@@ -1,0 +1,7 @@
+title = "brain (Tiếng Việt)"
+baseURL = "https://brain-vi.tamnd.com/"
+description = "Ghi chú của tamnd"
+contentDir = "content"
+outputDir = "public"
+staticDir = "static"
+theme = "zen"
