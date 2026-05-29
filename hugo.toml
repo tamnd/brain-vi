@@ -1,0 +1,62 @@
+baseURL = "https://brain-vi.tamnd.com/"
+title = "brain (Tiếng Việt)"
+
+enableGitInfo = true
+enableRobotsTXT = true
+enableEmoji = true
+
+[frontmatter]
+  date    = ["date", "publishDate"]
+  lastmod = ["lastmod", "date", "publishDate"]
+
+defaultContentLanguage = "vi"
+defaultContentLanguageInSubdir = false
+
+[module]
+  [[module.imports]]
+    path = "github.com/tamnd/hugo-brainy"
+
+[languages]
+  [languages.vi]
+    label = "brain (Tiếng Việt)"
+    locale = "vi"
+    contentDir = "content"
+    weight = 1
+
+[markup]
+  [markup.highlight]
+    noClasses = false
+  [markup.goldmark.renderer]
+    unsafe = true
+  [markup.goldmark.extensions.passthrough]
+    enable = true
+    [markup.goldmark.extensions.passthrough.delimiters]
+      block  = [["\$\$", "\$\$"], ["\\[", "\\]"]]
+      inline = [["\$", "\$"],       ["\\(", "\\)"]]
+
+[params]
+  description = "Ghi chú cá nhân của tamnd"
+  math = true
+
+  [params.navbar]
+    displayTitle = true
+    displayLogo = false
+    width = "full"
+
+  [params.theme]
+    default = "system"
+    displayToggle = true
+
+  [params.search]
+    enable = true
+    type = "flexsearch"
+    [params.search.flexsearch]
+      index = "summary"
+
+  [params.editURL]
+    enable = false
+
+  [params.footer]
+    enable = true
+    displayCopyright = false
+    displayPoweredBy = false
