@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/五.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.862779Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/人.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.862813Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/什么.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.862846Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/今天.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.862879Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/从.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.862913Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/他.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.862950Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/他们.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.862983Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/件.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.863017Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/但是.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.863050Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/住.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.863084Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/1/vocabulary/你.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.863118Z",
