@@ -68461,9 +68461,183 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/kvant/100.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.988727Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/101.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.988839Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/102.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.988898Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/103.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.988947Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/104.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.988997Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/105.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.989052Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/107.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.989101Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/108.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.989167Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/109.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.989218Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/kvant/11.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:01.300258Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/110.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.989289Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/111.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.989341Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/112.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.989387Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/113.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.989434Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/114.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.989477Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/115.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.989523Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/116.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.989568Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/117.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.989614Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/118.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.989663Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/119.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.989708Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/120.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.989751Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/121.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.989794Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/122.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.989838Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/123.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.989882Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/124.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.989928Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/125.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.989976Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/126.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.990024Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/127.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.990067Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/128.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.990114Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/129.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.990180Z",
       "retries": 0
     },
     {
@@ -68473,9 +68647,129 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/kvant/130.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.990249Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/131.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.990292Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/132.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.990337Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/133.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.990381Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/134.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.990425Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/135.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.990467Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/136.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.990513Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/137.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.990556Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/138.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.990600Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/139.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.990644Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/kvant/14.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:01.300324Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/140.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.990709Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/141.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.990765Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/142.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.990812Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/143.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.990854Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/144.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.990897Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/145.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.990939Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/146.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.990987Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/147.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.991034Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/148.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.991079Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/149.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.991123Z",
       "retries": 0
     },
     {
@@ -68485,9 +68779,99 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/kvant/150.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.991201Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/151.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.991244Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/152.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.991286Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/153.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.991325Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/154.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.991364Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/155.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.991405Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/156.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.991450Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/158.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.991493Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/159.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.991536Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/kvant/16.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:01.300392Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/160.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.991601Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/161.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.991649Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/163.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.991697Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/165.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.991743Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/167.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.991785Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/168.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.991830Z",
       "retries": 0
     },
     {
@@ -68497,15 +68881,123 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/kvant/170.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.991896Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/172.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.991940Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/173.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.991984Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/175.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.992034Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/177.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.992075Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/179.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.992126Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/kvant/18.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:01.300466Z",
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/kvant/180.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.992204Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/182.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.992246Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/183.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.992290Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/185.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.992333Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/186.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.992377Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/188.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.992422Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/kvant/19.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:01.300502Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/190.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.992493Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/192.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.992539Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/193.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.992581Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/195.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.992628Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/197.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.992673Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/199.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.992716Z",
       "retries": 0
     },
     {
@@ -68521,9 +69013,81 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/kvant/200.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.992806Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/202.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.992851Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/204.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.992895Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/205.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.992938Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/207.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.992981Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/208.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.993028Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/kvant/21.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:01.300604Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/210.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.993094Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/212.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.993152Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/213.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.993201Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/215.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.993245Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/217.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.993288Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/218.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.993329Z",
       "retries": 0
     },
     {
@@ -68533,9 +69097,63 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/kvant/220.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.993394Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/221.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.993442Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/223.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.993484Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/225.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.993527Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/226.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.993569Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/228.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.993612Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/kvant/23.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:01.300671Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/230.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.993679Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/231.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.993720Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/233.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.993762Z",
       "retries": 0
     },
     {
@@ -68725,9 +69343,81 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/kvant/501.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.994455Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/502.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.994500Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/504.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.994546Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/505.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.994595Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/509.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.994640Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/kvant/51.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:01.301787Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/510.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.994705Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/513.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.994749Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/514.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.994797Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/515.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.994842Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/516.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.994886Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/518.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.994932Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/519.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.994979Z",
       "retries": 0
     },
     {
@@ -68737,9 +69427,111 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/kvant/520.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.995043Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/521.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.995085Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/522.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.995130Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/523.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.995188Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/525.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.995235Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/526.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.995279Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/527.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.995324Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/528.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.995366Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/529.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.995412Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/kvant/53.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:01.301853Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/530.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.995480Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/531.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.995523Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/532.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.995569Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/534.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.995614Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/535.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.995661Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/536.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.995706Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/538.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.995753Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/539.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.995806Z",
       "retries": 0
     },
     {
@@ -68749,9 +69541,87 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/kvant/540.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.995871Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/541.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.995912Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/542.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.995959Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/544.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.996002Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/545.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.996043Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/546.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.996085Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/547.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.996128Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/548.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.996183Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/kvant/55.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:01.301921Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/550.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.996251Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/551.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.996293Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/552.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.996338Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/554.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.996380Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/555.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.996424Z",
       "retries": 0
     },
     {
@@ -69259,9 +70129,27 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/kvant/862.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.998205Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/866.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.998255Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/kvant/87.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:01.304857Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/876.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.998318Z",
       "retries": 0
     },
     {
@@ -69271,9 +70159,27 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/kvant/882.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.998380Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/889.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.998429Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/kvant/89.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:01.304929Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/897.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.998493Z",
       "retries": 0
     },
     {
@@ -69289,9 +70195,27 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/kvant/900.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.998579Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/908.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.998618Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/kvant/91.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:01.305038Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/912.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.998685Z",
       "retries": 0
     },
     {
@@ -69301,9 +70225,33 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/kvant/920.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.998749Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/927.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.998795Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/kvant/93.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:01.305104Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/932.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.998859Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/937.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.998905Z",
       "retries": 0
     },
     {
@@ -69313,15 +70261,39 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/kvant/943.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.998971Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/949.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.999013Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/kvant/95.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:01.305172Z",
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/kvant/956.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.999079Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/kvant/96.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:01.305205Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/963.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.999156Z",
       "retries": 0
     },
     {
@@ -69334,6 +70306,12 @@
       "source_path": "content/en/practice/maths/kvant/98.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:01.305273Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/99.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:51.999246Z",
       "retries": 0
     },
     {
@@ -84613,6 +85591,18 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/2.3.4.1/09.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:52.060629Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/2.3.4.1/12.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:52.060700Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/2.3.4.2/06.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:01.392483Z",
@@ -84658,6 +85648,72 @@
       "source_path": "content/en/practice/maths/taocp/2.3.4.2/18.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:01.392739Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/2.3.4.3/06.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:52.060978Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/2.3.4.4/01.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:52.061072Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/2.3.4.4/05.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:52.061117Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/2.3.4.4/06.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:52.061172Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/2.3.4.4/07.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:52.061214Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/2.3.4.4/09.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:52.061255Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/2.3.4.4/10.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:52.061296Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/2.3.4.4/11.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:52.061338Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/2.3.4.4/12.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:52.061378Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/2.3.4.4/13.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:52.061419Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/2.3.4.4/16.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:52.061459Z",
       "retries": 0
     },
     {
@@ -84790,6 +85846,24 @@
       "source_path": "content/en/practice/maths/taocp/2.3/22.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:01.389424Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/2.4/08.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:52.061550Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/2.4/14.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:52.061591Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/2.4/15.md",
+      "priority": 20,
+      "added_at": "2026-06-01T18:55:52.061633Z",
       "retries": 0
     },
     {
@@ -102343,9 +103417,27 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/2.3.4.3/_index.md",
+      "priority": 15,
+      "added_at": "2026-06-01T18:55:52.061023Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/2.3.4.4/_index.md",
+      "priority": 15,
+      "added_at": "2026-06-01T18:55:52.061506Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/2.3/_index.md",
       "priority": 15,
       "added_at": "2026-06-01T12:15:01.389455Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/2.4/_index.md",
+      "priority": 15,
+      "added_at": "2026-06-01T18:55:52.061674Z",
       "retries": 0
     },
     {
