@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/你.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.863118Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/你们.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.863151Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/你好.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.863185Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/你好吗.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.863219Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/便宜.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.863252Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/做.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.863286Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/儿子.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.863319Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/八.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.863355Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/公共汽车.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.863392Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/公司.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.863426Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/1/vocabulary/六.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.863460Z",
