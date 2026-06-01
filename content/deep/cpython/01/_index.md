@@ -5,11 +5,11 @@ tags: ["cpython", "python", "internals"]
 weight: 1
 ---
 
-| Chương | Tiêu đề |
-|---|---|
-| [1](01/) | CPython là gì |
-| [2](02/) | Xây dựng CPython từ nguồn |
-| [3](03/) | Bố cục kho lưu trữ |
-| [4](04/) | Đọc mã CPython C |
-| [5](05/) | Mô hình thời gian chạy |
+| Chương | Tiêu đề | 
+|---|---| 
+| [1](01/) | CPython là gì | 
+| [2](02/) | Xây dựng CPython từ nguồn | 
+| [3](03/) | Bố cục kho lưu trữ | 
+| [4](04/) | Đọc mã CPython C | 
+| [5](05/) | Mô hình thời gian chạy | 
 | [6](06/) | Từ mã nguồn đến thực thi |

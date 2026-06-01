@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/docs/_index.md",
-      "priority": 100,
-      "added_at": "2026-06-01T11:26:14.514695Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/_index.md",
-      "priority": 100,
-      "added_at": "2026-06-01T11:26:14.514797Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/maths/_index.md",
-      "priority": 100,
-      "added_at": "2026-06-01T11:26:14.669046Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/_index.md",
-      "priority": 100,
-      "added_at": "2026-06-01T11:26:14.669079Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/programming/_index.md",
-      "priority": 100,
-      "added_at": "2026-06-01T11:26:15.192544Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/research/_index.md",
-      "priority": 100,
-      "added_at": "2026-06-01T11:26:15.217985Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/spec/_index.md",
-      "priority": 100,
-      "added_at": "2026-06-01T11:26:15.225053Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/wiki/_index.md",
-      "priority": 100,
-      "added_at": "2026-06-01T11:26:15.227844Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/write/_index.md",
-      "priority": 100,
-      "added_at": "2026-06-01T11:26:15.246513Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/deep/cpython/01/_index.md",
-      "priority": 50,
-      "added_at": "2026-06-01T11:26:14.509136Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/deep/cpython/02/_index.md",
       "priority": 50,
       "added_at": "2026-06-01T11:26:14.509806Z",
