@@ -74803,6 +74803,24 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/kvant/652.md",
+      "priority": 0,
+      "added_at": "2026-06-01T10:42:11.978234Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/653.md",
+      "priority": 0,
+      "added_at": "2026-06-01T10:42:11.978307Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/kvant/657.md",
+      "priority": 0,
+      "added_at": "2026-06-01T10:42:11.978348Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/kvant/7.md",
       "priority": 0,
       "added_at": "2026-06-01T10:08:45.858560Z",
@@ -90829,6 +90847,12 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/2.5/03.md",
+      "priority": 0,
+      "added_at": "2026-06-01T10:42:12.025502Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/2.5/04.md",
       "priority": 0,
       "added_at": "2026-06-01T10:26:53.097557Z",
@@ -90853,6 +90877,12 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/2.5/10.md",
+      "priority": 0,
+      "added_at": "2026-06-01T10:42:12.025626Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/2.5/11.md",
       "priority": 0,
       "added_at": "2026-06-01T10:26:53.097764Z",
@@ -90868,6 +90898,18 @@
       "source_path": "content/en/practice/maths/taocp/2.5/30.md",
       "priority": 0,
       "added_at": "2026-06-01T10:26:53.097861Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/2.5/43.md",
+      "priority": 0,
+      "added_at": "2026-06-01T10:42:12.025712Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/2.5/44.md",
+      "priority": 0,
+      "added_at": "2026-06-01T10:42:12.025743Z",
       "retries": 0
     },
     {
