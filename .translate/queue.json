@@ -1,36 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/_index.md",
-      "priority": 0,
-      "added_at": "2026-06-01T10:08:45.233918Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/calendar.md",
-      "priority": 0,
-      "added_at": "2026-06-01T10:08:45.233997Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/deep/_index.md",
-      "priority": 0,
-      "added_at": "2026-06-01T10:08:45.234047Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/deep/cpython/01/01.md",
-      "priority": 0,
-      "added_at": "2026-06-01T10:08:45.234113Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/deep/cpython/01/02.md",
-      "priority": 0,
-      "added_at": "2026-06-01T10:08:45.234171Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/deep/cpython/01/03.md",
       "priority": 0,
       "added_at": "2026-06-01T10:08:45.234230Z",
