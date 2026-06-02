@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/开始.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.866230Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/弟弟.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.866267Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/张.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.866308Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/很.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.866343Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/忙.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.866377Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/快.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.866411Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/怎么.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.866445Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/怎么样.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.866484Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/您.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.866518Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/您好.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.866551Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/1/vocabulary/想.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.866584Z",
