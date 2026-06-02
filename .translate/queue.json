@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/热.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.867962Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/爸爸.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.867995Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/狗.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.868028Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/猫.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.868065Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/玩.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.868101Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/现在.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.868134Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/瓶.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.868167Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/用.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.868200Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/电脑.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.868234Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/电视.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.868268Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/1/vocabulary/电话.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.868301Z",
