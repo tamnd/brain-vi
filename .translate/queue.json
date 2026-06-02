@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/想.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.866584Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/慢.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.866618Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/我.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.866650Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/我们.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.866683Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/我很好.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.866725Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/房间.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.866760Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/所以.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.866796Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/手机.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.866830Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/才.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.866864Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/打.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.866898Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/1/vocabulary/打电话.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.866930Z",
