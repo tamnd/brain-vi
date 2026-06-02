@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/杯.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.867610Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/桌子.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.867643Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/椅子.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.867676Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/水.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.867722Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/汉语.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.867757Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/没.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.867791Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/没关系.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.867824Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/漂亮.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.867859Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/火车.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.867895Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/点.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.867927Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/1/vocabulary/热.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.867962Z",
