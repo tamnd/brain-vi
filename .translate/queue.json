@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/哥哥.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.864496Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/哪.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.864532Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/哪儿.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.864569Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/哪里.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.864606Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/唱.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.864640Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/商店.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.864674Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/喜欢.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.864716Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/喝.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.864752Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/四.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.864785Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/回.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.864819Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/1/vocabulary/回答.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.864852Z",
