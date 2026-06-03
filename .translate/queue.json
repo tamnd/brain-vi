@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/2/lessons/11-home-living.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.870857Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/lessons/12-work-colleagues.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.870896Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/lessons/13-talking-about-the-past.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.870934Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/lessons/14-feelings-emotions.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.870976Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/lessons/15-hsk2-review.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.871013Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.875420Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/一起.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.871117Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/上班.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.871152Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/不客气.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.871186Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/东西.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.871221Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/2/vocabulary/为了.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.871257Z",
