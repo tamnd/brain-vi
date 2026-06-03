@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/读.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.869332Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/谁.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.869366Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/谢谢.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.869400Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/贵.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.869433Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/走.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.869466Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/起床.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.869503Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/超市.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.869537Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/跑.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.869574Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/跳.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.869607Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/还.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.869641Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/1/vocabulary/这.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.869675Z",
