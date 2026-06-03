@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/2/lessons/01-comparisons.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.870458Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/lessons/02-directions-navigation.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.870495Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/lessons/03-expressing-opinions.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.870532Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/lessons/04-past-events.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.870572Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/lessons/05-making-plans.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.870613Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/lessons/06-at-the-restaurant.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.870652Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/lessons/07-shopping-bargaining.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.870690Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/lessons/08-health-doctor.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.870742Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/lessons/09-phone-communication.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.870780Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/lessons/10-weather-deep-dive.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.870819Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/2/lessons/11-home-living.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.870857Z",
