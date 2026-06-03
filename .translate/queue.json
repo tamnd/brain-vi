@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/地方.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.872308Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/坏.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.872341Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/城市.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.872378Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/声音.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.872411Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/外.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.872446Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/多么.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.872479Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/大家.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.872512Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/女.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.872545Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/奶奶.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.872578Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/季节.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.872611Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/2/vocabulary/安静.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.872644Z",
