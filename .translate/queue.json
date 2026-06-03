@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/帽子.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.872994Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/干净.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.873030Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/应该.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.873063Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/当然.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.873096Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/快乐.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.873129Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/总是.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.873162Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/懂.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.873195Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/或者.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.873230Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/所以.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.873263Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/打电话.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.873296Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/2/vocabulary/找到.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.873330Z",
