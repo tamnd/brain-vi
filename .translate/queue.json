@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/难.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.870028Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/零.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.870064Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/非常.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.870098Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/面条.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.870132Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/飞机.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.870165Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/饭馆.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.870201Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/高.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.870234Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/高兴.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.870268Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/鸡蛋.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.870301Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/grammar.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.870419Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/2/lessons/01-comparisons.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.870458Z",
