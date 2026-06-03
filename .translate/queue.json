@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/找到.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.873330Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/担心.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.873367Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/拿.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.873401Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/方便.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.873437Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/旁边.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.873470Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/早.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.873504Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/时候.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.873538Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/明白.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.873571Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/普通.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.873604Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/最.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.873638Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/2/vocabulary/有名.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.873671Z",
