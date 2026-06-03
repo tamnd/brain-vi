@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/右边.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.871955Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/同意.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.871988Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/后来.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.872024Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/吧.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.872059Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/听到.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.872099Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/告诉.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.872136Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/啊.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.872173Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/啤酒.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.872206Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/回答.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.872239Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/国家.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.872274Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/2/vocabulary/地方.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.872308Z",
