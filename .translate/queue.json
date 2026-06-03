@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/这.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.869675Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/进.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.869718Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/那.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.869752Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/都.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.869787Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/钱.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.869823Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/错.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.869859Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/长.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.869893Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/门.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.869927Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/问.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.869961Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/1/vocabulary/问题.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.869995Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/1/vocabulary/难.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.870028Z",
