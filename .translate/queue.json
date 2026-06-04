@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/一定.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876306Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/一直.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876340Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/不但.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876374Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/不但…而且….md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876408Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/不好意思.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876442Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/不得不.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876476Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/不必.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876510Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/不管.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876545Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/不过.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876579Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/专业.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876615Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/3/vocabulary/丢.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.876648Z",
