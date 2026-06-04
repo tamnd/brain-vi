@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/价格.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.877686Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/任何.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.877733Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/任务.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.877767Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/优点.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.877801Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/传统.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.877834Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/伤心.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.877870Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/低.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.877904Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/体育馆.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.877939Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/体验.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.877972Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/作用.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878010Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/3/vocabulary/保护.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.878043Z",
