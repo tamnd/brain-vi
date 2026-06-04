@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/包括.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.879862Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/十分.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.879897Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/单位.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.879931Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/印象.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.879970Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/危险.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.880006Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/即使.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.880041Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/厉害.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.880074Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/原则.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.880107Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/原因.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.880140Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/原来.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.880175Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/3/vocabulary/参加.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.880208Z",
