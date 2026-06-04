@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/丢.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876648Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/严格.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876682Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/中心.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876725Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/中间.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876761Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/丰富.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876797Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/为了.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876831Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/主人.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876867Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/主动.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876902Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/主要.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876936Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/举.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876969Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/3/vocabulary/之前.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.877003Z",
