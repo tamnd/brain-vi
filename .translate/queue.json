@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/其中.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878728Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/其他.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878763Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/其实.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878796Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/具体.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878830Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/内容.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878863Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/写错.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878901Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/农村.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878934Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/决定.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878968Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/冷静.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.879001Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/准备.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.879036Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/3/vocabulary/准时.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.879069Z",
