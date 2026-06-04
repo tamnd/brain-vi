@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/迟到.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.875072Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/重要.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.875108Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/钱.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.875143Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/错.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.875177Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/问题.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.875210Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/除了.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.875245Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/面条.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.875281Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/题.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.875314Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/首.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.875347Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/2/vocabulary/黑.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.875380Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/3/grammar.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.875497Z",
