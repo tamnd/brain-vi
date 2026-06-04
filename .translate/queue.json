@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/做完.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878385Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/偶尔.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878418Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/允许.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878451Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/公园.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878488Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/共同.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878521Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/关于.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878553Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/关心.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878587Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/关系.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878620Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/关键.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878653Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/兴趣.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878685Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/3/vocabulary/其中.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.878728Z",
