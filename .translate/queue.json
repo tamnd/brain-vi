@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/3/lessons/10-duration-frequency.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.875893Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/lessons/11-festivals.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.875931Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/lessons/12-travel-tourism.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.875971Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/lessons/13-health-wellness.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876010Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/lessons/14-study-career.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876050Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/lessons/15-describing-people.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876088Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/lessons/16-media-technology.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876125Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/lessons/17-environment-nature.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876163Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/lessons/18-review.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.876201Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.894006Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/3/vocabulary/一定.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.876306Z",
