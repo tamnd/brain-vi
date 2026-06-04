@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/保护.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878043Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/保证.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878077Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/信封.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878111Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/信息.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878144Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/信用卡.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878178Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/修.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878214Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/倒.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878250Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/借.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878284Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/假日.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878317Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/假期.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.878351Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/3/vocabulary/做完.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.878385Z",
