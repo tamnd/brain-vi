@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/感激.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.884026Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/感觉.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.884059Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/感谢.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.884095Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/懒.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.884128Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/成为.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.884162Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/成功.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.884198Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/成熟.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.884233Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/成绩.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.884267Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/才.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.884301Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/才能.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.884334Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/3/vocabulary/打印.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.884367Z",
