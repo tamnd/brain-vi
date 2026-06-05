@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/报名.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.884719Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/担心.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.884755Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/拒绝.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.884789Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/拿出去.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.884827Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/挂.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.884860Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/按时.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.884894Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/按照.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.884932Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/换.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.884984Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/换乘.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.885039Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/接.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.885089Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/3/vocabulary/接受.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.885141Z",
