@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/差.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.882981Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/差不多.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.883014Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/帮忙.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.883048Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/干净.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.883081Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/平均.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.883115Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/平时.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.883148Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/年级.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.883181Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/年轻.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.883214Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/幸福.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.883248Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/广告.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.883283Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/3/vocabulary/应该.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.883317Z",
