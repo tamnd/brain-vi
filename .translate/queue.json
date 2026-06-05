@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/机场.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.886537Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/杂志.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.886574Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/材料.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.886609Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/条件.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.886643Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/来自.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.886677Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/果然.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.886721Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/标准.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.886759Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/树.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.886797Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/根据.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.886831Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/格外.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.886866Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/3/vocabulary/检查.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.886899Z",
