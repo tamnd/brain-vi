@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/浪费.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.887599Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/海鲜.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.887633Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/消息.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.887666Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/消极.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.887700Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/深.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.887743Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/清楚.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.887778Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/温度.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.887811Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/满意.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.887846Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/满足.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.887880Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/漂亮.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.887915Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/3/vocabulary/演员.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.887948Z",
