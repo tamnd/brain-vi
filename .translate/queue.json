@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/复杂.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.881943Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/外国.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.881976Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/大夫.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.882010Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/大方.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.882044Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/大概.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.882080Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/大约.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.882115Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/失望.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.882148Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/头疼.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.882182Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/奇怪.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.882216Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/好不容易.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.882252Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/3/vocabulary/字.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.882286Z",
