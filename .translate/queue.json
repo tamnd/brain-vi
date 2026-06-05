@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/害怕.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.882624Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/害羞.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.882656Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/宿舍.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.882689Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/对于.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.882738Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/导游.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.882774Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/将来.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.882809Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/小时.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.882841Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/尤其.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.882875Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/尽管.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.882909Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/工具.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.882945Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/3/vocabulary/差.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.882981Z",
