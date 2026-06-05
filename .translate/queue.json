@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/检查.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.886899Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/楼.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.886935Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/正确.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.886970Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/此外.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.887005Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/每.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.887039Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/比赛.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.887073Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/比较.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.887106Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/比较…一点.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.887140Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/毕竟.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.887175Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/毛巾.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.887208Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/3/vocabulary/气候.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.887244Z",
