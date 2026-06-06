@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/锻炼.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.893146Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/镜子.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.893182Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/问候.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.893215Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/问题.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.893248Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/除了.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.893282Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/除非.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.893317Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/随着.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.893350Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/难过.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.893385Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/集中.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.893418Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/雨伞.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.893451Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/3/vocabulary/需要.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.893484Z",
