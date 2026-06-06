@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/程度.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889321Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/空调.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889360Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/突然.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889394Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/笨.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889429Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/等.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889465Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/筷子.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889501Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/简单.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889533Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/管.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889567Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/精彩.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889601Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/糖.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889634Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/3/vocabulary/紧张.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.889667Z",
