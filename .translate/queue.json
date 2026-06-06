@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/眼睛.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.888981Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/知识.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889014Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/短信.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889047Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/研究.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889081Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/确实.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889115Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/礼物.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889150Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/礼貌.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889183Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/科学.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889217Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/租.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889251Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/积极.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889286Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/3/vocabulary/程度.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.889321Z",
