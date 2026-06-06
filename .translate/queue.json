@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/诚实.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.891751Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/语法.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.891788Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/语言.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.891821Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/说清楚.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.891855Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/请假.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.891891Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/请求.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.891925Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/责任.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.891957Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/质量.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.891991Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/走过来.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.892025Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/赶.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.892059Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/3/vocabulary/超过.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.892097Z",
