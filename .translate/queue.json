@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/胳膊.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.890366Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/能力.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.890399Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/脖子.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.890433Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/脸.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.890466Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/自信.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.890499Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/自己.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.890535Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/自然.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.890571Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/自行车.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.890605Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/至少.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.890638Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/节约.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.890672Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/3/vocabulary/药.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.890714Z",
