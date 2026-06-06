@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/紧张.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889667Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/累.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889715Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/经历.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889751Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/经常.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889784Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/经济.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889817Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/经过.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889851Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/经验.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889884Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/结婚.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889920Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/结果.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889954Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/继续.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.889987Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/3/vocabulary/缺点.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.890021Z",
