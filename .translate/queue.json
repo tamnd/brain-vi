@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/高兴.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.893852Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/鼓励.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.893903Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/鼻子.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.893939Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/grammar.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.894082Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/lessons/01-even-x.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.894126Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/lessons/02-complex-comparisons.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.894166Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/lessons/03-budan-erqie.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.894209Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/lessons/04-pivotal-constructions.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.894249Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/lessons/05-topics.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.894288Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/lessons/06-yue-yue.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.894328Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/4/lessons/07-formal-negation.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.894373Z",
