@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/运气.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.892445Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/进步.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.892480Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/进行.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.892513Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/追.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.892546Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/送.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.892579Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/适合.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.892613Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/选择.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.892647Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/逐渐.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.892681Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/通常.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.892724Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/通知.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.892758Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/3/vocabulary/通过.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.892795Z",
