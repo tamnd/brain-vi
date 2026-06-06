@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/特别.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.888289Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/特点.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.888321Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/环境.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.888358Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/现代.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.888395Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/班.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.888428Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/理由.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.888464Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/理解.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.888498Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/甚至.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.888532Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/用途.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.888565Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/3/vocabulary/由于.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.888601Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/3/vocabulary/电子邮件.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.888634Z",
