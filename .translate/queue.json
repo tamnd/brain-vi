@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/互联网.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.895910Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/交流.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.895945Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/从来.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.895981Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/仔细.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.896018Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/代表.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.896052Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/价值.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.896086Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/任务.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.896120Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/企业.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.896154Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/休闲.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.896188Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/优势.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.896225Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/4/vocabulary/会议.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.896259Z",
