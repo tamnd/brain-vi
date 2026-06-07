@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/形式.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.901255Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/形成.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.901289Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/影响.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.901323Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/影响力.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.901357Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/往往.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.901390Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/律师.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.901425Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/心理健康.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.901460Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/必要.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.901493Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/志愿者.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.901531Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/怀疑.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.901565Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/4/vocabulary/态度.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.901599Z",
