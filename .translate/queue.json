@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/媒体.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.899867Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/学习.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.899901Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/学会.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.899934Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/学生.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.899969Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/宁可.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.900003Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/宁可…也不.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.900037Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/安慰.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.900073Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/安排.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.900110Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/完善.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.900145Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/完整.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.900180Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/4/vocabulary/实施.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.900214Z",
