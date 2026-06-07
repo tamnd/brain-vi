@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/态度.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.901599Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/思维.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.901636Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/思考.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.901670Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/总之.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.901716Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/总体.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.901752Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/总共.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.901786Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/总的来说.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.901820Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/总结.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.901854Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/悲观.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.901887Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/情况.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.901921Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/4/vocabulary/情绪.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.901955Z",
