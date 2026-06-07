@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/及时.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.898114Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/友好.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.898149Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/反对.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.898183Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/反映.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.898220Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/发展.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.898254Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/变化.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.898288Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/另外.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.898324Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/可能.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.898360Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/可靠.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.898397Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/号召.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.898431Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/4/vocabulary/吃惊.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.898465Z",
