@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/会议.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.896259Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/传统.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.896295Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/但是.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.896329Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/位置.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.896366Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/体育.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.896402Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/作用.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.896437Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/例如.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.896471Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/依赖.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.896506Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/保护.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.896543Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/保持.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.896577Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/4/vocabulary/信任.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.896612Z",
