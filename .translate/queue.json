@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/困难.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.899167Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/在于.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.899202Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/地区.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.899235Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/场所.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.899269Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/坚持.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.899302Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/城市.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.899335Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/培养.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.899369Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/培训.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.899403Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/基本上.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.899439Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/基础.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.899476Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/4/vocabulary/声明.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.899510Z",
