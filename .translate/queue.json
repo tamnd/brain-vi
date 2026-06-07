@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/打扰.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.902310Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/扩大.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.902344Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/批准.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.902379Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/批评.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.902415Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/承担.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.902449Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/承认.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.902483Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/技术.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.902517Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/技能.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.902552Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/投资.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.902585Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/报告.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.902619Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/4/vocabulary/抽象.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.902653Z",
