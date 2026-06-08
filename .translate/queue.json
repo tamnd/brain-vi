@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/文明.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.904143Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/新鲜.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.904177Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/方向.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.904211Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/方式.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.904245Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/方案.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.904278Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/方法.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.904313Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/无论.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.904346Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/既然.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.904380Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/既然…就.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.904414Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/明显.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.904449Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/4/vocabulary/明白.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.904484Z",
