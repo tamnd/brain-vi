@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/5/lessons/03-social-issues.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.912744Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/lessons/04-economy-finance.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.912786Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/lessons/05-science-technology.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.912830Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/lessons/06-literature-arts.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.912873Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/lessons/07-law-politics.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.912916Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/lessons/08-philosophy-ethics.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.912957Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/lessons/09-historical-events.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.913002Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/lessons/10-debate-argumentation.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.913050Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/lessons/11-advanced-grammar-review.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.913093Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/lessons/12-idioms-context-1.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.913134Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/5/lessons/13-idioms-context-2.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.913179Z",
