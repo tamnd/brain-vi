@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/5/lessons/13-idioms-context-2.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.913179Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/lessons/14-chinese-business-etiquette.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.913224Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/lessons/15-rhetoric-persuasion.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.913267Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/lessons/16-media-analysis.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.913311Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/lessons/17-environmental-policy.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.913354Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/lessons/18-healthcare-policy.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.913397Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/lessons/19-technology-ethics.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.913440Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/lessons/20-global-affairs.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.913483Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/lessons/21-advanced-reading-skills.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.913526Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/lessons/22-writing-academic-essays.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.913569Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/5/lessons/23-listening-to-lectures.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.913614Z",
