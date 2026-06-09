@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/产生.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.914392Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/人工智能.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.914427Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/从众.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.914460Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/从而.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.914496Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/代码.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.914531Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/以至于.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.914569Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/以致.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.914603Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/仲裁.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.914639Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/价值观.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.914673Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/优化.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.914717Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/5/vocabulary/传媒.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.914756Z",
