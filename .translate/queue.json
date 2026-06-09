@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/全面.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.915938Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/公共卫生.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.915974Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/公关.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.916009Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/公平.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.916046Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/公平的.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.916081Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/公正.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.916115Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/公民.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.916150Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/关键.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.916186Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/具体.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.916221Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/内在.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.916255Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/5/vocabulary/内容.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.916290Z",
