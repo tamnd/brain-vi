@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/部门.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.911488Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/重要.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.911522Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/错误.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.911556Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/锻炼.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.911592Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/问题.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.911626Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/间接.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.911660Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/阶段.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.911698Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/限制.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.911745Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/需求.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.911780Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/非正式.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.911818Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/4/vocabulary/面对.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.911851Z",
