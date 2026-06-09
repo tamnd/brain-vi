@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/质量.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.910799Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/费用.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.910833Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/资料.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.910868Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/资金.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.910901Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/趋势.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.910934Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/转变.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.910971Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/软件.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.911005Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/辛辣.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.911039Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/过敏.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.911075Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/过程.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.911109Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/4/vocabulary/进步.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.911143Z",
