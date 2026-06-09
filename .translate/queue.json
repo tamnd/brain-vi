@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/进步.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.911143Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/进程.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.911178Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/选举.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.911212Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/选择.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.911246Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/逐渐.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.911281Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/通报.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.911317Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/通知.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.911351Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/通过.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.911384Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/速度.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.911418Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/4/vocabulary/邀请.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.911454Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/4/vocabulary/部门.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.911488Z",
