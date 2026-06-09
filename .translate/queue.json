@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/创伤.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.916647Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/创新.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.916682Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/创造.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.916725Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/创造力.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.916761Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/利息.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.916800Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/利润.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.916836Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/利率.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.916871Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/利益.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.916906Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/制度.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.916940Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/制约.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.916976Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/5/vocabulary/制裁.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.917012Z",
