@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/专业.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.914031Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/严峻.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.914067Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/严谨.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.914101Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/主权.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.914137Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/主观.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.914174Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/乃至.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.914211Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/义务.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.914248Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/亏损.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.914288Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/云计算.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.914322Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/互联网.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.914357Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/5/vocabulary/产生.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.914392Z",
