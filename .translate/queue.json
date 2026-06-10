@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/变革.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.918169Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/叙事.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.918204Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/另一方面.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.918240Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/可再生.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.918276Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/可持续发展.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.918311Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/台风.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.918346Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/号召.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.918383Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/司法.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.918420Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/合作.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.918455Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/合同.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.918490Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/5/vocabulary/合并.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.918524Z",
