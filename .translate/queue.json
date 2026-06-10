@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/大数据.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919591Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/奖学金.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919628Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/威权主义.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919662Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/媒体.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919697Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/孕育.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919742Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/学历.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919778Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/学科.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919812Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/安全.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919847Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/完善.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919882Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/实例.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919921Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/5/vocabulary/实施.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.919956Z",
