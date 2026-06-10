@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/哪怕.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.918887Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/因此.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.918924Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/因而.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.918961Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/困境.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.918995Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/困惑.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919029Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/地震.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919064Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/垄断.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919098Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/培养.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919134Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/培育.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919169Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/培训.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919204Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/5/vocabulary/基本.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.919238Z",
