@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/应对.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.920669Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/应用程序.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.920704Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/康复.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.920750Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/廉洁.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.920789Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/建立.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.920825Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/建议.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.920860Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/开创.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.920896Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/开发.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.920934Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/引导.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.920969Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/引领.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.921004Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/5/vocabulary/弘扬.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.921041Z",
