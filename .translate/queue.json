@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/展现.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.920313Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/属性.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.920348Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/巩固.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.920382Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/市场份额.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.920418Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/带动.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.920453Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/干旱.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.920488Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/干预.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.920523Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/平台.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.920562Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/平等.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.920597Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/广泛.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.920632Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/5/vocabulary/应对.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.920669Z",
