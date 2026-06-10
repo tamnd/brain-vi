@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/基本.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919238Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/基础.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919276Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/增长.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919311Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/声誉.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919346Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/复杂.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919380Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/复杂化.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919415Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/外交.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919450Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/外在.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919484Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/外汇.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919522Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/多样化.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.919557Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/5/vocabulary/大数据.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.919591Z",
