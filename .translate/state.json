@@ -3,7 +3,7 @@
   "lang": "vi",
   "source_repo": "/tmp/brain",
   "target_repo": "/tmp/bs/vi/repo",
-  "last_run": "2026-06-10T01:23:25.162813Z",
+  "last_run": "2026-06-10T02:28:00.909072Z",
   "batch": 0,
   "translator": {
     "provider": "google",
@@ -12686,6 +12686,86 @@
       "source_hash": "sha256:4aaeeec0f743fb72df0d97ab3064f398335e9b9293f25b678e7256744a90ec84",
       "translated_at": "2026-06-10T01:23:25.162785Z",
       "dest_path": "content/languages/chinese/hsk/5/vocabulary/医疗.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/languages/chinese/hsk/5/vocabulary/医院.md": {
+      "source_hash": "sha256:bfa0c2d35faa6f11fa5fc60ec684060e1224978cb3ed3a0361e8e200b58c5d15",
+      "translated_at": "2026-06-10T02:27:25.764220Z",
+      "dest_path": "content/languages/chinese/hsk/5/vocabulary/医院.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/languages/chinese/hsk/5/vocabulary/协商.md": {
+      "source_hash": "sha256:050240ada954b65dca8374c5d0252b1f0d9039899e0dbb6b39ffc66a5ebdf324",
+      "translated_at": "2026-06-10T02:27:31.303964Z",
+      "dest_path": "content/languages/chinese/hsk/5/vocabulary/协商.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/languages/chinese/hsk/5/vocabulary/协议.md": {
+      "source_hash": "sha256:9f8df46b957f847cef01c36575c5fda9df18957d0f6963e4eef57209b7d3c5fd",
+      "translated_at": "2026-06-10T02:27:35.135955Z",
+      "dest_path": "content/languages/chinese/hsk/5/vocabulary/协议.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/languages/chinese/hsk/5/vocabulary/协调.md": {
+      "source_hash": "sha256:ba8ec17c96d6c6aadb8d576d38a4533b5943acf55f422ae9b8e09b4c23bd6374",
+      "translated_at": "2026-06-10T02:27:39.273673Z",
+      "dest_path": "content/languages/chinese/hsk/5/vocabulary/协调.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/languages/chinese/hsk/5/vocabulary/卓越.md": {
+      "source_hash": "sha256:2b0e2a83965d162d1d0bb401b09d478b1f286b827b1b40633795a367136bb646",
+      "translated_at": "2026-06-10T02:27:42.557885Z",
+      "dest_path": "content/languages/chinese/hsk/5/vocabulary/卓越.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/languages/chinese/hsk/5/vocabulary/博客.md": {
+      "source_hash": "sha256:21fe4983053fa17c37d03f6fa5fc1b657bd3e5783565718d3899973cde86681c",
+      "translated_at": "2026-06-10T02:27:45.779760Z",
+      "dest_path": "content/languages/chinese/hsk/5/vocabulary/博客.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/languages/chinese/hsk/5/vocabulary/博弈.md": {
+      "source_hash": "sha256:f087c1dc57990a116983e2c3540e57b72179d574a5bdd331cf488f205b65f244",
+      "translated_at": "2026-06-10T02:27:49.030469Z",
+      "dest_path": "content/languages/chinese/hsk/5/vocabulary/博弈.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/languages/chinese/hsk/5/vocabulary/危机.md": {
+      "source_hash": "sha256:cb1ce1ce9349b838233cf2d56e7b48dd426b032dbb2dce53f8c9622233399941",
+      "translated_at": "2026-06-10T02:27:53.126953Z",
+      "dest_path": "content/languages/chinese/hsk/5/vocabulary/危机.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/languages/chinese/hsk/5/vocabulary/即便.md": {
+      "source_hash": "sha256:94007a8d119a0f2c75cfc32c21570ff7818c95fbdce32eeffcbf7fc34a736910",
+      "translated_at": "2026-06-10T02:27:56.748320Z",
+      "dest_path": "content/languages/chinese/hsk/5/vocabulary/即便.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/languages/chinese/hsk/5/vocabulary/压力.md": {
+      "source_hash": "sha256:11438a77532fdf27d9c17b1ff1e9ed647c8a14d463dfa3045a2b07e11068e9f1",
+      "translated_at": "2026-06-10T02:28:00.909051Z",
+      "dest_path": "content/languages/chinese/hsk/5/vocabulary/压力.md",
       "status": "done",
       "tokens_used": 0,
       "provider": "google"
