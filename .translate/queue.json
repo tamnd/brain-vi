@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/乃至.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.935291Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/体现.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.935330Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/使命.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.935368Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/倡议.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.935406Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/假设.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.935441Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/共识.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.935477Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/内涵.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.935513Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/况且.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.935549Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/凝练.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.935585Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/分析.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.935620Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/6/vocabulary/利益.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.935656Z",
