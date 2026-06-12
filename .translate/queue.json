@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/边缘化的.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.932295Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/过渡.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.932331Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/运营.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.932366Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/进化.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.932401Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/进口.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.932437Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/进步.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.932472Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/进步的.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.932506Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/进而.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.932540Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/迫切.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.932574Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/迷惑.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.932612Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/5/vocabulary/退化.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.932646Z",
