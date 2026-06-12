@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/论据.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.930877Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/论点.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.930912Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/论证.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.930946Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/设计.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.930981Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/证实.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.931016Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/证据.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.931055Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/证明.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.931092Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/评价.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.931127Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/评估.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.931162Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/评论.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.931197Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/5/vocabulary/诉讼.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.931231Z",
