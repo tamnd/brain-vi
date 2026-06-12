@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/羡慕.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.929341Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/考核.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.929377Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/股东.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.929412Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/股票.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.929448Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/背景.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.929483Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/能力.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.929521Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/能源.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.929558Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/腐败.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.929594Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/自动化.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.929635Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/自学.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.929672Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/5/vocabulary/自尊.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.929749Z",
