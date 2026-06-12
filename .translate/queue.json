@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/规划.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.930507Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/规律.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.930542Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/视角.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.930578Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/解读.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.930613Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/触动.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.930650Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/警示.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.930685Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/认知.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.930736Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/议题.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.930775Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/记忆力.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.930809Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/论坛.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.930843Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/5/vocabulary/论据.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.930877Z",
