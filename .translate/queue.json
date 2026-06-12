@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/陶醉.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.933473Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/隐含.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.933509Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/隐私.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.933546Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/需求.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.933582Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/韧性.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.933618Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/顾虑.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.933654Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/预防.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.933690Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/领导.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.933741Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/频道.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.933777Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/驳斥.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.933812Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/5/vocabulary/验证.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.933847Z",
