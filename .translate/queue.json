@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/验证.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.933847Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/鼓舞.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.933883Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/grammar.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.934048Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/lessons/01-classical-chinese-influences.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.934094Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/lessons/02-complex-clause-structures.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.934139Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/lessons/03-advanced-idioms-chengyu-iii.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.934181Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/lessons/04-political-social-discourse.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.934222Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/lessons/05-scientific-writing.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.934264Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/lessons/06-literary-analysis.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.934306Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/lessons/07-news-journalism-style.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.934348Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/6/lessons/08-legal-language.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.934393Z",
