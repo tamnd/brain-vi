@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/调配.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.931572Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/谈判.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.931610Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/谋划.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.931650Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/象征.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.931687Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/负债.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.931735Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/负责任的.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.931771Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/质疑.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.931806Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/贷款.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.931840Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/贸易.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.931875Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/5/vocabulary/资产.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.931909Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/5/vocabulary/资源.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.931943Z",
