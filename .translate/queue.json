@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/利益.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.935656Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/前沿.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.935692Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/剖析.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.935737Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/含义.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.935773Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/命题.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.935812Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/固然.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.935847Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/审视.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.935882Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/底线.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.935919Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/弘扬.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.935957Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/归纳.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.935992Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/6/vocabulary/形态.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.936027Z",
