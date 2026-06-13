@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/形态.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.936027Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/思维.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.936063Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/思路.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.936099Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/批判.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.936134Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/承载.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.936170Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/探讨.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.936206Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/推断.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.936243Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/提炼.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.936281Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/整合.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.936318Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/文脉.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.936354Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/6/vocabulary/智慧.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.936392Z",
