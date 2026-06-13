@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/辩证.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.937488Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/进程.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.937525Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/逻辑.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.937560Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/遏制.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.937594Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/阐明.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.937629Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/阐述.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.937664Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/阐释.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.937703Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/颁布.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.937752Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/验证.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.937787Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/7/grammar.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.937929Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/7/lessons/01-classical-grammar.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.937974Z",
