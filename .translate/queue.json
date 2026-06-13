@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/8/lessons/02-expert-oral-presentation.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.938907Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/8/lessons/03-archaic-vocabulary-modern-use.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.938953Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/8/lessons/04-specialized-domain-mastery.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.938997Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/8/lessons/05-cross-register-fluency.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.939041Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/8/vocabulary.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.939486Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/8/vocabulary/光纤.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.939145Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/8/vocabulary/半导体制造.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.939181Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/8/vocabulary/微处理器.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.939216Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/8/vocabulary/材料科学.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.939251Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/8/vocabulary/流体动力学.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.939286Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/8/vocabulary/热力学.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.939323Z",
