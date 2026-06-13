@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/esperanto/cefr/b1/lessons/08-conjunctions-connectors.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.942597Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/esperanto/cefr/b1/lessons/09-numbers-advanced.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.942636Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/esperanto/cefr/b1/lessons/10-formal-writing-register.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.942675Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/esperanto/cefr/b1/lessons/11-reading-strategies.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.942727Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/esperanto/cefr/b1/lessons/12-b1-review.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.942769Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/esperanto/cefr/b2/lessons/01-advanced-correlative-combinations.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.942882Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/esperanto/cefr/b2/lessons/02-aspect-and-participle-nuance.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.942926Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/esperanto/cefr/b2/lessons/03-transitivity-and-causatives.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.942972Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/esperanto/cefr/b2/lessons/04-reported-speech-indirect-discourse.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.943017Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/esperanto/cefr/b2/lessons/05-concession-contrast-adversative.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.943062Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/esperanto/cefr/b2/lessons/06-advanced-word-building.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.943106Z",
