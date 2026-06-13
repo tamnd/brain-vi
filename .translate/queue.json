@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/7/lessons/01-classical-grammar.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.937974Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/7/lessons/02-academic-research-language.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.938017Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/7/lessons/03-literary-mandarin.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.938059Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/7/lessons/04-advanced-idiom-mastery.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.938100Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/7/lessons/05-specialized-law.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.938144Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/7/lessons/06-specialized-medicine.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.938187Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/7/lessons/07-specialized-finance.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.938227Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/7/lessons/08-political-discourse.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.938269Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/7/lessons/09-advanced-translation.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.938312Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/7/lessons/10-oral-defense-skills.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.938355Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/7/vocabulary.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.938745Z",
