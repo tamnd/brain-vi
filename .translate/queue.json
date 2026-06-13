@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/概述.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.936763Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/民主.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.936799Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/演绎.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.936834Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/理念.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.936872Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/秩序.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.936907Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/精炼.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.936945Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/系统.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.936982Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/综述.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.937018Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/融合.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.937054Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/languages/chinese/hsk/6/vocabulary/表述.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:00.937091Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/languages/chinese/hsk/6/vocabulary/规律.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:00.937126Z",
