@@ -1,7 +1,7 @@
 ---
 title: "CF 105292B - Dây Đẹp"
-description: "Tôi chưa thể viết một bài xã luận chính xác cho vấn đề này vì nội dung vấn đề thực tế bị thiếu. Hiện tại, câu lệnh chỉ hiển thị các phần giữ chỗ (“B C” và các phần đầu vào/đầu ra trống), không mô tả những gì “Chuỗi đẹp” đang yêu cầu."
-date: "2026-06-23T06:33:50+07:00"
+description: "Tôi chưa thể viết một bài xã luận chính xác cho vấn đề này vì thiếu tuyên bố vấn đề thực tế. Hiện tại, “Codeforces 105292B - Beautiful Strings” được hiển thị, nhưng nội dung câu lệnh thực sự trống (“B C” không có mô tả và không có thông số đầu vào/đầu ra)."
+date: "2026-06-25T01:18:10+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 105292
@@ -9,7 +9,7 @@ codeforces_index: "B"
 codeforces_contest_name: "National Taiwan University Class Preliminary 2024"
 rating: 0
 weight: 105292
-solve_time_s: 33
+solve_time_s: 41
 verified: false
 draft: false
 ---
@@ -18,16 +18,12 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 33s 
+**Thời gian giải:** 41s 
 **Đã xác minh:** không 
 
 ## Giải pháp 
-Tôi chưa thể viết một bài xã luận chính xác cho vấn đề này vì nội dung vấn đề thực tế bị thiếu. 
+Tôi chưa thể viết một bài xã luận chính xác cho vấn đề này vì thiếu tuyên bố vấn đề thực tế. 
 
-Hiện tại, câu lệnh chỉ hiển thị các phần giữ chỗ (“B C” và các phần đầu vào/đầu ra trống), không mô tả những gì “Chuỗi đẹp” đang yêu cầu. Nếu không biết các quy tắc xác định một chuỗi “đẹp”, mọi giải pháp, thuật toán hoặc phân tích độ phức tạp sẽ chỉ là phỏng đoán và rất có thể sai. 
+Hiện tại, “Codeforces 105292B - Beautiful Strings” được hiển thị, nhưng nội dung câu lệnh thực sự trống (“B C” không có mô tả và không có thông số đầu vào/đầu ra). Nếu không biết vấn đề đang đặt ra là gì thì bất kỳ giải pháp, cuộc thảo luận phức tạp hoặc ví dụ nào cũng sẽ chỉ là phỏng đoán thuần túy và gần như chắc chắn sẽ sai. 
 
-Vui lòng dán toàn bộ câu lệnh Codeforces (hoặc ít nhất là mô tả): 
-
-định nghĩa về một chuỗi đẹp, những phép biến đổi hoặc kiểm tra nào được yêu cầu và định dạng đầu vào/đầu ra. 
-
-Sau khi bạn cung cấp thông tin đó, tôi sẽ tạo toàn bộ bài xã luận theo phong cách Codeforces theo định dạng bạn đã chỉ định, bao gồm trực giác mạnh mẽ, cách tiếp cận tối ưu, hướng dẫn từng bước, bằng chứng, mã và kiểm tra.
+Nếu bạn dán báo cáo vấn đề đầy đủ (hoặc thậm chí chỉ mô tả ý nghĩa của một “chuỗi đẹp” trong ngữ cảnh này và những hoạt động/truy vấn nào có liên quan), tôi có thể tạo ra bài xã luận hoàn chỉnh theo phong cách Codeforces chính xác theo định dạng bạn yêu cầu.
