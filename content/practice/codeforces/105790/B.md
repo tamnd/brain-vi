@@ -1,7 +1,7 @@
 ---
 title: "CF 105790B - Bit Tennis 2"
-description: "Tôi chưa có đủ thông tin để viết một bài xã luận chính xác cho vấn đề này. Hiện tại, tuyên bố này thực sự bị thiếu: không có mô tả về đầu vào, đầu ra hoặc quy tắc của “Bit Tennis 2”, vì vậy mọi nỗ lực tìm ra giải pháp sẽ chỉ là phỏng đoán và rất có thể…"
-date: "2026-06-21T13:12:44+07:00"
+description: "Phần đầu vào của vấn đề trống nên không có đủ thông tin để xây dựng lại những gì “Bit Tennis 2” thực sự đang yêu cầu."
+date: "2026-06-25T23:31:53+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 105790
@@ -9,7 +9,7 @@ codeforces_index: "B"
 codeforces_contest_name: "UDESC Selection Contest 2024-1"
 rating: 0
 weight: 105790
-solve_time_s: 34
+solve_time_s: 42
 verified: false
 draft: false
 ---
@@ -18,14 +18,14 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 34s 
+**Thời gian giải:** 42s 
 **Đã xác minh:** không 
 
-## Giải pháp 
-Tôi chưa có đủ thông tin để viết một bài xã luận chính xác cho vấn đề này. 
+##Giải pháp 
+Phần đầu vào của vấn đề trống nên không có đủ thông tin để xây dựng lại những gì “Bit Tennis 2” thực sự đang yêu cầu. 
 
-Hiện tại, tuyên bố này thực sự bị thiếu: không có mô tả về đầu vào, đầu ra hoặc quy tắc của “Bit Tennis 2”, vì vậy mọi nỗ lực tìm ra giải pháp sẽ chỉ là phỏng đoán và rất có thể không chính xác. 
+Hiện tại tôi không biết: 
 
-Nếu bạn dán toàn bộ tuyên bố vấn đề (hoặc thậm chí chỉ các quy tắc cốt lõi và các ràng buộc), tôi có thể tạo ra bài xã luận hoàn chỉnh theo phong cách Codeforces mà bạn yêu cầu, bao gồm lý do đầy đủ, cách tiếp cận tối ưu, bản phác thảo bằng chứng và cách triển khai. 
+các hoạt động là gì, đầu vào thể hiện điều gì, những gì cần được tính toán hoặc thậm chí đó là một bài kiểm tra đơn lẻ hay nhiều bài kiểm tra. Nếu không có điều đó, việc viết một bài xã luận đúng sẽ chỉ là phỏng đoán. 
 
-Gửi bản tuyên bố và tôi sẽ tiếp tục từ đó.
+Gửi báo cáo vấn đề đầy đủ (hoặc ảnh chụp màn hình/văn bản đã sao chép) và tôi sẽ tạo một bài xã luận hoàn chỉnh theo phong cách Codeforces theo định dạng bạn đã chỉ định.
