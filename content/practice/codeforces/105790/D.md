@@ -1,7 +1,7 @@
 ---
 title: "CF 105790D - Độ lệch hướng"
-description: "Tôi chưa thể viết một bài xã luận chính xác cho vấn đề này vì lời nhắc của bạn thiếu báo cáo vấn đề thực tế cho Codeforces 105790D - Course Deviation (phần đầu vào/đầu ra trống và không có mô tả về nhiệm vụ, ràng buộc hoặc quy tắc)."
-date: "2026-06-21T13:13:18+07:00"
+description: "Tôi không thể viết một bài xã luận chính xác về Codeforces dựa trên những gì bạn đã cung cấp vì thiếu báo cáo vấn đề thực tế."
+date: "2026-06-25T23:31:44+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 105790
@@ -9,7 +9,7 @@ codeforces_index: "D"
 codeforces_contest_name: "UDESC Selection Contest 2024-1"
 rating: 0
 weight: 105790
-solve_time_s: 36
+solve_time_s: 33
 verified: false
 draft: false
 ---
@@ -18,21 +18,12 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 36s 
+**Thời gian giải:** 33s 
 **Đã xác minh:** không 
 
-## Giải pháp 
-Tôi chưa thể viết một bài xã luận chính xác cho vấn đề này vì báo cáo vấn đề thực tế cho **Codeforces 105790D - Course Deviation** bị thiếu trong lời nhắc của bạn (phần đầu vào/đầu ra trống và không có mô tả về nhiệm vụ, ràng buộc hoặc quy tắc). 
+##Giải pháp 
+Tôi không thể viết một bài xã luận chính xác về Codeforces dựa trên những gì bạn đã cung cấp vì thiếu báo cáo vấn đề thực tế. 
 
-Ngay bây giờ không có gì cụ thể để rút ra: 
+Hiện tại, phần "Tuyên bố vấn đề" trống nên không có thông tin về nội dung đầu vào thể hiện, những chuyển đổi nào được yêu cầu hoặc những ràng buộc nào thúc đẩy giải pháp. Bất kỳ nỗ lực nào nhằm tạo ra một bài xã luận đầy đủ đều nhất thiết phải liên quan đến việc đoán nhiệm vụ, điều này sẽ làm mất đi mục đích của việc giải thích tập trung vào việc học. 
 
-- “độ lệch” nghĩa là gì, 
-- cấu trúc đầu vào là gì, 
-- những gì cần được tính toán, 
-- hoặc những hạn chế nào hướng dẫn giải pháp. 
-
-Nếu bạn dán tuyên bố đầy đủ (hoặc thậm chí là ảnh chụp màn hình/văn bản thô), tôi sẽ tạo một bài xã luận hoàn chỉnh theo phong cách Codeforces theo đúng định dạng mà bạn yêu cầu, bao gồm: 
-
-nguồn gốc đầy đủ của giải pháp, sức mạnh vũ phu để chuyển đổi tối ưu, hướng dẫn thuật toán, triển khai Python, dấu vết hoạt động và phân tích trường hợp biên. 
-
-Gửi toàn bộ văn bản vấn đề và tôi sẽ tiếp tục từ đó.
+Nếu bạn dán câu lệnh đầy đủ (hoặc thậm chí chỉ mô tả đầu vào/đầu ra cộng với các ràng buộc và mẫu), tôi có thể viết bài xã luận cấp cao hoàn chỉnh theo định dạng chính xác mà bạn yêu cầu, bao gồm đạo hàm, các trường hợp đặc biệt và một giải pháp Python rõ ràng.

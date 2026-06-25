@@ -1,7 +1,7 @@
 ---
 title: "CF 105790H - Higgs"
-description: "Tuyên bố về “Codeforces 105790H - Higgs” hoàn toàn trống trong lời nhắc bạn cung cấp. Không có mô tả về đầu vào, đầu ra hoặc nhiệm vụ được yêu cầu nên không có gì cụ thể để phân tích, giảm bớt hoặc thực hiện."
-date: "2026-06-21T13:13:48+07:00"
+description: "Tôi chưa thể viết một bài xã luận chính xác cho vấn đề này vì thiếu tuyên bố vấn đề thực tế. Hiện tại, thông tin duy nhất có được là tiêu đề “Higgs”, với phần đầu vào/đầu ra trống."
+date: "2026-06-25T23:32:26+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 105790
@@ -9,7 +9,7 @@ codeforces_index: "H"
 codeforces_contest_name: "UDESC Selection Contest 2024-1"
 rating: 0
 weight: 105790
-solve_time_s: 30
+solve_time_s: 33
 verified: false
 draft: false
 ---
@@ -18,12 +18,12 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 30s 
+**Thời gian giải:** 33s 
 **Đã xác minh:** không 
 
-## Giải pháp 
-Tuyên bố về “Codeforces 105790H - Higgs” hoàn toàn trống trong lời nhắc bạn cung cấp. Không có mô tả về đầu vào, đầu ra hoặc nhiệm vụ được yêu cầu nên không có gì cụ thể để phân tích, giảm bớt hoặc thực hiện. 
+##Giải pháp 
+Tôi chưa thể viết một bài xã luận chính xác cho vấn đề này vì thiếu tuyên bố vấn đề thực tế. 
 
-Một bài biên tập phù hợp phụ thuộc vào việc biết ít nhất cấu trúc nào chúng ta đang làm việc (mảng, đồ thị, chuỗi, truy vấn, v.v.), chuyển đổi hoặc truy vấn nào là cần thiết và những ràng buộc nào thúc đẩy sự lựa chọn phức tạp. Nếu không có điều đó, bất kỳ “giải pháp” nào cũng sẽ chỉ là phỏng đoán chứ không phải là dẫn xuất, điều này sẽ làm mất đi mục đích của một bài xã luận theo phong cách Codeforces. 
+Hiện tại, thông tin duy nhất có được là tiêu đề “Higgs”, với phần đầu vào/đầu ra trống. Nếu không biết vấn đề đang hỏi là gì thì bất kỳ phác thảo giải pháp, lựa chọn thuật toán hoặc thảo luận phức tạp nào cũng sẽ mang tính suy đoán và rất có thể sai. 
 
-Nếu bạn dán toàn bộ câu lệnh vấn đề, thậm chí chỉ là mô tả đầu vào/đầu ra và các ràng buộc, tôi có thể viết bài xã luận hoàn chỉnh theo định dạng bạn đã chỉ định, bao gồm lý do đầy đủ, hướng dẫn thuật toán, cách triển khai và phân tích trường hợp cụ thể.
+Vui lòng dán câu lệnh đầy đủ (hoặc ít nhất là định dạng đầu vào, định dạng đầu ra và các ràng buộc). Sau khi bạn cung cấp thông tin đó, tôi sẽ viết bài xã luận hoàn chỉnh theo phong cách Codeforces theo đúng định dạng bạn yêu cầu.
