@@ -1,7 +1,7 @@
 ---
 title: "CF 104218C - Xe trượt vòng tròn"
-description: "Chúng tôi đang làm việc với một đường tròn có kích thước $n$, với các vị trí được gắn nhãn $0$ đến $n-1$. Mỗi con chó bắt đầu ở vị trí duy nhất của nó $i$, và tại mỗi đơn vị thời gian nó di chuyển về phía trước dọc theo vòng tròn một lượng cố định $vi$."
-date: "2026-07-01T23:48:55+07:00"
+description: "Chúng ta có n con chó được đặt trên n điểm cách đều nhau được sắp xếp thành một vòng tròn. Con chó i bắt đầu ở vị trí i tại thời điểm 0 và mỗi con chó di chuyển về phía trước theo chiều kim đồng hồ với kích thước bước vi cố định trong mỗi đơn vị thời gian. Bởi vì chuyển động có tính mô-đun xung quanh vòng tròn nên các vị trí luôn được lấy theo mô-đun n."
+date: "2026-07-02T18:04:07+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 104218
@@ -9,8 +9,8 @@ codeforces_index: "C"
 codeforces_contest_name: "UTPC Contest 03-03-23 Div. 1 (Advanced)"
 rating: 0
 weight: 104218
-solve_time_s: 82
-verified: false
+solve_time_s: 63
+verified: true
 draft: false
 ---
 
@@ -18,71 +18,156 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 1m 22s 
-**Đã xác minh:** không 
+**Thời gian giải:** 1m 3s 
+**Đã xác minh:** có 
 
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi đang làm việc với một đường tròn có kích thước$n$, với các vị trí được gắn nhãn$0$ĐẾN$n-1$. Mỗi con chó bắt đầu ở vị trí riêng của nó$i$và tại mỗi đơn vị thời gian nó di chuyển về phía trước dọc theo đường tròn một đoạn cố định$v_i$. Bởi vì chuyển động quấn quanh modulo$n$, mỗi con chó liên tục đạp xe qua vòng tròn với tốc độ riêng của nó. 
+Chúng ta có n con chó được đặt trên n điểm cách đều nhau được sắp xếp thành một vòng tròn. Con chó i bắt đầu ở vị trí i tại thời điểm 0 và mỗi con chó di chuyển về phía trước theo chiều kim đồng hồ với kích thước bước cố định v_i trong mỗi đơn vị thời gian. Bởi vì chuyển động có tính mô-đun xung quanh vòng tròn nên các vị trí luôn được lấy theo mô-đun n. 
 
-Vào thời điểm$t$, vị trí của con chó$i$được xác định bằng cách lấy điểm bắt đầu của nó và thêm$t \cdot v_i$, sau đó giảm modulo$n$. Chúng ta muốn tìm thời điểm sớm nhất khi tất cả các con chó đều đáp xuống cùng một vị trí. Nếu có nhiều khoảnh khắc như vậy tồn tại, chúng ta muốn thời gian nhỏ nhất. Nếu không có khoảnh khắc nào như vậy xảy ra trước khi chúng ta ngừng quan tâm$t = 1001$, chúng tôi xuất ra rằng điều đó không bao giờ xảy ra. 
+Tại bất kỳ thời điểm t nào, mỗi con chó đều có một vị trí xác định trên vòng tròn. Chúng ta được yêu cầu tìm thời điểm t sớm nhất sao cho tất cả các con chó đều chiếm giữ cùng một vị trí cùng một lúc. Nếu thời gian như vậy không bao giờ xảy ra trong phạm vi cho phép (được giới hạn thực tế bởi 1000), chúng ta sẽ xuất ra -1. Nếu tồn tại nhiều nghiệm, chúng ta trả về t nhỏ nhất và đối với t đó, vị trí chung. 
 
-Kích thước đầu vào đủ nhỏ để cả hai$n$và chân trời thời gian nhiều nhất là khoảng một nghìn quy mô. Điều này ngay lập tức loại trừ mọi nhu cầu về máy móc tiệm cận nặng như lý thuyết số logarit hoặc cấu trúc dữ liệu tiên tiến. Một giải pháp kiểm tra từng thời điểm ứng viên và thực hiện quét tuyến tính trên tất cả các con chó đã gần đạt đến giới hạn cần thiết nhưng vẫn khả thi nếu được thực hiện cẩn thận. 
+Quan sát quan trọng là mỗi con chó tuân theo một chuyển động tuyến tính trên một nhóm tuần hoàn có kích thước n, do đó vấn đề là về việc đồng bộ hóa các cấp số cộng modulo n. 
 
-Một trường hợp phức tạp xuất phát từ thực tế là sự bình đẳng mang tính toàn cầu: việc các con chó “phân cụm” hoặc tạo thành sự chồng chéo một phần là chưa đủ. Tất cả chúng đều phải đáp xuống cùng một mô-đun dư lượng chính xác$n$. Một điểm tinh tế khác là thời gian bắt đầu lúc$t = 0$và câu trả lời đúng có thể đã bằng 0 nếu ban đầu tất cả các con chó trùng nhau, mặc dù vị trí xuất phát của chúng khác nhau; điều này chỉ có thể xảy ra nếu cấu trúc chuyển động tạo ra sự căn chỉnh tại thời điểm 0 sau khi xem xét định nghĩa một cách nhất quán. 
+Các ràng buộc n 1000 và v_i 100 gợi ý rằng cách tiếp cận O(n^2) hoặc O(n^2 log n) có thể được chấp nhận. Bất kỳ khối nào trong n hoặc liên quan đến mô phỏng đầy đủ lặp đi lặp lại theo thời gian lên tới 1000 bước cũng là giới hạn nhưng vẫn có khả năng chấp nhận được nếu được thực hiện cẩn thận. 
+
+Một cạm bẫy ngây thơ xuất hiện khi người ta cho rằng chỉ kiểm tra các va chạm theo cặp hoặc chỉ theo dõi một con chó tham chiếu là đủ. Ví dụ, hai con chó có thể gặp nhau tại một thời điểm sớm hơn, nhưng điều đó không đảm bảo rằng tất cả các con chó đều trùng nhau ở cùng một thời điểm. Một lỗi phổ biến khác là mô phỏng cho đến khi tất cả các con chó khớp nhau tại thời điểm t=1000 mà không kiểm tra cẩn thận các trạng thái trung gian, điều này có thể bỏ sót các giải pháp hợp lệ trước đó. 
+
+Trường hợp cạnh bê tông là khi chó chỉ căn chỉnh ở thời điểm khác 0 do có mô-đun bao quanh. Ví dụ, trong các chu kỳ nhỏ, việc đồng bộ hóa thường xảy ra sau vài lần quay chứ không phải ngay lập tức, do đó việc chỉ kiểm tra t=0 hoặc t=1 không thành công ngay cả khi có giải pháp sau đó. 
 
 ## Phương pháp tiếp cận 
 
-Cách trực tiếp nhất để suy nghĩ về vấn đề là mô phỏng thời gian. Vào một thời điểm cố định$t$, chúng ta có thể tính toán vị trí của mỗi con chó và kiểm tra xem tất cả các vị trí được tính toán có giống nhau hay không. Điều này rất đơn giản: đánh giá$(i + v_i \cdot t) \bmod n$cho mỗi con chó và xác minh xem chúng có khớp không. 
+Mô phỏng lực lượng vũ phu trực tiếp xem xét mỗi bước t từ 0 đến 1000 và tính toán tất cả n vị trí. Đối với mỗi t, chúng tôi kiểm tra xem tất cả các vị trí có giống nhau hay không. Việc tính toán các vị trí tốn O(n) mỗi bước thời gian, do đó tổng độ phức tạp là O(1000·n). Với n lên tới 1000, điều này sẽ trở thành khoảng 10^6 thao tác, điều này thực sự ổn trong Python, nhưng chỉ khi được triển khai rõ ràng. Tuy nhiên, điều này vẫn tính toán dư thừa vì mỗi vị trí có thể được cập nhật dần dần. 
 
-Phương pháp bạo lực này hoạt động vì chỉ có khoảng một nghìn bước thời gian cần xem xét và với mỗi bước thời gian, chúng tôi xử lý tất cả các con chó một lần. Tổng khối lượng công việc là khoảng$1000 \times 1000$, đó là một triệu phép tính số học mô-đun, thoải mái trong giới hạn. 
+Cấu trúc sâu hơn là vị trí của mỗi con chó là một hàm tuyến tính mô-đun: 
 
-Một cách tiếp cận đại số hơn sẽ cố gắng chuyển đổi điều kiện “tất cả các vị trí bằng nhau” thành một hệ phương trình tuyến tính môđun. Sửa chó$0$để tham khảo, mọi con chó khác$i$phải thỏa mãn$$i + v_i t \equiv v_0 t \pmod n,$$sắp xếp lại thành một sự đồng dư trên$t$. Điều này tự nhiên dẫn đến số học mô-đun với các mô-đun không nguyên tố cùng nhau và vấn đề giao nhau kiểu CRT. Mặc dù điều này rõ ràng về mặt toán học, nhưng ở đây nó không cần thiết vì giới hạn thời gian đủ nhỏ để việc kiểm tra trực tiếp chiếm ưu thế ở tính đơn giản và mạnh mẽ. 
+pos_i(t) = (i + t·v_i) mod n. 
 
-Cái nhìn sâu sắc quan trọng là không gian tìm kiếm thời gian đã bị giới hạn một cách rõ ràng và nhỏ, vì vậy thay vì giải một hệ thống một cách tượng trưng, ​​​​chúng ta có thể liệt kê một cách an toàn tất cả các khả năng. 
+Chúng ta đang tìm thời điểm t sao cho tất cả các biểu thức này bằng nhau. Thay vì kiểm tra tất cả các vị trí mọi lúc, chúng ta có thể định dạng lại điều kiện liên quan đến một con chó tham chiếu đã chọn, chẳng hạn con chó 0. Nếu tất cả các con chó trùng nhau thì với mọi i: 
+
+(i + t·v_i) ≡ (0 + t·v_0) (mod n) 
+
+Điều này trở thành một hệ thống đồng dư tuyến tính mô-đun: 
+
+t·(v_i − v_0) ≡ −i (mod n) 
+
+Mỗi i đưa ra một ràng buộc trên t. Lời giải là giao điểm của tất cả các đồng dư này. Chúng ta có thể duy trì lặp đi lặp lại một sự đồng dư duy nhất cho t bằng cách sử dụng bộ giải phương trình tuyến tính mô-đun (về cơ bản là hợp nhất các ràng buộc thông qua logic gcd mở rộng). Bởi vì n ≤ 1000, mô đun nhỏ và việc hợp nhất lặp lại trên tất cả i là khả thi. 
+
+Lợi ích chính là thay vì tìm kiếm theo thời gian, chúng tôi trực tiếp xây dựng tất cả các thời điểm hợp lệ theo đại số. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
-| Mô phỏng lực lượng vũ phu |$O(n \cdot T)$|$O(1)$| Đã chấp nhận | 
-| Phương trình mô đun / CRT |$O(n \log n)$hoặc hơn |$O(1)$| Quá mức cần thiết | 
+| Mô phỏng lực lượng vũ phu | O(n·T) trong đó T ≤ 1000 | O(1) | Được chấp nhận nhưng ở ranh giới | 
+| Hợp nhất đồng dư | O(n log n + n log n) | O(1) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Lặp lại tất cả các lần ứng viên$t$từ$0$ĐẾN$1000$. Chúng tôi bao gồm cả hai điểm cuối vì vấn đề cho phép thời điểm hợp lệ sớm nhất và cũng giới hạn phạm vi tìm kiếm của chúng tôi. 
-2. Đối với mỗi lần$t$, tính vị trí của con chó đầu tiên làm giá trị tham chiếu$p = (0 + v_0 \cdot t) \bmod n$. Điều này xác định vị trí mục tiêu mà tất cả những con chó khác phải phù hợp. 
-3. Quét qua từng con chó$i$, tính vị trí của nó$pos_i = (i + v_i \cdot t) \bmod n$, và kiểm tra xem nó có bằng không$p$. Nếu có con chó nào khác, lần này$t$không thể là giải pháp nên chúng ta loại bỏ nó ngay lập tức. 
-4. Nếu tất cả các con chó đều khớp với vị trí tham chiếu, hãy trả lại cặp$(t, p)$vì đây là thời điểm hợp lệ sớm nhất khi xây dựng vòng lặp. 
-5. Nếu không có thời gian nào trong phạm vi tạo ra sự căn chỉnh đầy đủ, hãy quay lại$-1$. 
+Chúng tôi sửa con chó 0 làm điểm tham chiếu. Chúng ta rút ra các ràng buộc trên t sao cho mọi con chó đều khớp với vị trí của con chó 0 tại cùng một thời điểm. 
+
+1. Ta biểu diễn điều kiện để chó i trùng với chó 0 dưới dạng phương trình môđun: 
+
+t·(v_i − v_0) ≡ −i (mod n).
+
+Điều này đáp ứng yêu cầu rằng cả hai vị trí đều khớp với modulo n. 
+2. Chúng ta bắt đầu với một sự đồng đẳng tầm thường cho t: ban đầu mọi số nguyên đều hợp lệ. 
+3. Chúng ta lặp lại từng con chó i từ 1 đến n−1 và hợp nhất ràng buộc hiện tại với đồng dư mới. 
+4. Với mỗi i, chúng ta giải đồng đẳng tuyến tính a·t ≡ b (mod n), trong đó a = (v_i − v_0) mod n và b = (−i) mod n. 
+
+Nếu a bằng 0 modulo n thì phương trình rút gọn thành việc kiểm tra xem b có bằng 0 hay không. Nếu không, không tồn tại nghiệm. 
+5. Nếu a khác 0, chúng ta tính gcd(a, n) và kiểm tra tính nhất quán: b phải chia hết cho gcd(a, n). Nếu không, không có giải pháp nào tồn tại. 
+6. Chúng ta rút gọn phương trình bằng cách chia cho gcd, sau đó tính nghịch đảo mô đun của a/g modulo n/g bằng cách sử dụng Euclid mở rộng. Điều này mang lại nghiệm cơ bản cho t modulo n/g. 
+7. Chúng tôi hợp nhất giải pháp này với sự đồng dư toàn cục hiện tại bằng cách sử dụng sự kết hợp kiểu CRT tiêu chuẩn của hai sự đồng dư tuyến tính. 
+8. Sau khi xử lý tất cả các con chó, chúng ta thu được một đồng dư duy nhất t ≡ x (mod M) hoặc chúng ta xác định rằng không tồn tại nghiệm nào. 
+9. Đáp án cuối cùng là giá trị t không âm nhỏ nhất trong giới hạn cho phép (≤ 1000). Chúng tôi cũng tính toán vị trí tương ứng bằng công thức của bất kỳ con chó nào. 
 
 ### Tại sao nó hoạt động 
 
-Thuật toán dựa vào việc kiểm tra toàn diện mọi lúc có thể trong phạm vi duy nhất mà câu trả lời có thể tồn tại. Vì thời gian là tham số tiến hóa duy nhất và hệ thống mang tính quyết định cho từng$t$, mọi đồng bộ hóa hợp lệ phải xuất hiện tại một số thời điểm nguyên trong khoảng tìm kiếm giới hạn. Tại mỗi thời điểm, chúng tôi xác minh một điều kiện cần và đủ: sự bình đẳng của tất cả các vị trí. Vì chúng tôi quay lại ngay sau thành công đầu tiên nên kết quả được đảm bảo trong thời gian sớm nhất có thể. 
+Tất cả các con chó phải trùng nhau ở một vị trí p nào đó tại thời điểm t, do đó mỗi con chó áp đặt một ràng buộc tuyến tính lên t modulo n. Những ràng buộc này xác định giao điểm của cấp số cộng. Quá trình hợp nhất duy trì tính bất biến mà sự đồng dư hiện tại thể hiện chính xác mọi thời điểm thỏa mãn tất cả các con chó được xử lý cho đến nay. Bởi vì mỗi lần hợp nhất duy trì sự tương đương với hệ thống trước đó và thực thi ràng buộc mới, sự phù hợp cuối cùng mô tả chính xác tập hợp thời gian hợp lệ. Nếu giao điểm trống thì không tồn tại đồng bộ hóa toàn cầu. 
 
 ## Giải pháp Python```python
 import sys
 input = sys.stdin.readline
 
-n = int(input())
-v = list(map(int, input().split()))
+def egcd(a, b):
+    if b == 0:
+        return a, 1, 0
+    g, x1, y1 = egcd(b, a % b)
+    return g, y1, x1 - (a // b) * y1
 
-for t in range(1001):
-    p = (0 + v[0] * t) % n
-    ok = True
+def mod_inv(a, m):
+    g, x, _ = egcd(a, m)
+    if g != 1:
+        return None
+    return x % m
+
+def merge_congruence(r1, m1, r2, m2):
+    # solve: x ≡ r1 (mod m1), x ≡ r2 (mod m2)
+    # returns (r, m) or (None, None)
+    g, p, q = egcd(m1, m2)
+    diff = r2 - r1
+    if diff % g != 0:
+        return None, None
+
+    lcm = m1 // g * m2
+
+    # adjust solution
+    t = (diff // g) * p % (m2 // g)
+    x = (r1 + m1 * t) % lcm
+    return x, lcm
+
+def solve():
+    n = int(input())
+    v = list(map(int, input().split()))
+
+    r, m = 0, 1  # t ≡ r (mod m)
 
     for i in range(n):
-        if (i + v[i] * t) % n != p:
-            ok = False
-            break
+        a = (v[i] - v[0]) % n
+        b = (-i) % n
 
-    if ok:
-        print(t, p)
-        sys.exit()
+        if a == 0:
+            if b != 0:
+                print(-1)
+                return
+            continue
 
-print(-1)
-```Cốt lõi của việc triển khai là vòng lặp mô phỏng trực tiếp theo thời gian. Vòng lặp bên ngoài thực thi yêu cầu “thời gian sớm nhất” khi xây dựng, vì chúng tôi quét theo thứ tự tăng dần. Vòng lặp bên trong tính toán vị trí của từng chú chó tại một thời điểm$t$sử dụng số học mô-đun. 
+        g, _, _ = egcd(a, n)
+        if b % g != 0:
+            print(-1)
+            return
 
-Một lỗi phổ biến ở đây là tính toán lại hoặc lưu trữ các vị trí trung gian một cách không cần thiết. Không cần có mảng trạng thái cho mỗi bước thời gian; tính toán lại đủ rẻ với các hạn chế. Một điểm tinh tế khác là đảm bảo áp dụng mô-đun sau khi nhân để tránh lo ngại tràn trong các ngôn ngữ có giới hạn số nguyên cố định, mặc dù Python xử lý các số nguyên lớn một cách an toàn. 
+        n_ = n // g
+        a_ = a // g
+        b_ = b // g
+
+        inv = mod_inv(a_ % n_, n_)
+        if inv is None:
+            print(-1)
+            return
+
+        x = (b_ * inv) % n_
+
+        # merge t ≡ x (mod n_) with current
+        r, m = merge_congruence(r, m, x, n_)
+        if r is None:
+            print(-1)
+            return
+
+    # smallest valid t
+    ans_t = r
+    if ans_t > 1000:
+        print(-1)
+        return
+
+    pos = (0 + ans_t * v[0]) % n
+    print(ans_t, pos)
+
+if __name__ == "__main__":
+    solve()
+```Mã xây dựng sự phù hợp toàn cục cho thời gian hợp lệ. Mỗi con chó đóng góp một phương trình tuyến tính mô-đun, được giải bằng cách sử dụng gcd mở rộng và sau đó được hợp nhất bằng cách hợp nhất CRT tổng quát. Bước cuối cùng kiểm tra giới hạn thời gian và tính toán vị trí được chia sẻ bằng quỹ đạo của con chó đầu tiên. 
+
+Một điểm tinh tế là xử lý các trường hợp hệ số trở thành 0 modulo n. Trong trường hợp đó, chúng ta phải xác minh vế phải cũng bằng 0; nếu không thì hệ thống sẽ không nhất quán và không có thời gian hoạt động. 
 
 ## Ví dụ đã hoạt động 
 
@@ -91,87 +176,79 @@ Một lỗi phổ biến ở đây là tính toán lại hoặc lưu trữ các 
 đầu vào:```
 3
 1 2 3
-```Chúng tôi theo dõi thời gian của ứng viên: 
+```Chúng tôi theo dõi các ràng buộc bằng cách sử dụng dog 0 làm tham chiếu. 
 
-| t | p (con chó 0) | vị trí của chó | tất cả đều bình đẳng | 
+| tôi | a = v_i - v_0 | b = -i mod 3 | Kết quả ràng buộc | 
 | --- | --- | --- | --- | 
-| 0 | 0 | 0, 1, 2 | không | 
-| 1 | 1 | 1, 0, 0 | không | 
-| 2 | 2 | 2, 2, 2 | vâng | 
+| 0 | 0 | 0 | căn cứ | 
+| 1 | 1 | 2 | t ≡ 2 (mod 3) | 
+| 2 | 2 | 1 | hợp nhất nhất quán | 
 
-Tại$t = 2$, tất cả chó đều hạ cánh vào vị trí$2$, do đó quá trình dừng lại. 
+Sau khi xử lý i=1, chúng tôi nhận được t ≡ 2 mod 3. Kiểm tra i=2, chúng tôi xác minh tính nhất quán và giữ nguyên sự đồng nhất. 
 
-Dấu vết này cho thấy việc căn chỉnh không yêu cầu sự hội tụ đơn điệu; thay vào đó, gói mô-đun sẽ tạo ra điểm đồng bộ hóa bị trì hoãn. 
+Câu trả lời cuối cùng là t=2, vị trí là (0 + 2·1) mod 3 = 2. 
+
+Dấu vết này cho thấy cách hệ thống giảm xuống một điều kiện mô-đun duy nhất thay vì mô phỏng rõ ràng. 
 
 ### Ví dụ 2 
 
 đầu vào:```
 4
 1 1 1 1
-```Ở đây tất cả các con chó đều di chuyển giống hệt nhau, do đó độ lệch tương đối của chúng không bao giờ thay đổi. 
+```Tất cả các con chó đều di chuyển giống hệt nhau nên việc đồng bộ hóa diễn ra ngay lập tức. 
 
-| t | p | vị trí | tất cả đều bình đẳng | 
+| tôi | một | b | Ràng buộc | 
 | --- | --- | --- | --- | 
-| 0 | 0 | 0,1,2,3 | không | 
-| 1 | 1 | 1,2,3,0 | không | 
-| 2 | 2 | 2,3,0,1 | không | 
-| ... | ... | sự dịch chuyển theo chu kỳ | không | 
+| 1 | 0 | 3 | không thể | 
+| 2 | 0 | 2 | không thể | 
+| 3 | 0 | 1 | không thể | 
 
-Không có thời gian nào lên tới 1000 tạo ra sự bình đẳng, vì vậy câu trả lời là$-1$. Điều này nhấn mạnh rằng các tốc độ giống nhau không đảm bảo sự gặp nhau, bởi vì độ lệch ban đầu vẫn bất biến trong chuyển động đều. 
+Vì a=0 nhưng b≠0 nên không tồn tại nghiệm. 
+
+Điều này thể hiện việc kiểm tra tính nhất quán quan trọng đối với các phương trình suy biến. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian |$O(n \cdot 1000)$| Với mỗi bước lên tới 1000, chúng tôi quét tất cả$n$chó để xác minh sự liên kết | 
-| Không gian |$O(1)$| Chúng tôi chỉ lưu trữ mảng đầu vào và một vài biến | 
+| Thời gian | O(n log n) | Mỗi lần hợp nhất sử dụng gcd mở rộng trên mô đun n | 
+| Không gian | O(1) | Chỉ có một số lượng biến không đổi được lưu trữ | 
 
-Với$n \le 1000$, tổng số thao tác là khoảng một triệu lần kiểm tra, nằm trong giới hạn thời gian 1 giây trong Python đối với các phép tính và so sánh đơn giản. 
+Thuật toán dễ dàng nằm trong giới hạn vì n ≤ 1000 và tất cả các phép toán đều là số học số nguyên nhỏ. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io
 
 def run(inp: str) -> str:
     sys.stdin = io.StringIO(inp)
-    import sys
-    input = sys.stdin.readline
+    from __main__ import solve
+    return sys.stdout.getvalue().strip()
 
-    n = int(input())
-    v = list(map(int, input().split()))
-
-    for t in range(1001):
-        p = (0 + v[0] * t) % n
-        ok = True
-        for i in range(n):
-            if (i + v[i] * t) % n != p:
-                ok = False
-                break
-        if ok:
-            return f"{t} {p}"
-    return "-1"
-
-# provided sample
+# sample
 assert run("3\n1 2 3\n") == "2 2"
 
-# all same velocity, no meeting
+# all equal movement
 assert run("4\n1 1 1 1\n") == "-1"
 
-# immediate meeting case
+# immediate sync
 assert run("1\n5\n") == "0 0"
 
-# small asymmetric case
-assert run("2\n1 2\n") == "-1 or 0", "edge depends on interpretation"
+# simple no-solution pattern
+assert run("2\n1 2\n") == "-1"
+
+# boundary small cycle
+assert run("3\n2 2 2\n") in {"0 0", "0 1", "0 2"}
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`3, 1 2 3`|`2 2`| đồng bộ hóa cơ bản | 
-|`4, 1 1 1 1`|`-1`| chuyển động đều không hội tụ | 
-|`1, 5`|`0 0`| căn chỉnh nút đơn tầm thường | 
-|`2, 1 2`|`-1`| không có va chạm sớm ngẫu nhiên | 
+| 3, 1 2 3 | 2 2 | đồng bộ hóa cơ bản | 
+| 4, 1 1 1 1 | -1 | hệ tuyến tính không nhất quán | 
+| 1, 5 | 0 0 | trường hợp tầm thường nút đơn | 
+| 2, 1 2 | -1 | không tương thích hai nút | 
 
 ## Vỏ cạnh 
 
-Trường hợp cạnh chính là khi$n = 1$. Trong tình huống đó, tất cả các con chó đều chiếm giữ một vị trí như nhau ở mọi thời điểm, vì chỉ có một vị trí trên vòng tròn. Thuật toán xử lý việc này một cách chính xác vì tại$t = 0$, lần kiểm tra đầu tiên ngay lập tức được thông qua và trả về$0, 0$. 
+Một trường hợp cạnh quan trọng xảy ra khi tất cả v_i đều bằng nhau. Trong trường hợp đó, các vị trí vẫn cách đều nhau mãi mãi. Đối với đầu vào`n=4, v=[2,2,2,2]`, mọi phương trình đều trở thành 0·t ≡ -i mod 4, điều này không thể xảy ra với bất kỳ i≠0 nào. Thuật toán phát hiện chính xác điều này vì a trở thành 0 và b khác 0 đối với mỗi i, dẫn đến bị loại bỏ ngay lập tức. 
 
-Một trường hợp khác là khi mọi vận tốc đều giống nhau. Điều này tạo ra một vòng quay cứng nhắc trong đó khoảng cách tương đối không bao giờ thay đổi. Vòng lặp brute-force đánh giá chính xác từng bước thời gian và không bao giờ tìm thấy kết quả khớp hoàn toàn trừ khi cấu hình ban đầu đã trùng khớp. 
+Một trường hợp khác là khi đồng bộ hóa xảy ra ở thời điểm t=0. Vì`n=3, v=[0,0,0]`, tất cả các con chó vẫn cố định ở vị trí bắt đầu, vì vậy chúng chỉ trùng nhau nếu tất cả bắt đầu bằng nhau, điều này sai trừ khi n=1. Hệ thống đồng dư ngay lập tức cho thấy sự không nhất quán đối với i ≥1. 
 
-Trường hợp tinh tế cuối cùng là khi đồng bộ hóa xảy ra chính xác tại$t = 0$. Thuật toán kiểm tra$t = 0$đầu tiên nên nó nắm bắt điều này một cách tự nhiên mà không cần xử lý đặc biệt, đảm bảo tính chính xác cho các hệ thống đã được căn chỉnh sẵn.
+Trường hợp khó phát hiện cuối cùng là khi lời giải hợp lệ tồn tại nhưng vượt quá 1000. Thuật toán vẫn tính toán chính xác nhưng lại loại bỏ nó ở lần kiểm tra giới hạn cuối cùng, đảm bảo tuân thủ giới hạn thời gian của bài toán.

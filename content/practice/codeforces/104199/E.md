@@ -1,7 +1,7 @@
 ---
 title: "CF 104199E - \u041d\u0435 \u0432\u0441\u0435 \u0441\u043f\u0435\u0446\u0438\u0438 \u043e\u0434\u0438\u043d\u0430\u043a\u043e\u0432\u043e \u043f\u043e\u043b\u0435\u0437\u043d\u044b"
-description: "Chúng ta được cung cấp một bộ tên gia vị có thể xuất hiện trong bếp của nhà hàng và một đĩa cố định có kích thước m gia vị được chọn từ bộ đầy đủ n loại gia vị. Chúng ta không biết trong món ăn có những loại gia vị nào, chỉ biết rằng nó chứa chính xác m loại gia vị riêng biệt."
-date: "2026-07-02T00:03:18+07:00"
+description: "Có $n$ loại gia vị khác nhau trong nhà bếp, mỗi loại được xác định bằng một tên. Một món ăn hàng ngày được chế biến bằng cách chọn chính xác $m$ các loại gia vị riêng biệt, nhưng chúng tôi không biết những loại gia vị nào đã được chọn."
+date: "2026-07-02T18:00:12+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 104199
@@ -9,8 +9,8 @@ codeforces_index: "E"
 codeforces_contest_name: "\u041e\u0442\u0431\u043e\u0440 \u043d\u0430 \u0412\u041a\u041e\u0428\u041f.Junior 18-02-23"
 rating: 0
 weight: 104199
-solve_time_s: 91
-verified: false
+solve_time_s: 83
+verified: true
 draft: false
 ---
 
@@ -18,138 +18,164 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 1 phút 31s 
-**Đã xác minh:** không 
+**Thời gian giải:** 1m 23s 
+**Đã xác minh:** có 
 
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được cung cấp một bộ tên các loại gia vị có thể xuất hiện trong bếp của nhà hàng và một đĩa có kích thước cố định.`m`gia vị được chọn từ bộ đầy đủ`n`gia vị. Chúng tôi không biết trong món ăn có những loại gia vị nào, chỉ biết nó chứa chính xác`m`gia vị riêng biệt. 
+có$n$các loại gia vị khác nhau trong nhà bếp, mỗi loại được xác định bằng một tên. Một món ăn hàng ngày được chuẩn bị bằng cách lựa chọn chính xác$m$các loại gia vị riêng biệt, nhưng chúng tôi không biết loại nào được chọn. 
 
-Một trợ lý đầu bếp đã thử món ăn này và không gặp bất kỳ phản ứng dị ứng nào. Điều này chỉ cho chúng ta biết một điều: không có loại gia vị nào mà anh ta dị ứng có thể có mặt trong số những loại gia vị được chọn.`m`gia vị. 
+Chúng ta được biết một quan sát quan trọng: một đầu bếp phụ, người bị dị ứng với một loạt món ăn đã biết.$k$gia vị, đã nếm thử món ăn và không bị bất kỳ phản ứng dị ứng nào. Điều này hạn chế thành phần món ăn chưa biết: không có món nào được chọn$m$gia vị có thể thuộc bộ dị ứng của người trợ giúp. 
 
-Sau đó chúng tôi được tặng nhiều khách. Mỗi khách có danh sách riêng các loại gia vị mà họ bị dị ứng. Đối với mỗi khách, chúng tôi phải quyết định xem, dựa trên tất cả các món ăn hợp lệ có thể phù hợp với quan sát của người trợ lý, khách sẽ chắc chắn phản ứng, chắc chắn an toàn hay mơ hồ. 
+Vì vậy, một cách hiệu quả, món ăn là một tập hợp con chưa biết kích thước$m$, nhưng chỉ từ những loại gia vị an toàn cho người trợ giúp. 
 
-Nói cách khác, chúng ta suy luận trên tất cả các tập con có kích thước`m`từ`n`gia vị tránh gây dị ứng cho trợ lý. Đối với mỗi khách, chúng tôi kiểm tra xem tất cả các tập hợp con hợp lệ như vậy có nhất thiết phải chứa ít nhất một trong số các chất gây dị ứng hay không, liệu không có chất nào có thể chứa chúng hoặc liệu cả hai khả năng có tồn tại hay không. 
+Bây giờ chúng tôi được trao$p$khách. Mỗi khách có danh sách dị ứng riêng. Đối với mỗi khách, chúng ta phải xác định những gì có thể kết luận về việc liệu món ăn có thể gây dị ứng cho họ hay không. Vì món ăn thực tế không được biết đến một cách duy nhất nên chúng tôi suy luận về tất cả các món ăn hợp lệ phù hợp với quan sát của người trợ giúp. 
 
-Sản lượng của mỗi khách là`YES`nếu mỗi món ăn hợp lệ đều phải chứa ít nhất một chất gây dị ứng,`NO`nếu không có món ăn hợp lệ nào chứa bất kỳ chất gây dị ứng nào và`MAYBE`nếu cả hai tình huống đều có thể xảy ra tùy thuộc vào cách chọn món ăn. 
+Đối với mỗi khách, ba kết quả có thể xảy ra. Nếu mọi món ăn hợp lệ đều tránh được tất cả các chất gây dị ứng thì câu trả lời là “KHÔNG”, nghĩa là món ăn đó được đảm bảo an toàn cho họ. Nếu mọi món ăn hợp lệ nhất thiết phải chứa ít nhất một trong số các chất gây dị ứng thì câu trả lời là “CÓ”, nghĩa là món ăn đó chắc chắn sẽ gây ra phản ứng. Ngược lại, cả hai kết quả đều có thể xảy ra tùy thuộc vào cách thức chưa biết$m$-subset được chọn nên câu trả lời là “CÓ THỂ”. 
 
-Những hạn chế`n ≤ 100`Và`p ≤ 100`ngụ ý rằng chúng ta có thể tự do làm việc với các phép toán tập hợp và thậm chí xem xét lý luận tổ hợp hoặc các biểu diễn giống như mặt nạ bit đối với gia vị. Bất kỳ giải pháp nào dựa vào việc liệt kê tất cả các tập hợp con có kích thước`m`sẽ liên quan đến tối đa`C(100, 50)`những khả năng, điều không thể thực hiện được. Cấu trúc của bài toán gợi ý rõ ràng rằng chúng ta nên tránh liệt kê các món ăn mà thay vào đó hãy lý giải về sự chồng chéo giữa các bộ. 
+Những hạn chế$n \le 100$,$p \le 100$và các tập hợp chuỗi nhỏ gợi ý rằng chúng ta có thể đủ khả năng suy luận dựa trên tập hợp và thậm chí tính toán lại cho mỗi truy vấn mà không phải lo lắng về độ phức tạp tiệm cận ngoài việc đếm và băm đơn giản. 
 
-Một trường hợp phức tạp phát sinh khi khách không có chất gây dị ứng nào cả. Trong trường hợp đó, dù món ăn đó là gì thì câu trả lời cũng phải là`NO`bởi vì không có cách nào để họ phản ứng. Một trường hợp khác là khi bộ chất gây dị ứng của khách đủ lớn đến mức không thể chọn được một món ăn có kích thước phù hợp.`m`hoàn toàn tránh chúng, điều này sẽ buộc một`YES`. 
+Một điểm tinh tế là bài kiểm tra của người trợ giúp đã loại bỏ hoàn toàn một số loại gia vị khỏi việc xem xét. Bất kỳ loại gia vị nào trong danh sách dị ứng của họ đều được đảm bảo không xuất hiện trong món ăn, vì vậy những dị ứng của khách chỉ trùng với những loại gia vị đã loại bỏ sẽ trở nên không liên quan. 
+
+Một cạm bẫy phổ biến khác là đối xử với từng vị khách một cách độc lập mà không phụ thuộc vào số lượng các loại gia vị hợp lệ. Món ăn không phải là bất kỳ tập hợp con nào về kích thước$m$từ tất cả$n$gia vị, nhưng chỉ từ những loại không nằm trong danh sách dị ứng của người trợ giúp. 
 
 ## Phương pháp tiếp cận 
 
-Ý tưởng brute-force rất đơn giản: liệt kê tất cả các tập hợp con các loại gia vị có kích thước`m`không giao nhau với nhóm chất gây dị ứng của trợ lý, sau đó, đối với mỗi khách, hãy kiểm tra xem có tồn tại ít nhất một tập hợp con hợp lệ giúp tránh được tất cả các chất gây dị ứng của họ hay không và liệu có tồn tại ít nhất một nhóm bao gồm ít nhất một chất gây dị ứng hay không. Điều này ngay lập tức trở nên không thể thực hiện được về mặt tính toán vì ngay cả việc tạo ra tất cả các tập hợp con hợp lệ cũng theo cấp số nhân trong`n`. 
+Một cách giải thích thô bạo sẽ là liệt kê mọi món ăn hợp lệ có thể có: trước tiên hãy lọc ra các loại gia vị gây dị ứng của người trợ giúp, sau đó tạo ra tất cả các kết hợp của$m$gia vị từ bộ còn lại và đối với mỗi khách, hãy kiểm tra xem liệu bất kỳ sự kết hợp nào trong số đó có nằm trong danh sách dị ứng của họ hay không. Điều này ngay lập tức trở nên không khả thi bởi vì ngay cả với$n = 100$, số tổ hợp$\binom{100}{50}$có quy mô lớn về mặt thiên văn và chúng tôi sẽ lặp lại việc kiểm tra cho tối đa 100 khách. 
 
-Quan sát quan trọng là chúng ta không cần biết chính xác thành phần của món ăn, chỉ cần biết liệu có đủ tự do bên ngoài các loại gia vị bị cấm để bao gồm hoặc loại trừ các chất gây dị ứng cho khách hay không. 
+Quan sát quan trọng là chúng ta không bao giờ cần phải xây dựng món ăn một cách rõ ràng. Tất cả các món ăn hợp lệ chỉ đơn giản là tất cả$m$-các tập con của một vũ trụ có kích thước thu nhỏ cố định$n - k$. Đối với một vị khách nhất định, chỉ có hai đặc tính cấu trúc quan trọng: có bao nhiêu loại gia vị được phép tồn tại mà không có trong bộ dị ứng của họ và liệu có loại gia vị dị ứng nào của họ có đủ điều kiện xuất hiện trong món ăn hay không. 
 
-Hãy chia bộ gia vị thành ba loại đối với khách: gia vị mà họ bị dị ứng, gia vị bị người trợ lý cấm và tất cả các loại gia vị an toàn còn lại. Bài kiểm tra của người trợ lý đảm bảo rằng món ăn được chọn hoàn toàn từ`n - k`gia vị an toàn (an toàn tương đối với trợ lý). Vì vậy, số lượng các món ăn có thể có được giảm đi một cách hiệu quả từ`n`ĐẾN`n - k`. 
-
-Bây giờ dành cho một vị khách với bộ chất gây dị ứng`G`, bên trong vũ trụ thu nhỏ này, chúng ta chỉ quan tâm đến việc có bao nhiêu chất gây dị ứng của chúng còn tồn tại trong số`n - k`gia vị. Nếu tất cả gia vị trong`G`đã bị trợ lý loại trừ rồi, thì khách không bao giờ có thể phản ứng được, nên câu trả lời là`NO`. 
-
-Nếu có đủ gia vị không gây dị ứng (trong bộ an toàn trợ lý) để tạo thành một đĩa đầy đủ kích cỡ`m`, thì chúng ta có thể tạo ra một món ăn tránh hoàn toàn tất cả các chất gây dị ứng cho khách, điều này mang lại cảm giác`NO`khả năng. Mặt khác, nếu trong số tất cả các lựa chọn hợp lệ, mọi lựa chọn về kích thước`m`phải bao gồm ít nhất một loại gia vị từ`G`, thì câu trả lời sẽ trở thành`YES`. 
-
-Trường hợp ranh giới xảy ra khi cả hai cách xây dựng đều có thể thực hiện được: chúng ta có thể tạo một món ăn hợp lệ có và không kích hoạt chất gây dị ứng cho khách, điều này mang lại`MAYBE`. 
-
-Chúng ta có thể chính thức hóa điều này bằng cách chỉ làm việc bên trong bộ trợ lý an toàn. Cho phép`S`là bộ gia vị không có trong danh sách chất gây dị ứng của trợ lý. Khi đó mỗi món ăn hợp lệ là một tập con của`S`kích thước`m`. Đối với mỗi khách, hãy`G' = G ∩ S`. Thông tin liên quan duy nhất là`|S|`,`|G'|`, Và`m`. 
-
-Bây giờ chúng ta có thể quyết định: 
-
-Nếu`|S| < m`, không có món ăn hợp lệ nào tồn tại, nhưng tình huống này hoàn toàn không thể xảy ra trong sự cố vì trợ lý đã thử nghiệm thành công, nghĩa là tồn tại ít nhất một cấu hình hợp lệ. 
-
-Nếu như`|G'| = 0`, vị khách không bao giờ có thể phản ứng được nên câu trả lời là`NO`. 
-
-Nếu như`|S| - |G'| >= m`, chúng ta có thể chọn tất cả`m`gia vị bên ngoài`G'`, vậy tồn tại một đĩa an toàn, do đó`NO`là có thể. 
-
-Nếu như`|S| - |G'| < m`, mỗi lựa chọn kích thước`m`phải bao gồm ít nhất một phần tử từ`G'`, vì vậy khách sẽ luôn phản ứng, do đó`YES`. 
-
-Ngược lại cả hai trường hợp đều tồn tại, cho`MAYBE`. 
-
-Cấu trúc đơn giản hóa việc đếm và thiết lập kiểm tra tư cách thành viên. 
+Khi chúng tôi kết hợp bộ dị ứng của từng khách với vũ trụ an toàn, mọi thứ sẽ giảm xuống thành một phép đếm đơn giản. Chúng tôi chỉ theo dõi có bao nhiêu loại gia vị “nguy hiểm nhưng vẫn có thể xảy ra” đối với vị khách đó. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
-| Brute Force trên các tập hợp con | O(C(n, m) · p · m) | O(n) | Quá chậm | 
-| Đặt đếm giao lộ | O(n · p) | O(n) | Đã chấp nhận | 
+| Liệt kê Brute Force tất cả các món ăn hợp lệ | Số mũ trong$n$| Cao | Quá chậm | 
+| Đặt đếm giao lộ |$O(n + p \cdot n)$|$O(n)$| Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Đọc tất cả các tên gia vị và gán cho mỗi tên một số nguyên nhận dạng duy nhất. Điều này cho phép kiểm tra tư cách thành viên liên tục thay vì so sánh chuỗi. 
-2. Xây dựng một mảng hoặc tập hợp boolean`bad`đại diện cho các loại gia vị mà trợ lý bị dị ứng. Bất kỳ gia vị nào trong`bad`được loại trừ khỏi tất cả các món ăn hợp lệ. 
-3. Xây dựng bộ`S`của tất cả các loại gia vị không có trong`bad`. Điều này đại diện cho vô số nguyên liệu có thể có cho món ăn. 
-4. Đối với mỗi khách, hãy đọc danh sách chất gây dị ứng của họ và ánh xạ nó vào cùng một biểu diễn số nguyên. 
-5. Giao bộ chất gây dị ứng của khách với`S`để có được`G'`, chất gây dị ứng duy nhất thực sự có liên quan đến các món ăn có thể có. 
-6. Hãy để`available = |S|`Và`bad_for_guest = |G'|`. Tính xem chúng ta có thể chọn một tập hợp con có kích thước không`m`tránh tất cả các yếu tố trong`G'`. Điều này có thể thực hiện được nếu`available - bad_for_guest >= m`. 
-7. Nếu`bad_for_guest == 0`, đầu ra`NO`ngay lập tức vì khách không bao giờ có thể phản ứng. 
-8. Mặt khác, nếu có thể xây dựng cả một món ăn an toàn và một món ăn đảm bảo không gây dị ứng với các ràng buộc ở trên, thì đầu ra`MAYBE`. Nếu chỉ có thể ép buộc gây dị ứng, hãy xuất`YES`. Nếu chỉ tồn tại những công trình an toàn, đầu ra`NO`. 
+Hãy để gia vị gây dị ứng của người trợ giúp xác định một bộ bị cấm. Vũ trụ hợp lệ của các loại gia vị là tất cả mọi thứ ngoại trừ những món đồ bị cấm này. 
+
+Đối với mỗi khách, chúng tôi phân loại các loại gia vị trong danh sách dị ứng của họ thành hai loại: những loại vẫn còn tồn tại trong phạm vi hợp lệ và những loại đã bị loại trừ bởi sự ràng buộc của người trợ giúp. Chỉ có loại đầu tiên ảnh hưởng đến câu trả lời. 
+
+1. Xây dựng ánh xạ từ tên gia vị đến chỉ mục để chúng ta có thể làm việc hiệu quả với tập hợp thay vì chuỗi. Điều này cho phép kiểm tra tư cách thành viên liên tục. 
+2. Đọc bộ tài liệu về dị ứng dành cho người trợ giúp và đánh dấu tất cả các loại gia vị này là bị cấm. Vũ trụ hợp lệ là tất cả các loại gia vị không có trong bộ này và kích thước của nó là$N' = n - k$. 
+3. Đối với mỗi khách, hãy đếm xem có bao nhiêu loại gia vị gây dị ứng của họ vẫn còn tồn tại trong vũ trụ hợp lệ. Gọi giá trị này$x$. Điều này thể hiện số lượng gia vị thực sự có thể xuất hiện trong món ăn và vẫn kích hoạt chúng. 
+4. Tính xem còn lại bao nhiêu loại gia vị an toàn trong vũ trụ đối với vị khách này, đó là$N' - x$. Đây là những loại gia vị có thể dùng trong món ăn mà không gây dị ứng cho chúng. 
+5. Nếu$x = 0$, thì không chất gây dị ứng nào của khách có thể xuất hiện trong bất kỳ món ăn hợp lệ nào. Mọi món ăn hợp lệ đều tránh chúng, vì vậy câu trả lời là “KHÔNG”. 
+6. Ngược lại, nếu$N' - x < m$, thì không thể chọn được$m$gia vị mà không bao gồm ít nhất một trong các chất gây dị ứng của chúng. Mỗi món ăn hợp lệ đều phải chứa thứ gì đó nguy hiểm cho chúng, vì vậy câu trả lời là “CÓ”. 
+7. Trong tất cả các trường hợp còn lại đều tồn tại cả lựa chọn hoàn toàn an toàn và lựa chọn nguy hiểm nên câu trả lời là “CÓ THỂ”. 
 
 ### Tại sao nó hoạt động 
 
-Kiểm tra của trợ lý làm giảm không gian tìm kiếm khả thi từ tất cả`n`gia vị cho một tập hợp con cố định`S`. Mỗi món ăn hợp lệ chỉ đơn giản là một kích cỡ-`m`tập hợp con của`S`. Đối với bất kỳ vị khách nào, chỉ có gia vị bên trong`S`có thể ảnh hưởng đến kết quả, bởi vì gia vị bên ngoài`S`không bao giờ được chọn. Do đó, vấn đề giảm xuống còn việc lý luận xem liệu bộ chất gây dị ứng của khách có giao nhau với tất cả các kích cỡ không?`m`tập hợp con của`S`, hoặc liệu có tồn tại ít nhất một tập hợp con tránh nó hay không. Sự bất bình đẳng`|S| - |G'| >= m`mô tả chính xác liệu một tập hợp con đầy đủ tránh tất cả các chất gây dị ứng cho khách có thể được hình thành hay không, điều này đảm bảo tính chính xác của việc phân loại thành`YES`,`NO`, hoặc`MAYBE`. 
+Tất cả các món ăn hợp lệ đều đồng nhất$m$-tập hợp con của một vũ trụ có kích thước cố định$N'$. Cách duy nhất để khách tránh được phản ứng dị ứng với một món ăn cụ thể là nếu tập hợp con được chọn tránh được tất cả$x$về các chất gây dị ứng vẫn có thể xảy ra. Việc này có luôn luôn khả thi hay không chỉ phụ thuộc vào việc có ít nhất$m$gia vị không gây dị ứng có sẵn. Nếu có ít hơn$m$, mỗi tập hợp con phải bao gồm ít nhất một chất gây dị ứng; nếu không có thì mọi tập hợp con sẽ tránh chúng; mặt khác cả hai công trình đều tồn tại. 
 
 ## Giải pháp Python```python
 import sys
 input = sys.stdin.readline
 
-def solve():
-    n, m = map(int, input().split())
-    
-    k = int(input().strip())
-    assistant_bad = set()
-    
-    for _ in range(k):
-        assistant_bad.add(input().strip())
-    
-    p = int(input().strip())
-    
-    guests = []
-    for _ in range(p):
-        ni = int(input().strip())
-        s = set()
-        for _ in range(ni):
-            s.add(input().strip())
-        guests.append(s)
-    
-    # universe S: spices not forbidden by assistant
-    # we don't actually need full list of all n names; we infer S indirectly
-    # assume all spices mentioned anywhere form universe
-    
-    all_spices = set()
-    for s in guests:
-        all_spices |= s
-    all_spices |= assistant_bad
-    
-    S = all_spices - assistant_bad
-    available = len(S)
-    
-    for g in guests:
-        gprime = g & S
-        bad_for_guest = len(gprime)
-        
-        if bad_for_guest == 0:
-            print("NO")
-            continue
-        
-        if available - bad_for_guest >= m:
-            print("NO")
-        else:
-            print("YES")
+n, m = map(int, input().split())
+k = int(input())
 
-if __name__ == "__main__":
-    solve()
-```Giải pháp này hoạt động hoàn toàn với các tập hợp chuỗi, dựa vào tư cách thành viên dựa trên hàm băm của Python để đạt hiệu quả. Chúng tôi ngầm xây dựng vũ trụ trợ lý an toàn vì chỉ những gia vị xuất hiện trong đầu vào mới có liên quan. Mỗi vị khách được giảm đến mức giao nhau giữa bộ chất gây dị ứng của họ với vũ trụ an toàn. 
+all_spices = set()
+bad = set()
 
-Bước quan trọng là điều kiện`available - bad_for_guest >= m`, để kiểm tra xem liệu chúng ta vẫn có thể xây dựng một đĩa có kích thước đầy đủ hay không`m`mà không chạm vào bất kỳ loại gia vị gây dị ứng nào cho vị khách đó. 
+for _ in range(k):
+    bad.add(input().strip())
 
-Một lỗi thực hiện phổ biến là quên rằng các loại gia vị không được đề cập trong bất kỳ danh sách nào vẫn tồn tại trong vũ trụ quy mô`n`. Tuy nhiên, những gia vị không nhìn thấy đó không liên quan vì chúng không bao giờ là một phần của bất kỳ ràng buộc nào, vì vậy chúng hoạt động giống như các yếu tố trung tính tự do và không ảnh hưởng đến việc so sánh tính khả thi. 
+p = int(input())
+
+for _ in range(p):
+    ni = int(input())
+    guest = set()
+    for _ in range(ni):
+        guest.add(input().strip())
+
+    # compute intersection with helper-banned set
+    # and compute effective dangerous spices
+    x = 0
+    for s in guest:
+        if s not in bad:
+            x += 1
+
+    # actually x = |guest ∩ safe|, but we want safe allergens count
+    # recompute properly:
+    x = len([s for s in guest if s not in bad])
+
+    safe_pool_size = n - k
+    safe_non_guest = safe_pool_size - x
+
+    if x == 0:
+        print("NO")
+    elif safe_non_guest < m:
+        print("YES")
+    else:
+        print("MAYBE")
+```Việc triển khai bắt đầu bằng cách đọc danh sách dị ứng của người trợ giúp và coi nó như một bộ lọc bị cấm. Mỗi khách được xử lý độc lập bằng cách đếm xem có bao nhiêu chất gây dị ứng của họ tồn tại qua bộ lọc này. 
+
+Biến$x$thể hiện số lượng chất gây dị ứng của khách vẫn đủ điều kiện xuất hiện trong món ăn. Một khi đã biết được điều đó, phần còn lại của lý do sẽ chuyển thành một so sánh đơn giản giữa số lượng gia vị an toàn có thể sử dụng được và kích thước món ăn cần thiết.$m$. 
+
+Thứ tự phân nhánh quan trọng. Trường hợp “KHÔNG” phải được kiểm tra trước vì nó thể hiện cấu trúc không thể nào khiến khách bị ảnh hưởng, bất kể tổ hợp. Trường hợp “CÓ” xuất phát từ một cuộc tranh luận về nhóm an toàn còn lại. Mọi thứ khác là trường hợp hỗn hợp. 
 
 ## Ví dụ đã hoạt động 
 
-### Ví dụ 1 
+Chúng tôi sử dụng đầu vào mẫu được cung cấp. 
 
-đầu vào:```
-7 3
+### Mẫu 1 
+
+| Khách | Khách gây dị ứng | x (trong nhóm an toàn) | safe_pool_size - x | Quyết định | 
+| --- | --- | --- | --- | --- | 
+| 1 | hạt tiêu | 0 | 4 | KHÔNG | 
+| 2 | thì là, cỏ cà ri, chanh | 1 | 3 | CÓ | 
+| 3 | imbir, vôi | 2 | 2 | CÓ THỂ | 
+
+Người trợ giúp loại bỏ`pepper`,`imbir`,`cumin`, chỉ để lại những gia vị xác định tất cả các món ăn hợp lệ. Đối với mỗi khách, chúng tôi kiểm tra xem chất gây dị ứng của họ có tồn tại trong vũ trụ thu nhỏ này hay không và liệu có tránh chúng khi chọn không$m = 3$gia vị vẫn có thể. 
+
+Vị khách đầu tiên không còn chất gây dị ứng nào trong vũ trụ hợp lệ nên họ được đảm bảo an toàn. Vị khách thứ hai còn lại quá ít lựa chọn thay thế an toàn để tránh tất cả các chất gây dị ứng, gây ra phản ứng. Khách thứ ba nằm ở giữa, nơi có thể xây dựng cả công trình an toàn và không an toàn tùy thuộc vào tập hợp con hợp lệ nào được chọn. 
+
+## Phân tích độ phức tạp 
+
+| Đo | Độ phức tạp | Giải thích | 
+| --- | --- | --- | 
+| Thời gian |$O(p \cdot n)$| Mỗi khách xử lý tối đa$n$kiểm tra gia vị đối với bộ của người trợ giúp | 
+| Không gian |$O(n)$| Kho đựng bộ gia vị và bản đồ | 
+
+Những giới hạn$n, p \le 100$làm điều này nhanh chóng thoải mái. Ngay cả một giao điểm tập hợp dựa trên chuỗi đơn giản cũng chạy ngay lập tức. 
+
+## Trường hợp thử nghiệm```python
+import sys, io
+
+def run(inp: str) -> str:
+    sys.stdin = io.StringIO(inp)
+    import sys
+    input = sys.stdin.readline
+
+    n, m = map(int, input().split())
+    k = int(input())
+    bad = set(input().strip() for _ in range(k))
+
+    p = int(input())
+    out = []
+    for _ in range(p):
+        ni = int(input())
+        guest = set(input().strip() for _ in range(ni))
+
+        x = len([s for s in guest if s not in bad])
+        safe_pool = n - k
+        safe_non_guest = safe_pool - x
+
+        if x == 0:
+            out.append("NO")
+        elif safe_non_guest < m:
+            out.append("YES")
+        else:
+            out.append("MAYBE")
+
+    return "\n".join(out)
+
+# provided sample
+assert run("""7 3
 3
 pepper
 imbir
@@ -164,75 +190,47 @@ lime
 2
 imbir
 lime
-```Đầu tiên chúng tôi xác định các loại gia vị trợ lý an toàn. Trợ lý bị dị ứng với`pepper`,`imbir`, Và`cumin`, nên tất cả các món ăn hợp lệ đều phải đến từ những loại gia vị còn lại`{fenugreek, lime, ...}`tùy thuộc vào toàn bộ vũ trụ được suy ra từ đầu vào. 
+""") == """NO
+YES
+MAYBE"""
 
-Đối với mỗi khách: 
-
-| Khách | g' (chất gây dị ứng có liên quan) | có sẵn - g' >= m | Đầu ra | 
-| --- | --- | --- | --- | 
-| 1 | {hạt tiêu} ∩ S = ∅ | an toàn tầm thường | KHÔNG | 
-| 2 | {thì là, cỏ cà ri, chanh} ∩ S = {cỏ thảo dược, chanh} | không thể tránh được chất gây dị ứng trong mọi lựa chọn | CÓ | 
-| 3 | {imbir, vôi} ∩ S = {vôi} | tính khả thi hỗn hợp | CÓ THỂ | 
-
-Các kết quả đầu ra phù hợp với phân loại yêu cầu. 
-
-### Ví dụ 2 
-
-Hãy xem xét một kịch bản đơn giản hóa:```
-5 2
+# all safe trivial
+assert run("""3 2
 1
 a
-2
+1
 0
-2
+""") == "NO"
+
+# forced YES
+assert run("""4 3
+1
 a
+1
+2
 b
-```Ở đây trợ lý cấm`a`, vậy là các món ăn đến từ`{b, c, d, e}`. Đối với vị khách đầu tiên, không có chất gây dị ứng nào tồn tại nên sản lượng là`NO`. Riêng đối với vị khách thứ hai`b`vấn đề và tùy thuộc vào`m`, cả lựa chọn an toàn và không an toàn đều có thể tồn tại, tạo ra`MAYBE`. 
+c
+""") == "YES"
 
-Những dấu vết này cho thấy việc giảm xuống vũ trụ an toàn trợ lý sẽ quyết định mọi kết quả như thế nào. 
-
-## Phân tích độ phức tạp 
-
-| Đo | Độ phức tạp | Giải thích | 
-| --- | --- | --- | 
-| Thời gian | O(n + p · n) | bộ xây dựng và giao nhau cho mỗi khách | 
-| Không gian | O(n) | lưu trữ tên và bộ gia vị | 
-
-Được cho`n ≤ 100`Và`p ≤ 100`, thao tác này sẽ chạy ngay lập tức. Các hoạt động bị chi phối bởi các giao điểm tập hợp băm, có hiệu quả hệ số không đổi ở quy mô này. 
-
-## Trường hợp thử nghiệm```python
-import sys, io
-
-def run(inp: str) -> str:
-    sys.stdin = io.StringIO(inp)
-    from __main__ import solve
-    return sys.stdout.getvalue()
-
-# provided sample
-# (manual execution required in real setup)
-
-# minimum case
-assert True
-
-# all guests have no allergens
-assert True
-
-# guest allergic to everything
-assert True
-
-# assistant blocks all spices
-assert True
+# MAYBE case
+assert run("""5 2
+1
+a
+1
+1
+b
+""") == "MAYBE"
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-| tối thiểu n=m=1 trường hợp | KHÔNG | tính khả thi của yếu tố đơn lẻ | 
-| trợ lý cấm tất cả | Cạnh KHÔNG/CÓ | xử lý vũ trụ trống rỗng | 
-| khách với bộ chất gây dị ứng rỗng | KHÔNG | trường hợp an toàn tầm thường | 
-| khách bao gồm tất cả các loại gia vị an toàn | CÓ | trường hợp phản ứng cưỡng bức | 
+| mẫu | hỗn hợp | chính xác hoàn toàn trên cả ba kết quả | 
+| nhỏ KHÔNG | KHÔNG | xử lý giao lộ vắng với vũ trụ an toàn | 
+| buộc CÓ | CÓ | chuồng chim buộc đưa chất gây dị ứng vào | 
+| trường hợp hỗn hợp | CÓ THỂ | tồn tại của cả hai công trình hợp lệ | 
 
 ## Vỏ cạnh 
 
-Khi khách có danh sách chất gây dị ứng trống, giao điểm với bộ trợ lý an toàn cũng trống và tình trạng này sẽ ngay lập tức kích hoạt`NO`, vì không có cách nào để họ phản ứng bất kể thành phần món ăn như thế nào. 
+Khi một vị khách có tất cả các chất gây dị ứng có trong danh sách cấm của người trợ giúp, toàn bộ danh sách chất gây dị ứng của họ sẽ bị loại khỏi danh sách xem xét một cách hiệu quả. Trong tình huống đó, mọi món ăn hợp lệ sẽ tự động tránh chúng vì vũ trụ món ăn không bao giờ chứa bất kỳ loại gia vị kích hoạt nào. Thuật toán nắm bắt điều này thông qua$x = 0$, ngay lập tức tạo ra “KHÔNG” mà không cần bất kỳ lý luận tổ hợp nào. 
 
-Khi trợ lý cấm gần như tất cả các loại gia vị, để lại chính xác`m`có sẵn, mọi món ăn hợp lệ đều được cố định. Trong trường hợp này, bất kỳ sự trùng lặp nào giữa các chất gây dị ứng của khách và tập hợp còn lại sẽ ngay lập tức dẫn đến một kết quả xác định và sự bất bình đẳng sẽ giảm xuống hoàn toàn để kiểm tra sự bình đẳng. 
+Khi số lượng gia vị an toàn bên ngoài bộ dị ứng của khách quá ít để lấp đầy kích thước món ăn$m$, mọi lựa chọn hợp lệ phải bao gồm ít nhất một trong các chất gây dị ứng của chúng. Sự tính toán$N' - x < m$xác định trực tiếp tình huống bắt buộc đưa vào này, đảm bảo "CÓ" ngay cả khi các chất gây dị ứng được phân phối thưa thớt. 
 
-Khi tất cả các loại gia vị xuất hiện trong danh sách chất gây dị ứng nhưng trợ lý cấm một tập hợp con, thuật toán vẫn hoạt động chính xác vì chỉ giao nhau với`S`vấn đề. Bất kỳ gia vị bên ngoài`S`không bao giờ được chọn nên không thể ảnh hưởng đến tính khả thi bất kể tần suất xuất hiện trong danh sách khách mời.
+Khi cả hai điều kiện đều không thành công, sẽ có đủ tính linh hoạt để tạo ra một món ăn hợp lệ tránh hoàn toàn cho khách và một món ăn khác có ít nhất một chất gây dị ứng. Thuật toán phân loại điều này là “CÓ THỂ”, phản ánh sự cùng tồn tại của cả hai cấu trúc tổ hợp khả thi trong vũ trụ bị ràng buộc.
