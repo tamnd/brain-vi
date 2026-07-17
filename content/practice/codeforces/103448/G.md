@@ -28,7 +28,7 @@ Chúng tôi được cung cấp một chuỗi tham chiếu$S$và sau đó là nh
 
 Vì vậy, mỗi truy vấn được so sánh một cách hiệu quả$S$với một chuỗi tuần hoàn có chu kỳ là$T_i$, cắt ngắn theo chiều dài$|S|$. Đầu ra là khoảng cách Hamming giữa hai chuỗi này. 
 
-Các ràng buộc chặt chẽ về tổng kích thước đầu vào thay vì trên mỗi truy vấn. Tổng của tất cả$|T_i|$nhiều nhất là$2 \cdot 10^5$, Và$|S| \le 2 \cdot 10^5$. Điều này ngay lập tức cho chúng ta biết rằng bất kỳ giải pháp nào xử lý từng ký tự của mỗi truy vấn trong thời gian không đổi hoặc khấu hao không đổi đều khả thi, nhưng bất kỳ giải pháp nào nhân lên$|S|$qua$q$là không thể. 
+Các ràng buộc chặt chẽ về tổng kích thước đầu vào thay vì trên mỗi truy vấn. Tổng của tất cả$|T_i|$nhiều nhất là$2 \cdot 10^5$, and $|S| \le 2 \cdot 10^5$. Điều này ngay lập tức cho chúng ta biết rằng bất kỳ giải pháp nào xử lý từng ký tự của mỗi truy vấn trong thời gian không đổi hoặc khấu hao không đổi đều khả thi, nhưng bất kỳ giải pháp nào nhân lên$|S|$qua$q$là không thể. 
 
 Một ý tưởng đơn giản sẽ mô phỏng từng truy vấn một cách độc lập bằng cách xây dựng chuỗi lặp lại có độ dài tối đa$|S|$, sau đó so sánh từng ký tự. Điều đó đã gợi ý về một vấn đề tiềm ẩn: nếu$|S|$lớn và nhiều truy vấn cũng buộc phải duyệt toàn bộ, chúng ta có thể lặp lại quá nhiều công việc. 
 
@@ -44,7 +44,7 @@ Vấn đề là chi phí. Đối với mỗi truy vấn, chúng tôi có thể c
 
 Quan sát quan trọng là cấu trúc lặp đi lặp lại là tuần hoàn. Tại vị trí$i$, ký tự từ sự lặp lại vô hạn của$T$đơn giản là$T[i \bmod |T|]$. Điều này có nghĩa là mọi truy vấn đều giảm xuống mức so sánh$S[i]$với$T[i \bmod |T|]$. Vấn đề còn lại là tránh việc tính toán lại các phép toán modulo và tra cứu ký tự không hiệu quả cho mọi truy vấn trên tất cả các vị trí của$S$. 
 
-Chúng ta có thể tổ chức lại việc tính toán bằng cách nhóm các vị trí của$S$theo modulo chỉ số của họ$|T|$. Đối với một cố định$T$, mọi vị trí$j$TRONG$T$chịu trách nhiệm về tất cả các chỉ số$i$như vậy$i \equiv j \pmod{|T|}$. Chúng tôi tính toán trước, đối với mỗi lớp còn lại, số lần mỗi ký tự xuất hiện ở các vị trí đó của$S$. Sau đó chúng ta so sánh phân bố đó với ký tự trong$T[j]$. Điều này biến mỗi truy vấn thành một bản quét tuyến tính của$T$, độc lập với$|S|$. 
+Chúng ta có thể tổ chức lại việc tính toán bằng cách nhóm các vị trí của$S$theo modulo chỉ số của họ$|T|$. Đối với một cố định$T$, mọi vị trí$j$TRONG$T$chịu trách nhiệm về tất cả các chỉ số$i$như vậy$i \equiv j \pmod{|T|}$. Chúng tôi tính toán trước, đối với mỗi lớp còn lại, số lần mỗi ký tự xuất hiện ở các vị trí đó của$S$. Sau đó, chúng tôi so sánh phân phối đó với ký tự trong$T[j]$. Điều này biến mỗi truy vấn thành một bản quét tuyến tính của$T$, độc lập với$|S|$. 
 
 Vì tổng cộng$\sum |T_i| \le 2 \cdot 10^5$, việc xử lý theo từng ký tự này rất hiệu quả. 
 
@@ -58,7 +58,7 @@ Vì tổng cộng$\sum |T_i| \le 2 \cdot 10^5$, việc xử lý theo từng ký 
 Chúng tôi khắc phục ý tưởng rằng mỗi truy vấn được đánh giá bằng cách nhóm các vị trí của$S$theo chỉ số của chúng theo modulo độ dài chuỗi truy vấn. 
 
 1. Không tính toán trước cấu trúc toàn cục ngoài chuỗi đầu vào$S$, vì tất cả việc nhóm đều phụ thuộc vào các lớp mod dành riêng cho truy vấn. 
-2. Đối với một chuỗi truy vấn nhất định$T$, chúng tôi lặp lại tất cả các vị trí$i$TRONG$S$ngầm bằng cách nhóm chúng thành các nhóm bằng cách$i \bmod |T|$. Thay vì lặp lại rõ ràng tất cả các cặp, trước tiên chúng tôi xây dựng một cấu trúc đếm cho mỗi phần còn lại$r$, mỗi ký tự xuất hiện bao nhiêu lần ở các vị trí$i$của$S$Ở đâu$i \equiv r \pmod{|T|}$. 
+2. Đối với một chuỗi truy vấn nhất định$T$, chúng tôi lặp lại tất cả các vị trí$i$TRONG$S$ngầm bằng cách nhóm chúng vào nhóm bởi$i \bmod |T|$. Thay vì lặp lại rõ ràng tất cả các cặp, trước tiên chúng tôi xây dựng một cấu trúc đếm cho mỗi phần còn lại$r$, mỗi ký tự xuất hiện bao nhiêu lần ở các vị trí$i$của$S$Ở đâu$i \equiv r \pmod{|T|}$. 
 
 Bước này đảm bảo chúng ta không xem lại$S$riêng biệt cho mỗi truy vấn, bởi vì chúng tôi tổng hợp cấu trúc của nó một lần cho mỗi mẫu mô đun có liên quan. 
 3. Đối với từng vị trí ký tự$j$TRONG$T$, chúng ta nhìn vào thùng tương ứng với phần còn lại$j$. Số trận đấu đóng góp của vị trí này chính xác là tần suất của ký tự$T[j]$bên trong cái xô đó. 

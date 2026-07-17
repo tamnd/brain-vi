@@ -28,7 +28,7 @@ Chúng tôi đang duy trì một chuỗi số đại diện cho “mức sức m
 
 Có hai hoạt động. Một thao tác nhân mọi giá trị trong một phạm vi$[l, r]$bởi một yếu tố nhất định$k$. Hoạt động khác yêu cầu tổng các giá trị trong một phạm vi$[l, r]$, với câu trả lời được lấy modulo$M$. Giữa các thao tác, các giá trị vẫn tồn tại nên các cập nhật sẽ tích lũy theo thời gian. 
 
-Nơi hạn chế$n$Và$q$lên tới$10^5$, nghĩa là chúng ta phải xử lý cả cập nhật và truy vấn theo thời gian gần như logarit. Bất kỳ giải pháp nào tính toán lại một phạm vi từ đầu cho mỗi thao tác đều dẫn đến$O(nq)$, vượt xa giới hạn khả thi. Thậm chí$O(n)$mỗi thao tác sẽ đạt được$10^{10}$hoạt động trong trường hợp xấu nhất. 
+Nơi hạn chế$n$Và$q$lên đến$10^5$, nghĩa là chúng ta phải xử lý cả cập nhật và truy vấn theo thời gian gần như logarit. Bất kỳ giải pháp nào tính toán lại một phạm vi từ đầu cho mỗi thao tác đều dẫn đến$O(nq)$, vượt xa giới hạn khả thi. Thậm chí$O(n)$mỗi thao tác sẽ đạt được$10^{10}$hoạt động trong trường hợp xấu nhất. 
 
 Một khó khăn tinh tế đến từ tính chất nhân lên của các bản cập nhật. Không giống như các cập nhật cộng, phép nhân tương tác với tổng theo cách ngăn cản việc tính toán lại tiền tố đơn giản. Nếu chúng tôi không duy trì cấu trúc thì mọi truy vấn tổng phạm vi sẽ yêu cầu tính toán lại tất cả các giá trị bị ảnh hưởng. 
 

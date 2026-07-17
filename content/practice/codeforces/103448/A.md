@@ -38,7 +38,7 @@ Các trường hợp biên xuất hiện khi số đó là 1 hoặc 0, mặc dù
 
 Cách giải thích mạnh mẽ là trực tiếp: đối với mỗi số, hãy kiểm tra xem số đó có phải là số nguyên tố hay không và liệu nó có chia hết cho 2 hay không. Kiểm tra tính nguyên tố thường sẽ thử tất cả các ước số từ 2 đến √x. Điều này đúng vì hợp số phải có hệ số không lớn hơn căn bậc hai của nó. 
 
-Trong trường hợp xấu nhất, mỗi truy vấn yêu cầu khoảng √10^6 ≈ 1000 lần kiểm tra. Với tối đa 1000 truy vấn, điều này dẫn đến khoảng một triệu phép kiểm tra ước số, điều này vẫn không đáng kể trong giới hạn 1 giây trong Python. Vì vậy, ngay cả cách tiếp cận ngây thơ cũng đã trôi qua một cách thoải mái. 
+Trong trường hợp xấu nhất, mỗi truy vấn yêu cầu khoảng √10^6 ≈ 1000 lần kiểm tra. Với tối đa 1000 truy vấn, điều này dẫn đến khoảng một triệu kiểm tra ước số, điều này vẫn không đáng kể trong giới hạn 1 giây trong Python. Vì vậy, ngay cả cách tiếp cận ngây thơ cũng đã trôi qua một cách thoải mái. 
 
 Quan sát quan trọng là điều kiện chẵn và nguyên tố cực kỳ hạn chế. Vì tất cả các số chẵn lớn hơn 2 đều là hợp số nên yêu cầu về tính nguyên tố ngay lập tức loại bỏ mọi số chẵn ngoại trừ 2. Điều này làm giảm vấn đề xuống mức so sánh theo thời gian không đổi cho mỗi truy vấn. 
 

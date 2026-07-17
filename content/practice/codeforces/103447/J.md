@@ -18,7 +18,7 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải quyết:** 40s 
+**Thời gian giải:** 40s 
 **Đã xác minh:** có 
 
 ## Giải pháp 
@@ -32,13 +32,13 @@ Kích thước lưới có thể lớn tới 1000 x 1000, cung cấp tới một
 
 Trường hợp cạnh tinh tế xuất phát từ các giá trị tối thiểu lặp lại bên trong một hàng hoặc cột. Ví dụ, nếu một hàng là`1 2 1`, cả hai ô chứa`1`là những ứng cử viên xét từ góc độ hàng, nhưng một trong số chúng có thể thất bại khi xem xét cột của nó. 
 
-Một tình huống phức tạp khác là khi mức tối thiểu của hàng và mức tối thiểu của cột không đồng nhất. Một ô có thể là giá trị tối thiểu trong hàng của nó nhưng không phải là giá trị tối thiểu trong cột của nó hoặc ngược lại, vì vậy chúng ta phải luôn xem xét hợp nhất cả hai ràng buộc một cách chính xác. 
+Một tình huống khó khăn khác là khi mức tối thiểu của hàng và mức tối thiểu của cột không đồng nhất. Một ô có thể là giá trị tối thiểu trong hàng của nó nhưng không phải là giá trị tối thiểu trong cột của nó hoặc ngược lại, vì vậy chúng ta phải luôn xem xét hợp nhất cả hai ràng buộc một cách chính xác. 
 
 ## Phương pháp tiếp cận 
 
 Ý tưởng ngây thơ là đơn giản. Đối với mỗi ô`(i, j)`, chúng tôi quét toàn bộ hàng`i`để tìm giá trị nhỏ nhất và chúng tôi cũng quét toàn bộ cột`j`để tìm giá trị nhỏ nhất. Sau đó, chúng tôi so sánh giá trị ô với giá trị tối thiểu của hai kết quả này. Nếu trùng khớp thì chúng tôi tính. 
 
-Điều này đúng vì mức tối thiểu trên phần kết hợp của hàng và cột chỉ đơn giản là mức tối thiểu của mức tối thiểu của hàng và mức tối thiểu của cột. Tuy nhiên, việc tính toán lại các giá trị cực tiểu này cho mỗi ô là lãng phí. Mỗi lần quét hàng tốn O(m), mỗi lần quét cột tốn O(n) và thực hiện điều này cho tất cả n·m ô sẽ dẫn đến O(n·m·(n+m)), trong trường hợp xấu nhất là khoảng 2×10^9 đến 2×10^12 thao tác tùy thuộc vào hằng số, quá chậm. 
+Điều này đúng vì mức tối thiểu trên phần kết hợp của hàng và cột chỉ đơn giản là mức tối thiểu của mức tối thiểu của hàng và mức tối thiểu của cột. Tuy nhiên, việc tính toán lại các giá trị cực tiểu này cho mỗi ô là lãng phí. Mỗi lần quét hàng tốn O(m), mỗi lần quét cột tốn O(n) và thực hiện việc này cho tất cả n·m ô sẽ dẫn đến O(n·m·(n+m)), trong trường hợp xấu nhất là khoảng 2×10^9 đến 2×10^12 thao tác tùy thuộc vào hằng số, quá chậm. 
 
 Quan sát quan trọng là cực tiểu của hàng và cực tiểu của cột không phụ thuộc vào ô truy vấn. Chúng chỉ phụ thuộc vào cấu trúc lưới. Vì vậy, chúng ta có thể tính toán trước giá trị tối thiểu cho mỗi hàng và mỗi cột một lần. Sau đó, mỗi ô có thể được kiểm tra theo thời gian không đổi bằng cách so sánh nó với giá trị nhỏ hơn của giá trị tối thiểu hàng và giá trị tối thiểu cột của nó. 
 
@@ -53,8 +53,8 @@ Quan sát quan trọng là cực tiểu của hàng và cực tiểu của cột
 
 Trước tiên, chúng tôi tính toán hai mảng phụ trợ, một mảng lưu trữ giá trị tối thiểu của mỗi hàng và một mảng lưu trữ giá trị tối thiểu của mỗi cột. 
 
-1. Khởi tạo một mảng`rowMin`kích thước`n`, chứa đầy những giá trị rất lớn. Điều này sẽ lưu trữ giá trị nhỏ nhất được thấy trong mỗi hàng. 
-2. Khởi tạo một mảng`colMin`kích thước`m`, cũng chứa đầy những giá trị rất lớn. Điều này sẽ lưu trữ giá trị nhỏ nhất được thấy trong mỗi cột. 
+1. Khởi tạo một mảng`rowMin`kích thước`n`, chứa đầy những giá trị rất lớn. Điều này sẽ lưu trữ giá trị nhỏ nhất nhìn thấy trong mỗi hàng. 
+2. Khởi tạo một mảng`colMin`kích thước`m`, cũng chứa đầy những giá trị rất lớn. Điều này sẽ lưu trữ giá trị nhỏ nhất nhìn thấy trong mỗi cột. 
 3. Quét toàn bộ ma trận một lần. Đối với mỗi ô`(i, j)`, cập nhật`rowMin[i] = min(rowMin[i], a[i][j])`Và`colMin[j] = min(colMin[j], a[i][j])`. Bước này xây dựng giá trị cực tiểu chính xác cho mỗi hàng và cột theo thời gian tuyến tính trên tất cả các ô. 
 4. Sau khi tiền xử lý, quét lại ma trận. Đối với mỗi ô`(i, j)`, tính toán`t = min(rowMin[i], colMin[j])`. Nếu như`a[i][j] == t`, tăng câu trả lời. 
 5. Xuất số đếm cuối cùng. 
@@ -95,9 +95,9 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Giải pháp bắt đầu bằng cách đọc lưới vào bộ nhớ, điều này là cần thiết vì chúng ta cần hai lần truyền dữ liệu. Bước đầu tiên xây dựng các cực tiểu hàng và cột một cách độc lập. Điều này tránh việc quét lặp lại sau này. 
+```Giải pháp bắt đầu bằng cách đọc lưới vào bộ nhớ, điều này là cần thiết vì chúng ta cần hai lần truyền dữ liệu. Bước đầu tiên xây dựng cực tiểu hàng và cột một cách độc lập. Điều này tránh việc quét lặp lại sau này. 
 
-Lần thứ hai thực hiện kiểm tra tình trạng thực tế. biểu thức`min(rowMin[i], colMin[j])`được tính theo O(1), do đó mỗi ô đóng góp một công không đổi. Đây là bước thay thế việc tìm kiếm brute-force tốn kém. 
+Lần thứ hai thực hiện kiểm tra tình trạng thực tế. biểu thức`min(rowMin[i], colMin[j])`được tính bằng O(1), do đó mỗi ô đóng góp một công không đổi. Đây là bước thay thế việc tìm kiếm brute-force tốn kém. 
 
 Một lỗi triển khai phổ biến là cố gắng tính lại giá trị cực tiểu của hàng hoặc cột bên trong vòng lặp thứ hai. Điều đó sẽ âm thầm giới thiệu lại hệ số n hoặc m và phá vỡ hiệu suất. 
 
