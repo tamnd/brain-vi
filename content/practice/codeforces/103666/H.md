@@ -21,8 +21,8 @@ draft: false
 **Thời gian giải:** 2m 18s 
 **Đã xác minh:** không 
 
-## Giải pháp 
-## Giải pháp 
+##Giải pháp 
+##Giải pháp 
 
 Đại diện cho mỗi domino${i,j}$,$0 \le i \le j \le 6$, như một cạnh vô hướng giữa các đỉnh$i$Và$j$trong đa đồ thị$G$trên tập đỉnh${0,1,\dots,6}$, với một vòng lặp ở mỗi đỉnh$i$tương ứng với${i,i}$. Một sự sắp xếp tuần hoàn hợp lệ của tất cả 28 quân domino chính xác là một chu trình Euler trong$G$, vì mỗi domino được sử dụng một lần và các domino liên tiếp phải có chung một điểm cuối. 
 

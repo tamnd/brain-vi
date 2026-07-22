@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 45s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một lịch trình nhị phân có độ dài$n$, trong đó mỗi vị trí đại diện cho những gì Arseniy dự định làm trong một giờ cụ thể: tập luyện hoặc ăn uống. Lịch trình được cố định dưới dạng một chuỗi gồm hai ký tự, trong đó một chữ cái tượng trưng cho việc tập luyện và chữ kia là viết tắt của ăn uống. 
@@ -46,7 +46,7 @@ Một lực lượng vũ phu có cấu trúc chặt chẽ hơn sẽ quan sát th
 
 Điều này làm giảm vấn đề từ tìm kiếm theo cấp số nhân trên tất cả các chuỗi sang quét tuyến tính trên$n+1$điểm phân chia, mỗi điểm được đánh giá theo thời gian không đổi bằng cách sử dụng số lượng tiền tố. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
 | Brute Force trên tất cả các dây |$O(n \cdot 2^n)$|$O(1)$| Quá chậm | 
 | Hãy thử tất cả các điểm phân chia có số lượng tiền tố |$O(n)$|$O(n)$| Đã chấp nhận | 
@@ -58,8 +58,8 @@ Chúng tôi hiểu bất kỳ lịch trình cuối cùng hợp lệ nào đều 
 1. Tính toán trước số lượng tiền tố`t`xuất hiện ở từng vị trí. Điều này cho phép chúng tôi nhanh chóng biết cần bao nhiêu thay đổi nếu chúng tôi buộc tiền tố phải là tất cả.`e`. 
 2. Tương tự, tính hậu tố có bao nhiêu`e`xuất hiện từ mỗi vị trí trở đi. Điều này cho phép chúng ta đánh giá xem cần bao nhiêu thay đổi nếu chúng ta buộc một hậu tố phải là tất cả.`t`. 
 3. Đối với mỗi điểm phân chia có thể$k$, giải thích nó là: vị trí$[0, k-1]$trở nên`e`, và các vị trí$[k, n-1]$trở nên`t`. 
-4. Tính chi phí của việc phân chia này bằng số`t`ở tiền tố cộng với số lượng`e`trong hậu tố. Đây là số lần lật cần thiết để làm cho chuỗi khớp với dạng tách. 
-5. Theo dõi việc phân chia với chi phí tối thiểu. Nếu nhiều lần chia tách có cùng mức chi phí thì bất kỳ lần chia nào cũng được chấp nhận. 
+4. Tính chi phí của phần chia này bằng số`t`ở tiền tố cộng với số lượng`e`trong hậu tố. Đây là số lần lật cần thiết để làm cho chuỗi khớp với dạng tách. 
+5. Theo dõi việc phân chia với chi phí tối thiểu. Nếu nhiều lần chia tách có cùng chi phí thì bất kỳ lần chia nào cũng được chấp nhận. 
 6. Sau khi tìm được phần tách tốt nhất, hãy xây dựng lại chuỗi cuối cùng trực tiếp từ phần tách đó. 
 
 Lý do điều này có tác dụng là vì mọi chuỗi hợp lệ đều có chính xác một ranh giới giữa`e`Và`t`. Mọi vi phạm ràng buộc`te`biến mất chính xác khi chúng tôi thực thi ranh giới như vậy, vì vậy chúng tôi không thiếu bất kỳ ứng cử viên hợp lệ nào. 
@@ -208,6 +208,6 @@ assert run("tetetet\n") is not None
 
 Chuỗi ký tự đơn luôn thỏa mãn ràng buộc bất kể giá trị và thuật toán tự nhiên xem xét cả hai vị trí biên$k = 0$Và$k = 1$, mang lại chi phí bằng không. 
 
-Một chuỗi xen kẽ hoàn toàn như`tetete`rất thú vị vì việc sửa lỗi cục bộ không thành công: việc lật ngược một vi phạm có thể tạo ra một vi phạm khác ở gần đó. Công thức dựa trên phân tách tránh hoàn toàn điều này bằng cách cam kết với cấu trúc toàn cục và chi phí tiền tố-hậu tố nắm bắt chính xác tất cả các thay đổi cần thiết trong một đánh giá. 
+Một chuỗi xen kẽ hoàn toàn như`tetete`rất thú vị vì việc sửa lỗi cục bộ không thành công: việc lật ngược một vi phạm có thể tạo ra một vi phạm khác ở gần đó. Công thức dựa trên phân tách tránh được điều này hoàn toàn bằng cách cam kết với cấu trúc toàn cục và chi phí tiền tố-hậu tố nắm bắt chính xác tất cả các thay đổi cần thiết trong một đánh giá. 
 
 Một chuỗi hoàn toàn thống nhất không yêu cầu thay đổi và hàm chi phí đánh giá chính xác tất cả các phần tách, với ít nhất một phần tách mang lại chi phí bằng 0, giữ nguyên chuỗi gốc.

@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 53s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một lưới nhỏ, trong đó mỗi ô là một ký tự đại diện cho một ô vuông nhỏ của hình vẽ. Mỗi ô trống hoặc chứa một đoạn đường chéo. Dấu gạch chéo “/” vẽ một đoạn từ góc dưới bên trái của ô đến góc trên bên phải, dấu gạch chéo ngược “\” vẽ một đoạn từ trên cùng bên trái đến dưới cùng bên phải và dấu chấm biểu thị một ô trống. 
@@ -44,11 +44,11 @@ Quan sát quan trọng là chúng ta không cần phải xây dựng đa giác m
 
 Một cách rõ ràng để đạt được điều này là mở rộng lưới theo hệ số hai. Mỗi ô ban đầu trở thành một khối 2×2 trong một lưới mịn hơn. Sau đó, mỗi dấu gạch chéo hoặc dấu gạch chéo ngược có thể được biểu diễn dưới dạng kết nối giữa hai điểm lưới mịn. Phép biến đổi này biến các đoạn đường chéo thành các chuyển động trực giao trong lưới đã được tinh chỉnh, làm cho việc truyền tải trở nên đơn giản. 
 
-Sau khi cấu trúc được nhúng, chúng ta có thể lấp đầy khu vực bên ngoài trong lưới tinh tế. Bất kỳ ô nào không thuộc phần bên trong hoặc ranh giới của đa giác đều ở bên ngoài. Các cạnh ranh giới chính xác là các giao diện giữa các ô bên ngoài và đa giác. Bằng cách đi dọc theo ranh giới bằng một quy tắc nhất quán, chẳng hạn như giữ phần bên trong ở một bên, chúng ta có thể theo dõi chu trình và đếm các thay đổi hướng, tương ứng trực tiếp với các đỉnh đa giác.
+Sau khi cấu trúc được nhúng, chúng ta có thể lấp đầy khu vực bên ngoài trong lưới tinh tế. Bất kỳ ô nào không thuộc phần bên trong hoặc ranh giới của đa giác đều ở bên ngoài. Các cạnh ranh giới chính xác là các giao diện giữa các ô bên ngoài và đa giác. Bằng cách đi dọc theo ranh giới bằng một quy tắc nhất quán, chẳng hạn như giữ phần bên trong ở một phía, chúng ta có thể theo dõi chu trình và đếm các thay đổi hướng, tương ứng trực tiếp với các đỉnh đa giác.
 
 Ý tưởng mạnh mẽ về việc kiểm tra mọi cạnh ranh giới có thể có và cố gắng tập hợp các chu trình sẽ chiếm O((hw)^2) trong trường hợp xấu nhất vì mỗi cạnh có thể yêu cầu tìm kiếm sự tiếp tục của nó. Việc truyền tải lưới tinh tế làm giảm điều này thành một bước đi tuyến tính trên cấu trúc ranh giới. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
 | Xây dựng phân khúc rõ ràng + sáp nhập | O((hw)^2) | O(hw) | Quá chậm và dễ mắc lỗi | 
 | Lưới tinh tế + lấp lũ + đi bộ ranh giới | O(hw) | O(hw) | Đã chấp nhận | 
@@ -72,7 +72,7 @@ Các ô trống không thêm kết nối. Bước này mã hóa hình học thà
 
 ### Tại sao nó hoạt động 
 
-Cấu trúc lưới tinh tế loại bỏ sự mơ hồ về đường chéo bằng cách thay thế từng đoạn đường chéo bằng kết nối trực giao trong hệ tọa độ nhân đôi. Điều này đảm bảo rằng mọi cạnh biên đều được căn chỉnh theo trục trong không gian được chuyển đổi. Phần lấp đầy ngăn cách phần bên ngoài một cách duy nhất vì đa giác đơn giản và không tự giao nhau, do đó phần bù của biểu đồ có chính xác một thành phần không bị chặn. Đi qua ranh giới sẽ tạo ra một chu trình đơn. Vì các cạnh của đa giác thẳng tương ứng với các lần chạy cực đại có hướng không đổi trong chu kỳ này, việc đếm các thay đổi hướng sẽ thu được số cạnh chính xác. 
+Cấu trúc lưới tinh tế loại bỏ sự mơ hồ về đường chéo bằng cách thay thế từng đoạn đường chéo bằng kết nối trực giao trong hệ tọa độ nhân đôi. Điều này đảm bảo rằng mọi cạnh biên đều được căn chỉnh theo trục trong không gian được chuyển đổi. Phần lấp đầy ngăn cách phần bên ngoài một cách duy nhất vì đa giác đơn giản và không tự giao nhau, do đó phần bù của biểu đồ có chính xác một thành phần không bị chặn. Đi qua ranh giới sẽ tạo ra một chu trình đơn. Vì các cạnh của đa giác thẳng tương ứng với các lần chạy cực đại có hướng không đổi trong chu kỳ này, nên việc đếm các thay đổi hướng sẽ thu được số cạnh chính xác. 
 
 ## Giải pháp Python```python
 import sys
@@ -185,7 +185,7 @@ print(cnt)
 
 Việc duyệt ranh giới sau đó sẽ đi dọc theo các cạnh ngăn cách các vùng được thăm và không được thăm. Trạng thái chính là hướng chuyển động trước đó; mỗi khi hướng thay đổi, quá trình truyền tải đã đạt đến một đỉnh của đa giác, điều này làm tăng số cạnh. 
 
-Một phần tinh tế là đảm bảo rằng chuyển động luôn tuân theo các chuyển tiếp ranh giới hợp lệ, được thực thi bằng cách chỉ bước qua các cạnh ngăn cách các vùng bên ngoài và bên trong. 
+Một phần tinh tế là đảm bảo rằng chuyển động luôn tuân theo các chuyển đổi ranh giới hợp lệ, được thực thi bằng cách chỉ bước qua các cạnh ngăn cách các vùng bên ngoài và bên trong. 
 
 ## Ví dụ đã hoạt động 
 
@@ -201,7 +201,7 @@ Hãy xem xét đầu vào mẫu:```
 | --- | --- | --- | --- | --- | 
 | 1 | bắt đầu | đúng | không | 0 | 
 | 2 | di chuyển dọc theo cạnh | đúng | đúng | 0 | 
-| 3 | đạt tới góc | xuống | đúng | 1 | 
+| 3 | đạt đến góc | xuống | đúng | 1 | 
 | 4 | di chuyển | xuống | xuống | 1 | 
 | 5 | góc | trái | xuống | 2 | 
 | 6 | chu trình hoàn chỉnh | trái | trái | 2 | 

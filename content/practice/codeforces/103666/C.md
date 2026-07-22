@@ -1,6 +1,6 @@
 ---
 title: "CF 103666C - \u041c\u0430\u0440\u0441\u0438\u0430\u043d\u0441\u043a\u0438\u0435 \u043d\u043e\u043b\u0438\u043a\u0438"
-description: "Chúng ta đang làm việc trong một hệ thống số vị trí có cơ số $k$, trong đó các số được viết bằng các chữ số từ $0$ đến $k-1$. Một số được gọi là “đủ tròn” nếu khi viết dưới dạng cơ số $k$, biểu diễn của nó kết thúc bằng ít nhất $n$ chữ số 0."
+description: "Chúng ta đang làm việc trong một hệ thống số vị trí có cơ số $k$, trong đó các số được viết bằng các chữ số từ $0$ đến $k-1$. Một số được gọi là “đủ tròn” nếu khi viết dưới dạng $k$ cơ số, biểu diễn của nó kết thúc bằng ít nhất $n$ chữ số 0."
 date: "2026-07-02T21:31:02+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
@@ -21,14 +21,14 @@ draft: false
 **Thời gian giải:** 49s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta đang làm việc trong một hệ thống số vị trí có cơ số$k$, trong đó các số được viết bằng các chữ số từ$0$ĐẾN$k-1$. Một số được gọi là đủ tròn nếu khi viết dưới dạng cơ số$k$, biểu diễn của nó kết thúc bằng ít nhất$n$không có chữ số. Nói cách khác, số đó chia hết cho$k^n$. 
 
 Nhiệm vụ là liệt kê tất cả các số nguyên dương có thuộc tính này theo thứ tự tăng dần và trả về$i$-thứ một trong biểu diễn thập phân thông thường. 
 
-Từ những hạn chế,$k$có thể lớn như$10^9$,$n$có thể lên tới$100$, Và$i$có thể lên tới$10^9$. Câu trả lời được đảm bảo phù hợp với$10^{18}$, có nghĩa là chúng ta có thể sử dụng logic số học 64-bit một cách an toàn và tránh những lo ngại tràn vượt quá giới hạn đó. 
+Từ những hạn chế,$k$có thể lớn như$10^9$,$n$có thể lên đến$100$, Và$i$có thể lên đến$10^9$. Câu trả lời được đảm bảo phù hợp với$10^{18}$, có nghĩa là chúng ta có thể sử dụng logic số học 64-bit một cách an toàn và tránh những lo ngại tràn vượt quá giới hạn đó. 
 
 Một cách giải thích ngây thơ sẽ là lặp qua các số tự nhiên, chuyển đổi từng số thành cơ số$k$, đếm các số 0 ở cuối và chọn những số đủ điều kiện. Điều này ngay lập tức thất bại vì việc kiểm tra một số tốn kém$O(\log_k x)$và chúng tôi có thể cần tới$10^9$số hợp lệ, nghĩa là chúng tôi sẽ mô phỏng tối đa$10^9$ứng viên, vượt xa giới hạn khả thi. 
 
@@ -40,20 +40,20 @@ Một trường hợp cạnh khác là khi$k = 2$Và$n$là lớn. Mặc dù$k^n$
 
 Quan sát quan trọng là một số có ít nhất$n$số 0 ở cuối trong cơ sở$k$khi và chỉ khi nó chia hết cho$k^n$. Điều này biến vấn đề thành một câu hỏi cấp số cộng đơn giản: chúng ta được yêu cầu liệt kê tất cả các bội số dương của$k^n$. 
 
-Vậy dãy số làm tròn đủ là:$$k^n,\; 2k^n,\; 3k^n,\; \dots$$các$i$-con số đó chính xác là:$$i \cdot k^n$$Cách tiếp cận bạo lực sẽ kiểm tra rõ ràng từng số nguyên, chuyển đổi nó thành cơ sở$k$và kiểm tra các số 0 ở cuối. Điều này hoạt động về mặt khái niệm vì việc chuyển đổi cơ sở rất đơn giản, nhưng nó không thành công về mặt tính toán vì mật độ của các số hợp lệ là$1/k^n$, vì vậy chúng tôi vẫn sẽ quét tới$i \cdot k^n$ứng viên trong trường hợp xấu nhất. 
+Vậy dãy số làm tròn đủ là:$$k^n,\; 2k^n,\; 3k^n,\; \dots$$các$i$-con số đó chính xác là:$$i \cdot k^n$$Cách tiếp cận vũ phu sẽ kiểm tra rõ ràng từng số nguyên, chuyển đổi nó thành cơ sở$k$và kiểm tra các số 0 ở cuối. Điều này hoạt động về mặt khái niệm vì việc chuyển đổi cơ sở rất đơn giản, nhưng nó không thành công về mặt tính toán vì mật độ của các số hợp lệ là$1/k^n$, vì vậy chúng tôi vẫn sẽ quét tới$i \cdot k^n$ứng viên trong trường hợp xấu nhất. 
 
-Cách tiếp cận được tối ưu hóa bỏ qua hoàn toàn việc biểu diễn và dựa vào sự tương đương giữa các số 0 ở cuối trong cơ sở$k$và khả năng chia hết cho$k^n$. Một khi sự tương đương này được thiết lập, bài toán sẽ giảm xuống việc tính lũy thừa và phép nhân. 
+Cách tiếp cận được tối ưu hóa bỏ qua hoàn toàn việc biểu diễn và dựa vào sự tương đương giữa các số 0 ở cuối trong cơ sở$k$và khả năng chia hết cho$k^n$. Một khi sự tương đương này được thiết lập, vấn đề sẽ giảm xuống việc tính lũy thừa và phép nhân. 
 
 Khó khăn kỹ thuật duy nhất là tính toán$k^n$một cách an toàn. Từ$n \le 100$, lũy thừa bằng cách bình phương lặp lại là đủ và ổn định trong số học 64 bit do đảm bảo rằng câu trả lời cuối cùng không vượt quá$10^{18}$. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu |$O(i \cdot \log_k(i k^n))$|$O(1)$| Quá chậm | 
 | Tối ưu |$O(\log n)$|$O(1)$| Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-## 1. Giải thích điều kiện theo cơ sở$k$Một số kết thúc bằng$n$số không trong cơ sở$k$nghĩa là nó chia hết cho$k^n$. Điều này chuyển đổi một điều kiện dựa trên chữ số thành một điều kiện chia hết số học thuần túy. 
+## 1. Diễn giải điều kiện theo cơ sở$k$Một số kết thúc bằng$n$số không trong cơ sở$k$nghĩa là nó chia hết cho$k^n$. Điều này chuyển đổi một điều kiện dựa trên chữ số thành một điều kiện chia hết số học thuần túy. 
 
 ## 2. Tính toán$k^n$Chúng tôi tính toán$p = k^n$sử dụng lũy ​​thừa nhanh. Bước này là cần thiết vì phép nhân trực tiếp$n$thời gian có thể tràn hoặc không hiệu quả nếu$n$đã lớn hơn. 
 
@@ -67,7 +67,7 @@ Trở lại$i \cdot k^n$như câu trả lời ở dạng thập phân.
 
 ### Tại sao nó hoạt động 
 
-Bất biến quan trọng là mọi số có ít nhất$n$số 0 ở cuối trong cơ sở$k$chính xác là bội số của$k^n$và mọi bội số của$k^n$có ít nhất$n$số 0 ở cuối. Đây là hệ quả trực tiếp của biểu diễn vị trí: mỗi số 0 ở cuối tương ứng với một hệ số của$k$. Do đó, việc sắp xếp các số bằng cách tăng giá trị sẽ bảo toàn thứ tự của bội số và$i$-số hợp lệ thứ chính xác là$i$- bội số thứ của$k^n$. 
+Bất biến quan trọng là mọi số có ít nhất$n$số 0 ở cuối trong cơ sở$k$chính xác là bội số của$k^n$và mọi bội số của$k^n$có ít nhất$n$số 0 ở cuối. Đây là hệ quả trực tiếp của biểu diễn vị trí: mỗi số 0 ở cuối tương ứng với một hệ số của$k$. Do đó, việc sắp xếp các số bằng cách tăng giá trị sẽ bảo toàn thứ tự của bội số và$i$-số hợp lệ chính xác là$i$- bội số thứ của$k^n$. 
 
 ## Giải pháp Python```python
 import sys

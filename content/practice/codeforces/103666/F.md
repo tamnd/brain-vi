@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 41s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi được tặng một bộ sưu tập búp bê matryoshka, mỗi con đều có kích thước bằng số. Một con búp bê chỉ có thể được đặt bên trong một con búp bê khác nếu kích thước của nó nhỏ hơn hoàn toàn. Mỗi con búp bê có thể chứa trực tiếp nhiều nhất một con búp bê khác, vì vậy cấu trúc mà chúng tôi xây dựng là một chuỗi chứ không phải là cấu trúc phân nhánh. 
@@ -52,7 +52,7 @@ Tuy nhiên, có một góc nhìn cẩn thận hơn: nếu chúng ta sắp xếp 
 
 Lực lượng vũ phu hoạt động bằng cách khám phá tất cả các tập hợp con và hoán vị, nhưng không thành công vì nó lặp lại các bước kiểm tra tính khả thi tương tự theo cấp số nhân. Quan sát cho thấy rằng chỉ sắp xếp theo giá trị mới làm giảm vấn đề trùng lặp sau khi sắp xếp. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
 | Tập hợp con và hoán vị Brute Force | O(n! · n) | O(n) | Quá chậm | 
 | Sắp xếp + đếm các giá trị riêng biệt | O(n log n) | O(1) thêm | Đã chấp nhận | 

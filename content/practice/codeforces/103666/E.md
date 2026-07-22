@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 59s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một lưới nhỏ, nhiều nhất là 20 x 20, trong đó mỗi ô chứa một ký tự chỉ hướng giữa N, S, E và W. Mỗi ô hoạt động giống như một lệnh được chỉ dẫn: nếu robot đang đứng trên ô đó, nó buộc phải di chuyển một bước theo hướng đã chỉ định, di chuyển đến ô lân cận trong lưới. 
@@ -32,7 +32,7 @@ Sản lượng yêu cầu là lượng nhiên liệu tối thiểu cần thiết
 
 Ràng buộc cấu trúc chính là kích thước lưới, với n và m lên tới 20. Điều đó cho phép tối đa 400 nút. Bất kỳ thuật toán nào có giá trị lên tới khoảng O(n^2 m^2) hoặc thậm chí O(VE) với V, E khoảng 400 đều có thể chấp nhận được. Điều này ngay lập tức loại trừ bất kỳ phép liệt kê hàm mũ nào trên các đường dẫn hoặc trạng thái phụ thuộc vào lịch sử truyền tải đầy đủ. 
 
-Một vấn đề tế nhị phát sinh từ các chu kỳ. Vì mỗi ô có chính xác một hướng đi nên đồ thị là một đồ thị hàm số, do đó mỗi thành phần chứa chính xác một chu trình có hướng với các cây đi vào đó. Một quá trình truyền tải đơn giản tiếp tục đi theo các mũi tên mà không theo dõi các trạng thái đã truy cập sẽ lặp lại mãi mãi, vì vậy mọi giải pháp đúng đều phải xử lý rõ ràng các chu trình. 
+Một vấn đề tế nhị phát sinh từ các chu kỳ. Vì mỗi ô có chính xác một hướng đi nên đồ thị là một đồ thị hàm số, do đó mỗi thành phần chứa chính xác một chu trình có hướng với các cây đi vào đó. Một quá trình truyền tải đơn giản tiếp tục đi theo các mũi tên mà không theo dõi các trạng thái đã truy cập sẽ lặp lại mãi mãi, vì vậy mọi giải pháp đúng đều phải xử lý rõ ràng các chu kỳ. 
 
 Một cạm bẫy phổ biến khác là giả định câu trả lời phụ thuộc vào một ô bắt đầu. Trên thực tế, do các thành phần độc lập và mỗi thành phần có cấu trúc chu trình riêng nên chi phí được tích lũy trên tất cả các thành phần chứ không chỉ trong một bước đi. 
 
@@ -44,7 +44,7 @@ Quan sát quan trọng là mỗi nút có chính xác một cạnh đi ra, do đ
 
 Chúng ta có thể coi mỗi ô như một nút và đi theo cạnh đi ra của nó. Sử dụng DFS với ba trạng thái, chưa truy cập, đã truy cập và đã hoàn tất, chúng ta có thể phát hiện các chu kỳ một cách chính xác. Khi chúng tôi tìm thấy cạnh sau của nút truy cập, chúng tôi sẽ trích xuất chu trình và xử lý nó một lần. Tất cả các nút không theo chu kỳ cuối cùng được gắn vào một số chu kỳ và có thể được xử lý trong quá trình thư giãn DFS hoặc truyền bá BFS.
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
 | Mô phỏng lực lượng vũ phu từ mỗi nút | O(V^2) đến O(V^3) trong thực tế | O(V) | Quá chậm/mơ hồ | 
 | Đồ thị hàm DFS với tính năng phát hiện chu trình | O(V) | O(V) | Đã chấp nhận | 
@@ -55,7 +55,7 @@ Chúng ta có thể coi mỗi ô như một nút và đi theo cạnh đi ra củ
 2. Duy trì các mảng để lưu trữ trạng thái truy cập và con trỏ cha. Trạng thái truy cập phân biệt giữa các nút chưa được xử lý, hiện đang ở ngăn xếp đệ quy và được xử lý đầy đủ. 
 3. Chạy DFS từ mọi nút chưa được truy cập. Khi vào một nút, đánh dấu nút đó là đang truy cập và di chuyển đến nút lân cận đi ra của nó. Điều này đảm bảo chúng ta luôn tuân theo cấu trúc xác định của biểu đồ. 
 4. Nếu trong DFS, chúng tôi đạt đến một nút đã ở trạng thái truy cập, thì chúng tôi đã phát hiện ra một chu kỳ. Sau đó, chúng ta duyệt chu trình một cách rõ ràng bằng cách đi dọc theo các cạnh đi ra cho đến khi quay trở lại nút chu trình bắt đầu, thu thập tất cả các nút trong chu trình đó. 
-5. Sau khi xác định được một chu kỳ, hãy tính phần đóng góp của nó chính xác một lần. Bởi vì mỗi nút có chính xác một cạnh đi ra, mỗi nút trong biểu đồ thuộc về chính xác một chu trình hoặc nằm trên một đường dẫn vào một chu trình, do đó, các chu trình xử lý trước tiên sẽ đảm bảo tính chính xác. 
+5. Sau khi xác định được một chu kỳ, hãy tính toán phần đóng góp của nó chính xác một lần. Bởi vì mỗi nút có chính xác một cạnh đi ra, mỗi nút trong biểu đồ thuộc về chính xác một chu trình hoặc nằm trên một đường dẫn vào một chu trình, do đó, các chu trình xử lý trước tiên sẽ đảm bảo tính chính xác. 
 6. Sau khi xử lý một nút hoặc chu trình, hãy đánh dấu các nút là đã hoàn tất để chúng không bao giờ được xem lại trong các lệnh gọi DFS trong tương lai. Điều này ngăn chặn việc tính hai lần và đảm bảo độ phức tạp tuyến tính. 
 
 ### Tại sao nó hoạt động 

@@ -21,30 +21,30 @@ draft: false
 **Thời gian giải:** 51s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta có một dãy giống Fibonacci trong đó hai số hạng đầu tiên được cố định là$F_1 = 1$Và$F_2 = 2$, và mọi số hạng sau đều bằng tổng của hai số hạng trước đó. Điều này tạo ra một chuỗi số nguyên vô hạn xác định. Nhiệm vụ không phải là tính toán trực tiếp các giá trị lớn mà tập trung vào một đoạn của chuỗi này được lập chỉ mục từ$L$ĐẾN$R$và đếm xem có bao nhiêu số Fibonacci được lập chỉ mục chia hết cho 3. 
 
-Đầu vào cho hai số nguyên$L$Và$R$, mô tả một khối chỉ số liền kề trong chuỗi Fibonacci. Đầu ra là một số nguyên biểu thị có bao nhiêu số Fibonacci trong phạm vi chỉ số đó có số dư bằng 0 khi chia cho 3. 
+Đầu vào cho hai số nguyên$L$Và$R$, mô tả một khối chỉ số liền kề trong dãy Fibonacci. Đầu ra là một số nguyên biểu thị có bao nhiêu số Fibonacci trong phạm vi chỉ số đó có số dư bằng 0 khi chia cho 3. 
 
 Những ràng buộc cho phép$L, R \le 10^5$, điều này ngay lập tức gợi ý rằng bất kỳ giải pháp nào tính toán lại các giá trị Fibonacci một cách nguyên bản cho đến từng điểm cuối truy vấn đều ổn về mặt số lần lặp thô, kể từ khi tạo$10^5$Số Fibonacci là tầm thường. Tuy nhiên, vấn đề thực sự không phải là tự tính toán các số Fibonacci mà là kiểm tra tính chia hết và nhận biết cấu trúc trong thuộc tính đó một cách hiệu quả. 
 
-Một cạm bẫy tinh vi xuất hiện khi cố gắng tính trực tiếp các giá trị Fibonacci lớn. Mặc dù$n \le 10^5$, các số Fibonacci tăng theo cấp số nhân và vượt quá phạm vi số nguyên tiêu chuẩn rất nhanh. Việc triển khai đơn giản bằng cách sử dụng số nguyên lớn vẫn có thể thực hiện được bằng Python, nhưng không cần thiết. Quan trọng hơn, việc tính toán lại các giá trị đầy đủ là một nỗ lực lãng phí vì chúng ta chỉ quan tâm đến khả năng chia hết cho 3, điều này chỉ phụ thuộc vào chuỗi modulo 3. 
+Một cạm bẫy nhỏ xuất hiện khi cố gắng tính trực tiếp các giá trị Fibonacci lớn. Mặc dù$n \le 10^5$, các số Fibonacci tăng theo cấp số nhân và vượt quá phạm vi số nguyên tiêu chuẩn rất nhanh. Việc triển khai đơn giản bằng cách sử dụng số nguyên lớn vẫn có thể thực hiện được bằng Python, nhưng không cần thiết. Quan trọng hơn, việc tính toán lại các giá trị đầy đủ là một nỗ lực lãng phí vì chúng ta chỉ quan tâm đến khả năng chia hết cho 3, điều này chỉ phụ thuộc vào chuỗi modulo 3. 
 
-Không có trường hợp phức tạp nào phát sinh từ định dạng hoặc phạm vi đầu vào, nhưng có một trường hợp khái niệm: nếu ai đó tính toán trực tiếp các giá trị Fibonacci và sau đó kiểm tra khả năng chia hết, họ có thể cho rằng Python xử lý nó một cách an toàn. Đúng vậy, nhưng nó che giấu sự thật rằng cấu trúc của bài toán cho phép giải pháp thời gian không đổi cho mỗi chỉ mục sau khi tiền xử lý. 
+Không có trường hợp khó khăn nào phát sinh từ định dạng hoặc phạm vi đầu vào, nhưng có một trường hợp khái niệm: nếu ai đó tính toán trực tiếp các giá trị Fibonacci và sau đó kiểm tra khả năng chia hết, họ có thể cho rằng Python xử lý nó một cách an toàn. Đúng vậy, nhưng nó che giấu sự thật rằng cấu trúc của bài toán cho phép giải pháp thời gian không đổi cho mỗi chỉ mục sau khi tiền xử lý. 
 
 ## Phương pháp tiếp cận 
 
 Một cách tiếp cận trực tiếp là tạo ra từng số Fibonacci từ$F_1$lên đến$F_R$, kiểm tra từng giá trị và đếm xem có bao nhiêu trong phạm vi$[L, R]$đều chia hết cho 3. Điều này đúng vì nó tuân theo định nghĩa trực tiếp. Chi phí là tuyến tính trong$R$, với mỗi bước thực hiện phép cộng và kiểm tra modulo. Trong Python điều này vẫn khả thi đối với$10^5$điều khoản, nhưng nó đang làm công việc không cần thiết. 
 
-Quan sát quan trọng là chúng ta không bao giờ cần các giá trị Fibonacci đầy đủ. Chúng ta chỉ cần chúng theo modulo 3. Sau khi giảm hàm truy hồi theo modulo 3, chúng ta sẽ có được một máy trạng thái nhỏ: mỗi số hạng chỉ phụ thuộc vào hai dư lượng theo modulo 3 trước đó. Vì mỗi dư lượng nằm trong$\{0,1,2\}$, toàn bộ quá trình cuối cùng phải lặp lại. Trên thực tế, chuỗi này có cấu trúc tuần hoàn rất ngắn, do đó mẫu chia hết cho 3 trở thành tuần hoàn trong chỉ số. 
+Quan sát quan trọng là chúng ta không bao giờ cần các giá trị Fibonacci đầy đủ. Chúng ta chỉ cần chúng theo modulo 3. Sau khi giảm hàm truy hồi theo modulo 3, chúng ta sẽ có một máy trạng thái nhỏ: mỗi số hạng chỉ phụ thuộc vào hai dư lượng theo modulo 3 trước đó. Vì mỗi dư lượng nằm trong$\{0,1,2\}$, toàn bộ quá trình cuối cùng phải lặp lại. Trên thực tế, chuỗi này có cấu trúc tuần hoàn rất ngắn, do đó mẫu chia hết cho 3 trở thành tuần hoàn trong chỉ số. 
 
 Một khi chúng ta biết mẫu này, vấn đề sẽ giảm xuống việc đếm xem có bao nhiêu chỉ số trong$[L, R]$rơi vào các vị trí có dư lượng Fibonacci bằng 0. Điều này có thể được trả lời bằng cách tính toán trước chu kỳ đầu tiên và sử dụng phép tính số học hoặc bằng cách xây dựng tổng tiền tố theo mẫu tuần hoàn lên đến$10^5$. 
 
 Một cách tiếp cận đơn giản và an toàn không kém là tính toán trước chuỗi dư lượng lên đến$R$, xây dựng tổng tiền tố của các vị trí trong đó$F_i \bmod 3 = 0$và trả lời truy vấn trong thời gian không đổi. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
 | Fibonacci Brute Force + kiểm tra |$O(R)$|$O(1)$| Đã chấp nhận | 
 | Modulo + tổng tiền tố |$O(R)$tiền xử lý,$O(1)$truy vấn |$O(R)$| Đã chấp nhận | 
@@ -171,4 +171,4 @@ Vụ án$L = 1$là điều kiện biên cấu trúc duy nhất vì nó buộc ph
 Đối với trường hợp thứ hai:```
 2
 3
-```chúng tôi có$F_2 = 2$,$F_3 = 3$. Chỉ có chỉ số 3 đóng góp nên câu trả lời là 1. Phép trừ tiền tố`pref[3] - pref[1]`cách ly chính xác chỉ mục hợp lệ duy nhất này mà không cần logic trường hợp đặc biệt ngoài việc xử lý ranh giới.
+```Chúng tôi có$F_2 = 2$,$F_3 = 3$. Chỉ có chỉ số 3 đóng góp nên câu trả lời là 1. Phép trừ tiền tố`pref[3] - pref[1]`cách ly chính xác chỉ mục hợp lệ duy nhất này mà không cần logic trường hợp đặc biệt ngoài việc xử lý ranh giới.
