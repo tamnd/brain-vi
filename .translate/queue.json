@@ -1,6 +1,54 @@
 {
   "pending": [
     {
+      "source_path": "content/en/practice/codeforces/102741/D.md",
+      "priority": 30,
+      "added_at": "2026-07-29T18:03:32.026414Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/codeforces/102739/B.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.025547Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/codeforces/102739/C.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.025661Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/codeforces/102739/D.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.025712Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/codeforces/102739/E.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.025760Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/codeforces/102739/F.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.025814Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/codeforces/102739/G.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.025868Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/codeforces/102741/E.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.026462Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/codeforces/102788/E.md",
       "priority": 20,
       "added_at": "2026-07-28T18:09:03.094492Z",
@@ -197563,6 +197611,12 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.1.4/42.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.952550Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/5.1.4/43.md",
       "priority": 20,
       "added_at": "2026-07-28T18:09:04.027331Z",
@@ -197809,6 +197863,12 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.1/36.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.953977Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/5.2.1/37.md",
       "priority": 20,
       "added_at": "2026-07-28T18:09:04.029725Z",
@@ -198037,6 +198097,12 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.2/38.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.955041Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/5.2.2/39.md",
       "priority": 20,
       "added_at": "2026-07-28T18:09:04.031868Z",
@@ -198115,6 +198181,12 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.2/52.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.955453Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/5.2.2/53.md",
       "priority": 20,
       "added_at": "2026-07-28T18:09:04.032805Z",
@@ -198130,6 +198202,12 @@
       "source_path": "content/en/practice/maths/taocp/vol3/5.2.2/55.md",
       "priority": 20,
       "added_at": "2026-07-28T18:09:04.032914Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.2/56.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.955721Z",
       "retries": 0
     },
     {
@@ -198235,6 +198313,132 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.3/18.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.956253Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.3/19.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.956309Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.3/20.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.956360Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.3/21.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.956423Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.3/22.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.956481Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.3/23.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.956547Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.3/24.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.956749Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.3/25.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.956971Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.3/26.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.957026Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.3/27.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.957077Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.3/28.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.957129Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.3/29.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.957200Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.3/30.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.957407Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.3/31.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.957464Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.3/32.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.957683Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.3/33.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.957736Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.3/34.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.957910Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.3/35.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.957966Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.3/36.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.958017Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.3/37.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.958205Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.3/38.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.958266Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/5.2.4/01.md",
       "priority": 20,
       "added_at": "2026-06-13T17:31:05.041228Z",
@@ -198280,6 +198484,96 @@
       "source_path": "content/en/practice/maths/taocp/vol3/5.2.4/08.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.053582Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.4/09.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.958556Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.4/10.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.958618Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.4/11.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.958674Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.4/12.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.958725Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.4/13.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.958780Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.4/14.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.958832Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.4/15.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.958884Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.4/16.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.958937Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.4/17.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.958989Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.4/18.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.959045Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.4/19.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.959098Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.4/20.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.959149Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.4/21.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.959221Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.4/22.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.959289Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.4/23.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.959346Z",
       "retries": 0
     },
     {
@@ -198334,6 +198628,60 @@
       "source_path": "content/en/practice/maths/taocp/vol3/5.2.5/09.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.054049Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.5/10.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.959653Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.5/11.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.959706Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.5/12.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.959759Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.5/13.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.959815Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.5/14.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.960017Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.5/15.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.960249Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.5/16.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.960311Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.5/17.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.960368Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.2.5/18.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.960424Z",
       "retries": 0
     },
     {
@@ -198463,6 +198811,174 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/09.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.960703Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/10.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.960756Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/11.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.960963Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/12.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.961018Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/13.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.961071Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/14.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.961121Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/15.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.961191Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/16.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.961250Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/17.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.961302Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/18.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.961356Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/19.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.961412Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/20.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.961466Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/21.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.961517Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/22.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.961570Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/23.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.961623Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/24.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.961674Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/25.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.961723Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/26.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.961776Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/27.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.961836Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/28.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.961891Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/29.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.961947Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/30.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.962003Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/31.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.962212Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/32.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.962275Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/33.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.962341Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/34.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.962459Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/35.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.962511Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.1/36.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.962563Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/5.3.2/01.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.054682Z",
@@ -198532,6 +199048,12 @@
       "source_path": "content/en/practice/maths/taocp/vol3/5.3.2/12.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.055427Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.2/13.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.962958Z",
       "retries": 0
     },
     {
@@ -198679,6 +199201,72 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.3/17.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.963649Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.3/18.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.963703Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.3/19.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.963755Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.3/20.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.963815Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.3/21.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.963884Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.3/22.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.964082Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.3/23.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.964139Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.3/24.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.964356Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.3/25.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.964589Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.3/26.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.964646Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.3/27.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.964708Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/01.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.056781Z",
@@ -198712,6 +199300,378 @@
       "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/06.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.057094Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/07.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.964941Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/08.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.964995Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/09.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.965046Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/10.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.965099Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/11.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.965152Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/12.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.965230Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/13.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.965288Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/14.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.965475Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/15.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.965527Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/16.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.965578Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/17.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.965633Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/18.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.965687Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/19.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.965742Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/20.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.965926Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/21.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.965977Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/22.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.966026Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/23.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.966074Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/24.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.966123Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/25.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.966193Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/26.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.966250Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/27.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.966307Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/28.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.966363Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/29.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.966412Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/30.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.966468Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/31.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.966516Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/32.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.966568Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/33.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.966618Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/34.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.966667Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/35.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.966720Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/36.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.966771Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/37.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.966821Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/38.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.966874Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/39.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.967081Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/40.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.967133Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/41.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.967205Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/42.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.967258Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/43.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.967308Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/44.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.967363Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/45.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.967413Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/46.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.967464Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/47.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.967513Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/48.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.967707Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/49.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.967759Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/50.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.967810Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/51.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.967912Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/52.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.967969Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/53.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.968027Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/54.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.968083Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/55.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.968132Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/56.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.968209Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/57.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.968267Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/58.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.968318Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/59.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.968377Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/60.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.968431Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/61.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.968486Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/62.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.968537Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/63.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.968593Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/64.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.968649Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/65.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.968702Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/66.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.968887Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/67.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.968941Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.3.4/68.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.968995Z",
       "retries": 0
     },
     {
@@ -198841,6 +199801,12 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.1/22.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.969867Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/5.4.1/23.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.058415Z",
@@ -198952,6 +199918,12 @@
       "source_path": "content/en/practice/maths/taocp/vol3/5.4.2/13.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.059378Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.2/14.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.970447Z",
       "retries": 0
     },
     {
@@ -199123,6 +200095,138 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.4/01.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.971261Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.4/02.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.971316Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.4/03.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.971368Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.4/04.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.971418Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.4/05.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.971467Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.4/06.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.971515Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.4/07.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.971573Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.4/08.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.971629Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.4/09.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.971678Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.4/10.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.971726Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.4/11.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.971775Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.4/12.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.971837Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.4/13.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.971889Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.4/14.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.971945Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.4/15.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.971998Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.4/16.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.972050Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.4/17.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.972103Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.4/18.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.972155Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.4/19.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.972228Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.4/20.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.972278Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.4/21.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.972327Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.4/22.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.972374Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/5.4.5/01.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.061186Z",
@@ -199249,6 +200353,12 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.7/06.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.973041Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/5.4.7/07.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.062517Z",
@@ -199279,6 +200389,12 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.8/05.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.973263Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/5.4.8/06.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.062912Z",
@@ -199297,6 +200413,12 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.8/09.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.973390Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/5.4.8/10.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.063050Z",
@@ -199312,6 +200434,18 @@
       "source_path": "content/en/practice/maths/taocp/vol3/5.4.9/02.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.063192Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.9/03.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.973548Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.9/04.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.973601Z",
       "retries": 0
     },
     {
@@ -199387,15 +200521,45 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.9/17.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.973955Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/5.4.9/18.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.063776Z",
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.9/19.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.974037Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.9/20.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.974089Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.9/21.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.974147Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/5.4.9/22.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.063846Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.9/23.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.974251Z",
       "retries": 0
     },
     {
@@ -199429,6 +200593,12 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.9/29.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.974433Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/5.4.9/30.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.064146Z",
@@ -199438,6 +200608,30 @@
       "source_path": "content/en/practice/maths/taocp/vol3/5.4.9/31.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.064216Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4/01.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.969070Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4/02.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.969118Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4/03.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.969193Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4/04.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.969247Z",
       "retries": 0
     },
     {
@@ -199456,6 +200650,12 @@
       "source_path": "content/en/practice/maths/taocp/vol3/5.5/03.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.064479Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.5/04.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.974645Z",
       "retries": 0
     },
     {
@@ -199639,6 +200839,12 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.1/04.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.974843Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/6.1/05.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.064956Z",
@@ -199678,6 +200884,36 @@
       "source_path": "content/en/practice/maths/taocp/vol3/6.1/11.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.065336Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.1/12.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.975065Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.1/13.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.975120Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.1/14.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.975193Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.1/15.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.975252Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.1/16.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.975305Z",
       "retries": 0
     },
     {
@@ -199732,6 +200968,12 @@
       "source_path": "content/en/practice/maths/taocp/vol3/6.2.1/03.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.065913Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.2.1/04.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.975600Z",
       "retries": 0
     },
     {
@@ -200077,6 +201319,12 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.2.2/32.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.977212Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/6.2.2/33.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.069084Z",
@@ -200092,6 +201340,12 @@
       "source_path": "content/en/practice/maths/taocp/vol3/6.2.2/35.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.069173Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.2.2/36.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.977341Z",
       "retries": 0
     },
     {
@@ -200134,6 +201388,12 @@
       "source_path": "content/en/practice/maths/taocp/vol3/6.2.2/43.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.069553Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.2.2/44.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.977568Z",
       "retries": 0
     },
     {
@@ -200419,6 +201679,12 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.2.4/10.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.978872Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/6.3/01.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.072419Z",
@@ -200437,9 +201703,27 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.3/04.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.979029Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.3/05.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.979086Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/6.3/06.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.072619Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.3/07.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.979185Z",
       "retries": 0
     },
     {
@@ -200476,6 +201760,12 @@
       "source_path": "content/en/practice/maths/taocp/vol3/6.3/13.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.073129Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.3/14.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.979402Z",
       "retries": 0
     },
     {
@@ -200596,6 +201886,12 @@
       "source_path": "content/en/practice/maths/taocp/vol3/6.3/34.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.074079Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.3/35.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.980066Z",
       "retries": 0
     },
     {
@@ -200725,6 +202021,18 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.4/12.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.980687Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.4/13.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.980743Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/6.4/14.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.075535Z",
@@ -200749,6 +202057,12 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.4/18.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.980894Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/6.4/19.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.075718Z",
@@ -200761,9 +202075,21 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.4/21.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.980994Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/6.4/22.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.075827Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.4/23.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.981074Z",
       "retries": 0
     },
     {
@@ -200809,6 +202135,66 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.4/31.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.981326Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.4/32.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.981380Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.4/33.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.981429Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.4/34.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.981480Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.4/35.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.981529Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.4/36.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.981579Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.4/37.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.981629Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.4/38.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.981682Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.4/39.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.981734Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.4/40.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.981784Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/6.4/41.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.076191Z",
@@ -200848,6 +202234,12 @@
       "source_path": "content/en/practice/maths/taocp/vol3/6.4/47.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.076464Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.4/48.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.982012Z",
       "retries": 0
     },
     {
@@ -201031,6 +202423,12 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.5/01.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.982862Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/6.5/02.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.078291Z",
@@ -201052,6 +202450,12 @@
       "source_path": "content/en/practice/maths/taocp/vol3/6.5/05.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.078426Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.5/06.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.983017Z",
       "retries": 0
     },
     {
@@ -201115,9 +202519,27 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.5/17.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.983472Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.5/18.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.983530Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/6.5/19.md",
       "priority": 20,
       "added_at": "2026-06-23T17:36:21.079028Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/6.5/20.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.983606Z",
       "retries": 0
     },
     {
@@ -201232,6 +202654,12 @@
       "source_path": "content/en/practice/maths/taocp/vol4/7.1.1/108.md",
       "priority": 20,
       "added_at": "2026-06-26T17:34:42.700264Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol4/7.1.1/109.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:32.984201Z",
       "retries": 0
     },
     {
@@ -208063,6 +209491,84 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol4/7.2.1.5/46.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:33.013417Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol4/7.2.1.5/47.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:33.013483Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol4/7.2.1.5/48.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:33.013538Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol4/7.2.1.5/49.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:33.013592Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol4/7.2.1.5/50.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:33.013644Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol4/7.2.1.5/51.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:33.013703Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol4/7.2.1.5/52.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:33.013759Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol4/7.2.1.5/53.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:33.013816Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol4/7.2.1.5/54.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:33.013866Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol4/7.2.1.5/55.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:33.013917Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol4/7.2.1.5/56.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:33.013971Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol4/7.2.1.5/57.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:33.014022Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol4/7.2.1.5/58.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:33.014081Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol4/7.2.1.5/59.md",
       "priority": 20,
       "added_at": "2026-07-05T17:58:12.118511Z",
@@ -208630,6 +210136,12 @@
       "source_path": "content/en/practice/maths/taocp/vol4/7.2.1.6/46.md",
       "priority": 20,
       "added_at": "2026-07-05T17:58:12.123546Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol4/7.2.1.6/47.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:33.016551Z",
       "retries": 0
     },
     {
@@ -210091,6 +211603,18 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol4/7.2.2.1/265.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:33.024907Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol4/7.2.2.1/266.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:33.024968Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol4/7.2.2.1/267.md",
       "priority": 20,
       "added_at": "2026-06-28T17:27:12.441742Z",
@@ -210730,6 +212254,18 @@
       "source_path": "content/en/practice/maths/taocp/vol4/7.2.2.1/363.md",
       "priority": 20,
       "added_at": "2026-06-28T17:27:12.447136Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol4/7.2.2.1/364.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:33.027724Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol4/7.2.2.1/365.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:33.027780Z",
       "retries": 0
     },
     {
@@ -213322,6 +214858,12 @@
       "source_path": "content/en/practice/maths/taocp/vol4/7.2.2.2/349.md",
       "priority": 20,
       "added_at": "2026-07-10T18:19:43.789631Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol4/7.2.2.2/35.md",
+      "priority": 20,
+      "added_at": "2026-07-29T18:03:33.038831Z",
       "retries": 0
     },
     {
@@ -228850,6 +230392,12 @@
       "source_path": "content/en/practice/codeforces/1027/_index.md",
       "priority": 15,
       "added_at": "2026-06-16T18:30:45.822333Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/codeforces/102739/_index.md",
+      "priority": 15,
+      "added_at": "2026-07-29T18:03:32.025915Z",
       "retries": 0
     },
     {
@@ -248875,6 +250423,12 @@
       "retries": 0
     },
     {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4.4/_index.md",
+      "priority": 15,
+      "added_at": "2026-07-29T18:03:32.972421Z",
+      "retries": 0
+    },
+    {
       "source_path": "content/en/practice/maths/taocp/vol3/5.4.5/_index.md",
       "priority": 15,
       "added_at": "2026-06-23T17:36:21.061276Z",
@@ -248902,6 +250456,12 @@
       "source_path": "content/en/practice/maths/taocp/vol3/5.4.9/_index.md",
       "priority": 15,
       "added_at": "2026-06-23T17:36:21.064279Z",
+      "retries": 0
+    },
+    {
+      "source_path": "content/en/practice/maths/taocp/vol3/5.4/_index.md",
+      "priority": 15,
+      "added_at": "2026-07-29T18:03:32.969294Z",
       "retries": 0
     },
     {
