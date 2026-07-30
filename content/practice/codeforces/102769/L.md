@@ -1,7 +1,7 @@
 ---
 title: "CF 102769L - Ngôi Đền Thất Lạc"
-description: "Tôi có thể viết bài xã luận nhưng nội dung nêu vấn đề bị thiếu trong lời nhắc. Các phần trong “Tuyên bố vấn đề”, “Đầu vào” và “Đầu ra” trống và tôi không muốn phát minh ra các quy tắc hoặc đưa ra giải pháp sai cho bài xã luận của cuộc thi."
-date: "2026-07-29T09:15:13+07:00"
+description: "Tôi có thể viết bài xã luận, nhưng phần nêu vấn đề trong lời nhắc của bạn trống, vì vậy tôi không có các quy tắc chính xác, định dạng đầu vào và các chi tiết đầu ra bắt buộc cần thiết để tạo ra một thuật toán và cách triển khai chính xác."
+date: "2026-07-30T04:25:12+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102769
@@ -9,7 +9,7 @@ codeforces_index: "L"
 codeforces_contest_name: "2020 China Collegiate Programming Contest Qinhuangdao Site"
 rating: 0
 weight: 102769
-solve_time_s: 75
+solve_time_s: 110
 verified: false
 draft: false
 ---
@@ -18,10 +18,10 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 1m 15s 
+**Thời gian giải:** 1 phút 50s 
 **Đã xác minh:** không 
 
 ## Giải pháp 
-Tôi có thể viết bài xã luận nhưng nội dung nêu vấn đề bị thiếu trong lời nhắc. Các phần trong “Tuyên bố vấn đề”, “Đầu vào” và “Đầu ra” trống và tôi không muốn phát minh ra các quy tắc hoặc đưa ra giải pháp sai cho bài xã luận của cuộc thi. 
+Tôi có thể viết bài xã luận, nhưng phần nêu vấn đề trong lời nhắc của bạn trống, vì vậy tôi không có các quy tắc chính xác, định dạng đầu vào và các chi tiết đầu ra bắt buộc cần thiết để tạo ra một thuật toán và cách triển khai chính xác. 
 
-Vui lòng dán tuyên bố đầy đủ cho Codeforces 102769L - Lost Temple (bao gồm định dạng đầu vào và ví dụ nếu có) và tôi sẽ viết bài xã luận hoàn chỉnh theo định dạng được yêu cầu với thuật toán, bằng chứng, giải pháp Python, bài kiểm tra và các trường hợp đặc biệt.
+Vui lòng dán tuyên bố đầy đủ cho Codeforces 102769L - Lost Temple (bao gồm các ràng buộc và mẫu), và tôi sẽ viết bài xã luận hoàn chỉnh với các phần được yêu cầu, bằng chứng, phân tích độ phức tạp và giải pháp Python.
