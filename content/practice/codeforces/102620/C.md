@@ -1,7 +1,7 @@
 ---
 title: "CF 102620C - Dấu hiệu con khỉ"
-description: "Tôi có thể viết bài xã luận nhưng thiếu thông tin chi tiết về vấn đề trong lời nhắc. Mình thấy Codeforces Gym 102620 là cuộc thi mBIT Standard tháng 6 năm 2020 và bài C là “Monkey Signs”, nhưng mình không có câu lệnh thực tế, định dạng đầu vào, ràng buộc, mẫu…"
-date: "2026-07-31T03:23:29+07:00"
+description: "Tôi cần báo cáo vấn đề thực tế hoặc một liên kết đến nó vì “Codeforces 102620C - Monkey Signs” không cung cấp đủ thông tin để xây dựng lại thuật toán, các ràng buộc, mẫu hoặc các trường hợp biên một cách đáng tin cậy. Vui lòng cung cấp văn bản tuyên bố hoặc URL. Đang chờ câu trả lời của bạn"
+date: "2026-08-02T13:51:50+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102620
@@ -9,7 +9,7 @@ codeforces_index: "C"
 codeforces_contest_name: "mBIT Standard June 2020"
 rating: 0
 weight: 102620
-solve_time_s: 92
+solve_time_s: 32
 verified: false
 draft: false
 ---
@@ -18,10 +18,10 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 1m 32s 
+**Thời gian giải:** 32s 
 **Đã xác minh:** không 
 
 ##Giải pháp 
-Tôi có thể viết bài xã luận nhưng thiếu thông tin chi tiết về vấn đề trong lời nhắc. Tôi thấy rằng Codeforces Gym 102620 là cuộc thi mBIT Standard tháng 6 năm 2020 và vấn đề C là “Monkey Signs”, nhưng tôi không có tuyên bố thực tế, định dạng đầu vào, ràng buộc, mẫu hoặc định nghĩa đầu ra bắt buộc từ thông tin được cung cấp. 
+Tôi cần báo cáo vấn đề thực tế hoặc một liên kết đến nó vì “Codeforces 102620C - Monkey Signs” không cung cấp đủ thông tin để xây dựng lại thuật toán, các ràng buộc, mẫu hoặc các trường hợp biên một cách đáng tin cậy. Vui lòng cung cấp văn bản tuyên bố hoặc URL. 
 
-Vui lòng dán toàn bộ tuyên bố vấn đề (hoặc một liên kết đến trang vấn đề) và tôi sẽ tạo ra bài xã luận hoàn chỉnh ở định dạng được yêu cầu với phần giải thích thuật toán, bằng chứng, giải pháp Python, ví dụ, bài kiểm tra và các trường hợp đặc biệt.
+Đang chờ câu trả lời của bạn
