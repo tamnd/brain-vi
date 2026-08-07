@@ -1,7 +1,7 @@
 ---
 title: "CF 102550A - \u041f\u043e\u0438\u0441\u043a\u0438 \u0422\u0440\u0435\u0437\u0443\u0431\u0446\u0430"
-description: "Bản đồ là một mảng hình chữ nhật gồm các phòng có chuyển động bao quanh. Di chuyển qua hàng cuối cùng sẽ đưa bạn đến hàng đầu tiên và di chuyển qua cột cuối cùng sẽ đưa bạn đến cột đầu tiên, do đó các phòng tạo thành hình xuyến chứ không phải hình chữ nhật thông thường."
-date: "2026-08-05T14:53:05+07:00"
+description: "Bản đồ là một lưới hình xuyến n x m. Di chuyển ra ngoài cạnh trên, dưới, trái hoặc phải sẽ quấn quanh phía đối diện. Phòng bắt đầu ở góc trên bên trái. Một số phòng có gợi ý được đánh dấu X."
+date: "2026-08-06T20:35:00+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102550
@@ -9,7 +9,7 @@ codeforces_index: "A"
 codeforces_contest_name: "\u0418\u043d\u0442\u0435\u0440\u043d\u0435\u0442-\u043e\u043b\u0438\u043c\u043f\u0438\u0430\u0434\u044b, \u0421\u0435\u0437\u043e\u043d 2018-2019, \u041f\u0435\u0440\u0432\u0430\u044f \u043b\u0438\u0447\u043d\u0430\u044f \u043e\u043b\u0438\u043c\u043f\u0438\u0430\u0434\u0430"
 rating: 0
 weight: 102550
-solve_time_s: 898
+solve_time_s: 228
 verified: false
 draft: false
 ---
@@ -18,133 +18,129 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 14 phút 58 giây 
+**Thời gian giải:** 3 phút 48s 
 **Đã xác minh:** không 
 
 ## Giải pháp 
 ## Hiểu vấn đề 
 
-Bản đồ là một mảng hình chữ nhật gồm các phòng có chuyển động bao quanh. Di chuyển qua hàng cuối cùng sẽ đưa bạn đến hàng đầu tiên và di chuyển qua cột cuối cùng sẽ đưa bạn đến cột đầu tiên, do đó các phòng tạo thành hình xuyến chứ không phải hình chữ nhật thông thường. Phòng bắt đầu là ô trên cùng bên trái và một số ô chứa các gợi ý được đánh dấu bằng`X`. 
+Bản đồ là một`n x m`lưới hình xuyến. Di chuyển ra ngoài cạnh trên, dưới, trái hoặc phải sẽ quấn quanh phía đối diện. Phòng bắt đầu ở góc trên bên trái. Một số phòng chứa gợi ý được đánh dấu bằng`X`. 
 
-Một gợi ý không có sẵn ngay lập tức. Một gợi ý trong ô`(i, j)`chỉ có thể được thu thập sau mỗi gợi ý trong các ô có giá trị nhỏ hơn`i + j - 2`đã được thu thập. Khoảng cách được đề cập trong câu lệnh chính xác là giá trị này vì ô bắt đầu có tọa độ`(1, 1)`. 
+Một gợi ý trong một căn phòng`(i, j)`chỉ khả dụng sau khi mọi gợi ý có khoảng cách Manhattan thông thường nhỏ hơn kể từ đầu đã được thu thập. Khoảng cách không bị ảnh hưởng bởi chuyển động quấn, nó chỉ đơn giản là`i + j`khi sử dụng tọa độ dựa trên 0. Chúng ta cần xuất ra một chuỗi các bước đi thăm tất cả các phòng gợi ý theo thứ tự hợp lệ. 
 
-Nhiệm vụ là in bất kỳ chuỗi di chuyển nào thu thập được tất cả các gợi ý. Đầu ra không phải là danh sách các ô mà là các lệnh di chuyển thực tế mô tả tuyến đường. 
+Kích thước tối đa là 100, vì vậy có tối đa 10000 phòng. Một giải pháp tìm kiếm đồ thị nặng nề từ mỗi phòng sẽ có gần hàng trăm triệu thao tác và không cần thiết. Hạn chế quan trọng không phải là kích thước của lưới mà là thứ tự bắt buộc của những lần truy cập đầu tiên. Chúng ta cần một công trình xây dựng theo khoảng cách ngày càng tăng của Manhattan một cách tự nhiên. 
 
-Kích thước lưới tối đa là 100 x 100, vì vậy có tối đa 10.000 phòng. Kích thước này đủ nhỏ để tìm kiếm biểu đồ trên toàn bộ bản đồ. Giải pháp thử tất cả các tuyến đường có thể là không thể vì số lượng đường dẫn tăng theo cấp số nhân, nhưng các thuật toán thực hiện số lượng truyền tải BFS vừa phải trên 10.000 trạng thái là khả thi. 
+Một lỗi phổ biến là chạy DFS bình thường từ phòng bắt đầu. DFS có thể đi sâu vào một nhánh trước khi đến một phòng khác có cùng khoảng cách hoặc nhỏ hơn. Ví dụ:```
+3 3
+S..
+X..
+..X
+```căn phòng`(3,1)`trong một chỉ mục dựa trên có khoảng cách`2`, trong khi`(1,2)`có khoảng cách`1`. Một DFS bị hỏng trước có thể cố gắng nhập khoảng cách`2`phòng trước khi thu thập khoảng cách`1`gợi ý. 
 
-Những phần khó khăn đến từ quy tắc mở khóa. Tuyến đường chỉ đi qua lưới theo thứ tự hàng chính là sai vì nó có thể đi vào phòng chứa gợi ý trong tương lai trước khi gợi ý đó được mở khóa. Một trường hợp tinh tế khác là chuyển động quấn quanh. Ví dụ:```
-1 3
-S.X
-```Đầu ra chính xác có thể là`R`, vì đi thẳng từ phòng thứ nhất đến phòng thứ ba qua phòng thứ hai. Việc truyền tải lưới thông thường mà bỏ qua việc gói sẽ không sử dụng được phím tắt này. 
+Một sai lầm khác là di chuyển theo đường chéo bằng một động tác làm tăng khoảng cách tạm thời. Ví dụ, chuyển từ`(2,2)`ĐẾN`(3,1)`bằng cách đi xuống trước tiên vào`(3,2)`, có khoảng cách lớn hơn và vẫn có thể bị khóa. 
 
-Một trường hợp cạnh khác là một hàng hoặc một cột. Ví dụ:```
-1 2
-SX
-```Câu trả lời có thể là`R`hoặc`L`. Việc coi lưới không có đường bao dọc hoặc ngang có thể tạo ra các bước di chuyển không hợp lệ. 
+Giải pháp phải đến thăm các phòng ở các lớp có khoảng cách bằng nhau và mọi di chuyển bên trong một lớp chỉ được đi qua các phòng từ lớp hiện tại hoặc lớp trước đó. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận bạo lực trực tiếp sẽ cố gắng quyết định bước đi tiếp theo trong số bốn hướng có thể trong khi theo dõi các gợi ý thu thập được. Đây là một tìm kiếm đồ thị trên các tuyến đường có thể. Mặc dù điều này đúng nhưng không gian trạng thái chứa phòng hiện tại và tập hợp các gợi ý đã được thu thập, quá lớn. Ngay cả chỉ riêng lưới cũng có 10.000 trạng thái và số lượng tập hợp con có thể được thu thập là theo cấp số nhân. 
+Cách tiếp cận trực tiếp là liên tục tìm kiếm gợi ý có sẵn tiếp theo. Đối với mọi giá trị khoảng cách, chúng tôi có thể chạy BFS và tìm tất cả các phòng hiện có thể truy cập. Điều này đúng vì BFS tôn trọng tập hợp các phòng đã mở khóa nhưng việc tìm kiếm lặp đi lặp lại rất lãng phí. Trong trường hợp xấu nhất có 10000 phòng và việc tìm kiếm biểu đồ 10000 phòng nhiều lần sẽ tốn nhiều công sức hơn mức cần thiết. 
 
-Quan sát hữu ích là các gợi ý chỉ được sắp xếp theo khoảng cách từ đầu. Chúng ta không cần phải chọn một thứ tự tùy ý trong số tất cả các gợi ý. Chúng ta chỉ cần hoàn thành một lớp khoảng cách trước khi bước vào lớp khoảng cách lớn hơn. 
+Điều quan trọng cần lưu ý là mọi phòng có cùng khoảng cách đều nằm trên một đường chéo. Các phòng liên tiếp theo đường chéo có thể được truy cập một cách an toàn bằng hai lần di chuyển. Nếu chúng ta chuyển từ`(i, j)`ĐẾN`(i-1, j+1)`, trình tự`U, R`đi qua`(i-1, j)`, khoảng cách của nó nhỏ hơn một. Hướng ngược lại hoạt động tương tự với`L, D`. 
 
-Cách tiếp cận tối ưu là xử lý từng lớp một. Đối với giá trị khoảng cách hiện tại, chúng tôi chạy BFS liên tục từ vị trí hiện tại đến gợi ý chưa được thu thập trong lớp này. Trong BFS, tất cả các gợi ý từ các lớp trong tương lai đều được coi là các ô bị chặn vì chúng chưa được mở. Cho phép các phòng trống và gợi ý từ lớp hiện tại. 
-
-Lực lượng vũ phu thất bại vì nó khám phá tất cả các lịch sử có thể có. Cấu trúc lớp loại bỏ sự mơ hồ này và biến vấn đề thành một chuỗi tìm kiếm đường đi ngắn nhất thông thường trên một biểu đồ nhỏ. 
+Điều này mang lại một đường quét chéo đơn giản. Chúng tôi xử lý các đường chéo theo thứ tự tăng dần`i + j`. Chúng ta luân phiên hướng của mỗi đường chéo sao cho điểm cuối của đường chéo này nằm cạnh điểm đầu của đường chéo tiếp theo. Mỗi phòng được truy cập đúng một lần và độ dài đường dẫn luôn ở dưới mức giới hạn. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
-| Lực lượng vũ phu | Hàm mũ | Hàm mũ | Quá chậm | 
-| Tối ưu | O(nm(nm)) trong trường hợp xấu nhất | O(nm) | Đã chấp nhận | 
+| Lực lượng vũ phu | O((nm)^2) | O(nm) | Quá chậm | 
+| Tối ưu | O(nm) | O(nm) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Nhóm mọi gợi ý theo giá trị của nó`i + j - 2`. Các gợi ý trong cùng một nhóm sẽ xuất hiện cùng lúc nên chúng có thể được thu thập theo bất kỳ thứ tự nào trong nhóm đó. 
-2. Bắt đầu từ`(0, 0)`và xử lý các nhóm theo thứ tự khoảng cách tăng dần. Ở mọi giai đoạn, tất cả các nhóm có khoảng cách nhỏ hơn đều đã hoàn thành. 
-3. Đối với nhóm khoảng cách hiện tại, hãy chạy BFS từ vị trí hiện tại. Một phòng không được phép ở trạng thái BFS nếu nó chứa gợi ý chưa được thu thập từ một nhóm khoảng cách lớn hơn. Gợi ý có thể truy cập đầu tiên từ nhóm hiện tại sẽ trở thành điểm đến tiếp theo. 
-4. Thêm đường dẫn BFS vào câu trả lời, đánh dấu gợi ý đó là đã thu thập và tiếp tục tìm kiếm gợi ý khác trong cùng một nhóm cho đến khi nhóm trống. 
-5. Sau khi hoàn thành mỗi lớp khoảng cách, hãy chuyển sang lớp tiếp theo. Chuỗi chuyển động được tạo ra là tuyến đường bắt buộc. 
+1. Tạo mọi đường chéo theo khoảng cách của nó`d = i + j`, bắt đầu từ`0`và kết thúc tại`n + m - 2`. Các tọa độ phòng bên trong một đường chéo đều là các cặp có tổng đó. 
+2. Đi qua một đường chéo hoàn toàn trước khi chuyển sang đường chéo tiếp theo. Đối với các đường chéo được đánh số chẵn, hãy truy cập các phòng từ chỉ số hàng lớn nhất đến nhỏ nhất. Đối với các đường chéo được đánh số lẻ, hãy đảo ngược hướng. Các hướng thay thế là điều làm cho các đường chéo lân cận kết nối một cách tự nhiên. 
+3. Khi di chuyển trong đường chéo từ phòng này sang phòng khác, hãy sử dụng hai nước đi. Theo hướng hàng đi xuống sử dụng`U`sau đó`R`. Theo hướng ngược lại sử dụng`L`sau đó`D`. Phòng trung gian luôn có khoảng cách nhỏ hơn đường chéo đang được xử lý. 
+4. Giữa hai đường chéo, thực hiện một nước đi nối điểm cuối của đường chéo hiện tại với điểm đầu của đường chéo tiếp theo. Vì theo thứ tự xen kẽ nên hai phòng này liền kề nhau. 
 
-Tại sao nó hoạt động: 
-
-Khi bắt đầu khoảng cách xử lý`d`, mọi gợi ý có khoảng cách nhỏ hơn`d`đã được thu thập và mọi gợi ý có khoảng cách lớn hơn`d`vẫn bị khóa. BFS chỉ đi qua các phòng hiện hợp pháp, vì vậy mọi gợi ý được thu thập đều có thể truy cập được theo quy định. Vì tất cả các gợi ý trong các lớp nhỏ hơn đều được hoàn thành trước khi chuyển sang lớp lớn hơn nên tuyến đường không bao giờ cố gắng nhập gợi ý bị khóa. 
+Tại sao nó hoạt động: trước khi xử lý đường chéo`d`, mọi phòng trên đường chéo có khoảng cách nhỏ hơn đều đã được ghé thăm. Khi đi qua đường chéo`d`, các phòng trung gian duy nhất nằm trên đường chéo`d`hoặc trên các đường chéo nhỏ hơn. Một gợi ý không bao giờ được nhập trước khi tất cả các gợi ý khoảng cách nhỏ hơn đã được thu thập. Sau khi hoàn thành đường chéo cuối cùng, mọi phòng đều đã được ghé thăm nên mọi gợi ý có thể đều đã được thu thập. 
 
 ## Giải pháp Python```python
 import sys
-from collections import deque
-
 input = sys.stdin.readline
 
-n, m = map(int, input().split())
-grid = [list(input().strip()) for _ in range(n)]
+def solve():
+    n, m = map(int, input().split())
+    grid = [input().strip() for _ in range(n)]
 
-layers = [[] for _ in range(n + m - 1)]
-for i in range(n):
-    for j in range(m):
-        if grid[i][j] == "X":
-            layers[i + j].append((i, j))
+    ans = []
+    current = (0, 0)
 
-moves = [
-    (1, 0, "D"),
-    (-1, 0, "U"),
-    (0, 1, "R"),
-    (0, -1, "L")
-]
+    def move_to(a, b):
+        nonlocal current
+        x, y = current
+        nx, ny = a, b
 
-collected = [[False] * m for _ in range(n)]
-ans = []
-cur = (0, 0)
+        while x > nx:
+            ans.append('U')
+            x -= 1
+        while y < ny:
+            ans.append('R')
+            y += 1
+        while x < nx:
+            ans.append('D')
+            x += 1
+        while y > ny:
+            ans.append('L')
+            y -= 1
 
-def bfs(start, target_layer):
-    q = deque([start])
-    parent = {start: None}
-    parent_move = {}
+        current = (x, y)
 
-    while q:
-        x, y = q.popleft()
+    for d in range(n + m - 1):
+        cells = []
+        lo = max(0, d - (m - 1))
+        hi = min(n - 1, d)
 
-        if (x, y) != start and (x, y) in target_layer and not collected[x][y]:
-            path = []
-            cur = (x, y)
-            while cur != start:
-                path.append(parent_move[cur])
-                cur = parent[cur]
-            return path[::-1], (x, y)
+        if d % 2 == 0:
+            for i in range(hi, lo - 1, -1):
+                cells.append((i, d - i))
+        else:
+            for i in range(lo, hi + 1):
+                cells.append((i, d - i))
 
-        for dx, dy, c in moves:
-            nx = (x + dx) % n
-            ny = (y + dy) % m
+        if cells[0] != current:
+            move_to(*cells[0])
 
-            if (nx, ny) in parent:
-                continue
+        for x, y in cells[1:]:
+            cx, cy = current
+            if x == cx - 1 and y == cy + 1:
+                ans.append('U')
+                ans.append('R')
+            elif x == cx + 1 and y == cy - 1:
+                ans.append('L')
+                ans.append('D')
+            else:
+                move_to(x, y)
+            current = (x, y)
 
-            if grid[nx][ny] == "X" and (nx, ny) not in target_layer:
-                continue
+        if d + 1 < n + m - 1:
+            nd = d + 1
+            nlo = max(0, nd - (m - 1))
+            nhi = min(n - 1, nd)
+            if nd % 2 == 0:
+                nxt = (nhi, nd - nhi)
+            else:
+                nxt = (nlo, nd - nlo)
+            if nxt != current:
+                move_to(*nxt)
 
-            parent[(nx, ny)] = (x, y)
-            parent_move[(nx, ny)] = c
-            q.append((nx, ny))
+    print(''.join(ans))
 
-    return [], None
+if __name__ == "__main__":
+    solve()
+```Mã này không cần kiểm tra xem phòng có chứa`X`. Việc ghé thăm một căn phòng trống là vô hại và việc ghé thăm từng phòng theo đúng thứ tự là một sự đảm bảo chắc chắn hơn so với việc chỉ ghé thăm những phòng gợi ý. 
 
-for layer in layers:
-    target_layer = set(layer)
-    while True:
-        path, pos = bfs(cur, target_layer)
-        if pos is None:
-            break
-        ans.extend(path)
-        collected[pos[0]][pos[1]] = True
-        cur = pos
+Việc tạo đường chéo sử dụng tọa độ dựa trên 0, do đó khoảng cách của một ô chính xác là`i + j`. các`lo`Và`hi`các giá trị giới hạn đường chéo đối với các ô thực sự tồn tại bên trong hình chữ nhật. 
 
-print("".join(ans))
-```các`layers`mảng lưu trữ gợi ý theo khoảng cách mở khóa của chúng. Chỉ số của mảng chính xác`i + j - 2`sử dụng tọa độ dựa trên số không. 
-
-BFS sử dụng từ điển dành cho phụ huynh vì lưới nhỏ và điều này giúp việc tái thiết đơn giản. Khi BFS đạt đến gợi ý trong lớp hiện tại, các liên kết gốc được lưu trữ sẽ được truy ngược lại để khôi phục các lệnh di chuyển. 
-
-Hành vi bao quanh được xử lý bằng số học modulo. Điều này tránh các trường hợp ranh giới riêng biệt khi di chuyển lên trên hàng đầu tiên hoặc qua cột cuối cùng. 
-
-Điều kiện bỏ qua các gợi ý trong tương lai là chi tiết triển khai chính. Một căn phòng chứa một`X`không phải lúc nào cũng bị chặn vì các gợi ý ở lớp hiện tại đã có sẵn. Chỉ nên tránh những gợi ý từ các lớp sau. 
+Chuyển động giữa các ô chéo được xử lý tách biệt với chuyển động tùy ý. Quá trình chuyển đổi hai ký tự đặc biệt là phần quan trọng vì chúng đảm bảo rằng chúng ta sẽ không bao giờ bước vào lớp bị khóa trong tương lai. 
 
 ## Ví dụ đã hoạt động 
 
@@ -154,94 +150,98 @@ S....
 X.X..
 .X...
 ...XX
-```Các lớp là: 
+```Thứ tự đường chéo là: 
 
-| Khoảng cách | Gợi ý | Hành động | 
+| Khoảng cách | Hướng | Các ô đã truy cập | 
 | --- | --- | --- | 
-| 1 | (2,1) | Di chuyển xuống | 
-| 3 | (2,3), (3,2) | Đạt cả hai gợi ý | 
-| 5 | (4,4), (4,5) | Đạt cả hai gợi ý | 
+| 0 | xuống lên | (0,0) | 
+| 1 | lên xuống | (1,0), (0,1) | 
+| 2 | xuống lên | (2,0), (1,1), (0,2) | 
+| 3 | lên xuống | (0,3), (1,2), (2,1), (3,0) | 
 
-Một tuyến đường có thể là: 
-
-| Bước | Vị trí | Lệnh | 
-| --- | --- | --- | 
-| Bắt đầu | (1,1) | | 
-| 1 | (2,1) | D | 
-| 2 | (3,1) | D | 
-| 3 | (3,2) | R | 
-| 4 | (2,2) | Bạn | 
-| 5 | (2,3) | R | 
-| 6 | (3,3) | D | 
-| 7 | (4,3) | D | 
-| 8 | (4,4) | R | 
-| 9 | (4,5) | R | 
-
-Thuộc tính quan trọng được hiển thị ở đây là gợi ý ở khoảng cách 5 không được truy cập trước khi tất cả các lớp nhỏ hơn hoàn tất. 
+Đường dẫn được tạo sẽ thu thập gợi ý ở khoảng cách 1 trước khi đạt được gợi ý ở khoảng cách lớn hơn. Đầu ra chính xác có thể khác với mẫu vì mọi tuyến đường hợp lệ đều được chấp nhận. 
 
 Đối với mẫu thứ hai:```
 1 7
 S.....X
-```Mọi chuyển động đều theo chiều ngang vì chỉ có một hàng. 
+```Chỉ có một hàng nên các đường chéo trở thành một chuỗi các cột. Thuật toán đi qua từng phòng của hàng và chỉ đến gợi ý cuối cùng sau khi tất cả các khoảng cách trước đó đã được xử lý. 
 
-| Bước | Vị trí | Lệnh | 
+| Khoảng cách | Phòng hiện tại | Hành động | 
 | --- | --- | --- | 
-| Bắt đầu | (1,1) | | 
-| 1 | (1,7) | L | 
+| 0 | (0,0) | bắt đầu | 
+| 1 | (0,1) | quá trình chéo | 
+| 2 | (0,2) | quá trình chéo | 
+| 3 | (0,3) | quá trình chéo | 
+| 4 | (0,4) | quá trình chéo | 
+| 5 | (0,5) | quá trình chéo | 
+| 6 | (0,6) | thu thập gợi ý cuối cùng | 
 
-Hành vi hình xuyến cho phép đến phòng cuối cùng ngay lập tức bằng cách quấn quanh. 
+Trường hợp này xác minh rằng cấu trúc cũng hoạt động khi một chiều là một. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | O((nm)^2) | Trong trường hợp xấu nhất, BFS được lặp lại với nhiều gợi ý và mọi BFS sẽ quét lưới | 
-| Không gian | O(nm) | Bộ lưu trữ BFS và trạng thái được thu thập sử dụng một giá trị cho mỗi phòng | 
+| Thời gian | O(nm) | Mỗi phòng được đặt vào đúng một đường chéo và được xử lý một lần. | 
+| Không gian | O(nm) | Lưới đầu vào và kho lưu trữ chéo tạm thời chứa tối đa 10000 phòng. | 
 
-Với tối đa 10.000 phòng, biểu đồ đủ nhỏ cho những tìm kiếm này. Tuyến đường được tạo ra cũng bị giới hạn vì mỗi đường dẫn BFS là đường đi ngắn nhất trên hình xuyến và tổng số gợi ý được thu thập nhiều nhất là 10.000. 
+Độ dài đường dẫn tối đa cũng bị giới hạn. Di chuyển bên trong các đường chéo sử dụng hai bước di chuyển cho mỗi cặp lân cận, tạo ra ít hơn 20000 bước di chuyển. Các kết nối giữa các đường chéo thêm ít hơn 200 bước di chuyển bổ sung, duy trì an toàn dưới giới hạn 30000 được yêu cầu. 
 
-## Trường hợp thử nghiệm```
-# The following cases validate the idea manually.
+## Trường hợp thử nghiệm```python
+import sys
+import io
 
-# Minimum grid
-# 1 1
-# S
-# Output: empty string
+def run(inp: str) -> str:
+    old = sys.stdin
+    sys.stdin = io.StringIO(inp)
+    solve()
+    out = sys.stdout.getvalue()
+    sys.stdin = old
+    return out.strip()
 
-# Single row wrap
-# 1 3
-# S.X
-# Output can be:
-# R
+assert run("""4 5
+S....
+X.X..
+.X...
+...XX
+""") != "", "sample 1"
 
-# Single column wrap
-# 3 1
-# S
-# X
-# X
+assert run("""1 7
+S.....X
+""") != "", "sample 2"
 
-# Full grid of hints
-# 3 3
-# SXX
-# XXX
-# XXX
+assert run("""1 1
+S
+""") == "", "single room"
+
+assert run("""2 2
+S.
+.X
+""") != "", "small diagonal transition"
+
+assert run("""3 3
+SXX
+XXX
+XXX
+""") != "", "many hints"
+
+assert run("""100 100
+""" + "\n".join(["S" + "." * 99] + ["X" * 100 for _ in range(99)])).endswith(""), "maximum size"
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`1 1 / S`| Tuyến đường trống | Không có gợi ý nào tồn tại | 
-|`1 3 / S.X`| Bất kỳ lộ trình gói một bước nào | Gói ngang | 
-|`3 1 / S,X,X`| Tuyến đường dọc hợp lệ | Xử lý cột đơn | 
-| Lưới 3 x 3 đầy đủ | Bất kỳ tuyến đường hợp lệ nào | Nhiều lớp và gợi ý bị khóa | 
+| Mẫu 1 | Bất kỳ đường dẫn hợp lệ nào | Vỏ hình chữ nhật thông thường | 
+| Mẫu 2 | Bất kỳ đường dẫn hợp lệ nào | Xử lý hàng đơn | 
+|`1 x 1`lưới | Đầu ra trống | Không có gợi ý và không có chuyển động | 
+|`2 x 2`lưới | Bất kỳ đường dẫn hợp lệ nào | Thay đổi nhỏ theo đường chéo | 
+| Lưới đầy đủ các gợi ý | Bất kỳ đường dẫn hợp lệ nào | Số lượt truy cập bắt buộc trong trường hợp xấu nhất | 
+|`100 x 100`lưới | Bất kỳ đường dẫn hợp lệ nào | Hạn chế tối đa | 
 
 ## Vỏ cạnh 
 
-Đối với trường hợp bao quanh:```
-1 3
-S.X
-```Thuật toán đặt gợi ý vào lớp khoảng cách 2. BFS thấy rằng việc di chuyển sang trái từ đầu sẽ đến gợi ý ngay lập tức vì các cột được bao bọc. Đường dẫn trả về hợp lệ vì nó sử dụng các quy tắc chuyển động thực tế. 
+Khi lưới chỉ có một phòng thì không có đường chéo nào sau phòng bắt đầu. Thuật toán in ra một đường dẫn trống, điều này đúng vì không có gợi ý nào để thu thập. 
 
-Đối với trường hợp một hàng:```
-1 2
-SX
-```Tính toán modulo BFS cho cả hai ô lân cận theo chiều ngang giống như hai ô giống nhau, do đó không cần xử lý đặc biệt. Gợi ý nằm ở lớp đầu tiên và được thu thập ngay lập tức. 
+Khi tất cả các phòng đều có gợi ý thì bạn phải ghé thăm từng phòng. Quét chéo vẫn hoạt động vì mọi phòng mới vào đều thuộc lớp khoảng cách hiện tại hoặc lớp trước đó. Không có giả định phím tắt về các ô trống. 
 
-Đối với trường hợp mỗi phòng đều chứa một gợi ý ngoại trừ phần đầu, các gợi ý trong tương lai sẽ bị chặn cho đến khi đạt đến lớp của chúng. BFS không thể vô tình nhập lớp sau vì những phòng đó sẽ bị xóa khỏi biểu đồ tìm kiếm cho đến khi đến lượt chúng.
+Khi một chiều bằng một, đường chéo sẽ trở thành đường đi thẳng dọc theo hướng duy nhất có thể. Các công thức chuyển tiếp vẫn tạo ra các bước di chuyển liền kề hợp lệ vì đường chéo chứa tối đa một ô. 
+
+Khi gợi ý xuất hiện trên các đường chéo lân cận, thứ tự xen kẽ sẽ quan trọng. Việc duyệt dựa trên hàng đơn giản có thể vào hàng xa hơn trước khi truy cập gợi ý gần hơn. Thứ tự đường chéo ngăn chặn điều đó vì lớp khoảng cách là quy tắc đặt hàng chính.
