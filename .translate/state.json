@@ -3,7 +3,7 @@
   "lang": "vi",
   "source_repo": "/tmp/brain",
   "target_repo": "/tmp/bs/vi/repo",
-  "last_run": "2026-08-07T22:46:59.248226Z",
+  "last_run": "2026-08-07T23:46:47.870664Z",
   "batch": 0,
   "translator": {
     "provider": "google",
@@ -69390,6 +69390,86 @@
       "source_hash": "sha256:d433f5d64e8fb04bae4a46a1f39fa293fe9ee547722bd3a7299d5748c6bba193",
       "translated_at": "2026-08-07T22:46:59.248201Z",
       "dest_path": "content/practice/codeforces/102471/J.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/102471/K.md": {
+      "source_hash": "sha256:68fd81ded81b6b5a396913d1c27cf74e60f736b31936d8359bc187cf4c0d31e1",
+      "translated_at": "2026-08-07T23:40:31.974008Z",
+      "dest_path": "content/practice/codeforces/102471/K.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/102482/B.md": {
+      "source_hash": "sha256:6a23f43fafcd4738e8b71f7359aca8b614bca04fd15a2ba267aee34d2cc4b656",
+      "translated_at": "2026-08-07T23:41:26.713975Z",
+      "dest_path": "content/practice/codeforces/102482/B.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/102482/C.md": {
+      "source_hash": "sha256:2f77d34f9d7d19c388984932a6210064de05132b0217d669558fa846cd2a5c80",
+      "translated_at": "2026-08-07T23:42:06.392049Z",
+      "dest_path": "content/practice/codeforces/102482/C.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/102482/I.md": {
+      "source_hash": "sha256:a32031650ec84c0dfea62005c7e6e2c50b1734961bb844329ecbf144f7e35ecd",
+      "translated_at": "2026-08-07T23:42:10.313496Z",
+      "dest_path": "content/practice/codeforces/102482/I.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/102482/J.md": {
+      "source_hash": "sha256:fe39e548b6b96df117ed1478f1e3a8eee15badcbd04623c05c15ac3eeaef4416",
+      "translated_at": "2026-08-07T23:42:18.581109Z",
+      "dest_path": "content/practice/codeforces/102482/J.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/102482/K.md": {
+      "source_hash": "sha256:11ae700afbe08cf0406065c1b708c758d687fa37610f66a8894eba4639fb085f",
+      "translated_at": "2026-08-07T23:43:11.969472Z",
+      "dest_path": "content/practice/codeforces/102482/K.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/102483/A.md": {
+      "source_hash": "sha256:eebaeb42c063f20f43486fd0e2e8e5bea0d204e0f22305aa586a2d4a46fa9928",
+      "translated_at": "2026-08-07T23:44:03.795406Z",
+      "dest_path": "content/practice/codeforces/102483/A.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/102483/B.md": {
+      "source_hash": "sha256:aa058ca4fb8674aadbef61059a0bb4a8581563a30ba00e98bf75e411101842ff",
+      "translated_at": "2026-08-07T23:45:07.873083Z",
+      "dest_path": "content/practice/codeforces/102483/B.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/102483/H.md": {
+      "source_hash": "sha256:5d169b9ca0fbd41bbfb8fb7a49d515ab05c2bf8e4c1dcca26ca1aa5caade8e77",
+      "translated_at": "2026-08-07T23:46:09.855554Z",
+      "dest_path": "content/practice/codeforces/102483/H.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/102498/C.md": {
+      "source_hash": "sha256:41fb29ea9451dc20be0f8a255321797f8a6db30d99d159de4e579f4f4d183986",
+      "translated_at": "2026-08-07T23:46:47.870641Z",
+      "dest_path": "content/practice/codeforces/102498/C.md",
       "status": "done",
       "tokens_used": 0,
       "provider": "google"
