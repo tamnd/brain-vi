@@ -1,7 +1,7 @@
 ---
 title: "CF 102672G - Sự sắp xếp điên rồ"
-description: "Tôi có thể viết bài xã luận, nhưng phần nêu vấn đề trong lời nhắc của bạn trống, vì vậy tôi không có các quy tắc chính xác, định dạng đầu vào, định dạng đầu ra, các ràng buộc, mẫu hoặc chi tiết thuật toán bắt buộc để làm cơ sở giải thích và viết mã."
-date: "2026-08-04T17:23:46+07:00"
+description: "Tôi cần những chi tiết còn thiếu để viết một bài xã luận chính xác cho vấn đề này. Vui lòng cung cấp tuyên bố đầy đủ hoặc liên kết vấn đề. Đang chờ câu trả lời của bạn"
+date: "2026-08-07T21:37:37+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102672
@@ -9,7 +9,7 @@ codeforces_index: "G"
 codeforces_contest_name: "Selection of tasks from Internet olympiads season 2019-20"
 rating: 0
 weight: 102672
-solve_time_s: 74
+solve_time_s: 118
 verified: false
 draft: false
 ---
@@ -18,10 +18,10 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 1 phút 14s 
+**Thời gian giải:** 1 phút 58 giây 
 **Đã xác minh:** không 
 
-##Giải pháp 
-Tôi có thể viết bài xã luận, nhưng phần nêu vấn đề trong lời nhắc của bạn trống, vì vậy tôi không có các quy tắc chính xác, định dạng đầu vào, định dạng đầu ra, các ràng buộc, mẫu hoặc chi tiết thuật toán bắt buộc để làm cơ sở giải thích và viết mã. 
+## Giải pháp 
+Tôi cần những chi tiết còn thiếu để viết một bài xã luận chính xác cho vấn đề này. Vui lòng cung cấp tuyên bố đầy đủ hoặc liên kết vấn đề. 
 
-Vui lòng dán tuyên bố đầy đủ cho **Codeforces 102672G - Crazy Sắp xếp** (bao gồm Đầu vào, Đầu ra và Ví dụ) và tôi sẽ tạo bài xã luận hoàn chỉnh theo định dạng được yêu cầu.
+Đang chờ câu trả lời của bạn

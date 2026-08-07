@@ -1,7 +1,7 @@
 ---
 title: "CF 102672E - Domino điên cuồng"
-description: "Tôi có thể viết bài xã luận đầy đủ, nhưng báo cáo vấn đề cho Codeforces 102672E - Crazy domino bị thiếu trong lời nhắc và tôi không thể xác định chính xác vấn đề từ thông tin có sẵn một cách đáng tin cậy."
-date: "2026-08-01T23:44:15+07:00"
+description: "Tôi có thể viết bài xã luận đầy đủ, nhưng báo cáo vấn đề cho Codeforces 102672E - Crazy domino bị thiếu trong lời nhắc và tôi không thể xác định chính xác nhiệm vụ chính xác chỉ từ ID vấn đề."
+date: "2026-08-07T21:43:00+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102672
@@ -9,7 +9,7 @@ codeforces_index: "E"
 codeforces_contest_name: "Selection of tasks from Internet olympiads season 2019-20"
 rating: 0
 weight: 102672
-solve_time_s: 47
+solve_time_s: 56
 verified: false
 draft: false
 ---
@@ -18,16 +18,10 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 47s 
+**Thời gian giải:** 56s 
 **Đã xác minh:** không 
 
-##Giải pháp 
-Tôi có thể viết toàn bộ bài xã luận nhưng thông báo vấn đề cho **Codeforces 102672E - Crazy domino** bị thiếu trong lời nhắc và tôi không thể xác định chính xác vấn đề từ thông tin có sẵn một cách đáng tin cậy. Việc giải thích sai sẽ dẫn đến thuật toán, mã và trường hợp kiểm thử hoàn toàn không chính xác. 
+## Giải pháp 
+Tôi có thể viết bài xã luận đầy đủ, nhưng báo cáo vấn đề cho **Codeforces 102672E - Crazy domino** bị thiếu trong lời nhắc và tôi không thể xác định chính xác nhiệm vụ chính xác chỉ từ ID vấn đề. 
 
-Vui lòng cung cấp báo cáo vấn đề đầy đủ (hoặc liên kết đến trang vấn đề), bao gồm:```
-Problem Statement
-Input
-Output
-Constraints
-Samples
-```Sau khi bạn gửi, tôi sẽ tạo bài xã luận hoàn chỉnh theo định dạng được yêu cầu kèm theo lời giải thích, ý tưởng chứng minh, giải pháp Python, hướng dẫn, bài kiểm tra và các trường hợp đặc biệt.
+Vui lòng cung cấp câu lệnh đầy đủ (bao gồm các ràng buộc và ví dụ về đầu vào/đầu ra) hoặc dán liên kết vấn đề. Khi tôi gặp vấn đề thực tế, tôi sẽ tạo ra bài xã luận hoàn chỉnh theo cấu trúc và phong cách được yêu cầu.
