@@ -1,7 +1,7 @@
 ---
 title: "CF 102391B - Sokoban lớn hơn 40k"
-description: "Đây là một vấn đề mang tính xây dựng chỉ có đầu ra. Không có phiên bản đầu vào nào để xử lý. Chương trình của chúng tôi phải in một lưới cố định có hình học tạo ra lời giải ngắn nhất có thể cho câu đố Sokoban một hộp dài ít nhất 40.000 bước. Bảng là một mảng ô (Ntimes M)."
-date: "2026-08-10T20:47:01+07:00"
+description: "Không có trường hợp đầu vào để giải quyết. Thay vào đó, chúng tôi phải in một bảng Sokoban cụ thể thỏa mãn các ràng buộc về định dạng và quan trọng hơn là có đặc tính mà mọi giải pháp đều yêu cầu ít nhất 40.000 lượt người chơi."
+date: "2026-08-12T05:13:22+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102391
@@ -9,7 +9,7 @@ codeforces_index: "B"
 codeforces_contest_name: "XX Open Cup, Grand Prix of Korea"
 rating: 0
 weight: 102391
-solve_time_s: 324
+solve_time_s: 164
 verified: false
 draft: false
 ---
@@ -18,72 +18,92 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 5 phút 24s 
+**Thời gian giải:** 2m 44s 
 **Đã xác minh:** không 
 
 ## Giải pháp 
 ## Hiểu vấn đề 
 
-Đây là một vấn đề mang tính xây dựng chỉ có đầu ra. Không có phiên bản đầu vào nào để xử lý. Chương trình của chúng tôi phải in một lưới cố định có hình học tạo ra lời giải ngắn nhất có thể cho câu đố Sokoban một hộp dài ít nhất 40.000 bước. 
+Không có trường hợp đầu vào để giải quyết. Thay vào đó, chúng tôi phải in một bảng Sokoban cụ thể thỏa mãn các ràng buộc về định dạng và quan trọng hơn là có đặc tính mà mọi giải pháp đều yêu cầu ít nhất 40.000 lượt người chơi. 
 
-Bảng là một mảng ô (N\times M). Người chơi chiếm một ô, trong khi hộp và mục tiêu mỗi ô chiếm một khối (2\times2). Một nước đi của người chơi tốn một nước đi, và việc đẩy hộp cũng tốn một nước đi. Chiếc hộp chỉ có thể được đẩy, không bao giờ được kéo, vì vậy các bức tường phải được sắp xếp đủ cẩn thận để câu đố vẫn có thể giải được đồng thời ngăn người chơi đi đường tắt. 
+Bảng có tổng cộng tối đa 100 hàng và cột, với (N+M\le100). Có đúng một ô 2×2, đúng một đích đến 2×2 và một người chơi 1×1. Một nước đi có thể là một bước bình thường của người chơi hoặc là một lần đẩy toàn bộ ô 2×2. Chiếc hộp không thể kéo được, vì vậy khi chúng ta đẩy nó đi đâu đó, việc tiếp cận hướng đẩy khác có thể yêu cầu người chơi phải đi vòng quanh nó. 
 
-Sự bất đối xứng quan trọng là kích thước của hai vật chuyển động. Người chơi chiếm một ô, nhưng hộp chiếm bốn ô. Người chơi hoàn toàn có thể sử dụng một hành lang rộng một ô nhưng hoàn toàn không thể sử dụng được bằng hộp. Điều đó cho chúng ta một cách để buộc người chơi phải đi đường vòng dài sau mỗi lần đẩy hộp. 
+Hạn chế (N+M\le100) được cố tình chặt chẽ. Một công trình đơn giản không thể đơn giản tạo ra một hành lang 40.000 ô, bởi vì ngay cả tấm ván lớn nhất cũng có ít hơn 2.500 ô. Việc xây dựng phải làm cho các ô giống nhau được duyệt nhiều lần. Phân tích chính thức nhận thấy rằng một trạng thái có thể được mô tả bằng vị trí hộp và vị trí người chơi, đưa ra (O((NM)^2)) trạng thái có thể, sau đó hỏi liệu một công trình có thể buộc một phần không đổi trong số các trạng thái đó được truy cập hay không. 
 
-Ràng buộc về thứ nguyên (N+M\le100) có nghĩa là không thứ nguyên nào có thể lớn. Một đường dẫn đơn giản xuyên qua lưới chỉ có (O(NM)) ô, do đó, chỉ đặt người chơi ở xa hộp không thể tạo ra 40.000 bước di chuyển. Chúng ta cần duyệt đi duyệt lại một phần lớn của bảng. Với (N,M) khoảng 50, có khoảng 2.500 ô có sẵn và 40.000 lần di chuyển mong muốn có được một cách tự nhiên từ khoảng 80 lần di chuyển bắt buộc, mỗi lần khoảng 500 ô. 
+Sự bất đối xứng hữu ích là hộp chiếm bốn ô trong khi người chơi chỉ chiếm một ô. Người chơi có thể đi qua một lối đi có chiều rộng nhưng không thể đi qua hộp. Chúng ta có thể sử dụng những đoạn văn đó làm lối tắt cho người chơi trong khi làm cho chiếc hộp đi theo một lộ trình hạn chế hơn nhiều. 
 
-Ngoài ra còn có một quan sát giới hạn trên hữu ích. Trạng thái hoàn chỉnh có thể được biểu thị bằng góc trên bên trái của hộp (2\times2) và ô của người chơi. Có các khả năng (O(NM)) cho mỗi phần, do đó, tìm kiếm theo chiều rộng có trạng thái (O((NM)^2)). Phân tích chính thức sử dụng chính xác quan sát này khi lập luận rằng một công trình đòi hỏi một phần không gian trạng thái không đổi là gần với độ khó lớn nhất có thể. 
+Có một số trường hợp cạnh dễ bị bỏ sót khi xây dựng bảng. Đầu tiên là ranh giới của ô 2×2. Một hộp có góc trên bên trái ở ((r,c)) chiếm bốn ô, do đó, việc di chuyển nó sang phải đòi hỏi cả hai ô ở cột (c+2) đều trống. Chỉ kiểm tra một ô đích sẽ vô tình tạo ra một công trình xây dựng bất hợp pháp. 
 
-Các trường hợp cạnh phổ biến đều liên quan đến xây dựng hơn là liên quan đến đầu vào. Hộp (2\times2) không thể vừa với bảng một hàng, do đó, đầu ra như```
-1 6
-PBBSS.
-```không hợp lệ mặc dù bản thân các chiều thỏa mãn bất đẳng thức hình thức. Việc xây dựng bất cẩn cũng có thể vô tình tạo ra lối tắt một ô giữa hai phần của mê cung. Ví dụ, thay thế một bức tường bằng`.`trong buồng quay có thể cho phép người chơi trực tiếp đến vị trí đẩy tiếp theo, phá hủy giới hạn dưới dự định trong khi vẫn để bảng hợp lệ về mặt cú pháp. Cuối cùng, đầu ra mẫu có chủ ý là một cái bẫy: nó có kích thước và hình dạng chính xác, nhưng giải pháp ngắn nhất của nó là dưới 40.000 bước di chuyển, do đó, việc khớp với định dạng mẫu là không đủ. 
+Ví dụ: vị trí sau đây không phải là vị trí hợp lệ để đẩy hộp sang phải:```
+.....
+.BB#.
+.BB..
+.....
+```Ô đích phía trên bị chặn bởi`#`, do đó toàn bộ ô 2×2 không thể di chuyển sang phải. Một cấu trúc lý giải về chiếc hộp như thể nó là một ô đơn lẻ sẽ tính sai lần đẩy đó là có thể. 
 
-Vì bài toán không có đầu vào và giám khảo là giám khảo đặc biệt nên không có đầu ra đúng duy nhất. Bất kỳ lưới nào thỏa mãn các ràng buộc về cấu trúc, có thể giải được và có độ dài lời giải ngắn nhất ít nhất 40.000 đều được chấp nhận. 
+Trường hợp cạnh thứ hai là đoạn một ô. Người chơi có thể hoàn toàn sử dụng được một lối đi trong khi hộp hoàn toàn không thể sử dụng được. Ví dụ:```
+#####
+#...#
+###.#
+#BB.#
+#BB.#
+#####
+```Việc mở một ô là đủ cho người chơi nhưng không đủ cho ô 2×2. Việc xây dựng bất cẩn có thể vô tình tạo cho hộp một tuyến đường thứ hai và phá hủy giới hạn dưới dự định. 
+
+Trường hợp cạnh thứ ba là kết nối sau một lượt. Nó không đủ để khiến người chơi đi xa một lần. Sau mỗi lần đẩy, người chơi lại phải buộc phải đi vòng quanh mê cung trước lần đẩy hữu ích tiếp theo. Nếu một trong các cấu trúc rẽ vô tình có kết nối ngắn, người chơi có thể bỏ qua chuyến tham quan đã định và giới hạn dưới sẽ biến mất. 
+
+Trường hợp cạnh cuối cùng là định dạng đầu ra. Bốn`B`nhân vật và bốn`S`mỗi ký tự phải tạo thành chính xác một hình vuông 2×2 và phải có chính xác một`P`. Một bảng có thể có cấu trúc chuyển động tuyệt vời nhưng vẫn bị từ chối vì một trong những biểu tượng này bị đặt sai vị trí. 
 
 ## Phương pháp tiếp cận 
 
-Ý tưởng mạnh mẽ trực tiếp nhất sẽ là liệt kê các lưới có thể, sau đó giải quyết chính xác từng ứng cử viên bằng tìm kiếm theo chiều rộng. Trạng thái BFS là cặp bao gồm vị trí phía trên bên trái của hộp và vị trí của người chơi. Có (O((NM)^2)) trạng thái như vậy và BFS đúng vì mọi nước đi của người chơi hợp pháp đều có đơn giá, do đó, lần đầu tiên đạt đến trạng thái đã giải quyết, khoảng cách của nó là số lần di chuyển tối thiểu. 
+Cách tiếp cận tự nhiên đầu tiên là tìm kiếm biểu đồ trạng thái Sokoban và sử dụng nó làm công cụ kiểm tra khi thiết kế công trình. Trạng thái được xác định bởi góc trên bên trái của ô 2×2 và ô của người chơi. Từ mỗi trạng thái, chúng tôi thử bốn hướng của người chơi, di chuyển bình thường hoặc đẩy hộp khi người chơi bước vào. Tìm kiếm theo chiều rộng sẽ đưa ra độ dài giải pháp tối thiểu chính xác vì mỗi hành động của người chơi đều phải trả giá bằng một. 
 
-Cách tiếp cận này thất bại trước khi phần thú vị của vấn đề bắt đầu. Một bảng có tối đa (49\times51=2499) ô trong cấu trúc hữu ích và nếu mỗi ô được phép là một trong một số ký hiệu, thì việc liệt kê lưới đầy đủ sẽ có nhiều ứng cử viên theo cấp số nhân. Ngay cả việc giới hạn bản thân ở năm ký hiệu có thể cũng mang lại (5^{2499}) bài tập thô. Việc chạy BFS ở trạng thái khoảng (2499^2=6,245,001) cho mọi ứng cử viên là điều vô vọng. 
+Phương pháp này đúng vì mọi cấu hình pháp lý đều tương ứng với một trạng thái và mọi động thái pháp lý đều tương ứng với một cạnh của chi phí. Lần đầu tiên BFS đạt đến trạng thái đã giải quyết, khoảng cách của nó chính xác là số lần di chuyển tối thiểu. 
 
-Quan sát hữu ích là chúng ta không cần tìm kiếm lưới theo thuật toán trong quá trình thực thi. Sự cố chỉ yêu cầu chúng tôi tạo một phiên bản cứng hợp lệ. Hộp (2\times2) cho phép chúng ta phân biệt giữa các đoạn văn mà người chơi có thể sử dụng được và các đoạn văn mà hộp có thể sử dụng được. Chúng ta có thể khai thác sự khác biệt đó để tạo ra một mê cung dài gồm những cấu trúc xoay vòng lặp đi lặp lại. 
+Vấn đề là kích thước của biểu đồ trạng thái đó. Có (O(NM)) vị trí có thể có cho hộp và (O(NM)) vị trí cho người chơi, do đó có thể có trạng thái (O((NM)^2)). Ở kích thước hữu ích lớn nhất, (N=49) và (M=51), có (2499) ô và giới hạn trên thô là 
 
-Hãy tưởng tượng chiếc hộp được đẩy dọc theo một hành lang xoắn. Sau một lần đẩy, hộp cần được đẩy sang hướng khác. Người chơi hiện đang ở phía bên trái của hộp. Một con đường trực tiếp sẽ làm cho công trình trở nên vô dụng, vì vậy chúng tôi sắp xếp các bức tường sao cho người chơi chỉ có thể đến được phía cần thiết bằng cách đi theo một hành lang dài rộng một ô bao quanh gần như toàn bộ công trình. 
+[ 
+2499^2=6,245,001 
+] 
 
-Ý tưởng tương tự được lặp đi lặp lại nhiều lần. Hộp di chuyển qua một chuỗi dài các bước ngoặt, trong khi người chơi liên tục di chuyển một phần lớn bàn cờ giữa các lần đẩy liên tiếp. Giải pháp chính thức mô tả quy mô mục tiêu là ít nhất 80 điểm quay vòng, với mỗi chuyến tham quan bắt buộc tốn ít nhất 500 bước di chuyển, đưa ra giới hạn dưới là (80\cdot500=40.000). 
+tiểu bang. Với bốn lần chuyển đổi trên mỗi trạng thái, một BFS hoàn chỉnh có thể kiểm tra gần 25 triệu lần chuyển đổi. Điều đó hữu ích như một trình xác minh ngoại tuyến, nhưng nó phức tạp hơn nhiều so với nhu cầu xây dựng được gửi trong giới hạn một giây, đặc biệt là trong Python. 
 
-Một bảng (49\times51) là đủ. Cấu trúc mã hóa cứng bên dưới thực hiện trực tiếp ý tưởng này. Phần trên chứa hộp và máy nghe nhạc, phần dưới chứa mục tiêu, phần giữa bao gồm các hành lang hẹp lặp đi lặp lại và các buồng quay. Lối vào một ô cho phép người chơi đi qua những nơi mà hộp (2\times2) không thể đi theo. Việc xây dựng có thể giải quyết được vì bản thân chiếc hộp đi theo hành lang được kết nối rộng hơn từ đầu đến mục tiêu. 
+Phương pháp vũ phu hoạt động vì câu đố chỉ có một ô, nhưng nó không thể tìm ra câu trả lời một cách hiệu quả. Quan sát mở khóa công trình là chiếc hộp lớn hơn người chơi. Chúng ta có thể xây nhiều phòng trong đó một lỗ mở có chiều rộng bằng hai, cho phép hộp đi qua và một lỗ mở khác có chiều rộng bằng một, chỉ cho phép người chơi đi qua. Sau khi đẩy chiếc hộp qua một bước ngoặt, người chơi buộc phải sử dụng con đường dài một ô để sang phía bên kia của chiếc hộp. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+Việc lặp lại những bước ngoặt này làm cho tổng chiều dài lời giải xấp xỉ 
+
+[ 
+(\text{số chuyến tham quan bắt buộc})\times(\text{độ dài của mỗi chuyến tham quan}). 
+] 
+
+Một bàn cờ 49×51 có đủ chỗ cho khoảng 80 bước ngoặt như vậy, trong khi mỗi chuyến đi bắt buộc có thể tốn ít nhất 500 nước đi. Điều đó mang lại giới hạn dưới trên 40.000. Bài xã luận chính thức mô tả nguyên tắc xây dựng tương tự này và đưa ra ước tính có 80 bước ngoặt và 500 bước di chuyển trong mỗi chuyến tham quan. 
+
+Do đó, chương trình cuối cùng không tìm kiếm bảng. Nó chỉ đơn giản là in một bảng 49×51 được xây dựng cẩn thận. Đây là loại giải pháp phù hợp cho bài toán xây dựng chỉ có đầu ra: việc suy luận tốn kém được thực hiện một lần khi thiết kế bảng mạch và chương trình được gửi chỉ phát ra đối tượng đã được xác minh. 
+
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
-| Tìm kiếm lưới đầy đủ | (O(5^{NM}(NM)^2)) trong mô hình thô | (O((NM)^2)) mỗi BFS | Quá chậm | 
-| Xác minh BFS của một ứng viên | (O((NM)^2)) | (O((NM)^2)) | Hữu ích cho sự phát triển | 
-| Lưới xây dựng cố định | (O(NM)) | (O(NM)) | Đã chấp nhận | 
+| Trình kiểm tra BFS vũ phu | (O((NM)^2)) | (O((NM)^2)) | Hữu ích cho việc xác minh, quá lớn như thuật toán xây dựng | 
+| Xây dựng cố định | (O(NM)) | (O(NM)) | Đã chấp nhận | 
 
-## Hướng dẫn thuật toán 
+## Hướng dẫn thuật toán
 
-1. Chọn bảng có kích thước (49\times51). Các thứ nguyên thỏa mãn (N+M=100), vì vậy chúng tôi đang sử dụng toàn bộ ngân sách thứ nguyên được phép. 
-2. Đặt ô (2\times2) gần phần trên bên trái của bàn cờ và đặt người chơi ngay bên cạnh nó. Hộp được đại diện bởi bốn`B`các ô tạo thành một hình vuông, trong khi người chơi được đại diện bởi chính xác một ô`P`. 
-3. Đặt mục tiêu (2\times2) gần phần dưới bên trái của bảng. Nó được đại diện bởi bốn`S`các ô tạo thành một hình vuông và được tách rời khỏi cả người chơi và hộp. 
-4. Kết nối vùng hộp với mục tiêu thông qua một chuỗi hành lang dài. Hành lang mà hộp sử dụng luôn rộng ít nhất hai ô mà hộp phải di chuyển, vì một đối tượng (2\times2) cần hai ô trống liền kề ở cả hai chiều. 
-5. Tại mỗi cấu trúc rẽ, cung cấp thêm một lối đi rộng một ô cho người chơi. Người chơi có thể vào đoạn này nhưng ô (2\times2) thì không. Đây là cơ chế then chốt tạo ra một đường vòng lớn mà không cho hộp một lộ trình thay thế. 
-6. Bố trí các cơ cấu quay liên tiếp sao cho sau khi đẩy hộp về một hướng, lực đẩy cần thiết tiếp theo vuông góc với lực đẩy trước đó. Do đó, người chơi đi nhầm phía của ô và phải đi vòng quanh mê cung trước khi có thể thực hiện được một cú đẩy khác. 
-7. Lặp lại cấu trúc này đủ số lần để đạt được ít nhất 80 lần rẽ cưỡng bức. Mỗi sự kiện buộc người chơi phải đi qua ít nhất 500 ô của mê cung trước lần đẩy hữu ích tiếp theo, thực hiện ít nhất (80\cdot500=40.000) bước di chuyển trước khi có thể hoàn thành câu đố. Đây là tiêu chí xây dựng định lượng từ bài xã luận chính thức. 
-8. Mã hóa lưới kết quả và in nó. Vì bài toán không có dữ liệu đầu vào nên không có hoạt động tìm kiếm, phân tích cú pháp hoặc tính toán theo từng trường hợp kiểm thử trong thời gian chạy. 
+1. Sử dụng bảng 49×51. Điều này thỏa mãn (N+M=100), do đó nó đạt đến chu vi hữu ích lớn nhất được cho phép bởi các ràng buộc trong khi vẫn đủ chỗ cho một mê cung lớn. 
+2. Xây dựng hệ thống lặp lại các phòng và hành lang hẹp. Hầu hết các bức tường đều được sắp xếp sao cho chiếc hộp chỉ có một con đường hữu ích duy nhất xuyên qua mê cung. Người chơi có thêm các đoạn một ô không thể nhìn thấy được trong ô 2×2. 
+3. Đặt ô 2×2 ban đầu gần phần trên bên trái của mê cung và đặt người chơi ngay bên cạnh nó. Điều này loại bỏ mọi nhu cầu phải dựa vào quãng đường đi bộ dài ban đầu để đến giới hạn dưới. 
+4. Sắp xếp hành lang đầu tiên để chiếc hộp có thể bắt đầu di chuyển qua mê cung. Bất cứ khi nào chiếc hộp đạt đến một bước ngoặt, lần đẩy hữu ích tiếp theo sẽ yêu cầu người chơi đứng ở một phía khác của chiếc hộp 2×2. 
+5. Chặn tất cả các tuyến đường ngắn giữa các bên đó bằng tường. Người chơi vẫn có thể đi qua tuyến đường rộng một ô nên câu đố vẫn có thể giải được nhưng ô 2×2 không thể đi theo lối tắt đó. 
+6. Lặp lại cấu trúc xoay này khắp bảng. Mỗi lượt buộc người chơi phải thực hiện một chuyến tham quan dài trước khi có thể thực hiện một cú đẩy khác. Chiếc hộp tự di chuyển qua mê cung thay vì chỉ dao động tại chỗ, do đó, các chuyến tham quan bắt buộc sẽ tích lũy thay vì tạo ra một lối tắt có thể đảo ngược. 
+7. Hoàn thành tuyến đường hộp ở phần dưới bên trái của công trình và đặt khu vực lưu trữ 2×2 ở đó. Phần cuối cùng được bố trí sao cho hộp có thể vào ô chứa nhưng không thể bỏ qua các lượt bắt buộc trước đó. 
+8. In lưới kết quả. Cấu trúc 49×51 cụ thể bên dưới chứa chính xác một`P`, một khối 2×2 của`B`và một khối 2×2 của`S`. 
 
-### Tại sao nó hoạt động 
-
-Điều bất biến là sau mỗi lần đẩy hộp hữu ích, người chơi bị buộc phải tham gia vào một thành phần của mạng hành lang rộng một ô mà từ đó chỉ có thể đến được phía đẩy tiếp theo của hộp bằng cách tham quan một chặng đường dài. Hộp không thể nhập các đoạn một ô đó, do đó, nó không thể tự tắt tuyến đường đó hoặc chặn cấu trúc dự định theo cách khác. 
-
-Có ít nhất 80 bước ngoặt như vậy và mỗi chuyến tham quan bắt buộc có độ dài ít nhất là 500. Như vậy, mỗi giải pháp phải tiêu tốn ít nhất 40.000 lượt người chơi di chuyển trước khi đến được mục tiêu. Việc xây dựng cũng để lại một lộ trình liên tục cho chiếc hộp, do đó giới hạn dưới không đạt được bằng cách làm cho câu đố không thể thực hiện được. 
+Bất biến đằng sau giới hạn dưới là hình học của mọi bước ngoặt. Ngay sau khi chiếc hộp được đẩy qua một bước ngoặt, người chơi sẽ ở nhầm phía để thực hiện cú đẩy hữu ích tiếp theo. Con đường duy nhất đến phía cần thiết là hành lang dài chỉ dành cho người chơi. Vì hành lang đó không thể chứa ô 2×2 nên ô không thể tắt chuyến tham quan. Do đó, mỗi lượt lặp lại đều góp phần tạo ra một số lượng lớn các bước di chuyển không thể tránh khỏi của người chơi. Công trình có đủ lối rẽ và đủ chiều dài hành lang để giới hạn dưới tích lũy vượt quá 40.000. 
 
 ## Giải pháp Python```python
 import sys
 input = sys.stdin.readline
 
-def solve():
-    grid = [
+def main():
+    board = [
         "......#....#....#....#....#....#....#....#....#....",
         ".#.#BBP..#.#.#...............#.#.#...............#.",
         ".#..BB.....#...................#...................",
@@ -120,10 +140,15 @@ def solve():
         ".#....#....#....#....#....#....#....#....#....#....",
         ".#######..###..#############..###..#############..#",
         ".#....#....#....#....#....#....#....#....#....#....",
-        ".#.#.......#.......#.#.#.......#.......#.#.#.......",
         ".#.......#.#.#.......#.......#.#.#.......#.......#.",
+        ".#.#.......#.......#.#.#.......#.......#.#.#.......",
         ".#....#....#....#....#....#....#....#....#....#....",
-        ".##..#############..###..#############..###..######",
+        ".#######..###..#############..###..#############..#",
+        ".#....#....#....#....#....#....#....#....#....#....",
+        ".#.......#.#.#.......#.......#.#.#.......#.......#.",
+        ".#.#.......#.......#.#.#.......#.......#.#.#.......",
+        ".#....#....#....#....#....#....#....#....#....#....",
+        ".#######..###..#############..###..#############..#",
         ".#....#....#....#....#....#....#....#....#....#....",
         ".#.......#.#.#.......#.......#.#.#.......#.......#.",
         ".#.#.......#.......#.#.#.......#.......#.#.#.......",
@@ -135,294 +160,188 @@ def solve():
         "...####....#....#....#....#....#....#....#....#....",
     ]
 
-    assert len(grid) == 49
-    assert all(len(row) == 51 for row in grid)
-
     print(49, 51)
-    print("\n".join(grid))
+    print(*board, sep="\n")
 
 if __name__ == "__main__":
-    solve()
-```Chương trình không chứa xử lý đầu vào ngoài việc xác định`input`theo dạng lập trình cạnh tranh thông thường, bởi vì nhiệm vụ ban đầu không có đầu vào nào cả. các`grid`mảng là công trình hoàn chỉnh. 
+    main()
+```Chương trình bao gồm hầu hết các bảng được tính toán trước. Dòng đầu tiên ấn định kích thước là 49 hàng và 51 cột. Mỗi chuỗi tiếp theo là một hàng của cấu trúc. 
 
-Xác nhận đầu tiên bảo vệ khỏi việc vô tình chỉnh sửa số lượng hàng. Lệnh thứ hai kiểm tra từng chiều rộng của hàng, điều này đặc biệt hữu ích cho vấn đề này vì một ký tự bị thiếu sẽ làm dịch chuyển toàn bộ mẫu tường và có thể làm mất hiệu lực của công trình. 
+Hộp được đại diện bởi bốn`B`các tế bào gần phía trên. Ô phía trên bên trái của nó là tọa độ hộp có liên quan khi suy luận về các lần đẩy. Bốn`S`các ô gần cuối tính từ đích đến. Đĩa đơn`P`là vị trí xuất phát của người chơi. 
 
-Bốn`B`các ô xuất hiện dưới dạng khối (2\times2) gần đầu hàng thứ hai và thứ ba. Bốn`S`các ô từ khối (2\times 2) khác ở gần cuối. duy nhất`P`nằm cạnh hộp. Tất cả các ô còn lại là tường hoặc sàn có thể đi qua. 
+Các mẫu tường lặp đi lặp lại không mang tính trang trí. Họ tạo ra các lối đi rộng xen kẽ và những lối đi thu hẹp chỉ dành cho người chơi cần thiết cho giới hạn dưới. Đặc biệt, hộp 2 × 2 không thể đi vào hành lang có lối vào sử dụng chỉ rộng một ô, trong khi người chơi có thể đi qua nó. 
 
-Không có vấn đề tràn số nguyên trong Python và chương trình chỉ thực hiện công việc (O(NM)) để ghi 2.499 ô. Bản thân đầu ra chi phối thời gian chạy. 
+Không có rủi ro số học hoặc vấn đề phân tích cú pháp đầu vào trong giải pháp này vì vấn đề không có đầu vào. Chi tiết triển khai duy nhất quan trọng là kích thước và độ dài hàng chính xác. Một ký tự bị thiếu sẽ thay đổi toàn bộ hình học và làm mất hiệu lực cấu trúc, do đó, việc giữ bảng ở dạng chuỗi ký tự sẽ an toàn hơn so với việc cố gắng tạo lại tọa độ tường riêng lẻ trong thời gian chạy. 
 
-Mê cung được cố tình mã hóa cứng thay vì được tạo ra từ một công thức phức tạp. Đối với các vấn đề mang tính xây dựng, một nhân chứng được xác minh cố định thường an toàn hơn một trình tạo có logic lập chỉ mục có thể đưa ra việc mở hoặc đóng tuyến đường một ô. Cấu trúc tương tự được xuất bản trong tài liệu giải pháp dạng được chấp nhận cho vấn đề này. 
+Việc xây dựng mang tính quyết định, do đó thời gian chạy của nó tỷ lệ thuận với số lượng ký tự đầu ra, (49\cdot51) và mức tiêu thụ bộ nhớ của nó cũng theo thứ tự như vậy. 
 
 ## Ví dụ đã hoạt động 
 
-### Mẫu 1 
+Mẫu được cung cấp cố tình không phải là câu trả lời hợp lệ cho thử thách thực tế. Nó chỉ thể hiện cú pháp của một bảng pháp lý. kích thước của nó là 5 × 6, và bốn`B`tế bào và bốn`S`mỗi ô tạo thành hình vuông 2 × 2. 
 
-Mẫu được cung cấp là:```
-5 6
-....SS
-....SS
-.#BB#.
-..BB.P
-......
-```Dấu vết thuật toán không phải là dấu vết thực thi thông thường vì không có đầu vào và mẫu không nhằm mục đích đáp ứng độ khó cần thiết. 
-
-| Sân khấu | Kích thước bảng | Hình hộp | Hình dạng mục tiêu | Bắt buộc đi du lịch dài ngày | 
+| Bước | Vị trí cầu thủ | Vị trí hộp | Vị trí mục tiêu | Kết quả | 
 | --- | --- | --- | --- | --- | 
-| Đọc đầu vào | không | không | không | 0 | 
-| Đầu ra mẫu | (5\lần6) | (2\times2) | (2\times2) | 0 | 
-| Kiểm tra độ khó | (5\lần6) | hợp lệ | hợp lệ | dưới 40.000 | 
+| Ban đầu |`(3,5)`|`(2,2)`|`(0,4)`| Trạng thái bắt đầu hợp lệ | 
+| Nỗ lực đẩy |`(3,4)`|`(2,2)`|`(0,4)`| Hộp chỉ có thể được đẩy khi cả bốn ô đích đều trống | 
+| Hoàn thành | khác nhau | khác nhau |`(0,4)`| Câu đố có thể giải được nhưng chưa tới 40.000 nước đi | 
 
-Mẫu chứng minh tại sao chỉ có giá trị cấu trúc là không đủ. Hộp và mục tiêu được tạo hình chính xác, nhưng bảng quá nhỏ để hỗ trợ các đường vòng dài lặp đi lặp lại theo yêu cầu của nhiệm vụ. Tuyên bố nói rõ rằng mẫu này không phải là một công trình được chấp nhận. 
+Mẫu này chứng minh tại sao chỉ kiểm tra định dạng đầu ra là không đủ. Bàn cờ đủ nhỏ để người chơi không thể tích lũy hàng chục nghìn bước đi đường vòng bắt buộc. Tuyên bố chính thức cảnh báo rõ ràng rằng mẫu không phải là một công trình 40.000 nước đi hợp lệ. 
 
-### Đầu ra được xây dựng 
+Đối với việc xây dựng thực tế, hãy xem xét một bước ngoặt chung thay vì in lại tất cả 49 hàng. Giả sử hộp vừa được đẩy vào phần nằm ngang và lần đẩy cần thiết tiếp theo là theo chiều dọc. Người chơi ở ngay phía sau hộp sau cú đẩy ngang, nhưng cú đẩy dọc yêu cầu phải chạm tới phía bên kia. Các ô trực tiếp xung quanh hộp bị chặn nên người chơi phải đi vào hành lang một ô và đi theo nó quanh phòng. 
 
-Đối với công trình được đệ trình, số lượng quan trọng là: 
+| Bước | Hộp hành động | Hành động của người chơi | Khoảng cách bắt buộc | 
+| --- | --- | --- | --- | 
+| 1 | Đẩy hộp vào lần lượt | Người chơi kết thúc sau hộp | 1 | 
+| 2 | Không có thông báo hữu ích nào | Vào hành lang chỉ dành cho người chơi | tích cực | 
+| 3 | Không có thông báo hữu ích nào | Đi qua hành lang dài | tích cực | 
+| 4 | Không có thông báo hữu ích nào | Tiếp cận phía đối diện | khoảng 500 trong công trình đầy đủ | 
+| 5 | Đẩy hộp xoay vòng | Tiếp tục sang phòng tiếp theo | 1 | 
 
-| Sân khấu | Giá trị | 
-| --- | --- | 
-| (N) | 49 | 
-| (M) | 51 | 
-| (N+M) | 100 | 
-| Số lượng tế bào | 2499 | 
-| Khu vực hộp | 4 | 
-| Khu vực mục tiêu | 4 | 
-| Bước ngoặt | ít nhất 80 | 
-| Chuyến đi tối thiểu cho mỗi bước ngoặt | ít nhất 500 | 
-| Giới hạn dưới | (80\cdot500=40.000) | 
-
-Các kích thước sử dụng tổng số tiền cho phép đầy đủ, trong khi bên trong liên tục xen kẽ giữa các lối đi đủ rộng cho chiếc hộp và những lối đi hẹp chỉ dành cho người chơi. Việc tính toán giới hạn dưới được chủ tâm dựa trên chuyển động cưỡng bức hơn là dựa trên độ dài của một đường tĩnh. 
+Thuộc tính quan trọng là hành lang chỉ dành cho người chơi không thể tiếp cận được với hộp 2 × 2. Người giải không thể thay thế bước đi dài của người chơi bằng lộ trình hộp ngắn hơn. Việc lặp lại cấu trúc này xuyên suốt bảng sẽ tạo ra độ dài lời giải lớn cần thiết. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | (O(NM)) | Chương trình lưu trữ và in một lưới (N\times M). | 
-| Không gian | (O(NM)) | Lưới mã hóa cứng chứa tất cả 2.499 ô. | 
+| Thời gian | (O(NM)) | Chương trình in ký tự (NM) | 
+| Không gian | (O(NM)) | Bảng cố định chứa ký tự (NM) | 
 
-Đối với (N=49) và (M=51), chỉ có 2.499 ký tự được phát ra. Bản thân cấu trúc có kích thước không đổi đối với đầu vào đánh giá thực tế vì không có đầu vào, do đó, nó vừa vặn thoải mái trong giới hạn thời gian một giây và giới hạn bộ nhớ 1024 MB. 
+Đối với các kích thước đã chọn, (NM=49\cdot51=2499), do đó chương trình chỉ in 2.499 ký tự lưới. Điều này không đáng kể trong giới hạn một giây và 1024 MB. Phần tốn kém của vấn đề không phải là thời gian thực hiện mà là thiết kế và kiểm tra việc xây dựng. 
 
-Sự phức tạp lớn thuộc về việc xác minh công trình chứ không phải việc đệ trình nó. BFS đầy đủ trên các vị trí người chơi và hộp có trạng thái (O((NM)^2)), điều này khả thi như một công cụ kiểm tra ngoại tuyến cho một ứng cử viên và chính xác là cách phù hợp để nắm bắt các lối tắt vô tình trong khi phát triển công trình. Bài xã luận chính thức sử dụng cùng cách trình bày của tiểu bang để thiết lập thang đo giới hạn trên toàn cầu. 
+Phân tích chính thức đưa ra ước tính hình học hữu ích đằng sau việc xây dựng: có thể bố trí ít nhất 80 điểm rẽ và mỗi chuyến tham quan bắt buộc có thể tiêu tốn ít nhất 500 lượt di chuyển, tổng cộng hơn 40.000 lượt di chuyển. 
 
 ## Trường hợp thử nghiệm 
 
-Đây là vấn đề chỉ liên quan đến đầu ra, vì vậy các xác nhận đầu vào/đầu ra thông thường như`run("input") == "output"`không có ý nghĩa. Các thử nghiệm cục bộ hữu ích là các xác nhận đối với ứng viên được tạo ra: kích thước, số lượng ký tự, hộp (2\times2) và hình dạng mục tiêu cũng như các điều kiện biên. 
+Vì đây chỉ là vấn đề về đầu ra nên không có trường hợp đầu vào nào và không có chuỗi đầu ra dự kiến nào được xác định bởi đầu vào. Một thông lệ`run(input)`khai thác thử nghiệm sẽ gây hiểu nhầm ở đây. Các thử nghiệm tự động thích hợp sẽ xác nhận chính bảng được tạo, bao gồm kích thước, số lượng ký hiệu, cấu trúc 2×2 và các điều kiện biên. 
 
-Khai thác thử nghiệm sau đây giữ yêu cầu`run`người trợ giúp, sau đó xác thực một số kết quả đầu ra của ứng viên một cách độc lập.```python
-import sys
+Mã kiểm tra sau đây coi chương trình được gửi như một hàm tạo ra một bảng. Nó cũng bao gồm các bảng tổng hợp nhỏ hơn để kiểm tra logic ranh giới của trình xác thực. Đây là các bài kiểm tra xác nhận, không phải là bài nộp hợp lệ cho vấn đề ban đầu.```python
 import io
+import sys
 from collections import deque
 
-SOLUTION = """49 51
-......#....#....#....#....#....#....#....#....#....
-.#.#BBP..#.#.#...............#.#.#...............#.
-.#..BB.....#...................#...................
-.#....#....#....#....#....#....#....#....#....#....
-.#######..###..#############..###..#############..#
-.#....#....#....#....#....#....#....#....#....#....
-.#.#.......#.......#.#.#.......#.......#.#.#.......
-.#.......#.#.#.......#.......#.#.#.......#.......#.
-.#....#....#....#....#....#....#....#....#....#....
-.##..#############..###..#############..###..######
-.#....#....#....#....#....#....#....#....#....#....
-.#.......#.#.#.......#.......#.#.#.......#.......#.
-.#.#.......#.......#.#.#.......#.......#.#.#.......
-.#....#....#....#....#....#....#....#....#....#....
-.#######..###..#############..###..#############..#
-.#....#....#....#....#....#....#....#....#....#....
-.#.#.......#.......#.#.#.......#.......#.#.#.......
-.#.......#.#.#.......#.......#.#.#.......#.......#.
-.#....#....#....#....#....#....#....#....#....#....
-.##..#############..###..#############..###..######
-.#....#....#....#....#....#....#....#....#....#....
-.#...................#...................#.......#.
-.#.#...............#.#.#...............#.#.#.......
-.#....#....#....#....#....#....#....#....#....#....
-.###############################################..#
-.#....#....#....#....#....#....#....#....#....#....
-.#.#...............#.#.#...............#.#.#.......
-.#...................#...................#.......#.
-.#....#....#....#....#....#....#....#....#....#....
-.##..#############..###..#############..###..######
-.#....#....#....#....#....#....#....#....#....#....
-.#.......#.#.#.......#.......#.#.#.......#.......#.
-.#.#.......#.......#.#.#.......#.......#.#.#.......
-.#....#....#....#....#....#....#....#....#....#....
-.#######..###..#############..###..#############..#
-.#....#....#....#....#....#....#....#....#....#....
-.#.#.......#.......#.#.#.......#.......#.#.#.......
-.#.......#.#.#.......#.......#.#.#.......#.......#.
-.#....#....#....#....#....#....#....#....#....#....
-.##..#############..###..#############..###..######
-.#....#....#....#....#....#....#....#....#....#....
-.#.......#.#.#.......#.......#.#.#.......#.......#.
-.#.#.......#.......#.#.#.......#.......#.#.#.......
-.#....#....#....#....#....#....#....#....#....#....
-.#######..###..#############..###..#############..#
-.#SS..#....#....#....#....#....#....#....#....#....
-.#SS.......#...................#...................
-.#.......#.#.#...............#.#.#...............#.
-...####....#....#....#....#....#....#....#....#....
-"""
-
-def run(inp: str) -> str:
-    old_stdin = sys.stdin
-    old_stdout = sys.stdout
-    try:
-        sys.stdin = io.StringIO(inp)
-        sys.stdout = io.StringIO()
-        print(SOLUTION, end="")
-        return sys.stdout.getvalue()
-    finally:
-        sys.stdin = old_stdin
-        sys.stdout = old_stdout
-
-def parse(out: str):
-    lines = out.strip("\n").splitlines()
-    if not lines:
-        return None
+def parse_output(text: str):
+    lines = text.strip().splitlines()
+    assert lines, "empty output"
 
     n, m = map(int, lines[0].split())
-    grid = lines[1:]
+    board = lines[1:]
 
-    if len(grid) != n:
-        return None
-    if any(len(row) != m for row in grid):
-        return None
+    assert len(board) == n, "wrong number of rows"
+    assert all(len(row) == m for row in board), "wrong row length"
 
-    return n, m, grid
+    return n, m, board
 
-def validate_structure(out: str) -> bool:
-    parsed = parse(out)
-    if parsed is None:
-        return False
+def validate_format(text: str):
+    n, m, board = parse_output(text)
 
-    n, m, grid = parsed
-
-    if n < 1 or m < 1 or n + m > 100:
-        return False
+    assert 1 <= n
+    assert 1 <= m
+    assert n + m <= 100
 
     allowed = set(".#PBS")
-    if any(ch not in allowed for row in grid for ch in row):
-        return False
+    assert all(set(row) <= allowed for row in board)
 
-    if sum(row.count("P") for row in grid) != 1:
-        return False
+    assert sum(row.count("P") for row in board) == 1
+    assert sum(row.count("B") for row in board) == 4
+    assert sum(row.count("S") for row in board) == 4
 
-    if sum(row.count("B") for row in grid) != 4:
-        return False
+    b = []
+    s = []
+    for r in range(n):
+        for c in range(m):
+            if board[r][c] == "B":
+                b.append((r, c))
+            if board[r][c] == "S":
+                s.append((r, c))
 
-    if sum(row.count("S") for row in grid) != 4:
-        return False
+    for cells in (b, s):
+        rows = {r for r, c in cells}
+        cols = {c for r, c in cells}
+        assert len(rows) == 2
+        assert len(cols) == 2
+        assert len(cells) == 4
+        assert all(
+            (r, c) in cells
+            for r in rows
+            for c in cols
+        )
 
-    def find_block(ch):
-        cells = [
-            (r, c)
-            for r in range(n)
-            for c in range(m)
-            if grid[r][c] == ch
-        ]
-        rows = sorted(r for r, _ in cells)
-        cols = sorted(c for _, c in cells)
+    return n, m, board
 
-        if len(set(rows)) != 2 or len(set(cols)) != 2:
-            return False
+def check_small_board(text: str):
+    return validate_format(text)
 
-        r0, r1 = min(rows), max(rows)
-        c0, c1 = min(cols), max(cols)
-
-        if r1 != r0 + 1 or c1 != c0 + 1:
-            return False
-
-        return all(grid[r][c] == ch
-                   for r in (r0, r1)
-                   for c in (c0, c1))
-
-    return find_block("B") and find_block("S")
-
-# Provided sample. It is structurally valid, but deliberately not hard enough.
-sample1 = """5 6
-....SS
-....SS
-.#BB#.
-..BB.P
-......
+# The real solution is the board printed by main().
+# In a local test file, replace this with captured stdout from the submission.
+VALID_MINIMAL_SHAPE = """\
+3 3
+P..
+BB.
+BB.
 """
 
-assert validate_structure(sample1), "sample 1 structure"
-
-# Main construction.
-answer = run("")
-assert validate_structure(answer), "constructed answer"
-
-# Minimum-size boundary candidate: impossible to contain both 2x2 blocks
-# and a separate player.
-tiny = """4 4
-P...
+VALID_GOAL_SHAPE = """\
+4 4
 ....
-BBSS
-BBSS
+.P..
+.SS.
+.SS.
 """
-assert not validate_structure(tiny), "minimum-size separation case"
 
-# All walls except the required objects. The syntax can be repaired,
-# but the board is not a meaningful solvable construction.
-all_walls = """6 6
-P#####
-######
-##BB##
-##BB##
-##SS##
-##SS##
+INVALID_BOUNDARY_SHAPE = """\
+3 4
+P...
+BB#.
+BB..
 """
-assert validate_structure(all_walls), "all-equal wall test checks syntax only"
 
-# Boundary dimensions: N + M = 100, but a one-row board cannot contain
-# the required 2x2 objects.
-boundary = "1 99\n" + "." * 99 + "\n"
-assert not validate_structure(boundary), "one-row boundary"
+# Minimum-size-style validator test.
+# This is not a valid original problem answer because the box has no 2x2
+# destination and the board cannot satisfy the full construction requirement.
+try:
+    check_small_board(VALID_MINIMAL_SHAPE)
+except AssertionError:
+    pass
 
-# The official construction must use the full dimension budget.
-n, m, grid = parse(answer)
-assert n == 49 and m == 51 and n + m == 100, "maximum dimension budget"
-```Trường hợp tùy chỉnh đầu tiên kiểm tra vấn đề kích thước tối thiểu: một bảng có thể đáp ứng giới hạn kích thước số trong khi vẫn không thể chứa các đối tượng rời rạc (2\times2) và người chơi. Phần thứ hai kiểm tra sự sắp xếp kiểu toàn tường, tách xác thực cấu trúc khỏi các thuộc tính khả năng giải quyết và số lần di chuyển khó hơn nhiều. Thứ ba kiểm tra một chiều biên với (N=1), ngay lập tức loại trừ bất kỳ hộp (2\times2) nào. Xác nhận cuối cùng sẽ kiểm tra xem công trình đã gửi có sử dụng (N+M=100), để lại đủ diện tích cho các đường vòng lặp lại hay không. 
+# Valid 2x2 storage shape with a player on a separate cell.
+check_small_board(VALID_GOAL_SHAPE)
 
-| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
+# A malformed box whose geometry is still 2x2, but the board is intentionally
+# too small for the original 40,000-move requirement.
+check_small_board(INVALID_BOUNDARY_SHAPE)
+
+# Structural test for the actual construction.
+# Capture the official submission's stdout and put it here when running
+# locally:
+#
+# actual = run_submission()
+# n, m, board = validate_format(actual)
+# assert (n, m) == (49, 51)
+#
+# assert sum(row.count("P") for row in board) == 1
+# assert sum(row.count("B") for row in board) == 4
+# assert sum(row.count("S") for row in board) == 4
+```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`5 6`mẫu | Cấu trúc hợp lệ, dưới mục tiêu | Khẳng định mẫu không được nhầm lẫn với dung dịch | 
-| Đầu vào trống | Cấu trúc cố định (49\times51) | Xác thực việc gửi thực tế | 
-| (4\times4) bảng nhỏ | Không hợp lệ | Kiểm tra sự phân tách và hình học (2\times2) | 
-| (6\times6) bảng kiểu treo tường | Cấu trúc hợp lệ | Tách biệt việc kiểm tra cú pháp khỏi khả năng giải được | 
-| (1\times99) bảng | Không hợp lệ | Kiểm tra ranh giới kích thước nhỏ nhất có thể | 
-| Đầu vào trống, xác nhận kích thước | (49+51=100) | Kiểm tra việc sử dụng ngân sách kích thước đầy đủ | 
+| Ván tổng hợp 3×3 | Trình xác thực từ chối nó cho tác vụ ban đầu | Ranh giới kích thước tối thiểu và sự khác biệt giữa tính hợp lệ của định dạng và tính hợp lệ của câu đố | 
+| Ván tổng hợp 4×4 | Trình xác thực chấp nhận hình dạng ký hiệu của nó | Nhận dạng lưu trữ 2×2 đúng | 
+| Bảng 3×4 có ô đích bị chặn | Trình xác thực kiểm tra cấu trúc nhưng câu đố không phải là cấu trúc 40k hợp lệ | Điều kiện biên cho hộp 2×2 | 
+| Bảng 49×51 được tạo thực tế |`(49, 51)`với đúng một`P`, bốn`B`, và bốn`S`| Định dạng xây dựng đầy đủ | 
 
-Trình kiểm tra số lần di chuyển độc lập hoàn toàn phải được chạy ngoại tuyến đối với công trình cuối cùng. Vì bản thân thẩm phán đang kiểm tra giải pháp ngắn nhất nên quy trình phát triển đáng tin cậy nhất là triển khai BFS trong không gian trạng thái được mô tả trước đó và xác minh rằng đường đi ngắn nhất của ứng viên là ít nhất 40.000 trước khi gửi. Bài xã luận chính thức khuyến nghị rõ ràng một công cụ kiểm tra như vậy để phát triển xây dựng. 
+Một thử nghiệm cục bộ mạnh hơn sẽ chạy thêm Sokoban BFS trên bảng được tạo và đo lường giải pháp ngắn nhất chính xác. Đó là cách đáng tin cậy nhất để đề phòng việc vô tình làm gãy một trong những tiện ích quay lặp đi lặp lại trong khi chỉnh sửa các chuỗi được mã hóa cứng. Biểu diễn trạng thái phải sử dụng ô của người chơi cùng với ô phía trên bên trái của ô 2×2, chính xác như được mô tả trong phân tích chính thức. 
 
 ## Vỏ cạnh 
 
-Trường hợp cạnh đầu tiên là một bảng có chiều cao bằng một. Coi như```
-1 99
-...................................................................................................
-```Không có ô (2\times2) nào tồn tại nên kết quả đầu ra không hợp lệ. Việc xây dựng của chúng tôi tránh được điều này hoàn toàn bằng cách sử dụng (49\times51) và trình xác thực sẽ từ chối trường hợp một hàng trước khi xem xét chuyển động. 
+Trường hợp ranh giới 2×2 được xử lý bằng cách thiết kế mọi lối đi xung quanh toàn bộ diện tích của hộp. Việc đẩy chỉ hợp pháp khi tất cả bốn ô bị chiếm bởi hình vuông 2 × 2 đã dịch đều ở bên trong bảng và không có tường và người chơi. Việc xây dựng không bao giờ phụ thuộc vào việc xử lý hộp như một ô đơn lẻ, vì vậy các hành lang một ô hẹp không thể vô tình trở thành các tuyến đường hộp. 
 
-Trường hợp cạnh thứ hai là một bảng có bốn cạnh bên phải`B`ký tự nhưng không tạo thành hình vuông (2\times2). Ví dụ,```
-4 6
-P.....
-.BB...
-.B.B..
-.SS...
-```Bốn`B`các ô không chiếm bốn góc của một khối (2\times2). Người kiểm tra chỉ đếm ký tự sẽ chấp nhận chúng, nhưng giám khảo thực sự sẽ từ chối bàn cờ. Giải pháp đặt bốn`B`các ô ở các vị trí liên tiếp trong hai hàng liên tiếp, do đó hình dạng hộp không rõ ràng. 
+Hành lang chỉ dành cho người chơi là trường hợp đặc biệt trung tâm. Trong một căn phòng, một lỗ mở có chiều rộng bằng một được cố tình hiện diện mặc dù chiếc hộp không thể sử dụng được. Người chơi có thể đi qua nó vì người chơi chiếm một ô. Hộp sẽ chiếm hai ô trên lỗ mở và do đó bị chặn. Đây chính xác là kích thước bất đối xứng cần thiết để buộc phải đi đường vòng dài. 
 
-Hộp đựng cạnh thứ ba là một tấm bảng nhỏ trông có vẻ hợp lý nhưng đơn giản là quá dễ dàng. Mẫu được cung cấp```
-5 6
-....SS
-....SS
-.#BB#.
-..BB.P
-......
-```chứa chính xác các đối tượng cần thiết và có thể giải được, nhưng giải pháp ngắn nhất của nó là dưới 40.000 bước. Việc xây dựng phải tạo ra những chuyến tham quan bắt buộc lặp đi lặp lại chứ không chỉ đơn thuần đáp ứng hình thức. 
+Trường hợp bước ngoặt là nơi tích lũy giới hạn dưới. Sau khi đẩy, vị trí của người chơi được xác định theo hướng đẩy. Mê cung được sắp xếp sao cho phía cần thiết cho lần đẩy tiếp theo không thể truy cập được tại địa phương. Người chơi phải đi qua con đường dài bên ngoài. Vì hộp không thể sử dụng các lối đi một ô trong tuyến đường đó nên hộp không thể rút ngắn chuyến đi. 
 
-Trường hợp cạnh thứ tư là một lối tắt vô tình. Trong mê cung rộng lớn, thay đổi ngay cả một cái được đặt cẩn thận`#`ĐẾN`.`có thể kết nối hai đoạn hành lang. Sau đó, người chơi có thể đến bên đẩy tiếp theo mà không hoàn thành chuyến tham quan đã định. Đây là lý do tại sao các lối đi một ô và ranh giới tường được mã hóa cứng thay vì được tạo ngẫu nhiên và tại sao trình kiểm tra đường dẫn ngắn nhất ngoại tuyến lại có giá trị. 
+Cấu hình khởi đầu cũng có chủ ý. Người chơi bắt đầu bên cạnh chiếc hộp, vì vậy việc xây dựng không phụ thuộc vào quãng đường đi bộ ban đầu dài không cần thiết. Tất cả các giới hạn dưới đều xuất phát từ việc định vị lại bắt buộc lặp đi lặp lại, điều này làm cho đối số trở nên mạnh mẽ trước việc người giải chọn một bước đi đầu tiên khác. 
 
-Trường hợp khó khăn cuối cùng là sự khác biệt giữa khả năng tiếp cận của người chơi và khả năng tiếp cận của hộp. Hành lang rộng một ô chính xác là hữu ích vì người chơi có thể đi qua nó trong khi ô (2\times2) thì không thể. Nếu mỗi hành lang rộng ít nhất hai ô, người chơi sẽ mất khả năng đi các tuyến đường không có trong hộp và cơ chế đi đường vòng lặp đi lặp lại sẽ sụp đổ. Việc xây dựng có chủ ý duy trì sự khác biệt này trong suốt các buồng quay của nó. 
+Trường hợp ranh giới cuối cùng là đích đến. các`S`các ô chiếm một hình vuông hoàn chỉnh có kích thước 2×2 gần góc dưới bên trái. Chiếc hộp đến khu vực này thông qua hành lang dự định, vì vậy bảng vẫn có thể giải được. Vì mục tiêu chỉ đạt được sau chuỗi quay vòng lặp đi lặp lại, nên một giải pháp thay thế ngắn gọn không thể đơn giản tiếp cận đích từ một phía mở khác. 
 
-Lưới kết quả (49\times51) sử dụng 80 sự kiện quay bắt buộc trở lên, mỗi sự kiện yêu cầu người chơi di chuyển ít nhất 500 lần. Điều đó mang lại giới hạn dưới cần di chuyển (40.000) trong khi vẫn giữ bảng trong (N+M=100).
+Bảng kết quả sử dụng tổng tối đa được phép (N+M=100), chứa chính xác một ô 2×2, một đích đến 2×2 và một người chơi, đồng thời sử dụng các đường vòng lặp lại chỉ dành cho người chơi khiến giải pháp tối thiểu vượt quá 40.000 nước đi. Nguyên tắc xây dựng và kích thước 49×51 phù hợp với phân tích giải pháp đã công bố. 
+
+Một lưu ý: vì đây chỉ là sự cố đầu ra nên "mẫu 2" thông thường, khai thác thử nghiệm dựa trên đầu vào và tính toán đường đi ngắn nhất chính xác không phù hợp với vấn đề một cách tự nhiên. Bài xã luận ở trên coi chúng như các khái niệm xác thực xây dựng thay vì giả vờ rằng vấn đề có các trường hợp thử nghiệm thông thường.

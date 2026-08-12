@@ -1,7 +1,7 @@
 ---
 title: "CF 102437E - \u041f\u043e\u0445\u043e\u0436\u0438\u0435 \u0437\u0430\u043a\u0430\u0437\u044b"
-description: "Tôi đang nói về điều đó. Điều đó có nghĩa là bạn có thể kiếm được nhiều tiền hơn, và bạn có thể sử dụng nó."
-date: "2026-08-09T17:46:42+07:00"
+description: "Chúng ta có hai đơn hàng, mỗi đơn hàng được biểu thị bằng một chuỗi có độ dài (n). Ký tự thứ (i)-th mô tả số bài viết của hộp thứ (i)-th trong ngăn xếp. Chúng ta cần xác định xem (các) đơn hàng hiện tại có thể được chuyển đổi thành đơn hàng (t) trước đó hay không."
+date: "2026-08-12T07:59:52+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102437
@@ -9,7 +9,7 @@ codeforces_index: "E"
 codeforces_contest_name: "\u0418\u043d\u0442\u0435\u0440\u043d\u0435\u0442-\u043e\u043b\u0438\u043c\u043f\u0438\u0430\u0434\u044b, \u0421\u0435\u0437\u043e\u043d 2019-2020, \u0427\u0435\u0442\u0432\u0451\u0440\u0442\u0430\u044f \u043a\u043e\u043c\u0430\u043d\u0434\u043d\u0430\u044f \u043e\u043b\u0438\u043c\u043f\u0438\u0430\u0434\u0430, \u0443\u0441\u043b\u043e\u0436\u043d\u0435\u043d\u043d\u0430\u044f \u043d\u043e\u043c\u0438\u043d\u0430\u0446\u0438\u044f"
 rating: 0
 weight: 102437
-solve_time_s: 746
+solve_time_s: 836
 verified: false
 draft: false
 ---
@@ -18,79 +18,106 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 12m 26s 
+**Thời gian giải:** 13 phút 56 giây 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Bạn đang ở đâu?`n`. Строка`s`описывает текущую стопку коробок сверху вниз, а`t`bạn có thể làm điều đó. Bạn có thể làm được điều đó`s`bạn có thể sử dụng các công cụ sau: циклически сдвинуть все буквы на одну và ту же величину по алфавиту и bạn có thể làm điều đó. Bạn có thể làm điều đó, bạn có thể làm điều đó`t`, và если можно, вывести величину поворота`k`và величину сдвига`d`. 
+Chúng ta có hai đơn hàng, mỗi đơn hàng được biểu thị bằng một chuỗi có độ dài (n). Ký tự thứ (i)-th mô tả số bài viết của hộp thứ (i)-th trong ngăn xếp. Chúng ta cần xác định xem (các) đơn hàng hiện tại có thể được chuyển đổi thành đơn hàng (t) trước đó hay không. 
 
-Поворот на`k`означает, что первые`k`символов`s`bạn có thể làm điều đó. Xin chào,`abcdef`при`k = 2`превращается в`cdefab`. Bạn có thể làm điều đó để có được một khoản tiền lớn`d`bạn có thể tham khảo ý kiến ​​của mình. Если`d = 3`, đó`f`превращается в`c`. 
+Phép biến đổi được phép có hai phần độc lập. Đầu tiên, mọi chữ cái đều được dịch chuyển bằng cùng một dịch chuyển Caesar (d), theo chu kỳ modulo 26. Thứ hai, ngăn xếp có thể được xoay, nghĩa là tiền tố của (s) được di chuyển từ trên xuống dưới. Nếu số lượng vòng quay là (k), thứ tự kết quả là 
 
-При`n`до`200000`перебрать все`n`bạn có thể kiếm được nhiều tiền hơn và có nhiều tiền hơn`n`символов нельзя. Bạn có thể làm được điều đó`n² = 4 * 10^10`thật tuyệt vời, bạn có thể làm điều đó với bạn. Tôi không bao giờ có thể làm được điều đó hoặc bạn có thể làm điều đó. 
+[ 
+s[k:] + s[]. 
+] 
 
-Bạn không cần phải làm gì cả, bạn có thể làm điều đó. Đây là một trong những điều tốt nhất bạn có thể làm để đạt được điều đó. Xin chào, bạn```
+Sau cả hai thao tác, chuỗi kết quả phải bằng (t). Chúng ta phải xuất ra bất kỳ cặp hợp lệ nào ((k,d)) hoặc báo cáo`Impossible`. 
+
+Độ dài có thể lớn tới (200.000). Một thuật toán kiểm tra mọi phép quay và so sánh tất cả (n) ký tự sẽ thực hiện so sánh tối đa (n^2 = 40.000.000.000) ký tự trong trường hợp xấu nhất, vượt xa những gì thực tế. Chúng ta cần một giải pháp mà công việc của nó về cơ bản là tuyến tính theo độ dài chuỗi. 
+
+Có một số trường hợp khó khăn có thể phá vỡ quá trình triển khai đơn giản. Đầu tiên là (n=1). Không có sự xoay vòng có ý nghĩa nào để tìm kiếm, nhưng sự dịch chuyển Caesar có thể vẫn cần thiết. Ví dụ,```
+1
+z
+a
+```có thể giải được với (k=0), vì dịch chuyển`z`lùi lại 25 cho`a`. Việc triển khai giả định có các ký tự liền kề cần kiểm tra sẽ không thành công trong trường hợp này. 
+
+Một trường hợp cạnh khác được bao bọc trong bảng chữ cái. Ví dụ,```
+1
+a
+z
+```cũng có thể giải quyết được. Sự dịch chuyển cần thiết có thể được biểu diễn dưới dạng (d=1), bởi vì sự dịch chuyển`z`lùi lại 1 cho`y`, trong khi dịch chuyển`a`lùi lại 1 cho`z`. Phép tính số học phải được thực hiện theo modulo 26 thay vì sử dụng sai số nguyên thông thường. 
+
+Vấn đề thứ ba là xoay vòng ở cuối chuỗi. Coi như```
+5
+abcde
+bcdea
+```Xoay`bcdea`bởi (4) vị trí tạo ra`abcde`, do đó câu trả lời đúng tồn tại với (k=4) và (d=0). Một tìm kiếm chỉ kiểm tra các chuỗi con thông thường của`s`và quên ranh giới tuần hoàn sẽ bỏ lỡ giải pháp này. 
+
+Cuối cùng, các ký tự lặp lại có thể làm cho một số phép quay hợp lệ. Ví dụ,```
 4
-dabc
-abcd
-```правильный ответ существует: thiết lập`s`на`3`, получив`dabc`, và bạn`d = 0`. Bạn có thể dễ dàng tìm được một công cụ có thể cung cấp cho bạn một khoản vay và một khoản tiền lớn để có được một khoản tiền lớn Tuy nhiên, tôi sẽ không bao giờ phải lo lắng về vấn đề này. 
-
-Второй случай возникает при`n = 1`. Xin chào,```
-1
-a
-z
-```một người có thể kiếm được nhiều tiền hơn, một người có thể làm điều đó với một người khác`z`в`a`bạn có thể làm điều đó. Bạn có thể sử dụng công cụ này để có được một khoản vay phù hợp, bạn có thể sử dụng công cụ này và có thể cung cấp cho bạn một khoản vay phù hợp равна`0`. 
-
-Третий случай связан с переходом через`a`và`z`. Xin chào,```
-1
-a
-z
-```требует сдвига, эквивалентного`d = 25`, потому что`z - 25 = a`. Нельзя ограничивать`d`обычным диапазоном от`0`до`25`đây là một trong những điều tốt nhất bạn có thể làm và không cần phải làm gì nữa. условии разрешены все целые`d`от`-25`до`25`, một одинаковые сдвиги по модулю`26`nó. 
+aaaa
+aaaa
+```có mọi vòng quay là một vòng quay hợp lệ và (d=0) hoạt động với tất cả chúng. Thuật toán phải chấp nhận ứng viên hợp lệ đầu tiên thay vì dựa vào tính duy nhất. 
 
 ## Phương pháp tiếp cận 
 
-Bạn có thể tham khảo ý kiến ​​của mình. Для каждого`k`строим строку`s[k:] + s[:k]`. Một người có thể làm được điều đó`d`. Если первый символ после поворота должен перейти в`t[0]`, значение`d`bạn có thể làm điều đó. Bạn có thể làm điều đó bằng cách sử dụng nó. 
+Giải pháp trực tiếp là thử mọi phép quay có thể (k). Đối với mỗi phép quay, chúng ta sẽ so sánh mọi ký tự của (các) được xoay với ký tự tương ứng của (t). Cặp vị trí đầu tiên xác định độ dịch chuyển Caesar, sau đó mọi vị trí còn lại phải có cùng độ dịch chuyển theo modulo 26. Phương pháp này đúng vì nó kiểm tra rõ ràng mọi phép biến đổi có thể có. 
 
-Bạn có thể sử dụng tài khoản của mình để có được một khoản tiền nhất định`d`Bạn có thể sử dụng nó để có được một cái gì đó tốt hơn. Но для каждого из`n`một người có thể làm được điều đó`n`символов. Bạn có thể làm được điều đó`n²`операций, то есть около`4 * 10^10`при`n = 200000`. Bạn có thể làm điều đó với tôi. 
+Vấn đề là số lượng công việc lặp đi lặp lại. Có (n) vòng quay và việc kiểm tra một vòng quay mất (O(n)) thời gian. Tại (n=200.000), trường hợp xấu nhất đạt tới (200.000^2=40.000.000.000) kiểm tra ký tự. Lực lượng vũ phu đơn giản về mặt khái niệm, nhưng hành vi bậc hai của nó loại trừ nó. 
 
-Nếu bạn không biết, Caesar-сдвиг одинаков для всех символов. Bạn không cần phải làm gì cả, bạn có thể làm điều đó để đạt được điều đó`26`. 
+Quan sát hữu ích là sự dịch chuyển Caesar không làm thay đổi sự khác biệt giữa các chữ cái lân cận. Nếu như`x`được đổi thành`x-d`Và`y`được đổi thành`y-d`, thì sự khác biệt của họ vẫn còn 
 
-Для строки`abcde`эти разности равны`1, 1, 1, 1`. Bạn có thể làm được điều đó và bạn có thể làm điều đó, bạn có thể đạt được điều đó`defgh`, разности останутся`1, 1, 1, 1`. Общий Caesar-сдвиг полностью исчезает из этой информации. 
+[ 
+(y-d)-(x-d)=y-x \pmod {26}. 
+] 
 
-Đây là một trong những điều tốt nhất bạn có thể làm. Для строки`abcd`разности должны быть`b - a`,`c - b`,`d - c`,`a - d`. 
+Vì vậy, thay vì so sánh các chữ cái gốc, chúng ta có thể so sánh trình tự khác nhau theo chu kỳ giữa các chữ cái liên tiếp. 
 
-Получается массив из ровно`n`tốt hơn hết, bạn có thể sử dụng nó để có được một khoản tiền lớn. 
+Đối với một chuỗi (x), hãy xác định 
 
-Bạn có thể làm điều đó với những gì bạn đang làm. Bạn có thể dễ dàng tìm được một người có thể kiếm được nhiều tiền hơn`s`, которое совпадает с массивом разностей`t`. Bạn có thể dễ dàng tìm thấy những gì bạn có thể tìm thấy ở Caesar-сдвигом. Đó là một trong những điều tốt nhất bạn có thể làm để đạt được điều đó. 
+(x[(i+1)\bmod n]-x[i])\bmod 26. 
+] 
 
-Bạn có thể dễ dàng tìm thấy những gì bạn có thể làm với nó. Для этого построим`diff_s + diff_s`và bạn đang ở đâu`diff_t`алгоритмом Кнута, Морриса và Пратта. Bạn có thể làm được điều đó, bạn có thể làm được điều đó`0`до`n - 1`, соответствует некоторому циклическому повороту`s`. 
+Chuỗi này có chính xác (n) phần tử vì nó cũng chứa sự khác biệt từ ký tự cuối cùng đến ký tự đầu tiên. 
 
-Bạn có thể làm được điều đó, bạn có thể làm điều đó với Caesar và Caesar, bạn sẽ có được một khoản tiền lớn bạn có thể sử dụng nó để có được một khoản vay lớn. 
+Giả sử xoay (các) vị trí theo (k) sẽ có sự sắp xếp chính xác trước khi chuyển Caesar. Dãy sai phân tuần hoàn của nó đơn giản là dãy sai phân tuần hoàn của (s), bắt đầu từ vị trí (k). Sự dịch chuyển Caesar sau đó thay đổi không có sự khác biệt nào cả. Do đó, một phép quay hợp lệ tồn tại chính xác khi chuỗi sai phân tuần hoàn của (t) xảy ra dưới dạng phép quay tuần hoàn của chuỗi sai phân tuần hoàn của (s). 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+Tìm một chuỗi tuần hoàn bên trong một chuỗi khác là một vấn đề so khớp chuỗi tiêu chuẩn. Chúng ta có thể ghép chuỗi sai phân của (các) với chính nó và sử dụng thuật toán Knuth-Morris-Pratt để tìm chuỗi sai phân của (t) trong thời gian (O(n)). Khi tìm thấy vị trí bắt đầu phù hợp (k), sự dịch chuyển Caesar được xác định bởi ký tự đầu tiên: 
+
+[ 
+d=(s[k]-t[0])\bmod 26. 
+] 
+
+Biểu diễn sự khác biệt giải quyết vấn đề xoay vòng, trong khi KMP làm cho tìm kiếm tuyến tính. 
+
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
-| Lực lượng vũ phu | O(n²) | O(n) | Quá chậm | 
-| Tối ưu | O(n) | O(n) | Đã chấp nhận | 
+| Lực lượng vũ phu | (O(n^2)) | (O(n)) | Quá chậm | 
+| Tối ưu | (O(n)) | (O(n)) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Представим каждую букву числом от`0`до`25`. Для строки`x`người quản lý tài chính`diff_x`, vâng```
-diff_x[i] = (x[(i + 1) mod n] - x[i]) mod 26.
-```Nếu bạn muốn có được một khoản tiền lớn, bạn không nên chọn Caesar-сдвиг. 
+1. Chuyển đổi mọi ký tự của (s) và (t) thành giá trị số của nó từ 0 đến 25. Điều này cho phép chúng ta thực hiện tất cả số học dịch chuyển Caesar với số học mô-đun thông thường. 
+2. Xây dựng mảng sai phân tuần hoàn`ds`cho (các) cái. Đối với mọi vị trí (i), lưu trữ chênh lệch từ (s[i]) đến (s[(i+1)\bmod n]), modulo 26. Xây dựng`dt`cho (t) theo cách hoàn toàn tương tự. 
+3. Xây dựng hàm tiền tố KMP cho`dt`. Hàm tiền tố cho chúng ta biết bao nhiêu mẫu vẫn có thể sử dụng được sau khi không khớp, do đó việc tìm kiếm không bao giờ phải bắt đầu lại từ đầu. 
+4. Tìm kiếm`dt`bên trong`ds + ds`. Một phép quay của mảng tuần hoàn tương ứng với một đoạn liền kề của phiên bản nhân đôi của nó. Chúng tôi chỉ chấp nhận kết quả khớp bắt đầu từ chỉ số nhỏ hơn (n), vì đó chính xác là (n) phép quay có thể có. 
+5. Nếu không có sự trùng khớp như vậy, hãy in`Impossible`. Việc so khớp các khác biệt theo chu kỳ là cần thiết để một phép biến đổi hợp lệ, do đó, không có phép dịch chuyển Caesar nào có thể sửa chữa được một phép quay bị thiếu. 
+6. Nếu trận đấu bắt đầu ở (k), hãy tính 
 
-1. Построим`diff_s + diff_s`. Вторая копия нужна потому, что любой циклический поворот`diff_s`теперь появляется как обычный непрерывный отрезок этой удвоенной последовательности. 
-2. Найдём`diff_t`внутри`diff_s + diff_s`của KMP. Если первое совпадение начинается в позиции`k < n`, đó là`k`является нужным поворотом исходной строки`s`. 
-3. Bạn không cần phải làm gì cả`Impossible`. Bạn có thể làm được điều đó, nhưng bạn không cần phải làm gì để có thể đạt được mục tiêu của mình Tuy nhiên, một trong những điều quan trọng nhất là Caesar-сдвиг уже не поможет. 
-4. Bạn có thể làm điều đó, bạn có thể làm điều đó`d`bạn có thể làm điều đó. После поворота символ на позиции`0`равен`s[k]`. Tôi không có gì để nói`t[0]`, câu chuyện```
-s[k] - d ≡ t[0] (mod 26),
-```откуда```
-d ≡ s[k] - t[0] (mod 26).
-```Можно вывести остаток от`0`до`25`, потому что весь этот диапазон удовлетворяет условию`-26 < d < 26`. 
+[ 
+d=(s[k]-t[0])\bmod 26. 
+] 
 
-1. Для`n = 1`tôi có thể làm điều đó một cách dễ dàng. KMP là một trong những người có quyền lợi nhất định, nhưng không phải là một công việc tuyệt vời. Найденный поворот будет`k = 0`, à`d`bạn có thể làm điều đó. 
+Chuỗi xoay bắt đầu bằng`s[k]`. Dịch chuyển ký tự đó lùi lại (d) phải tạo ra`t[0]`, do đó phương trình này cho chính xác độ dịch chuyển Caesar cần thiết. 
 
-Bạn có thể sử dụng nó: Caesar-сдвиг прибавляет одну и ту же величину ко всем символам, поэтому при вычитании bạn có thể dễ dàng tìm thấy nó. Следовательно, если некоторое преобразование переводит`s`в`t`, và bạn có thể tìm thấy một số thứ có thể được cung cấp cho bạn. Bạn có thể làm điều đó để có được một khoản tiền lớn, bạn có thể sử dụng nó để có được một khoản tiền lớn соответствующими символами`s`và`t`одинакова на каждой позиции. Значит, существует один общий Caesar-сдвиг, переводящий всю повернутую`s`в`t`. Bạn có thể dễ dàng tìm được một người có thể kiếm được nhiều tiền hơn. 
+1. In`Success`, theo sau là (k) và (d). Giá trị được tạo bởi modulo 26 nằm trong khoảng từ 0 đến 25, thỏa mãn phạm vi yêu cầu (-26<d<26). 
+
+### Tại sao nó hoạt động 
+
+Bất biến trung tâm là hai chuỗi chỉ khác nhau bởi một phép dịch chuyển Caesar đều khi và chỉ khi hiệu chu kỳ tương ứng của chúng bằng nhau. Phép dịch Caesar hủy bỏ khi hai ký tự lân cận bị trừ đi, do đó nó không thể ảnh hưởng đến mảng chênh lệch. 
+
+Một phép quay theo (k) chỉ đơn giản là thay đổi điểm bắt đầu của mảng sai phân theo chu kỳ. Tìm kiếm`dt`bên trong`ds + ds`do đó tìm thấy chính xác các phép quay có cấu trúc ký tự tương đối khớp với (t). Khi tìm thấy một phép quay như vậy, mọi sai phân liền kề đều đồng ý, do đó hiệu giữa (các) và (t) được quay là không đổi trong toàn bộ chu kỳ. Hằng số đó chính xác là phép dịch chuyển Caesar được tính từ ký tự đầu tiên. Do đó, mọi cặp được báo cáo ((k,d)) đều tạo ra (t) và nếu tồn tại một cặp hợp lệ thì phép quay của nó phải xuất hiện trong tìm kiếm KMP. 
 
 ## Giải pháp Python```python
 import sys
@@ -98,301 +125,357 @@ input = sys.stdin.readline
 
 def build_diff(s):
     n = len(s)
-    a = [ord(c) - ord('a') for c in s]
-    return [(a[(i + 1) % n] - a[i]) % 26 for i in range(n)]
+    if n == 1:
+        return []
+    return [
+        (ord(s[(i + 1) % n]) - ord(s[i])) % 26
+        for i in range(n)
+    ]
 
-def kmp_search(pattern, text, limit):
+def prefix_function(pattern):
     m = len(pattern)
-
     pi = [0] * m
-    j = 0
+
     for i in range(1, m):
+        j = pi[i - 1]
+
         while j > 0 and pattern[i] != pattern[j]:
             j = pi[j - 1]
+
         if pattern[i] == pattern[j]:
             j += 1
+
         pi[i] = j
 
-    j = 0
-    for i, value in enumerate(text):
-        while j > 0 and value != pattern[j]:
-            j = pi[j - 1]
-
-        if value == pattern[j]:
-            j += 1
-
-        if j == m:
-            start = i - m + 1
-            if start < limit:
-                return start
-            j = pi[j - 1]
-
-    return -1
+    return pi
 
 def solve():
     n = int(input())
     t = input().strip()
     s = input().strip()
 
-    diff_t = build_diff(t)
-    diff_s = build_diff(s)
+    if n == 1:
+        d = (ord(s[0]) - ord(t[0])) % 26
+        print("Success")
+        print(0, d)
+        return
 
-    text = diff_s + diff_s
-    k = kmp_search(diff_t, text, n)
+    ds = build_diff(s)
+    dt = build_diff(t)
 
-    if k == -1:
-        return "Impossible\n"
+    pi = prefix_function(dt)
 
-    s_first = ord(s[k]) - ord('a')
-    t_first = ord(t[0]) - ord('a')
+    j = 0
+    doubled = ds + ds
 
-    d = (s_first - t_first) % 26
+    for i, value in enumerate(doubled):
+        while j > 0 and value != dt[j]:
+            j = pi[j - 1]
 
-    return f"Success\n{k} {d}\n"
+        if value == dt[j]:
+            j += 1
+
+        if j == n:
+            start = i - n + 1
+
+            if start < n:
+                d = (ord(s[start]) - ord(t[0])) % 26
+                print("Success")
+                print(start, d)
+                return
+
+            j = pi[j - 1]
+
+    print("Impossible")
 
 if __name__ == "__main__":
-    sys.stdout.write(solve())
-```
+    solve()
+```các`build_diff`hàm chuyển đổi một chuỗi thành chuỗi sai phân tuần hoàn của nó. biểu thức`(i + 1) % n`xử lý cạnh cuối cùng đến cạnh đầu tiên, điều này là cần thiết vì các phép quay là tuần hoàn chứ không phải là các hoạt động chuỗi con thông thường. 
 
-`build_diff`bạn có thể làm được điều đó và bạn có thể làm điều đó. Индекс`(i + 1) % n`bạn có thể sử dụng nó để có được một công việc tuyệt vời. Tôi không cần phải làm gì để có được một khoản tiền lớn. 
+Trường hợp (n=1) được xử lý riêng vì chuỗi sai phân của nó sẽ trống. Chỉ có một phép quay khả thi, (k=0) và sự dịch chuyển Caesar có thể được lấy trực tiếp từ hai ký tự. 
 
-В`kmp_search`сначала строится префиксная функция для`diff_t`. Bạn có thể làm điều đó với bạn`diff_s`. Параметр`limit = n`запрещает использовать совпадение, начинающееся в позиции`n`Hoặc là, bạn không cần phải làm gì để có được một khoản tiền lớn. 
+Hàm tiền tố chỉ được tính cho`dt`. Trong quá trình tìm kiếm KMP,`ds + ds`đại diện cho mọi vòng quay theo chu kỳ của`ds`như một đoạn liền kề bình thường. (n) vị trí bắt đầu đầu tiên có thể tương ứng chính xác với (k=0,\ldots,n-1). 
 
-После совпадения значение`k`bạn có thể làm điều đó để có được một khoản tiền lớn. Формула для`d`использует именно`s[k]`, không`s[0]`. Bạn có thể dễ dàng tìm thấy một trong những lựa chọn sau: поворота является`s[k]`. 
+Khi KMP đạt`j == n`, toàn bộ chuỗi khác biệt mục tiêu đã khớp. biểu thức`i - n + 1`bắt đầu trận đấu đó. Chúng tôi từ chối bắt đầu bằng hoặc xa hơn (n), vì đó là những kết quả trùng lặp được tạo bằng cách nhân đôi mảng. 
 
-Вычисления выполняются по модулю`26`, поэтому переходы вроде`z -> a`обрабатываются обычным остатком. Python không cần phải là một công cụ hỗ trợ tốt cho công cụ tìm kiếm, và bạn có thể sử dụng các công cụ có sẵn trên mạng của mình cảm ơn. 
+Cuối cùng,`d = (ord(s[start]) - ord(t[0])) % 26`theo trực tiếp từ sự chỉ đạo của hoạt động Caesar. Nếu ký tự được xoay là`c`, dịch chuyển nó lùi lại bởi (d) cho`c-d`, vì vậy chúng ta cần`c-d = t[0] (mod 26)`. Sắp xếp lại sẽ đưa ra biểu thức được sử dụng trong mã. 
+
+Số nguyên Python có độ chính xác tùy ý, do đó không có vấn đề tràn. Tất cả các chỉ số đều nằm trong (2n) và mọi chuyển đổi ký tự đều có thời gian không đổi. 
 
 ## Ví dụ đã hoạt động 
 
 ### Mẫu 1 
 
-bạn:```
+Đầu vào là```
 3
 abc
 fde
-```Для`t = abc`những gì bạn có thể làm:```
-b - a = 1
-c - b = 1
-a - c = 24
-```Для`s = fde`câu trả lời:```
-d - f = 24
-e - d = 1
-f - e = 1
-```После удвоения`diff_s`ищем`[1, 1, 24]`. 
+```Sự khác biệt theo chu kỳ như sau. 
 
-| tôi | khác biệt_s + khác biệt_s | Độ dài tiền tố KMP | Событие | 
+| Chuỗi | Trình tự khác biệt | 
+| --- | --- | 
+|`t = abc`|`[1, 1, 24]`| 
+|`s = fde`|`[24, 1, 1]`| 
+
+Nhân đôi trình tự khác biệt của`s`cho`[24, 1, 1, 24, 1, 1]`. Trình tự mục tiêu`[1, 1, 24]`đầu tiên xảy ra ở vị trí (1). 
+
+| Bang KMP | Giá trị | Vị trí mẫu | Kết quả | 
 | --- | --- | --- | --- | 
-| 0 | 24 | 0 | Совпадения không | 
-| 1 | 1 | 1 | Совпала первая разность | 
-| 2 | 1 | 2 | Совпала вторая разность | 
-| 3 | 24 | 3 | Xin chào,`k = 1`| 
+| bắt đầu | 24 | 0 | không khớp | 
+| sau chỉ số 1 | 1 | 1 | trận đấu | 
+| sau chỉ số 2 | 1 | 2 | trận đấu | 
+| sau chỉ số 3 | 24 | 3 | trận đấu đầy đủ | 
 
-Значит, поворот`s`на`1`tốt`def`. Một người có thể làm được điều đó`d`в`a`, câu chuyện`d = 3`. Получаем`abc`, то есть ответ`Success`,`1 3`. 
+Do đó (k=1). Xoay`fde`bởi một vị trí mang lại`def`. Ký tự đầu tiên của nó là`d`, trong khi mục tiêu bắt đầu bằng`a`, vậy 
 
-Nếu bạn muốn, bạn có thể sử dụng một công cụ để tìm kiếm một khoản tiền lớn. 
+[ 
+d=(d-a)\bmod26=3. 
+] 
+
+Dịch chuyển`def`lùi lại 3 cho`abc`, do đó thuật toán in`Success`,`1 3`. 
 
 ### Mẫu 2 
 
-bạn:```
+Đầu vào là```
 3
 abc
 aba
-```Для`t = abc`:```
-diff_t = [1, 1, 24]
-```Для`s = aba`:```
-b - a = 1
-a - b = 25
-a - a = 0
-```câu trả lời:```
-diff_s = [1, 25, 0]
-```Câu trả lời của bạn là: 
+```Sự khác biệt mang tính chu kỳ là 
 
-| Позиция начала | Последовательность длины 3 | Совпадает с diff_t | 
+| Chuỗi | Trình tự khác biệt | 
+| --- | --- | 
+|`t = abc`|`[1, 1, 24]`| 
+|`s = aba`|`[25, 25, 0]`| 
+
+Trình tự nhân đôi của`s`là`[25, 25, 0, 25, 25, 0]`, không chứa sự xuất hiện của`[1, 1, 24]`. 
+
+| Vị trí tìm kiếm | Sự khác biệt hiện tại | Tiến độ mục tiêu | 
 | --- | --- | --- | 
-| 0 |`[1, 25, 0]`| Нет | 
-| 1 |`[25, 0, 1]`| Нет | 
-| 2 |`[0, 1, 25]`| Нет | 
+| 0 | 25 | 0 | 
+| 1 | 25 | 0 | 
+| 2 | 0 | 0 | 
+| 3 | 25 | 0 | 
+| 4 | 25 | 0 | 
+| 5 | 0 | 0 | 
 
-Không cần phải nói, hãy làm theo cách của bạn để có được một khoản tiền từ Caesar và общего Caesar-сдвига получить`abc`không có gì đâu. Алгоритм выводит`Impossible`. 
-
-Nếu bạn muốn, bạn có thể làm điều đó bằng cách sử dụng nó. Nếu bạn có một khoản vay nhỏ, bạn sẽ không cần phải làm gì nữa, bạn không cần phải làm gì vậy nhé. 
+Không có vòng quay nào có các thay đổi ký tự tương đối giống như`t`, do đó không có phép dịch chuyển Caesar nào có thể làm cho các dây bằng nhau. Câu trả lời là`Impossible`. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | O(n) | Построение разностей и префиксной функции занимает O(n), поиск KMP в удвоенном массиве также занимает O(n) | 
-| Không gian | O(n) | Хранятся два массива разностей, удвоенный текст и префиксная функция | 
+| Thời gian | (O(n)) | Việc xây dựng cả hai mảng sai phân, xây dựng hàm tiền tố của KMP và tìm kiếm mảng nhân đôi đều mất thời gian tuyến tính. | 
+| Không gian | (O(n)) | Các mảng sai phân, chuỗi nhân đôi và hàm tiền tố đều yêu cầu bộ nhớ tuyến tính. | 
 
-При`n = 200000`линейный алгоритм выполняет лишь несколько проходов по массивам длины порядка`n`. Đây là một trong những điều bạn có thể nhận được nếu bạn muốn có được một khoản vay nhất định tôi không thể làm được. 
+Với (n\le200.000), thuật toán chỉ thực hiện một số lần truyền tuyến tính không đổi qua đầu vào. Việc sử dụng bộ nhớ của nó cũng tuyến tính nên nó phù hợp với các ràng buộc đã nêu. 
 
 ## Trường hợp thử nghiệm 
 
-Bạn có thể làm được điều đó`run`bạn có thể làm điều đó, nhưng bạn không thể làm điều đó với bạn. Nếu bạn muốn, bạn có thể không cần phải làm gì để đạt được mục tiêu, bạn sẽ không phải lo lắng về vấn đề này nữa, nhưng không конкретный единственный`k`và`d`.```python
+Kết quả đầu ra thành công không phải là duy nhất, do đó, một bộ khai thác thử nghiệm mạnh mẽ sẽ xác minh phép biến đổi được trả về thay vì so sánh chuỗi đầu ra hoàn chỉnh theo nghĩa đen. Mã kiểm tra sau đây thực hiện điều đó trong khi vẫn kiểm tra chính xác`Impossible`mẫu.```python
 import sys
 import io
 
-def build_diff(s):
-    n = len(s)
-    a = [ord(c) - ord('a') for c in s]
-    return [(a[(i + 1) % n] - a[i]) % 26 for i in range(n)]
+def solve_data(inp: str) -> str:
+    data = inp.strip().split()
+    n = int(data[0])
+    t = data[1]
+    s = data[2]
 
-def kmp_search(pattern, text, limit):
-    m = len(pattern)
+    def build_diff(x):
+        if n == 1:
+            return []
+        return [
+            (ord(x[(i + 1) % n]) - ord(x[i])) % 26
+            for i in range(n)
+        ]
 
-    pi = [0] * m
-    j = 0
-    for i in range(1, m):
-        while j > 0 and pattern[i] != pattern[j]:
+    if n == 1:
+        d = (ord(s[0]) - ord(t[0])) % 26
+        return f"Success\n0 {d}\n"
+
+    ds = build_diff(s)
+    dt = build_diff(t)
+
+    pi = [0] * n
+    for i in range(1, n):
+        j = pi[i - 1]
+        while j > 0 and dt[i] != dt[j]:
             j = pi[j - 1]
-        if pattern[i] == pattern[j]:
+        if dt[i] == dt[j]:
             j += 1
         pi[i] = j
 
     j = 0
-    for i, value in enumerate(text):
-        while j > 0 and value != pattern[j]:
+    for i, value in enumerate(ds + ds):
+        while j > 0 and value != dt[j]:
             j = pi[j - 1]
 
-        if value == pattern[j]:
+        if value == dt[j]:
             j += 1
 
-        if j == m:
-            start = i - m + 1
-            if start < limit:
-                return start
+        if j == n:
+            k = i - n + 1
+            if k < n:
+                d = (ord(s[k]) - ord(t[0])) % 26
+                return f"Success\n{k} {d}\n"
             j = pi[j - 1]
 
-    return -1
-
-def solve_data(inp):
-    data = inp.strip().split()
-    n = int(data[0])
-    t = data[1]
-    s = data[2]
-
-    diff_t = build_diff(t)
-    diff_s = build_diff(s)
-
-    k = kmp_search(diff_t, diff_s + diff_s, n)
-
-    if k == -1:
-        return "Impossible"
-
-    d = (ord(s[k]) - ord(t[0])) % 26
-    return f"Success\n{k} {d}"
+    return "Impossible\n"
 
 def run(inp: str) -> str:
     return solve_data(inp)
 
-def check_success(inp):
-    output = run(inp)
-    assert output.startswith("Success\n")
-
-    lines = output.splitlines()
-    k, d = map(int, lines[1].split())
-
+def valid_output(inp: str, out: str) -> bool:
     data = inp.strip().split()
     n = int(data[0])
     t = data[1]
     s = data[2]
 
-    assert 0 <= k < n
-    assert -26 < d < 26
+    lines = out.strip().split()
+
+    if lines[0] == "Impossible":
+        return len(lines) == 1
+
+    if lines[0] != "Success" or len(lines) != 3:
+        return False
+
+    k = int(lines[1])
+    d = int(lines[2])
+
+    if not (0 <= k < n and -26 < d < 26):
+        return False
 
     rotated = s[k:] + s[:k]
-    transformed = ''.join(
+
+    transformed = "".join(
         chr((ord(c) - ord('a') - d) % 26 + ord('a'))
         for c in rotated
     )
 
-    assert transformed == t
+    return transformed == t
 
-# Provided sample 1
-check_success(
-    """3
+# Provided samples.
+assert run("""3
 abc
 fde
-"""
-)
+""") == "Success\n1 3\n"
 
-# Provided sample 2
-assert run(
-    """3
+assert run("""3
 abc
 aba
-"""
-) == "Impossible"
+""") == "Impossible\n"
 
-# Provided sample 3
-check_success(
+assert valid_output(
     """1
 z
 a
-"""
+""",
+    run("""1
+z
+a
+""")
 )
 
-# Minimum size, equal symbols
-check_success(
+# Minimum-size, no transformation needed.
+assert valid_output(
     """1
 a
 a
-"""
+""",
+    run("""1
+a
+a
+""")
 )
 
-# Rotation by n - 1
-check_success(
+# All characters equal, with a non-zero Caesar shift.
+assert valid_output(
     """4
-dabc
-abcd
-"""
+zzzz
+aaaa
+""",
+    run("""4
+zzzz
+aaaa
+""")
 )
 
-# All equal values
-check_success(
-    """6
-aaaaaa
-zzzzzz
-"""
+# Rotation by n - 1, exercising the cyclic boundary.
+assert valid_output(
+    """5
+abcde
+bcdea
+""",
+    run("""5
+abcde
+bcdea
+""")
 )
 
-# Maximum size
+# Maximum-size input, all characters equal.
 n = 200000
 max_case = f"{n}\n" + "a" * n + "\n" + "a" * n + "\n"
-check_success(max_case)
-
-print("All tests passed.")
+assert valid_output(max_case, run(max_case))
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`1 / a / a`|`Success`| Минимальный размер và нулевой сдвиг | 
-|`4 / dabc / abcd`|`Success`| Поворот на`n - 1`, циклическая граница | 
-|`6 / aaaaaa / zzzzzz`|`Success`| Все разности равны нулю, Caesar-сдвиг определяется независимо от поворота | 
-|`200000 / a...a / a...a`|`Success`| Максимальный размер входа và линейную сложность | 
+|`1 / a / a`|`Success`, (k=0,d=0) | Kích thước tối thiểu và chuỗi chênh lệch trống | 
+|`4 / zzzz / aaaa`|`Success`, bất kỳ phép quay nào và (d=1) | Chuỗi hoàn toàn bằng nhau và số học Caesar mô-đun | 
+|`5 / abcde / bcdea`|`Success`, (k=4,d=0) | Xoay quanh cuối | 
+| (n=200000), tất cả`a`|`Success`, (k=0,d=0) | Kích thước đầu vào tối đa và hiệu suất tuyến tính | 
 
 ## Vỏ cạnh 
 
-При`n = 1`циклический массив разностей имеет единственный элемент`0`, bạn có thể làm điều đó bằng cách sử dụng nó. Xin chào,```
+Đối với (n=1), các mảng sai phân không chứa phần tử nào, vì vậy KMP không có ý nghĩa. Coi như```
+1
+z
+a
+```Chỉ có một khả năng quay duy nhất (k=0). Sự thay đổi cần thiết là 
+
+[ 
+(z-a)\bmod26=25. 
+] 
+
+Thuật toán trả về`Success`,`0 25`. Điều này tương đương với mẫu`0 -25`bởi vì sự dịch chuyển Caesar là tuần hoàn modulo 26 và cả hai giá trị đều biểu thị cùng một phép biến đổi. 
+
+Đối với bảng chữ cái, hãy xem xét```
 1
 a
 z
-```tốt`diff_t = [0]`và`diff_s = [0]`, câu chuyện`k = 0`. Затем`d = (25 - 0) mod 26 = 25`, và преобразование`z - 25`tốt`a`. Ответ`Success`,`0 25`корректен, хотя в условии в качестве эквивалентного варианта можно было бы вывести`0 -1`. 
+```Thuật toán tính toán 
 
-Bạn có thể sử dụng một số công cụ để cung cấp cho bạn một khoản phí bảo hiểm. Для```
+[ 
+(a-z)\bmod26=1. 
+] 
+
+Dịch chuyển`a`lùi lại 1 tạo ra`z`, Vì thế`Success 0 1`là hợp lệ. Hoạt động modulo ngăn không cho chênh lệch thô âm bị coi là một ca làm việc không hợp lệ. 
+
+Đối với một phép quay đi qua phần cuối của chuỗi, hãy xem xét```
+5
+abcde
+bcdea
+```Trình tự sai phân theo chu kỳ của`s`được tìm kiếm trong`ds + ds`. Mục tiêu bắt đầu tại vị trí (4), tương ứng với vòng quay 
+
+# \texttt{a}+\texttt{bcde} 
+
+\texttt{abcde}. 
+] 
+
+KMP tìm thấy (k=4) và các ký tự đầu tiên đã đồng ý, vì vậy (d=0). 
+
+Đối với các ký tự lặp lại, hãy xem xét```
 4
-dabc
-abcd
-```массив`diff_t`равен`[23, 1, 1, 1]`, à`diff_s`равен`[1, 1, 1, 23]`. удвоенном массиве`diff_s`шаблон начинается с позиции`3`, поэтому алгоритм находит`k = 3`. Поворот`abcd`на три позиции действительно даёт`dabc`. 
+aaaa
+aaaa
+```Mọi sai khác theo chu kỳ đều bằng 0, nên mọi phép quay đều khớp. KMP chấp nhận ký tự đầu tiên (k=0) và ký tự đầu tiên cho (d=0). Không cần phải phân biệt giữa nhiều câu trả lời hợp lệ vì bài toán chấp nhận bất kỳ câu trả lời nào trong số đó. 
 
-При переходе через границу алфавита арифметика по модулю`26`không có gì đáng ngạc nhiên. Для```
-1
-a
-z
-```разность между`z`và`a`рассматривается как`25`, tôi không cần phải làm gì cả. Формула`(s_first - t_first) % 26`với Python`25`, что является допустимым значением`d`. 
+Trường hợp đúng đắn nhất là khi các chuỗi khác nhau khớp nhau nhưng các chuỗi ban đầu không có cùng ký tự đầu tiên. Ví dụ,```
+3
+abc
+def
+```Chuỗi sai phân tuần hoàn của cả hai chuỗi là`[1, 1, 24]`, vì vậy (k=0) là một kết quả khớp cấu trúc hợp lệ. Sự khác biệt của ký tự đầu tiên mang lại 
 
-Bạn có thể làm được điều đó, например```
-6
-aaaaaa
-zzzzzz
-```bạn có thể làm điều đó một cách dễ dàng. KMP сразу находит совпадение при`k = 0`, после чего вычисляется`d = 25`. Bạn không cần phải làm gì cả, bạn có thể làm điều đó để có được một công việc tuyệt vời. 
+[ 
+d=(d-a)\bmod26=3. 
+] 
 
-Tất nhiên, không có gì có thể xảy ra với bạn khi bạn đang làm việc tại nhà`n`không có gì cả. Позиции`0`và`n`соответствуют одному и тому же циклическому положению, поэтому поиск ограничивается`start < n`. Đây là một trong những yếu tố giúp bạn có được một khoản tiền lớn và một khoản tiền lớn để đạt được điều đó`0 <= k < n`.
+Dịch chuyển`def`lùi lại 3 tạo ra`abc`. Điều này chứng tỏ tại sao việc so khớp những khác biệt không phải là bước cuối cùng mà nó làm giảm công việc còn lại trong việc xác định một sự dịch chuyển Caesar toàn cầu.

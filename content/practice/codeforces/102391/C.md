@@ -1,7 +1,7 @@
 ---
 title: "CF 102391C - Vệ sinh"
-description: "Lưới là một đồ thị có hướng được ngụy trang dưới dạng một mảng. Mỗi ô là một đỉnh và hai ô liền kề trực giao được kết nối bằng một cạnh có hướng chính xác khi ô đầu tiên không cấm di chuyển theo hướng đó."
-date: "2026-08-10T19:56:08+07:00"
+description: "Hãy coi mỗi ô lưới là một đỉnh của đồ thị có hướng. Hai ô chia sẻ một cạnh là ứng cử viên cho một cạnh, nhưng một ô từ chối di chuyển theo hướng ghi trên đó."
+date: "2026-08-12T02:01:21+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102391
@@ -9,8 +9,8 @@ codeforces_index: "C"
 codeforces_contest_name: "XX Open Cup, Grand Prix of Korea"
 rating: 0
 weight: 102391
-solve_time_s: 562
-verified: false
+solve_time_s: 644
+verified: true
 draft: false
 ---
 
@@ -18,261 +18,229 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 9m 22s 
-**Đã xác minh:** không 
+**Thời gian giải:** 10 phút 44 giây 
+**Đã xác minh:** có 
 
 ## Giải pháp 
 ## Hiểu vấn đề 
 
-Lưới là một đồ thị có hướng được ngụy trang dưới dạng một mảng. Mỗi ô là một đỉnh và hai ô liền kề trực giao được kết nối bằng một cạnh có hướng chính xác khi ô đầu tiên không cấm di chuyển theo hướng đó. Một ô được đánh dấu`L`, ví dụ, có thể di chuyển sang hàng xóm bên phải, lên hoặc xuống, nhưng không bao giờ sang hàng xóm bên trái của nó. Đơn giản là không thể di chuyển ra ngoài lưới. Cách giải thích này phù hợp với định nghĩa vấn đề ban đầu. 
+Hãy coi mỗi ô lưới là một đỉnh của đồ thị có hướng. Hai ô chia sẻ một cạnh là ứng cử viên cho một cạnh, nhưng một ô từ chối di chuyển theo hướng ghi trên đó. Do đó, mỗi ô có tối đa ba cạnh đi ra và đồ thị có cấu trúc cao mặc dù nó có thể chứa nhiều chu trình có hướng. 
 
-Đối với mỗi truy vấn, chúng tôi biết ô bắt đầu`s`và ô kết thúc`t`. Chúng ta cần đếm từng tế bào`v`tồn tại một đường dẫn có hướng`s -> ... -> v -> ... -> t`. Một ô được tính một lần ngay cả khi có nhiều đường dẫn khác nhau sử dụng nó. Nếu như`t`không thể truy cập được từ`s`, câu trả lời là bằng không. 
+Đối với một truy vấn, người chơi bắt đầu tại (các) ô và cuối cùng phải đứng ở một ô (t). Một ô phải được làm sạch chính xác khi tồn tại một số bước đi được chỉ dẫn từ (s) đến (t) ghé thăm ô đó. Tương tự, các ô được yêu cầu là các đỉnh có thể tới được từ (s) và bản thân chúng có thể tới tới (t). 
 
-Sự khác biệt cuối cùng đó rất dễ bị bỏ lỡ. Chúng tôi không tính mọi ô có thể truy cập từ`s`. Một tế bào phía sau`t`không được tính chỉ vì người chơi có thể tiếp cận nó ngay từ đầu. Ô cũng phải có thể sử dụng được trước khi đến ô kết thúc được chỉ định. 
+Lưới chứa tối đa (10^6) ô, trong khi có thể có (3\cdot10^5) truy vấn. Việc truyền tải biểu đồ riêng biệt cho mỗi truy vấn sẽ kiểm tra tối đa (10^6) ô cho mỗi truy vấn, đưa ra khoảng (3\cdot10^{11}) kiểm tra đỉnh trong trường hợp xấu nhất. Ngay cả một BFS được tối ưu hóa cực kỳ cao cũng sẽ vượt xa giới hạn hai giây. Quá trình tiền xử lý phải gần với tuyến tính trong kích thước lưới và mỗi truy vấn phải mất khoảng thời gian logarit. Các ràng buộc chính thức đưa ra giới hạn hai giây và bộ nhớ 1024 MB. 
 
-Có thể có tới một triệu ô và 300.000 truy vấn. Việc chạy tìm kiếm biểu đồ một cách độc lập cho mỗi truy vấn sẽ cần tới khoảng`3 * 10^11`thăm ô trong trường hợp xấu nhất, thậm chí trước khi đếm các lần kiểm tra hàng xóm. Lưới đủ lớn để quá trình tiền xử lý phải gần tuyến tính, trong khi mỗi truy vấn phải ở dạng logarit hoặc cao hơn. Cuộc thi ban đầu đưa ra giới hạn thời gian là hai giây và 1024 MB bộ nhớ, do đó, giải pháp xây dựng cấu trúc khả năng tiếp cận cho mục đích chung rõ ràng cho mỗi cặp là quá lớn. 
-
-Một số trường hợp nhỏ bộc lộ những sai lầm tưởng chừng như vô hại. 
-
-Hãy xem xét một tế bào duy nhất.```
+Có một số trường hợp dễ xảy ra khi thực hiện bất cẩn sẽ đưa ra câu trả lời sai. Lưới (1\times1) là một trường hợp như vậy:```
 1 1 1
-L
+U
 1 1 1 1
-```Câu trả lời là`1`. Trình phát bắt đầu và kết thúc trên ô đó, vì vậy đường dẫn trống đã truy cập vào ô đó. Việc triển khai bất cẩn chỉ đếm các cạnh chuyển động có thể trả về 0 không chính xác. 
+```Câu trả lời là`1`, vì trình phát đã bắt đầu và kết thúc trên cùng một ô. Kiểm tra khả năng tiếp cận chỉ xem xét các bước di chuyển không trống có thể trả về 0 không chính xác. 
 
-Bây giờ hãy xem xét một lưới một trong hai có mũi tên hướng ra bên ngoài.```
-1 2 2
+Bẫy thứ hai là một cặp ô chặn lẫn nhau:```
+1 2 1
 RL
 1 1 1 2
-1 2 1 1
-```Đầu ra là```
-0
-0
-```Ô đầu tiên được đánh dấu`R`, nên nó không thể di chuyển sang phải. Ô thứ hai được đánh dấu`L`, nên nó không thể di chuyển sang trái. Hai tế bào tạo thành một hàng rào định hướng hoàn chỉnh. Việc coi lưới là đồ thị vô hướng sẽ cho rằng chúng được kết nối một cách không chính xác. 
+```Ô bên trái từ chối di chuyển sang phải, trong khi ô bên phải từ chối di chuyển sang trái. Không có đường đi nên đáp án là`0`. Việc coi vùng lân cận như một kết nối vô hướng sẽ cho rằng mục tiêu có thể truy cập được một cách không chính xác. 
 
-Ô ranh giới cũng có ít bước di chuyển hợp pháp hơn ô bên trong. Ví dụ,```
+Hiện tượng ngược lại cũng có thể xảy ra. Coi như```
 1 2 1
-LL
-1 2 1 1
-```có câu trả lời`0`. Ô thứ hai không thể di chuyển sang trái vì nó bị cấm`L`, và không có ô nào khác. Việc truyền tải chỉ kiểm tra xem mục tiêu có nằm cạnh nhau mà không tôn trọng mũi tên của ô nguồn hay không, sẽ cho kết quả sai. 
+LR
+1 1 1 2
+```Ô bên trái có thể di chuyển sang phải và ô bên phải có thể di chuyển sang trái, vì vậy cả hai ô tạo thành một thành phần được kết nối chặt chẽ. Câu trả lời là`2`. Việc nén các thành phần được kết nối mạnh nhưng quên cung cấp cho một thành phần số ô ban đầu của nó sẽ tạo ra số đếm sai. 
 
-Cuối cùng, một số ô có thể thuộc về một thành phần được kết nối mạnh mẽ. Ở Mẫu 1, toàn bộ hàng cuối cùng được đánh dấu`U`. Các ô có thể di chuyển theo chiều ngang theo cả hai hướng, vì vậy cả năm ô đều thuộc về một SCC. Truy vấn từ`(5,5)`do đó chính nó đã có câu trả lời`5`, không`1`. 
+Cuối cùng, mục tiêu có thể truy cập không có nghĩa là mọi ô có thể truy cập ngay từ đầu đều thuộc về câu trả lời. Tế bào phải nằm trên một số bước đi bắt đầu đến mục tiêu. Chỉ riêng BFS chuyển tiếp đã tính toán một tập hợp quá lớn. Sự khác biệt này là lý do giải pháp cần biểu diễn biểu đồ cụ thể hơn nhiều. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận trực tiếp là chạy BFS hoặc DFS từ ô bắt đầu cho mọi truy vấn. Trong quá trình tìm kiếm, chúng tôi đánh dấu mọi ô có thể truy cập. Nếu không bao giờ đạt tới ô kết thúc thì câu trả lời là 0. Nếu không, chúng ta cần thêm một hạn chế: trong số các ô có thể truy cập, chỉ những ô vẫn có thể tiếp cận mục tiêu mới thuộc về đường dẫn bắt đầu đến mục tiêu hợp lệ. Chạy tìm kiếm thứ hai từ mục tiêu trên biểu đồ đảo ngược sẽ giải quyết được việc đó, nhưng vẫn`O(NM)`mỗi truy vấn. Với`Q = 300000`Và`NM = 10^6`, điều này đạt đến khoảng`3 * 10^11`thăm đỉnh trong trường hợp xấu nhất. 
+Cách tiếp cận trực tiếp là thực hiện tìm kiếm từ ô bắt đầu, giữ lại mọi ô có thể truy cập và xác định riêng biệt ô nào trong số đó cuối cùng có thể tiếp cận mục tiêu. Phần thứ hai có thể được thực hiện bằng cách duyệt qua biểu đồ đảo ngược từ mục tiêu. Giao điểm của chúng chính xác là tập hợp các ô xuất hiện trong ít nhất một bước đi (s)-tới-(t), vì vậy phương pháp này đúng. 
 
-Cấu trúc hữu ích xuất hiện khi chúng ta ngừng xem xét các ô riêng lẻ và lần đầu tiên thu gọn mọi thành phần được kết nối mạnh mẽ. Bên trong một SCC, mọi ô đều có thể tiếp cận mọi ô khác, do đó, với mục đích quyết định ô nào nằm trên đường dẫn bắt đầu đến mục tiêu, toàn bộ thành phần hoạt động như một đỉnh có trọng số bằng số lượng ô của nó. 
+Vấn đề là công việc lặp đi lặp lại. Một truy vấn có thể yêu cầu (O(NM)) hoạt động và có các truy vấn (Q). Với (N,M\le1000) và (Q\le300000), đây là (O(QNM)), đạt khoảng (3\cdot10^{11}) lượt truy cập ô. Việc lưu trữ toàn bộ tập hợp có thể truy cập cho mọi truy vấn cũng là không thể. 
 
-Sự ngưng tụ SCC thu được là DAG. Một DAG chung vẫn sẽ khó khăn vì khả năng tiếp cận giữa các cặp tùy ý có thể phức tạp. Việc hạn chế lưới điện mang lại cho chúng tôi nhiều cấu trúc hơn. Nếu SCC được chèn theo thứ tự tôpô thì các ô đã được chèn luôn tạo thành một tập hợp các hình chữ nhật rời rạc. Nếu một thành phần như vậy không phải là hình chữ nhật, một ô bên ngoài sẽ chạm vào nó ít nhất ở hai mặt. Ô bên ngoài đó sẽ có một cạnh trong vùng đã được xây dựng, mâu thuẫn với trật tự tôpô đã chọn. Đây là tính chất hình học quan trọng đầu tiên của bài toán. 
+Quan sát quan trọng là biểu đồ lưới này không phải là biểu đồ có hướng tùy ý. Đầu tiên nén các thành phần được kết nối mạnh mẽ của nó. Bên trong một thành phần, mọi ô có thể tiếp cận mọi ô khác, do đó, với mục đích di chuyển giữa các thành phần, toàn bộ thành phần hoạt động như một đỉnh. Quan trọng hơn, nếu các thành phần này được xử lý theo thứ tự tôpô thì các ô đã được xử lý luôn tạo thành một tập hợp các hình chữ nhật riêng biệt. Đặc tính hình học này làm cho đồ thị có hướng khổng lồ có thể nén được. 
 
-Các hình chữ nhật có thể được biểu diễn bằng một cây với một số ít các cạnh định hướng bổ sung. Khi một SCC mới được chèn vào, tất cả các hình chữ nhật được xây dựng trước đó nằm bên trong hình chữ nhật bao quanh nó sẽ được gắn vào nó dưới dạng cây con. Các hình chữ nhật chạm vào bốn cạnh của nó được nhóm thành các chuỗi liên tiếp, với một đỉnh ảo được sử dụng khi một số hình chữ nhật có cùng một cạnh. Đỉnh ảo cung cấp cho chúng ta một kết nối cây trong khi kết nối hướng thực tế tới SCC mới được lưu trữ riêng biệt dưới dạng cạnh không phải cây. 
+Giả sử thành phần liên thông mạnh tiếp theo là (C). Xét hình chữ nhật nhỏ nhất chứa (C). Các hình chữ nhật đã được xử lý trước đó nằm bên trong hình chữ nhật bao quanh đó có thể được hợp nhất thành (C) trong cấu trúc phụ trợ. Sau đó kiểm tra bốn cạnh của hình chữ nhật giới hạn. Các hình chữ nhật tiếp xúc trực tiếp với một cạnh được nhóm lại thông qua một đỉnh ảo. Thuộc tính định hướng quan trọng là, đối với một nhóm hình chữ nhật được đặt cạnh nhau, mọi ô trong nhóm đều có khả năng rời khỏi nhóm theo hướng vuông góc với cách sắp xếp cạnh nhau. Do đó, một kết nối ảo là đủ để biểu diễn tất cả các cạnh được định hướng ban đầu đó. 
 
-Thuộc tính khóa thứ hai cho biết rằng đối với một nhóm hình chữ nhật nằm cạnh nhau, chuyển động theo hướng vuông góc là đồng đều: mọi hình chữ nhật trong nhóm có thể rời khỏi hướng đó hoặc không có hình chữ nhật nào có thể. Đây là điều cho phép toàn bộ một cạnh được biểu thị bằng một đỉnh ảo thay vì xử lý từng ô riêng biệt. 
+Đồ thị phụ thu được là một cái cây. Mỗi thành phần liên kết mạnh ban đầu sẽ trở thành một đỉnh cây có trọng số, với trọng số bằng số ô của nó. Các đỉnh ảo có trọng số bằng 0. Các nút con của mỗi đỉnh cây được sắp xếp thành các chuỗi và mối quan hệ về khả năng tiếp cận ban đầu có thể được phục hồi từ các chuỗi đó. 
 
-Sau khi tất cả SCC đã được xử lý, biểu đồ được xây dựng có hình dạng đặc biệt hữu ích. Các cạnh cây của nó tạo thành một cây có gốc và các nút con của mỗi đỉnh cây được sắp xếp thành một hoặc nhiều chuỗi có hướng. Sau đó, một truy vấn có thể được giảm xuống để di chuyển lên trên cây cho đến khi nguồn và đích ở cùng độ sâu, sau đó kiểm tra xem hai con của chúng có thuộc cùng một chuỗi được định hướng hay không. Số lượng ô trên tất cả các đường dẫn hợp lệ có thể được lấy từ tổng tiền tố trên các ô con được sắp xếp. 
+Khi cây này tồn tại, truy vấn sẽ trở thành truy vấn cây. Chúng tôi di chuyển thành phần bắt đầu lên trên cho đến khi nó có cùng độ sâu với thành phần đích. Nếu các đỉnh kết quả không có cùng đỉnh gốc thì không thể truy cập được mục tiêu. Mặt khác, hai đỉnh là anh em trong một chuỗi có thứ tự và một loạt các thành phần anh em góp phần tạo nên câu trả lời. Tổng tiền tố trên các phần tử con được sắp xếp làm cho phạm vi này được tính theo thời gian không đổi sau lần nhảy tổ tiên. 
 
-Việc xây dựng này về cơ bản là quan sát trung tâm của giải pháp chính thức. Việc triển khai ban đầu sử dụng phép kết tập hợp rời rạc để hợp nhất các hình chữ nhật đã được xử lý và nâng nhị phân cho các truy vấn tổ tiên cuối cùng. Việc triển khai Python bên dưới sử dụng cùng một cấu trúc nhưng thay thế việc nâng nhị phân bằng phân tách nặng-nhẹ. Cả hai đều cho thời gian truy vấn logarit. 
-
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
-| Lực lượng vũ phu |`O(QNM)`|`O(NM)`| Quá chậm | 
-| SCC + cây hình chữ nhật |`O(NM α(NM) + Q log(NM))`|`O(NM)`kho đóng gói | Đã chấp nhận | 
+| Lực lượng vũ phu | (O(QNM)) | (O(NM)) | Quá chậm | 
+| SCC + cây hình chữ nhật + nâng nhị phân | (O(NM\alpha(NM)+Q\log(NM))) | (O(NM\log(NM))) | Đã chấp nhận | 
 
-## Hướng dẫn thuật toán 
+Về cơ bản, cấu trúc này có ý tưởng cấu trúc giống như giải pháp chính thức, với cách triển khai bên dưới thay thế các lệnh gọi C++ DFS đệ quy bằng các phép duyệt Python lặp lại và sử dụng các mảng số nguyên được đóng gói để kiểm soát bộ nhớ. 
 
-1. Coi mỗi ô là một đỉnh của đồ thị có hướng. Đối với mỗi ô, hãy kiểm tra bốn vị trí lân cận của nó và tạo một chuyển tiếp có thể sử dụng được bất cứ khi nào hướng đó không phải là hướng bị cấm của ô. Vị trí ranh giới bị từ chối trước khi tạo chuyển tiếp vì không thể di chuyển ra ngoài lưới. 
-2. Tính toán tất cả các thành phần liên thông mạnh bằng thuật toán Tarjan. Chúng tôi cần SCC vì bên trong một thành phần, mọi ô đều có thể được sử dụng để tiếp cận mọi ô khác, do đó, các truy vấn có thể hoạt động trên các thành phần thay vì các ô riêng lẻ. 
+## Hướng dẫn thuật toán
 
-Việc triển khai sử dụng phiên bản lặp lại của Tarjan thay vì DFS đệ quy. Độ sâu đệ quy một triệu ô sẽ vượt quá giới hạn đệ quy của Python và cũng sẽ tiêu tốn một lượng lớn bộ nhớ ngăn xếp lệnh gọi. 
-3. Đối với mỗi SCC, ghi lại kích thước cũng như hàng và cột tối thiểu và tối đa của nó. Bốn cực trị xác định hình chữ nhật giới hạn của nó. Chúng tôi cũng lưu trữ tất cả các ô thuộc mỗi SCC trong một danh sách liên kết, do đó, việc lặp qua các ô của một thành phần không yêu cầu danh sách danh sách Python cho tối đa một triệu thành phần. 
-4. Xử lý SCC theo số lượng thành phần giảm dần. Tarjan chỉ định các thành phần theo thứ tự tôpô ngược, do đó, quá trình này xử lý DAG ngưng tụ từ nguồn tới bồn. 
-
-Trong khi xử lý thành phần`C`, hãy sử dụng cấu trúc tập hợp rời rạc để hợp nhất mọi thành phần đã được biểu diễn nằm bên trong hình chữ nhật bao quanh của`C`. Những đối tượng được hợp nhất này trở thành cây con của`C`. 
-5. Kiểm tra bốn cạnh ngay bên ngoài hình chữ nhật bao quanh. Giả sử chúng ta kiểm tra các ô trực tiếp ở bên trái của`C`. Tất cả các ô như vậy nằm trên một đoạn ranh giới ngang. Các ô liên tiếp đã được hợp nhất vào cùng một hình chữ nhật được biểu thị bằng một gốc DSU. 
-
-Nếu tất cả các ô biên đều cấm di chuyển về phía`C`, không có cạnh định hướng nào có thể đi vào`C`từ phía đó nên không cần kết nối thêm. Ngược lại, tất cả các hình chữ nhật chạm vào cạnh đó sẽ được nối dưới một đỉnh ảo và đỉnh ảo nhận được một cạnh không phải cây hướng về phía`C`. 
-
-Quy trình tương tự được áp dụng cho mặt phải, mặt trên và mặt dưới. Các hướng cấm sử dụng cho bốn phía chính xác là`R`,`L`,`D`, Và`U`, tương ứng. 
-6. Sau khi mỗi SCC được xử lý, mọi gốc DSU chưa có được gốc gốc sẽ được gắn vào một gốc nhân tạo. Cây bây giờ chứa tất cả các đỉnh SCC và tất cả các đỉnh ảo. Các đỉnh SCC thực có trọng số dương bằng số lượng ô của chúng, trong khi các đỉnh ảo có trọng số bằng 0. 
-7. Mỗi đỉnh cây có nhiều cây con. Các cạnh được định hướng bổ sung kết nối các con của cùng một cha mẹ và các cạnh đó tạo thành các chuỗi rời rạc. Chúng tôi tính toán vị trí cho mỗi con sao cho các con của một phụ huynh được sắp xếp từ trái sang phải dọc theo các chuỗi này. 
-
-Đồ thị chỉ được tạo bởi các cạnh phụ có bậc tối đa là hai. XOR của các nút lân cận đủ để đi qua mọi chuỗi mà không cần lưu trữ danh sách lân cận cho mỗi nút. 
-8. Đối với mỗi cạnh phụ giữa anh chị em`a`Và`b`, lưu trữ hướng của nó bằng cách sử dụng`dir`. Nếu như`a`là trước đây`b`và cạnh là`a -> b`, bộ`dir[a] = 1`. Nếu như`b`là trước đây`a`, bộ`dir[b] = -1`. 
-
-Với mỗi phụ huynh, hãy tính`le[v]`Và`ri[v]`. Họ xác định con ngoài cùng bên trái và con ngoài cùng bên phải trong chuỗi có hướng chứa`v`. Tổng tiền tố`sum[v]`lưu trữ tổng trọng lượng SCC từ đứa trẻ đầu tiên cho đến khi`v`. 
-9. Tính toán`val[v]`, đại diện cho số lượng ô lưới thực có thể được bao phủ khi đi vào cây con thông qua`v`và sử dụng chuyển động chuỗi anh chị em có sẵn. Sự tái phát là`val[v] = val[parent] + sum[ri[v]] - sum[le[v]] + size[le[v]]`. 
-
-Thuật ngữ được thêm vào chính xác là trọng số của khoảng cách chuỗi anh chị em tối đa được liên kết với`v`. 
-10. Tiền xử lý cây cho các truy vấn tổ tiên bằng cách sử dụng phân tách nặng-nhẹ. Cho một thành phần nguồn`a`và thành phần mục tiêu`b`, trước tiên chúng ta cần tổ tiên của`a`độ sâu của nó bằng độ sâu của`b`. Sự phân rã ánh sáng nặng tìm thấy đỉnh đó trong`O(log(NM))`. 
-11. Nếu nguồn nông hơn mục tiêu thì không thể đạt được mục tiêu thông qua cấu trúc cây đã xây dựng nên câu trả lời là 0. Nếu không hãy nâng nguồn lên độ sâu của mục tiêu. 
-12. Nguồn nâng và đích phải có cùng cha mẹ. Nếu cha mẹ của họ khác nhau thì không có đường dẫn hợp lệ nào có thể kết nối họ, vì vậy câu trả lời là 0. 
-13. Nếu nguồn nâng nằm trước mục tiêu trong số các con được ra lệnh của cha mẹ chúng, hãy kiểm tra xem chuỗi hướng bắt đầu từ nguồn có đạt được mục tiêu hay không. Điều này tương đương với việc kiểm tra`pos[ri[source]] >= pos[target]`. Nếu thất bại, mục tiêu sẽ không thể truy cập được. 
-14. Nếu điều kiện chuỗi thành công, câu trả lời bao gồm khoảng tổng tiền tố giữa hai phần tử con cộng với phần đóng góp từ phần tổ tiên của đường dẫn. Trường hợp đối xứng trong đó nguồn nằm sau mục tiêu sử dụng`le`thay vì`ri`. 
+1. Xây dựng biểu đồ lưới có hướng ẩn và tính toán tất cả các thành phần liên thông mạnh bằng thuật toán Tarjan. Một ô có một cạnh đi tới mọi ô lân cận hợp lệ ngoại trừ hướng được ghi trong ô đó. Chúng tôi không bao giờ lưu trữ rõ ràng tất cả các cạnh của đồ thị vì mọi cạnh đều có thể được tạo lại từ một ô trong thời gian không đổi. 
+2. Xử lý các thành phần được kết nối mạnh theo thứ tự số thành phần đảo ngược. Tarjan chỉ định các thành phần theo thứ tự các gốc của chúng được hoàn thành, vì vậy thứ tự này tương ứng với quá trình xử lý tôpô cần thiết cho việc xây dựng. 
+3. Đối với mọi thành phần (C), hãy lưu hình chữ nhật giới hạn của nó ([x_{\min},x_{\max}]\times[y_{\min},y_{\max}]) và số lượng ô ban đầu của nó. Trọng số của thành phần chính xác là con số đó, bởi vì mọi ô trong một thành phần được kết nối mạnh đều có thể sử dụng được bất cứ khi nào chính thành phần đó có thể sử dụng được. 
+4. Duy trì cấu trúc liên kết được thiết lập rời rạc trên các thành phần và đỉnh ảo đã được xử lý. Khi xử lý (C), kiểm tra từng ô thuộc (C). Bất kỳ thành phần được xử lý nào gặp bên trong hình chữ nhật giới hạn của (C) đều được hợp nhất vào (C). Điều này thể hiện thực tế là các vùng đó có thể nhập (C) thông qua cấu trúc hình chữ nhật bên trong. 
+5. Kiểm tra hàng ngay phía trên và ngay bên dưới hình chữ nhật bao quanh. Đối với mỗi bên hiện có, hãy quét các cột của nó từ trái sang phải. Các vùng được xử lý liên tiếp được nối thông qua một đỉnh ảo mới được tạo bất cứ khi nào có nhiều hơn một vùng xuất hiện. Thực hiện thao tác tương tự cho các cột ngay bên trái và bên phải của hình chữ nhật. 
+6. Trong khi quét một bên, hãy kiểm tra xem mọi ô ranh giới có từ chối hướng hướng về phía (C) hay không. Nếu điều đó xảy ra, không có cạnh thực tế nào từ cạnh vào (C) có thể xảy ra, do đó không có kết nối không phải cây nào được ghi lại. Nếu không thì ghi lại một kết nối phụ giữa nhóm bên và (C). Đây là nơi thông tin định hướng của lưới ban đầu đi vào cấu trúc cây. 
+7. Sau khi tất cả các thành phần đã được xử lý, mọi gốc DSU còn lại sẽ được gắn vào một gốc nhân tạo. Các mối quan hệ cha mẹ kết quả tạo thành một cây. Các đỉnh ảo có trọng số bằng 0, trong khi các đỉnh SCC ban đầu vẫn giữ nguyên kích thước thành phần của chúng. 
+8. Xây dựng mảng con có thứ tự cho mỗi đỉnh cây. Các kết nối phụ trợ không phải cây cung cấp cho mỗi đứa trẻ một mối quan hệ dây chuyền với các anh chị em lân cận của nó. Việc tuân theo những mối quan hệ đó cho phép chúng ta chỉ định một vị trí cho mỗi đứa trẻ. Một cấp độ con bằng 0 bắt đầu chuỗi một đỉnh, trong khi cấp độ con một bắt đầu duyệt qua chuỗi của nó bằng cách sử dụng XOR của hai chuỗi lân cận. 
+9. Đánh dấu mỗi em bằng một lá cờ chỉ đường để mô tả chuỗi của em tiếp tục sang phải hay sang trái. Với mỗi đỉnh cây, hãy tính tổng tiền tố của các trọng số con. Đồng thời tính toán`le[v]`Và`ri[v]`, điểm cuối của chuỗi chứa con (v). 
+10. Tính toán`val[v]`, số lượng ô được biểu thị bằng phần của cây phụ từ gốc đến (v), bao gồm cả sự đóng góp của chuỗi anh chị em có liên quan. Các giá trị này cho phép truy vấn loại bỏ phần phía trên phần tổ tiên có độ sâu mục tiêu trong thời gian không đổi. 
+11. Xây dựng bảng nâng nhị phân cho cây. Một truy vấn chỉ cần di chuyển thành phần bắt đầu lên trên cho đến khi độ sâu của nó bằng với độ sâu của thành phần đích, do đó, một bảng tổ tiên tiêu chuẩn là đủ. Không cần tính toán LCA chung. 
+12. Đối với truy vấn ((s,t)), ánh xạ cả hai ô lưới tới SCC của chúng. Nếu điểm xuất phát nông hơn mục tiêu thì không thể đạt được mục tiêu. Nếu không, hãy bắt đầu nhảy lên độ sâu của mục tiêu. Nếu đỉnh kết quả và đích không có chung đỉnh cha thì không thể truy cập được đích. Nếu chúng là anh em ruột, hãy sử dụng điểm cuối chuỗi và tổng tiền tố của chúng để đếm chính xác các thành phần mà các ô của chúng có thể xuất hiện trên một bước đi (s)-to-(t). 
 
 ### Tại sao nó hoạt động 
 
-Sự co lại của SCC duy trì mọi mối quan hệ về khả năng tiếp cận giữa các ô vì tất cả các ô bên trong một SCC đều có thể truy cập được lẫn nhau. Thuộc tính hình chữ nhật có nghĩa là trong quá trình xử lý tôpô, mọi vùng đã được xây dựng đều có thể được biểu diễn bằng các phần hình chữ nhật. Thuộc tính thống nhất-thoát cho phép mỗi tương tác bên được nén thành một đỉnh ảo và một mối quan hệ chuỗi có hướng mà không làm mất đường đi khả dĩ. 
+Bất biến trung tâm là sau khi xử lý bất kỳ tiền tố nào của trật tự tôpô SCC, vùng được xử lý có thể biểu diễn dưới dạng các hình chữ nhật rời rạc, có thể được nhóm thành các chuỗi cạnh nhau. Thuộc tính định hướng của các hình chữ nhật này đảm bảo rằng mọi ô trong một nhóm như vậy đều có khả năng đi theo hướng vuông góc như nhau. Do đó, việc thay thế tất cả các kết nối ranh giới bằng một kết nối ảo duy nhất không làm thay đổi khả năng tiếp cận. 
 
-Sau quá trình nén này, mọi tuyến đường có thể từ một thành phần đến thành phần khác phải đi theo cây gốc đi lên và bất cứ khi nào một số thành phần con có chung cha mẹ, hãy di chuyển bên trong chuỗi anh chị em được định hướng tương ứng. Việc nâng tổ tiên xác định cấp độ cây duy nhất có thể mà tại đó nguồn có thể đáp ứng được mục tiêu. Việc kiểm tra của cùng một phụ huynh xác minh rằng cuộc họp như vậy có thể thực hiện được về mặt cấu trúc, trong khi`le`Và`ri`giới hạn xác minh rằng chuỗi anh chị em được định hướng thực sự kết nối hai vị trí. 
-
-Tổng tiền tố đếm mọi SCC trên tập hợp các đường dẫn có thể đó chính xác một lần và các đỉnh ảo đóng góp bằng 0. Vì kích thước SCC là số ô lưới ban đầu mà chúng chứa nên tổng cuối cùng chính xác là số ô nằm trên ít nhất một đường dẫn hợp lệ từ ô bắt đầu đến ô kết thúc. 
+Sau khi tất cả SCC được xử lý, cấu trúc phụ trợ là một cây. Đường dẫn được định hướng từ SCC này đến SCC khác phải đi theo lộ trình cây tương ứng duy nhất, trong khi việc di chuyển giữa các anh chị em có thể thực hiện chính xác bên trong chuỗi được ghi lại. Quy trình truy vấn trước tiên sẽ loại bỏ phần cây phía trên độ sâu của mục tiêu, sau đó kiểm tra xem hai cây anh em kết quả có nằm trên cùng một chuỗi có thể truy cập hay không. Công thức tổng tiền tố đếm chính xác các SCC có trọng số trên chuỗi đó và`val`chiếm phần đã được cố định ở trên nó. Do đó, mỗi ô được đếm thuộc về một số bước đi bắt đầu đến mục tiêu hợp lệ và mọi ô thuộc về một bước đi như vậy đều được tính. 
 
 ## Giải pháp Python```python
 import sys
-from array import array
-
 input = sys.stdin.readline
 
-def solve():
-    n, m, q = map(int, input().split())
-    R = n * m
+from array import array
 
+def solve():
+    read = sys.stdin.readline
+    n, m, q = map(int, read().split())
+    cells = n * m
+    MAX = 2 * cells + 5
+
+    # Directions:
     # 0 = L, 1 = R, 2 = U, 3 = D
-    direction = bytearray(R)
+    direction = bytearray(cells)
+
     for i in range(n):
-        s = input().strip()
+        s = read().strip()
         base = i * m
         for j, ch in enumerate(s):
-            if ch == 76:       # L
+            if ch == 'L':
                 direction[base + j] = 0
-            elif ch == 82:     # R
+            elif ch == 'R':
                 direction[base + j] = 1
-            elif ch == 85:     # U
+            elif ch == 'U':
                 direction[base + j] = 2
-            else:              # D
+            else:
                 direction[base + j] = 3
+
+    dx = (-0, 0, -1, 1)
+    dy = (-1, 1, 0, 0)
+
+    def iarr(length, value=0):
+        return array('i', [value]) * length
 
     # ------------------------------------------------------------
     # Iterative Tarjan SCC
     # ------------------------------------------------------------
-    dfn = array('i', [0]) * R
-    low = array('i', [0]) * R
-    bel = array('i', [-1]) * R
 
-    scc_stack = []
+    dfn = iarr(cells, -1)
+    low = iarr(cells, -1)
+    bel = iarr(cells, -1)
+    nxt_cell = iarr(cells, -1)
+
+    # SCC member linked lists.
+    member_head = iarr(MAX, -1)
+    sz = iarr(MAX, 0)
+    xmi = iarr(MAX, n)
+    xma = iarr(MAX, -1)
+    ymi = iarr(MAX, m)
+    yma = iarr(MAX, -1)
+
+    tarjan_stack = []
+    dfs_stack = []
+    it = bytearray(cells)
+
     timer = 0
     cnt = 0
 
-    for start in range(R):
-        if dfn[start]:
+    for root in range(cells):
+        if dfn[root] != -1:
             continue
 
-        dfn[start] = timer + 1
-        low[start] = timer + 1
+        dfn[root] = timer
+        low[root] = timer
         timer += 1
+        tarjan_stack.append(root)
+        dfs_stack.append(root)
 
-        dfs = [start]
-        it = [0]
-        scc_stack.append(start)
-
-        while dfs:
-            u = dfs[-1]
-            k = it[-1]
+        while dfs_stack:
+            u = dfs_stack[-1]
+            k = it[u]
 
             while k < 4:
-                it[-1] = k + 1
+                it[u] = k + 1
 
                 if k == direction[u]:
                     k += 1
                     continue
 
-                if k == 0:
-                    if u % m == 0:
-                        k += 1
-                        continue
-                    v = u - 1
-                elif k == 1:
-                    if u % m == m - 1:
-                        k += 1
-                        continue
-                    v = u + 1
-                elif k == 2:
-                    if u < m:
-                        k += 1
-                        continue
-                    v = u - m
-                else:
-                    if u >= R - m:
-                        k += 1
-                        continue
-                    v = u + m
+                ux = u // m
+                uy = u - ux * m
+                vx = ux + dx[k]
+                vy = uy + dy[k]
 
-                if dfn[v] == 0:
-                    dfn[v] = timer + 1
-                    low[v] = timer + 1
+                if vx < 0 or vx >= n or vy < 0 or vy >= m:
+                    k += 1
+                    continue
+
+                v = vx * m + vy
+
+                if dfn[v] == -1:
+                    dfn[v] = timer
+                    low[v] = timer
                     timer += 1
-                    dfs.append(v)
-                    it.append(0)
-                    scc_stack.append(v)
+                    tarjan_stack.append(v)
+                    dfs_stack.append(v)
                     break
 
                 if bel[v] == -1 and dfn[v] < low[u]:
                     low[u] = dfn[v]
 
-                k += 1
+                k = it[u]
 
             else:
-                dfs.pop()
-                it.pop()
+                dfs_stack.pop()
 
-                if dfs:
-                    p = dfs[-1]
+                if dfs_stack:
+                    p = dfs_stack[-1]
                     if low[u] < low[p]:
                         low[p] = low[u]
 
                 if low[u] == dfn[u]:
                     while True:
-                        v = scc_stack.pop()
+                        v = tarjan_stack.pop()
                         bel[v] = cnt
+
+                        x = v // m
+                        y = v - x * m
+
+                        nxt_cell[v] = member_head[cnt]
+                        member_head[cnt] = v
+                        sz[cnt] += 1
+
+                        if x < xmi[cnt]:
+                            xmi[cnt] = x
+                        if x > xma[cnt]:
+                            xma[cnt] = x
+                        if y < ymi[cnt]:
+                            ymi[cnt] = y
+                        if y > yma[cnt]:
+                            yma[cnt] = y
+
                         if v == u:
                             break
+
                     cnt += 1
 
-    # dfn and low are no longer needed.
-    del dfn, low, scc_stack
-
     # ------------------------------------------------------------
-    # Store SCC members as linked lists and compute bounding boxes.
+    # Auxiliary tree construction
     # ------------------------------------------------------------
-    head = array('i', [-1]) * cnt
-    nxt = array('i', [-1]) * R
 
-    xmin = array('i', [n]) * cnt
-    xmax = array('i', [-1]) * cnt
-    ymin = array('i', [m]) * cnt
-    ymax = array('i', [-1]) * cnt
-    size = array('i', [0]) * cnt
+    parent = iarr(MAX, -1)
+    dsu = array('i', range(MAX))
 
-    for u in range(R):
-        c = bel[u]
-        nxt[u] = head[c]
-        head[c] = u
+    deg = iarr(MAX, 0)
+    chain_xor = iarr(MAX, 0)
 
-        x = u // m
-        y = u - x * m
-
-        if x < xmin[c]:
-            xmin[c] = x
-        if x > xmax[c]:
-            xmax[c] = x
-        if y < ymin[c]:
-            ymin[c] = y
-        if y > ymax[c]:
-            ymax[c] = y
-        size[c] += 1
-
-    # ------------------------------------------------------------
-    # DSU and compressed tree construction.
-    # ------------------------------------------------------------
-    V = 2 * R + 5
-
-    parent = array('i', [-1]) * V
-    dsu = array('i', range(V))
-
-    deg = array('i', [0]) * V
-    ch = array('i', [0]) * V
-
+    # Non-tree edges are kept as packed integer arrays.
     edge_a = array('i')
     edge_b = array('i')
 
@@ -282,157 +250,194 @@ def solve():
             x = dsu[x]
         return x
 
-    # SCCs are numbered in reverse topological order by Tarjan.
     for c in range(cnt - 1, -1, -1):
-        u = head[c]
-
-        # Merge all previously represented components inside C's
-        # bounding rectangle into C.
+        # First merge processed components inside the bounding rectangle.
+        u = member_head[c]
         while u != -1:
             ux = u // m
             uy = u - ux * m
 
-            if uy > ymin[c]:
-                v = u - 1
-                if ymin[c] <= uy - 1 <= ymax[c]:
-                    r = find(bel[v])
-                    if r != c:
-                        parent[r] = c
-                        dsu[r] = c
+            for k in range(4):
+                vx = ux + dx[k]
+                vy = uy + dy[k]
 
-            if uy < ymax[c]:
-                v = u + 1
+                if vx < xmi[c] or vx > xma[c] or vy < ymi[c] or vy > yma[c]:
+                    continue
+
+                v = vx * m + vy
                 r = find(bel[v])
+
                 if r != c:
                     parent[r] = c
                     dsu[r] = c
 
-            if ux > xmin[c]:
-                v = u - m
-                r = find(bel[v])
-                if r != c:
-                    parent[r] = c
-                    dsu[r] = c
+            u = nxt_cell[u]
 
-            if ux < xmax[c]:
-                v = u + m
-                r = find(bel[v])
-                if r != c:
-                    parent[r] = c
-                    dsu[r] = c
-
-            u = nxt[u]
-
-        # Process top and bottom sides.
-        for x in (xmin[c] - 1, xmax[c] + 1):
+        # Scan horizontal sides.
+        for x in (xmi[c] - 1, xma[c] + 1):
             if x < 0 or x >= n:
                 continue
 
-            base = x * m + ymin[c]
-            if bel[base] < c:
+            first_bel = bel[x * m + ymi[c]]
+            if first_bel < c:
                 continue
 
             all_blocked = True
-            u = find(bel[base])
+            group = find(first_bel)
             first = True
 
-            for y in range(ymin[c], ymax[c] + 1):
-                v = x * m + y
+            for y in range(ymi[c], yma[c] + 1):
+                vcell = x * m + y
 
-                # Direction toward C.
-                needed = 3 if x < xmin[c] else 2
-                if direction[v] != needed:
+                forbidden = 3 if x < xmi[c] else 2
+                if direction[vcell] != forbidden:
                     all_blocked = False
 
-                r = find(bel[v])
+                r = find(bel[vcell])
 
-                if r != u:
+                if r != group:
                     if first:
-                        parent[u] = cnt
-                        dsu[u] = cnt
-                        u = cnt
+                        parent[group] = cnt
+                        dsu[group] = cnt
+                        group = cnt
                         cnt += 1
                         first = False
 
-                    parent[r] = u
-                    dsu[r] = u
+                    parent[r] = group
+                    dsu[r] = group
 
             if not all_blocked:
-                edge_a.append(u)
+                edge_a.append(group)
                 edge_b.append(c)
-                deg[u] += 1
-                ch[u] ^= c
+                deg[group] += 1
+                chain_xor[group] ^= c
                 deg[c] += 1
-                ch[c] ^= u
+                chain_xor[c] ^= group
 
-        # Process left and right sides.
-        for y in (ymin[c] - 1, ymax[c] + 1):
+        # Scan vertical sides.
+        for y in (ymi[c] - 1, yma[c] + 1):
             if y < 0 or y >= m:
                 continue
 
-            base = xmin[c] * m + y
-            if bel[base] < c:
+            first_bel = bel[xmi[c] * m + y]
+            if first_bel < c:
                 continue
 
             all_blocked = True
-            u = find(bel[base])
+            group = find(first_bel)
             first = True
 
-            for x in range(xmin[c], xmax[c] + 1):
-                v = x * m + y
+            for x in range(xmi[c], xma[c] + 1):
+                vcell = x * m + y
 
-                # Direction toward C.
-                needed = 1 if y < ymin[c] else 0
-                if direction[v] != needed:
+                forbidden = 1 if y < ymi[c] else 0
+                if direction[vcell] != forbidden:
                     all_blocked = False
 
-                r = find(bel[v])
+                r = find(bel[vcell])
 
-                if r != u:
+                if r != group:
                     if first:
-                        parent[u] = cnt
-                        dsu[u] = cnt
-                        u = cnt
+                        parent[group] = cnt
+                        dsu[group] = cnt
+                        group = cnt
                         cnt += 1
                         first = False
 
-                    parent[r] = u
-                    dsu[r] = u
+                    parent[r] = group
+                    dsu[r] = group
 
             if not all_blocked:
-                edge_a.append(u)
+                edge_a.append(group)
                 edge_b.append(c)
-                deg[u] += 1
-                ch[u] ^= c
+                deg[group] += 1
+                chain_xor[group] ^= c
                 deg[c] += 1
-                ch[c] ^= u
+                chain_xor[c] ^= group
 
-    # Attach every remaining DSU root to one artificial root.
+    # Add one root above all remaining DSU roots.
     root = cnt
-    old_cnt = cnt
 
-    for i in range(old_cnt):
+    for i in range(cnt):
         if dsu[i] == i:
             parent[i] = root
             dsu[i] = root
 
     cnt += 1
-    parent[root] = -1
+    parent[root] = root
+
+    nodes = cnt
 
     # ------------------------------------------------------------
-    # Find the order of children inside every tree vertex.
+    # Store children in contiguous ranges.
     # ------------------------------------------------------------
-    pos = array('i', [-1]) * cnt
-    next_pos = array('i', [0]) * cnt
 
-    for i in range(old_cnt):
+    child_count = iarr(nodes, 0)
+
+    for i in range(nodes - 1):
+        child_count[parent[i]] += 1
+
+    start = iarr(nodes, 0)
+    total = 0
+    for u in range(nodes):
+        start[u] = total
+        total += child_count[u]
+
+    ordered = iarr(nodes - 1, 0)
+    used = iarr(nodes, 0)
+
+    for i in range(nodes - 1):
+        p = parent[i]
+        idx = start[p] + used[p]
+        ordered[idx] = i
+        used[p] += 1
+
+    # ------------------------------------------------------------
+    # Depth and binary lifting.
+    # ------------------------------------------------------------
+
+    depth = iarr(nodes, 0)
+    p0 = iarr(nodes, 0)
+    p0[root] = root
+
+    stack = [root]
+
+    while stack:
+        u = stack.pop()
+        begin = start[u]
+        end = begin + child_count[u]
+
+        for idx in range(begin, end):
+            v = ordered[idx]
+            depth[v] = depth[u] + 1
+            p0[v] = u
+            stack.append(v)
+
+    LOG = max(1, (nodes - 1).bit_length())
+    up = [p0]
+
+    for _ in range(1, LOG):
+        prev = up[-1]
+        cur = iarr(nodes, 0)
+        for i in range(nodes):
+            cur[i] = prev[prev[i]]
+        up.append(cur)
+
+    # ------------------------------------------------------------
+    # Order children by chain structure.
+    # ------------------------------------------------------------
+
+    pos = iarr(nodes, -1)
+    cp = iarr(nodes, 0)
+
+    for i in range(nodes - 1):
         if pos[i] != -1:
             continue
 
         if deg[i] == 0:
             p = parent[i]
-            pos[i] = next_pos[p]
-            next_pos[p] += 1
+            pos[i] = cp[p]
+            cp[p] += 1
 
         elif deg[i] == 1:
             u = i
@@ -440,329 +445,228 @@ def solve():
             p = parent[u]
 
             while True:
-                pos[u] = next_pos[p]
-                next_pos[p] += 1
+                pos[u] = cp[p]
+                cp[p] += 1
 
-                nxt_node = ch[u] ^ previous
-                previous, u = u, nxt_node
+                nxt = previous ^ chain_xor[u]
+                previous, u = u, nxt
 
                 if deg[u] != 2:
-                    pos[u] = next_pos[p]
-                    next_pos[p] += 1
+                    pos[u] = cp[p]
+                    cp[p] += 1
                     break
 
-    del next_pos
-
-    # Set the direction of every non-tree edge.
-    dir_edge = array('b', [0]) * cnt
-
-    for a, b in zip(edge_a, edge_b):
-        if pos[a] < pos[b]:
-            dir_edge[a] = 1
-        else:
-            dir_edge[b] = -1
-
-    del edge_a, edge_b, dsu
-
-    # ------------------------------------------------------------
-    # Build children in the required left-to-right order.
-    # ------------------------------------------------------------
-    child_count = array('i', [0]) * cnt
-
-    for i in range(old_cnt):
-        child_count[parent[i]] += 1
-
-    start_child = array('i', [0]) * cnt
-    total = 0
-
-    for u in range(cnt):
-        start_child[u] = total
-        total += child_count[u]
-
-    children = array('i', [0]) * old_cnt
-    cursor = array('i', start_child)
-
-    for i in range(old_cnt):
+    # Rebuild children according to their final positions.
+    for i in range(nodes - 1):
         p = parent[i]
-        children[cursor[p]] = i
-        cursor[p] += 1
+        ordered[start[p] + pos[i]] = i
 
-    del cursor
+    # Direction of the auxiliary chain edges.
+    chain_dir = iarr(nodes, 0)
 
-    # ------------------------------------------------------------
-    # Tree depths, subtree sizes, and heavy child.
-    # ------------------------------------------------------------
-    depth = array('i', [0]) * cnt
-    subtree = array('i', [1]) * cnt
-    heavy = array('i', [-1]) * cnt
+    for i in range(len(edge_a)):
+        a = edge_a[i]
+        b = edge_b[i]
 
-    order = array('i', [root])
-    idx = 0
-
-    while idx < len(order):
-        u = order[idx]
-        idx += 1
-
-        begin = start_child[u]
-        end = begin + child_count[u]
-
-        for j in range(begin, end):
-            v = children[j]
-            depth[v] = depth[u] + 1
-            order.append(v)
-
-    for idx in range(len(order) - 1, -1, -1):
-        u = order[idx]
-        begin = start_child[u]
-        end = begin + child_count[u]
-
-        best_size = 0
-        best_child = -1
-
-        for j in range(begin, end):
-            v = children[j]
-            subtree[u] += subtree[v]
-            if subtree[v] > best_size:
-                best_size = subtree[v]
-                best_child = v
-
-        heavy[u] = best_child
+        if pos[a] < pos[b]:
+            chain_dir[a] = 1
+        else:
+            chain_dir[b] = -1
 
     # ------------------------------------------------------------
-    # Heavy-light decomposition.
-    # tin is a preorder in which every heavy chain is contiguous.
+    # Prefix sums and val/le/ri.
     # ------------------------------------------------------------
-    chain_head = array('i', [-1]) * cnt
-    tin = array('i', [0]) * cnt
-    at = array('i', [0]) * cnt
 
-    stack = [(root, root)]
-    timer = 0
+    prefix = iarr(nodes, 0)
+    le = iarr(nodes, 0)
+    ri = iarr(nodes, 0)
+    val = iarr(nodes, 0)
 
-    while stack:
-        u, h = stack.pop()
-
-        while u != -1:
-            chain_head[u] = h
-            tin[u] = timer
-            at[timer] = u
-            timer += 1
-
-            heavy_u = heavy[u]
-
-            begin = start_child[u]
-            end = begin + child_count[u]
-
-            for j in range(begin, end):
-                v = children[j]
-                if v != heavy_u:
-                    stack.append((v, v))
-
-            u = heavy_u
-
-    del subtree, heavy, order
-
-    def ancestor_at_depth(u, target_depth):
-        while depth[chain_head[u]] > target_depth:
-            u = parent[chain_head[u]]
-
-        return at[tin[u] - (depth[u] - target_depth)]
-
-    # ------------------------------------------------------------
-    # Prefix sums and chain intervals.
-    # ------------------------------------------------------------
-    prefix = array('i', [0]) * cnt
-    left_chain = array('i', [0]) * cnt
-    right_chain = array('i', [0]) * cnt
-    val = array('i', [0]) * cnt
-
+    # Process parents before children.
     stack = [root]
 
     while stack:
         u = stack.pop()
+        begin = start[u]
+        end = begin + child_count[u]
 
-        begin = start_child[u]
-        dcnt = child_count[u]
-
-        if dcnt == 0:
+        if begin == end:
             continue
 
-        end = begin + dcnt
+        running = 0
+        for idx in range(begin, end):
+            v = ordered[idx]
+            running += sz[v]
+            prefix[v] = running
 
-        s = 0
-        for j in range(begin, end):
-            v = children[j]
-            s += size[v]
-            prefix[v] = s
+        for idx in range(begin, end):
+            v = ordered[idx]
 
-        previous = -1
-        for j in range(begin, end):
-            v = children[j]
-            if j == begin or dir_edge[previous] != -1:
-                left_chain[v] = v
+            if idx == begin or chain_dir[ordered[idx - 1]] != -1:
+                le[v] = v
             else:
-                left_chain[v] = left_chain[previous]
-            previous = v
+                le[v] = le[ordered[idx - 1]]
 
-        for j in range(end - 1, begin - 1, -1):
-            v = children[j]
-            if j == end - 1 or dir_edge[v] != 1:
-                right_chain[v] = v
+        for idx in range(end - 1, begin - 1, -1):
+            v = ordered[idx]
+
+            if chain_dir[v] != 1:
+                ri[v] = v
             else:
-                right_chain[v] = right_chain[children[j + 1]]
+                ri[v] = ri[ordered[idx + 1]]
 
-        for j in range(begin, end):
-            v = children[j]
-            val[v] = (
-                val[u]
-                + prefix[right_chain[v]]
-                - prefix[left_chain[v]]
-                + size[left_chain[v]]
-            )
+        for idx in range(begin, end):
+            v = ordered[idx]
+            val[v] = prefix[ri[v]] - prefix[le[v]] + sz[le[v]]
+            val[v] += val[u]
 
-        for j in range(begin, end):
-            stack.append(children[j])
-
-    del head, nxt, xmin, xmax, ymin, ymax
-    del children, start_child, child_count
-    del chain_head, tin, at, dir_edge
+        for idx in range(begin, end):
+            stack.append(ordered[idx])
 
     def query(a, b):
         if depth[a] < depth[b]:
             return 0
 
         ret = val[a]
-        a = ancestor_at_depth(a, depth[b])
+
+        diff = depth[a] - depth[b]
+
+        bit = 0
+        while diff:
+            if diff & 1:
+                a = up[bit][a]
+            diff >>= 1
+            bit += 1
+
         ret -= val[a]
 
         if parent[a] != parent[b]:
             return 0
 
         if pos[a] < pos[b]:
-            if pos[right_chain[a]] >= pos[b]:
-                return prefix[b] - prefix[a] + ret + size[a]
+            if pos[ri[a]] >= pos[b]:
+                return prefix[b] - prefix[a] + ret + sz[a]
             return 0
 
-        if pos[left_chain[a]] <= pos[b]:
-            return prefix[a] - prefix[b] + ret + size[b]
+        if pos[le[a]] <= pos[b]:
+            return prefix[a] - prefix[b] + ret + sz[b]
 
         return 0
+
+    # ------------------------------------------------------------
+    # Queries.
+    # ------------------------------------------------------------
 
     out = []
 
     for _ in range(q):
-        x1, y1, x2, y2 = map(int, input().split())
-        u = bel[(x1 - 1) * m + (y1 - 1)]
-        v = bel[(x2 - 1) * m + (y2 - 1)]
-        out.append(str(query(u, v)))
+        x1, y1, x2, y2 = map(int, read().split())
+        x1 -= 1
+        y1 -= 1
+        x2 -= 1
+        y2 -= 1
+
+        a = bel[x1 * m + y1]
+        b = bel[x2 * m + y2]
+
+        out.append(str(query(a, b)))
 
     sys.stdout.write("\n".join(out))
 
 if __name__ == "__main__":
     solve()
-```Phần đầu tiên của quá trình triển khai sẽ chuyển đổi từng mũi tên thành một hướng số nguyên. Sử dụng một`bytearray`là đủ vì chỉ cần bốn giá trị. 
+```Giai đoạn SCC sử dụng ngăn xếp DFS rõ ràng vì giới hạn đệ quy của Python không thể xử lý một cách an toàn đường dẫn chứa tối đa (10^6) ô. Các mảng từ`array('i')`cũng là cố ý. Một danh sách Python bình thường gồm hàng triệu số nguyên Python sẽ tiêu tốn nhiều bộ nhớ hơn đáng kể so với các mảng số nguyên C++ tương đương. 
 
-Giai đoạn SCC được lặp đi lặp lại.`dfs`lưu trữ đường dẫn DFS hiện tại, trong khi`it`lưu trữ hướng tiếp theo để kiểm tra mọi đỉnh hoạt động. Khi một đỉnh kết thúc, giá trị liên kết thấp của nó sẽ được truyền tới đỉnh cha của nó. Nếu giá trị liên kết thấp của nó bằng số khám phá của nó thì ngăn xếp SCC đang hoạt động sẽ được đưa ra cho đến khi đỉnh đó bị loại bỏ. 
+Mã hóa hướng phải khớp chính xác với thứ tự lân cận.`0,1,2,3`nghĩa là trái, phải, lên và xuống tương ứng, do đó hướng cấm được bỏ qua trước khi kiểm tra ba hàng xóm có thể sử dụng được. 
 
-Các thành viên SCC được lưu trữ thông qua`head`Và`nxt`. Điều này tránh`cnt`Danh sách Python, sẽ đặc biệt đắt tiền khi hầu hết mọi ô đều có SCC riêng. Hình chữ nhật và kích thước giới hạn được tính toán trong cùng một lần duyệt qua các ô. 
+Danh sách thành viên thành phần được đại diện bởi`member_head`Và`nxt_cell`. Điều này thay thế C++`vector<int> vr[N]`cấu trúc và tránh tạo tối đa (10^6) đối tượng danh sách Python riêng biệt. 
 
-Giai đoạn DSU theo sau việc xây dựng hình chữ nhật trực tiếp. ID thành phần do Tarjan tạo ra được xử lý từ lớn đến nhỏ vì đó là hướng cấu trúc liên kết cần thiết cho việc xây dựng. Mỗi khi một số hình chữ nhật biên phải được coi là một đối tượng, một đỉnh ảo sẽ được tạo. Đỉnh ảo có số 0`size`, vì vậy họ không bao giờ đóng góp các ô cho câu trả lời. 
+Trong quá trình xử lý hình chữ nhật, DSU lưu trữ đại diện hiện tại của mọi vùng đã được xử lý. điều kiện`bel[v] < c`trên một cạnh hình chữ nhật cũng là cố ý. Chỉ những thành phần đã xuất hiện theo thứ tự cấu trúc liên kết bắt buộc mới được phép tham gia vào quá trình quét đó. 
 
-các`pos`tính toán là một trong những phần tinh tế hơn. Các cạnh bổ sung tạo thành chuỗi, do đó, điểm cuối cấp một có thể đi qua chuỗi bằng cách sử dụng XOR của hai điểm lân cận của nó. Khi mỗi nút nhận được một vị trí, các nút con của đỉnh cây có thể được đặt theo thứ tự yêu cầu của chúng. 
+Rễ nhân tạo có chính nó như là gốc nâng của nó. Điều này tránh các chỉ số tiêu cực trong truy cập mảng của Python trong khi vẫn giữ được ý nghĩa logic của gốc C++ gốc, không có gốc gốc. 
 
-Phân rã nặng-nhẹ chỉ được sử dụng cho các truy vấn tổ tiên. Mỗi chuỗi nặng tiếp giáp nhau ở`tin`thứ tự, vì vậy nếu tổ tiên mong muốn nằm trên chuỗi nặng hiện tại, đỉnh của nó có thể được lấy trực tiếp từ mảng thứ tự ngược`at`. Ngược lại, chúng ta sẽ nhảy tới phần tử cha của phần đầu chuỗi hiện tại. Số bước nhảy của chuỗi nhẹ là logarit. 
+Mảng con có thứ tự được xây dựng lại sau`pos`đã được giao. Điều này là cần thiết vì các công thức tổng tiền tố phụ thuộc vào thứ tự cuối cùng của chuỗi chứ không phụ thuộc vào thứ tự các nút được tạo ra. 
 
-Truy vấn cuối cùng có chủ ý kiểm tra độ sâu trước khi trừ`val`. Nếu nguồn nông hơn đích thì không có biểu diễn cây hướng lên hợp lệ. Sau khi nâng lên, so sánh hai cha mẹ là kiểm tra khả năng tiếp cận cấu trúc. các`left_chain`Và`right_chain`kiểm tra sau đó kiểm tra kết nối anh chị em được chỉ đạo. 
+Truy vấn đầu tiên chỉ thay đổi đỉnh bắt đầu. Vì độ sâu cây của mục tiêu được bảo toàn nên tổ tiên đạt được bằng bước nhảy này là ứng cử viên duy nhất có thể tham gia vào cùng chuỗi anh chị em với mục tiêu. Nếu cha mẹ khác nhau, sẽ không có con đường định hướng nào đến mục tiêu và câu trả lời ngay lập tức là con số 0. 
 
-Tất cả các tọa độ chỉ được chuyển đổi từ đầu vào dựa trên một sang chỉ số ô dựa trên 0 khi định vị SCC. Không có sự điều chỉnh tọa độ nào được thực hiện trong quá trình xây dựng cây, do đó, các thử nghiệm ranh giới luôn sử dụng các hàng và cột dựa trên số 0. 
+Tất cả các giá trị câu trả lời nhiều nhất là (NM\le10^6), vì vậy số nguyên có dấu 32-bit là đủ cho số lượng biểu đồ được lưu trữ. Các số nguyên của Python được sử dụng tự động cho số học trung gian, do đó không có vấn đề tràn trong các phép tính cuối cùng. 
 
 ## Ví dụ đã hoạt động 
 
+Chỉ có một mẫu chính thức được cung cấp nên dấu vết thứ hai sử dụng một lưới được xây dựng nhỏ. 
+
 ### Mẫu 1 
 
-Lưới đã cho là```
+Lưới là```
 DDDDD
 RDDDL
 RRDLL
 RUUUL
 UUUUU
-```Xem xét truy vấn`(5,5) -> (5,5)`. Tất cả năm ô ở hàng cuối cùng đều có`U`. Chúng có thể di chuyển sang trái và sang phải một cách tự do nên chúng tạo thành một SCC chứa năm ô. 
+```Năm câu hỏi đều có câu trả lời`0, 14, 20, 14, 5`. 
 
-| Sân khấu | Thành phần nguồn | Thành phần mục tiêu | Mối quan hệ sâu sắc | Cùng thành phần | Trả lời | 
+Dấu vết sau đây tóm tắt giai đoạn truy vấn sau quá trình tiền xử lý SCC và cây phụ trợ. 
+
+| Truy vấn | Bắt đầu SCC | SCC mục tiêu | Mối quan hệ sâu sắc | Cùng cha mẹ sau khi nhảy | Kết quả | 
 | --- | --- | --- | --- | --- | --- | 
-| Đầu vào |`(5,5)`|`(5,5)`| bằng | vâng | 5 | 
-| nén SCC | SCC hàng dưới cùng | SCC hàng dưới cùng | bằng | vâng | 5 | 
-| Truy vấn |`a = b`|`a = b`| bằng | vâng | 5 | 
+|`(1,1) -> (5,5)`| vùng nguồn | vùng mục tiêu | nhảy sâu hợp lệ | không |`0`| 
+|`(2,2) -> (5,5)`| SCC A | SCC B | bắt đầu di chuyển lên trên | vâng |`14`| 
+|`(3,3) -> (5,5)`| SCC C | SCC B | bắt đầu di chuyển lên trên | vâng |`20`| 
+|`(4,4) -> (5,5)`| SCC D | SCC B | bắt đầu di chuyển lên trên | vâng |`14`| 
+|`(5,5) -> (5,5)`| SCC B | SCC B | nhảy không | vâng |`5`| 
 
-Khi`a == b`, công thức truy vấn sẽ giảm kích thước của SCC đó. Kết quả là`5`, khớp với dòng đầu ra thứ năm của Mẫu 1. Điều này chứng tỏ tại sao các trọng số SCC phải chứa số lượng ô ban đầu thay vì coi mọi đỉnh bị nén là một trọng số. 
+Truy vấn đầu tiên chứng minh rằng việc xây dựng không nhầm lẫn giữa khoảng cách hình học với khả năng tiếp cận. Truy vấn cuối cùng thể hiện tính bất biến trọng số SCC: khi cả hai điểm cuối đều nằm trong cùng một SCC, câu trả lời là kích thước của SCC đó, tức là`5`đây. 
 
-Bây giờ hãy xem xét`(2,2) -> (5,5)`. Nguồn và đích nằm trong các thành phần khác nhau. Sau khi nâng nguồn tới độ sâu của mục tiêu, công trình tìm thấy hai vị trí anh em dưới một cha mẹ chung và một chuỗi có hướng nối chúng. Tổng tiền tố trên chuỗi đó, cùng với phần đóng góp của tổ tiên, chứa chính xác 14 ô thực. 
-
-| Sân khấu | Hoạt động | Kết quả | 
-| --- | --- | --- | 
-| Đầu vào | nguồn`(2,2)`, mục tiêu`(5,5)`| SCC khác nhau | 
-| Bước tổ tiên | nâng nguồn đến độ sâu mục tiêu | cùng độ sâu | 
-| Bài kiểm tra dành cho phụ huynh | so sánh`parent[a]`Và`parent[b]`| bằng | 
-| Kiểm tra dây chuyền | so sánh vị trí mục tiêu với`right_chain[a]`| có thể truy cập | 
-| Đếm | khoảng cách giữa anh chị em + đóng góp của tổ tiên | 14 | 
-
-Truy vấn đầu tiên của Mẫu 1,`(1,1) -> (5,5)`, không đáp ứng được điều kiện về khả năng tiếp cận chuỗi tương ứng, vì vậy câu trả lời của nó là bằng 0. Các truy vấn khác tạo ra`20`,`14`, Và`5`, đưa ra kết quả mẫu hoàn chỉnh`0 14 20 14 5`. 
-
-### Chuỗi một chiều 
+### Ví dụ được xây dựng 
 
 Hãy xem xét```
-1 3 3
-LLL
-1 1 1 3
-1 2 1 3
-3 1 1 1
-```MỘT`L`cấm di chuyển sang trái, vì vậy mọi ô đều có thể di chuyển sang phải. Đồ thị là chuỗi có hướng```
-1 -> 2 -> 3
-```Mỗi ô là SCC riêng của nó. 
+2 3 2
+UUU
+UUU
+1 1 2 3
+2 3 1 1
+```Đối với một`U`ô, di chuyển lên trên bị cấm, trong khi di chuyển xuống dưới và theo chiều ngang được phép khi hàng xóm tương ứng tồn tại. Từ`(1,1)`ĐẾN`(2,3)`, mọi ô đều có thể xuất hiện trên một đường dẫn hợp lệ. 
 
-| Truy vấn | Vị trí nguồn | Vị trí mục tiêu | Kiểm tra chuỗi có hướng | Trả lời | 
-| --- | --- | --- | --- | --- | 
-|`1 -> 3`| 0 | 2 | thành công | 3 | 
-|`2 -> 3`| 1 | 2 | thành công | 2 | 
-|`3 -> 1`| 2 | 0 | thất bại | 0 | 
+| Truy vấn | Bắt đầu | Mục tiêu | Có thể truy cập được? | Các ô trên một số đường dẫn | Trả lời | 
+| --- | --- | --- | --- | --- | --- | 
+| 1 |`(1,1)`|`(2,3)`| vâng | cả 6 ô |`6`| 
+| 2 |`(2,3)`|`(1,1)`| không | không |`0`| 
 
-Cây được xây dựng có ba SCC là anh em của một gốc, với các cạnh không phải là cây`1 -> 2`Và`2 -> 3`. Điểm cuối bên phải của nút con đầu tiên là nút con thứ ba, do đó truy vấn đầu tiên sẽ tính cả ba trọng số SCC. Truy vấn thứ hai tính hai truy vấn cuối cùng. Truy vấn ngược lại không thành công vì chuỗi được định hướng không trỏ ngược lại. 
-
-Ví dụ này xác nhận mục đích của`left_chain`Và`right_chain`: bản thân cây không mã hóa hướng giữa anh chị em, vì vậy những giới hạn bổ sung đó là cần thiết. 
+Truy vấn thứ hai thực hiện tính định hướng. Mục tiêu nằm phía trên điểm bắt đầu, nhưng không có bước di chuyển nào có thể đi lên, do đó việc kiểm tra độ sâu của cây phụ trợ cuối cùng sẽ từ chối truy vấn. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian |`O(NM α(NM) + Q log(NM))`| Việc xây dựng SCC, hợp nhất hình chữ nhật DSU và tiền xử lý cây gần như tuyến tính; mỗi truy vấn sử dụng nâng tổ tiên nặng nhẹ | 
-| Không gian |`O(NM)`| Tất cả thông tin về đồ thị và cây được lưu trữ trong các mảng số nguyên đóng gói | 
+| Thời gian | (O(NM\alpha(NM)+Q\log(NM))) | Tính toán SCC, xây dựng hình chữ nhật DSU và tiền xử lý cây gần như tuyến tính; mỗi truy vấn thực hiện một lần nhảy tổ tiên nâng nhị phân | 
+| Không gian | (O(NM\log(NM))) | Chi phí phụ thêm chính là bàn nâng nhị phân; tất cả các mảng lưới và cây đều tuyến tính | 
 
-Có nhiều nhất`NM`đỉnh SCC ban đầu và`O(NM)`đỉnh ảo. Đóng gói`array`bộ lưu trữ giữ cho cấu trúc số nguyên dày đặc nhỏ hơn nhiều so với danh sách số nguyên Python thông thường. Thuật toán chỉ thực hiện một lượng công việc hình học không đổi trên mỗi phần tử ranh giới lưới được xử lý và sử dụng công việc logarit cho mỗi truy vấn. Các giới hạn tiệm cận phù hợp với giới hạn của một triệu ô và 300.000 truy vấn; Giới hạn hai giây của cuộc thi ban đầu là quá cao đối với Python, do đó việc triển khai có chủ ý tránh các danh sách Python và truyền tải đồ thị đệ quy. 
+Với (NM\le10^6), quá trình tiền xử lý chỉ chạm vào lưới một số lần không đổi ngoài các hoạt động DSU. Mỗi truy vấn (3\cdot10^5) chỉ cần (O(\log(NM))) hoạt động. Đây là độ phức tạp mà các ràng buộc yêu cầu và nó phù hợp với cấu trúc của phương pháp C++ được chấp nhận, có độ phức tạp được nêu là (O(NM\alpha(NM)+Q\log(NM))). 
 
-## Trường hợp thử nghiệm 
+Việc triển khai Python sử dụng các mảng số nguyên được đóng gói và các phép duyệt lặp lại vì chỉ riêng độ phức tạp tiệm cận là không đủ ở một triệu đỉnh. Một bản dịch Python đơn giản sử dụng các danh sách lồng nhau và DFS đệ quy sẽ tiêu tốn nhiều bộ nhớ hơn và cũng sẽ thất bại trên các cây DFS sâu. 
 
-Các thử nghiệm sau đây giả định giải pháp đã gửi được lưu dưới dạng`solution.py`. Người trợ giúp đặt lại mô-đun`input`chức năng sau khi thay thế`sys.stdin`, điều này là cần thiết vì giải pháp xác định`input = sys.stdin.readline`ở phạm vi mô-đun.```python
+## Trường hợp thử nghiệm```python
+# This test block assumes the solve() function from the solution above
+# is available in the same file.
+
 import sys
 import io
-import solution
+from contextlib import redirect_stdout
 
 def run(inp: str) -> str:
     old_stdin = sys.stdin
-    old_stdout = sys.stdout
-
     sys.stdin = io.StringIO(inp)
-    sys.stdout = io.StringIO()
-
-    solution.input = sys.stdin.readline
+    out = io.StringIO()
 
     try:
-        solution.solve()
-        return sys.stdout.getvalue()
+        with redirect_stdout(out):
+            solve()
     finally:
         sys.stdin = old_stdin
-        sys.stdout = old_stdout
 
-# Provided sample
+    return out.getvalue()
+
+# Official sample.
 sample1 = """\
 5 5 5
 DDDDD
@@ -779,110 +683,113 @@ UUUUU
 
 assert run(sample1) == "0\n14\n20\n14\n5", "sample 1"
 
-# Minimum-size grid, start equals end.
+# Minimum-size grid. The only cell is both the start and target.
 case_min = """\
 1 1 1
-L
+U
 1 1 1 1
 """
 
 assert run(case_min) == "1", "minimum-size grid"
 
-# Two cells with a complete directed barrier.
-case_barrier = """\
+# Two cells block each other.
+case_blocked = """\
 1 2 2
 RL
 1 1 1 2
-1 2 1 1
+1 2 1 2
 """
 
-assert run(case_barrier) == "0\n0", "mutual boundary barrier"
+assert run(case_blocked) == "0\n1", "mutually blocked boundary cells"
 
-# Directed chain, catches endpoint and ordering errors.
-case_chain = """\
-1 3 3
-LLL
-1 1 1 3
-1 2 1 3
-3 1 1 1
+# Two cells form one strongly connected component.
+case_scc = """\
+1 2 1
+LR
+1 1 1 2
 """
 
-assert run(case_chain) == "3\n2\n0", "directed chain"
+assert run(case_scc) == "2", "same SCC must count both cells"
 
-# Maximum-size grid and maximum number of cells.
-# Every L forbids moving left, while vertical movement is unrestricted.
-# Hence every column is an SCC and movement is possible only toward
-# increasing columns.
+# All equal directions. Every cell lies on some path from the
+# upper-left corner to the lower-right corner.
+case_all_equal = """\
+2 2 1
+UU
+UU
+1 1 2 2
+"""
+
+assert run(case_all_equal) == "4", "all-equal directions"
+
+# Boundary and directionality.
+case_direction = """\
+2 3 2
+UUU
+UUU
+1 1 2 3
+2 3 1 1
+"""
+
+assert run(case_direction) == "6\n0", "boundary directionality"
+
+# Maximum-size grid. All cells are reachable from the upper-left
+# corner to the lower-right corner because downward and horizontal
+# moves are available from every U cell.
 n = 1000
 m = 1000
-grid = "\n".join(["L" * m] * n)
+grid = "\n".join(["U" * m for _ in range(n)])
+case_max = f"""\
+{n} {m} 1
+{grid}
+1 1 1000 1000
+"""
 
-case_max = (
-    f"{n} {m} 3\n"
-    + grid
-    + "\n"
-    + "1 1 1000 1000\n"
-    + "1000 1000 1 1\n"
-    + "500 500 500 500\n"
-)
-
-assert run(case_max) == "1000000\n0\n1", "maximum-size all-equal grid"
+assert run(case_max) == "1000000", "maximum-size grid"
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`1 x 1`, một truy vấn |`1`| Đường dẫn trống và lưới tối thiểu | 
-|`1 x 2`,`RL`|`0`,`0`| Rào cản chỉ đạo và xử lý ranh giới | 
-|`1 x 3`,`LLL`|`3`,`2`,`0`| Chuỗi anh chị em được đặt hàng và các vị trí riêng biệt | 
-|`1000 x 1000`, tất cả`L`|`1000000`,`0`,`1`| Lưới tối đa, câu trả lời tối đa, mũi tên hoàn toàn bằng nhau | 
+|`1 1 1 / U / 1 1 1 1`|`1`| Lưới tối thiểu và bước đi có độ dài bằng không | 
+|`1 2 2 / RL / ...`|`0`,`1`| Các ô bị chặn lẫn nhau và xử lý ranh giới | 
+|`1 2 1 / LR / 1 1 1 2`|`2`| Trọng lượng thành phần được kết nối mạnh mẽ | 
+|`2 2 1 / UU / 1 1 2 2`|`4`| Các hướng hoàn toàn bằng nhau và phạm vi bao phủ toàn bộ đường đi | 
+|`2 3 2 / UUU / UUU / ...`|`6`,`0`| Tính định hướng và khả năng tiếp cận ranh giới | 
+|`1000 1000 1 / all U`|`1000000`| Kích thước lưới tối đa và câu trả lời lớn | 
 
 ## Vỏ cạnh 
 
-### Bắt đầu và kết thúc trên cùng một ô 
-
-cho```
+Trường hợp (1\times1) được xử lý trước khi có bất kỳ chuyển động có ý nghĩa nào được yêu cầu. Vì```
 1 1 1
-L
+U
 1 1 1 1
-```SCC chứa ô duy nhất có kích thước một. Truy vấn thấy các thành phần nguồn và đích giống hệt nhau, do đó nguồn nâng lên không thay đổi và khoảng anh chị em chứa chính xác SCC đó. Đầu ra là`1`. 
+```Tarjan sản xuất một SCC với kích thước`1`. Cả hai điểm cuối truy vấn đều ánh xạ tới SCC đó, do đó chênh lệch độ sâu bằng 0 và phép tính chuỗi trả về trọng số của nó,`1`. 
 
-Logic tương tự xử lý SCC lớn hơn. Trong mẫu 1,`(5,5)`thuộc về SCC hàng dưới cùng gồm 5 ô, vì vậy truy vấn cùng ô sẽ trả về`5`. Việc triển khai không bao giờ giả định rằng một truy vấn có tọa độ bằng nhau có một câu trả lời. 
-
-### Mục tiêu không thể tiếp cận 
-
-cho```
-1 2 2
-RL
-1 1 1 2
-1 2 1 1
-```không ô nào có thể vượt qua ranh giới giữa chúng. Các SCC khác biệt và cấu trúc hình chữ nhật không tạo ra chuỗi anh chị em có định hướng kết nối chúng. Sau khi nâng nguồn, kiểm tra gốc hoặc kiểm tra chuỗi không thành công nên cả hai câu trả lời đều bằng 0. 
-
-Điều này mắc phải sai lầm phổ biến khi coi vùng lân cận là hai chiều tự động. 
-
-### Một ô ranh giới có mũi tên chặn bước di chuyển hữu ích duy nhất 
-
-cho```
+Đối với những người hàng xóm bị chặn lẫn nhau,```
 1 2 1
 RL
 1 1 1 2
-```ô đầu tiên có`R`, điều này cấm di chuyển duy nhất về phía ô thứ hai. Quá trình quét ranh giới nhận ra rằng cạnh vào mục tiêu không tồn tại. Truy vấn trả về 0 mà không cần bất kỳ trường hợp đặc biệt nào trong mã truy vấn. 
+```ô đầu tiên không thể di chuyển được vì hàng xóm duy nhất của nó ở bên phải, điều này bị cấm. Do đó, hai ô trở thành các SCC riêng biệt không có chuỗi khả năng tiếp cận phụ trợ kết nối chúng theo hướng yêu cầu. Truy vấn không thành công trong thử nghiệm gốc hoặc chuỗi và trả về`0`. 
 
-Lý do tương tự áp dụng cho ô hàng trên cùng được đánh dấu`U`, ô ở hàng dưới cùng được đánh dấu`D`, ô ngoài cùng bên trái được đánh dấu`L`, hoặc ô ngoài cùng bên phải được đánh dấu`R`. Một mũi tên có thể cấm một hướng ngay cả khi hướng đó rời khỏi lưới, nhưng dù sao thì việc di chuyển ra bên ngoài như vậy cũng là điều không thể. 
+Đối với một cặp kết nối mạnh,```
+1 2 1
+LR
+1 1 1 2
+```ô bên trái có thể di chuyển sang phải và ô bên phải có thể di chuyển sang trái. Tarjan đặt cả hai ô vào một SCC, có trọng lượng là`2`. Vì thành phần bắt đầu và thành phần đích giống hệt nhau nên truy vấn trả về trọng số thành phần hoàn chỉnh thay vì chỉ đếm ô đích. 
 
-### Một thành phần lớn được kết nối mạnh mẽ 
+Đối với lưới hoàn toàn bằng nhau (2\times2)```
+2 2 1
+UU
+UU
+1 1 2 2
+```người chơi có thể di chuyển từ ô phía trên bên trái xuống hoặc sang phải và từ các ô kết quả tiếp tục di chuyển về ô phía dưới bên phải. Bốn ô đều nằm trên một đường dẫn hợp lệ nào đó, vì vậy câu trả lời là`4`. Điều này nắm bắt các giải pháp chỉ tính toán một đường đi ngắn nhất cụ thể thay vì kết hợp tất cả các đường đi có thể. 
 
-Trong Mẫu 1, hàng cuối cùng là```
-UUUUU
-```Mọi ô đều có thể di chuyển sang trái hoặc phải vì`U`chỉ cấm chuyển động đi lên. Như vậy cả năm ô đều thuộc về một SCC. Kho lưu trữ nén SCC`size = 5`và một truy vấn hoàn toàn bên trong thành phần này sẽ ngay lập tức đếm tất cả năm ô. 
+Đối với ví dụ định hướng lớn hơn```
+2 3 2
+UUU
+UUU
+1 1 2 3
+2 3 1 1
+```truy vấn đầu tiên có thể truy cập mọi ô. Một đường dẫn có thể di chuyển xuống sớm hoặc muộn và có thể di chuyển theo chiều ngang ở một trong hai hàng, do đó, mỗi ô trong số sáu ô nằm trên ít nhất một đường dẫn bắt đầu đến mục tiêu. Truy vấn ngược lại không thể di chuyển lên trên, vì vậy câu trả lời của nó là`0`. Cây phụ trợ duy trì sự bất đối xứng này mặc dù lưới bên dưới trông hoàn toàn đồng nhất. 
 
-Đây là lý do tại sao việc thay thế mọi SCC bằng một đỉnh không có trọng số sẽ không chính xác. Biểu đồ nén trả lời khả năng tiếp cận, nhưng câu hỏi ban đầu yêu cầu số lượng ô lưới ban đầu. 
+Thử nghiệm kích thước tối đa sử dụng (10^6) ô. Quá trình xử lý trước vẫn xử lý mỗi ô với số lần không đổi, trong khi truy vấn đơn lẻ chỉ sử dụng cây được tính toán trước. Câu trả lời mong đợi chính xác là (10^6), chứng tỏ rằng việc triển khai xử lý cả lưới lớn nhất và câu trả lời lớn nhất có thể mà không cần dựa vào kích thước nhỏ. 
 
-### Một số đường dẫn có thể có giữa các điểm cuối giống nhau 
-
-Câu trả lời không phải là độ dài của con đường đã chọn. Đó là số lượng ô xuất hiện trên ít nhất một đường dẫn bắt đầu đến đích hợp lệ. Trong cây nén, một chuỗi anh chị em có thể chứa một số SCC trung gian mà tất cả đều có thể tham gia vào các tuyến đường khác nhau. Tổng tiền tố có chủ ý đếm toàn bộ khoảng thời gian hợp lệ của chuỗi thay vì chọn một tuyến đường tùy ý. 
-
-Đây cũng là lý do tại sao thuật toán đường đi ngắn nhất đơn giản không thể giải quyết được vấn đề. Số lượng mong muốn là sự kết hợp của các đỉnh đường đi có thể, không phải độ dài đường đi. 
-
-### Rất nhiều SCC nhỏ 
-
-Một lưới như một chiều`LLL`ví dụ có một SCC trên mỗi ô. Việc xây dựng vẫn hoạt động vì nó không bao giờ giả định rằng SCC chứa nhiều ô. Mỗi thành phần đơn lẻ có một hình chữ nhật bao quanh một ô và các thành phần liền kề được kết nối thông qua cùng một cơ chế cạnh hình chữ nhật. 
-
-Kích thước tối đa tất cả-`L`bài kiểm tra thực hiện tình huống ngược lại trên quy mô lớn. Có 1000 SCC lớn, một SCC cho mỗi cột và thuật toán vẫn xử lý chúng bằng cách sử dụng cùng một biểu diễn.
+Bài xã luận ở trên bám sát giải pháp cấu trúc được chấp nhận, trong khi phiên bản Python thay thế vectơ đệ quy và vectơ C++ bằng các phép duyệt lặp và mảng đóng gói.

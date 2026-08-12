@@ -1,7 +1,7 @@
 ---
 title: "CF 102391I - Cây bao trùm đường kính tối thiểu"
-description: "Chúng ta có đồ thị vô hướng liên thông với độ dài cạnh dương. Chúng ta phải chọn chính xác (N-1) các cạnh của nó để chúng tạo thành một cây khung, và trong số tất cả các cây khung có thể có, chúng ta muốn một cây có đường đi dài nhất của cây càng ngắn càng tốt."
-date: "2026-08-11T23:12:35+07:00"
+description: "Chúng ta có một đồ thị vô hướng liên thông có các cạnh có độ dài dương. Chúng ta cần giữ chính xác đủ số cạnh để tạo thành cây bao trùm, nhưng mục tiêu không phải là tổng trọng lượng của cây. Thay vào đó, chúng ta muốn đường đi dài nhất bên trong cây kết quả càng ngắn càng tốt."
+date: "2026-08-12T05:26:26+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102391
@@ -9,7 +9,7 @@ codeforces_index: "I"
 codeforces_contest_name: "XX Open Cup, Grand Prix of Korea"
 rating: 0
 weight: 102391
-solve_time_s: 541
+solve_time_s: 782
 verified: false
 draft: false
 ---
@@ -18,526 +18,534 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 9 phút 1 giây 
+**Thời gian giải:** 13m 2s 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta có đồ thị vô hướng liên thông với độ dài cạnh dương. Chúng ta phải chọn chính xác (N-1) các cạnh của nó để chúng tạo thành một cây khung, và trong số tất cả các cây khung có thể có, chúng ta muốn một cây có đường đi dài nhất của cây càng ngắn càng tốt. Đầu ra phải chứa đường kính tối thiểu có thể có và các cạnh của một cây tối ưu. 
+Chúng ta có một đồ thị vô hướng liên thông có các cạnh có độ dài dương. Chúng ta cần giữ chính xác đủ số cạnh để tạo thành cây bao trùm, nhưng mục tiêu không phải là tổng trọng lượng của cây. Thay vào đó, chúng ta muốn đường đi dài nhất bên trong cây kết quả càng ngắn càng tốt. Đầu ra là đường kính tối thiểu có thể cùng với bất kỳ cây bao trùm nào đạt được nó. Bài toán chính thức cho phép bất kỳ cây tối ưu hợp lệ nào, do đó các cạnh cụ thể được in bằng cách triển khai đúng không nhất thiết phải khớp với đầu ra mẫu. 
 
-Khó khăn là mục tiêu không phải là tổng trọng lượng của cây. Cây bao trùm nhẹ vẫn có thể có nhánh rất dài, trong khi cây nặng hơn có thể có đường kính nhỏ hơn nhiều. Do đó, một thuật toán cây bao trùm tối thiểu như Kruskal hoặc Prim sẽ giải quyết được một vấn đề khác. 
+Giới hạn (N\le 500) đủ nhỏ để cho phép các thuật toán xoay quanh thời gian bậc ba, nhưng (M) có thể lớn bằng (N(N-1)/2), do đó đồ thị có thể dày đặc. Ở kích thước tối đa có thể có khoảng (125000) cạnh. Việc liệt kê các cây bao trùm là hoàn toàn không thể, bởi vì một đồ thị hoàn chỉnh trên (500) đỉnh có (500^{498}) cây bao trùm khác nhau theo công thức Cayley. Ngay cả việc kiểm tra một cây cũng tốn ít nhất thời gian tuyến tính nếu chúng ta muốn đường kính của nó. Thay vào đó, chúng ta cần một thuật toán đa thức sử dụng thông tin đường đi ngắn nhất. 
 
-Đồ thị có nhiều nhất (500) đỉnh, trong khi (M) có thể gần như (N^2/2). Điều đó loại trừ bất kỳ số mũ nào trong (N), chẳng hạn như liệt kê các cây bao trùm. Ở kích thước tối đa, một biểu đồ hoàn chỉnh có (500\cdot499/2=124750) cạnh, do đó, thuật toán có một lượt vượt qua đáng kể (O(MN)) đã có xung quanh (6.2\cdot10^7) hoạt động đỉnh-cạnh. Thuật toán (O(N^3)) cũng xoay quanh các cập nhật khoảng cách cơ bản (1,25\cdot10^8), phù hợp với giải pháp đa thức dự định cho (N=500). Trọng số cạnh có thể đạt tới (10^9) và đường đi ngắn nhất có thể chứa (N-1) cạnh, vì vậy số học 64 bit là cần thiết. Số nguyên Python tự động xử lý việc này. 
+Tất cả các độ dài cạnh đều dương và có thể đạt tới (10^9). Một đường dẫn có thể chứa (N-1) cạnh, do đó khoảng cách có thể đạt tới khoảng (5\cdot10^{11}). Số nguyên Python xử lý trực tiếp phạm vi này, nhưng sử dụng loại số nguyên 32 bit sẽ tràn. 
 
-Có một số trường hợp khó khăn khi giải pháp có vẻ tự nhiên lại thất bại. 
+Có ba trường hợp đặc biệt dễ xử lý sai. 
 
-Xét đồ thị chỉ gồm hai đỉnh.```
-2 1
-1 2 10
-```Cây bao trùm duy nhất có đường kính (10). Một giải pháp chỉ coi một đỉnh hiện có là tâm có thể tính toán độ lệch tâm đỉnh tốt nhất gấp đôi và thu được (20). Tâm thực là trung điểm của cạnh và bán kính của nó là (5), cho đường kính (10). 
-
-Vấn đề tương tự xuất hiện mà không có điểm giữa rõ ràng. Coi như```
+Đầu tiên, tâm tối ưu có thể nằm bên trong một cạnh chứ không phải ở một đỉnh. Coi như```
 4 3
 1 2 1
 2 3 1
 3 4 1
-```Bản thân đồ thị đã là một cái cây nên câu trả lời là (3). Tâm là trung điểm của cạnh (2-3). Nếu chúng ta chỉ thử tâm đỉnh, độ lệch tâm tốt nhất là (2), điều này sẽ gợi ý (4), mặc dù cây thực tế có đường kính (3). 
+```Cây bao trùm duy nhất là đường dẫn (1-2-3-4), có đường kính là (3). Nếu chỉ xét tâm đỉnh thì đỉnh tốt nhất có độ lệch tâm (2), dẫn đến giá trị sai (4). Tâm thật là trung điểm của cạnh (2-3), có bán kính (1,5) nên đường kính đúng là (3). 
 
-Vị trí tối ưu bên trong một cạnh cũng không nhất thiết phải là điểm giữa của nó. Vì```
-3 2
-1 2 2
-2 3 100
-```cây bao trùm duy nhất có đường kính (102). Tâm của nó nằm (49) đơn vị tính từ đỉnh (2) dọc theo cạnh (2-3), không phải ở điểm giữa của cạnh đó. Việc giới hạn mọi tâm cạnh ứng cử viên vào điểm giữa của nó sẽ đưa ra bán kính sai. 
+Thứ hai, cạnh chứa tâm không nhất thiết phải là đường đi ngắn nhất giữa các điểm cuối của nó. Coi như```
+3 3
+1 2 1
+2 3 1
+1 3 100
+```Cạnh đắt tiền (1-3) vẫn là một cạnh của biểu đồ và phải được coi là vị trí có thể có của tâm tuyệt đối. Khoảng cách điểm cuối của nó phải được tính bằng cách sử dụng các đường đi ngắn nhất của đồ thị, chứ không phải bằng cách giả sử rằng chính cạnh đã cho là tuyến đường ngắn nhất giữa các điểm cuối của nó. Cây tối ưu là đường dẫn (1-2-3), có đường kính (2). 
 
-Cuối cùng, các đường dẫn ngắn nhất bằng nhau có thể gây ra một lỗi triển khai khác. TRONG```
+Thứ ba, khoảng cách đường đi ngắn nhất bằng nhau có thể xảy ra thường xuyên. TRONG```
 3 3
 1 2 1
 2 3 1
 1 3 1
-```mỗi đỉnh có hai đỉnh lân cận ngắn nhất. Nếu chúng ta thêm mọi cạnh thỏa mãn đẳng thức khoảng cách ngắn nhất mà không duy trì tập hợp đã ghé thăm, chúng ta có thể xuất ra cả ba cạnh và tạo một chu trình. Cây mong muốn chỉ có hai cạnh và đường kính (2). 
-
-Do đó, giải pháp phải xử lý các tâm tại các đỉnh, các tâm hoàn toàn bên trong các cạnh, các vị trí phân số tùy ý bên trong một cạnh và mối liên hệ giữa một số đường đi ngắn nhất. 
+```cả hai đỉnh (2) và (3) được buộc ở khoảng cách (1) tính từ đỉnh (1). Việc triển khai Dijkstra phải cho phép sắp xếp thứ tự ràng buộc tùy ý. Câu trả lời cuối cùng vẫn là đường kính (2) và thuật toán không được phụ thuộc vào một thứ tự cụ thể nào của các đỉnh có khoảng cách bằng nhau. 
 
 ## Phương pháp tiếp cận 
 
-Cách mạnh mẽ nhất là liệt kê từng cây bao trùm, tính đường kính của nó và giữ lại cây tốt nhất. Điều này đúng vì mọi câu trả lời khả thi đều được biểu thị bằng một trong những cây đó. Thật không may, đồ thị hoàn chỉnh (K_N) đã có (N^{N-2}) cây bao trùm theo công thức Cayley. Tại (N=500), tức là có (500^{498}) ứng viên. Ngay cả việc chỉ chi tiêu (O(N)) hoạt động cho mỗi ứng cử viên cũng sẽ yêu cầu (500^{499}) hoạt động cơ bản, điều này hoàn toàn không khả thi. 
+Cách tiếp cận vũ phu rất đơn giản về mặt khái niệm. Liệt kê mọi tập hợp con của các cạnh, giữ lại các tập hợp con chứa chính xác (N-1) cạnh, kiểm tra xem mỗi tập hợp con đó có phải là một cây hay không, tính đường kính của nó và giữ lại giá trị nhỏ nhất. Điều này đúng vì mọi cây bao trùm đều xuất hiện trong bảng liệt kê. Vấn đề là số lượng ứng viên. Trong biểu đồ hoàn chỉnh (K_N), có (N^{N-2}) cây bao trùm, do đó, đối với (N=500), bảng liệt kê đã có (500^{498}) ứng cử viên. Việc tính toán đường kính cho mỗi ứng cử viên sẽ làm cho tổng công việc theo thứ tự (N\cdot N^{N-2}), vượt xa mọi giới hạn thực tế. 
 
-Một lực lượng vũ phu phức tạp hơn có thể thử mọi đỉnh làm trung tâm và xây dựng cây đường đi ngắn nhất từ ​​đó. Điều đó đã tốt hơn nhiều, nhưng nó vẫn thiếu các trung tâm nằm bên trong các cạnh. Người ta cũng có thể thử mọi cạnh và chạy liên tục thuật toán đường đi ngắn nhất trong khi di chuyển tâm giả định dọc theo cạnh đó. Với các cạnh ứng cử viên (M), điều này đưa ra một phép tính đường đi ngắn nhất khác cho mỗi cạnh và trở nên quá tốn kém. 
+Quan sát hữu ích là một cây có đường kính tối thiểu có tâm hình học rất cụ thể. Hãy tưởng tượng việc thay thế mọi cạnh của đồ thị bằng một đoạn thẳng liên tục có cùng độ dài. Một điểm trên mạng liên tục này có thể là một đỉnh hoặc một điểm trong của một cạnh. Đối với một điểm (x) như vậy, hãy xác định bán kính của nó là khoảng cách đường đi ngắn nhất tối đa từ (x) đến bất kỳ đỉnh nào của đồ thị. 
 
-Điều quan trọng nhất là hãy ngừng nghĩ về cái cây trước tiên. Hãy coi đồ thị ban đầu là một mạng liên tục trong đó mỗi cạnh là một khoảng. Điểm (c) có thể là đỉnh ban đầu hoặc là điểm nằm trong một cạnh. Xác định độ lệch tâm của nó là khoảng cách đường đi ngắn nhất lớn nhất từ ​​(c) đến bất kỳ đỉnh nào của đồ thị. Điểm như vậy được gọi là 1 tâm tuyệt đối. 
+Lấy bất kỳ cây bao trùm (T) nào và nhìn vào điểm giữa của một trong các đường kính của nó. Điểm giữa đó là đỉnh cây hoặc nằm bên trong cạnh cây. Mỗi đỉnh của cây cách cây tối đa một nửa đường kính tính từ điểm giữa đó. Đường đi ngắn nhất của đồ thị chỉ có thể ngắn hơn đường đi của cây, do đó, cùng một điểm có khoảng cách đồ thị nhiều nhất là một nửa đường kính cây đến mọi đỉnh. Do đó, mỗi cây bao trùm có đường kính (D) cho một điểm mạng có bán kính nhiều nhất là (D/2). 
 
-Định lý quan trọng là cây đường đi ngắn nhất có gốc tại một tâm tuyệt đối là cây bao trùm có đường kính tối thiểu. Ngược lại, tâm của cây bao trùm có đường kính tối thiểu cho ra 1 tâm tuyệt đối của đồ thị ban đầu. Do đó, bài toán cây trở thành bài toán trung tâm mạng. Sự tương đương này là kết quả trung tâm được sử dụng bởi phương pháp Hassin-Tamir cổ điển. 
+Điều ngược lại là chìa khóa. Nếu (x) là một điểm của mạng ban đầu có khoảng cách đồ thị tối đa đến một đỉnh là (R), hãy xây dựng cây đường đi ngắn nhất bắt nguồn từ (x), coi điểm cạnh trong là đỉnh chia nhỏ. Mỗi khoảng cách từ gốc đến đỉnh trong cây đó lớn nhất là (R), do đó mỗi cặp đỉnh có khoảng cách cây tối đa là (2R). Do đó, đường kính cây bao trùm tối ưu chính xác gấp đôi bán kính tối thiểu có thể có của một điểm mạng như vậy. 
 
-Giả sử tâm nằm ở khoảng cách (x) tính từ điểm cuối (u) của một cạnh (uv) có chiều dài (w). Đối với một đỉnh khác (z), khoảng cách của nó tới tâm là 
+Điều này chuyển đổi vấn đề tối ưu hóa cây ban đầu thành vấn đề 1 tâm tuyệt đối trên biểu đồ có trọng số. Sự tương đương này là đặc tính tiêu chuẩn của cây bao trùm có đường kính tối thiểu. 
+
+Chỉ có hai loại trung tâm khả thi. Tâm có thể là một đỉnh ban đầu, trong trường hợp đó bán kính của nó đơn giản là độ lệch tâm của nó. Hoặc nó có thể nằm đâu đó bên trong một cạnh ban đầu. Chúng ta có thể kiểm tra trực tiếp tất cả các đỉnh, nhưng việc kiểm tra một cạnh đòi hỏi phải cẩn thận hơn. 
+
+Đối với một cạnh (u-v) có chiều dài (w), gọi (x) là một điểm ở khoảng cách (\alpha) từ (u), trong đó (0\le\alpha\le w). Với mọi đỉnh (z), 
 
 [ 
-f_z(x)=\min(d(u,z)+x,\ d(v,z)+w-x). 
+d(x,z)=\min(\alpha+d(u,z),,w-\alpha+d(v,z)). 
 ] 
 
-Biểu thức đầu tiên đạt đến (z) thông qua (u), trong khi biểu thức thứ hai đạt đến nó thông qua (v). Độ lệch tâm của điểm là giá trị lớn nhất của các hàm này trên tất cả (z). 
+Biểu thức đầu tiên mô tả các đường đi đến (z) qua (u), trong khi biểu thức thứ hai mô tả các đường đi đến nó qua (v). Bán kính của (x) là giá trị lớn nhất của các giá trị này trên tất cả (z). 
 
-Đối với một cạnh cố định, mọi (f_z) là hàm tuyến tính hai phần. Mức tối đa của các chức năng này chỉ có thể đạt mức tối thiểu tại điểm cuối hoặc tại giao điểm của hai phần hoạt động. Sau khi sắp xếp các đỉnh theo khoảng cách của chúng với một điểm cuối, các giao điểm có liên quan đó có thể được quét theo thời gian tuyến tính cho cạnh đó. Đây là phép tính trung tâm tuyệt đối theo kiểu Kariv-Hakimi. Thuật toán kết quả mất (O(MN+N^2\log N)) thời gian sau khi có sẵn ma trận khoảng cách tất cả các cặp. 
+Mỗi đỉnh đóng góp một hàm hình chữ V ngược của (\alpha). Đường bao trên của tất cả các hàm này chính xác là hàm bán kính dọc theo cạnh. Chúng ta cần điểm thấp nhất của nó. Quá trình quét Kariv-Hakimi tìm thấy tất cả các thung lũng có liên quan của đường bao trên này theo thời gian tuyến tính sau khi khoảng cách tất cả các cặp và thứ tự Dijkstra đã được tính toán. 
 
-Bởi vì (N\le500), chúng ta có thể thu được khoảng cách đường đi ngắn nhất tất cả các cặp với Floyd-Warshall trong (O(N^3)). Sau đó, chúng tôi quét mọi cạnh trong (O(N)), tìm tâm tối ưu và cuối cùng xây dựng cây đường đi ngắn nhất xung quanh tâm đó. 
+Đối với cạnh cố định (u-v), sắp xếp các đỉnh theo mức tăng (d(u,z)). Bắt đầu từ đỉnh xa nhất (u). Khi chúng ta quét ngược các đỉnh còn lại, một đỉnh mới chỉ quan trọng khi nó ở xa (v) hơn đỉnh hiện đang hoạt động. Sự thay đổi như vậy tạo ra sự giao thoa mới giữa hàm hiện có liên quan ở phía (u) và hàm mới ở phía (v). Nếu hai đỉnh liên quan là (p) và (q) thì đường giao nhau có bán kính 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+[ 
+R=\frac{d(u,p)+w+d(v,q)}{2}. 
+] 
+
+Vì câu trả lời bắt buộc là đường kính nên sẽ thuận tiện khi lưu trữ bán kính gấp đôi: 
+
+[ 
+D= d(u,p)+w+d(v,q). 
+] 
+
+Điều này tránh mọi phép tính dấu phẩy động.
+
+Do đó, thuật toán hoàn chỉnh là tính toán đường đi ngắn nhất cho tất cả các cặp, sau đó là kiểm tra tâm đỉnh và quét Kariv-Hakimi tuyến tính cho mọi cạnh của đồ thị. Cuối cùng, khi đã biết được trung tâm tốt nhất, một phép tính Dijkstra nữa sẽ xây dựng cây đường đi ngắn nhất có gốc tại trung tâm đó. 
+
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
-| Liệt kê tất cả các cây bao trùm | (\Omega(N^{N-1})) công việc cơ bản | Hàm mũ | Quá chậm | 
-| Hãy thử mọi trung tâm với những con đường ngắn nhất lặp đi lặp lại | Ít nhất (O(M^2\log N)) kiểu làm việc | (O(M+N)) | Quá chậm | 
-| Tuyệt đối 1 trung tâm + APSP | (O(N^3+MN+N^2\log N)) | (O(N^2+M)) | Đã chấp nhận | 
+| Lực lượng vũ phu | (O(N\cdot N^{N-2})) | (O(N^2)) | Quá chậm | 
+| Tối ưu | (O(NM\log N + NM)) với heap Dijkstra | (O(N^2+M)) | Đã chấp nhận | 
 
-## Hướng dẫn thuật toán
+Đối với (N\le500) đã nêu, đây là cách tiếp cận đa thức chính xác tiêu chuẩn. Công thức lý thuyết của phương pháp trung tâm tuyệt đối thường được đưa ra là (O(MN+N^2\log N)) khi có sẵn ma trận đường đi ngắn nhất, với các đường dẫn ngắn nhất tất cả các cặp cung cấp các phép tính nguồn đơn (N) bổ sung. 
 
-1. Xây dựng một ma trận chứa các trọng số cạnh ban đầu và khởi tạo mọi mục nhập đường chéo về 0. Tất cả các cạnh không nhận được vô cùng. Chúng tôi cũng giữ danh sách cạnh ban đầu vì cây bao trùm cuối cùng chỉ được phép sử dụng các cạnh thực sự xuất hiện trong đầu vào. 
-2. Tính toán khoảng cách đường đi ngắn nhất của tất cả các cặp với Floyd-Warshall. Sau bước này, (d[u][v]) là khoảng cách ngắn nhất giữa mỗi cặp đỉnh của đồ thị chứ không chỉ đơn thuần là trọng số của một cạnh trực tiếp. 
-3. Với mỗi đỉnh (u), sắp xếp tất cả các đỉnh theo thứ tự giảm dần (d[u][v]). Gọi thứ tự này là (L_u). Phần tử đầu tiên là đỉnh xa nhất tính từ (u). Những thứ tự này cho phép chúng ta quét các ràng buộc tâm cạnh có liên quan mà không cần sắp xếp lại cho mọi cạnh. 
-4. Lấy đỉnh (u) làm tâm. Độ lệch tâm của nó là 
+## Hướng dẫn thuật toán 
 
-[ 
-e(u)=\max_v d[u][v]. 
-] 
+1. Chạy Dijkstra từ mọi đỉnh. Lưu trữ cả khoảng cách ngắn nhất (d[s][v]) và thứ tự mà các đỉnh được Dijkstra hoàn thiện vĩnh viễn từ (s). 
 
-Cây đường đi ngắn nhất có gốc tại (u) có đường kính tối đa là (2e(u)) và tâm tuyệt đối sẽ cho kết quả tối ưu chính xác. Do đó (2e(u)) là một câu trả lời ứng cử viên. 
+Thứ tự hoàn thiện được sắp xếp theo khoảng cách không giảm từ (s). Đó chính xác là thứ tự cần thiết cho quá trình quét cạnh Kariv-Hakimi. 
 
-1. Bây giờ hãy xem xét một cạnh ban đầu (uv) có trọng số (w) và tưởng tượng đặt tâm ở khoảng cách (x) từ (u). Với mỗi đỉnh (z), khoảng cách của nó tới tâm là 
+1. Với mỗi đỉnh (c), hãy tính 
 
 [ 
-\min(d[u][z]+x,\ d[v][z]+w-x). 
+D_c=2\max_v d[c][v]. 
 ] 
 
-Số hạng thứ nhất tăng theo (x), trong khi số hạng thứ hai giảm theo (x). Đỉnh xa nhất ở hai bên xác định đường bao trên hiện tại. 
+Giữ giá trị nhỏ nhất và ghi nhớ (c) là trung tâm tốt nhất hiện tại. 
 
-1. Xử lý các đỉnh trong (L_u) từ gần nhất đến (u) đến xa nhất. Duy trì`cmp`, đỉnh nhìn thấy cho đến nay có khoảng cách lớn nhất so với (v). Bất cứ khi nào một đỉnh mới được xử lý có khoảng cách lớn hơn so với (v), nó sẽ trở thành một ràng buộc hoạt động mới. Ràng buộc mới từ phía (u) và ràng buộc hoạt động trước đó từ phía (v) giao nhau tại 
+Nếu tâm tuyệt đối tối ưu là một đỉnh của đồ thị thì điều này đã tìm thấy nó. Hệ số hai là có chủ ý vì đường kính cây bao trùm cuối cùng gấp đôi bán kính tâm. 
+
+1. Với mọi cạnh đồ thị (u-v) có độ dài (w), hãy sử dụng thứ tự Dijkstra từ (u). Hãy để trật tự đó được 
 
 [ 
-x=\frac{d[v][z_{\text{old}}]-d[u][z_{\text{new}}]+w}{2}. 
+r_0,r_1,\ldots,r_{N-1}, 
 ] 
 
-Tại giao điểm này, hai khoảng cách liên quan bằng nhau nên đường kính ứng cử viên là 
+trong đó (r_{N-1}) cách xa (u nhất). 
+
+Khởi tạo (a=N-1). Sau đó quét (b=N-2,N-3,\ldots,0). Bất cứ khi nào 
 
 [ 
-d[u][z_{\text{new}}]+d[v][z_{\text{old}}]+w. 
+d[v][r_b] > d[v][r_a], 
 ] 
 
-Quá trình quét sẽ kiểm tra mọi giao lộ có thể hoạt động trong thời gian tuyến tính. 
+hai đường bao hiện có liên quan tạo thành một thung lũng ứng cử viên mới. 
 
-1. Lặp lại quá trình quét cạnh cho mọi cạnh ban đầu. Bất cứ khi nào tìm thấy một ứng cử viên nhỏ hơn, hãy lưu trữ các điểm cuối cạnh và tọa độ trung tâm nhân đôi. Tọa độ nhân đôi rất hữu ích vì tâm thực có thể nằm ở vị trí nửa số nguyên mặc dù mọi cạnh của đồ thị đều có trọng số nguyên. 
-2. Khi đã biết tâm tối ưu, hãy xác định (R_2[v]) bằng hai lần khoảng cách ngắn nhất từ ​​tâm đến đỉnh (v). Nếu tâm là một (các) đỉnh thì 
+Bán kính nhân đôi tương ứng là 
 
 [ 
-R_2[v]=2d[s][v]. 
+D=d[u][r_b]+w+d[v][r_a]. 
 ] 
 
-Nếu tâm là (x) đơn vị từ (s) trên cạnh (st) có chiều dài (w), lưu trữ (h_2=2x), cho 
+Nếu giá trị này cải thiện câu trả lời hiện tại, hãy nhớ cạnh này và hai đỉnh (r_b) và (r_a). 
 
-\min(2d[s][v]+h_2,\ 2d[t][v]+2w-h_2). 
-] 
+Lý do của sự so sánh chặt chẽ là chỉ có một giá trị mới, lớn hơn ở phía (v) mới thay đổi đường bao trên. Các giá trị bằng nhau không thể tạo đường giao nhau thấp hơn chưa được biểu thị bằng đường hiện hoạt. 
 
-1. Xây dựng cây đường đi ngắn nhất bằng cách đi theo các cạnh ban đầu thỏa mãn 
+1. Sau khi kiểm tra tất cả các đỉnh và cạnh, chúng ta biết bán kính nhân đôi tối thiểu (D^*). 
+
+Nếu tâm tốt nhất là đỉnh (c), chúng ta sẽ xây dựng cây đường đi ngắn nhất thông thường có gốc tại (c). 
+
+Nếu tâm tốt nhất nằm trên cạnh (u-v), hãy đặt (p=r_b) và (q=r_a) là hai đỉnh được ghi lại khi tìm thấy ứng cử viên cạnh đó. Vị trí giao cắt thỏa mãn 
 
 [ 
-R_2[v]=R_2[u]+2w(u,v). 
+\alpha+d[u][p]=w-\alpha+d[v][q]. 
 ] 
 
-Bởi vì mọi cạnh đều có trọng số dương nên giá trị (R_2) tăng lên bất cứ khi nào chúng ta di chuyển ra khỏi tâm. Một mảng đã truy cập là đủ để chọn một cha cho mỗi đỉnh và tránh các chu kỳ. 
+Nhân với hai cho 
 
-1. Nếu tâm nằm bên trong một cạnh, hãy bắt đầu xây dựng lại từ cả hai điểm cuối của cạnh đó và cuối cùng thêm chính cạnh trung tâm đó. Nếu tâm là một đỉnh ban đầu thì chỉ có đỉnh đó là gốc và không cần có cạnh trung tâm đặc biệt nào. 
+[ 
+2\alpha=w+d[v][q]-d[u][p]. 
+] 
+
+Chúng tôi lưu trữ giá trị số nguyên này thay vì sử dụng dấu phẩy động. 
+
+1. Để xây dựng cây cho tâm đỉnh, hãy chạy Dijkstra từ đỉnh đó và giữ lại đỉnh trước của mỗi đỉnh. Mỗi đỉnh không phải gốc đều đóng góp cạnh trước nó. 
+
+Một cây có đường đi ngắn nhất chính xác là những gì chúng ta muốn bởi vì mỗi đỉnh đều có khoảng cách đồ thị tối đa bằng bán kính tâm tính từ gốc, do đó, bất kỳ hai đỉnh cây nào cũng được nối qua gốc bằng một đường đi có độ dài tối đa gấp đôi bán kính đó. 
+
+1. Để xây dựng cây cho tâm cạnh, hãy chia nhỏ (u-v) bằng cách chèn tâm mới (x). Khoảng cách từ (x) đến (u) và (v) là (\alpha) và (w-\alpha). 
+
+Trong quá trình triển khai, chúng tôi tránh tạo đỉnh mới. Chúng tôi khởi tạo Dijkstra với khoảng cách dự kiến ​​gấp đôi 
+
+[ 
+2\alpha 
+] 
+
+cho (u) và 
+
+[ 
+2w-2\alpha 
+] 
+
+cho (v). Khi đó các cạnh của đồ thị thông thường có chiều dài gấp đôi (2w_e). 
+
+Hai đỉnh ban đầu được phép thả lỏng sau đó. Chi tiết này quan trọng vì cạnh được chọn (u-v) không nhất thiết phải là đường đi ngắn nhất giữa (u) và (v). Nếu có thể tiếp cận một điểm cuối với chi phí rẻ hơn thông qua phần còn lại của biểu đồ thì Dijkstra phải được phép khám phá điều đó.
+
+1. Biểu đồ tiền thân do Dijkstra đa nguồn này tạo ra là một khu rừng bắt nguồn từ các đỉnh đạt trực tiếp từ trung tâm nhân tạo. Nếu cả hai (u) và (v) vẫn là gốc, hãy thêm cạnh ban đầu (u-v). Nếu chỉ còn lại một cạnh gốc thì cạnh ban đầu là không cần thiết. 
+
+Đồ thị kết quả có chính xác (N-1) cạnh và là cây bao trùm. Khoảng cách từ gốc đến đỉnh của nó bằng khoảng cách ngắn nhất từ ​​tâm đã chọn, do đó đường kính của nó tối đa là (D^_). Vì không có cây bao trùm nào có thể có đường kính dưới (D^_), nên đường kính của nó chính xác là tối ưu. 
 
 ### Tại sao nó hoạt động 
 
-Đặt (c) là một tâm tuyệt đối và gọi (r) là khoảng cách đường đi ngắn nhất tối đa của nó tới bất kỳ đỉnh đồ thị nào. Cây đường đi ngắn nhất có gốc tại (c) cho mỗi đỉnh một đường đi từ (c) có độ dài chính xác khoảng cách đồ thị của nó từ (c). Đối với hai đỉnh bất kỳ (a,b), đường cây của chúng có thể được phân chia tại điểm chung thấp nhất so với (c), do đó độ dài của nó tối đa là (d(c,a)+d(c,b)\le2r). Như vậy cây được xây dựng có đường kính lớn nhất là (2r). 
+Gọi (R^_) là khoảng cách tối đa tối thiểu từ một điểm của đồ thị liên tục đến tất cả các đỉnh ban đầu. Đối với mọi cây bao trùm (T) có đường kính (D), điểm giữa của đường kính tối đa ở khoảng cách cây (D/2) tính từ mọi đỉnh và khoảng cách đồ thị không được vượt quá khoảng cách cây. Do đó (R^_\le D/2), cho (D\ge2R^*). 
 
-Bây giờ lấy bất kỳ cây bao trùm (T). Đường kính của nó có một điểm ở giữa, là một đỉnh hoặc một điểm bên trong một trong các cạnh của nó. Khoảng cách từ điểm giữa đó đến mọi đỉnh tối đa bằng một nửa đường kính cây. Vì đường đi ngắn nhất của đồ thị không bao giờ có thể dài hơn đường đi bên trong (T), điểm giữa đó cũng có thể là tâm của đồ thị ban đầu. Do đó, mọi cây khung có đường kính (D) đều cho bán kính tâm tuyệt đối nhiều nhất là (D/2). Tâm tuyệt đối có bán kính không lớn hơn giá trị này, vì vậy cây đường đi ngắn nhất của nó có đường kính tối đa là (D). Áp dụng điều này cho cây tối ưu chứng tỏ rằng cây được xây dựng từ tâm tuyệt đối là tối ưu. Đây chính xác là MDST và tương đương tuyệt đối với 1 trung tâm. 
+Ngược lại, lấy tâm tuyệt đối (x) có bán kính (R^_). Cây đường đi ngắn nhất có gốc tại (x) cho phép mỗi đỉnh có khoảng cách tối đa là (R^_) từ (x). Khoảng cách của cây giữa hai đỉnh bất kỳ nhiều nhất là tổng khoảng cách của chúng đến (x), do đó đường kính của nó nhiều nhất là (2R^_). Hai bất đẳng thức gặp nhau, chứng tỏ đường kính cây bao trùm tối ưu là (2R^_). 
 
-Việc quét cạnh là chính xác bởi vì, trên một cạnh cố định, mỗi đỉnh đóng góp một hàm được hình thành bởi tối thiểu một biểu thức tuyến tính tăng và một biểu thức tuyến tính giảm. Ở mức tối ưu, điểm cuối của cạnh là tối ưu hoặc hai ràng buộc hiện đang hoạt động đáp ứng. Việc sắp xếp theo khoảng cách từ một điểm cuối cho phép chúng tôi xác định mọi thay đổi trong giới hạn hoạt động chỉ bằng một lần quét tuyến tính. 
+Tâm tuyệt đối nằm ở một đỉnh hoặc bên trong một cạnh. Trung tâm Vertex được kiểm tra trực tiếp. Trên mỗi cạnh, bán kính là đường bao trên của các hàm khoảng cách đỉnh và phép quét Kariv-Hakimi kiểm tra chính xác các điểm mà đường bao này có thể đạt mức tối thiểu cục bộ. Do đó, ứng cử viên nhỏ nhất được tìm thấy trong quá trình quét là (R^_). Cây có đường đi ngắn nhất cuối cùng sẽ đạt được đường kính (2R^_), do đó cây được in là tối ưu. 
 
 ## Giải pháp Python```python
 import sys
+import heapq
 
 input = sys.stdin.readline
 
 INF = 10**30
 
-def tree_diameter(n, edges):
-    adj = [[] for _ in range(n)]
-    for u, v, w in edges:
-        adj[u].append((v, w))
-        adj[v].append((u, w))
-
-    def farthest(start):
-        stack = [(start, -1, 0)]
-        best_v = start
-        best_d = 0
-
-        while stack:
-            u, parent, dist = stack.pop()
-            if dist > best_d:
-                best_d = dist
-                best_v = u
-
-            for v, w in adj[u]:
-                if v == parent:
-                    continue
-                stack.append((v, u, dist + w))
-
-        return best_v, best_d
-
-    a, _ = farthest(0)
-    _, diameter = farthest(a)
-    return diameter
-
-def solve(data):
-    it = iter(map(int, data.split()))
-    n = next(it)
-    m = next(it)
-
-    edges = []
-    dist = [[INF] * n for _ in range(n)]
-    direct = [[INF] * n for _ in range(n)]
-
-    for i in range(n):
-        dist[i][i] = 0
-        direct[i][i] = 0
-
-    all_equal = True
-    first_weight = None
-
-    for _ in range(m):
-        u = next(it) - 1
-        v = next(it) - 1
-        w = next(it)
-
-        edges.append((u, v, w))
-        direct[u][v] = w
-        direct[v][u] = w
-        dist[u][v] = w
-        dist[v][u] = w
-
-        if first_weight is None:
-            first_weight = w
-        elif first_weight != w:
-            all_equal = False
-
-    # If the input graph is already a tree, it is the only spanning tree.
-    if m == n - 1:
-        diameter = tree_diameter(n, edges)
-        out = [str(diameter)]
-        for u, v, _ in edges:
-            out.append(f"{u + 1} {v + 1}")
-        return "\n".join(out)
-
-    # Complete graph with equal edge weights: any star is optimal.
-    if m == n * (n - 1) // 2 and all_equal:
-        w = first_weight
-        diameter = w if n == 2 else 2 * w
-        out = [str(diameter)]
-        for v in range(1, n):
-            out.append(f"1 {v + 1}")
-        return "\n".join(out)
-
-    # Floyd-Warshall.
-    for k in range(n):
-        dk = dist[k]
-        for i in range(n):
-            di = dist[i]
-            dik = di[k]
-            if dik >= INF:
-                continue
-
-            for j in range(n):
-                nd = dik + dk[j]
-                if nd < di[j]:
-                    di[j] = nd
-
-    # Farthest-first ordering for every source.
+def dijkstra(source, graph, n):
+    dist = [INF] * n
+    parent = [-1] * n
     order = []
-    for u in range(n):
-        row = dist[u]
-        order.append(sorted(range(n), key=row.__getitem__, reverse=True))
 
-    # First consider centers that are original vertices.
-    best = INF
-    best_s = 0
-    best_t = 0
-    best_h2 = 0
+    dist[source] = 0
+    pq = [(0, source)]
 
-    for u in range(n):
-        candidate = 2 * dist[u][order[u][0]]
-        if candidate < best:
-            best = candidate
-            best_s = u
-            best_t = u
-            best_h2 = 0
-
-    # Consider centers inside every graph edge.
-    for u, v, w in edges:
-        # We run the scan in both orientations. This is harmless
-        # asymptotically and avoids depending on which endpoint was chosen.
-        for s, t in ((u, v), (v, u)):
-            seq = order[s]
-
-            # seq is farthest-first from s.
-            # We scan from the closest vertex toward the farthest.
-            cmp = n - 1
-
-            for i in range(n - 2, -1, -1):
-                a = seq[i]
-                b = seq[cmp]
-
-                if dist[t][a] > dist[t][b]:
-                    candidate = dist[s][a] + dist[t][b] + w
-
-                    if candidate < best:
-                        best = candidate
-
-                        # candidate =
-                        # d(s,a) + d(t,b) + w
-                        #
-                        # If h is the center's distance from s,
-                        # d(s,a) + h = d(t,b) + w - h.
-                        # Store 2*h to avoid floating point.
-                        best_h2 = candidate - 2 * dist[s][a]
-                        best_s = s
-                        best_t = t
-
-                    cmp = i
-
-    # Twice the center-to-vertex distances.
-    radius2 = [0] * n
-
-    if best_s == best_t:
-        s = best_s
-        for v in range(n):
-            radius2[v] = 2 * dist[s][v]
-    else:
-        s = best_s
-        t = best_t
-        w = direct[s][t]
-        h2 = best_h2
-
-        for v in range(n):
-            radius2[v] = min(
-                2 * dist[s][v] + h2,
-                2 * dist[t][v] + 2 * w - h2
-            )
-
-    # Build the shortest-path tree from the center.
-    visited = [False] * n
-    tree_edges = []
-
-    roots = [best_s]
-    if best_t != best_s:
-        roots.append(best_t)
-
-    for root in roots:
-        if visited[root]:
+    while pq:
+        d, u = heapq.heappop(pq)
+        if d != dist[u]:
             continue
 
-        visited[root] = True
-        stack = [root]
+        order.append(u)
 
-        while stack:
-            u = stack.pop()
+        for v, w in graph[u]:
+            nd = d + w
+            if nd < dist[v]:
+                dist[v] = nd
+                parent[v] = u
+                heapq.heappush(pq, (nd, v))
 
-            for v in range(n):
-                w = direct[u][v]
-                if w >= INF or visited[v]:
-                    continue
+    return dist, parent, order
 
-                if radius2[v] == radius2[u] + 2 * w:
-                    visited[v] = True
-                    tree_edges.append((u, v))
-                    stack.append(v)
+def dijkstra_center(graph, n, u, v, alpha2, w):
+    """
+    Dijkstra from an artificial center x lying on edge u-v.
 
-    # If the center is inside an edge, that edge belongs to the tree.
-    if best_s != best_t:
-        tree_edges.append((best_s, best_t))
+    All distances are doubled, so alpha2 = 2 * distance(x, u).
+    The initial distances are:
+        dist2[u] = alpha2
+        dist2[v] = 2*w - alpha2
 
-    out = [str(best)]
-    for u, v in tree_edges:
+    Unlike ordinary multi-source Dijkstra, u and v are allowed to
+    be relaxed later. This is necessary because u-v itself need not
+    be a shortest path between u and v.
+    """
+    dist = [INF] * n
+    parent = [-1] * n
+
+    dv = 2 * w - alpha2
+    dist[u] = alpha2
+    dist[v] = dv
+
+    pq = [(alpha2, u)]
+    if v != u:
+        heapq.heappush(pq, (dv, v))
+
+    used = [False] * n
+
+    while pq:
+        d, x = heapq.heappop(pq)
+        if used[x] or d != dist[x]:
+            continue
+
+        used[x] = True
+
+        for y, ew in graph[x]:
+            nd = d + 2 * ew
+            if nd < dist[y]:
+                dist[y] = nd
+                parent[y] = x
+                heapq.heappush(pq, (nd, y))
+
+    tree = []
+
+    for x in range(n):
+        if parent[x] != -1:
+            tree.append((x, parent[x]))
+
+    # If both endpoints are roots of the shortest-path forest,
+    # the artificial center connects to both, which corresponds
+    # to using the original edge u-v.
+    if parent[u] == -1 and parent[v] == -1 and u != v:
+        tree.append((u, v))
+
+    return tree
+
+def dijkstra_tree(graph, n, source):
+    dist = [INF] * n
+    parent = [-1] * n
+
+    dist[source] = 0
+    pq = [(0, source)]
+
+    while pq:
+        d, u = heapq.heappop(pq)
+        if d != dist[u]:
+            continue
+
+        for v, w in graph[u]:
+            nd = d + w
+            if nd < dist[v]:
+                dist[v] = nd
+                parent[v] = u
+                heapq.heappush(pq, (nd, v))
+
+    return [(v, parent[v]) for v in range(n) if parent[v] != -1]
+
+def solve():
+    n, m = map(int, input().split())
+
+    graph = [[] for _ in range(n)]
+    edges = []
+
+    for _ in range(m):
+        u, v, w = map(int, input().split())
+        u -= 1
+        v -= 1
+        graph[u].append((v, w))
+        graph[v].append((u, w))
+        edges.append((u, v, w))
+
+    # All-pairs shortest paths and Dijkstra finalization orders.
+    dist = [[0] * n for _ in range(n)]
+    orders = [None] * n
+
+    for s in range(n):
+        ds, _, order = dijkstra(s, graph, n)
+        dist[s] = ds
+        orders[s] = order
+
+    # Best center found so far.
+    best2 = INF
+    best_type = 0          # 0 = vertex, 1 = edge
+    best_vertex = -1
+
+    for s in range(n):
+        cur = 2 * max(dist[s])
+        if cur < best2:
+            best2 = cur
+            best_type = 0
+            best_vertex = s
+
+    best_edge = None
+
+    # Kariv-Hakimi sweep on every edge.
+    for u, v, w in edges:
+        r = orders[u]
+
+        a = n - 1
+
+        for b in range(n - 2, -1, -1):
+            x = r[b]
+            y = r[a]
+
+            if dist[v][x] > dist[v][y]:
+                candidate2 = dist[u][x] + w + dist[v][y]
+
+                if candidate2 < best2:
+                    best2 = candidate2
+                    best_type = 1
+                    best_edge = (u, v, w, x, y)
+
+                a = b
+
+    # Construct an optimal shortest-path tree.
+    if best_type == 0:
+        tree = dijkstra_tree(graph, n, best_vertex)
+    else:
+        u, v, w, p, q = best_edge
+
+        # 2 * alpha = w + d(v,q) - d(u,p)
+        alpha2 = w + dist[v][q] - dist[u][p]
+
+        tree = dijkstra_center(graph, n, u, v, alpha2, w)
+
+    out = [str(best2)]
+
+    for u, v in tree:
         out.append(f"{u + 1} {v + 1}")
 
-    return "\n".join(out)
-
-def main():
-    data = sys.stdin.buffer.read().decode()
-    sys.stdout.write(solve(data))
+    sys.stdout.write("\n".join(out))
 
 if __name__ == "__main__":
-    main()
-```Trường hợp đặc biệt đầu tiên xử lý (M=N-1). Chỉ có một cây bao trùm nên việc tính toán tâm tuyệt đối sẽ không cần thiết. Hai lần duyệt cây sẽ tìm thấy đường kính của nó một cách trực tiếp. 
+    solve()
+```Vòng lặp Dijkstra đầu tiên tính toán đồng thời hai mẩu thông tin. Mảng khoảng cách cung cấp ma trận đường đi ngắn nhất tất cả các cặp, trong khi mảng thứ tự ghi lại các đỉnh trong khoảng cách không giảm từ nguồn. Vì mỗi trọng số của cạnh đều dương nên thứ tự mà Dijkstra trích xuất vĩnh viễn các đỉnh là thứ tự khoảng cách hợp lệ. 
 
-Trường hợp đặc biệt thứ hai xử lý một biểu đồ hoàn chỉnh có trọng số các cạnh bằng nhau. Một ngôi sao có đường kính (2w) ứng với (N>2) và không có cây bao trùm nào có thể có đường kính nhỏ hơn (2w), bởi vì mọi cây tầm thường đều có hai đỉnh cách nhau ít nhất hai cạnh. Điều này cũng cung cấp một bài kiểm tra sức chịu đựng kích thước tối đa hữu ích mà không buộc việc triển khai khối phải xử lý một phiên bản hoàn toàn đối xứng. 
+Vòng lặp tâm đỉnh sử dụng (2\cdot\max d[c][v]) vì câu trả lời thực tế là đường kính chứ không phải bán kính. Giữ mọi thứ nhân đôi cũng làm cho tích phân số học cạnh-tâm sau này. 
 
-Chi nhánh chung đầu tiên xây dựng`dist`, sau đó chạy Floyd-Warshall. Ma trận lưu trữ khoảng cách đồ thị ngắn nhất, trong khi`direct`chỉ giữ lại các cạnh đầu vào thực tế. Việc tách biệt hai ma trận này là điều cần thiết. Đường đi ngắn nhất giữa hai đỉnh có thể sử dụng nhiều cạnh nhưng cây cuối cùng chỉ có thể chứa các cạnh gốc. 
+Vòng lặp cạnh là phần nhỏ gọn của thuật toán Kariv-Hakimi. Đối với một cạnh (u-v),`r`được sắp xếp theo khoảng cách từ (u). Biến`a`xác định đường xa nhất hiện đang hoạt động ở phía đối diện, trong khi`b`quét các dòng có thể có thể thay thế nó. Khi`dist[v][r[b]]`trở nên lớn hơn nghiêm ngặt so với`dist[v][r[a]]`, hai đường tạo thành một giao điểm mới có liên quan, có chiều cao gấp đôi chính xác```
+dist[u][r[b]] + w + dist[v][r[a]]
+```Mã xây dựng lại sử dụng khoảng cách gấp đôi. Nếu tâm cách (\alpha) từ (u), hai khoảng cách ban đầu tới tâm nhân tạo là (\alpha) và (w-\alpha). Nhân tất cả khoảng cách với 2 sẽ cho giá trị ban đầu là số nguyên, do đó không cần so sánh dấu phẩy động. 
 
-các`order`ma trận chứa các đỉnh có khoảng cách giảm dần từ mỗi nguồn. Quét trung tâm cạnh đảo ngược thứ tự này về mặt khái niệm, bắt đầu từ đỉnh gần nhất.`cmp`ghi lại đỉnh gặp trước đó có khoảng cách lớn nhất từ ​​​​điểm cuối đối diện. Mỗi khi giá trị đó tăng lên, một cặp ràng buộc tuyến tính hoạt động mới sẽ được tìm thấy. 
+Việc tái thiết Dijkstra cố tình không đánh dấu vĩnh viễn (u) và (v) là nguồn bất biến. Một cạnh đắt tiền có thể có tuyến đường thay thế ngắn hơn ở những nơi khác trong biểu đồ, do đó, một trong những điểm cuối đó có thể không còn là con trực tiếp của trung tâm nhân tạo. Biểu đồ tiền thân vẫn là một khu rừng vì mọi đồ thị tiền nhiệm chỉ được chỉ định thông qua việc cải thiện khoảng cách nghiêm ngặt. Nếu cả hai điểm cuối vẫn là gốc thì tâm nhân tạo sẽ sử dụng cả hai nửa của cạnh được chọn, do đó hai gốc đó được nối với nhau bằng cạnh ban đầu. 
 
-biểu thức```
-candidate = dist[s][a] + dist[t][b] + w
-```là đường kính tương ứng với giao điểm của hai ràng buộc đó. Tọa độ trung tâm không nhất thiết phải là số nguyên nên mã lưu trữ`best_h2`, gấp đôi khoảng cách từ điểm cuối đầu tiên đến tâm. Do đó, tất cả các phép tính vẫn là số nguyên chính xác. 
-
-Việc tái thiết sử dụng`radius2`, gấp đôi khoảng cách từ tâm. Một cạnh ban đầu (uv) thuộc về cây đường đi ngắn nhất bất cứ khi nào di chuyển từ (u) đến (v) sẽ tăng giá trị này lên chính xác gấp đôi chiều dài cạnh. Bởi vì tất cả các trọng số của cạnh đều dương nên các giá trị này tăng hoàn toàn dọc theo cạnh cha được chọn. Sau đó, mảng đã truy cập sẽ chọn một cha có đường dẫn ngắn nhất cho mỗi đỉnh. 
-
-Khi tâm nằm bên trong một cạnh, cả hai điểm cuối đều được coi là gốc. Cạnh trung tâm được thêm vào riêng biệt. Điều này là cần thiết vì cả hai điểm cuối đều không có khoảng cách tính từ tâm bằng 0 và việc khởi tạo cả hai với khoảng cách tâm thực tế của chúng là điều duy trì hình dạng của cây đường đi ngắn nhất lấy cạnh làm trung tâm. 
-
-Số nguyên Python tránh tự động tràn. Giá trị đường dẫn ngắn nhất có thể lớn nhất là dưới (500\cdot10^9), do đó, các giá trị này cũng có thể được biểu diễn một cách thoải mái dưới dạng số nguyên 64 bit thông thường. 
+Số nguyên có độ chính xác tùy ý của Python loại bỏ mối lo ngại về tràn. Khoảng cách phù hợp lớn nhất nằm ở bên dưới (5\cdot10^{11}), trong khi khoảng cách nhân đôi vẫn ở mức thoải mái ở bên dưới (10^{12}). 
 
 ## Ví dụ đã hoạt động 
 
 ### Mẫu 1 
 
-Đồ thị là một đồ thị hoàn chỉnh trên ba đỉnh và mỗi cạnh đều có trọng số (1). Việc triển khai nhận ra trường hợp đối xứng này và xây dựng ngôi sao có tâm ở đỉnh (1). 
+Đồ thị là một hình tam giác có cả ba cạnh dài (1). Mọi đỉnh đều có độ lệch tâm (1), do đó tâm của đỉnh đã có bán kính gấp đôi (2). 
 
-| Sân khấu | Trạng thái chính | Kết quả | 
+| Ứng viên trung tâm | Bán kính | Bán kính nhân đôi | 
 | --- | --- | --- | 
-| Đầu vào | (N=3,M=3) | Đồ thị hoàn chỉnh | 
-| Trọng lượng cạnh | (1,1,1) | Tất cả đều bình đẳng | 
-| Kiểm tra trường hợp đặc biệt | Đầy đủ và bình đẳng | Đúng | 
-| Trung tâm được chọn | Đỉnh (1) | Ngôi sao | 
-| Đã thêm cạnh | (1-2,1-3) | Hai mép cây | 
-| Đường kính | (1+1) | (2) | 
+| Đỉnh 1 | 1 | 2 | 
+| Đỉnh 2 | 1 | 2 | 
+| Đỉnh 3 | 1 | 2 | 
 
-Do đó, đầu ra có thể là```
-2
-1 2
-1 3
-```khác với đầu ra mẫu chỉ ở việc lựa chọn cạnh thứ hai. Cả hai đều là cây bao trùm có đường kính tối thiểu hợp lệ. 
+Việc quét cạnh không thể cải thiện giá trị này. Thuật toán có thể chọn đỉnh (1), sau đó Dijkstra tạo ra cây đường đi ngắn nhất như (1-2) và (1-3). 
 
-Ví dụ này chứng tỏ rằng có thể tồn tại một số cây tối ưu. Chương trình không được dựa vào việc khớp thứ tự cạnh cụ thể của mẫu. 
+Cây kết quả có đường kính (2), phù hợp với mức tối ưu được hiển thị trong mẫu. 
 
 ### Mẫu 2 
 
-Biểu đồ bao gồm phần bên trái xung quanh các đỉnh (1,2,3), phần bên phải xung quanh (4,5,6) và cây cầu đắt tiền (3-4) có chiều dài (1000). 
+Biểu đồ có cụm bên trái được kết nối qua cạnh dài (3-4) có chiều dài (1000) đến cụm bên phải. 
 
-| Sân khấu | Trạng thái chính | Kết quả | 
-| --- | --- | --- | 
-| Đầu vào | (N=6,M=7) | Đồ thị có trọng số chung | 
-| Phím tắt cây | (M\ne N-1) | Tiếp tục | 
-| Phím tắt hoàn toàn bằng nhau | Sai | Tiếp tục | 
-| APSP | Floyd-Warshall | Tất cả (d[u][v]) đã biết | 
-| Trung tâm đỉnh tốt nhất | Lớn hơn (1060) | Không tối ưu | 
-| Cạnh ứng viên | (3-4), trọng lượng (1000) | Ứng viên nặng ký | 
-| Vị trí trung tâm | Gần giữa (3-4) | Trung tâm cạnh | 
-| Đóng góp còn lại | Qua (3) | Điều khiển bên trái | 
-| Đóng góp đúng đắn | Qua (4) | Điều khiển bởi bên phải | 
-| Đường kính tốt nhất | (1060) | Được lưu trữ dưới dạng`best`| 
-| Tái thiết | Đường dẫn ngắn nhất từ ​​cả hai điểm cuối | Năm cạnh | 
-| Đường kính đầu ra | (1060) | Tối ưu | 
+Ứng cử viên quan trọng là phần bên trong của cạnh (3-4). Phía bên trái đến đỉnh (1) qua khoảng cách (30) từ (3), trong khi phía bên phải đến đỉnh (6) qua khoảng cách (30) từ (4). 
 
-Cây kết quả có thể giống như mẫu:```
-1060
-3 4
-4 6
-6 5
-2 3
-1 2
-```Cạnh dài (3-4) chiếm ưu thế về hình học. Thuật toán không chỉ đơn giản chọn điểm giữa của nó. Thay vào đó, nó so sánh các ràng buộc xa nhất ở cả hai bên và chọn vị trí cân bằng chính xác. Các nhánh (1-2-3) và (4-6-5) đóng góp lượng khác nhau, do đó điểm tối ưu được xác định bởi những khoảng cách đó. 
+Do đó, đường giao nhau có liên quan có bán kính gấp đôi 
+
+[ 
+30+1000+30=1060. 
+] 
+
+| Ứng viên | Đóng góp còn lại | Cạnh | Đóng góp đúng đắn | Đường kính | 
+| --- | --- | --- | --- | --- | 
+| Tâm trên cạnh (3-4) | 30 | 1000 | 30 | 1060 | 
+
+Tâm là trung điểm của cạnh (3-4). Cây có đường đi ngắn nhất nối các đỉnh bên trái qua (3) và các đỉnh bên phải qua (4), cho ra một cây có đường kính là (1060). 
+
+Đầu ra mẫu sử dụng chính xác cạnh trung tâm này và báo cáo đường kính (1060). 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | (O(N^3+MN+N^2\log N)) | Floyd-Warshall là (O(N^3)), sắp xếp tất cả các hàng khoảng cách là (O(N^2\log N)) và mọi cạnh đều nhận được một lần quét trung tâm (O(N)) | 
-| Không gian | (O(N^2+M)) | Hai ma trận (N\time N), ma trận thứ tự và danh sách cạnh gốc | 
+| Thời gian | (O(NM\log N + NM)) | (N) Dijkstra chạy cộng với một lần quét (O(N)) cho mọi cạnh | 
+| Không gian | (O(N^2+M)) | Khoảng cách tất cả các cặp, thứ tự Dijkstra và danh sách kề | 
 
-Vì (M\le N(N-1)/2), số hạng (MN) lớn nhất là (O(N^3)). Do đó, giới hạn tổng thể của trường hợp xấu nhất là (O(N^3)), với (N\le500). Công thức tâm tuyệt đối dự định là đa thức và được biết là sẽ đạt được (O(MN+N^2\log N)) sau khi có được khoảng cách đường đi ngắn nhất. 
+Với (N\le500), ma trận khoảng cách chỉ cần (250000) mục nhập. Biểu đồ có thể chứa khoảng (125000) cạnh, do đó, danh sách kề cũng có thể quản lý được trong giới hạn bộ nhớ (1024) MB. Bản thân quá trình quét cạnh thực hiện tối đa (N) thao tác đơn giản trên mỗi cạnh, tức là khoảng (6,25\cdot10^7) lần lặp ở mật độ tối đa. Giai đoạn đường đi ngắn nhất chiếm ưu thế trong thời gian chạy. 
 
-Giới hạn bộ nhớ bị chi phối bởi ma trận khoảng cách và cạnh trực tiếp. Đối với (N=500), mỗi mục chỉ chứa (250000), nằm trong giới hạn bộ nhớ (1024) MB. 
+Công thức trung tâm tuyệt đối chính xác tiêu chuẩn là đa thức và dựa trên các đường đi ngắn nhất của tất cả các cặp, sau đó xử lý mọi cạnh. 
 
 ## Trường hợp thử nghiệm 
 
-Cây đầu ra không phải là duy nhất nên việc so sánh chuỗi chính xác là không phù hợp cho vấn đề này. Bộ khai thác kiểm tra sau đây kiểm tra các thuộc tính thực sự quan trọng: đường kính được báo cáo, các cạnh đầu vào hợp lệ (N-1) được in, các cạnh đó tạo thành cây và đường kính có trọng số của chúng bằng với mức tối ưu được báo cáo.```python
-# helper: run solution on input string, return output string
+Cây đầu ra không phải là duy nhất nên bộ khai thác kiểm tra không được so sánh toàn bộ chuỗi đầu ra với một câu trả lời cố định. Thay vào đó, nó kiểm tra đường kính được báo cáo, xác minh rằng mọi cạnh được in đều thuộc về biểu đồ đầu vào, xác minh rằng có chính xác (N-1) cạnh và kiểm tra xem các cạnh đó có tạo thành một cây có đường kính trọng số thực tế bằng với mức tối ưu dự kiến ​​hay không.```python
 import sys
 import io
+from collections import deque
+import heapq
+
+# Put the submitted solution in the same file above this harness.
+# The function solve() must be the solution entry point.
 
 def run(inp: str) -> str:
-    return solve(inp)
+    old_stdin = sys.stdin
+    old_stdout = sys.stdout
 
-def validate(inp: str, expected_diameter: int):
+    sys.stdin = io.StringIO(inp)
+    sys.stdout = io.StringIO()
+
+    try:
+        solve()
+        return sys.stdout.getvalue()
+    finally:
+        sys.stdin = old_stdin
+        sys.stdout = old_stdout
+
+def validate(inp: str, out: str, expected_diameter: int):
     data = list(map(int, inp.split()))
     it = iter(data)
 
     n = next(it)
     m = next(it)
 
-    graph_edges = set()
-    weights = {}
+    edge_weight = {}
+    graph = [[] for _ in range(n)]
 
     for _ in range(m):
-        u = next(it)
-        v = next(it)
+        u = next(it) - 1
+        v = next(it) - 1
         w = next(it)
 
-        if u > v:
-            u, v = v, u
+        edge_weight[frozenset((u, v))] = w
+        graph[u].append((v, w))
+        graph[v].append((u, w))
 
-        graph_edges.add((u, v))
-        weights[(u, v)] = w
+    lines = out.strip().splitlines()
+    assert len(lines) == n
 
-    out = list(map(int, run(inp).split()))
-    assert out[0] == expected_diameter
-
-    tree_edges = []
-    pos = 1
-
-    for _ in range(n - 1):
-        u = out[pos]
-        v = out[pos + 1]
-        pos += 2
-
-        if u > v:
-            u, v = v, u
-
-        assert (u, v) in graph_edges
-        tree_edges.append((u, v))
-
-    assert len(set(tree_edges)) == n - 1
-
-    adj = [[] for _ in range(n + 1)]
-    for u, v in tree_edges:
-        w = weights[(u, v)]
-        adj[u].append((v, w))
-        adj[v].append((u, w))
-
-    seen = [False] * (n + 1)
-    stack = [1]
-    seen[1] = True
-
-    while stack:
-        u = stack.pop()
-        for v, _ in adj[u]:
-            if not seen[v]:
-                seen[v] = True
-                stack.append(v)
-
-    assert all(seen[1:])
-
-    def farthest(start):
-        stack = [(start, 0, -1)]
-        best_v = start
-        best_d = 0
-
-        while stack:
-            u, d, parent = stack.pop()
-
-            if d > best_d:
-                best_d = d
-                best_v = u
-
-            for v, w in adj[u]:
-                if v == parent:
-                    continue
-                stack.append((v, d + w, u))
-
-        return best_v, best_d
-
-    a, _ = farthest(1)
-    _, diameter = farthest(a)
-
+    diameter = int(lines[0])
     assert diameter == expected_diameter
+
+    tree = []
+    for line in lines[1:]:
+        u, v = map(int, line.split())
+        u -= 1
+        v -= 1
+
+        assert 0 <= u < n
+        assert 0 <= v < n
+        assert u != v
+
+        key = frozenset((u, v))
+        assert key in edge_weight
+
+        tree.append((u, v, edge_weight[key]))
+
+    assert len(tree) == n - 1
+
+    # Check that the output is a tree.
+    parent = list(range(n))
+
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    for u, v, _ in tree:
+        ru = find(u)
+        rv = find(v)
+        assert ru != rv
+        parent[ru] = rv
+
+    root = find(0)
+    for v in range(n):
+        assert find(v) == root
+
+    # Compute the actual diameter of the printed tree.
+    tg = [[] for _ in range(n)]
+    for u, v, w in tree:
+        tg[u].append((v, w))
+        tg[v].append((u, w))
+
+    actual = 0
+
+    for s in range(n):
+        dist = [-1] * n
+        dist[s] = 0
+        q = deque([s])
+
+        while q:
+            u = q.popleft()
+            for v, w in tg[u]:
+                if dist[v] == -1:
+                    dist[v] = dist[u] + w
+                    q.append(v)
+
+        actual = max(actual, max(dist))
+
+    assert actual == expected_diameter
 
 # Sample 1
 sample1 = """\
@@ -546,7 +554,7 @@ sample1 = """\
 2 3 1
 3 1 1
 """
-validate(sample1, 2)
+validate(sample1, run(sample1), 2)
 
 # Sample 2
 sample2 = """\
@@ -559,87 +567,91 @@ sample2 = """\
 5 6 20
 4 6 10
 """
-validate(sample2, 1060)
+validate(sample2, run(sample2), 1060)
 
 # Minimum-size graph.
 case_min = """\
 2 1
-1 2 1000000000
-"""
-validate(case_min, 1000000000)
-
-# All-equal complete graph.
-case_equal = """\
-4 6
 1 2 7
-1 3 7
-1 4 7
-2 3 7
-2 4 7
-3 4 7
 """
-validate(case_equal, 14)
+validate(case_min, run(case_min), 7)
 
-# Non-midpoint edge center.
-case_boundary = """\
-3 2
-1 2 2
-2 3 100
+# Four-vertex path. The optimum center is inside an edge,
+# so a vertex-only solution would incorrectly report 4.
+case_edge_center = """\
+4 3
+1 2 1
+2 3 1
+3 4 1
 """
-validate(case_boundary, 102)
+validate(case_edge_center, run(case_edge_center), 3)
 
-# Maximum-size test, but already a tree, so the tree shortcut applies.
+# All edge weights equal. The triangle has a vertex center,
+# and every spanning tree has diameter 10.
+case_equal = """\
+3 3
+1 2 5
+2 3 5
+1 3 5
+"""
+validate(case_equal, run(case_equal), 10)
+
+# Maximum-size dense input, all weights equal.
+# A star has diameter 2 and is optimal.
 n = 500
-lines = [f"{n} {n - 1}"]
-for i in range(1, n):
-    lines.append(f"{i} {i + 1} 1")
-case_max = "\n".join(lines) + "\n"
+parts = [f"{n} {n * (n - 1) // 2}"]
 
-validate(case_max, n - 1)
+for u in range(1, n + 1):
+    for v in range(u + 1, n + 1):
+        parts.append(f"{u} {v} 1")
+
+case_max = "\n".join(parts) + "\n"
+validate(case_max, run(case_max), 2)
 
 print("all tests passed")
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-| Mẫu 1 | Đường kính (2) | Nhiều cây tối ưu và trọng số cạnh bằng nhau | 
-| Mẫu 2 | Đường kính (1060) | Tính toán trọng tâm chung của cạnh | 
-| (2) đỉnh, cạnh (10^9) | (10^9) | Đầu vào có kích thước tối thiểu và tâm bên trong một cạnh | 
-| Hoàn thành (K_4), tất cả trọng lượng (7) | (14) | Đồ thị trọng lượng bằng nhau và cấu trúc ngôi sao | 
-| Đường dẫn có trọng số (2.100) | (102) | Tâm không phải là trung điểm của cạnh được chọn | 
-| Đường đi có (500) đỉnh | (499) | Tối đa (N), kích thước đầu vào lớn, phím tắt cây | 
+| Mẫu 1 | Đường kính (2) | Tâm đỉnh và các mối quan hệ có khoảng cách bằng nhau | 
+| Mẫu 2 | Đường kính (1060) | Tâm cạnh bên trong trên một cạnh có trọng lượng dài | 
+| (2) đỉnh, một cạnh có trọng số (7) | Đường kính (7) | Ranh giới kích thước tối thiểu | 
+| Đường dẫn (1-2-3-4), trọng lượng đơn vị | Đường kính (3) | Nắm bắt các giải pháp chỉ kiểm tra tâm đỉnh | 
+| Tam giác cân bằng có trọng lượng (5) | Đường kính (10) | Khoảng cách bằng nhau và xử lý đỉnh-tâm | 
+| Đồ thị hoàn chỉnh trên (500) đỉnh, tất cả trọng số (1) | Đường kính (2) | Tối đa (N), tối đa (M), đồ thị dày đặc, trọng số bằng nhau | 
 
 ## Vỏ cạnh 
 
-Đồ thị hai đỉnh```
+Trường hợp kích thước tối thiểu chỉ có hai đỉnh:```
 2 1
-1 2 10
-```chạm vào trường hợp đặc biệt đầu tiên vì (M=N-1). Có chính xác một cây bao trùm, vì vậy thuật toán chỉ cần trả về cạnh đó và tính đường kính của nó là (10). Điều này tránh được sai lầm phổ biến khi coi một đỉnh là tâm duy nhất có thể. 
+1 2 7
+```Có chính xác một cây khung bao gồm cạnh duy nhất nên đáp án phải là (7). Pha trung tâm đỉnh cung cấp độ lệch tâm (7) cho điểm cuối và bán kính nhân đôi (14), nhưng đường kính cây thực tế là (7), điều này cho thấy có vấn đề khi xử lý (2R) một cách mù quáng đối với (N=2). Bán kính tâm tuyệt đối thực tế là (3,5), đạt được tại điểm giữa của cạnh, do đó việc quét cạnh sẽ tìm thấy ứng cử viên (7). Đây là lý do tại sao việc kiểm tra tâm cạnh bên trong là cần thiết ngay cả đối với đồ thị nhỏ nhất. 
 
 Đối với đường đi bốn đỉnh```
 4 3
 1 2 1
 2 3 1
 3 4 1
-```đồ thị lại đã là một cái cây nên câu trả lời là bắt buộc. Hai lần duyệt cây tìm các đỉnh (1) và (4) làm điểm cuối đường kính, cho khoảng cách (3). Đầu ra chứa tất cả ba cạnh ban đầu. Thuật toán chỉ lấy tâm đỉnh sẽ suy luận không chính xác từ độ lệch tâm (2) và làm mất hệ số do tâm nằm ở cạnh trong (2-3) đưa ra. 
+```độ lệch tâm của đỉnh là (3,2,2,3). Ứng cử viên đỉnh tốt nhất có bán kính gấp đôi (4). Trên cạnh (2-3), các đỉnh xa nhất có liên quan là (1) và (4), cho 
 
-Đối với đường dẫn không đối xứng```
-3 2
-1 2 2
-2 3 100
-```cây bao trùm duy nhất có đường kính (102). Tâm cách (51) đơn vị tính từ đỉnh (1), đặt nó (49) đơn vị vào cạnh (2-3). Thuật toán biểu thị vị trí này bằng cách`h2 = 98`, tránh dấu phẩy động. Cây có đường đi ngắn nhất thu được là cây ban đầu và đường kính của nó chính xác là (102). 
+[ 
+1+1+1=3. 
+] 
 
-Đối với hình tam giác```
+Quét cạnh ghi lại đường kính (3) và việc tái thiết đặt tâm nhân tạo ở điểm giữa của (2-3). Cây kết quả nhất thiết phải là đường dẫn ban đầu, có đường kính là (3). 
+
+Đối với biểu đồ chứa một cạnh không phải là đường đi ngắn nhất giữa các điểm cuối của nó,```
+3 3
+1 2 1
+2 3 1
+1 3 100
+```ma trận đường đi ngắn nhất cho (d(1,3)=2), mặc dù cạnh trực tiếp có trọng số (100). Tính toán trung tâm sử dụng những khoảng cách đường đi ngắn nhất này ở mọi nơi. Cạnh đắt tiền vẫn được xem xét như một vị trí trung tâm có thể, nhưng nó không thể đánh bại tâm ở đỉnh (2). Đường kính cuối cùng là (2), có cạnh cây (1-2) và (2-3). 
+
+Với khoảng cách bằng nhau,```
 3 3
 1 2 1
 2 3 1
 1 3 1
-```phím tắt biểu đồ hoàn chỉnh có trọng số bằng nhau sẽ tạo thành một ngôi sao. Hai cạnh của nó có tổng chiều dài đường đi (2), là tối ưu. Việc xây dựng có chủ ý chỉ xuất ra các cạnh (N-1=2), do đó, mối quan hệ giữa một số đường dẫn ngắn nhất không thể vô tình tạo ra một chu trình. 
+```Dijkstra có thể hoàn thiện các đỉnh theo các thứ tự khác nhau tùy thuộc vào hành vi liên kết đống. Việc quét cạnh chỉ sử dụng thứ tự khoảng cách không giảm và các cải tiến nghiêm ngặt ở phía đối diện. Các giá trị bằng nhau không yêu cầu quy tắc ràng buộc cụ thể. Các ứng viên có tâm đỉnh đã cho bán kính gấp đôi (2), do đó thuật toán trả về đường kính (2). 
 
-Ranh giới trọng lượng lớn cũng an toàn. Một đường dẫn có (499) cạnh có trọng số (10^9) sẽ có đường kính gần (5\cdot10^{11}), vượt xa các số nguyên có dấu 32 bit. Các số nguyên có độ chính xác tùy ý của Python xử lý phép tính trực tiếp, trong khi thuật toán không bao giờ dựa vào so sánh dấu phẩy động. 
+Đối với trường hợp dày đặc tối đa, đồ thị có thể chứa tất cả (124750) cạnh có thể có khi (N=500). Nếu mọi cạnh đều có trọng số (1), việc chọn bất kỳ đỉnh nào làm tâm sẽ cho bán kính (1), do đó đường kính tối ưu là (2). Thuật toán vẫn xử lý tất cả các cạnh trong quá trình quét Kariv-Hakimi, nhưng mọi ứng cử viên đều không tốt hơn giá trị đỉnh-trung tâm. Trường hợp này thực hiện cả ranh giới đầu vào (M=\Theta(N^2)) và hành vi khoảng cách bằng nhau của thứ tự đường đi ngắn nhất. 
 
-Cuối cùng, khi một giải pháp lấy cạnh làm trung tâm có hai đường đi ngắn nhất tốt như nhau đến một đỉnh thì có thể chọn cha mẹ. Việc xây dựng lại chỉ cần 
-
-[ 
-R_2[v]=R_2[u]+2w(u,v), 
-] 
-
-và mảng đã truy cập sẽ chọn một mảng trước đó. Các trọng số cạnh dương làm cho (R_2) tăng nghiêm ngặt dọc theo mỗi cạnh cây được chọn, do đó việc tái cấu trúc không thể tạo ra một chu trình và tạo ra các cạnh chính xác (N-1).
+Cần lưu ý một điều chỉnh khi triển khai bài xã luận này: khai thác thử nghiệm có chủ ý xác thực _properties_ của đầu ra thay vì so sánh danh sách cạnh, bởi vì Codeforces chấp nhận bất kỳ cây bao trùm có đường kính tối thiểu nào.
