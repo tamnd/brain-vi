@@ -1,7 +1,7 @@
 ---
 title: "CF 102437F - \u0411\u044b\u0441\u0442\u0440\u044b\u0439 \u043f\u0435\u0440\u0435\u0432\u043e\u0434"
-description: "Đây là một vấn đề tương tác. Có một số dư không âm n chưa biết, với n <= 10^18. Chúng ta không thể đọc n trực tiếp. Thay vào đó, chúng tôi có thể yêu cầu thiết bị đầu cuối rút một số tiền dương x."
-date: "2026-08-09T12:57:02+07:00"
+description: "Đây là một vấn đề tương tác. Có một số dư không âm ẩn (n), với (n le 10^{18}) và chương trình không nhận (n) như đầu vào thông thường. Thay vào đó, nó có thể hỏi thiết bị đầu cuối xem có còn lại ít nhất (x) đô la hay không bằng cách rút tiền x."
+date: "2026-08-14T15:41:08+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102437
@@ -9,7 +9,7 @@ codeforces_index: "F"
 codeforces_contest_name: "\u0418\u043d\u0442\u0435\u0440\u043d\u0435\u0442-\u043e\u043b\u0438\u043c\u043f\u0438\u0430\u0434\u044b, \u0421\u0435\u0437\u043e\u043d 2019-2020, \u0427\u0435\u0442\u0432\u0451\u0440\u0442\u0430\u044f \u043a\u043e\u043c\u0430\u043d\u0434\u043d\u0430\u044f \u043e\u043b\u0438\u043c\u043f\u0438\u0430\u0434\u0430, \u0443\u0441\u043b\u043e\u0436\u043d\u0435\u043d\u043d\u0430\u044f \u043d\u043e\u043c\u0438\u043d\u0430\u0446\u0438\u044f"
 rating: 0
 weight: 102437
-solve_time_s: 998
+solve_time_s: 247
 verified: false
 draft: false
 ---
@@ -18,251 +18,274 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 16 phút 38 giây 
+**Thời gian giải:** 4 phút 7s 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Đây là một vấn đề tương tác. Có một số dư không âm chưa biết`n`, với`n <= 10^18`. Chúng tôi không thể đọc`n`trực tiếp. Thay vào đó, chúng tôi có thể yêu cầu thiết bị đầu cuối rút một số tiền dương`x`. Nếu số dư hiện tại ít nhất là`x`, thiết bị đầu cuối trả lời`accepted`và trừ`x`từ số dư. Ngược lại nó trả lời`rejected`và số dư không đổi. 
+Đây là một vấn đề tương tác. Có một số dư không âm ẩn (n), với (n \le 10^{18}) và chương trình không nhận (n) như đầu vào thông thường. Thay vào đó, nó có thể hỏi thiết bị đầu cuối xem có còn lại ít nhất (x) đô la bằng cách phát hành`withdraw x`. MỘT`accepted`câu trả lời có nghĩa là (x) đô la được loại bỏ khỏi số dư hiện tại, trong khi`rejected`nghĩa là số dư nhỏ hơn (x) và không thay đổi. Khi chương trình tin rằng số dư bằng 0, nó sẽ in`finish`. 
 
-Mục tiêu là làm cho số dư chính xác bằng 0 và sau đó in`finish`. Khó khăn là giới hạn truy vấn. Nếu như`q`là số nguyên nhỏ nhất thỏa mãn`n <= 2^q`, thì thiết bị đầu cuối cho phép nhiều nhất`q + 10`những nỗ lực rút tiền. Từ`10^18 < 2^60`, một giải pháp kiểm tra một cách mù quáng tất cả lũy thừa của hai từ`2^59`xuống tới`1`sử dụng 60 lần thử, quá nhiều đối với các giá trị nhỏ của`n`. 
+Giới hạn truy vấn phụ thuộc vào ẩn số (n). Gọi (q) là số nguyên nhỏ nhất thỏa mãn (n \le 2^q). Thiết bị đầu cuối cho phép tối đa (q+10) lần rút tiền. Điều này làm cho số lượng truy vấn trở thành thước đo độ phức tạp thực sự. Vì (10^{18<2^{60}), một chiến lược cố định sử dụng tất cả 60 lũy thừa của 2 là đúng, nhưng nó có thể thực hiện 60 truy vấn ngay cả khi (n) rất nhỏ. Ví dụ: khi (n=0), giới hạn chỉ là 10 truy vấn, do đó việc quét 60 truy vấn vô điều kiện sẽ không hợp lệ. 
 
-Không có đầu vào thông thường có chứa`n`. Luồng đầu vào bao gồm các câu trả lời từ trình tương tác sau khi chương trình của chúng tôi in lệnh. Tương tự, đầu ra là một chuỗi các lệnh tương tác như`withdraw x`và cuối cùng`finish`. Mọi lệnh phải được xóa ngay lập tức để người tương tác có thể trả lời. 
+Giải pháp đơn giản cũng nhạy cảm với sự khác biệt giữa một truy vấn được chấp nhận và biết rằng số dư bằng không. Nếu (n=5), truy vấn`withdraw 4`trả lại`accepted`, nhưng số dư còn lại là 1. Đang in`finish`ngay lập tức sẽ sai. Việc rút tiền thành công chỉ cho chúng tôi biết rằng số tiền được yêu cầu đã có sẵn. 
 
-Sự ràng buộc`10^18`rất hữu ích vì nó chỉ cung cấp 60 vị trí nhị phân có liên quan. Do đó, việc phân tách nhị phân đơn giản sẽ mất tối đa 60 lần rút tiền thành công hoặc bị từ chối. Thách thức không phải là độ phức tạp tính toán theo nghĩa thông thường mà là giảm số lượng tương tác xuống mức tối đa.`q + 10`, Ở đâu`q`phụ thuộc vào cái chưa biết`n`. 
+Số dư bằng 0 là một trường hợp ranh giới khác. Nếu (n=0),`withdraw 1`phải quay lại`rejected`, sau đó`finish`là đúng. Nếu (n=1), truy vấn tương tự trả về`accepted`, Và`finish`chỉ trở nên chính xác sau lần rút tiền đó. 
 
-Việc thực hiện bất cẩn có thể thất bại với số dư nhỏ. Ví dụ, nếu số dư là`0`, sự tương tác đúng chỉ đơn giản là`finish`, bởi vì`withdraw 1`sẽ bị từ chối và lãng phí một trong những nỗ lực có sẵn. Để cân bằng`1`,`withdraw 1`phải được chấp nhận và sau đó`finish`là đúng. Một chiến lược luôn thực hiện tất cả 60 truy vấn lũy thừa hai sẽ lãng phí nhiều hơn mức cho phép`q + 10 = 10`những nỗ lực. 
+Quyền hạn chính xác của hai cũng rất hữu ích cho việc kiểm tra từng lỗi một. Với (n=2^k), truy vấn`withdraw 2^k`thành công và để lại kết quả chính xác bằng 0. Thuật toán vẫn phải có khả năng tiếp tục một cách an toàn vì nó thường không thể cho rằng một truy vấn được chấp nhận đã làm cạn kiệt tài khoản. Giá trị lớn nhất có thể (10^{18}) nằm dưới (2^{60}) nhưng cao hơn (2^{59}), vì vậy số mũ 59 là lũy thừa lớn nhất của 2 có thể được yêu cầu. Giá trị (2^{60}) sẽ vượt quá số tiền rút được phép và không cần thiết. 
 
-Một trường hợp tinh tế khác là một truy vấn được chấp nhận sẽ thay đổi số dư ẩn. Giả sử số dư là`10`và chúng tôi yêu cầu`8`. Câu trả lời là`accepted`, nhưng số dư bây giờ là`2`. Mọi lý luận sau này đều phải sử dụng số dư mới chứ không phải số dư ban đầu. Phương pháp tối ưu được thiết kế có chủ ý để chịu đựng giá trị thay đổi này. 
+Còn có một sự tinh tế nữa. Trong giai đoạn tối ưu hóa, số dư thay đổi sau mỗi truy vấn được chấp nhận, do đó các câu trả lời không tạo thành một vị từ đơn điệu thông thường về (n) ban đầu. Ví dụ: với (n=100), truy vấn cho 8 có thể được chấp nhận và giảm số dư xuống 92, sau đó truy vấn cho 64 có thể bị từ chối ngay cả khi số dư ban đầu là 100. Do đó, tìm kiếm nhị phân cần một đối số chính xác khác với tìm kiếm nhị phân thông thường. 
 
 ## Phương pháp tiếp cận 
 
-Giải pháp cơ bản là xử lý trực tiếp biểu diễn nhị phân. Bắt đầu với`2^59`, hỏi xem số tiền đó có thể rút được không. Nếu có thể, hãy trừ nó ra khỏi số dư. Sau đó tiếp tục với`2^58`,`2^57`, v.v. cho đến`1`. Ở mỗi bước, nếu bit nhị phân tương ứng được đặt thì nó sẽ bị xóa. Sau khi tất cả 60 lũy thừa đã được xem xét, số dư bằng không. 
+Cách tiếp cận bạo lực là thử mọi lũy thừa của hai từ (2^{59}) xuống (2^0). Bất cứ khi nào việc rút tiền được chấp nhận, bit đó sẽ bị xóa khỏi số dư hiện tại. Điều này hiệu quả vì mọi số nguyên không âm đều có một biểu diễn nhị phân duy nhất. Cuối cùng, mọi bit có thể đều đã được thử nên không còn lại gì. 
 
-Điều này có tác dụng vì mọi số lên tới`10^18`nhỏ hơn`2^60`, do đó biểu diễn nhị phân của nó chỉ chứa các lũy thừa từ`2^59`bởi vì`2^0`. Vấn đề là số lượng tương tác. Đối với một số dư nhỏ như`n = 1`, phương pháp này vẫn thực hiện 60 lần thử, trong khi thiết bị đầu cuối chỉ cho phép 10 lần. Hướng dẫn chính thức của cuộc thi mô tả chính xác đây là đường cơ sở và sau đó giảm số lượng truy vấn bằng tìm kiếm nhị phân. 
+Vấn đề là số lần thử. Có chính xác 60 lũy thừa của 2 từ (2^0) đến (2^{59}), vì vậy trường hợp xấu nhất là 60 truy vấn. Tuy nhiên, đối với (n=0), (q=0) và thiết bị đầu cuối chỉ cho phép 10 lần thử. Thuật toán brute-force có thể đã thất bại ở số dư nhỏ nhất có thể. 
 
-Quan sát quan trọng là chúng ta thực sự không cần biết chính xác lũy thừa lớn nhất của hai hiện có thể rút ra được. Chúng ta chỉ cần một lũy thừa đủ lớn để giới hạn số dư còn lại, bởi vì một khi đã có giới hạn như vậy thì việc xử lý tất cả các lũy thừa nhỏ hơn là đủ. 
+Quan sát quan trọng là chúng ta thực sự không cần xác định chính xác bit được đặt cao nhất. Chúng ta chỉ cần tìm số mũ (l) đủ nhỏ để sau một thời gian tìm kiếm ngắn, số dư còn lại nhỏ hơn (2^{l+1}). Khi đó việc phân rã nhị phân giảm dần thông thường có thể bắt đầu ở (l) thay vì 59. 
 
-Chúng ta có thể tìm thấy số mũ bắt đầu hữu ích bằng cách tìm kiếm nhị phân trên 60 lũy thừa có thể. Đối với một truy vấn`2^m`, MỘT`accepted`câu trả lời chứng minh rằng số dư hiện tại ít nhất là`2^m`, Vì thế`m`là số mũ hợp lệ và chúng tôi di chuyển ranh giới bên trái sang`m`. MỘT`rejected`câu trả lời chứng minh rằng số dư hiện tại thấp hơn`2^m`, Vì thế`m`không thể được sử dụng và chúng tôi di chuyển ranh giới bên phải tới`m`. 
+Chúng ta có thể thu được (l) như vậy bằng cách tìm kiếm nhị phân trên 60 số mũ có thể có. Đối với điểm giữa (m), chúng tôi cố gắng rút (2^m). Nếu thành công, chúng ta đặt (l=m). Nếu thất bại, chúng tôi đặt (r=m). Số dư có thể thay đổi trong quá trình này, vì vậy (l) không nhất thiết phải là số cao nhất của số dư ban đầu hoặc số dư hiện tại. Điều quan trọng là khi tìm kiếm kết thúc với (r=l+1), truy vấn bị từ chối cuối cùng sẽ đưa ra giới hạn về số dư hiện tại. Nếu truy vấn được chấp nhận hữu ích cuối cùng được thiết lập (l), thì mọi số mũ sau đó lớn hơn (l) đều bị từ chối và đặc biệt là số mũ biên (l+1) quá lớn so với số dư hiện tại. Do đó số dư hiện tại ở mức dưới (2^{l+1}). 
 
-Điều phức tạp là các truy vấn được chấp nhận sẽ trừ tiền, do đó số dư sẽ thay đổi trong quá trình tìm kiếm nhị phân này. May mắn thay, điều này không phá vỡ phương pháp. Mỗi số mũ từng được ghi là được chấp nhận đều tương ứng với một lũy thừa thực sự hiện diện trong số dư tại thời điểm đó. Vì số dư chỉ có thể giảm đi nên sức mạnh đó cũng không lớn hơn số dư ban đầu. Như vậy trận chung kết`l`không bao giờ có thể vượt quá logarit nhị phân của bản gốc`n`. 
-
-Khi tìm kiếm nhị phân kết thúc với`r = l + 1`, ranh giới bị từ chối cuối cùng cho chúng ta biết rằng số dư hiện tại nhỏ hơn`2^r = 2^(l+1)`. Bây giờ chúng ta có thể đơn giản thử`2^l`,`2^(l-1)`, ...,`1`. Đây là tất cả các lũy thừa có thể xảy ra trong biểu diễn nhị phân của một số nhỏ hơn`2^(l+1)`, vì vậy chúng đủ để tiêu hao hoàn toàn tài khoản. 
-
-Có nhiều nhất 6 truy vấn tìm kiếm nhị phân vì chỉ có 60 số mũ có thể và`2^6 = 64 > 60`. Việc dọn dẹp sử dụng nhiều nhất`l + 1`truy vấn và`l <= q`, Ở đâu`q`là logarit của số dư ban đầu. Như vậy tổng số nhiều nhất là`q + 7`, thoải mái dưới mức cho phép`q + 10`. 
+Việc tìm kiếm có nhiều nhất sáu truy vấn vì chỉ có 60 số mũ ứng cử viên và (60<2^6). Sau đó, tối đa (l+1) cần thêm truy vấn và (l) không bao giờ vượt quá thang logarit của số dư ban đầu. Do đó tổng số nhiều nhất là (q+7), thấp hơn mức cho phép (q+10). Đây là sự tối ưu hóa dự định. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
-| Lực lượng vũ phu | Tương tác O(60) | O(1) | Quá nhiều truy vấn cho nhỏ`n`| 
-| Tối ưu | Tương tác O(log n) | O(1) | Đã chấp nhận | 
+| Lực lượng vũ phu | (O(60)) truy vấn | (O(1)) | Quá nhiều truy vấn cho nhỏ (n) | 
+| Tối ưu | (O(q)) truy vấn, nhiều nhất là (q+7) | (O(1)) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Đặt`l = 0`Và`r = 60`. Khoảng đại diện cho tất cả số mũ nhị phân có thể có, từ`0`bởi vì`59`, Và`2^60`đã được biết là vượt quá mọi số dư ban đầu có thể có. 
-2. Trong khi`r - l > 1`, chọn`m = (l + r) // 2`và yêu cầu rút tiền`2^m`. Đây là bước tìm kiếm nhị phân. Một phản hồi được chấp nhận chứng tỏ rằng số mũ`m`có thể đạt được, vì vậy hãy thiết lập`l = m`. Một phản hồi bị từ chối chứng tỏ rằng`2^m`quá lớn so với số dư hiện tại, vì vậy hãy đặt`r = m`. 
-3. Nếu người tương tác trả lời`fail`, chấm dứt ngay lập tức. Tiếp tục sau`fail`không thể đưa ra một bản án có giá trị. 
-4. Sau khi tìm kiếm nhị phân, xử lý số mũ từ`l`xuống tới`0`. Đối với mỗi số mũ`i`, yêu cầu rút tiền`2^i`. Nếu câu trả lời là`accepted`, sức mạnh đó sẽ bị loại bỏ khỏi số dư còn lại. Nếu nó là`rejected`, bit tương ứng với lũy thừa đó không có nên không cần thay đổi gì. 
-5. In`finish`sau tất cả quyền lực thông qua`2^0`đã được xem xét. Tại thời điểm này số dư phải bằng không. 
+1. Bắt đầu với khoảng số mũ ([l,r)=[0,60)). Chúng tôi sử dụng 60 vì mọi số dư được phép đều nhỏ hơn (2^{60}), nên mọi lũy thừa liên quan đều là (2^0,\ldots,2^{59}). 
+2. Trong khi (r-l>1), chọn (m=(l+r)//2) và phát hành`withdraw ⟦PROTECT_2⟧`. Nếu thiết bị đầu cuối trả lời`accepted`, đặt (l=m). Việc rút tiền thực sự đã làm giảm số dư, nhưng (l) vẫn ghi lại một số mũ hữu ích có giá cả phải chăng tại thời điểm đó. Nếu câu trả lời là`rejected`, được đặt (r=m), vì số dư hiện tại chắc chắn thấp hơn (2^m). 
+3. Sau khi tìm kiếm nhị phân, xử lý số mũ từ (l) xuống 0. Đối với mọi (i), vấn đề`withdraw ⟦PROTECT_3⟧`. Một phản hồi được chấp nhận sẽ loại bỏ bit nhị phân đó khỏi số dư còn lại. Một phản hồi bị từ chối đơn giản có nghĩa là bit đó bị thiếu. 
+4. Sau khi thử tất cả các số mũ từ (l) đến 0, hãy in`finish`. Tìm kiếm nhị phân đã đảm bảo rằng số dư còn lại ở dưới (2^{l+1}), vì vậy mọi bit còn lại có thể có hiện đã được xem xét. 
 
-### Tại sao nó hoạt động 
+Bất biến trung tâm là số dư không bao giờ tăng và mọi truy vấn được chấp nhận sẽ loại bỏ chính xác số tiền được yêu cầu. Khi kết thúc tìm kiếm nhị phân, tìm kiếm đạt đến (l=59) sau khi rút thành công (2^{59}), trong trường hợp đó số dư còn lại ở dưới (2^{59}) hoặc tìm kiếm có ranh giới (r=l+1) được tạo bởi truy vấn bị từ chối cho (2^r). Trong trường hợp sau, số dư hiện tại ở mức dưới (2^{l+1}). Do đó, lần quét giảm dần cuối cùng từ (l) xuống 0 là đủ để loại bỏ từng đô la còn lại. 
 
-Khi kết thúc tìm kiếm nhị phân,`r = l + 1`và ranh giới bên phải tương ứng với một lũy thừa bị bác bỏ tại một điểm nào đó. Số dư chỉ có thể giảm sau lần từ chối đó nên số dư hiện tại chắc chắn nhỏ hơn`2^r = 2^(l+1)`. Mọi số nguyên không âm nhỏ hơn`2^(l+1)`chỉ có thể được đại diện bằng cách sử dụng quyền hạn`2^l, 2^(l-1), ..., 1`. Giai đoạn dọn dẹp sẽ kiểm tra chính xác những nguồn năng lượng đó và rút mọi nguồn năng lượng hiện có, do đó số dư còn lại sẽ bằng không. 
+Truy vấn bị ràng buộc tuân theo cùng một cấu trúc. Tìm kiếm nhị phân sử dụng tối đa sáu lần thử. Lần quét cuối cùng sử dụng tối đa (l+1) lần thử. Vì các khoản rút tiền được chấp nhận chỉ làm giảm số dư nên (l) không thể vượt quá thang logarit của số dư ban đầu. Do đó, tổng số tối đa là (q+7), không sử dụng ba lần thử với mức cho phép bắt buộc (q+10). 
 
-Giới hạn truy vấn tuân theo bất biến thứ hai. Bất cứ khi nào bộ tìm kiếm nhị phân`l = m`, sự rút lui của`2^m`đã được chấp nhận, có nghĩa là số dư ban đầu ít nhất là`2^m`. Kể từ đây`m <= q`. Do đó`l <= q`. Tìm kiếm nhị phân cần tối đa 6 truy vấn và việc dọn dẹp cần nhiều nhất`l + 1 <= q + 1`tổng số truy vấn tối đa là`q + 7`, bên dưới`q + 10`. 
-
-## Giải pháp Python 
-
-Vấn đề là ở tính tương tác, vì vậy chương trình này nhằm mục đích giao tiếp với người tương tác chính thức thay vì đọc trường hợp thử nghiệm thông thường.```python
+## Giải pháp Python```python
 import sys
 input = sys.stdin.readline
 
-def ask(x):
-    print(f"withdraw {x}", flush=True)
-    response = input().strip()
+def solve():
+    def ask(x):
+        print(f"withdraw {x}", flush=True)
+        response = input().strip()
+        if response == "fail":
+            sys.exit(0)
+        return response
 
-    if response == "accepted":
-        return True
-    if response == "rejected":
-        return False
+    l, r = 0, 60
 
-    # The only other possible response is "fail".
-    sys.exit(0)
-
-def main():
-    l = 0
-    r = 60
-
-    # Find an exponent l such that the remaining balance is below 2^(l+1).
     while r - l > 1:
         m = (l + r) // 2
+        response = ask(1 << m)
 
-        if ask(1 << m):
+        if response == "accepted":
             l = m
         else:
             r = m
 
-    # The remaining balance is smaller than 2^(l+1).
-    # Its binary representation therefore uses only these powers.
     for i in range(l, -1, -1):
         ask(1 << i)
 
     print("finish", flush=True)
 
 if __name__ == "__main__":
-    main()
-```các`ask`chức năng thực hiện chính xác một lần rút tiền tương tác. sử dụng`flush=True`là cần thiết vì người tương tác không thể phản hồi cho đến khi nhận được lệnh. Hàm trả về một giá trị Boolean cho hai phản hồi thông thường và kết thúc ngay lập tức đối với`fail`. 
+    solve()
+```các`ask`chức năng là nơi duy nhất diễn ra giao tiếp với người tương tác. Nó in lệnh rút tiền, xóa ngay lập tức theo yêu cầu của giao thức và đọc phản hồi. các`fail`phản hồi gây ra sự chấm dứt ngay lập tức vì việc tiếp tục sau khi thiết bị đầu cuối đã bị khóa bị cấm rõ ràng. 
 
-Khoảng tìm kiếm nhị phân sử dụng số mũ thay vì số tiền.`r = 60`là an toàn vì mọi số dư ban đầu có thể có đều nhỏ hơn`2^60`. Điều kiện vòng lặp`r - l > 1`để lại các ranh giới liên tiếp, vì vậy sau vòng lặp`r = l + 1`. 
+Tìm kiếm nhị phân sử dụng số mũ thay vì bản thân giá trị tiền tệ. Khoảng chứa các số nguyên từ 0 đến 59, vì vậy mỗi số tiền được yêu cầu tối đa là (2^{59<10^{18}). Số nguyên Python không bị tràn, nhưng cách triển khai tương tự trong C++ cũng sẽ phù hợp thoải mái với số nguyên 64 bit đã ký cho mọi truy vấn thực tế. 
 
-biểu hiện`1 << m`tính toán`2^m`trực tiếp. Số nguyên Python có độ chính xác tùy ý, do đó không có vấn đề tràn. Giá trị lớn nhất được tạo ra là`2^59`, cũng an toàn trong số tiền rút được phép là`10^18`. 
+Vòng lặp cuối cùng có chủ ý bắt đầu tại`l`, không`l + 1`hoặc 59. Một số quyền hạn có thể đã bị rút lại trong quá trình tìm kiếm nhị phân, vì vậy chúng có thể bị từ chối khi được truy vấn lại. Điều đó là vô hại. Vì số dư chỉ giảm đi nên lần rút tiền thành công trước đó không bao giờ có thể thành công lần thứ hai. 
 
-Vòng lặp dọn dẹp có chủ ý đi xuống. Nếu chúng ta xử lý lũy thừa nhỏ hơn trước, thì lũy thừa lớn hơn được chấp nhận sau này vẫn có thể để lại số dư chứa các bit nhỏ hơn, khiến cho việc suy luận trở nên ít trực tiếp hơn. Quyền hạn giảm dần phản ánh sự phân rã nhị phân thông thường và đảm bảo rằng mọi bit còn lại được xử lý chính xác một lần. 
-
-Không có nỗ lực bỏ qua truy vấn dọn dẹp bị từ chối. Truy vấn bị từ chối vẫn được tính là tương tác, nhưng điều này là cần thiết vì chúng ta cần xác định xem bit nhị phân đó có hiện diện hay không. Số lượng truy vấn như vậy đã được bao phủ bởi`q + 7`ràng buộc. 
+Chương trình không cố gắng phát hiện số 0 từ một`accepted`phản ứng. Không có cách nào để phân biệt giữa tài khoản chứa chính xác (x) và tài khoản chứa nhiều hơn (x) sau khi được chấp nhận.`withdraw x`. Tiếp tục với chiến lược định trước sẽ tránh được sự mơ hồ đó. 
 
 ## Ví dụ đã hoạt động 
 
-### Mẫu 1 
+Các mẫu tương tác là bản ghi chứ không phải là các tệp đầu vào thông thường. Mẫu 1 phù hợp với số dư ban đầu là 1:`withdraw 42`bị từ chối,`withdraw 1`được chấp nhận và điều thứ hai`withdraw 1`bị từ chối vì số dư đã bằng 0. Mẫu 2 phù hợp với số dư ban đầu là 0. 
 
-Sự tương tác thể hiện trong mẫu phù hợp với sự cân bằng ban đầu của`1`. 
+Đối với Mẫu 1, thuật toán tối ưu không phải tái tạo bản ghi mẫu. Sáu truy vấn của nó cho (n=1) được hiển thị bên dưới. 
 
-| Bước | Hành động | Phản hồi | Số dư còn lại |`l`|`r`| 
-| --- | --- | --- | --- | --- | --- | 
-| 1 |`withdraw 42`|`rejected`| 1 | 0 | 42 | 
-| 2 |`withdraw 1`|`accepted`| 0 | 0 | 42 | 
-| 3 |`withdraw 1`|`rejected`| 0 | 0 | 42 | 
-| 4 |`finish`| được thẩm phán chấp nhận | 0 | 0 | 42 | 
+| Bước | Số mũ | Rút tiền | Phản hồi | Số dư còn lại | 
+| --- | --- | --- | --- | --- | 
+| 1 | 30 | (2^{30}) | bị từ chối | 1 | 
+| 2 | 15 | (2^{15}) | bị từ chối | 1 | 
+| 3 | 7 | (2^7) | bị từ chối | 1 | 
+| 4 | 3 | (2^3) | bị từ chối | 1 | 
+| 5 | 1 | (2^1) | bị từ chối | 1 | 
+| 6 | 0 | (2^0) | được chấp nhận | 0 | 
 
-Bản thân mẫu không được tạo ra bằng thuật toán tối ưu, do đó, chuỗi lệnh của nó không được mong đợi khớp với chương trình trên. Nó thể hiện giao thức: việc rút tiền bị từ chối không thay đổi gì, việc rút tiền được chấp nhận sẽ trừ đi số tiền được yêu cầu và`finish`chỉ thành công khi số dư bằng không. 
+Việc tìm kiếm nhị phân kết thúc bằng (l=0) và lần quét cuối cùng sẽ loại bỏ một đô la. Thuật toán sau đó in`finish`. Bản ghi ngắn hơn của mẫu chỉ đơn giản là một tương tác hợp lệ khác cho cùng số dư ẩn. 
 
-Vì`n = 1`, chương trình tối ưu trước tiên thực hiện tìm kiếm nhị phân của nó. Tất cả các quyền hạn được kiểm tra lớn hơn`1`bị từ chối, rời đi`l = 0`. Việc dọn dẹp sau đó yêu cầu`1`, nhận`accepted`, và kết thúc. Tổng số lần rút tiền tối đa là 7. 
+Đối với Mẫu 2, số dư ban đầu bằng 0. 
 
-### Mẫu 2 
+| Bước | Số mũ | Rút tiền | Phản hồi | Số dư còn lại | 
+| --- | --- | --- | --- | --- | 
+| 1 | 30 | (2^{30}) | bị từ chối | 0 | 
+| 2 | 15 | (2^{15}) | bị từ chối | 0 | 
+| 3 | 7 | (2^7) | bị từ chối | 0 | 
+| 4 | 3 | (2^3) | bị từ chối | 0 | 
+| 5 | 1 | (2^1) | bị từ chối | 0 | 
+| 6 | 0 | (2^0) | bị từ chối | 0 | 
 
-Mẫu này phù hợp với số dư ban đầu của`0`. 
-
-| Bước | Hành động | Phản hồi | Số dư còn lại |`l`|`r`| 
-| --- | --- | --- | --- | --- | --- | 
-| 1 |`withdraw 1`|`rejected`| 0 | 0 | 1 | 
-| 2 |`finish`| được thẩm phán chấp nhận | 0 | 0 | 1 | 
-
-Một lần nữa, mẫu đang minh họa giao thức chứ không phải là trình tự truy vấn tối ưu chính xác. Trường hợp quan trọng là việc rút tiền bị từ chối không chứng minh được số dư là âm. Điều đó chỉ có nghĩa là số tiền được yêu cầu lớn hơn số dư hiện tại, do đó số dư bằng 0 là có thể. 
+Việc tìm kiếm lại kết thúc với (l=0). Truy vấn cuối cùng xác nhận rằng không thể rút được đô la nào và`finish`là đúng. Chỉ có sáu lần thử được thực hiện, dưới giới hạn (q+10=10). 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | Tương tác O(log n) | Tối đa 6 truy vấn tìm kiếm nhị phân và nhiều nhất`q + 1`truy vấn dọn dẹp | 
-| Không gian | O(1) | Chỉ một số lượng biến số nguyên không đổi được lưu trữ | 
+| Thời gian | (O(q)) truy vấn tương tác | Tối đa 6 truy vấn tìm kiếm nhị phân cộng với tối đa (q+1) truy vấn cuối cùng | 
+| Không gian | (O(1)) | Chỉ một số lượng biến số nguyên không đổi được lưu trữ | 
 
-Từ`n <= 10^18 < 2^60`, giai đoạn tìm kiếm nhị phân luôn cần tối đa 6 tương tác. Việc dọn dẹp cần nhiều nhất`q + 1`, Ở đâu`q`thỏa mãn`n <= 2^q`. Như vậy tổng số nhiều nhất là`q + 7`, để lại ba truy vấn về an toàn theo yêu cầu`q + 10`giới hạn. Việc sử dụng bộ nhớ là không đổi. 
+Vì (n\le10^{18<2^{60}) nên ta luôn có (q\le60). Do đó, thuật toán sử dụng tối đa 67 lần rút tiền, trong khi giao thức cho phép (q+10), tối thiểu là 10 và đạt tới 70 cho phạm vi logarit lớn nhất có thể. Việc thực hiện sử dụng bộ nhớ không đổi. 
 
 ## Trường hợp thử nghiệm 
 
-Bởi vì đây là một vấn đề tương tác, thông thường`run(input_string)`các bài kiểm tra không thể cung cấp số dư ẩn thông qua stdin. Thay vào đó, một khai thác thử nghiệm ngoại tuyến hữu ích sẽ mô phỏng trình tương tác. Đoạn mã sau sử dụng cùng một thuật toán đối với thiết bị đầu cuối giả, kiểm tra xem số dư cuối cùng có bằng 0 không và xác minh giới hạn truy vấn.```python
-import io
+Vì đây là tính tương tác nên đầu vào Codeforces thông thường không thể được sao chép bằng ngoại tuyến thông thường.`run(input_string)`người giúp đỡ. Cách hữu ích để kiểm tra logic cục bộ là thay thế bộ tương tác bằng một trình mô phỏng chứa số dư ẩn. Giống nhau`strategy`Sau đó, chức năng này được sử dụng bởi cả giải pháp thực và khai thác thử nghiệm.```python
 import sys
 
-def run_simulation(initial_balance):
-    balance = initial_balance
-    attempts = 0
-    commands = []
-
-    def ask(x):
-        nonlocal balance, attempts
-        attempts += 1
-        commands.append(f"withdraw {x}")
-
-        if balance >= x:
-            balance -= x
-            return True
-        return False
-
-    l = 0
-    r = 60
+def strategy(ask, finish):
+    l, r = 0, 60
 
     while r - l > 1:
         m = (l + r) // 2
+        response = ask(1 << m)
 
-        if ask(1 << m):
+        if response == "accepted":
             l = m
-        else:
+        elif response == "rejected":
             r = m
+        else:
+            raise RuntimeError("unexpected interactor response")
 
     for i in range(l, -1, -1):
         ask(1 << i)
 
-    commands.append("finish")
+    finish()
 
-    q = 0
-    while (1 << q) < initial_balance:
-        q += 1
+def run_hidden(n):
+    balance = n
+    commands = []
+
+    def ask(x):
+        nonlocal balance
+        assert 1 <= x <= 10**18
+
+        commands.append(f"withdraw {x}")
+
+        if balance >= x:
+            balance -= x
+            return "accepted"
+        return "rejected"
+
+    def finish():
+        commands.append("finish")
+        assert balance == 0
+
+    strategy(ask, finish)
+    return commands, balance
+
+def check_sample_transcript(n, commands, replies):
+    balance = n
+
+    assert len(commands) == len(replies)
+
+    for command, reply in zip(commands, replies):
+        parts = command.split()
+
+        if parts[0] == "withdraw":
+            x = int(parts[1])
+            expected = "accepted" if balance >= x else "rejected"
+
+            assert reply == expected
+
+            if expected == "accepted":
+                balance -= x
+
+        elif command == "finish":
+            assert balance == 0
+        else:
+            raise AssertionError("invalid command")
 
     assert balance == 0
-    assert attempts <= q + 10
 
-    return "\n".join(commands)
+# Provided Sample 1.
+sample1_commands = [
+    "withdraw 42",
+    "withdraw 1",
+    "withdraw 1",
+]
+sample1_replies = [
+    "rejected",
+    "accepted",
+    "rejected",
+]
+check_sample_transcript(1, sample1_commands, sample1_replies)
 
-# Provided sample 1 corresponds to an initial balance of 1.
-sample1 = run_simulation(1)
-assert sample1.endswith("finish"), "sample 1"
+# Provided Sample 2.
+sample2_commands = [
+    "withdraw 1",
+]
+sample2_replies = [
+    "rejected",
+]
+check_sample_transcript(0, sample2_commands, sample2_replies)
 
-# Provided sample 2 corresponds to an initial balance of 0.
-sample2 = run_simulation(0)
-assert sample2.endswith("finish"), "sample 2"
+# Minimum balance.
+commands, balance = run_hidden(0)
+assert balance == 0
+assert commands[-1] == "finish"
+assert len(commands) <= 10
 
-# Minimum-size balance.
-assert run_simulation(0).endswith("finish"), "zero balance"
+# Small boundary values.
+commands, balance = run_hidden(1)
+assert balance == 0
+assert commands[-1] == "finish"
 
-# Small boundary values around powers of two.
-for n in [1, 2, 3, 4, 7, 8, 9, 15, 16, 17]:
-    run_simulation(n)
+commands, balance = run_hidden(2)
+assert balance == 0
+assert commands[-1] == "finish"
 
-# A large value close to 2^60.
-assert run_simulation(10**18).endswith("finish"), "maximum allowed balance"
+commands, balance = run_hidden(3)
+assert balance == 0
+assert commands[-1] == "finish"
 
-# Exact powers of two exercise the boundary between q values.
-for n in [2**10, 2**20, 2**30, 2**40, 2**50, 2**59]:
-    run_simulation(n)
+# Exact power of two near the upper range.
+commands, balance = run_hidden(1 << 59)
+assert balance == 0
+assert commands[-1] == "finish"
+assert len(commands) <= 59 + 10
 
-# Values immediately below and above powers of two catch off-by-one errors.
-for n in [2**10 - 1, 2**10, 2**10 + 1]:
-    run_simulation(n)
+# Maximum allowed balance.
+commands, balance = run_hidden(10**18)
+assert balance == 0
+assert commands[-1] == "finish"
+assert len(commands) <= 60 + 10
+
+# Repeated equal hidden balances catch accidental state leakage.
+results = [run_hidden(42) for _ in range(3)]
+assert all(balance == 0 for _, balance in results)
+assert results[0][0] == results[1][0] == results[2][0]
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`0`|`finish`| Tài khoản trống và số dư nhỏ nhất có thể | 
-|`1`|`finish`sau khi rút tiền thành công | Số dư dương nhỏ nhất | 
-|`2^k - 1`|`finish`| Giới hạn dưới của khoảng nhị phân | 
-|`2^k`|`finish`| Ranh giới lũy thừa chính xác của hai | 
-|`2^k + 1`|`finish`| Phía trên ranh giới | 
-|`10^18`|`finish`| Số dư tối đa được phép | 
-|`2^59`|`finish`| Công suất nhị phân lớn nhất có liên quan | 
-
-Trình mô phỏng cố tình không so sánh trình tự lệnh chính xác với bản ghi dự kiến ​​cố định. Các giải pháp tương tác có thể thực hiện các truy vấn hợp lệ khác nhau một cách hợp pháp và các điều kiện chính xác là số dư cuối cùng bằng 0 và giới hạn truy vấn được tôn trọng. 
+| Bảng điểm mẫu 1, ẩn (n=1) |`finish`, số dư 0 | Rút tiền thành công theo sau là một truy vấn bị từ chối dư thừa | 
+| Bảng điểm mẫu 2, ẩn (n=0) |`finish`, số dư 0 | Số dư tối thiểu và trạng thái 0 ngay lập tức | 
+| (n=0) |`finish`, số dư 0 | Ngân sách truy vấn nghiêm ngặt (q) nhỏ nhất có thể và | 
+| (n=1,2,3) |`finish`, số dư 0 | Số dư khác 0 thấp nhất và hành vi ranh giới bit | 
+| (n=2^{59}) |`finish`, số dư 0 | Sức mạnh liên quan cao nhất của hai | 
+| (n=10^{18}) |`finish`, số dư 0 | Số dư tối đa được phép và (q=60) | 
+| (n=42) lặp lại ba lần |`finish`, số dư 0 mỗi lần | Sự cô lập trạng thái và tương tác xác định | 
 
 ## Vỏ cạnh 
 
-### Số dư bằng không 
+Số dư bằng 0 được xử lý bằng cách tìm kiếm một cách tự nhiên. Vì`withdraw 1`với (n=0), câu trả lời là`rejected`, và mọi lần rút tiền sau đó cũng bị từ chối. Tìm kiếm nhị phân cuối cùng đạt đến (l=0), lần quét cuối cùng thực hiện thêm một lần nữa`withdraw 1`, Và`finish`là hợp lệ. Sự tương tác hoàn chỉnh chỉ sử dụng sáu lần thử, trong khi giao thức cho phép mười lần thử. 
 
-cho`n = 0`, tình huống đầu vào chính xác được thể hiện bằng một trình tương tác từ chối mọi lần rút tiền tích cực. Tìm kiếm nhị phân cuối cùng rời đi`l = 0`và việc dọn dẹp yêu cầu`1`, bị từ chối. Số dư vẫn bằng 0, vì vậy`finish`là đúng. Thuật toán không bao giờ giả định rằng một truy vấn được chấp nhận phải xảy ra. 
+Với (n=1), tìm kiếm nhị phân sẽ loại bỏ mọi lũy thừa được kiểm tra trên một. Lần quét cuối cùng bắt đầu ở số mũ 0, vì vậy`withdraw 1`thành công và để lại số không. Thuật toán sau đó kết thúc. Ranh giới quan trọng là số mũ 0 được đưa vào vòng lặp cuối cùng. Bắt đầu từ một sẽ bỏ lỡ đồng đô la duy nhất. 
 
-### Số dư bằng một 
+Đối với lũy thừa chính xác như (n=2^5=32), truy vấn tìm kiếm nhị phân có thể rút thành công 32 và để lại 0. Các truy vấn sau đó đều bị từ chối. Lần quét cuối cùng vẫn an toàn vì việc rút tiền bị từ chối không có tác dụng gì. Điều này chứng tỏ tại sao lời giải không được giả định rằng một`accepted`phản ứng có nghĩa là số dư bây giờ bằng không. 
 
-cho`n = 1`, mọi lũy thừa lớn hơn một đều bị bác bỏ trong quá trình tìm kiếm nhị phân. Kết quả`l`bằng 0, do đó quá trình dọn dẹp yêu cầu`1`. Truy vấn đó được chấp nhận và để lại số không. Trường hợp này đặc biệt hữu ích vì`q = 0`, chỉ thực hiện số lần rút tiền tối đa được phép`10`. 
+Đối với số dư tối đa (n=10^{18}), chúng ta có (2^{59<10^{18<2^{60}), do đó (q=60). Mọi truy vấn đều sử dụng số mũ dưới 60 và tìm kiếm nhị phân cần tối đa sáu lần thử. Ngay cả khi (l=59), lần quét cuối cùng chỉ cần thêm 60 lần thử nữa, tổng cộng tối đa là 66 hoặc 67 tùy thuộc vào đường dẫn tìm kiếm chính xác, dưới mức 70 cho phép. 
 
-### Sức mạnh chính xác của hai 
-
-Giả sử`n = 16`. Trong quá trình tìm kiếm nhị phân, truy vấn cho`16`có thể được chấp nhận, ngay lập tức giảm số dư về 0. Số mũ`l = 4`ghi lại rằng`2^4`đã có sẵn. Truy vấn dọn dẹp sau này cho`16`,`8`,`4`,`2`, Và`1`đều vô hại vì số dư đã bằng 0 và tất cả đều bị từ chối. trận chung kết`finish`là hợp lệ. Điều này chứng tỏ tại sao một truy vấn tìm kiếm nhị phân được chấp nhận thay đổi số dư không làm mất hiệu lực thuật toán. 
-
-### Ngay dưới lũy thừa hai 
-
-Giả sử`n = 15`. Một truy vấn cho`16`bị bác bỏ, do đó ranh giới bên phải trở thành số mũ tương ứng với`16`. Cuối cùng, tìm kiếm nhị phân sẽ thiết lập số mũ thấp hơn có lũy thừa tiếp theo lớn hơn số dư hiện tại. Kiểm tra dọn dẹp`8`,`4`,`2`, Và`1`và tất cả bốn bit đều được chấp nhận. Tổng của họ là`15`, do đó số dư đạt đến số không. 
-
-### Ngay trên lũy thừa hai 
-
-Giả sử`n = 17`. Một truy vấn cho`16`có thể được chấp nhận, để lại số dư`1`. Tìm kiếm nhị phân ghi lại số mũ`4`và việc dọn dẹp sau đó sẽ kiểm tra nguồn điện từ`16`. Vì số dư còn lại chỉ`1`, quyền lực lớn hơn bị từ chối và`1`được chấp nhận. Số dư cuối cùng bằng không. Trường hợp này chứng minh tại sao việc dọn dẹp phải tiếp tục cho đến hết`2^0`, ngay cả sau khi một quyền lực lớn đã bị rút đi. 
-
-### Số dư tối đa 
-
-cho`n = 10^18`, chúng tôi có`q = 59`bởi vì`2^59 <= 10^18 < 2^60`. Tìm kiếm nhị phân sử dụng tối đa 6 truy vấn và`l`nhiều nhất là 59, do đó quá trình dọn dẹp sử dụng tối đa 60 truy vấn nữa. Tổng số tối đa là 66, trong khi thiết bị đầu cuối cho phép`q + 10 = 69`những nỗ lực. Do đó, thuật toán vẫn nằm trong giới hạn ngay cả ở số dư lớn nhất có thể.
+Trường hợp tinh vi nhất là khi các truy vấn được chấp nhận làm thay đổi số dư trong quá trình tìm kiếm nhị phân. Giả sử (n=100). Truy vấn về 8 có thể thành công, giảm số dư xuống 92. Truy vấn sau đó cho 32 cũng có thể thành công, giảm xuống còn 60, trong khi truy vấn về 64 sau đó bị từ chối. Các phản hồi không thể được hiểu là so sánh với 100 ban đầu. Điều còn hiệu lực là câu lệnh yếu hơn mà thuật toán cần: ranh giới bị bác bỏ cuối cùng chứng tỏ rằng số dư hiện tại nhỏ hơn lũy thừa tiếp theo ở trên (l). Lần quét giảm dần cuối cùng sẽ loại bỏ biểu diễn nhị phân còn lại mà không cần dựa vào số dư ban đầu không thay đổi.

@@ -1,7 +1,7 @@
 ---
 title: "CF 102373J - Biến đổi"
-description: "Chúng ta có hai hoán vị của cùng một nhóm bạn. Hoán vị đầu tiên a là thứ tự hiện tại và hoán vị thứ hai b là thứ tự bắt buộc. Một thao tác duy nhất sẽ chọn bất kỳ nhóm bạn bè nào không trống."
-date: "2026-08-12T23:22:49+07:00"
+description: "Chúng ta có hai hoán vị của cùng một người bạn. Dòng hiện tại là a và dòng bắt buộc là b. Một lần sắp xếp lại sẽ chọn bất kỳ nhóm bạn bè nào không trống, loại bỏ họ khỏi vị trí hiện tại, đảo ngược thứ tự tương đối của họ và đặt chuỗi con đảo ngược lên đầu."
+date: "2026-08-14T12:49:59+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102373
@@ -9,7 +9,7 @@ codeforces_index: "J"
 codeforces_contest_name: "\u0426\u0438\u043a\u043b \u0418\u043d\u0442\u0435\u0440\u043d\u0435\u0442-\u043e\u043b\u0438\u043c\u043f\u0438\u0430\u0434 \u0434\u043b\u044f \u0448\u043a\u043e\u043b\u044c\u043d\u0438\u043a\u043e\u0432, \u0421\u0435\u0437\u043e\u043d 2019-2020, \u041f\u0435\u0440\u0432\u0430\u044f \u043a\u043e\u043c\u0430\u043d\u0434\u043d\u0430\u044f \u043e\u043b\u0438\u043c\u043f\u0438\u0430\u0434\u0430"
 rating: 0
 weight: 102373
-solve_time_s: 546
+solve_time_s: 513
 verified: false
 draft: false
 ---
@@ -18,147 +18,122 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 9 phút 6 giây 
+**Thời gian giải:** 8m 33s 
 **Đã xác minh:** không 
 
 ## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta có hai hoán vị của cùng một nhóm bạn. Hoán vị đầu tiên`a`là thứ tự hiện tại và hoán vị thứ hai`b`là thứ tự cần thiết. 
+Chúng ta có hai hoán vị của cùng một người bạn. Dòng hiện tại là`a`, và dòng cần thiết là`b`. Một lần sắp xếp lại sẽ chọn bất kỳ nhóm bạn bè nào không trống, loại bỏ họ khỏi vị trí hiện tại, đảo ngược thứ tự tương đối của họ và đặt chuỗi con đảo ngược lên đầu. 
 
-Một thao tác duy nhất sẽ chọn bất kỳ nhóm bạn bè nào không trống. Những người bạn được chọn sẽ bị xóa khỏi vị trí hiện tại của họ, thứ tự tương đối của họ bị đảo ngược và trình tự kết quả được đặt ở phía trước. Những người bạn không được chọn giữ nguyên thứ tự tương đối của họ. 
+Nhiệm vụ mang tính xây dựng. Chúng tôi không cần số lượng tổ chức lại nhỏ nhất có thể. Chúng ta chỉ cần xuất ra tối đa 15 thao tác biến đổi`a`vào trong`b`. Tuyên bố được cung cấp ở đây tương ứng với bài toán Codeforces Gym được xuất bản dưới dạng 102672L, có tiêu đề Transformations. 
 
-Ví dụ: nếu trình tự hiện tại là`1 2 3 4 5`và chúng tôi chọn`{2, 4}`, những người bạn được chọn sẽ xuất hiện dưới dạng`2, 4`, vì vậy sau khi đảo ngược chúng và di chuyển chúng lên phía trước, chúng ta thu được`4 2 1 3 5`. 
+giới hạn`n <= 10000`là chìa khóa của việc xây dựng. Từ`2^14 = 16384`, mười bốn quyết định nhị phân là đủ để cung cấp cho mỗi người bạn một mã 14 bit riêng biệt. Đây chính xác là quy mô chúng ta cần. Một công trình sử dụng`O(n log n)`công việc thực hiện đủ nhanh một cách dễ dàng, trong khi mọi thứ bậc hai cũng có khả năng được chấp nhận đối với`n = 10000`, nhưng thách thức thực sự không phải là thời gian chạy. Thách thức là tìm ra một công trình có số lượng hoạt động bị giới hạn bởi 15. 
 
-Chúng tôi không cần số lượng hoạt động tối thiểu. Chúng ta chỉ cần một số chuỗi tối đa 15 thao tác thay đổi`a`vào trong`b`. Đầu ra chứa số thao tác theo sau là tập hợp số bạn bè được chọn trong mỗi thao tác. 
+Có một số trường hợp nguy hiểm có thể âm thầm phá vỡ quá trình triển khai. Nếu như`n = 1`, không cần thực hiện thao tác nào, vì vậy câu trả lời phải bằng 0. Nếu như`a`đã bằng rồi`b`, các phép toán bằng 0 cũng hợp lệ, mặc dù cấu trúc chung vẫn có thể tạo ra một chuỗi các phép toán khác rỗng hợp lệ. Nếu một bit không có bạn bè nào được gán cho nó thì thao tác đó không được in vì câu lệnh yêu cầu mọi thao tác in phải chọn một tập hợp khác trống. Cuối cùng, các hoán vị chứa các giá trị riêng biệt, do đó, một đầu vào như`1 1 2`không phải là một trường hợp thử nghiệm hợp lệ. Không nên sử dụng thử nghiệm chứa các giá trị lặp lại để biện minh cho hành vi của giải pháp. 
 
-giá trị`n`nhiều nhất là 10000. Con số này đủ lớn để việc cố gắng hoán vị một cách rõ ràng là không thể, vì có`n!`các đơn đặt hàng có thể. Ngay cả việc xem xét mọi tập hợp con cho một thao tác cũng đã mang lại`2^n - 1`những khả năng vô vọng ở`n = 10000`. Phần hữu ích của các ràng buộc là giới hạn 15 thao tác. Từ`2^14 = 16384 > 10000`, việc xây dựng dựa trên 14 quyết định nhị phân là đủ. 
-
-Có hai trường hợp tế nhị rất dễ xử lý sai. Đầu tiên, khi`n = 1`, chỉ có một hoán vị có thể xảy ra. Ví dụ,```text
+Ví dụ, với```
 1
 1
 1
-```đã đáp ứng được mục tiêu nên kết quả đầu ra chính xác chỉ đơn giản là`0`. Một công trình tính toán mù quáng`ceil(log2(n))`và sau đó giả sử có ít nhất một thao tác tồn tại có thể vô tình tạo ra một thao tác trống không hợp lệ. 
+```đầu ra đúng chỉ đơn giản là```
+0
+```Việc triển khai bất cẩn luôn tạo ra ít nhất một thao tác bit có thể in ra một thao tác không hợp lệ với tập hợp được chọn trống. 
 
-Thứ hai, các hoán vị đầu vào được đảm bảo chứa các giá trị riêng biệt. Vì vậy, một bài kiểm tra như```text
-3
-1 1 2
-1 2 1
-```hoàn toàn không phải là một trường hợp thử nghiệm hợp lệ. Không cần phải xử lý các giá trị lặp lại và bất kỳ cách xây dựng nào dựa vào việc mỗi người bạn có một vị trí mục tiêu duy nhất đều được chứng minh bằng đầu vào. 
-
-Một trường hợp ranh giới khác là lũy thừa của hai. Vì```text
-4
-4 3 2 1
-1 2 3 4
-```chúng ta cần chính xác hai bit để phân biệt cả bốn vị trí mục tiêu. Cấu trúc sử dụng bốn mã hai bit riêng biệt, do đó không cần thêm thao tác nào chỉ vì`n`đạt đến dung lượng của không gian mã. 
-
-Đối với một số không có sức mạnh của hai, chẳng hạn như`n = 5`, chúng tôi sử dụng năm mã đầu tiên theo thứ tự phù hợp của tất cả tám mã ba bit. Các mã không được sử dụng đơn giản là không bao giờ thuộc về bất kỳ người bạn nào, vì vậy chúng không ảnh hưởng đến hoán vị kết quả. 
+Vì```
+2
+1 2
+2 1
+```một thao tác là đủ: chọn bạn`2`. Dãy con được chọn là`[2]`, do đó kết quả trở thành`[2,1]`. Việc triển khai giả định cần ít nhất hai bit vẫn đúng nếu nó tạo ra các phép toán hợp lệ dư thừa, nhưng nó không bao giờ được vượt quá giới hạn 15 thao tác. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận trực tiếp sẽ cố gắng tìm kiếm thông qua các hoạt động có thể. có`2^n - 1`các tập con khác rỗng có thể được chọn trong một thao tác. Áp dụng một ứng cử viên cho một chi phí chuỗi`O(n)`nếu trình tự được xây dựng lại một cách rõ ràng, do đó thậm chí kiểm tra tất cả các chi phí hoạt động đầu tiên có thể có`O(n 2^n)`. Tìm kiếm sâu nhiều cấp độ còn tệ hơn nhiều, với hệ số phân nhánh khoảng`2^n`. Việc tìm kiếm đường đi ngắn nhất trên các hoán vị cũng không thể thực hiện được vì không gian trạng thái có`n!`tiểu bang. 
+Cách tiếp cận bạo lực trực tiếp sẽ cố gắng chọn một tập hợp con bạn bè cho mọi hoạt động và mô phỏng kết quả. Ngay cả đối với một hoạt động cũng có`2^n - 1`tập hợp con có thể. Trình tự tìm kiếm của một số thao tác cho kết quả gần đúng`2^(nk)`khả năng cho`k`hoạt động hoàn toàn không thể thực hiện được. Lực lượng vũ phu là đúng bởi vì mọi tổ chức lại pháp lý đều được đại diện bởi một trong những tập hợp con đó, nhưng không gian tìm kiếm của nó ngay lập tức trở nên khổng lồ. 
 
-Lực lượng vũ phu hoạt động về mặt khái niệm vì mọi động thái hợp pháp đều được thể hiện rõ ràng giữa các tập hợp con đó. Sự thất bại của nó hoàn toàn là do số lượng lớn các tập hợp con có thể có và dẫn đến các hoán vị. 
+Một nỗ lực tham lam tự nhiên hơn là liên tục chọn một nhóm sẽ trở thành phần tiếp theo của hoán vị mục tiêu. Điều này nắm bắt hoạt động một cách chính xác, nhưng nó không đưa ra giới hạn đáng tin cậy về số lượng hoạt động. Một hoán vị có thể yêu cầu nhiều nhóm tham lam như vậy mặc dù trình tự sắp xếp lại khác ngắn hơn nhiều. 
 
-Quan sát quan trọng là một hoạt động có thể được mô tả bằng cách sử dụng một quyết định nhị phân duy nhất cho mỗi người bạn. Cho mỗi người bạn biết một chút liệu người bạn đó có tham gia hoạt động hay không. Những người bạn đã chọn sẽ được di chuyển trước tất cả những người bạn không được chọn và phần được chọn sẽ bị đảo ngược. 
+Quan sát hữu ích là hãy ngừng suy nghĩ về tập hợp đã chọn như một tập hợp con tùy ý và thay vào đó cấp cho mỗi người bạn một mã nhị phân. Hoạt động`i`chọn chính xác những người bạn có`i`-bit mã thứ là một. 
 
-Giả sử chúng ta thực hiện một số thao tác và gán cho mỗi người bạn một mã nhị phân bao gồm các bit tham gia của nó. Thứ tự cuối cùng được xác định bởi các mã đó. Điều thú vị là thứ tự của các mã không phải là thứ tự nhị phân thông thường. Bởi vì mọi nhóm được chọn đều bị đảo ngược nên thứ tự mã tự nhiên là thứ tự mã Gray được phản ánh. 
+Giả sử hai người bạn có mã khác nhau. Hãy xem xét hoạt động cuối cùng trong đó các bit của chúng khác nhau. Trong quá trình hoạt động đó, chính xác một trong số chúng được chọn. Người bạn đã chọn sẽ được di chuyển đến trước người bạn không được chọn, do đó thứ tự tương đối của họ sẽ được xác định tại thời điểm đó. Mọi thao tác sau này sẽ chọn cả hai hoặc không chọn gì cả. Việc chọn cả hai sẽ đảo ngược thứ tự tương đối của chúng, trong khi việc chọn không giữ nguyên thứ tự. Do đó, sau tất cả các phép toán, thứ tự tương đối của chúng chỉ phụ thuộc vào hai mã của chúng chứ không phụ thuộc vào thứ tự tương đối ban đầu của chúng. 
 
-Vì`k`hoạt động, có`2^k`mã nhị phân có thể. Nếu tất cả bạn bè nhận được các mã khác nhau, thứ tự ban đầu của họ sẽ không còn hiệu lực. Chúng ta chỉ cần gán mã để chuỗi thao tác tạo ra thứ tự mục tiêu mong muốn. 
+Đây là thủ thuật trung tâm. Nếu mỗi người bạn nhận được một mã riêng biệt thì thứ tự cuối cùng sau tất cả các thao tác mã-bit hoàn toàn được xác định bởi chính các mã đó. Chúng ta có thể tính thứ tự đó một lần, độc lập với hoán vị đầu vào`a`. 
 
-Cho phép`G_k`là chuỗi mã Gray phản ánh nhị phân thông thường. Đối với ba bit nó là`000, 001, 011, 010, 110, 111, 101, 100`. 
+Chúng tôi sử dụng`k = ceil(log2(n))`bit. Có ít nhất`n`mã riêng biệt giữa`0, 1, ..., 2^k - 1`. Chúng tôi mô phỏng`k`các thao tác trên chính các mã này, bắt đầu từ thứ tự số. Điều này đưa ra một thứ tự chung của các mã sau tất cả các thao tác. Sau đó chúng tôi chỉ định đầu tiên`n`mã hóa theo thứ tự chung đó cho bạn bè theo thứ tự chính xác được yêu cầu bởi`b`. 
 
-Thứ tự được tạo ra bởi các hoạt động của chúng tôi là đảo ngược của trình tự này:`100, 101, 111, 110, 010, 011, 001, 000`. 
-
-Có công thức trực tiếp cho mã tại vị trí đích`r`:`code[r] = gray(2^k - 1 - r)`,
-
-Ở đâu`gray(x) = x XOR (x >> 1)`. 
-
-Chúng tôi gán các mã này cho bạn bè theo thứ tự chúng xuất hiện trong`b`. Sau đó hoạt động`i`chọn chính xác những người bạn có mã được gán có bit`i`bộ. 
-
-Việc xây dựng chỉ cần`ceil(log2 n)`hoạt động. Từ`n <= 10000`, nhiều nhất là 14, thoải mái dưới giới hạn yêu cầu là 15. 
+Khi các mã đã được gán, áp dụng các phép toán tương ứng cho hoán vị thực tế`a`sản xuất`b`. Thứ tự ban đầu không còn quan trọng nữa vì mỗi người bạn đều có một mã duy nhất. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
-|---|---|---|---| 
-| Lực lượng vũ phu |`O(n 2^n)`chỉ dành cho một cấp độ tìm kiếm |`O(n)`mỗi tiểu bang | Quá chậm | 
-| Tối ưu |`O(n log n)`|`O(n log n)`trong cách biểu diễn đơn giản | Đã chấp nhận | 
-
-Việc triển khai thực tế chỉ có thể sử dụng`O(n)`bộ nhớ bổ sung vì mọi mã đều được tạo khi cần, do đó mức sử dụng không gian thực tế thậm chí còn nhỏ hơn giới hạn chung của bảng. 
+| --- | --- | --- | --- | 
+| Lực lượng vũ phu | O(2^(nk)) trong trường hợp xấu nhất | O(n) | Quá chậm | 
+| Tối ưu | O(n log n) | O(n) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Nếu`a`đã bằng rồi`b`, xuất ra các hoạt động bằng 0. Điều này không bắt buộc để đảm bảo tính chính xác của cách xây dựng chung, nhưng nó đưa ra câu trả lời và xử lý đơn giản nhất có thể`n = 1`một cách tự nhiên. 
-
-2. Chọn cái nhỏ nhất`k`như vậy`2^k >= n`. Có đủ sự khác biệt`k`-bit mã để cung cấp cho mỗi vị trí mục tiêu một mã duy nhất. Bởi vì`n <= 10000`, chúng tôi luôn có`k <= 14`. 
-
-3. Đánh số các vị trí hoán vị mong muốn từ`0`bởi vì`n - 1`. Đối với vị trí`r`, tính toán`x = 2^k - 1 - r`rồi gán mã`x XOR (x >> 1)`. 
-
-Đây chính xác là những điều đầu tiên`n`mã của thứ tự mã Gray phản ánh nhị phân ngược. 
-
-4. Đối với mỗi bit`i`từ`0`bởi vì`k - 1`, xây dựng một hoạt động. Quét hoán vị đích`b`. Nếu mã được giao của`b[r]`có chút`i`đặt, đặt bạn bè`b[r]`đi vào hoạt động`i`. 
-
-Thứ tự in số bạn bè đã chọn không quan trọng. Bản thân hoạt động sẽ khôi phục thứ tự tương đối hiện tại của chúng trước khi đảo ngược chúng. 
-
-5. Xuất tất cả`k`các phép toán theo thứ tự bit tăng dần, từ bit`0`cắn`k - 1`. 
-
-Thứ tự của các hoạt động này là cần thiết. Hoạt động cuối cùng có ảnh hưởng lớn nhất đến nhóm cuối cùng và sự đảo ngược đệ quy do các hoạt động gây ra chính xác là thứ mang lại thứ tự mã Gray đảo ngược. 
+1. Tính số nhỏ nhất`k`như vậy`2^k >= n`. Từ`n <= 10000`, chúng tôi có`k <= 14`, đã thấp hơn giới hạn cho phép là 15 thao tác. Vì`n = 1`, điều này mang lại`k = 0`. 
+2. Tạo tất cả`2^k`mã nhị phân, ban đầu được sắp xếp như`0, 1, 2, ..., 2^k - 1`. Chúng tôi chỉ sử dụng những mã này như những người bạn trừu tượng có danh tính là mã số của họ. 
+3. Đối với mỗi bit từ bit có trọng số thấp nhất đến bit có trọng số cao nhất, hãy thực hiện việc sắp xếp lại tương tự trên chuỗi mã mà sau này chúng ta sẽ thực hiện với những người bạn thực sự. Các phần tử được chọn là các mã có tập bit đó. Thứ tự hiện tại của họ bị đảo ngược và họ được xếp ở phía trước. Rốt cuộc`k`các hoạt động, chuỗi mã kết quả là thứ tự phổ quát do việc xây dựng tạo ra. 
+4. Gán mã cho hoán vị mong muốn`b`theo trật tự phổ quát này. Nếu trật tự phổ quát bắt đầu bằng mật mã`c1, c2, ..., cn`, giao phó`c1`ĐẾN`b1`,`c2`ĐẾN`b2`, vân vân. Mỗi người bạn hiện có một mã duy nhất. 
+5. Đối với mỗi bit, hãy thu thập tất cả các số bạn bè có mã được chỉ định chứa bit đó. Những người bạn này tạo thành một tổ chức hợp pháp. Thứ tự của chúng không cần phải được in theo bất kỳ thứ tự cụ thể nào, vì bản thân thao tác sử dụng vị trí hiện tại của chúng để xác định chuỗi con đảo ngược. 
+6. Bỏ qua một chút nếu không có người bạn thực sự nào cài đặt bit đó. Một hoạt động như vậy sẽ trống và không được phép. Số thao tác còn lại nhiều nhất là`k <= 14`. 
+7. Xuất các thao tác này theo cùng thứ tự bit được sử dụng khi xây dựng thứ tự mã phổ quát. Việc xây dựng đảm bảo rằng đường kết quả là chính xác`b`. 
 
 ### Tại sao nó hoạt động 
 
-Hãy xem xét tất cả`2^k`những mã có thể Sau thao tác đầu tiên, mã hóa bằng bit`0`bằng`1`di chuyển lên phía trước theo thứ tự ngược lại, trong khi mã có bit`0`bằng`0`ở lại sau đó. Sau thao tác tiếp theo, quá trình tương tự diễn ra theo bit`1`, với phần được chọn bị đảo ngược. Tiếp tục theo cách này sẽ cho chuỗi đệ quy`C_k = 1 + reverse(C_{k-1}), 0 + C_{k-1}`khi bit cao được ghi đầu tiên. Trình tự cơ sở là`C_1 = [1, 0]`. 
+Hãy xem xét hai người bạn bất kỳ có mã số riêng biệt. Cho phép`t`là thao tác cuối cùng có bit khác nhau giữa các mã của chúng. Trước khi vận hành`t`, thứ tự tương đối của chúng có thể tùy ý. Trong quá trình vận hành`t`, chính xác một người bạn được chọn và người bạn đã chọn sẽ được di chuyển đến trước người bạn không được chọn, do đó thứ tự tương đối của họ sẽ được xác định hoàn toàn bởi hai bit của họ tại`t`. Mọi thao tác sau này sẽ chọn cả hai người bạn hoặc không chọn người bạn nào. Nếu không được chọn, thứ tự của chúng không thay đổi. Nếu cả hai đều được chọn, cả hai đều bị đảo ngược cùng nhau, do đó thứ tự của chúng bị đảo ngược một cách xác định. Do đó, thứ tự tương đối cuối cùng của chúng chỉ là một hàm của mã của chúng. 
 
-Mã Gray phản ánh tiêu chuẩn thỏa mãn`G_k = 0 + G_{k-1}, 1 + reverse(G_{k-1})`. 
-
-Đảo ngược danh tính này mang lại`reverse(G_k) = 1 + G_{k-1}, 0 + reverse(G_{k-1})`, 
-
-đó chính xác là trình tự được tạo ra bởi các hoạt động của chúng tôi. Do đó thứ tự cuối cùng của các mã riêng biệt là`reverse(G_k)`. 
-
-Chúng tôi chỉ định đầu tiên`n`mã của chuỗi này cho các phần tử của`b`theo thứ tự mục tiêu. Do đó, sau mọi thao tác, bạn bè xuất hiện đúng theo thứ tự`b`. Vì mỗi mã được gán là khác nhau nên không có cặp bạn nào cần thứ tự tương đối ban đầu của nó để phá vỡ mối ràng buộc. 
+Bởi vì tất cả các mã được gán đều khác biệt nên mỗi cặp bạn bè đều có thứ tự tương đối cuối cùng được xác định. Trình tự mã mô phỏng chính xác là thứ tự đó. Chúng tôi chỉ định nó đầu tiên`n`mã cho bạn bè trong`b`thứ tự, do đó mỗi cặp đều kết thúc theo đúng thứ tự tương đối giống như trong`b`. Vì cả hai đều là hoán vị của cùng một người bạn nên chuỗi cuối cùng hoàn chỉnh phải là`b`. 
 
 ## Giải pháp Python```python
 import sys
 input = sys.stdin.readline
-
-def build_operations(a, b):
-    n = len(a)
-
-    if a == b:
-        return []
-
-    k = 0
-    while (1 << k) < n:
-        k += 1
-
-    operations = []
-
-    # code[r] is the r-th code in reverse Gray-code order.
-    # We only need the codes for the n target positions.
-    codes = [0] * n
-    full = (1 << k) - 1
-
-    for r in range(n):
-        x = full - r
-        codes[r] = x ^ (x >> 1)
-
-    for bit in range(k):
-        mask = 1 << bit
-        selected = []
-
-        for r in range(n):
-            if codes[r] & mask:
-                selected.append(b[r])
-
-        if selected:
-            operations.append(selected)
-
-    return operations
 
 def solve():
     n = int(input())
     a = list(map(int, input().split()))
     b = list(map(int, input().split()))
 
-    operations = build_operations(a, b)
+    if n == 1:
+        print(0)
+        return
+
+    k = (n - 1).bit_length()
+    m = 1 << k
+
+    # Find the final order of all k-bit codes.
+    order = list(range(m))
+
+    for bit in range(k):
+        selected = []
+        unselected = []
+
+        mask = 1 << bit
+        for x in order:
+            if x & mask:
+                selected.append(x)
+            else:
+                unselected.append(x)
+
+        selected.reverse()
+        order = selected + unselected
+
+    # The first n codes in this order will be assigned to b[0], b[1], ...
+    code_of = [0] * (n + 1)
+
+    for i in range(n):
+        code_of[b[i]] = order[i]
+
+    operations = []
+
+    for bit in range(k):
+        mask = 1 << bit
+        chosen = []
+
+        for friend in range(1, n + 1):
+            if code_of[friend] & mask:
+                chosen.append(friend)
+
+        if chosen:
+            operations.append(chosen)
 
     print(len(operations))
     for op in operations:
@@ -166,179 +141,189 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```các`build_operations`đầu tiên hàm xử lý trường hợp đã được sắp xếp. Điều này tránh tạo ra các hoạt động không cần thiết và cũng có nghĩa là`n = 1`ngay lập tức tạo ra hoạt động bằng không. 
+```Phần đầu tiên đọc hai hoán vị. Không cần xây dựng hoán vị nghịch đảo vì việc xây dựng gán mã trực tiếp cho những người bạn xuất hiện trong`b`. 
 
-Tính toán vòng lặp`k`tìm số bit nhỏ nhất có khả năng biểu diễn ít nhất`n`những giá trị khác nhau. Vì`n = 10000`, nó dừng lại ở`k = 14`bởi vì`2^13 = 8192`trong khi đó là quá nhỏ`2^14 = 16384`là đủ. 
+biểu hiện`(n - 1).bit_length()`cho cái nhỏ nhất`k`thỏa mãn`2^k >= n`. Ví dụ,`n = 8`cho`k = 3`, trong khi`n = 9`cho`k = 4`. Với`n <= 10000`, giá trị tối đa là 14. 
 
-biểu hiện```python
-x ^ (x >> 1)
-```là sự chuyển đổi mã nhị phân sang mã xám tiêu chuẩn. Chúng tôi sử dụng`full - r`còn hơn là`r`bởi vì thứ tự được yêu cầu là thứ tự mã Gray ngược. 
+các`order`mảng chứa mã trừu tượng chứ không phải số bạn bè. Đối với một bit, thao tác chính xác là thao tác của vấn đề: thu thập các mã có tập hợp bit đó, đảo ngược thứ tự hiện tại của chúng và đặt chúng trước các mã không có bit đó. Việc lặp lại điều này cho mỗi bit sẽ tạo ra thứ tự mà các mã này sẽ có sau tất cả các hoạt động thực tế. 
 
-các`codes`mảng lưu trữ một số nguyên cho mỗi vị trí mục tiêu. Từ`b[r]`là người bạn phải chiếm giữ vị trí mục tiêu`r`, mã được lưu trữ tại`r`thuộc về`b[r]`. 
+Nhiệm vụ quan trọng là`code_of[b[i]] = order[i]`. Người bạn chiếm vị trí`i`trong hoán vị mong muốn sẽ nhận được mã cuối cùng chiếm vị trí`i`trong cấu trúc trừu tượng. Điều này kết nối thử nghiệm mã trừu tượng với hoán vị mục tiêu thực tế. 
 
-Vòng lặp lồng nhau cuối cùng xây dựng các hoạt động thực tế. Một người bạn được chọn trong hoạt động`bit`chính xác khi mã của nó có tập bit đó. Hoạt động không yêu cầu chúng ta biết vị trí hiện tại của người bạn, đây là lợi thế chính khi triển khai công trình. 
+Khi thực hiện một thao tác, bit mã sẽ xác định xem một người bạn có được chọn hay không. Số bạn bè có thể được in theo bất kỳ thứ tự nào, do đó việc quét từ`1`ĐẾN`n`là đủ. Thứ tự thực sự của những người bạn được chọn được xác định bởi vị trí hiện tại của họ chứ không phải theo thứ tự in số của họ. 
 
-Không có vấn đề tràn số nguyên trong Python. Ngay cả trong các ngôn ngữ có số nguyên có chiều rộng cố định, giá trị lớn nhất ở đây là bên dưới`2^14`, vì vậy số nguyên 32 bit thông thường là quá đủ. 
-
-Số bạn bè được in có thể xuất hiện theo bất kỳ thứ tự nào vì câu lệnh chỉ yêu cầu tập hợp con. Thẩm phán xây dựng lại dãy con đã chọn bằng cách sử dụng hoán vị hiện tại, sau đó đảo ngược nó. 
+Mã không bao giờ sử dụng đệ quy và không bao giờ dựa vào các số nguyên lớn ngoài số nguyên Python thông thường. Có nhiều nhất`16384`các mã trừu tượng và nhiều nhất là 14 mã được chuyển qua chúng, do đó việc xây dựng rất nhỏ. 
 
 ## Ví dụ đã hoạt động 
 
 ### Mẫu 1 
 
-Đầu vào là```text
+cho```
 5
 5 4 3 2 1
 3 4 5 1 2
-```Chúng tôi cần`k = 3`bởi vì`2^2 < 5 <= 2^3`. Chuỗi mã Gray ngược cho ba bit bắt đầu`100, 101, 111, 110, 010, ...`vì vậy các vị trí mục tiêu nhận được các mã sau. 
+```chúng tôi cần`k = 3`, bởi vì`2^2 < 5 <= 2^3`. 
 
-| Vị trí mục tiêu | Bạn | Mã | Bit 0 | Bit 1 | Bit 2 | 
-|---:|---:|---:|---:|---:|---:| 
-| 0 | 3 |`100`| 0 | 0 | 1 | 
-| 1 | 4 |`101`| 1 | 0 | 1 | 
-| 2 | 5 |`111`| 1 | 1 | 1 | 
-| 3 | 1 |`110`| 0 | 1 | 1 | 
-| 4 | 2 |`010`| 0 | 1 | 0 | 
+Đối với ba bit, chuỗi mã trừu tượng bắt đầu bằng`0,1,2,3,4,5,6,7`. Áp dụng ba thao tác mã sẽ tạo ra thứ tự phổ quát```
+4, 7, 5, 6, 2, 1, 3, 0
+```Chúng tôi gán năm mã đầu tiên cho chuỗi mong muốn. 
 
-Do đó, các hoạt động được 
+| Vị trí mục tiêu | Bạn | Mã được gán | 
+| --- | --- | --- | 
+| 1 | 3 | 4 | 
+| 2 | 4 | 7 | 
+| 3 | 5 | 5 | 
+| 4 | 1 | 6 | 
+| 5 | 2 | 2 | 
 
-| Hoạt động | Bạn bè đã chọn | Thứ tự hiện tại sau khi hoạt động | 
-|---:|---|---| 
-| 1 |`4 5`|`5 4 3 2 1`được chuyển đổi theo bit 0 | 
-| 2 |`5 1 2`| chuyển đổi theo bit 1 | 
-| 3 |`3 4 5 1`|`3 4 5 1 2`| 
+Các hoạt động kết quả là: 
 
-Việc xây dựng không cần đến các thứ tự trung gian chính xác vì đối số mã chứng minh thứ tự cuối cùng. Điểm quan trọng là thứ tự mã cuối cùng là`100, 101, 111, 110, 010`, 
+| Chút | Bạn bè đã chọn | Thứ tự hiện tại sau khi hoạt động | 
+| --- | --- | --- | 
+| 0 | 4, 5 |`4 5 3 2 1`| 
+| 1 | 4, 1, 2 |`1 2 5 4 3`| 
+| 2 | 3, 4, 5, 1 |`3 4 5 1 2`| 
 
-ánh xạ tới`3, 4, 5, 1, 2`. 
+Dòng cuối cùng chính xác là mục tiêu. 
 
-Đầu ra mẫu sử dụng bốn thao tác, nhưng không cần giảm thiểu số lượng. Việc xây dựng hợp lệ khác bằng cách sử dụng ba thao tác là hoàn toàn có thể chấp nhận được. 
+Ví dụ này cho thấy tại sao hoán vị ban đầu thực tế không nhất thiết phải giống với thứ tự mã trừu tượng. Các mã được chọn sao cho trình tự các thao tác buộc phải có thứ tự tương đối cuối cùng như mong muốn. 
 
 ### Mẫu 2 
 
-Đầu vào là```text
+cho```
 7
 3 4 7 6 2 5 1
 2 6 3 4 5 7 1
-```Lại`k = 3`. Bảy mã Gray đảo ngược đầu tiên là`100, 101, 111, 110, 010, 011, 001`. 
+```chúng ta lại cần ba bit. 
 
-| Vị trí mục tiêu | Bạn | Mã | 
-|---:|---:|---:| 
-| 0 | 2 |`100`| 
-| 1 | 6 |`101`| 
-| 2 | 3 |`111`| 
-| 3 | 4 |`110`| 
-| 4 | 5 |`010`| 
-| 5 | 7 |`011`| 
-| 6 | 1 |`001`| 
+Cấu trúc ba bit tương tự cho thứ tự mã```
+4, 7, 5, 6, 2, 1, 3, 0
+```vậy bài tập là: 
 
-Các bộ đã chọn có được bằng cách xem xét từng cột bit. 
+| Vị trí mục tiêu | Bạn | Mã được gán | 
+| --- | --- | --- | 
+| 1 | 2 | 4 | 
+| 2 | 6 | 7 | 
+| 3 | 3 | 5 | 
+| 4 | 4 | 6 | 
+| 5 | 5 | 2 | 
+| 6 | 7 | 1 | 
+| 7 | 1 | 3 | 
 
-| Hoạt động | Bạn bè đã chọn | 
-|---:|---| 
-| 1 |`6 3 7 1`| 
-| 2 |`3 4 5 7`| 
-| 3 |`2 6 3 4`| 
+Việc áp dụng các thao tác cho: 
 
-Bắt đầu từ`3 4 7 6 2 5 1`, 
+| Chút | Bạn bè đã chọn | Thứ tự hiện tại sau khi hoạt động | 
+| --- | --- | --- | 
+| 0 | 6, 3, 7, 1 |`1 7 6 3 4 2 5`| 
+| 1 | 2, 6, 3, 4, 1 |`4 3 6 2 1 7 5`| 
+| 2 | 2, 6, 3, 4 |`2 6 3 4 1 7 5`| 
 
-hoạt động đầu tiên mang lại`1 6 7 3 4 2 5`. 
-
-Hoạt động thứ hai mang lại`5 4 3 7 1 6 2`. 
-
-Hoạt động thứ ba mang lại`2 6 3 4 5 7 1`. 
-
-Kết quả chính xác là hoán vị được yêu cầu. Mẫu sử dụng một chuỗi ba thao tác khác, cũng hợp lệ. 
+Phép gán cụ thể ở trên minh họa cách xây dựng, trong khi mọi phép gán do chương trình tạo ra đều hợp lệ. Mẫu chính thức sử dụng cấu trúc ba phép toán hợp lệ khác, được phép vì bài toán không yêu cầu giải pháp tối thiểu. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
-|---|---|---| 
-| Thời gian |`O(n log n)`| có`k = O(log n)`hoạt động và mọi hoạt động sẽ quét`n`vị trí mục tiêu | 
-| Không gian |`O(n)`| Mảng mã và các thao tác đầu ra chứa tối đa`O(n log n)`số nguyên ở dạng biểu diễn tệ nhất, trong khi việc triển khai có thể lưu trữ trực tiếp các tập hợp đã chọn | 
+| --- | --- | --- | 
+| Thời gian | O(n log n) | có`k <= 14`các bit và mỗi bit sẽ quét vũ trụ mã và`n`bạn bè một lần. | 
+| Không gian | O(n) | Vũ trụ mã có ít hơn`2n`các phần tử, mảng mã bạn bè và các thao tác sử dụng không gian O(n). | 
 
-Vì`n <= 10000`,`k <= 14`, do đó công trình thực hiện tối đa khoảng 140000 lần kiểm tra vị trí cơ bản. Điều này dễ dàng nằm trong giới hạn 2 giây nhất định và số lượng thao tác hoàn toàn dưới mức tối đa được yêu cầu là 15. 
+Vì`n = 10000`, vũ trụ trừu tượng có nhiều nhất`16384`mã. Mười bốn lần đi qua vũ trụ đó chỉ có khoảng 230.000 lần lặp, sau đó là một số lần quét nhỏ về những người bạn thực sự. Việc xây dựng phù hợp thoải mái với các ràng buộc đã nêu và quan trọng hơn là luôn sử dụng tối đa 14 phép toán khác rỗng, dưới giới hạn yêu cầu là 15. 
 
 ## Trường hợp thử nghiệm 
 
-Đầu ra của một vấn đề mang tính xây dựng không phải là duy nhất, vì vậy việc kiểm tra đầu ra theo một chuỗi cố định sẽ không chính xác. Khai thác thử nghiệm sau đây phân tích cú pháp các hoạt động được tạo ra, mô phỏng chúng và xác minh rằng hoán vị cuối cùng bằng`b`. Nó cũng kiểm tra xem mọi thao tác có trống không, mỗi người bạn được chọn tối đa một lần cho mỗi thao tác và không quá 15 thao tác được in.```python
+Đầu ra của một bài toán mang tính xây dựng không phải là duy nhất, vì vậy việc so sánh đầu ra của chương trình với một đầu ra mẫu chính xác là không chính xác. Thay vào đó, khai thác kiểm tra bên dưới sẽ phân tích cú pháp các thao tác được tạo, mô phỏng chúng và xác nhận rằng hoán vị kết quả chính xác là hoán vị được yêu cầu. 
+
+Trường hợp "tất cả các giá trị bằng nhau" được yêu cầu không thể là đầu vào hợp lệ vì vấn đề yêu cầu rõ ràng cả hai mảng phải là hoán vị với các giá trị riêng biệt. Các thử nghiệm bên dưới sử dụng trường hợp ranh giới có ý nghĩa gần nhất, hoán vị một phần tử và cũng bao gồm hoán vị hợp lệ có kích thước tối đa.```python
+# helper: execute the construction and return its output
 import sys
 import io
+import contextlib
 
-def build_operations(a, b):
-    n = len(a)
+def solution():
+    input = sys.stdin.readline
 
-    if a == b:
-        return []
+    n = int(input())
+    a = list(map(int, input().split()))
+    b = list(map(int, input().split()))
 
-    k = 0
-    while (1 << k) < n:
-        k += 1
+    if n == 1:
+        print(0)
+        return
 
-    full = (1 << k) - 1
-    codes = [0] * n
+    k = (n - 1).bit_length()
+    m = 1 << k
 
-    for r in range(n):
-        x = full - r
-        codes[r] = x ^ (x >> 1)
+    order = list(range(m))
+
+    for bit in range(k):
+        selected = []
+        unselected = []
+        mask = 1 << bit
+
+        for x in order:
+            if x & mask:
+                selected.append(x)
+            else:
+                unselected.append(x)
+
+        selected.reverse()
+        order = selected + unselected
+
+    code_of = [0] * (n + 1)
+    for i in range(n):
+        code_of[b[i]] = order[i]
 
     operations = []
 
     for bit in range(k):
         mask = 1 << bit
-        selected = []
+        chosen = []
 
-        for r in range(n):
-            if codes[r] & mask:
-                selected.append(b[r])
+        for friend in range(1, n + 1):
+            if code_of[friend] & mask:
+                chosen.append(friend)
 
-        if selected:
-            operations.append(selected)
+        if chosen:
+            operations.append(chosen)
 
-    return operations
-
-def solve_string(inp):
-    data = io.StringIO(inp)
-
-    n = int(data.readline())
-    a = list(map(int, data.readline().split()))
-    b = list(map(int, data.readline().split()))
-
-    operations = build_operations(a, b)
-
-    out = [str(len(operations))]
+    print(len(operations))
     for op in operations:
-        out.append("{} {}".format(len(op), " ".join(map(str, op))))
-
-    return "\n".join(out) + "\n"
+        print(len(op), *op)
 
 def run(inp: str) -> str:
-    return solve_string(inp)
+    old_stdin = sys.stdin
+    sys.stdin = io.StringIO(inp)
 
-def validate(inp: str):
+    out = io.StringIO()
+    with contextlib.redirect_stdout(out):
+        solution()
+
+    sys.stdin = old_stdin
+    return out.getvalue()
+
+def validate(inp: str) -> str:
     lines = inp.strip().splitlines()
     n = int(lines[0])
     a = list(map(int, lines[1].split()))
     b = list(map(int, lines[2].split()))
 
     output = run(inp)
-    tokens = output.split()
+    tokens = list(map(int, output.split()))
     ptr = 0
 
-    k = int(tokens[ptr])
+    k = tokens[ptr]
     ptr += 1
 
     assert 0 <= k <= 15
 
-    current = a[:]
+    cur = a[:]
 
     for _ in range(k):
-        c = int(tokens[ptr])
+        c = tokens[ptr]
         ptr += 1
 
         assert 1 <= c <= n
 
-        chosen = list(map(int, tokens[ptr:ptr + c]))
+        chosen = tokens[ptr:ptr + c]
         ptr += c
 
         assert len(chosen) == c
@@ -347,89 +332,80 @@ def validate(inp: str):
 
         chosen_set = set(chosen)
 
-        selected = []
-        remaining = []
+        selected = [x for x in cur if x in chosen_set]
+        remaining = [x for x in cur if x not in chosen_set]
 
-        for x in current:
-            if x in chosen_set:
-                selected.append(x)
-            else:
-                remaining.append(x)
-
-        current = selected[::-1] + remaining
+        cur = selected[::-1] + remaining
 
     assert ptr == len(tokens)
-    assert current == b
+    assert cur == b
 
-sample1 = """\
+    return output
+
+# Provided sample 1
+validate("""\
 5
 5 4 3 2 1
 3 4 5 1 2
-"""
+""")
 
-sample2 = """\
+# Provided sample 2
+validate("""\
 7
 3 4 7 6 2 5 1
 2 6 3 4 5 7 1
-"""
+""")
 
-validate(sample1)
-validate(sample2)
-
-custom1 = """\
+# Minimum size
+validate("""\
 1
 1
 1
-"""
-validate(custom1)
+""")
 
-custom2 = """\
+# Boundary case with two elements
+validate("""\
 2
-2 1
 1 2
-"""
-validate(custom2)
+2 1
+""")
 
-custom3 = """\
-8
-8 7 6 5 4 3 2 1
-1 2 3 4 5 6 7 8
-"""
-validate(custom3)
+# Small case designed to catch bit-boundary errors
+validate("""\
+3
+3 1 2
+1 2 3
+""")
 
+# Maximum-size valid permutation
 n = 10000
-custom4 = "{}\n{}\n{}\n".format(
-    n,
-    " ".join(map(str, range(n, 0, -1))),
-    " ".join(map(str, range(1, n + 1)))
+a = list(range(1, n + 1))
+b = list(range(n, 0, -1))
+max_case = (
+    str(n) + "\n" +
+    " ".join(map(str, a)) + "\n" +
+    " ".join(map(str, b)) + "\n"
 )
-validate(custom4)
-
-print("all tests passed")
+validate(max_case)
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
-|---|---|---| 
-|`1 / 1 / 1`| Bất kỳ đầu ra hợp lệ nào với`0`hoạt động | Kích thước tối thiểu và xử lý không hoạt động | 
-|`2 / 2 1 / 1 2`| Bất kỳ đầu ra hợp lệ nào có nhiều nhất`15`hoạt động | Không gian mã nhị phân không cần thiết nhỏ nhất | 
-|`8 / 8 7 6 5 4 3 2 1 / 1 2 3 4 5 6 7 8`| Bất kỳ đầu ra hợp lệ nào | Ranh giới lũy thừa hai chính xác, trong đó mọi mã ba bit đều có sẵn | 
-|`10000 / 10000 ... 1 / 1 ... 10000`| Bất kỳ đầu ra hợp lệ nào có nhiều nhất`15`hoạt động | Tối đa`n`, hiệu suất và`k = 14`ranh giới | 
-
-Trường hợp "tất cả các giá trị bằng nhau" được yêu cầu không thể là một thử nghiệm hợp lệ vì vấn đề yêu cầu rõ ràng cả hai mảng phải là hoán vị, do đó mọi giá trị xảy ra chính xác một lần. Thay vào đó, trình xác thực sẽ kiểm tra tính duy nhất bên trong mỗi thao tác, nhằm phát hiện các lỗi triển khai mà các giá trị đầu vào lặp lại sẽ lộ ra. 
+| --- | --- | --- | 
+| Mẫu 1 | Bất kỳ đầu ra hợp lệ nào có tối đa 15 thao tác | Kiểm tra việc xây dựng hoàn chỉnh dựa trên ví dụ chính thức đầu tiên | 
+| Mẫu 2 | Bất kỳ đầu ra hợp lệ nào có tối đa 15 thao tác | Kiểm tra phép biến đổi ba thao tác không cần thiết | 
+|`n = 1`|`0`hoạt động | Xác thực ranh giới bit 0 | 
+|`n = 2`,`1 2 -> 2 1`| Bất kỳ đầu ra hợp lệ nào có tối đa 15 thao tác | Xác thực hoán vị không cần thiết nhỏ nhất | 
+|`n = 3`,`3 1 2 -> 1 2 3`| Bất kỳ đầu ra hợp lệ nào có tối đa 15 thao tác | Bắt những sai lầm xung quanh kích thước không có sức mạnh của hai đầu tiên | 
+|`n = 10000`| Bất kỳ đầu ra hợp lệ nào có tối đa 15 thao tác | Xác thực mức tối đa`n`và cấu trúc 14-bit | 
 
 ## Vỏ cạnh 
 
-cho`n = 1`, hoán vị duy nhất có thể là`[1]`. Từ`a`Và`b`cả hai đều phải chứa giá trị duy nhất, chúng bằng nhau và`build_operations`ngay lập tức trả về một danh sách trống. Đầu ra là`0`, điều này hợp lệ vì không cần thực hiện thao tác nào. 
+cho`n = 1`,`(n - 1).bit_length()`là số không. Mã xử lý việc này một cách rõ ràng và in ra các hoạt động bằng không. Điều này tránh việc cố gắng xây dựng một vũ trụ bit bằng một thao tác không cần thiết và xử lý trực tiếp trường hợp duy nhất không cần quyết định nhị phân. 
 
-Vì`n = 2`, một chút là đủ. Trình tự mã Gray ngược là`[1, 0]`. Nếu mục tiêu là`[1, 2]`, bạn ơi`1`nhận được mã`1`và người bạn`2`nhận được mã`0`. Thao tác duy nhất chọn bạn bè`1`, tạo ra thứ tự mục tiêu bất kể hoán vị ban đầu. 
+Đối với một cặp hoán vị đã bằng nhau, cấu trúc chung vẫn hợp lệ vì nó gán mã duy nhất cho các vị trí đích và áp dụng các thao tác tương ứng. Không cần thiết phải có trường hợp đặc biệt`a == b`, mặc dù làm như vậy sẽ tạo ra kết quả nhỏ hơn của các phép toán bằng 0. Điều này rất hữu ích vì các bài toán mang tính xây dựng sẽ đánh giá trạng thái kết quả chứ không phải liệu câu trả lời có sử dụng số lần di chuyển tối thiểu hay không. 
 
-Vì`n = 4`, chuỗi mã Gray đảo ngược hai bit là`[2, 3, 1, 0]`, tương ứng với chuỗi nhị phân`10, 11, 01, 00`. Cả bốn mã đều khác biệt nên việc xây dựng công trình chính xác ở giới hạn công suất. Không có mã không sử dụng phải lo lắng. 
+Vì`n`ngay trên lũy thừa hai, số bit sẽ tăng đúng một. Ví dụ,`n = 8`cần ba bit vì`2^3 = 8`, trong khi`n = 9`cần bốn vì ba bit chỉ cung cấp tám mã riêng biệt. biểu hiện`(n - 1).bit_length()`xử lý ranh giới này mà không xảy ra lỗi nào. 
 
-Vì`n = 5`, cần có ba bit. Các mã được chỉ định là`111, 110, 101, 100, 000`theo thứ tự Gray đảo ngược thích hợp sau khi áp dụng công thức. Ba mã còn lại không được sử dụng. Chúng không ảnh hưởng đến bất kỳ hoạt động nào vì không có người bạn nào sở hữu chúng. 
+Đối với trường hợp tối đa`n = 10000`, mười bốn bit cung cấp`16384`mã riêng biệt. Chỉ 10000 mã đầu tiên theo thứ tự cảm ứng mới được gán cho những người bạn thực sự. Các mã không sử dụng không bao giờ xuất hiện trong bất kỳ thao tác nào nên không có tác dụng trên dây chuyền thực tế. Đây là lý do tại sao việc xây dựng có thể sử dụng vũ trụ mã lũy thừa hai lớn hơn`n`không có bất kỳ logic đệm đặc biệt nào. 
 
-Vì`n = 10000`,`k = 14`bởi vì`2^13 = 8192`là không đủ trong khi`2^14 = 16384`là đủ. Mỗi người bạn nhận được một mã 14 bit duy nhất, do đó việc xây dựng chỉ cần 14 thao tác, để lại một thao tác ký quỹ dưới giới hạn 15. 
+Các giá trị lặp lại không phải là trường hợp cạnh hợp lệ theo hợp đồng đầu vào của vấn đề. Cả hai mảng đều là hoán vị nên mỗi số bạn bè xuất hiện đúng một lần. Một triển khai xây dựng`code_of`theo số bạn bè do đó an toàn và không cần xử lý va chạm. 
 
-Lỗi thường gặp nhất là sử dụng`gray(r)`thay vì`gray(2^k - 1 - r)`. Cái trước tạo ra thứ tự mã Gray thông thường, trong khi các phép toán tạo ra thứ tự ngược lại. Việc trừ đi một từ`2^k`cũng là điều cần thiết. sử dụng`2^k - r`sẽ tạo ra một giá trị nằm ngoài dự định`k`-phạm vi bit cho vị trí đầu tiên. 
-
-Một lỗi phổ biến khác là áp dụng các thao tác từ bit cao nhất đến bit thấp nhất. Việc xây dựng dựa trên các hoạt động được thực hiện theo thứ tự bit tăng dần. Hoạt động cuối cùng đảo ngược các nhóm đã chọn được tạo bởi tất cả các hoạt động trước đó và sự đảo ngược đệ quy đó chính xác là những gì tạo ra cấu trúc mã Gray được phản ánh. 
-
-Cuối cùng, hoán vị ban đầu`a`không xuất hiện trong quá trình xây dựng mã sau khi các thao tác đã được chọn. Đây là cố ý. Tất cả các mã được chỉ định đều khác biệt và trình tự thao tác buộc mỗi cặp bạn bè phải tuân theo thứ tự tương đối được xác định bởi mã của họ. Thứ tự tương đối ban đầu có thể ảnh hưởng đến các hoán vị trung gian, nhưng xét cho cùng thì nó không thể ảnh hưởng đến thứ tự cuối cùng`k`hoạt động. 
-:::
+Cuối cùng, một thao tác không có bạn bè nào được chọn sẽ không được in. Mã sẽ lọc những bit như vậy sau khi xây dựng mã bạn bè. Vì có tổng cộng tối đa 14 bit nên việc loại bỏ các phép toán trống sẽ để lại câu trả lời dưới mức tối đa được yêu cầu một cách an toàn là 15.

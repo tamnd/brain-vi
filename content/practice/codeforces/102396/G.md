@@ -1,7 +1,7 @@
 ---
 title: "CF 102396G - Tràn trọng lượng"
-description: "Chúng tôi có tới 25 quả cân và mỗi quả cân có thể được xử lý theo đúng một trong ba cách: có thể đặt nó lên đĩa thứ nhất, đặt lên đĩa thứ hai hoặc không sử dụng. Thang đo không so sánh số tiền thực tế."
-date: "2026-08-11T23:31:21+07:00"
+description: "Chúng tôi có tới 25 quả cân và mỗi quả cân có thể được đặt trên đĩa thứ nhất, đĩa thứ hai hoặc không sử dụng. Thang đo không so sánh các khoản tiền thông thường. Thay vào đó, nó làm giảm cả hai tổng số tấm modulo (m) và báo cáo số dư khi hai phần dư đó bằng nhau."
+date: "2026-08-14T14:17:42+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102396
@@ -9,7 +9,7 @@ codeforces_index: "G"
 codeforces_contest_name: "2019-2020 Saint-Petersburg Open High School Programming Contest (SpbKOSHP 19)"
 rating: 0
 weight: 102396
-solve_time_s: 427
+solve_time_s: 196
 verified: false
 draft: false
 ---
@@ -18,307 +18,287 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 7 phút 7 giây 
+**Thời gian giải:** 3 phút 16s 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi có tới 25 quả cân và mỗi quả cân có thể được xử lý theo đúng một trong ba cách: có thể đặt nó lên đĩa thứ nhất, đặt lên đĩa thứ hai hoặc không sử dụng. Thang đo không so sánh số tiền thực tế. Đầu tiên nó làm giảm tổng modulo của mỗi tấm`m`, sau đó so sánh các dư lượng đó. Chúng ta cần một phép gán khác rỗng mà hai số dư bằng nhau. 
+Chúng tôi có tới 25 quả cân và mỗi quả cân có thể được đặt trên đĩa thứ nhất, đĩa thứ hai hoặc không sử dụng. Thang đo không so sánh các khoản tiền thông thường. Thay vào đó, nó làm giảm cả hai tổng số tấm modulo (m) và báo cáo số dư khi hai phần dư đó bằng nhau. 
 
-Nếu trọng lượng`i`nằm ở đĩa đầu tiên, cho hệ số đi`+1`. Nếu nó ở tấm thứ hai thì cho hệ số`-1`. Nếu nó không được sử dụng, hãy cho nó hệ số`0`. Điều kiện trở thành 
+Nếu tấm thứ nhất chứa tập hợp (L) và tấm thứ hai chứa tập hợp rời rạc (R) thì điều kiện cần là 
 
 [ 
-\sum_{i=1}^{n} c_i a_i \equiv 0 \pmod m, 
+\sum_{i\in L} a_i \equiv \sum_{i\in R} a_i \pmod m. 
 ] 
 
-trong đó mọi hệ số đều thỏa mãn (c_i\in{-1,0,1}) và không phải tất cả các hệ số đều bằng 0. Khi các hệ số như vậy được tìm thấy, các hệ số dương mô tả tấm đầu tiên và các hệ số âm mô tả tấm thứ hai. 
+Tương đương, 
 
-Các ràng buộc hướng tới tìm kiếm theo cấp số nhân hơn là lập trình động đa thức. Chỉ có 25 trọng số, vì vậy sự phụ thuộc theo cấp số nhân vào`n`có thể được chấp nhận nếu số mũ được giảm bằng cách chia các trọng số. Một phép liệt kê trực tiếp có thể có (3^{25}=847288609443), vượt xa giới hạn một giây. Giá trị của`m`có thể gần như (4\cdot10^7), do đó, một mảng DP thông thường được lập chỉ mục theo phần dư cũng sẽ quá lớn để chuyển đổi cho mọi trọng số. Các ràng buộc vấn đề chính thức là`n <= 25`Và`m < 4 * 10^7`, với giới hạn thời gian một giây và bộ nhớ 512 MB. 
+[ 
+\sum_{i\in L} a_i-\sum_{i\in R}a_i\equiv0\pmod m. 
+] 
 
-Một số trường hợp nhỏ có thể bộc lộ việc triển khai không chính xác. 
+Vì vậy, mọi trọng lượng đều có chính xác ba trạng thái có thể xảy ra. Chúng ta có thể mã hóa các trạng thái này bằng (0), (+1) và (-1), trong đó (0) có nghĩa là không sử dụng, (+1) có nghĩa là tấm đầu tiên và (-1) có nghĩa là tấm thứ hai. Chúng ta cần một phép gán khác 0 có tổng có dấu chia hết cho (m). 
 
-Vì`m = 1`, mọi vị trí không trống đều hợp lệ vì mọi số nguyên đều đồng dư với 0 modulo 1. Ví dụ:```
-1 1
-5
-```có thể được trả lời bằng cách đặt vật nặng 1 lên đĩa thứ nhất và không đặt vật nặng nào lên đĩa thứ hai. Việc triển khai chỉ tìm kiếm hai tập hợp con khác nhau có thể vô tình báo cáo`-1`. 
+Giới hạn (n\le25) là đầu mối trung tâm. Bảng liệt kê trực tiếp có (3^n) trạng thái và (3^{25}=847288609443), vượt xa những gì giải pháp một giây có thể kiểm tra. Modulo (m) có thể gần bằng (4\cdot10^7), do đó, một mảng lập trình động được lập chỉ mục theo mọi phần dư cũng sẽ quá đắt nếu chúng ta xử lý tất cả các trọng số. Số lượng trọng số tương đối nhỏ gợi ý nên chia chúng thành hai nửa và liệt kê ba lựa chọn một cách độc lập trong mỗi nửa. 
 
-Một trọng lượng có khối lượng đã chia hết cho`m`là một câu trả lời ngay lập tức. Ví dụ,```
-1 7
-14
-```được giải quyết bằng cách đặt vật nặng 1 lên cả hai tấm. Điều kiện modulo là về phần dư chứ không phải về tổng thô. 
+Các giá trị (a_i) có thể lớn bằng (10^9), nhưng chỉ phần dư của chúng theo modulo (m) ảnh hưởng đến thang đo. Số nguyên Python cũng tránh tràn, do đó không có vấn đề tràn số học trong quá trình triển khai. 
 
-Nhiệm vụ trống không bao giờ được chấp nhận. Ví dụ,```
-1 7
+Trường hợp cạnh đầu tiên là (n=1). Ví dụ,```
+1 5
+3
+```không có câu trả lời, bởi vì vị trí duy nhất không trống đặt trọng số 3 lên một tấm và để trống cái kia, tạo ra các thặng dư 3 và 0. Một giải pháp bất cẩn chỉ kiểm tra xem một số tổng tập hợp con có chia hết cho (m) xảy ra trong trường hợp này hay không, nhưng giải pháp dựa trên việc so sánh hai tập hợp con được tạo độc lập phải cấm rõ ràng việc sử dụng cùng một trọng số ở cả hai bên. 
+
+Trường hợp cạnh thứ hai xảy ra khi một trọng số đã chia hết cho (m). Ví dụ,```
+1 5
+10
+```có đầu ra hợp lệ```
 1
-```không có giải pháp. Số tiền được ký duy nhất là`0`, từ việc không sử dụng gì, và`1`hoặc`-1`, từ việc sử dụng trọng lượng. Việc triển khai gặp nhau ở giữa một cách bất cẩn có thể tìm thấy phần dư bằng 0 từ nhiệm vụ trống ở cả hai nửa và chấp nhận nó một cách không chính xác. 
+1
+0
+```vì tấm thứ nhất có cặn (10\bmod5=0), trong khi tấm thứ hai trống rỗng. Việc thực hiện bất cẩn yêu cầu cả hai tấm phải chứa vật nặng sẽ từ chối một câu trả lời hợp lệ. 
 
-Không thể đặt cùng một trọng lượng lên cả hai tấm. Ví dụ,```
-2 10
-3 3
-```được giải bằng cách đặt vật nặng 1 lên một đĩa và vật nặng 2 lên đĩa kia. Cả hai phần dư của mảng đều bằng 3. Một biểu diễn coi hai bên là tập con độc lập mà không nhớ rằng chúng phải rời nhau có thể vô tình sử dụng một chỉ mục hai lần. 
+Trường hợp cạnh thứ ba là (m=1). Ví dụ,```
+1 1
+7
+```luôn có thể giải được vì mọi số nguyên đều đồng dư với 0 theo modulo 1. Thuật toán phải cho phép tấm trống và không được vô tình coi phép gán toàn bộ chưa được sử dụng là một câu trả lời hợp lệ. 
 
-Cuối cùng, đẳng thức là modulo`m`, không bằng nhau của các khoản tiền thông thường. Vì```
-2 5
-7 2
-```đặt hai vật nặng lên hai đĩa đối diện nhau có tác dụng vì`7 mod 5 = 2 mod 5`, mặc dù khối lượng thực tế của chúng khác nhau. 
+Trường hợp cạnh thứ tư là các tổng thông thường không cần phải bằng nhau. Ví dụ,```
+4 14
+1 3 7 10
+```có thể đặt quả cân (1,3,10) lên một đĩa. Tổng thông thường của chúng là 14, trở thành số dư 0, trong khi đĩa kia trống. Một giải pháp chỉ tìm kiếm các tổng thông thường bằng nhau sẽ bỏ lỡ sự đẳng thức mô-đun hợp lệ này. 
 
 ## Phương pháp tiếp cận 
 
-Giải pháp trực tiếp nhất sẽ xem xét từng trọng lượng một cách độc lập và thử cả ba lựa chọn: chưa sử dụng, tấm thứ nhất hoặc tấm thứ hai. Đối với mỗi bài tập, chúng tôi tính toán tổng modulo đã ký`m`và chấp nhận nếu nó bằng 0 và ít nhất một trọng số đã được chọn. Điều này đúng vì mọi vị trí hợp pháp đều tương ứng với chính xác một vectơ hệ số từ`{-1,0,1}`. 
+Cách tiếp cận vũ phu được rút ra trực tiếp từ ba trạng thái có thể có của mọi trọng số. Đối với mỗi trọng lượng, hãy chọn tấm thứ nhất hoặc tấm thứ hai chưa sử dụng, tính tổng có dấu theo modulo (m) và chấp nhận phép gán khác 0 có dư lượng bằng 0. Điều này đúng vì mọi vị trí hợp pháp đều tương ứng với chính xác một trong các nhiệm vụ ba trạng thái này. 
 
-Vấn đề là số lượng nhiệm vụ. Với 25 quả cân có 
+Vấn đề là số lượng nhiệm vụ. Với (n=25), có 
 
 [ 
 3^{25}=847288609443 
 ] 
 
-khả năng. Ngay cả khi việc kiểm tra một nhiệm vụ chỉ mất một vài lệnh máy, hàng trăm tỷ trạng thái cũng không thể đáp ứng được thời hạn. 
+khả năng. Ngay cả khi việc kiểm tra một nhiệm vụ chỉ thực hiện một thao tác duy nhất trong thời gian không đổi, thì thao tác này vẫn quá lớn so với giới hạn một giây. 
 
-Quan sát hữu ích là số tiền đã ký có tính cộng. Chia các quả nặng thành hai nửa rời nhau. Đối với một bài tập trong nửa đầu, hãy để số tiền đã ký của nó là`x`. Đối với bài tập ở nửa sau, gọi tổng có dấu của nó là`y`. Chúng cùng nhau tạo thành một giải pháp hợp lệ chính xác khi 
+Quan sát hữu ích là số tiền đã ký có tính cộng. Nếu chúng ta chia các trọng số thành hai nhóm thì mỗi phép gán hoàn chỉnh có thể được viết dưới dạng tổng có dấu của nửa đầu cộng với tổng có dấu của nửa sau. Đối với phần dư (x) được tạo ra ở nửa đầu, chúng ta chỉ cần phần dư ở nửa phần sau bằng (-x\bmod m). 
 
-[ 
-x+y\equiv0\pmod m. 
-] 
+Đây là ý tưởng gặp nhau ở giữa. Thay vì khám phá tất cả (3^n) bài tập, chúng tôi khám phá các bài tập (3^{\lfloor n/2\rfloor}) trong một nửa và (3^{\lceil n/2\rceil}) trong nửa còn lại. Đối với (n=25), những con số này là (3^{12}=531441) và (3^{13}=1594323), là những con số thực tế. 
 
-Vì vậy, thay vì liệt kê tất cả (3^n) phép gán, chúng ta liệt kê khoảng (3^{n/2}) phép gán trong mỗi nửa và so khớp các phần dư bổ sung. 
+Có một chi tiết làm cho công thức này trở nên đặc biệt thuận tiện. Chúng tôi không chỉ lưu trữ liệu phần dư có tồn tại trong nửa đầu hay không mà còn lưu trữ một nhiệm vụ tạo ra phần dư đó. Khi nửa thứ hai tìm thấy phần dư bổ sung, hai phép gán được lưu trữ cùng nhau mô tả trực tiếp hai tấm. 
 
-Với 25 trọng số, một nửa có tối đa 12 trọng số và nửa còn lại có nhiều nhất 13 trọng số. Không gian tìm kiếm của chúng chứa tối đa (3^{12}=531441) và (3^{13}=1594323) phép gán tương ứng. Chúng tôi lưu trữ một phép gán cho mỗi phần dư được tạo ra bởi nửa đầu trong bảng băm, sau đó liệt kê nửa sau và tìm phần dư là phủ định mô-đun của nó. 
-
-Có một điểm tinh tế trong việc lưu trữ bài tập trống. Dư lượng bằng 0 luôn được tạo ra bằng cách không làm gì cả. Nếu chúng ta chỉ lưu trữ bài tập đó thì một tìm kiếm sau đó cũng cho kết quả bằng 0 có thể vô tình kết hợp hai bài tập trống. Việc triển khai từ chối trường hợp đó một cách rõ ràng và nó cũng ưu tiên phân công nửa đầu không trống cho phần dư bằng 0 khi tồn tại. 
-
-Sự so sánh là: 
+Nhiệm vụ hoàn toàn bằng 0 phải được xử lý đặc biệt. Nó luôn cho dư lượng bằng 0, nhưng không được phép đặt trọng lượng ở bất cứ đâu. Nếu một trong hai nửa đóng góp một lựa chọn khác 0 thì phép gán kết hợp sẽ hợp lệ. Chỉ trường hợp cả hai mã được lưu trữ bằng 0 mới bị từ chối. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | (O(3^n)) | (O(n)) | Quá chậm | 
-| Gặp nhau ở giữa | (O(3^{n/2})) | (O(3^{n/2})) | Đã chấp nhận | 
-
-Số học mô-đun cũng có nghĩa là mọi tổng trung gian đều có thể giảm đi ngay lập tức. Số nguyên Python không bị giới hạn, do đó không có vấn đề tràn số nguyên mặc dù khối lượng ban đầu có thể lớn bằng (10^9). 
+| Tối ưu | (O(3^{\lceil n/2\rceil})) | (O(3^{\lfloor n/2\rfloor})) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Chia tạ thành hai nửa liên tiếp. Nếu như`n = 25`, nửa đầu chứa 12 trọng số và nửa thứ hai chứa 13. Các nửa rời rạc, có nghĩa là bất kỳ phép gán nào được chọn độc lập trong mỗi nửa sẽ tự động sử dụng mọi trọng số nhiều nhất một lần. 
-2. Liệt kê mọi nhiệm vụ tạm thời của nửa đầu. Với mỗi trọng số, hệ số`0`có nghĩa là không sử dụng,`1`có nghĩa là tấm đầu tiên, và`2`có nghĩa là tấm thứ hai. Chuyển đổi các lựa chọn này thành hệ số`0`,`+1`, Và`-1`, và tính tổng có dấu modulo`m`. 
-3. Lưu trữ một mã hóa bậc ba cho mỗi dư lượng gặp phải trong nửa đầu. Nếu phần dư bằng 0 và bảng hiện chỉ chứa mã hóa trống, hãy thay thế nó khi một mã hóa khác có cùng phần dư xuất hiện. Mã hóa được lưu trữ đủ để tái tạo lại trọng số nào thuộc về mỗi tấm. 
-4. Liệt kê mọi nhiệm vụ tạm thời của nửa sau. Giả sử tổng có dấu của nó là`s`. Một bài tập tương thích từ nửa đầu phải có dư lượng`(-s) mod m`, bởi vì tổng có dấu kết hợp phải bằng 0 modulo`m`. 
-5. Tra cứu`(-s) mod m`ở hiệp một. Nếu nó vắng mặt, nhiệm vụ nửa sau này không thể tạo thành giải pháp. Nếu có, hãy kết hợp cả hai bảng mã. 
-6. Chỉ từ chối kết hợp khi cả hai bảng mã đều trống. Bất kỳ sự kết hợp nào khác đều chứa ít nhất một trọng số đã chọn và có tổng số có dấu chia hết cho`m`, vì vậy đó là một câu trả lời hợp lệ. 
-7. Giải mã hai bảng mã bậc ba. Một chữ số đại diện`+1`đi đến tấm đầu tiên, trong khi một chữ số đại diện`-1`đi đến tấm thứ hai. In hai bộ chỉ mục. 
+1. Chia các trọng lượng thành nửa kích thước đầu tiên (\lfloor n/2\rfloor) và nửa sau chứa các trọng lượng còn lại. Việc phân chia được chọn sao cho bảng liệt kê lớn hơn chỉ chứa tối đa 13 trọng số. 
+2. Liệt kê từng nhiệm vụ của nửa đầu. Mỗi trọng số có ba lựa chọn: đóng góp (0), đóng góp (+a_i) hoặc đóng góp (-a_i). Lưu trữ dư lượng modulo (m) kết quả trong một từ điển, cùng với một phép gán được mã hóa tạo ra nó. Nếu một số nhiệm vụ tạo ra cùng một dư lượng thì chỉ cần một nhiệm vụ vì mỗi nhiệm vụ đều hữu ích như nhau trong việc hoàn thành một giải pháp. 
+3. Liệt kê mọi nhiệm vụ của nửa sau bằng cách sử dụng ba lựa chọn giống nhau. Giả sử tổng đã ký của nó có (các) số dư. Để tổng có dấu đầy đủ chia hết cho (m) thì nửa đầu phải có dư 
 
-Tại sao nó hoạt động: mọi vị trí hợp pháp đều có một đại diện có chữ ký duy nhất với các hệ số trong`{-1,0,1}`. Việc chia các chỉ số sẽ chia số tiền đã ký của nó thành phần đóng góp từ mỗi nửa, chẳng hạn`x`Và`y`, với`x + y ≡ 0 (mod m)`. Trong quá trình liệt kê nửa sau, thuật toán tìm kiếm chính xác phần dư nửa đầu bằng`-y`, vì vậy mọi giải pháp khả thi đều được xem xét. Ngược lại, mỗi cặp được tra cứu trả về có`x + y ≡ 0`và các nửa rời nhau nên phép gán được giải mã của chúng tạo thành một vị trí hợp pháp. Kiểm tra gán trống rõ ràng đảm bảo rằng ít nhất một trọng số thực sự được đặt. 
+[ 
+(-s)\bmod m. 
+] 
+
+Hãy tra phần cặn này trong từ điển. 
+
+1. Khi tìm thấy dư lượng phù hợp, hãy giải mã cả hai phép gán. Lựa chọn (+1) dành cho tấm đầu tiên, lựa chọn (-1) dành cho tấm thứ hai và lựa chọn (0) bị bỏ qua. 
+2. Chỉ từ chối kết quả khớp khi cả hai mã gán đều bằng 0. Trong mọi trường hợp khác, ít nhất một trọng số được sử dụng và hai nửa tổng cộng lại bằng 0 modulo (m), do đó thang đo được cân bằng. 
+3. Nếu bảng liệt kê hoàn chỉnh kết thúc mà không khớp, hãy in (-1). Mọi vị trí có thể đều được thể hiện bằng một cặp nửa bài tập, vì vậy không thể bỏ sót giải pháp nào.
+
+Tại sao nó hoạt động: mọi vị trí hợp pháp đều tương ứng với một vectơ hệ số (c_i\in{-1,0,+1}), trong đó hệ số biểu thị tấm hoặc trạng thái không sử dụng. Việc chia vectơ thành hai nửa sẽ cho các dư lượng (x) và (y) thỏa mãn (x+y\equiv0\pmod m) chính xác khi vị trí cân bằng tỷ lệ. Từ điển nửa đầu chứa một đại diện cho mỗi dư lượng mà nó có thể tạo ra và tìm kiếm ở nửa sau sẽ kiểm tra chính xác dư lượng bổ sung cho mọi phép gán có thể có ở nửa sau. Do đó, mọi vị trí không trống hợp lệ đều được tìm thấy, trong khi mọi vị trí được báo cáo đều có tổng có dấu chia hết cho (m). 
 
 ## Giải pháp Python```python
 import sys
 input = sys.stdin.readline
 
-def build_map(values, mod):
-    """
-    Map residue -> one ternary encoding for this half.
+def solve():
+    n, m = map(int, input().split())
+    a = [x % m for x in map(int, input().split())]
 
-    Ternary digit:
-        0 = unused
-        1 = first plate
-        2 = second plate
-    """
-    result = {}
+    mid = n // 2
+    left = a[:mid]
+    right = a[mid:]
 
-    def dfs(pos, total, code, place):
-        if pos == len(values):
-            old = result.get(total)
-            if old is None or (total == 0 and old == 0 and code != 0):
-                result[total] = code
+    # choice encoding:
+    # 0 = unused
+    # 1 = first plate
+    # 2 = second plate
+    #
+    # Two bits are enough for every choice.
+    first = {}
+
+    def build_first(pos, end, residue, code):
+        if pos == end:
+            first.setdefault(residue, code)
             return
 
-        # Leave this weight unused.
-        dfs(pos + 1, total, code, place * 3)
+        x = a[pos]
 
-        # Put it on the first plate.
-        nxt = total + values[pos]
-        if nxt >= mod:
-            nxt -= mod
-        dfs(pos + 1, nxt, code + place, place * 3)
+        build_first(pos + 1, end, residue, code)
 
-        # Put it on the second plate.
-        nxt = total - values[pos]
-        if nxt < 0:
-            nxt += mod
-        dfs(pos + 1, nxt, code + 2 * place, place * 3)
+        nr = residue + x
+        if nr >= m:
+            nr -= m
+        build_first(pos + 1, end, nr, code | (1 << (2 * (pos - 0))))
 
-    dfs(0, 0, 0, 1)
-    return result
+        nr = residue - x
+        if nr < 0:
+            nr += m
+        build_first(pos + 1, end, nr, code | (2 << (2 * (pos - 0))))
 
-def find_in_second(values, mod, first_map):
-    """
-    Search all ternary assignments of the second half.
-    Returns (first_code, second_code), or None.
-    """
+    build_first(0, mid, 0, 0)
 
     answer = None
 
-    def dfs(pos, total, code, place):
+    def search_second(pos, end, residue, code):
         nonlocal answer
 
         if answer is not None:
             return
 
-        if pos == len(values):
-            need = (-total) % mod
-            first_code = first_map.get(need)
-
-            if first_code is not None:
-                if first_code != 0 or code != 0:
-                    answer = (first_code, code)
+        if pos == end:
+            need = (-residue) % m
+            if need in first:
+                left_code = first[need]
+                if left_code != 0 or code != 0:
+                    answer = (left_code, code)
             return
 
-        # Unused.
-        dfs(pos + 1, total, code, place * 3)
+        x = a[pos]
+
+        # Leave the weight unused.
+        search_second(pos + 1, end, residue, code)
 
         if answer is not None:
             return
 
-        # First plate.
-        nxt = total + values[pos]
-        if nxt >= mod:
-            nxt -= mod
-        dfs(pos + 1, nxt, code + place, place * 3)
+        # Put it on the first plate.
+        nr = residue + x
+        if nr >= m:
+            nr -= m
+        search_second(
+            pos + 1,
+            end,
+            nr,
+            code | (1 << (2 * (pos - mid)))
+        )
 
         if answer is not None:
             return
 
-        # Second plate.
-        nxt = total - values[pos]
-        if nxt < 0:
-            nxt += mod
-        dfs(pos + 1, nxt, code + 2 * place, place * 3)
+        # Put it on the second plate.
+        nr = residue - x
+        if nr < 0:
+            nr += m
+        search_second(
+            pos + 1,
+            end,
+            nr,
+            code | (2 << (2 * (pos - mid)))
+        )
 
-    dfs(0, 0, 0, 1)
-    return answer
-
-def decode(code, length, offset, first, second):
-    for i in range(length):
-        digit = code % 3
-        code //= 3
-
-        index = offset + i + 1
-
-        if digit == 1:
-            first.append(index)
-        elif digit == 2:
-            second.append(index)
-
-def solve():
-    n, mod = map(int, input().split())
-    a = list(map(int, input().split()))
-
-    # Reducing the masses once makes every later transition smaller.
-    a = [x % mod for x in a]
-
-    # A split near the middle minimizes the larger ternary search space.
-    mid = n // 2
-    left = a[:mid]
-    right = a[mid:]
-
-    first_map = build_map(left, mod)
-    answer = find_in_second(right, mod, first_map)
+    search_second(mid, n, 0, 0)
 
     if answer is None:
-        print(-1)
-        return
+        return "-1\n"
 
     left_code, right_code = answer
-
     first_plate = []
     second_plate = []
 
-    decode(left_code, len(left), 0, first_plate, second_plate)
-    decode(right_code, len(right), mid, first_plate, second_plate)
+    for i in range(mid):
+        choice = (left_code >> (2 * i)) & 3
+        if choice == 1:
+            first_plate.append(i + 1)
+        elif choice == 2:
+            second_plate.append(i + 1)
 
-    print(len(first_plate))
-    print(*first_plate)
-    print(len(second_plate))
-    print(*second_plate)
+    for i in range(n - mid):
+        choice = (right_code >> (2 * i)) & 3
+        idx = mid + i + 1
+        if choice == 1:
+            first_plate.append(idx)
+        elif choice == 2:
+            second_plate.append(idx)
+
+    out = [
+        str(len(first_plate)),
+        " ".join(map(str, first_plate)),
+        str(len(second_plate)),
+        " ".join(map(str, second_plate)),
+    ]
+    return "\n".join(out) + "\n"
 
 if __name__ == "__main__":
-    solve()
-```Dây chuyền tiền xử lý đầu tiên giảm thiểu mọi`a[i]`modulo`m`. Điều này an toàn về mặt toán học vì chỉ có dư lượng mới ảnh hưởng đến kết quả so sánh cuối cùng. Nó cũng cho phép mỗi lần chuyển đổi đệ quy ở trong khoảng`[0, m)`sử dụng một điều chỉnh có điều kiện thay vì liên tục xây dựng các số nguyên lớn hơn.`build_map`thực hiện toàn bộ tìm kiếm nửa đầu. các`code`biến là mã hóa cơ sở ba của các quyết định đã được đưa ra. các`place`biến là lũy thừa hiện tại của ba, do đó việc chọn tấm đầu tiên sẽ thêm`place`để mã hóa và chọn tấm thứ hai sẽ thêm`2 * place`. 
+    sys.stdout.write(solve())
+```Nửa đầu được lưu trữ trong một từ điển được khóa bằng dư lượng.`setdefault`giữ lại nhiệm vụ đầu tiên gặp phải đối với phần dư và tránh sự thay thế không cần thiết. Vì mỗi dư lượng chỉ cần một nhân chứng nên thế là đủ. 
 
-Số tiền đã ký được giữ theo modulo`m`sau mỗi sự lựa chọn. Đối với một quá trình chuyển đổi tích cực, việc thêm một giá trị có thể đạt được nhiều nhất`2m - 2`, vì vậy một phép trừ là đủ. Đối với một chuyển đổi âm, kết quả có thể thấp đến mức`-(m - 1)`, vậy chỉ cần thêm một lần là đủ. Điều này tránh được một`%`hoạt động tại mọi nút đệ quy. 
+Phép gán được mã hóa với hai bit cho mỗi trọng số. Các giá trị 0, 1 và 2 đại diện cho tấm thứ nhất và tấm thứ hai chưa được sử dụng. Việc giữ mã ở dạng số nguyên làm cho từ điển nhỏ hơn đáng kể so với việc lưu trữ danh sách hoặc bộ dữ liệu Python cho mọi trạng thái. 
 
-Việc xử lý đặc biệt lượng cặn bằng 0 rất dễ bị bỏ qua. Bài tập trống phải được lưu trữ vì nó có thể kết hợp hợp pháp với một bài tập không trống từ nửa còn lại. Tuy nhiên, nếu phép gán nửa đầu không trống cũng tạo ra số 0 thì tốt hơn nên thay thế mã hóa trống bằng nó. Điều kiện ở`build_map`xử lý chính xác trường hợp đó.`find_in_second`tìm kiếm nửa còn lại. Đối với mỗi dư lượng đã ký`total`, nó tính toán`(-total) % mod`và thực hiện một lần tra cứu từ điển. Quá trình đệ quy dừng ngay sau khi tìm thấy một cặp hợp lệ, do đó, các đầu vào thông thường kết thúc sớm hơn nhiều so với bảng liệt kê đầy đủ (3^{13}). 
+Đệ quy tính toán dư lượng modulo (m) tại mỗi lần chuyển đổi. Vì phần dư hiện tại đã nằm trong khoảng từ (0) đến (m-1), nên việc thêm một phần dư cần tối đa một phép trừ (m) và phép trừ một phần dư cần nhiều nhất một phép cộng (m). Điều này tránh được cái chung đắt tiền hơn`%`hoạt động bên trong phần nóng nhất của bảng liệt kê. 
 
-Mã hóa bậc ba sử dụng chữ số có nghĩa nhỏ nhất cho trọng số sớm nhất trong mỗi nửa.`decode`nhiều lần mất`code % 3`và sau đó chia cho ba, phục hồi các quyết định theo đúng thứ tự mà chúng được tạo ra. Phần bù chỉ số cho nửa sau là`mid`, bởi vì vị trí địa phương đầu tiên của nó tương ứng với trọng số toàn cầu`mid + 1`. 
+Hai nửa sử dụng các vị trí bit cục bộ riêng biệt. Khi giải mã nửa sau, các chỉ số được dịch chuyển bởi`mid`để phục hồi việc đánh số trọng lượng ban đầu. Do đó, mã hóa cục bộ giống nhau có thể được sử dụng ở cả hai nửa. 
 
-Python không có lỗi tràn số nguyên có chiều rộng cố định, vì vậy các tổng như khối lượng ban đầu sẽ an toàn. Việc triển khai vẫn thực hiện rút gọn mô-đun trong suốt quá trình tìm kiếm vì bản thân thuật toán hoạt động trên các lớp dư lượng. 
+Python không bị tràn số nguyên có chiều rộng cố định thường xảy ra ở các ngôn ngữ sử dụng số nguyên 32 bit. Trọng lượng ban đầu được giảm theo modulo (m) trước khi liệt kê, vì vậy mọi dư lượng được lưu trữ dù sao cũng vẫn ở mức nhỏ. 
 
 ## Ví dụ đã hoạt động 
 
 Đối với mẫu 1,```
 4 14
 1 3 7 10
-```sự chia tách là`[1, 3]`Và`[7, 10]`. 
+```sự phân chia là ( [1,3] \mid [7,10] ). Nửa đầu có thể tạo ra các dư lượng có dấu như (0,1,3,4,10,12,\ldots). Việc tìm kiếm ở nửa sau cuối cùng xem xét việc đặt trọng lượng 10 lên tấm đầu tiên, đóng góp phần dư 10. Phần bù của nó là (14-10=4), và nửa đầu có thể tạo ra phần dư 4 bằng cách đặt trọng số 1 và 3 lên tấm đầu tiên. 
 
-| Sân khấu | Bài tập | Tổng có dấu modulo 14 | Dư lượng nửa đầu yêu cầu | 
-| --- | --- | --- | --- | 
-| Nửa đầu |`+1, +3`| 4 | | 
-| Hiệp hai | trống | 0 | 0 | 
-| Hiệp hai |`+7`| 7 | 7 | 
-| Hiệp hai |`+10`| 10 | 4 | 
-| Trận đấu |`(+1,+3)`với`(+10)`|`4 + 10 = 14 ≡ 0`| 4 | 
+| Sân khấu | Dư lượng nửa đầu | Dư lượng nửa sau | Dư lượng cần thiết | Đã tìm thấy bài tập | 
+| --- | --- | --- | --- | --- | 
+| Ban đầu | 0 | 0 | 0 | tất cả không được sử dụng, bị từ chối | 
+| Điều tra nửa đầu | 4 | 0 | 0 | trọng số 1 và 2 tạo ra 4 | 
+| Tìm kiếm nửa sau | 4 | 10 | 4 | tìm thấy trận đấu | 
 
-Do đó, thuật toán có thể đặt các trọng số 1, 2 và 4 lên tấm đầu tiên và để trống tấm thứ hai. Tổng số của họ là 14, vì vậy thang đo sẽ tính toán`14 mod 14 = 0`trên tấm đầu tiên và`0`vào thứ hai. Đầu ra của mẫu là khác nhau, nhưng cả hai đều hợp lệ vì vấn đề yêu cầu bất kỳ cấu trúc hợp lệ nào. 
+Vị trí kết quả là các vật nặng 1, 2 và 4 trên tấm đầu tiên và không có vật nặng nào trên tấm thứ hai. Tổng thông thường của chúng là (1+3+10=14), do đó thang đo nhìn thấy (0) trên cả hai mặt theo modulo 14. Điều này chứng tỏ rằng thuật toán đang tìm kiếm đẳng thức mô-đun thay vì đẳng thức của tổng thông thường. 
 
 Đối với mẫu 2,```
 3 7
 1 2 4
-```sự chia tách là`[1]`Và`[2, 4]`. 
+```sự phân chia là ( [1]\mid[2,4] ). Nửa đầu tạo ra dư lượng (0,1,6). Nửa thứ hai có thể tạo ra cặn 6 bằng cách đặt cả hai quả nặng 2 và 4 lên đĩa thứ nhất. Phần bù bắt buộc của nó là 1, tồn tại trong từ điển nửa đầu. 
 
-| Sân khấu | Bài tập | Tổng đã ký modulo 7 | Dư lượng nửa đầu yêu cầu | 
-| --- | --- | --- | --- | 
-| Nửa đầu |`+1`| 1 | | 
-| Hiệp hai |`+2`| 2 | 5 | 
-| Hiệp hai |`-2`| 5 | 2 | 
-| Hiệp hai |`+4`| 4 | 3 | 
-| Hiệp hai |`-4`| 3 | 4 | 
-| Hiệp hai |`+2,+4`| 6 | 1 | 
-| Trận đấu |`+1`với`+2,+4`|`1 + 6 = 7 ≡ 0`| 1 | 
+| Sân khấu | Dư lượng nửa đầu | Dư lượng nửa sau | Dư lượng cần thiết | Đã tìm thấy bài tập | 
+| --- | --- | --- | --- | --- | 
+| Ban đầu | 0 | 0 | 0 | tất cả không được sử dụng, bị từ chối | 
+| Điều tra nửa đầu | 1 | 0 | 0 | trọng lượng 1 tạo ra 1 | 
+| Điều tra nửa sau | 1 | 6 | 1 | trọng số 2 và 3 tạo ra 6 | 
 
-Cấu trúc thu được đặt cả ba quả nặng lên tấm đầu tiên. Tổng của nó là 7, phần dư của nó theo modulo 7 bằng 0, trong khi tấm thứ hai trống. Đây chính xác là cấu trúc của mẫu. 
+Vị trí kết quả đặt cả ba quả nặng lên tấm đầu tiên. Tổng của chúng là (1+2+4=7), bằng 0 modulo 7, trong khi tấm thứ hai trống. Đây cũng là một ví dụ hữu ích về lý do tại sao tấm thứ hai trống là hợp pháp. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | (O(3^{n/2})) | Mỗi nửa được liệt kê một lần và mỗi trạng thái thực hiện số học mô-đun theo thời gian không đổi và đối với nửa sau, tra cứu bảng băm. | 
-| Không gian | (O(3^{n/2})) | Nửa đầu lưu trữ một mã hóa bậc ba cho mỗi phần dư riêng biệt, với tối đa (3^{n/2}) mục nhập. | 
+| Thời gian | (O(3^{\lceil n/2\rceil})) | Mỗi nửa liệt kê mọi phép gán bậc ba và nửa lớn hơn có tối đa 13 trọng số. | 
+| Không gian | (O(3^{\lfloor n/2\rfloor})) | Từ điển lưu trữ một phép gán cho mỗi phần dư riêng biệt được tạo ra bởi một nửa nhỏ hơn. | 
 
-Vì`n = 25`, nửa lớn hơn chỉ có 13 trọng số nên nó chứa nhiều nhất`3^13 = 1,594,323`bài tập. Nửa nhỏ hơn có nhiều nhất`3^12 = 531,441`bài tập. Đây là một số bậc độ lớn nhỏ hơn so với trực tiếp`3^25`tìm kiếm và vừa vặn thoải mái trong giới hạn bộ nhớ 512 MB. Giá trị tối đa của`m`không xuất hiện dưới dạng kích thước của DP, do đó giới hạn modulo lớn không làm cho mức sử dụng bộ nhớ tỷ lệ với 40 triệu. 
+Tại (n=25), nửa lớn hơn có (3^{13}=1,594,323) phép gán và nửa được lưu trữ có nhiều nhất (3^{12}=531,441) mục nhập. Nó nhỏ hơn theo cấp số nhân so với tìm kiếm brute-force (3^{25}) và vừa vặn thoải mái trong giới hạn bộ nhớ 512 MB với biểu diễn số nguyên nhỏ gọn được triển khai sử dụng. 
 
 ## Trường hợp thử nghiệm 
 
-Vì đầu ra không phải là duy nhất nên các thử nghiệm sẽ xác thực vị trí được trả về thay vì so sánh chuỗi đầu ra chính xác. Quy trình khai thác sau đây sẽ kiểm tra xem mọi chỉ số được báo cáo đều hợp lệ, không có chỉ mục nào được sử dụng hai lần, đặt ít nhất một trọng lượng và tổng hai tấm có dư lượng bằng nhau.```python
+Khai thác thử nghiệm bên dưới kiểm tra tính hợp lệ về cấu trúc của vị trí được trả về thay vì yêu cầu nhân chứng hợp lệ cụ thể. Đó là cách đúng đắn để kiểm tra vấn đề này vì nhiều đầu ra khác nhau có thể thỏa mãn cùng một đầu vào.```python
 import sys
 import io
 
-# Paste the solve_data implementation from the solution here.
-def solve_data(inp: str) -> str:
+def run(inp: str) -> str:
     old_stdin = sys.stdin
-    old_stdout = sys.stdout
-
     sys.stdin = io.StringIO(inp)
-    sys.stdout = io.StringIO()
-
     try:
-        # Call the submitted solve() here.
-        solve()
-        return sys.stdout.getvalue()
+        return solve()
     finally:
         sys.stdin = old_stdin
-        sys.stdout = old_stdout
 
-def validate(inp: str, out: str) -> bool:
+def check_output(inp: str, out: str) -> bool:
     data = list(map(int, inp.split()))
-    n, mod = data[0], data[1]
+    n, m = data[0], data[1]
     a = data[2:2 + n]
 
     tokens = out.split()
@@ -326,18 +306,18 @@ def validate(inp: str, out: str) -> bool:
         return False
 
     if tokens[0] == "-1":
-        return True
+        return len(tokens) == 1
 
     p = 0
 
     k = int(tokens[p])
     p += 1
-    first = list(map(int, tokens[p:p + k]))
+    left = [int(tokens[p + i]) for i in range(k)]
     p += k
 
     q = int(tokens[p])
     p += 1
-    second = list(map(int, tokens[p:p + q]))
+    right = [int(tokens[p + i]) for i in range(q)]
     p += q
 
     if p != len(tokens):
@@ -346,104 +326,107 @@ def validate(inp: str, out: str) -> bool:
     if k + q == 0:
         return False
 
-    if any(x < 1 or x > n for x in first + second):
+    if any(x < 1 or x > n for x in left + right):
         return False
 
-    if len(set(first)) != len(first):
+    if len(set(left)) != len(left):
+        return False
+    if len(set(right)) != len(right):
+        return False
+    if set(left) & set(right):
         return False
 
-    if len(set(second)) != len(second):
-        return False
+    s_left = sum(a[i - 1] for i in left) % m
+    s_right = sum(a[i - 1] for i in right) % m
 
-    if set(first) & set(second):
-        return False
+    return s_left == s_right
 
-    s1 = sum(a[i - 1] for i in first) % mod
-    s2 = sum(a[i - 1] for i in second) % mod
-
-    return s1 == s2
-
-# Provided sample 1.
+# Provided sample 1
 sample1 = """\
 4 14
 1 3 7 10
 """
-assert validate(sample1, solve_data(sample1)), "sample 1"
+out = run(sample1)
+assert check_output(sample1, out), "sample 1"
 
-# Provided sample 2.
+# Provided sample 2
 sample2 = """\
 3 7
 1 2 4
 """
-assert validate(sample2, solve_data(sample2)), "sample 2"
+out = run(sample2)
+assert check_output(sample2, out), "sample 2"
 
-# Minimum-size case and m = 1.
+# Minimum size, and m = 1.
 case1 = """\
 1 1
-123456789
+7
 """
-assert validate(case1, solve_data(case1)), "minimum size and modulo 1"
+out = run(case1)
+assert check_output(case1, out), "minimum size"
 
-# A weight is itself divisible by m.
+# Minimum size with no possible answer.
 case2 = """\
-1 7
-14
+1 5
+3
 """
-assert validate(case2, solve_data(case2)), "single divisible weight"
+assert run(case2).strip() == "-1", "single weight with nonzero residue"
 
-# Equal weights must be placed on opposite plates.
+# All equal values. One copy can balance another.
 case3 = """\
-2 10
-3 3
+4 10
+7 7 7 7
 """
-assert validate(case3, solve_data(case3)), "all equal values"
+out = run(case3)
+assert check_output(case3, out), "all equal values"
 
-# Maximum n, with no signed sum able to reach a nonzero multiple
-# of m. The total absolute sum is smaller than m.
-case4 = "25 39999989\n" + " ".join(str(1 << i) for i in range(25)) + "\n"
-result4 = solve_data(case4)
-assert result4.strip() == "-1", "maximum-size no-solution case"
-
-# Empty assignment must not be accepted.
-case5 = """\
-1 7
-1
+# Boundary-style pair: 2 + 3 = 5 modulo 5.
+case4 = """\
+2 5
+2 3
 """
-assert solve_data(case5).strip() == "-1", "empty assignment"
-```Hai thử nghiệm đầu tiên xác nhận cấu trúc mẫu đồng thời cho phép chương trình tạo ra một phép gán hợp lệ khác. Bài kiểm tra thứ ba kiểm tra nhỏ nhất có thể`n`và trường hợp đặc biệt`m = 1`. Phần thứ tư kiểm tra nghiệm trọng lượng đơn trực tiếp khi khối lượng chia cho môđun. Bước thứ năm kiểm tra xem hai vật nặng bằng nhau có thể cân bằng trên các tấm đối diện mà không cần sử dụng lại vật chia độ hay không. Trường hợp thứ sáu là trường hợp căng thẳng có kích thước tối đa buộc thuật toán phải khám phá không gian tìm kiếm và xác nhận rằng việc triển khai có thể báo cáo chính xác rằng không có giải pháp nào tồn tại. Bài kiểm tra cuối cùng đặc biệt phát hiện ra lỗi phổ biến là nhận bài trống. 
+out = run(case4)
+assert check_output(case4, out), "modulo boundary"
 
-| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
+# Maximum n and a guaranteed no-answer instance.
+# The sum of all powers of two is 2^25 - 1 = 33554431,
+# which is smaller than m, so every subset has a distinct ordinary sum.
+powers = [1 << i for i in range(25)]
+case5 = "25 39999999\n" + " ".join(map(str, powers)) + "\n"
+assert run(case5).strip() == "-1", "maximum-size no-answer case"
+```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`4 14 / 1 3 7 10`| Bất kỳ vị trí hợp lệ nào | Mẫu 1 | 
-|`3 7 / 1 2 4`| Bất kỳ vị trí hợp lệ nào | Mẫu 2 | 
-|`1 1 / 123456789`| Vị trí không trống | Kích thước tối thiểu và`m = 1`| 
-|`1 7 / 14`| Trọng lượng 1 trên một trong hai đĩa | Trọng lượng chia trực tiếp | 
-|`2 10 / 3 3`| Một trọng lượng trên mỗi đĩa | Giá trị bằng nhau và sự rời rạc | 
-|`25 39999989 / 1 2 4 ... 2^24`|`-1`| Tìm kiếm toàn diện kích thước tối đa | 
-|`1 7 / 1`|`-1`| Từ chối bài tập trống | 
+|`1 1 / 7`| Bất kỳ vị trí trống hợp lệ nào | Tối thiểu (n), modulo 1 và tấm thứ hai trống | 
+|`1 5 / 3`|`-1`| Trường hợp nhỏ nhất không thể | 
+|`4 10 / 7 7 7 7`| Bất kỳ vị trí nào có phần dư không trống hoặc bên trống bằng nhau | Giá trị hoàn toàn bằng nhau và dư lượng trùng lặp | 
+|`2 5 / 2 3`| Một trọng lượng trên mỗi tấm | Ranh giới modulo chính xác | 
+|`25 39999999 / 1 2 4 ... 2^24`|`-1`| Tối đa (n), lớn (m) và trường hợp không có va chạm mô-đun | 
 
 ## Vỏ cạnh 
 
-Khi nào`m = 1`, mọi dư lượng đều bằng không. Đối với đầu vào```
+cho```
+1 5
+3
+```nửa đầu trống và nửa sau chứa trọng số 3. Từ điển nửa đầu chỉ chứa phần dư 0 với phép gán trống. Nửa thứ hai có thể tạo ra các số dư 0, 3 và 2, nhưng chỉ số dư 0 mới có phần bù phù hợp. Trận đấu đó sẽ không sử dụng trọng số ở cả hai nửa, vì vậy thuật toán sẽ loại bỏ nó và in ra`-1`. Đây chính xác là hành vi cần thiết. 
+
+Vì```
+1 5
+10
+```trọng số duy nhất có phần dư 0. Từ điển nửa đầu lại chứa phần dư 0, trong khi phép gán nửa sau đặt trọng số 1 trên tấm đầu tiên cũng có phần dư 0. Hai mã gán không đều bằng 0, do đó sự trùng khớp được chấp nhận. Đầu ra đặt trọng số 1 lên tấm đầu tiên và để trống tấm thứ hai. 
+
+Vì```
 1 1
-5
-```bản đồ nửa đầu chứa phần dư bằng 0 từ cả phép gán trống và phép gán sử dụng trọng số. Việc triển khai có chủ ý ưu tiên mã hóa khác rỗng cho phần dư bằng 0. Nửa thứ hai trống nên kết quả xây dựng chứa trọng số 1 và được chấp nhận. 
+7
+```mọi phần dư đều bằng 0 vì mô đun là 1. Phép liệt kê ở nửa sau ngay lập tức tìm thấy một phép gán khác rỗng với phần dư bằng 0, và phép gán trống ở nửa đầu sẽ cung cấp phần bù cần thiết. Vị trí kết quả là hợp lệ vì mỗi tổng của tấm đều bằng 0 modulo 1. 
 
-Khi một trọng số được chia cho`m`, bài tập trống ở nửa còn lại là đủ để hoàn thành nó. Vì```
-1 7
-14
-```phần dư có dấu của trọng số 1 bằng 0. Bản đồ nửa đầu lưu trữ mã hóa khác trống cho phần dư bằng 0 và tìm kiếm nửa sau có thể sử dụng phép gán trống của nó. Vị trí kết hợp chứa một trọng số và có tổng bằng 0 theo modulo 7. 
+cho```
+4 14
+1 3 7 10
+```nửa đầu có thể tạo ra cặn 4 có dấu từ các quả cân 1 và 2 đặt trên đĩa thứ nhất. Nhiệm vụ ở nửa sau đặt vật nặng 4 lên đĩa đầu tiên sẽ đóng góp phần dư 10. Vì (4+10=14), phần dư có dấu tổng hợp của chúng bằng 0. Do đó, đầu ra có thể đặt các trọng số 1, 2 và 4 lên tấm đầu tiên, tạo ra tổng mô-đun bằng 0, khi tấm thứ hai trống. 
 
-Đối với trọng lượng bằng nhau, hãy xem xét```
-2 10
-3 3
-```Nhiệm vụ`+3 - 3`đã ký tổng số bằng không. Vì hai trọng số thuộc về hai nửa khác nhau nên việc tra cứu gặp nhau ở giữa sẽ tìm thấy phần dư`3`từ một nửa và dư lượng`7`, sự phủ định mô-đun của nó, từ nửa còn lại. Kết quả được giải mã đặt hai chỉ số khác nhau lên các tấm đối diện nhau, cho ra dư lượng`3`Và`3`. 
-
-Đối với một trường hợp không thể,```
-1 7
-1
-```số tiền được ký không rỗng duy nhất là`1`Và`-1`, số dư của nó là`1`Và`6`. Cả hai đều không bằng không. Phần dư bằng 0 duy nhất xuất phát từ việc không chọn gì, nhưng tìm kiếm ở nửa sau loại bỏ rõ ràng cặp trong đó cả hai mã hóa đều bằng 0, do đó chương trình sẽ in ra`-1`. 
-
-Đối với trường hợp kích thước tối đa, phần tách chứa 12 và 13 trọng số. Bản đồ đầu tiên có chỗ cho tối đa (3^{12}) bài tập riêng biệt, trong khi bảng liệt kê thứ hai kiểm tra nhiều nhất (3^{13}). Không có phần nào của việc triển khai phụ thuộc tuyến tính vào giá trị tiềm năng to lớn của`m`và mọi phép gán được biểu diễn gọn bằng một số nguyên bậc ba chứ không phải bằng một danh sách các chỉ số đã chọn. 
-
-Bất biến trung tâm rất đơn giản: mỗi phần dư được lưu trữ biểu thị một phép gán thực có dấu của một nửa của nó và mỗi trạng thái nửa thứ hai chỉ được so khớp với phần bù mô-đun của tổng có dấu của chính nó. Sau khi tìm thấy một cặp, các hệ số của chúng mô tả vị trí hợp lệ trên các tập hợp chỉ số rời rạc, do đó đẳng thức của hai phần dư tấm được suy ra trực tiếp từ phương trình (x+y\equiv0\pmod m).
+Đối với trường hợp không có câu trả lời kích thước tối đa```
+25 39999999
+1 2 4 8 16 32 64 128 256 512 1024 2048 4096
+8192 16384 32768 65536 131072 262144 524288 1048576
+2097152 4194304 8388608 16777216
+```tổng của tất cả các trọng số là (2^{25}-1=33554431), nhỏ hơn (m). Do đó, mỗi tập hợp con có tổng thông thường khác nhau, vì vậy hai tập hợp con rời nhau không thể có tổng bằng nhau trừ khi cả hai đều rỗng. Vì tổng không bao giờ đạt đến (m) nên cũng không có tập con nào khác rỗng mà tổng chia hết cho (m). Tìm kiếm gặp ở giữa làm cạn kiệt tất cả các phép gán ba trạng thái và trả về chính xác`-1`.
