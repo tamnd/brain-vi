@@ -208,6 +208,6 @@ Kích thước đầu vào tối thiểu`E`, sự thay đổi`1`, từ`a`sản x
 
 Để bao bọc ngược lại, hãy xem xét`D`, sự thay đổi`1`, từ`a`. Vị trí là 0 và trừ đi sự thay đổi sẽ cho`-1`. Python đánh giá`-1 % 26`là 25, do đó kết quả trở thành`z`. Đây là trường hợp chính giúp phân biệt số học mô-đun chính xác với việc triển khai chỉ xử lý các vị trí không âm. 
 
-Đối với một sự thay đổi lớn, hãy xem xét`E`, sự thay đổi`25`, từ`b`. Vị trí của`b`là 1, do đó vị trí được biến đổi là`(1 + 25) % 26 = 0`. Đầu ra là`a`. Điều này phát hiện các triển khai vô tình sử dụng quy tắc đặc biệt chỉ dành cho những ca gần với ranh giới bảng chữ cái. 
+Đối với một sự thay đổi lớn, hãy xem xét`E`, sự thay đổi`25`, từ`b`. Vị trí của`b`là 1, do đó vị trí được biến đổi là`(1 + 25) % 26 = 0`. Đầu ra là`a`. Điều này phát hiện các triển khai vô tình sử dụng quy tắc đặc biệt chỉ dành cho các ca gần với ranh giới bảng chữ cái. 
 
 Cuối cùng, hãy xem xét một từ chỉ chứa`z`các ký tự, chẳng hạn như`E`, sự thay đổi`1`, từ`zzzz`. Mỗi ký tự ánh xạ độc lập từ vị trí 25 đến vị trí 0, tạo ra`aaaa`. Bất biến trên mỗi ký tự vẫn hợp lệ ngay cả khi mọi ký tự thực hiện cùng một điều kiện biên.

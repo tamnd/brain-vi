@@ -52,7 +52,7 @@ Do đó, chúng ta có thể chia câu trả lời thành hai phần độc lậ
 
 Phần khó khăn là khi hai chiều dài bằng nhau. Sau đó, vị trí đầu tiên nơi trình tự khác nhau sẽ quyết định kết quả. Trước vị trí đó, hai chuỗi phải giống nhau và ở vị trí khác nhau đầu tiên, giá trị được chọn từ`a`phải lớn hơn. 
 
-Phép lặp tuần tự phân biệt tiêu chuẩn xử lý phần đầu tiên. Đối với vị trí`i`, cho phép`p[i]`là sự xuất hiện trước đó của`a[i]`. Nếu như`F[i][k]`là số dãy con khác nhau có độ dài`k`sử dụng tiền tố kết thúc tại`i`, sau đó`F[i][k] = F[i-1][k] + F[i-1][k-1] - F[p[i]-1][k-1]`. 
+Phép lặp tuần tự phân biệt tiêu chuẩn xử lý phần đầu tiên. Đối với vị trí`i`, cho phép`p[i]`là sự xuất hiện trước đó của`a[i]`. Nếu như`F[i][k]`là số các dãy con khác nhau có độ dài`k`sử dụng tiền tố kết thúc tại`i`, sau đó`F[i][k] = F[i-1][k] + F[i-1][k-1] - F[p[i]-1][k-1]`. 
 
 Phép trừ loại bỏ các chuỗi có thể được tạo lại vì`a[i]`bằng với lần xuất hiện trước đó của cùng một giá trị. 
 
@@ -77,7 +77,7 @@ Có một cải tiến bộ nhớ dành riêng cho Python rất hữu ích ở �
 6. Lưu trữ mỗi hàng DP dưới dạng tổng tiền tố hai chiều. Đối với hình chữ nhật`[r1,r2] × [c1,c2]`, tổng của nó được lấy từ bốn giá trị tiền tố. Từ`r1 = p[i]`đối với hàng hiện tại, hàng bắt buộc`p[i]-1`được giữ trong ảnh chụp nhanh được liên kết với`a[i]`. Điều này loại bỏ sự cần thiết phải lưu trữ tất cả`n*m`tế bào DP. 
 7. Sau khi xử lý từng hàng,`G[n][m]`chính xác là số cặp có độ dài bằng nhau riêng biệt mà dãy con của nó`a`là lớn hơn. Thêm nó vào phần đóng góp có độ dài không bằng nhau. 
 
-Tại sao nó hoạt động: mỗi cặp chiến thắng thuộc về chính xác một trong hai trường hợp độ dài. Trong trường hợp độ dài không bằng nhau, chuỗi dài hơn luôn lớn hơn về mặt số lượng. Trong trường hợp có độ dài bằng nhau, mỗi cặp có một vị trí được chọn khác nhau đầu tiên duy nhất. Trước vị trí đó, hai chuỗi bằng nhau, được biểu thị bằng`F`; ở vị trí đó hoặc`a[i] > b[j]`, tạo`G`, hoặc cặp vẫn bằng nhau. Khi một cặp bước vào`G`, các phần tử sau này không thể thay đổi kết quả so sánh. Việc hiệu chỉnh trùng lặp bằng cách sử dụng các lần xuất hiện trước đó mang lại cho mỗi chuỗi riêng biệt chính xác một biểu diễn, do đó các cặp trùng lặp và cặp hợp lệ đều không bị mất. 
+Tại sao nó hoạt động: mỗi cặp chiến thắng thuộc về chính xác một trong hai trường hợp độ dài. Trong trường hợp độ dài không bằng nhau, chuỗi dài hơn luôn lớn hơn về mặt số lượng. Trong trường hợp có độ dài bằng nhau, mỗi cặp có một vị trí được chọn khác nhau đầu tiên duy nhất. Trước vị trí đó, hai chuỗi bằng nhau, được biểu thị bằng`F`; ở vị trí đó hoặc`a[i] > b[j]`, tạo`G`, hoặc cặp vẫn bằng nhau. Khi một cặp bước vào`G`, các phần tử sau này không thể thay đổi kết quả so sánh. Việc sửa lỗi trùng lặp bằng cách sử dụng các lần xuất hiện trước đó mang lại cho mỗi chuỗi riêng biệt chính xác một biểu diễn, do đó các cặp trùng lặp và cặp hợp lệ đều không bị mất. 
 
 ## Giải pháp Python```python
 import sys
@@ -339,7 +339,7 @@ Từ`n,m <= 5000`, số hạng bậc hai nhiều nhất là khoảng 25 triệu 
 
 ## Trường hợp thử nghiệm 
 
-Các thử nghiệm sau đây gọi thực tế`main.py`giải pháp cho các trường hợp nhỏ. Trường hợp kích thước tối đa được kiểm tra thông qua giá trị mong đợi ở dạng đóng của nó thay vì được thực thi như một phần của quá trình chạy thử nghiệm đơn vị thông thường, vì đây là một thử nghiệm có chủ đích.```python
+Các thử nghiệm sau đây gọi thực tế`main.py`giải pháp cho các trường hợp nhỏ. Trường hợp kích thước tối đa được kiểm tra thông qua giá trị mong đợi ở dạng đóng thay vì được thực thi như một phần của quá trình chạy thử nghiệm đơn vị thông thường, vì đây là một thử nghiệm có chủ đích.```python
 # Save the submitted solution as main.py before running this file.
 
 import subprocess
@@ -420,6 +420,6 @@ Vì`a = [1,1]`Và`b = [1]`, lần xuất hiện đầu tiên của`1`tạo ra m�
 
 Đối với các giá trị lặp lại, ảnh chụp nhanh xảy ra trước đó sẽ ngăn chặn các biểu diễn trùng lặp. Giả sử giá trị hiện tại là`1`và sự xuất hiện trước đó của nó là ở vị trí`p`. Mỗi dãy con được hình thành bằng cách thêm dãy mới`1`đã có thể đạt được bằng cách nối thêm cái cũ`1`phải được loại bỏ. Phép trừ sử dụng tiền tố kết thúc tại`p-1`, chính xác là tập hợp các chuỗi có thể xảy ra trước một trong hai lần xuất hiện mà không cần sử dụng chính lần xuất hiện đó. 
 
-Đối với các mảng có độ dài bằng nhau có kích thước tối đa`5000`, có chính xác một dãy con riêng biệt cho mọi độ dài khác rỗng. Vì các mảng giống hệt nhau nên các cặp có độ dài bằng nhau không bao giờ đóng góp. Đối với mọi`k`từ`2`bởi vì`5000`, độ dài duy nhất-`k`trình tự từ`a`đánh bại các chuỗi độ dài độc đáo`1`bởi vì`k-1`từ`b`. Câu trả lời là`1 + 2 + ... + 4999 = 5000 * 4999 / 2 = 12,497,500`khi cả hai mảng đều có độ dài`5000`. 
+Đối với các mảng có độ dài bằng nhau có kích thước tối đa`5000`, có chính xác một dãy con riêng biệt cho mọi độ dài khác trống. Vì các mảng giống hệt nhau nên các cặp có độ dài bằng nhau không bao giờ đóng góp. Đối với mọi`k`từ`2`bởi vì`5000`, độ dài duy nhất-`k`trình tự từ`a`đánh bại các chuỗi độ dài độc đáo`1`bởi vì`k-1`từ`b`. Câu trả lời là`1 + 2 + ... + 4999 = 5000 * 4999 / 2 = 12,497,500`khi cả hai mảng đều có độ dài`5000`. 
 
 Đối với giá trị biên`100`, phép so sánh cơ sở 1000 vẫn hoạt động mà không cần sửa đổi. Một chữ số đứng đầu của`100`vẫn ở bên dưới`1000`, do đó không có sự chuyển tiếp giữa các vị trí. Đây là lý do tại sao toàn bộ sự so sánh bằng số có thể được giảm xuống một cách an toàn theo độ dài và thứ tự từ điển.

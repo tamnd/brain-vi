@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 3 phút 9 giây 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta có một bàn cờ (n\times n) chứa nhiều nhất một quân cờ trong mỗi ô. Mỗi mảnh đều có màu trắng hoặc đen và có giá trị loại bỏ dương. Một quân trắng và một quân đen có thể bị loại bỏ cùng nhau nếu cả hai quân này hiện đang lộ ra từ hướng dưới cùng bên trái. Giá của một cặp như vậy là sự khác biệt tuyệt đối về giá trị của chúng. Một mảnh cũng có thể bị loại bỏ bất cứ lúc nào để giữ giá trị riêng của nó. 
@@ -50,7 +50,7 @@ WB
 B.
 5 7
 7 0
-```Quân đen ở ((2,1)) chặn cả hai quân phía trên nó, vì vậy ban đầu nó là quân tiếp xúc duy nhất có liên quan. Loại bỏ nó một mình chi phí (7). Các quân trắng và quân đen ở hàng đầu tiên sau đó sẽ lộ ra đồng thời và có thể được ghép nối với giá (2). Câu trả lời là (9). Một thuật toán bất cẩn có thể ghép nối ngay lập tức hai phần ở hàng đầu tiên vì các ô của chúng trông có vẻ tương thích, mặc dù điều kiện chặn phía dưới bên trái ngăn không cho cặp đó được sử dụng ngay từ đầu. 
+```Quân đen ở ((2,1)) chặn cả hai quân phía trên nó, vì vậy ban đầu nó là quân tiếp xúc duy nhất có liên quan. Loại bỏ nó một mình chi phí (7). Các quân trắng và quân đen ở hàng đầu tiên sau đó sẽ lộ ra đồng thời và có thể được ghép nối với giá (2). Câu trả lời là (9). Một thuật toán bất cẩn có thể ghép nối ngay lập tức hai phần ở hàng đầu tiên vì các ô của chúng trông có vẻ tương thích, mặc dù điều kiện chặn phía dưới bên trái ngăn cản việc sử dụng cặp đó ngay từ đầu. 
 
 Quyền tự do loại bỏ một phần tùy ý không yêu cầu chúng ta phải đưa các phần loại bỏ tùy ý vào trạng thái đường viền. Giả sử một giải pháp tối ưu loại bỏ một mảnh bị chặn (p) trong khi một mảnh khác (q) vẫn chặn (p). Việc loại bỏ (p) không thể cần thiết để làm cho (q) có sẵn, bởi vì bản thân (p) là một trong những mảnh chặn (q). Bất kỳ thao tác nào liên quan đến các phần không liên quan đến sự phụ thuộc này đều có thể được thực hiện theo cùng thứ tự mà không cần (p). Chúng ta có thể trì hoãn việc loại bỏ (p) một lần cho đến khi (p) đạt đến đường viền lộ ra, trả số tiền chính xác như nhau. Do đó, luôn có một giải pháp tối ưu trong đó mỗi lần loại bỏ đều xảy ra khi mảnh đó nằm trên đường viền hiện tại. 
 
@@ -62,7 +62,7 @@ Một giải pháp brute-force tự nhiên coi mọi tập hợp các mảnh cò
 2^{144}\cdot144^2 \khoảng 4,6\times10^{47} 
 ] 
 
-kiểm tra trạng thái cặp. Về mặt khái niệm, vũ lực là đúng vì nó trực tiếp mô hình hóa mọi hoạt động pháp lý, nhưng cơ quan đại diện của nhà nước chứa quá nhiều thông tin. 
+kiểm tra trạng thái cặp. Lực lượng vũ phu là đúng về mặt khái niệm vì nó trực tiếp mô hình hóa mọi hoạt động pháp lý, nhưng cơ quan đại diện của nhà nước chứa quá nhiều thông tin. 
 
 Quan sát hữu ích là hình học. Các mảnh hiện đang được trưng bày luôn nằm trên một cầu thang đơn điệu chạy từ phía trên bên trái về phía dưới bên phải. Khi mọi thứ ở phía dưới bên trái của cầu thang này đã được gỡ bỏ, bất kỳ phần nào trên cầu thang đều có thể được gỡ bỏ và sau khi tháo nó ra, cầu thang sẽ di chuyển qua ô đó. 
 
@@ -104,7 +104,7 @@ Cả hai phần đều hợp pháp cùng một lúc vì chúng đều là các g
 7. Trong quá trình thực hiện, hãy đảo ngược thứ tự bit đường viền. Sau đó, quá trình chuyển đổi ban đầu (01\to10) trở thành (10\to01), làm tăng giá trị nguyên của mặt nạ. Do đó, chúng ta có thể liệt kê tất cả các mặt nạ với (n) bit được đặt chính xác bằng cách sử dụng thủ thuật tạo kết hợp của Gosper theo thứ tự số tăng dần. Mặt nạ thu được chính xác là trạng thái đường viền, nhưng bây giờ hướng chuyển tiếp của chúng đồng ý với hướng liệt kê. 
 8. Câu trả lời là giá trị DP ở dạng đảo ngược của đường viền cuối cùng. Các bảng trống cũng hoạt động một cách tự nhiên vì mọi chuyển đổi đường viền qua một ô trống đều không tốn phí. 
 
-Tại sao nó hoạt động: duy trì bất biến rằng giá trị DP của đường viền là chi phí tối thiểu để xóa mọi thứ ở phía đã được xử lý của đường viền đó trong khi không chạm vào phần còn lại. Mọi thao tác hợp pháp đều có thể được chuyển đổi thành thao tác được thực hiện khi các phần của nó chạm đến đường viền. Một thao tác duy nhất tương ứng với một lần lật góc, trong khi cặp trắng-đen hợp lệ tương ứng với hai lần lật góc được thực hiện đồng thời. Ngược lại, mọi chuyển đổi do DP tạo ra đều là một hoạt động hợp pháp, bởi vì các ô góc của nó được hiển thị trên đường viền hiện tại. Do đó, mọi trình tự loại bỏ hợp lệ được biểu thị bằng một đường dẫn qua DP và mọi đường dẫn DP mô tả một trình tự loại bỏ hợp lệ với cùng chi phí. Do đó, lấy giá trị DP tối thiểu ở đường viền cuối cùng sẽ mang lại giá trị tối ưu. 
+Tại sao nó hoạt động: duy trì bất biến rằng giá trị DP của đường viền là chi phí tối thiểu để xóa mọi thứ ở phía đã được xử lý của đường viền đó trong khi không chạm vào phần còn lại. Mọi thao tác hợp pháp đều có thể được chuyển đổi thành thao tác được thực hiện khi các phần của nó chạm đến đường viền. Một thao tác duy nhất tương ứng với một lần lật góc, trong khi cặp trắng-đen hợp lệ tương ứng với hai lần lật góc được thực hiện đồng thời. Ngược lại, mọi chuyển đổi do DP tạo ra đều là một hoạt động hợp pháp, bởi vì các ô góc của nó được hiển thị trên đường viền hiện tại. Do đó, mọi trình tự loại bỏ hợp lệ được biểu thị bằng một đường dẫn qua DP và mọi đường dẫn DP mô tả một trình tự loại bỏ hợp lệ với chi phí chính xác như nhau. Do đó, lấy giá trị DP tối thiểu ở đường viền cuối cùng sẽ mang lại giá trị tối ưu. 
 
 ## Giải pháp Python```python
 import sys
@@ -233,7 +233,7 @@ Việc thực hiện lưu trữ đường viền ngược. Trong biểu diễn b
 y = (r >> (j + 2)).bit_count()
 ```và số bước đi xuống là`x = i - y`. Đây là lý do tại sao không cần quét đường dẫn theo bước (2n) rõ ràng cho mọi trạng thái. 
 
-biểu thức```
+biểu hiện```
 corners = r & ~(r >> 1) & corner_mask
 ```tìm thấy mọi thứ đảo ngược`10`mẫu. các`corner_mask`loại bỏ vị trí cuối cùng không tồn tại, tránh góc ngoài giới hạn ở bit (2n-1). 
 
@@ -300,7 +300,7 @@ Mảng DP có (2^{24}=16,777,216) mục nhập, yêu cầu khoảng 64 MB với 
 
 ## Trường hợp thử nghiệm 
 
-Các thử nghiệm sau đây giả định giải pháp đã gửi được lưu dưới dạng`solution.py`. Người trợ giúp đặt lại mô-đun`input`ràng buộc sau khi thay thế`sys.stdin`, bởi vì giải pháp cố tình sử dụng`sys.stdin.readline`để nhập liệu nhanh.```python
+Các thử nghiệm sau đây giả định giải pháp đã gửi được lưu dưới dạng`solution.py`. Người trợ giúp đặt lại mô-đun`input`ràng buộc sau khi thay thế`sys.stdin`, bởi vì giải pháp cố ý sử dụng`sys.stdin.readline`để nhập liệu nhanh.```python
 import sys
 import io
 import solution

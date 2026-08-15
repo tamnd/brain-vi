@@ -108,7 +108,7 @@ Phần quan trọng là yêu cầu bị xóa trước đó có thể được th
 
 Sau khi xử lý bất kỳ tiền tố nào của chuỗi sự kiện, vùng heap chứa một tập hợp các yêu cầu được phê duyệt khả thi với số lượng yêu cầu tối đa có thể có trong số tất cả các lựa chọn khả thi cho tiền tố đó. 
 
-Khi một yêu cầu mới phù hợp, việc thêm yêu cầu đó sẽ tăng số lượng yêu cầu được phê duyệt lên một, do đó, tập hợp mới là tối ưu cho tiền tố đó. Khi nó không phù hợp, một số yêu cầu được chấp nhận phải được loại bỏ. Mỗi lần xóa có thể sẽ làm giảm số lượng phê duyệt đi một, nhưng việc xóa yêu cầu lớn nhất sẽ mang lại số dư lớn nhất có thể. Do đó, heap chứa tập khả thi tốt nhất có thể có trong số tất cả các lựa chọn với số lượng phê duyệt tối đa. Vì các sự kiện trong tương lai chỉ phụ thuộc vào số tiền còn lại và các yêu cầu đã được chọn, nên việc duy trì số dư còn lại lớn nhất có thể trong số các giải pháp lớn như nhau không bao giờ có thể ảnh hưởng đến tính khả thi trong tương lai. Điều này duy trì tính bất biến trong suốt chuỗi và đưa ra số lượng yêu cầu được phê duyệt tối ưu trên toàn cầu. 
+Khi một yêu cầu mới phù hợp, việc thêm yêu cầu đó sẽ tăng số lượng yêu cầu được phê duyệt lên một, do đó, tập hợp mới là tối ưu cho tiền tố đó. Khi nó không phù hợp, một số yêu cầu được chấp nhận phải được loại bỏ. Mỗi lần xóa có thể sẽ làm giảm số lượng phê duyệt đi một, nhưng việc xóa yêu cầu lớn nhất sẽ mang lại số dư lớn nhất có thể. Do đó, heap chứa tập khả thi tốt nhất có thể có trong số tất cả các lựa chọn với số lượng phê duyệt tối đa. Vì các sự kiện trong tương lai chỉ phụ thuộc vào số tiền còn lại và các yêu cầu đã được chọn, việc duy trì số dư còn lại lớn nhất có thể giữa các giải pháp lớn như nhau không bao giờ có thể ảnh hưởng đến tính khả thi trong tương lai. Điều này duy trì tính bất biến trong suốt chuỗi và đưa ra số lượng yêu cầu được phê duyệt tối ưu trên toàn cầu. 
 
 ## Giải pháp Python```python
 import sys
@@ -368,7 +368,7 @@ resupplied
 approved
 declined
 approved
-```Đây chính là tình huống trong đó quy tắc "từ chối yêu cầu hiện tại" đơn giản có hiệu quả, nhưng công thức vùng heap cũng xử lý tình huống ngược lại khó khăn hơn khi yêu cầu hiện tại nhỏ hơn yêu cầu trước đó. 
+```Đây chính xác là tình huống trong đó quy tắc "từ chối yêu cầu hiện tại" đơn giản có hiệu quả, nhưng công thức heap cũng xử lý tình huống ngược lại khó khăn hơn khi yêu cầu hiện tại nhỏ hơn yêu cầu trước đó. 
 
 Thay vào đó hãy xem xét:```
 3 1

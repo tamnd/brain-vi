@@ -1,6 +1,6 @@
 ---
 title: "CF 102361A - Nhịp góc"
-description: "Đối với mỗi điểm truy vấn (A), chúng ta phải chọn hai điểm gốc riêng biệt (Pu) và (Pv). Ba điểm phải tạo thành một tam giác không suy biến có một góc bằng (90^circ). Đầu ra cho truy vấn đó là số lượng các cặp điểm ban đầu không có thứ tự như vậy."
+description: "Đối với mỗi điểm truy vấn (A), chúng ta phải chọn hai điểm gốc riêng biệt (Pu) và (Pv). Ba điểm phải tạo thành một tam giác không suy biến có một góc bằng (90^circ). Đầu ra của truy vấn đó là số lượng các cặp điểm gốc không có thứ tự như vậy."
 date: "2026-08-14T02:48:06+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1 phút 55s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Đối với mỗi điểm truy vấn (A), chúng ta phải chọn hai điểm gốc riêng biệt (P_u) và (P_v). Ba điểm phải tạo thành một tam giác không suy biến có một góc bằng (90^\circ). Đầu ra của truy vấn đó là số lượng các cặp điểm gốc không có thứ tự như vậy. 
@@ -88,7 +88,7 @@ kiểm tra cặp. Bản thân bài kiểm tra có thời gian không đổi, nh�
 
 Lực lượng vũ phu hoạt động vì mọi tam giác có thể được kiểm tra trực tiếp. Vấn đề là nó bỏ qua thực tế là độ vuông góc chỉ phụ thuộc vào hướng chứ không phụ thuộc vào độ dài của vectơ. 
 
-Giả sử một điểm (O) cố định. Xét tất cả các vectơ từ (O) đến các điểm liên quan. Hai vectơ như vậy tạo thành một góc vuông chính xác khi các đường định hướng của chúng vuông góc. Chúng ta có thể chuẩn hóa mọi vectơ khác 0 thành biểu diễn chính tắc của đường vô hướng của nó. Đối với vectơ ((x,y)), chia cả hai tọa độ cho (\gcd(|x|,|y|)), sau đó chọn dấu nhất quán sao cho (x>0) hoặc (x=0) và (y>0). 
+Giả sử một điểm (O) cố định. Xét tất cả các vectơ từ (O) đến các điểm liên quan. Hai vectơ như vậy tạo thành một góc vuông chính xác khi các đường chỉ hướng của chúng vuông góc. Chúng ta có thể chuẩn hóa mọi vectơ khác 0 thành biểu diễn chính tắc của đường vô hướng của nó. Đối với vectơ ((x,y)), chia cả hai tọa độ cho (\gcd(|x|,|y|)), sau đó chọn dấu nhất quán sao cho (x>0) hoặc (x=0) và (y>0). 
 
 Ví dụ, tất cả 
 
@@ -102,7 +102,7 @@ Khi một hướng (d=(x,y)) được chuẩn hóa, hướng vuông góc chỉ �
 
 Vẫn còn hai vai trò hình học cho điểm truy vấn. Nếu truy vấn là đỉnh góc vuông, chúng ta có thể xử lý truy vấn đó một cách độc lập trong (O(n\log C)), trong đó (C) là độ lớn tọa độ, vì mỗi vectơ (n) phải được chuẩn hóa. 
 
-Nếu truy vấn không phải là đỉnh góc vuông, chúng ta không thể xử lý độc lập từng cặp xung quanh truy vấn. Thay vào đó, chúng tôi đảo ngược quan điểm. Cố định một điểm ban đầu (P_i) làm đỉnh vuông góc. Xây dựng bản đồ tần số hướng cho tất cả các điểm gốc khác xung quanh (P_i). Sau đó, mọi truy vấn (A) đều yêu cầu số điểm ban đầu có vectơ từ (P_i) vuông góc với (A-P_i). Chúng tôi có thể trả lời tất cả các truy vấn (q) trong khi bản đồ này có sẵn. Việc lặp lại điều này cho mọi điểm ban đầu sẽ mang lại các phép toán hướng (O(n^2+nq)). 
+Nếu truy vấn không phải là đỉnh vuông góc thì chúng ta không thể xử lý độc lập từng cặp xung quanh truy vấn. Thay vào đó, chúng tôi đảo ngược quan điểm. Cố định một điểm ban đầu (P_i) làm đỉnh vuông góc. Xây dựng bản đồ tần số hướng cho tất cả các điểm gốc khác xung quanh (P_i). Sau đó, mọi truy vấn (A) đều yêu cầu số điểm ban đầu có vectơ từ (P_i) vuông góc với (A-P_i). Chúng tôi có thể trả lời tất cả các truy vấn (q) trong khi bản đồ này có sẵn. Việc lặp lại điều này cho mọi điểm ban đầu sẽ mang lại các phép toán hướng (O(n^2+nq)). 
 
 Hai trường hợp cùng nhau giảm công việc từ hàng tỷ kiểm tra cặp xuống còn khoảng vài triệu thao tác bản đồ băm. 
 
@@ -135,7 +135,7 @@ Một tam giác trong đó truy vấn không phải là đỉnh góc vuông có 
 
 Khi truy vấn là đỉnh góc vuông, bản đồ tần số sẽ đếm từng cặp điểm ban đầu có vectơ từ truy vấn vuông góc. Mỗi cặp không có thứ tự xuất hiện hai lần trong tổng, một lần từ mỗi lớp hướng, do đó việc chia cho hai sẽ cho ra chính xác số lượng hình tam giác. 
 
-Khi điểm ban đầu (P_i) là đỉnh góc vuông thì vectơ (A-P_i) xác định hướng mà vectơ (P_j-P_i) phải có. Bản đồ chứa chính xác tần số của tất cả các hướng điểm ban đầu có thể có từ (P_i), do đó việc tra cứu sẽ tính chính xác các lựa chọn hợp lệ của (P_j). Vì mỗi tam giác chỉ có một đỉnh vuông nên mỗi tam giác có truy vấn về cạnh huyền của nó được tính một lần. Hai trường hợp không khớp nhau vì tam giác không suy biến chỉ có một góc vuông. 
+Khi điểm gốc (P_i) là đỉnh góc vuông thì vectơ (A-P_i) xác định hướng mà vectơ (P_j-P_i) phải có. Bản đồ chứa chính xác tần số của tất cả các hướng điểm ban đầu có thể có từ (P_i), do đó việc tra cứu sẽ tính chính xác các lựa chọn hợp lệ của (P_j). Vì mỗi tam giác chỉ có một đỉnh vuông nên mỗi tam giác có truy vấn về cạnh huyền của nó được tính một lần. Hai trường hợp không khớp nhau vì tam giác không suy biến chỉ có một góc vuông. 
 
 ## Giải pháp Python```python
 import sys

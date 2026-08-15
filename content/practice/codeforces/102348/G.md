@@ -18,7 +18,7 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 5 phút 32s 
+**Thời gian giải:** 5 phút 32 giây 
 **Đã xác minh:** không 
 
 ##Giải pháp 
@@ -54,7 +54,7 @@ aba
 
 ## Phương pháp tiếp cận 
 
-Một cách tiếp cận đơn giản là kiểm tra các vị trí không khớp và liên tục tìm kiếm hai vị trí có ký tự có thể được trao đổi để đạt được tiến bộ. Vì có hai loại không khớp, người ta có thể thử mọi cặp chỉ số có thể có và kiểm tra xem việc hoán đổi các ký tự tương ứng có làm giảm số lượng không khớp hay không. Điều này đúng vì việc tìm kiếm toàn diện sẽ xem xét mọi giao dịch hoán đổi hợp pháp, nhưng nó quá đắt. Với`n`các vị trí, có`n²`các hoán đổi chuỗi chéo có thể xảy ra và việc tìm kiếm liên tục qua chúng có thể yêu cầu theo thứ tự`n²`séc. Tại`n = 2 * 10^5`, đó là về`4 * 10^10`trao đổi ứng viên. 
+Một cách tiếp cận đơn giản là kiểm tra các vị trí không khớp và liên tục tìm kiếm hai vị trí có ký tự có thể được trao đổi để đạt được tiến bộ. Vì có hai loại không khớp, người ta có thể thử mọi cặp chỉ số có thể và kiểm tra xem việc hoán đổi các ký tự tương ứng có làm giảm số lượng không khớp hay không. Điều này đúng vì việc tìm kiếm toàn diện sẽ xem xét mọi giao dịch hoán đổi hợp pháp, nhưng nó quá đắt. Với`n`các vị trí, có`n²`các hoán đổi chuỗi chéo có thể xảy ra và việc tìm kiếm liên tục qua chúng có thể yêu cầu theo thứ tự`n²`séc. Tại`n = 2 * 10^5`, đó là về`4 * 10^10`trao đổi ứng viên. 
 
 Quan sát quan trọng là các ký tự thực tế chỉ quan trọng thông qua loại không khớp. Giả sử vị trí`i`Và`j`cả hai đều thuộc loại`ab`. Ở cả hai vị trí ta có`s = a`Và`t = b`. Hoán đổi`s[i]`với`t[j]`trao đổi`a`Và`b`, vì vậy cả hai vị trí đều trở thành`bb`Và`aa`. Như vậy hai`ab`sự không phù hợp có thể được sửa chữa bằng một thao tác. Lập luận tương tự có tác dụng đối với hai`ba`sự không phù hợp. 
 
@@ -178,7 +178,7 @@ b
 | --- | --- | --- | --- | --- | 
 | 1 |`a`|`b`|`[1]`|`[]`| 
 
-Tổng số không khớp là một, số lẻ. 
+Tổng số không khớp là một, là số lẻ. 
 
 | Tổng số không khớp | Khả thi? | Đầu ra | 
 | --- | --- | --- | 

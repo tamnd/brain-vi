@@ -28,7 +28,7 @@ Chúng ta có số lượng vệ tinh chẵn xung quanh điểm gốc. Mỗi v�
 
 Elphaba chọn một tia bắt đầu từ gốc tọa độ. Cô ấy cần mọi lực hấp dẫn dọc theo tia đó để hướng chính xác dọc theo tia đó, ở mọi khoảng cách dương tính từ gốc tọa độ. Đầu ra là tập hợp tất cả các hướng tia như vậy, được đo bằng cung giây. Vì một đường thẳng có hai tia đối nhau nên một trục đối xứng hợp lệ sẽ cho hai hướng ra cách nhau 64.800 giây cung. 
 
-Công thức vật lý có vẻ phức tạp nhưng tính chất liên quan lại đơn giản hơn nhiều. Đối với một đường thẳng ứng cử đi qua điểm gốc, mọi vệ tinh ở một bên của đường thẳng phải có một vệ tinh phù hợp ở phía bên kia, có khoảng cách chính xác đến điểm gốc và cùng khối lượng. Sự phản xạ trên đường truyền phải bảo toàn cấu hình vệ tinh có trọng số hoàn chỉnh. Đây là sự giảm thiểu trung tâm của vấn đề. Quan sát tính đối xứng tương tự cũng nhằm mục đích đơn giản hóa bài toán ban đầu. 
+Công thức vật lý có vẻ phức tạp nhưng tính chất liên quan lại đơn giản hơn nhiều. Đối với một đường thẳng ứng cử viên đi qua điểm gốc, mọi vệ tinh ở một bên của đường thẳng phải có một vệ tinh phù hợp ở phía bên kia, có khoảng cách chính xác đến điểm gốc và cùng khối lượng. Sự phản xạ trên đường truyền phải bảo toàn cấu hình vệ tinh có trọng số hoàn chỉnh. Đây là sự giảm thiểu trung tâm của vấn đề. Quan sát tính đối xứng tương tự cũng nhằm mục đích đơn giản hóa bài toán ban đầu. 
 
 Miền góc chỉ chứa 129.600 vị trí số nguyên. Mặc dù câu lệnh cho phép (n) tối đa (2\cdot10^5), tính duy nhất của các góc nguyên thực sự ngụ ý (n\le129600). Thuật toán bậc hai vẫn yêu cầu so sánh khoảng (1,7\cdot10^{10}) ở đầu vào lớn nhất có thể, vượt xa giới hạn hai giây. Chúng ta cần một thuật toán tuyến tính hoặc gần tuyến tính trong miền góc cố định. 
 
@@ -242,13 +242,13 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Phần đầu tiên của quá trình triển khai lưu trữ toàn bộ cấu hình góc trong một mảng có độ dài 129.600. Một bộ dữ liệu ((\rho,m)) là đủ để xác định thông tin vệ tinh cần thiết cho sự phản xạ, vì góc đã được biểu thị bằng chỉ số mảng. 
+```Phần đầu tiên của quá trình triển khai lưu trữ toàn bộ cấu hình góc trong một mảng có độ dài 129.600. Một bộ dữ liệu ((\rho,m)) là đủ để xác định thông tin vệ tinh cần thiết cho sự phản chiếu, vì góc đã được biểu thị bằng chỉ số mảng. 
 
 Việc xây dựng`a[0] + a[:0:-1]`xứng đáng được quan tâm. Phần tử mong muốn tại chỉ mục (x) là (A[-x\bmod L]), do đó chỉ số 0 vẫn ở phía trước và các phần tử còn lại xuất hiện theo thứ tự ngược lại. Một điều bình thường`a[::-1]`sẽ đặt (A[L-1]) ở chỉ số 0 và thay vào đó sẽ biểu thị sự phản ánh đã dịch chuyển. 
 
 Hàm tiền tố KMP sử dụng trực tiếp đẳng thức tuple. Số nguyên Python có thể giữ bán kính và khối lượng đầu vào mà không bị tràn và không cần số học liên quan đến (\rho_i) hoặc (m_i) sau khi xây dựng mảng. 
 
-Quét KMP sử dụng vị trí văn bản (2L-1). Một mẫu đầy đủ xuất hiện bắt đầu từ vị trí (p<L) kết thúc ở (p+L-1), do đó các vị trí xuyên qua (2L-2) là đủ. Sự chuyển đổi`s = (-p) % L`suy ra trực tiếp từ mối quan hệ giữa sự trùng khớp theo trình tự đảo ngược và sự phản ánh. 
+Quét KMP sử dụng vị trí văn bản (2L-1). Một mẫu đầy đủ xuất hiện bắt đầu từ vị trí (p<L) kết thúc ở (p+L-1), do đó các vị trí xuyên qua (2L-2) là đủ. Sự chuyển đổi`s = (-p) % L`suy ra trực tiếp từ mối quan hệ giữa sự trùng khớp theo trình tự đảo ngược và sự phản chiếu. 
 
 Bài kiểm tra điểm cố định tách biệt với bài kiểm tra tính đối xứng. Một cấu hình thực sự có thể đối xứng xung quanh một đường trong khi có các vệ tinh nằm trên đường đó. Elphaba không thể sử dụng dòng như vậy nên những ứng cử viên đó phải bị loại bỏ. 
 
@@ -467,7 +467,7 @@ Trường hợp cạnh thứ hai là hướng nửa số nguyên. Vì```
 2
 1 0 1
 1 1 1
-```sự dịch chuyển theo chu kỳ phù hợp sẽ cho (s=1). Vì (s) là số lẻ nên không có vị trí góc nguyên thỏa mãn (2x=s) nên không có vệ tinh nào có thể nằm trên trục. Thuật toán lưu trữ hướng nhân đôi (1), sau đó in (1/2=0,5) và cũng in hướng ngược lại (64800,5). 
+```sự dịch chuyển theo chu kỳ phù hợp sẽ cho (s=1). Vì (s) là số lẻ nên không có vị trí góc nguyên nào thỏa mãn (2x=s) nên không có vệ tinh nào có thể nằm trên trục. Thuật toán lưu trữ hướng nhân đôi (1), sau đó in (1/2=0,5) và cũng in hướng ngược lại (64800,5). 
 
 Vỏ cạnh thứ ba được bao bọc theo góc cạnh. Vì```
 2

@@ -41,7 +41,7 @@ Ví dụ: mẫu có bốn điểm
 (0,923879533,0,382683432,0),\quad 
 (0,923879533,-0,382683432,0), 
 ] 
-cùng với những mặt tiêu cực của chúng. Mọi điểm đều nhận được dấu vân tay bậc hai giống nhau. Đầu ra đúng có thể sử dụng phép quay (-\pi/2) quanh trục (z) và hoán vị (2,3,4,1). Một phương pháp giả định mỗi dấu vân tay là duy nhất sẽ âm thầm thất bại trước khi nó cố gắng tính toán phép quay. 
+cùng với những mặt tiêu cực của chúng. Mọi điểm đều nhận được dấu vân tay bậc hai giống nhau. Đầu ra đúng có thể sử dụng phép quay (-\pi/2) quanh trục (z) và hoán vị (2,3,4,1). Một phương pháp giả định mỗi dấu vân tay là duy nhất sẽ âm thầm thất bại trước khi nó cố gắng tính toán phép xoay. 
 
 Trường hợp cạnh đơn giản thứ hai là phép xoay danh tính. Nếu hai bộ đầu vào giống hệt nhau nhưng bị xáo trộn thì góc yêu cầu là (0) và trục có thể là bất kỳ vectơ nào khác 0. Việc triển khai tạo ra trục (x) trong trường hợp này. Trục không được xác định duy nhất khi góc bằng 0, do đó việc so sánh trục được in với một số trục dự kiến ​​sẽ không chính xác. 
 

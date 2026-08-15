@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1 phút 38 giây 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta có mô đun nguyên tố (p) và một mảng (a_1,\ldots,a_n), trong đó mọi giá trị mảng đều khác 0 modulo (p). Đối với hai số dư khác 0 (a,b), chúng ta cần số mũ dương nhỏ nhất (u) sao cho (a^u) thuộc nhóm con tuần hoàn được tạo bởi (b). Gọi giá trị đó là (f(a,b)). 
@@ -70,7 +70,7 @@ d_b=\gcd(B,q).
 Chúng ta cần (u) dương nhỏ nhất sao cho (a^u) thuộc nhóm con đó. Vì (a^u=g^{Au}), điều này có nghĩa là 
 
 [ 
-d_b\mid Au. 
+d_b\mid Âu. 
 ] 
 
 Giải pháp tích cực nhỏ nhất là 

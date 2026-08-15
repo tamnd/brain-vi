@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 19 phút 36 giây 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Những chiếc đèn lồng được cho dưới dạng tọa độ tăng dần, vì vậy thứ tự đầu vào của chúng đã là thứ tự của chúng dọc theo đường phố. Chúng ta cần chọn dãy con lớn nhất của các tọa độ này để tạo thành một cấp số cộng. Nếu chúng ta chọn tọa độ (a_1,a_2,\ldots,a_k) thì mọi khoảng cách liên tiếp phải giống nhau. Bất kỳ lựa chọn nào về một hoặc hai chiếc đèn lồng đều tự động hợp lệ, vì vậy phần thú vị sẽ bắt đầu ở độ dài thứ ba. 
@@ -86,7 +86,7 @@ Phép truy toán đưa ra các trạng thái (O(n^2)) và công việc không đ
 
 1. Lưu trữ tọa độ theo thứ tự đã sắp xếp và xây dựng từ điển ánh xạ mọi tọa độ vào chỉ mục của nó. Từ điển cho phép chúng tôi xác định xem tiền thân được yêu cầu (2x_i-x_j) có tồn tại trong thời gian dự kiến ​​không đổi hay không. 
 2. Phân bổ một mục nhập DP được đóng gói cho mỗi cặp (i<j). Chúng ta chỉ cần lưu trữ hình tam giác vì các trạng thái có (i\ge j) là vô nghĩa và mỗi giá trị tối đa là (n\le3000), do đó, số nguyên 16 bit không dấu là đủ. 
-3. Xử lý chỉ mục đầu tiên (i) từ trái sang phải và với mọi (j>i), hãy xét cặp (x_i,x_j). Mọi tiền thân của cặp này phải có chỉ số nhỏ hơn (i), do đó trạng thái cần thiết cho phép truy toán đã được tính toán. 
+3. Xử lý chỉ mục đầu tiên (i) từ trái sang phải và với mọi (j>i), xét cặp (x_i,x_j). Mọi tiền thân của cặp này phải có chỉ số nhỏ hơn (i), do đó trạng thái cần thiết cho phép truy toán đã được tính toán. 
 4. Tính tọa độ liền trước cần thiết là (p=2x_i-x_j). Nếu (p) hiện diện tại chỉ mục (k), hãy đọc trạng thái đã được tính toán (dp[k][i]) và đặt 
 
 [ 
@@ -313,4 +313,4 @@ Trường hợp cạnh thứ tư sử dụng các giá trị tọa độ pháp l
 Trường hợp hoàn toàn bình đẳng được yêu cầu, chẳng hạn như```
 3
 5 5 5
-```không thể xảy ra trong một bài kiểm tra hợp lệ vì bài toán đảm bảo tọa độ tăng dần. Từ điển và DP được thiết kế dựa trên sự đảm bảo đó, do đó, dữ liệu đầu vào không đúng định dạng này được loại trừ một cách có chủ ý khỏi các xác nhận có thể thực thi thay vì coi đó là một thử nghiệm pháp lý.
+```không thể xảy ra trong một bài kiểm tra hợp lệ vì bài toán đảm bảo tọa độ tăng dần. Từ điển và DP được thiết kế dựa trên sự đảm bảo đó, do đó, dữ liệu đầu vào không đúng định dạng này được loại trừ một cách có chủ ý khỏi các xác nhận có thể thực thi được thay vì coi đó là một thử nghiệm pháp lý.
