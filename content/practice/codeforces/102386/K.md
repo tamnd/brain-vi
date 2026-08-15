@@ -1,7 +1,7 @@
 ---
 title: "CF 102386K - \u041c\u0430\u043b\u044b\u0448 \u0438 \u041a\u0430\u0440\u043b\u0441\u043e\u043d"
-description: "Chúng ta có một đa giác lồi hoàn toàn có các đỉnh là các điểm mạng nguyên và được liệt kê ngược chiều kim đồng hồ. Chúng ta cần một đường thẳng chia đa giác thành hai vùng có cùng diện tích."
-date: "2026-08-14T13:42:47+07:00"
+description: "Chúng ta có một đa giác lồi hoàn toàn có các đỉnh được cho ngược chiều kim đồng hồ và có tọa độ nguyên. Chúng ta cần vẽ một đường thẳng chia đa giác thành hai vùng có diện tích bằng nhau."
+date: "2026-08-15T18:57:38+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102386
@@ -9,7 +9,7 @@ codeforces_index: "K"
 codeforces_contest_name: "\u041a\u0432\u0430\u043b\u0438\u0444\u0438\u043a\u0430\u0446\u0438\u043e\u043d\u043d\u044b\u0439 \u0442\u0443\u0440 \u0423\u0440\u0430\u043b\u044c\u0441\u043a\u043e\u0433\u043e \u0447\u0435\u0442\u0432\u0435\u0440\u0442\u044c\u0444\u0438\u043d\u0430\u043b\u0430 \u0427\u0435\u043c\u043f\u0438\u043e\u043d\u0430\u0442\u0430 \u043c\u0438\u0440\u0430 \u043f\u043e \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044e 2019"
 rating: 0
 weight: 102386
-solve_time_s: 246
+solve_time_s: 549
 verified: false
 draft: false
 ---
@@ -18,121 +18,134 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 4 phút 6s 
+**Thời gian giải:** 9 phút 9 giây 
 **Đã xác minh:** không 
 
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta có một đa giác lồi hoàn toàn có các đỉnh là các điểm mạng nguyên và được liệt kê ngược chiều kim đồng hồ. Chúng ta cần một đường thẳng chia đa giác thành hai vùng có cùng diện tích. Bản thân đường thẳng phải chứa hai điểm mạng nguyên phân biệt, do đó, tương tự, chúng ta cần một đường chia đôi diện tích với độ dốc hợp lý và điểm giao nhau hợp lý. 
+Chúng ta có một đa giác lồi hoàn toàn có các đỉnh được cho ngược chiều kim đồng hồ và có tọa độ nguyên. Chúng ta cần vẽ một đường thẳng chia đa giác thành hai vùng có diện tích bằng nhau. Bản thân dòng phải chứa hai điểm tọa độ nguyên riêng biệt và tọa độ của chúng phải nằm trong phạm vi từ (-10^{18}) đến (10^{18}). 
 
-Sự tự do hình học quan trọng là chúng ta được phép chọn bất kỳ đường thẳng nào, không nhất thiết phải là đường đi qua các đỉnh đa giác. Tuy nhiên, việc chọn một đỉnh cụ thể sẽ mang lại cho chúng ta một cấu trúc mạnh mẽ hơn nhiều. Sửa đỉnh đầu tiên (V_0). Khi một điểm (P) di chuyển dọc theo đường biên đa giác từ (V_1) về phía (V_{n-1}), đường thẳng (V_0P) quét qua tất cả các vết cắt có thể có mà một điểm cuối trên đường biên là (V_0). Với mỗi vị trí biên (P), diện tích một cạnh của (V_0P) thay đổi liên tục từ 0 đến toàn bộ diện tích đa giác. Vì đa giác lồi nên chính xác một (P) như vậy sẽ cho một nửa diện tích. 
+Thuộc tính hình học hữu ích là đa giác có thể được tạo tam giác từ bất kỳ đỉnh nào của nó. Chọn đỉnh đầu tiên (V_0) và kết nối nó với mọi đỉnh khác. Điều này tạo ra (N-2) tam giác có diện tích nhân đôi là số nguyên vì mọi tọa độ đều là số nguyên. Toàn bộ vấn đề sau đó trở thành việc tìm ra nơi mà một nửa tổng diện tích nhân đôi rơi vào chuỗi hình tam giác này. Vấn đề ban đầu sử dụng (N\le 1000), tọa độ được giới hạn bởi (10^5) và giới hạn một giây. Nó đủ nhỏ cho một thuật toán tuyến tính hoặc bậc hai, nhưng không có lý do gì để thực hiện bất cứ điều gì bậc hai một khi tam giác quạt được nhận ra. Số học số nguyên chính xác cũng thích hợp hơn dấu phẩy động vì đẳng thức cần thiết là chính xác. 
 
-Đầu vào có tối đa (1000) đỉnh và mọi tọa độ có tối đa giá trị tuyệt đối (10^5). Một giải pháp trực tiếp (O(n^2)) đã nhỏ về mặt số lượng ở giới hạn này, khoảng một triệu phép tính hình học cơ bản, nhưng cấu trúc cho phép xây dựng (O(n)). Giới hạn tọa độ cũng làm cho số học số nguyên chính xác trở nên thực tế. Tích chéo của hai hiệu tọa độ tối đa là khoảng (8\cdot10^{10}) và tổng của nhiều nhất (1000) hình tam giác nhỏ hơn (10^{14}). Số nguyên Python không có vấn đề tràn ở đây, trong khi số học 64-bit có dấu cũng đủ để tính toán diện tích. 
+Tìm kiếm toàn diện trực tiếp trên tất cả các cặp tọa độ nguyên (A, B) là hữu hạn vì tọa độ bị giới hạn nhưng hoàn toàn vô dụng. Có khoảng ((4\cdot10^{36})^2/2\approx8\cdot10^{72}) cặp điểm mạng không có thứ tự và việc kiểm tra một dòng so với tất cả các cạnh đa giác sẽ thêm một hệ số khác của (N). Với (N=1000), đó là thứ tự của (10^{75}) phép toán hình học cơ bản. Các cách tiếp cận mạnh mẽ hơn có vẻ hợp lý hơn, chẳng hạn như thử các đường đi qua các cặp đỉnh đa giác, cũng không đủ vì một đường cắt hợp lệ không cần phải đi qua hai đỉnh đa giác. 
 
-Có một số trường hợp đặc biệt có thể âm thầm phá vỡ việc triển khai dấu phẩy động. Đầu tiên, đường cắt được yêu cầu có thể đi qua chính xác một đỉnh đa giác khác. Ví dụ,```
-4
+Có một số trường hợp ranh giới mà việc triển khai bất cẩn có thể xử lý sai. Đối với hình tam giác```
+3
 0 0
 4 0
-4 2
 0 2
-```có diện tích (8) và đường chéo từ ((0,0)) đến ((4,2)) chia nó thành hai diện tích (4). Việc so sánh liên quan đến các tham số dấu phẩy động có thể vô tình đặt điểm cuối vào cạnh tiếp theo. So sánh số nguyên chính xác tránh điều này. 
+```câu trả lời là trung tuyến từ ((0,0)) đến trung điểm của cạnh đối diện. Bản thân điểm giữa không cần phải có tọa độ nguyên, vì vậy việc tìm kiếm một điểm nguyên trên cạnh có thể không thành công. Công thức của chúng ta nhân điểm hữu tỉ với mẫu số của nó và thu được một điểm nguyên trên cùng một dòng. 
 
-Một trường hợp khác là khi điểm nửa diện tích nằm hoàn toàn bên trong một cạnh. Mẫu có hành vi chính xác này đối với phần cắt (y=4). Đường thẳng không đi qua một đỉnh đa giác nhưng giao điểm với cạnh thẳng đứng bên phải là một điểm nguyên. Tổng quát hơn, giao điểm đó chỉ được đảm bảo là hợp lý, không phải là số nguyên. Chúng ta phải xây dựng một hướng nguyên cho toàn bộ đường thay vì yêu cầu giao điểm phải là một điểm nguyên. 
+Đối với hình vuông```
+4
+0 0
+2 0
+2 2
+0 2
+```tam giác quạt đầu tiên đã có đúng một nửa diện tích gấp đôi của đa giác. Việc triển khai bất cẩn chỉ xử lý trường hợp một nửa nằm hoàn toàn bên trong một hình tam giác có thể chuyển sang hình tam giác tiếp theo và truy cập các chỉ mục không hợp lệ. Trường hợp đẳng thức phải được xử lý ngay và đường chéo từ ((0,0)) đến ((2,2)) là đáp án hợp lệ. 
 
-Cuối cùng, tổng diện tích nhân đôi có thể là số lẻ. Trong mẫu diện tích nhân đôi là (15), nên một nửa của nó là (15/2). Một giải pháp chỉ dựa trên diện tích số nguyên sẽ kết luận không chính xác rằng việc cắt chính xác là không thể. Điểm cắt có thể đơn giản có tọa độ hợp lý và đường kết quả vẫn có hướng nguyên sau khi chia tỷ lệ. 
+Mẫu được cung cấp là một trường hợp hữu ích khác:```
+4
+0 3
+3 0
+3 6
+0 7
+```Điểm nửa diện tích nằm hoàn toàn bên trong tam giác hình quạt thứ nhất. Việc triển khai dấu phẩy động có thể gần đúng với điểm cắt, nhưng trình kiểm tra yêu cầu sự bằng nhau chính xác. Thay vào đó, chúng ta xây dựng một điểm nguyên trên cùng một dòng bằng cách sử dụng phép nhân số nguyên. 
+
+Dưới những ràng buộc đã nêu, một giải pháp luôn tồn tại, do đó`-1`đầu ra không bao giờ cần thiết. Cấu trúc dưới đây tạo ra một cách rõ ràng cho mỗi đầu vào hợp lệ. 
 
 ## Phương pháp tiếp cận 
 
-Việc xây dựng lực lượng vũ phu tự nhiên bắt đầu bằng cách chọn một đỉnh đa giác (V_i) làm điểm cuối cố định của đường cắt. Sau đó, chúng ta có thể đi vòng quanh ranh giới còn lại, xác định giao điểm của nửa khu vực nằm ở cạnh nào và giải quyết vị trí dọc theo cạnh đó. Nếu toàn bộ tìm kiếm này được lặp lại độc lập cho mỗi (V_i), thì sẽ mất (O(n^2)) thời gian. Đối với (n=1000), đây là khoảng kiểm tra cạnh (10^6), do đó, nó không thực sự bị loại trừ bởi các ràng buộc đã cho, nhưng nó lặp lại chính xác cùng một công việc hình học nhiều lần. 
+Giải pháp brute-force theo nghĩa đen nhất sẽ tìm kiếm trên các điểm nguyên và kiểm tra các dòng ứng cử viên. Điều đó là không thể nếu chỉ xét riêng tọa độ giới hạn, vì mạng chứa khoảng (4\cdot10^{36}) điểm. Ngay cả việc hạn chế tìm kiếm theo các dòng thông qua các cặp đỉnh đa giác cũng để lại các ứng cử viên (O(N^2)) và việc kiểm tra từng ứng cử viên theo đa giác cũng mất (O(N)) thời gian. Trường hợp xấu nhất là về (N^3/2), khoảng (5\cdot10^8) phép toán cạnh cho (N=1000). Quan trọng hơn, việc tìm kiếm hạn chế đó chưa hoàn tất, vì đường được yêu cầu có thể đáp ứng ranh giới đa giác tại hai điểm nằm hoàn toàn bên trong các cạnh. 
 
-Quan sát hữu ích là chúng ta không cần phải thử mọi đỉnh. Chọn (V_0) một lần. Đa giác có thể được chia thành các hình tam giác 
+Quan sát quan trọng là chúng ta không cần phải tìm kiếm chỉ đường. Sửa đỉnh đa giác đầu tiên (V_0) và tam giác hóa đa giác như 
 
 [ 
 (V_0,V_1,V_2),\quad 
-(V_0,V_2,V_3),\quad\ldots,\quad 
-(V_0,V_{n-2},V_{n-1}). 
+(V_0,V_2,V_3),\quad 
+\dots,\quad 
+(V_0,V_{N-2},V_{N-1}). 
 ] 
 
-Vì đa giác hoàn toàn lồi và ngược chiều kim đồng hồ nên tất cả các hình tam giác này đều có diện tích dương và diện tích của chúng cộng lại bằng diện tích của đa giác. 
+Diện tích nhân đôi của mỗi tam giác là một số nguyên. Khi chúng ta đi qua các hình tam giác này, diện tích tích lũy bắt đầu từ 0 và kết thúc ở diện tích gấp đôi của toàn bộ đa giác. Do đó, có một tam giác đầu tiên mà việc bao gồm nó làm cho diện tích tích lũy đạt hoặc vượt quá một nửa tổng diện tích. 
 
-Giả sử điểm nửa diện tích cần thiết nằm trên cạnh (V_iV_{i+1}). Vùng được giới hạn bởi (V_0), chuỗi ranh giới (V_0,V_1,\ldots,V_i,P) và đoạn (PV_0) bao gồm tất cả các tam giác quạt trước cộng với tam giác (V_0V_iP). Dọc theo cạnh (V_iV_{i+1}), diện tích của tam giác sau là tuyến tính ở vị trí (P). Do đó, một khi chúng ta biết cạnh chứa mục tiêu thì vị trí chính xác của (P) chỉ là một phần hữu tỉ của cạnh đó. 
+Nếu diện tích tích lũy chính xác bằng một nửa sau một tam giác hoàn chỉnh nào đó thì đường chéo từ (V_0) tới đỉnh cuối cùng của tam giác đó đã là đường cắt mong muốn. 
 
-Bước cuối cùng là phần làm cho yêu cầu về mạng trở nên dễ dàng. Viết 
+Ngược lại, một nửa tổng diện tích nằm hoàn toàn bên trong một tam giác (V_0BC). Bên trong tam giác đó, mọi đường thẳng đi qua (V_0) và một điểm (P) trên (BC) cắt một tam giác (V_0BP). Diện tích của nó thay đổi tuyến tính khi (P) di chuyển dọc theo (BC), vì vậy chúng ta có thể chọn tỷ lệ chính xác cần thiết trên (BC). 
+
+Khó khăn còn lại là (P) có thể là hữu tỉ chứ không phải là tích phân. Đây là lúc giới hạn đầu ra lớn bất thường (10^{18}) trở nên hữu ích. Nếu 
 
 [ 
-P=V_i+\frac pq(V_{i+1}-V_i). 
+P=\frac{(2T-d)B+dC}{2T}, 
 ] 
 
-Sau đó 
+chúng ta có thể đơn giản sử dụng 
 
-(q-p)(V_i-V_0)+p(V_{i+1}-V_0). 
+[ 
+Q=(2T-d)B+dC. 
 ] 
 
-Vectơ bên phải có tọa độ nguyên. Nó là vectơ chỉ phương của đường mong muốn, vì vậy (V_0) và (V_0+D) là hai điểm nguyên trên đường cắt. Không cần thiết phải xây dựng (P) bằng cách sử dụng tọa độ dấu phẩy động. 
-
-Điều này cũng chứng tỏ rằng một câu trả lời hợp lệ luôn tồn tại dưới sự đảm bảo của bài toán. Trường hợp đầu ra (-1) không bao giờ đạt được đối với đầu vào hợp lệ. 
+Điểm (Q) có tọa độ nguyên và nằm trên cùng một tia từ (V_0) với (P). Do đó đường (V_0Q) chính xác là đường cắt yêu cầu. Không có phép chia và không có số học dấu phẩy động ở bất cứ đâu. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
-| Hãy thử mọi đỉnh và quét ranh giới | (O(n^2)) | (O(n)) | Được chấp nhận cho (n\le1000), nhưng không cần thiết | 
-| Sửa một đỉnh và quét quạt một lần | (O(n)) | (O(n)) | Đã chấp nhận | 
+| Lực lượng vũ phu | (O(N^3)) sau khi giới hạn ứng viên ở các cặp đỉnh | (O(N)) | Quá chậm và không đầy đủ | 
+| Tối ưu | (O(N)) | (O(N)) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Chọn (V_0) làm đỉnh cố định của đường cắt. Vì đa giác là lồi nên mỗi đường từ (V_0) đến một điểm trên ranh giới đối diện sẽ cắt một vùng được xác định rõ có diện tích tăng liên tục từ 0 đến diện tích đa giác đầy đủ. 
-2. Tính diện tích nhân đôi (S) của đa giác bằng cách sử dụng quạt từ (V_0). Với mỗi (i=1,\ldots,n-2), hãy tính 
+1. Chọn đỉnh đa giác đầu tiên (V_0) làm đỉnh chung của tam giác quạt. Dịch mọi đỉnh khác bằng cách trừ (V_0), do đó (V_0) trở thành gốc tọa độ. Bản dịch không thay đổi vùng hoặc dòng qua (V_0). 
+2. Với mọi cặp liên tiếp (V_i,V_{i+1}), với (1\le i<N-1), hãy tính 
 
 [ 
-T_i=\tên toán tử{cross}(V_i-V_0,V_{i+1}-V_0). 
+T_i=\left|\operatorname{cross}(V_i,V_{i+1})\right|. 
 ] 
 
-Tổng của tất cả (T_i) chính xác là diện tích đa giác nhân đôi (S). 
+Bằng hai lần diện tích tam giác (V_0V_iV_{i+1}). Bởi vì tất cả tọa độ đều là số nguyên nên mọi (T_i) đều là số nguyên. 
 
-1. Đi qua các tam giác quạt trong khi duy trì`prefix`, diện tích nhân đôi của tất cả các tam giác hoàn chỉnh trước cạnh hiện tại (V_iV_{i+1}). Mục tiêu nửa diện tích là (S/2). Để tránh phân số, hãy kiểm tra 
+1. Tổng tất cả (T_i) để được (S), diện tích gấp đôi của toàn bộ đa giác. Chúng tôi cố tình làm việc với diện tích nhân đôi để mục tiêu chính xác là (S/2) mà không đưa vào phân số. 
+2. Đi qua các hình tam giác trong khi duy trì diện tích gấp đôi tiền tố của chúng. Tìm tam giác đầu tiên (V_0BC) mà tiền tố mới thỏa mãn (2\cdot\text{prefix}\ge S). Tính lồi đảm bảo rằng tất cả các tam giác quạt đều nằm bên trong đa giác và có diện tích dương, do đó tam giác như vậy luôn tồn tại. 
+3. Nếu (2\cdot\text{prefix}=S), xuất ra (V_0) và đỉnh cuối cùng của tam giác hiện tại. Các tam giác quạt trước đường chéo này có đúng một nửa tổng diện tích. 
+4. Nếu không, hãy để`before`là diện tích gấp đôi của tất cả các tam giác quạt trước (V_0BC) và gọi (T) là diện tích gấp đôi của (V_0BC). Xác định 
 
 [ 
-2\cdot tiền tố\le S\le2(tiền tố+T_i). 
+d=S-2\cdot\text{trước}. 
 ] 
 
-Cạnh đầu tiên thỏa mãn điều kiện này chứa điểm biên mong muốn (P). Diện tích lồi và diện tích tam giác dương đảm bảo rằng cần có chính xác một cạnh, ngoài sự bình đẳng vô hại ở một đỉnh chung. 
-
-1. Hãy để 
+Phần mong muốn của tam giác hiện tại phải có diện tích gấp đôi (d/2). Vì tam giác hiện tại là tam giác đầu tiên vượt qua ranh giới nửa diện tích, 
 
 [ 
-tiền tố r=S-2\cdot. 
+0<d<2T. 
 ] 
 
-Đây là gấp đôi diện tích cần nhân đôi bên trong tam giác (V_0V_iV_{i+1}). Nếu (P) chia (V_iV_{i+1}) theo tỷ lệ (p), thì 
+1. Cho (B=V_i) và (C=V_{i+1}). Một điểm trên (BC) có thể được viết là 
 
 [ 
-\frac pq=\frac{r}{2T_i}. 
+P=\frac{(2T-d)B+dC}{2T}. 
 ] 
 
-Giảm phân số này bằng ước chung lớn nhất của chúng. Chúng ta sử dụng số nguyên xuyên suốt nên ngay cả (S) lẻ cũng không gây ra trường hợp đặc biệt nào. 
+Tam giác (V_0BP) có diện tích gấp đôi 
 
-1. Xác định 
+# \frac{d}{2T}\operatorname{cross}(B,C) 
+
+\frac d2. 
+] 
+
+Do đó diện tích trước tam giác này cộng với diện tích của (V_0BP) chính xác là (S/2). 
+
+1. Chúng tôi không xuất ra (P), vì nó có thể là phân số. Thay vào đó hãy tính 
 
 [ 
-a=V_i-V_0,\qquad b=V_{i+1}-V_0. 
+Q=(2T-d)B+dC. 
 ] 
 
-Vectơ từ (V_0) về phía (P), nhân với (q), là 
+Mọi tọa độ của (Q) đều là số nguyên. Vì (Q=2T\cdot P), các điểm (V_0,P,Q) thẳng hàng nên đường thẳng đi qua (V_0) và (Q) là đường cắt cần thiết. 
 
-[ 
-D=(q-p)a+pb. 
-] 
-
-Cả (a) và (b) đều là vectơ số nguyên, vì vậy (D) là vectơ số nguyên. Vì (P) nằm trên ranh giới đa giác và vết cắt có diện tích dương ở cả hai phía nên (D) không thể bằng 0. 
-
-1. Đầu ra (V_0) và (V_0+D). Chúng là các điểm nguyên phân biệt trên cùng một đường chia đôi diện tích. 
-
-Bất biến đằng sau việc xây dựng là`prefix`luôn bằng diện tích gấp đôi của phần đã bị đường quét đi (V_0P). Mỗi tam giác quạt tiếp theo cộng thêm một số dương, do đó cuối cùng mục tiêu (S/2) nằm bên trong đúng một tam giác. Bên trong tam giác đó, diện tích phụ thuộc tuyến tính vào vị trí của (P), cho biết tham số hữu tỷ chính xác được sử dụng để xây dựng vectơ chỉ hướng nguyên. 
+Sau các bước được đánh số, bất biến là các tam giác hình quạt tích lũy biểu thị chính xác diện tích trên một cạnh của đường chéo ứng cử viên. Trước tam giác đã chọn, diện tích này hoàn toàn dưới một nửa và sau khi thêm tam giác đã chọn, diện tích này ít nhất là một nửa. Nếu sự bằng nhau xảy ra ở ranh giới của tam giác thì đường chéo tương ứng sẽ giải quyết được vấn đề. Mặt khác, số lượng được yêu cầu nằm hoàn toàn trong khoảng từ 0 đến toàn bộ diện tích của tam giác đã chọn, do đó điểm duy nhất (P) được mô tả ở trên nằm hoàn toàn bên trong cạnh của tam giác đó. Điểm nguyên tỷ lệ (Q) nằm trên cùng một đường thẳng, chứng tỏ rằng đường đầu ra có các điểm nguyên và chia đôi chính xác đa giác. 
 
 ## Giải pháp Python```python
 import sys
-from math import gcd
-
 input = sys.stdin.readline
 
 def cross(ax, ay, bx, by):
@@ -142,240 +155,231 @@ def solve():
     n = int(input())
     p = [tuple(map(int, input().split())) for _ in range(n)]
 
-    x0, y0 = p[0]
+    ox, oy = p[0]
 
-    triangles = []
+    # Translate the polygon so p[0] becomes (0, 0).
+    q = [(x - ox, y - oy) for x, y in p]
+    q[0] = (0, 0)
+
+    # Doubled areas of the fan triangles.
+    areas = []
     total = 0
 
     for i in range(1, n - 1):
-        xi, yi = p[i]
-        xj, yj = p[i + 1]
-
-        ax = xi - x0
-        ay = yi - y0
-        bx = xj - x0
-        by = yj - y0
-
-        t = cross(ax, ay, bx, by)
-        triangles.append(t)
+        ax, ay = q[i]
+        bx, by = q[i + 1]
+        t = abs(cross(ax, ay, bx, by))
+        areas.append(t)
         total += t
 
     prefix = 0
 
-    for i in range(1, n - 1):
-        t = triangles[i - 1]
+    for i, t in enumerate(areas, start=1):
+        prefix += t
 
-        if 2 * prefix <= total <= 2 * (prefix + t):
-            r = total - 2 * prefix
-            den = 2 * t
-
-            g = gcd(r, den)
-            num = r // g
-            den //= g
-
-            xi, yi = p[i]
-            xj, yj = p[i + 1]
-
-            ax = xi - x0
-            ay = yi - y0
-            bx = xj - x0
-            by = yj - y0
-
-            dx = (den - num) * ax + num * bx
-            dy = (den - num) * ay + num * by
-
-            print(x0, y0)
-            print(x0 + dx, y0 + dy)
+        # The current fan triangle ends at q[i + 1].
+        if prefix * 2 == total:
+            x, y = q[i + 1]
+            print(ox, oy)
+            print(ox + x, oy + y)
             return
 
-        prefix += t
+        if prefix * 2 > total:
+            before = prefix - t
+            d = total - 2 * before
+
+            # Current triangle is q[0], q[i], q[i + 1].
+            bx, by = q[i]
+            cx, cy = q[i + 1]
+
+            # Q = (2T-d) * B + d * C.
+            #
+            # Q is a scaled version of the exact rational
+            # point on BC, so OQ is the same cutting line.
+            qx = (2 * t - d) * bx + d * cx
+            qy = (2 * t - d) * by + d * cy
+
+            print(ox, oy)
+            print(ox + qx, oy + qy)
+            return
 
 if __name__ == "__main__":
     solve()
-```Vòng lặp đầu tiên tính toán tất cả diện tích tam giác quạt. Việc sử dụng vectơ tương đối với (V_0) sẽ tránh phải viết công thức dây giày đầy đủ và làm cho việc xây dựng hướng sau này sử dụng đại lượng chính xác như nhau. 
+```Phần đầu tiên của quá trình triển khai sẽ dịch đa giác theo đỉnh đầu tiên. Điều này làm cho công thức tính diện tích trở nên đặc biệt đơn giản, vì mỗi tam giác quạt có gốc tọa độ là một đỉnh. 
 
-Vòng lặp thứ hai tìm kiếm tam giác mục tiêu. Sự so sánh được cố tình viết là`2 * prefix <= total <= 2 * (prefix + t)`. Điều này xử lý cả tổng diện tích nhân đôi chẵn và lẻ và không bao giờ chuyển đổi bất cứ thứ gì thành`float`. 
+các`cross`hàm là nguyên hàm hình học duy nhất được yêu cầu. Đối với hai vectơ (u) và (v), giá trị tuyệt đối của nó là diện tích gấp đôi của tam giác tạo bởi gốc tọa độ và các vectơ đó. Số nguyên Python có độ chính xác tùy ý, do đó, các sản phẩm trung gian vẫn an toàn mặc dù đầu ra được xây dựng có thể lớn hơn nhiều so với tọa độ đầu vào. 
 
-Khi cạnh mục tiêu được tìm thấy,`r / den`là phân số (p/q) mô tả vị trí của nửa điểm dọc theo cạnh đó.`gcd`không cần thiết để đảm bảo tính chính xác, nhưng việc giảm phân số sẽ giữ cho vectơ chỉ phương thu được nhỏ hơn. 
+Vòng lặp đầu tiên tính diện tích tam giác quạt và tổng diện tích của chúng. Vòng lặp thứ hai tìm kiếm tiền tố đầu tiên vượt qua một nửa tổng số đó. Nhánh đẳng thức là riêng biệt vì trong trường hợp đó đường mong muốn đã là đường chéo đa giác. 
 
-biểu hiện```
-dx = (den - num) * ax + num * bx
-```là dạng số nguyên của 
+Trong nhánh vượt qua nghiêm ngặt,`before`là diện tích nhân đôi đã được tính. số lượng`d = total - 2 * before`gấp đôi diện tích còn lại cần thiết của tam giác hiện tại. các hệ số`2 * t - d`Và`d`đều dương, do đó điểm được xây dựng nằm trên đoạn giữa hai đỉnh đa giác hiện tại trước khi chia tỷ lệ. 
 
-[ 
-q(P-V_0)=(q-p)(V_i-V_0)+p(V_{i+1}-V_0). 
-] 
-
-Điểm đầu ra có thể cách xa hơn nhiều so với đa giác ban đầu, điều này được cho phép. Kích thước của nó vẫn ở mức an toàn dưới đây (10^{18}). Mỗi chênh lệch tọa độ trong đa giác ban đầu nhiều nhất là (2\cdot10^5), mỗi tam giác quạt có diện tích tối đa gấp đôi (8\cdot10^{10}) và sau khi chia tỷ lệ, tọa độ hướng thu được vẫn ở dưới xa (10^{18}). 
-
-Việc thực hiện không bao giờ in`-1`, bởi vì việc xây dựng chứng minh rằng tồn tại một đường lưới hợp lệ cho mọi đa giác thỏa mãn các đảm bảo đầu vào. 
+Mã không bao giờ chia cho`2 * t`. Đó là thủ thuật thực hiện trung tâm. Điểm hữu tỷ được nhân với mẫu số của nó, tạo ra điểm nguyên`Q`trên cùng một dòng. Với tọa độ đầu vào được giới hạn bởi (10^5), mọi tọa độ dịch có độ lớn tối đa (2\cdot10^5), trong khi (2T\le8\cdot10^{10}) đối với một tam giác riêng lẻ. Do đó, tọa độ được xây dựng nằm ở mức dưới (10^{18}). 
 
 ## Ví dụ đã hoạt động 
 
-Đối với mẫu được cung cấp, đa giác là```
-(0,3), (3,0), (3,6), (0,7)
-```Chiếc quạt ở (V_0=(0,3)) có hai hình tam giác. 
-
-| Cạnh |`prefix`|`t`|`total`| Điều kiện mục tiêu |`r / (2t)`| 
-| --- | --- | --- | --- | --- | --- | 
-| (V_1V_2) | 0 | 18 | 30 | (0\le30\le36) | (30/36=5/6) | 
-
-Mục tiêu nằm trên (V_1V_2). Như vậy (p=5), (q=6). Liên quan đến (V_0), 
-
-[ 
-V_1-V_0=(3,-3), 
-\qquad 
-V_2-V_0=(3,3). 
-] 
-
-Hướng nguyên là 
-
-[ 
-(6-5)(3,-3)+5(3,3)=(18,12). 
-] 
-
-Do đó chương trình có thể xuất ra```
+Đối với mẫu được cung cấp,```
+4
 0 3
-18 15
-```Đường có độ dốc (12/18=2/3). Dòng của mẫu (y=4) là một câu trả lời hợp lệ khác, vì vậy dự kiến ​​sẽ có các kết quả đầu ra chính xác khác nhau. 
+3 0
+3 6
+0 7
+```bản dịch theo đỉnh đầu tiên sẽ cho ((0,0),(3,-3),(3,3),(0,4)). Chiếc quạt bao gồm hai hình tam giác. 
 
-Ví dụ thứ hai, hãy xem xét một tam giác vuông.```
+| Tam giác | Các đỉnh liên quan đến (V_0) | Diện tích nhân đôi | Tiền tố | 
+| --- | --- | --- | --- | 
+| 1 | ((0,0),(3,-3),(3,3)) | 18 | 18 | 
+| 2 | ((0,0),(3,3),(0,4)) | 12 | 30 | 
+
+Tổng diện tích nhân đôi là (30), nên mục tiêu là (15). Tam giác đầu tiên đã vượt qua mục tiêu. Đây`before = 0`, (T=18) và (d=30). Điểm chia tỷ lệ là 
+
+[ 
+Q=(36-30)(3,-3)+30(3,3)=(108,72). 
+] 
+
+Sau khi dịch ngược lại, chương trình xuất ra```
+0 3
+108 75
+```Đường cắt cắt đa giác tại ((0,3)) và ((3,5)) và tam giác thu được có diện tích (15/2), chính xác bằng một nửa diện tích của đa giác. Đầu ra của mẫu là khác nhau, nhưng được phép có nhiều câu trả lời hợp lệ. 
+
+Đối với ví dụ thứ hai, hãy xem xét hình vuông```
+4
+0 0
+2 0
+2 2
+0 2
+```| Tam giác | Các đỉnh liên quan đến (V_0) | Diện tích nhân đôi | Tiền tố | 
+| --- | --- | --- | --- | 
+| 1 | ((0,0),(2,0),(2,2)) | 4 | 4 | 
+| 2 | ((0,0),(2,2),(0,2)) | 4 | 8 | 
+
+Tổng diện tích nhân đôi là (8), nên một nửa là (4). Tiền tố đầu tiên đã chính xác là (4), tiền tố này sẽ kích hoạt nhánh đẳng thức. Đầu ra của thuật toán```
+0 0
+2 2
+```Đường chéo chia hình vuông thành hai hình tam giác có diện tích (2) mỗi hình. 
+
+Một ví dụ nhỏ thứ ba là hình tam giác```
 3
 0 0
 4 0
-0 4
-```Chỉ có một tam giác quạt. 
-
-| Cạnh |`prefix`|`t`|`total`|`r`| Giảm phần | 
-| --- | --- | --- | --- | --- | --- | 
-| (V_1V_2) | 0 | 16 | 16 | 16 | (1/2) | 
-
-Điểm nửa diện tích là trung điểm của (V_1V_2) nên đường cắt đi từ ((0,0)) đến ((2,2)). Công thức định hướng cho 
+0 2
+```Chỉ có một tam giác quạt nên diện tích nhân đôi của nó là (8). Mục tiêu là (4), tương ứng với điểm giữa của cạnh đối diện. Việc xây dựng mang lại 
 
 [ 
-(2-1)(4,0)+1(0,4)=(4,4). 
+Q=8(4,0)+8(0,2)=(32,16), 
 ] 
 
-Vì vậy kết quả đầu ra của chương trình```
-0 0
-4 4
-```Đường thẳng (y=x) chia tam giác thành hai tam giác bằng nhau. 
+nên đường ra là đường đi qua ((0,0)) và ((32,16)), tương đương (y=x/2). Nó đi qua trung điểm ((2,1)) của cạnh đối diện và chính xác là đường trung tuyến của tam giác. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | (O(n)) | Một lượt tính toán các vùng quạt và một lượt xác định cạnh mục tiêu | 
-| Không gian | (O(n)) | Các đỉnh và diện tích tam giác quạt được lưu trữ | 
+| Thời gian | (O(N)) | Mỗi đỉnh đa giác được xử lý một số lần không đổi. | 
+| Không gian | (O(N)) | Các vùng đa giác và tam giác hình quạt được lưu trữ rõ ràng. | 
 
-Giải pháp tuyến tính dễ dàng phù hợp (n\le1000). Các phép toán chủ yếu là cộng số nguyên, nhân, so sánh và tính toán một gcd. Mọi quyết định hình học đều chính xác nên lời giải không phụ thuộc vào độ chính xác về mặt số học. 
+Đối với (N\le1000), thời gian tuyến tính thấp hơn nhiều so với giới hạn sẵn có. Các giá trị số nguyên lớn nhất phát sinh từ các tích chéo và từ việc chia tỷ lệ điểm trên một cạnh đa giác, nhưng các số nguyên có độ chính xác tùy ý của Python xử lý chúng một cách chính xác. Tọa độ được xây dựng cuối cùng nằm ở mức dưới (10^{18}), do đó giới hạn đầu ra cũng được thỏa mãn. 
 
 ## Trường hợp thử nghiệm 
 
-Bộ dây thử nghiệm dưới đây kiểm tra dây chuyền sản xuất về mặt hình học một cách chính xác`Fraction`số học. Điều này rất hữu ích vì câu trả lời không phải là duy nhất, vì vậy việc so sánh kết quả đầu ra với một cặp điểm cụ thể sẽ loại bỏ nhiều giải pháp đúng một cách không chính xác.```python
+Khai thác thử nghiệm sau đây sử dụng hình học số nguyên chính xác để xác thực dòng trả về. Vì các bài toán hình học thường cho phép có nhiều kết quả đầu ra khác nhau nên các bài kiểm tra sẽ kiểm tra tính chất toán học của kết quả đầu ra thay vì yêu cầu một cặp điểm cụ thể.```python
+# helper: run solution on input string, return output string
 import sys
 import io
 from fractions import Fraction
-from math import gcd, atan2
+import math
 
-def solve_text(inp: str) -> str:
-    data = inp.strip().split()
-    it = iter(data)
+def cross(ax, ay, bx, by):
+    return ax * by - ay * bx
 
+def solve_data(data):
+    it = iter(data.strip().split())
     n = int(next(it))
     p = [(int(next(it)), int(next(it))) for _ in range(n)]
 
-    x0, y0 = p[0]
+    ox, oy = p[0]
+    q = [(x - ox, y - oy) for x, y in p]
 
-    triangles = []
+    areas = []
     total = 0
 
     for i in range(1, n - 1):
-        xi, yi = p[i]
-        xj, yj = p[i + 1]
-
-        ax = xi - x0
-        ay = yi - y0
-        bx = xj - x0
-        by = yj - y0
-
-        t = ax * by - ay * bx
-        triangles.append(t)
+        ax, ay = q[i]
+        bx, by = q[i + 1]
+        t = abs(cross(ax, ay, bx, by))
+        areas.append(t)
         total += t
 
     prefix = 0
 
-    for i in range(1, n - 1):
-        t = triangles[i - 1]
-
-        if 2 * prefix <= total <= 2 * (prefix + t):
-            r = total - 2 * prefix
-            den = 2 * t
-
-            g = gcd(r, den)
-            num = r // g
-            den //= g
-
-            xi, yi = p[i]
-            xj, yj = p[i + 1]
-
-            ax = xi - x0
-            ay = yi - y0
-            bx = xj - x0
-            by = yj - y0
-
-            dx = (den - num) * ax + num * bx
-            dy = (den - num) * ay + num * by
-
-            return f"{x0} {y0}\n{x0 + dx} {y0 + dy}\n"
-
+    for i, t in enumerate(areas, start=1):
         prefix += t
+
+        if prefix * 2 == total:
+            x, y = q[i + 1]
+            return f"{ox} {oy}\n{ox + x} {oy + y}\n"
+
+        if prefix * 2 > total:
+            before = prefix - t
+            d = total - 2 * before
+
+            bx, by = q[i]
+            cx, cy = q[i + 1]
+
+            qx = (2 * t - d) * bx + d * cx
+            qy = (2 * t - d) * by + d * cy
+
+            return f"{ox} {oy}\n{ox + qx} {oy + qy}\n"
 
     return "-1\n"
 
-def polygon_area2(poly):
+def run(inp: str) -> str:
+    return solve_data(inp)
+
+def polygon_double_area(p):
     s = 0
-    n = len(poly)
+    n = len(p)
     for i in range(n):
-        x1, y1 = poly[i]
-        x2, y2 = poly[(i + 1) % n]
+        x1, y1 = p[i]
+        x2, y2 = p[(i + 1) % n]
         s += x1 * y2 - y1 * x2
-    return s
+    return abs(s)
 
-def clip_halfplane(poly, A, B, keep_positive):
-    ax, ay = A
-    bx, by = B
-    dx = bx - ax
-    dy = by - ay
+def line_value(a, b, p):
+    ax, ay = a
+    bx, by = b
+    x, y = p
+    return (bx - ax) * (y - ay) - (by - ay) * (x - ax)
 
-    def side(P):
-        px, py = P
-        return dx * (py - ay) - dy * (px - ax)
+def clip_halfplane(poly, a, b, keep_positive):
+    if not poly:
+        return []
 
     result = []
 
+    def inside(v):
+        return v >= 0 if keep_positive else v <= 0
+
     for i in range(len(poly)):
-        P = poly[i]
-        Q = poly[(i + 1) % len(poly)]
+        p = poly[i]
+        q = poly[(i + 1) % len(poly)]
+        fp = line_value(a, b, p)
+        fq = line_value(a, b, q)
+        inp = inside(fp)
+        inq = inside(fq)
 
-        fP = side(P)
-        fQ = side(Q)
+        if inp:
+            result.append(p)
 
-        inP = fP >= 0 if keep_positive else fP <= 0
-        inQ = fQ >= 0 if keep_positive else fQ <= 0
-
-        if inP:
-            result.append(P)
-
-        if inP != inQ:
-            t = Fraction(fP, fP - fQ)
-            x = P[0] + t * (Q[0] - P[0])
-            y = P[1] + t * (Q[1] - P[1])
+        if inp != inq:
+            den = fq - fp
+            t = Fraction(-fp, den)
+            x = p[0] + t * (q[0] - p[0])
+            y = p[1] + t * (q[1] - p[1])
             result.append((x, y))
 
     return result
 
-def area2_fraction(poly):
+def double_area_fraction(poly):
     if len(poly) < 3:
         return Fraction(0)
 
@@ -386,76 +390,39 @@ def area2_fraction(poly):
         s += x1 * y2 - y1 * x2
     return abs(s)
 
-def valid_answer(inp: str, out: str) -> bool:
-    data = inp.strip().split()
-    n = int(data[0])
-    poly = []
-    pos = 1
-
-    for _ in range(n):
-        poly.append((int(data[pos]), int(data[pos + 1])))
-        pos += 2
-
-    ans = out.strip().split()
-    if len(ans) != 4:
+def valid_cut(inp, out):
+    tokens = out.strip().split()
+    if len(tokens) == 1 and tokens[0] == "-1":
         return False
 
-    A = (int(ans[0]), int(ans[1]))
-    B = (int(ans[2]), int(ans[3]))
-
-    if A == B:
+    if len(tokens) != 4:
         return False
 
-    if any(abs(v) > 10**18 for v in A + B):
+    a = (int(tokens[0]), int(tokens[1]))
+    b = (int(tokens[2]), int(tokens[3]))
+
+    if a == b:
         return False
 
-    total = Fraction(abs(polygon_area2(poly)))
+    it = iter(inp.strip().split())
+    n = int(next(it))
+    poly = [(int(next(it)), int(next(it))) for _ in range(n)]
 
-    positive = clip_halfplane(poly, A, B, True)
-    negative = clip_halfplane(poly, A, B, False)
+    total = Fraction(polygon_double_area(poly))
 
-    ap = area2_fraction(positive)
-    an = area2_fraction(negative)
+    left = clip_halfplane(poly, a, b, True)
+    right = clip_halfplane(poly, a, b, False)
 
-    return ap * 2 == total or an * 2 == total
+    return (
+        double_area_fraction(left) * 2 == total
+        and double_area_fraction(right) * 2 == total
+        and abs(a[0]) <= 10**18
+        and abs(a[1]) <= 10**18
+        and abs(b[0]) <= 10**18
+        and abs(b[1]) <= 10**18
+    )
 
-def make_max_polygon():
-    vectors = []
-
-    for x in range(1, 51):
-        for y in range(0, 51):
-            if x == 0 and y == 0:
-                continue
-            if gcd(x, y) == 1:
-                vectors.append((x, y))
-
-    vectors.sort(key=lambda v: atan2(v[1], v[0]))
-    vectors = vectors[:500]
-
-    edges = vectors[:]
-
-    for x, y in vectors:
-        edges.append((-x, -y))
-
-    poly = []
-    x = 0
-    y = 0
-
-    for dx, dy in edges:
-        poly.append((x, y))
-        x += dx
-        y += dy
-
-    min_x = min(x for x, y in poly)
-    max_x = max(x for x, y in poly)
-    min_y = min(y for x, y in poly)
-    max_y = max(y for x, y in poly)
-
-    shift_x = -(min_x + max_x) // 2
-    shift_y = -(min_y + max_y) // 2
-
-    return [(x + shift_x, y + shift_y) for x, y in poly]
-
+# Provided sample.
 sample1 = """\
 4
 0 3
@@ -463,93 +430,105 @@ sample1 = """\
 3 6
 0 7
 """
+assert valid_cut(sample1, run(sample1)), "sample 1"
 
-assert valid_answer(sample1, solve_text(sample1)), "sample 1"
-
+# Minimum-size polygon.
 triangle = """\
 3
 0 0
 4 0
-0 4
-"""
-
-assert valid_answer(triangle, solve_text(triangle)), "minimum-size triangle"
-
-half_vertex = """\
-4
-0 0
-4 0
-4 2
 0 2
 """
+assert run(triangle) == "0 0\n32 16\n", "minimum-size triangle"
 
-assert valid_answer(half_vertex, solve_text(half_vertex)), "half-area at a vertex"
-
-boundary_coordinates = """\
-3
--100000 -100000
-100000 -100000
-0 100000
+# Equal fan areas, exercising the exact-half branch.
+square = """\
+4
+0 0
+2 0
+2 2
+0 2
 """
+assert run(square) == "0 0\n2 2\n", "exact prefix half"
 
-assert valid_answer(
-    boundary_coordinates,
-    solve_text(boundary_coordinates)
-), "boundary coordinates"
+# Coordinates at the input boundary.
+boundary_triangle = """\
+3
+100000 100000
+-100000 100000
+-100000 -100000
+"""
+assert valid_cut(boundary_triangle, run(boundary_triangle)), "coordinate boundary"
 
-max_poly = make_max_polygon()
-assert len(max_poly) == 1000
-assert max(abs(x) <= 10**5 and abs(y) <= 10**5 for x, y in max_poly)
+# A nontrivial polygon where half the area lies strictly inside a fan triangle.
+pentagon = """\
+5
+0 0
+4 0
+5 2
+3 5
+0 4
+"""
+assert run(pentagon) == "0 0\n144 145\n", "interior fan triangle"
 
-max_input = str(len(max_poly)) + "\n"
-max_input += "\n".join(f"{x} {y}" for x, y in max_poly) + "\n"
+# Maximum-size stress test.
+# Points are sampled from a large circle and slightly perturbed radially.
+# The radius is large enough that rounding preserves strict convexity.
+n = 1000
+pts = []
+for i in range(n):
+    angle = 2.0 * math.pi * i / n
+    r = 90000 + (i % 7)
+    x = int(round(r * math.cos(angle)))
+    y = int(round(r * math.sin(angle)))
+    pts.append((x, y))
 
-assert valid_answer(max_input, solve_text(max_input)), "maximum-size polygon"
+# Rotate the generated order if necessary so it is counterclockwise.
+area = polygon_double_area(pts)
+if area < 0:
+    pts.reverse()
 
-# A polygon with all coordinates equal cannot satisfy the input guarantees:
-# three distinct vertices would be impossible. Such a test is intentionally
-# excluded because it is not a valid instance of the problem.
+max_case = str(n) + "\n" + "\n".join(f"{x} {y}" for x, y in pts) + "\n"
+assert valid_cut(max_case, run(max_case)), "maximum-size stress test"
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-| Mẫu được cung cấp | Bất kỳ đường nửa diện tích chính xác nào, chẳng hạn như đầu ra của chương trình | Giao lộ hợp lý ngay trong một cạnh | 
-| (3)-đỉnh tam giác vuông | Một đường thẳng đi qua hai điểm nguyên chia đôi tam giác | Đa giác hợp lệ tối thiểu | 
-| (4\times2) hình chữ nhật | Một đường chéo qua một đỉnh đối diện | Mục tiêu nửa diện tích chính xác tại ranh giới tam giác quạt | 
-| Tam giác sử dụng tọa độ (\pm10^5) | Bất kỳ dòng số nguyên hợp lệ nào trong giới hạn đầu ra (10^{18}) | Số học tọa độ biên | 
-| Đa giác được tạo (1000) -vertex | Bất kỳ dòng số nguyên hợp lệ nào | Quét tối đa (n) và tuyến tính | 
-| Tất cả tọa độ đều bằng nhau | Không tồn tại đầu vào hợp lệ | Xác nhận tại sao đây không thể là một trường hợp thử nghiệm hợp pháp | 
+| Mẫu 1 | Bất kỳ dòng số nguyên chia đôi diện tích chính xác nào | Đường cắt độc đáo bên trong tam giác quạt đầu tiên | 
+|`3 / 0 0 / 4 0 / 0 2`|`0 0`Và`32 16`| Đa giác tối thiểu và chia tỷ lệ điểm giữa hợp lý | 
+|`4 / 0 0 / 2 0 / 2 2 / 0 2`|`0 0`Và`2 2`| Tiền tố chính xác bằng một nửa | 
+| Tam giác biên có tọa độ (\pm100000) | Bất kỳ dòng số nguyên hợp lệ nào | Tọa độ đầu vào lớn và số nguyên được xây dựng lớn | 
+| Đa giác năm đỉnh |`0 0`Và`144 145`| Thi công tam giác quạt nội thất nghiêm ngặt | 
+| Đã tạo đa giác 1000 đỉnh | Bất kỳ dòng số nguyên hợp lệ nào | Tối đa (N), số học số nguyên và truyền tải thời gian tuyến tính | 
 
 ## Vỏ cạnh 
 
-Khi điểm nửa diện tích chính xác là một đỉnh đa giác, mục tiêu có thể được chia sẻ bởi hai hình tam giác quạt liên tiếp. Vì```
-4
+Đối với tam giác tối thiểu```
+3
 0 0
 4 0
-4 2
 0 2
-```tam giác quạt đầu tiên có diện tích gấp đôi (8), trong khi toàn bộ đa giác có diện tích gấp đôi (16). Mục tiêu đạt được chính xác tại (V_2=(4,2)). Phép so sánh số nguyên chấp nhận cạnh đầu tiên có đẳng thức, đưa ra hướng (V_2-V_0=(4,2)). Không có epsilon nào liên quan. 
+```thuật toán có đúng một tam giác quạt có diện tích gấp đôi (8). Tiền tố ngay lập tức bằng tổng, nhưng điều kiện nửa diện tích đạt được bên trong tam giác đó chứ không phải sau toàn bộ tam giác. Đây`before = 0`, (T=8) và (d=8). Điểm nguyên được xây dựng là (Q=8(4,0)+8(0,2)=(32,16)). Đường thẳng từ ((0,0)) đến ((32,16)) là đường trung tuyến nên cả hai phần đều có diện tích (4). 
 
-Khi điểm nửa diện tích nằm hoàn toàn bên trong một cạnh, tham số là hợp lý. Trong mẫu, tam giác quạt thứ nhất có diện tích gấp đôi (18), trong khi tổng diện tích là (30). Phân số cần tìm là 
+Đối với trường hợp tiền tố chính xác```
+4
+0 0
+2 0
+2 2
+0 2
+```tam giác quạt thứ nhất có diện tích gấp đôi (4), trong khi tổng diện tích gấp đôi là (8). Bài kiểm tra bình đẳng diễn ra trước nhánh vượt qua nghiêm ngặt. Đường chéo đầu ra ((0,0)) đến ((2,2)) chia hình vuông thành hai hình tam giác bằng nhau. Trường hợp này phát hiện ra cả lỗi ngẫu nhiên trong việc chọn tam giác hiện tại và cách triển khai giả định điểm nửa diện tích luôn nằm trong một cạnh. 
 
-[ 
-\frac{30}{36}=\frac56. 
-] 
+Đối với mẫu được cung cấp```
+4
+0 3
+3 0
+3 6
+0 7
+```tam giác đầu tiên có diện tích gấp đôi (18), trong khi toàn bộ đa giác có diện tích gấp đôi (30). Vì (18>15) nên mục tiêu nằm trong tam giác đó. Điểm chia tỷ lệ chính xác là ((108,72)) trong tọa độ so với đỉnh đầu tiên, cho điểm đầu ra ((108,75)). Đường thẳng đi qua ((0,3)) và ((108,75)) lại cắt đa giác tại ((3,5)) và tam giác thu được có diện tích (7,5), chính xác bằng một nửa diện tích của đa giác (15). 
 
-Do đó, điểm này là hợp lý, nhưng hướng được chia tỷ lệ 
+Đối với trường hợp tọa độ biên```
+3
+100000 100000
+-100000 100000
+-100000 -100000
+```đầu vào sử dụng cường độ tọa độ lớn nhất được phép. Sau khi dịch theo đỉnh đầu tiên, các điểm còn lại là ((-200000,0)) và ((-200000,-200000)). Việc xây dựng chia tỷ lệ điểm giữa cạnh đối diện bằng diện tích nhân đôi của tam giác và tạo ra một điểm có độ lớn khoảng (10^{13}), vẫn thấp hơn nhiều (10^{18}). Không cần thực hiện phép toán dấu phẩy động nên không làm mất độ chính xác ở biên. 
 
-[ 
-(6-5)(3,-3)+5(3,3)=(18,12) 
-] 
-
-là không thể thiếu. Do đó, dòng đầu ra chứa hai điểm nguyên mặc dù giao điểm ranh giới của nó không cần phải là điểm nguyên. 
-
-Khi tổng diện tích nhân đôi là số lẻ thì thuật toán vẫn hoạt động không thay đổi. Nếu (S=15), mục tiêu là (7,5) tính theo đơn vị diện tích gấp đôi. Phép so sánh nhân mọi thứ với hai, do đó nó tìm kiếm 
-
-[ 
-2\cdot tiền tố\le15\le2(tiền tố+T_i). 
-] 
-
-Tử số kết quả là số lẻ, nhưng`gcd`thường rút gọn phân số hữu tỉ. Không cần giả định tính chẵn lẻ về diện tích đa giác. 
-
-Khi tọa độ gần giới hạn đầu vào, mọi tính toán vẫn chính xác. Các tọa độ đa giác góp phần tạo ra sự khác biệt tối đa là (2\cdot10^5) và một hình tam giác hình quạt có diện tích tối đa là gấp đôi (8\cdot10^{10}). Ngay cả sau khi chia tỷ lệ theo hướng hợp lý, tọa độ đầu ra vẫn ở mức thoải mái bên dưới (10^{18}). Các số nguyên có độ chính xác tùy ý của Python làm cho phép tính số học trở nên đơn giản. 
-
-Đầu vào suy biến với tất cả các đỉnh bằng nhau hoặc có ba đỉnh thẳng hàng sẽ làm mất hiệu lực các giả định hình học được sử dụng trong công trình. Những đầu vào như vậy được loại trừ một cách rõ ràng bởi vấn đề, do đó thuật toán không cần xử lý phòng thủ đối với chúng.
+Trường hợp cạnh tinh vi nhất là điểm cắt hợp lý mà bản thân nó không phải là điểm nguyên. Thuật toán không bao giờ cố gắng làm tròn điểm đó. Thay vào đó, nó biểu diễn điểm dưới dạng tổ hợp affine hữu tỉ của hai đỉnh nguyên và nhân toàn bộ tổ hợp đó với mẫu số của nó. Chia tỷ lệ một vectơ từ đỉnh nguyên cố định (V_0) sẽ thay đổi độ dài của nó nhưng không thay đổi hướng của nó, do đó điểm nguyên thu được sẽ xác định chính xác cùng một đường cắt. Đây là lý do việc xây dựng hoạt động cho mọi đa giác lồi tọa độ nguyên hợp lệ thay vì chỉ cho các đa giác có nửa diện tích bị cắt đi qua một điểm mạng hiện có.

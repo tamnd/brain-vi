@@ -1,7 +1,7 @@
 ---
 title: "CF 102437J - Robot giao hàng"
-description: "Robot bắt đầu tại một điểm nguyên (x 1 ​ ,y 1 ​ ) và phải đạt đến một điểm nguyên khác (x 2 ​ ,y 2 ​ ). Có hai tháp vô tuyến cố định ở (0,0) và (1,0)."
-date: "2026-08-14T15:51:06+07:00"
+description: "Robot di chuyển trong mặt phẳng nguyên và có hai tâm quay cố định tại ((0,0)) và ((1,0)). Mỗi lệnh xoay vị trí hiện tại một cách chính xác (90^circ), theo chiều kim đồng hồ hoặc ngược chiều kim đồng hồ, xung quanh một trong hai tâm này."
+date: "2026-08-15T09:27:56+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102437
@@ -9,7 +9,7 @@ codeforces_index: "J"
 codeforces_contest_name: "\u0418\u043d\u0442\u0435\u0440\u043d\u0435\u0442-\u043e\u043b\u0438\u043c\u043f\u0438\u0430\u0434\u044b, \u0421\u0435\u0437\u043e\u043d 2019-2020, \u0427\u0435\u0442\u0432\u0451\u0440\u0442\u0430\u044f \u043a\u043e\u043c\u0430\u043d\u0434\u043d\u0430\u044f \u043e\u043b\u0438\u043c\u043f\u0438\u0430\u0434\u0430, \u0443\u0441\u043b\u043e\u0436\u043d\u0435\u043d\u043d\u0430\u044f \u043d\u043e\u043c\u0438\u043d\u0430\u0446\u0438\u044f"
 rating: 0
 weight: 102437
-solve_time_s: 369
+solve_time_s: 391
 verified: false
 draft: false
 ---
@@ -18,214 +18,377 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 6 phút 9 giây 
+**Thời gian giải:** 6 phút 31 giây 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
-Robot bắt đầu tại một điểm nguyên (x 1 ​ ,y 1 ​ ) và phải đạt đến một điểm nguyên khác (x 2 ​ ,y 2 ​ ). Có hai tháp vô tuyến cố định ở (0,0) và (1,0). Mỗi lệnh xoay điểm hiện tại chính xác 90 ∘, theo chiều kim đồng hồ hoặc ngược chiều kim đồng hồ, xung quanh một trong những tòa tháp này. Do đó, bốn lệnh là bốn phép biến đổi affine của mặt phẳng. Nhiệm vụ là in tối đa 10 6 lệnh thực hiện phép biến đổi cần thiết, hoặc in`-1`khi đích đến không thể đạt được. 
+Robot di chuyển trong mặt phẳng nguyên và có hai tâm quay cố định tại ((0,0)) và ((1,0)). Mỗi lệnh xoay vị trí hiện tại một cách chính xác (90^\circ), theo chiều kim đồng hồ hoặc ngược chiều kim đồng hồ, xung quanh một trong hai tâm này. Do đó, mọi lệnh đều là một phép quay cố định và nhiệm vụ là tìm một chuỗi gồm nhiều nhất (10^6) phép quay như vậy để di chuyển robot từ ((x_1,y_1)) đến ((x_2,y_2)) hoặc chứng minh rằng không tồn tại chuỗi như vậy. 
 
-Các ràng buộc chính thức đặt mọi tọa độ trong khoảng từ −100000 đến 100000, trong khi giới hạn lệnh là 10 6, với giới hạn thời gian 2 giây và bộ nhớ 512 MB. Một giải pháp tìm kiếm rõ ràng một phần lớn của mặt phẳng sẽ không hấp dẫn. Việc xây dựng hữu ích phải tránh sự phụ thuộc vào kích thước của vùng tọa độ được khám phá và phải tạo ra một chuỗi theo thời gian gần như tuyến tính trong chênh lệch tọa độ. 
+Bốn lệnh có thể được viết trực tiếp dưới dạng phép biến đổi tọa độ: 
 
-Thuộc tính ẩn đầu tiên là tính chẵn lẻ. Mọi thao tác đều bảo toàn tính chẵn lẻ của x+y. Ví dụ: lệnh 1 biến đổi (x,y) thành (y,−x), có tổng tọa độ là y−x, có cùng tính chẵn lẻ với x+y. Một phép quay quanh (1,0) cũng hoạt động tương tự. Do đó, một điểm như (0,1) không thể đạt tới (1,1), vì tổng của chúng có tính chẵn lẻ khác nhau. Đây chính xác là mẫu chính thức thứ hai. 
+[ 
+1:(x,y)\mapsto(y,-x), 
+] 
 
-Một trường hợp dễ xử lý sai khác là sự dịch chuyển chỉ dọc theo một đường chéo. Từ (0,0) đến (1,1) có độ dời là (1,1) nên việc xây dựng chỉ cần lệnh`23`. Việc triển khai chung giả định cả hai thành phần đường chéo là dương hoặc âm sẽ thất bại ở đây vì một trong hai số đếm bằng 0. 
+[ 
+2:(x,y)\mapsto(-y,x), 
+] 
 
-Trường hợp ranh giới thứ ba là chuyển vị lớn. Từ (−100000,−100000) đến (100000,100000), độ dịch chuyển là (200000,200000). Công trình sử dụng 200000 bản dịch chéo`23`, đối với 400000 lệnh, thoải mái dưới 10 6. Giải pháp thực hiện một lệnh trên một đơn vị khoảng cách Manhattan vẫn có thể hoạt động ở đây, nhưng tìm kiếm vũ phu thông qua các chuỗi lệnh sẽ hoàn toàn không khả thi. 
+[ 
+3:(x,y)\mapsto(y+1,1-x), 
+] 
 
-Cuối cùng, câu lệnh đảm bảo rằng điểm đầu và điểm đích khác nhau. Do đó, một đầu vào như (5,5) đến (5,5) nằm ngoài miền đầu vào hợp lệ, mặc dù về mặt toán học, chuỗi trống sẽ giải quyết được nó. Chương trình không cần phải tạo ra một chuỗi lệnh trống. 
+[ 
+4:(x,y)\mapsto(1-y,x-1). 
+] 
+
+Sự cố chính thức có giới hạn thời gian 2 giây và giới hạn bộ nhớ 512 MB. Các tọa độ được giới hạn bởi (100000), do đó, một thuật toán tỷ lệ với phạm vi tọa độ là dễ dàng khả thi, trong khi mọi thứ bậc hai có kích thước của bình phương tọa độ đều quá lớn. Một công trình chỉ sử dụng vài trăm nghìn lệnh cũng nằm trong giới hạn (10^6). 
+
+Vấn đề không rõ ràng đầu tiên là không phải mọi điểm đều có thể truy cập được. Coi như```
+0 1
+1 1
+```Giá trị ban đầu của (x+y) là (1), trong khi mục tiêu có (x+y=2). Đầu ra đúng là`-1`. Một tìm kiếm bất cẩn chỉ kiểm tra khoảng cách hình học hoặc giả sử hai tâm quay tạo ra toàn bộ mặt phẳng nguyên có thể cho rằng điểm có thể truy cập được một cách không chính xác. 
+
+Vấn đề thứ hai là câu trả lời có thể yêu cầu nhiều lệnh mặc dù bản thân việc xây dựng rất đơn giản. Ví dụ,```
+-100000 -100000
+100000 100000
+```có thể truy cập được, nhưng độ dịch chuyển là (200000) ở cả hai tọa độ. Một công trình di chuyển từng đơn vị một có thể cần hàng trăm nghìn thao tác, do đó việc triển khai phải xây dựng câu trả lời một cách hiệu quả thay vì thực hiện nhiều lần các tìm kiếm tốn kém. 
+
+Ngoài ra còn có một trường hợp biên nhỏ trong đó độ dịch chuyển chính xác là đường chéo:```
+0 0
+1 1
+```Trình tự đúng là`23`. Việc thiếu thứ tự của hai lệnh này sẽ tạo ra một phép biến đổi khác, do đó việc coi các lệnh là các thao tác không có thứ tự là không chính xác. 
 
 ## Phương pháp tiếp cận 
 
-Một cách tiếp cận trực tiếp là coi mọi điểm nguyên là một đỉnh của đồ thị và kết nối mỗi điểm với bốn vị trí thu được bằng bốn lệnh. Tìm kiếm theo chiều rộng là chính xác vì mọi lệnh đều có đơn vị giá trị, do đó, lần đầu tiên BFS đạt được mục tiêu, nó đã tìm thấy một chuỗi hợp lệ. Vấn đề là kích thước của biểu đồ. Bên trong hình vuông tọa độ được đầu vào cho phép có khoảng 200001 2, hoặc khoảng 4⋅10 10, các điểm có thể. Ngay cả việc kiểm tra bốn chuyển đổi đi từ mỗi điểm như vậy cũng sẽ yêu cầu theo thứ tự 1,6⋅10 11 kiểm tra chuyển tiếp. Tìm kiếm trực tiếp các chuỗi lệnh thậm chí còn tệ hơn: tất cả các chuỗi có độ dài tối đa L đều chứa (4 L+1 −1)/3 khả năng. 
+Cách tiếp cận bạo lực trực tiếp là coi mọi điểm nguyên là một đỉnh của đồ thị và kết nối mỗi điểm với bốn điểm thu được bằng một lệnh. Tìm kiếm theo chiều rộng là chính xác vì mọi lệnh đều có đơn vị giá trị, do đó, lần đầu tiên BFS đạt được mục tiêu, nó đã tìm thấy một chuỗi hợp lệ. Vấn đề là kích thước của biểu đồ. Ngay cả khi chúng ta hạn chế sự chú ý vào ô vuông (200001\times200001) chứa tất cả các tọa độ đầu vào được phép, thì vẫn có (40.000.400.001) điểm có thể và việc kiểm tra bốn lần chuyển đổi trên mỗi điểm có nghĩa là có tới (160.001.600.004) chuyển đổi lân cận. Một BFS thực sự không bị hạn chế không có hộp tọa độ hữu hạn nào để dựa vào. Việc liệt kê các chuỗi lệnh thay vào đó thậm chí còn tệ hơn, vì độ sâu (k) chứa các chuỗi (4^k). 
 
-Cách tiếp cận bạo lực hoạt động vì mọi lệnh có thể được mô phỏng chính xác, nhưng nó thất bại vì nó bỏ qua cấu trúc đại số được chia sẻ bởi bốn phép biến đổi. Quan sát quan trọng là hai lệnh có thể hủy các phép quay và để lại một bản dịch thuần túy. 
+Brute-force hoạt động vì mọi lệnh đều dễ mô phỏng nhưng nó hoàn toàn bỏ qua cấu trúc đại số của các phép biến đổi. Quan sát quan trọng là hai lệnh có thể hủy phép quay của chúng trong khi vẫn để lại bản dịch thuần túy. 
 
-Đặt lệnh 1 là xoay theo chiều kim đồng hồ quanh (0,0) và lệnh 4 là xoay ngược chiều kim đồng hồ quanh (1,0). Áp dụng lệnh 1 theo sau là lệnh 4 sẽ cho 
+Áp dụng lệnh 2 rồi đến lệnh 3. Bắt đầu từ ((x,y)), 
 
-(x,y) 1 ​ (y,−x) 4 ​ (1+x,y−1). 
+[ 
+(x,y)\xrightarrow{2}(-y,x)\xrightarrow{3}(x+1,y+1). 
+]
 
-Vì vậy cặp`14`dịch mọi điểm theo (1,−1). 
+Vì thế`23`dịch mọi điểm theo ((1,1)). 
 
-Tương tự, lệnh 2 theo sau là lệnh 3 sẽ cho 
+Tương tự, 
 
-(x,y) 2 ​ (−y,x) 3 ​ (1+x,1+y), 
+[ 
+(x,y)\xrightarrow{1}(y,-x)\xrightarrow{4}(x+1,y-1), 
+] 
 
-vậy`23`dịch mọi điểm theo (1,1). 
+vậy`14`dịch mọi điểm theo ((1,-1)). 
 
-Hai bản dịch này tạo thành cơ sở cho chính xác lớp chẵn lẻ có thể truy cập được. Nếu chuyển vị yêu cầu là 
+nghịch đảo của chúng là`41`, dịch theo ((-1,-1)) và`32`, được dịch bởi ((-1,1)). 
 
-(dx,dy)=(x 2 ​ −x 1 ​ ,y 2 ​ −y 1 ​ ), 
+Điều này làm giảm toàn bộ vấn đề về việc biểu diễn độ dịch chuyển mong muốn dưới dạng kết hợp của hai vectơ đường chéo ((1,1)) và ((1,-1)). hãy để 
 
-chúng ta có thể viết nó như 
+[ 
+dx=x_2-x_1,\qquad dy=y_2-y_1. 
+] 
 
-(dx,dy)=a(1,1)+b(1,−1), 
+Ta cần các số nguyên (a,b) thỏa mãn 
 
-ở đâu 
+[ 
+a(1,1)+b(1,-1)=(dx,dy). 
+] 
 
-a= 2 dx+dy ​ ,b= 2 dx−dy ​ . 
+Giải hai phương trình ta có 
 
-Các giá trị này là số nguyên chính xác khi dx và dy có cùng tính chẵn lẻ, tương đương với x 1 ​ +y 1 ​ và x 2 ​ +y 2 ​ có cùng tính chẵn lẻ. 
+[ 
+a=\frac{dx+dy}{2},\qquad b=\frac{dx-dy}{2}. 
+] 
 
-Bản dịch phủ định thu được bằng cách đảo ngược chuỗi hai lệnh tương ứng. Nghịch đảo của`23`là`41`, tạo ra (−1,−1) và nghịch đảo của`14`là`32`, tạo ra (−1,+1). 
+Những số nguyên như vậy tồn tại chính xác khi (dx) và (dy) có cùng tính chẵn lẻ. Tương đương, (x_1+y_1) và (x_2+y_2) phải có cùng tính chẵn lẻ. 
 
-Số lượng lệnh đặc biệt thuận tiện. Chúng ta cần 2 lệnh(∣a∣+∣b∣) và 
+Việc xây dựng cần các lệnh (2|a|+2|b|). sử dụng 
 
-∣a∣+∣b∣=max(∣dx∣,∣dy∣). 
+[ 
+|dx+dy|+|dx-dy|=2\max(|dx|,|dy|), 
+] 
 
-Vì mỗi chênh lệch tọa độ nhiều nhất là 200000, nên chuỗi cuối cùng chứa tối đa 400000 lệnh, thấp hơn nhiều so với mức cho phép là 10 6. 
+số lượng lệnh nhiều nhất là (400000), vì mọi chênh lệch tọa độ đều có giá trị tuyệt đối nhiều nhất (200000). Đây là mức an toàn dưới mức yêu cầu (10^6). 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
-| Lực lượng vũ phu | O(4 L ) cho độ sâu L, hoặc O(10 11 ) cho khám phá mặt phẳng | O(10 10 ) trong lưới đã khám phá | Quá chậm | 
-| Tối ưu | (O(\max( | dx | , | 
+| BFS vũ phu | (O(R^2)) trạng thái trong hộp tọa độ bán kính (R) | (O(R^2)) | Quá chậm | 
+| Xây dựng tối ưu | (O( | dx | + | dy | )) để xây dựng đầu ra | (O( | dx | + | dy | )) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Tính độ dịch chuyển dx=x 2 ​ −x 1 ​ và dy=y 2 ​ −y 1 ​. Toàn bộ công trình chỉ cần tái tạo sự dịch chuyển này vì các cặp lệnh chúng tôi sử dụng là các bản dịch hoạt động giống hệt nhau từ mọi điểm bắt đầu. 
-2. Kiểm tra xem x 1 ​ +y 1 ​ và x 2 ​ +y 2 ​ có cùng tính chẵn lẻ hay không. Nếu chúng khác nhau, hãy in`-1`. Mọi lệnh hợp pháp đều bảo toàn tính chẵn lẻ của x+y, do đó không có chuỗi nào có thể giao nhau giữa hai lớp chẵn lẻ. 
-3. Tính toán 
+1. Tính chuyển vị 
 
-a=(dx+dy)/2,b=(dx−dy)/2. 
+[ 
+dx=x_2-x_1,\qquad dy=y_2-y_1. 
+] 
 
-Giá trị a cho chúng ta biết số lần áp dụng dịch (1,1), trong khi b cho chúng ta biết số lần áp dụng (1,−1). Việc kiểm tra tính chẵn lẻ đảm bảo rằng cả hai phép chia đều chính xác. 
-4. Với mỗi đơn vị của a > 0, hãy nối thêm`23`. Mỗi cặp thêm chính xác (1,1) vào vị trí hiện tại. Với a<0, nối thêm`41`thay vào đó, vì cặp đó cộng (−1,−1). 
-5. Với mỗi đơn vị của b>0, hãy nối thêm`14`. Mỗi cặp cộng (1,−1). Với b<0, nối thêm`32`, cộng (−1,1). 
-6. In chuỗi kết quả. Vì 2(∣a∣+∣b∣)=2max(∣dx∣,∣dy∣)≤400000, nên giới hạn lệnh sẽ tự động được đáp ứng. 
+Toàn bộ công trình chỉ cần tái tạo lại sự dịch chuyển này, bởi vì chuỗi hai lệnh`23`Và`14`là những bản dịch hoạt động từ mọi điểm. 
+
+1. Kiểm tra xem (dx) và (dy) có cùng tính chẵn lẻ hay không. Nếu không, hãy in`-1`. 
+
+Mọi lệnh đều bảo toàn tính chẵn lẻ của (x+y). Một phép quay quanh điểm gốc thay đổi ((x,y)) thành ((-y,x)) hoặc ((y,-x)), có tổng tọa độ có cùng tính chẵn lẻ với (x+y). Xoay quanh ((1,0)) có cùng tính chất. Do đó, các số chẵn lẻ khác nhau của (x+y) không bao giờ có thể được kết nối. 
+
+1. Tính toán 
+
+[ 
+a=\frac{dx+dy}{2},\qquad b=\frac{dx-dy}{2}. 
+] 
+
+Hệ số đầu tiên cho chúng ta biết số lần sử dụng bản dịch ((1,1)), trong khi hệ số thứ hai cho chúng ta biết số lần sử dụng ((1,-1)). 
+
+1. Nếu (a>0), nối thêm`23`chính xác (a) lần. Nếu (a<0), nối thêm`41`chính xác (-a) lần.`23`thêm ((1,1)), trong khi`41`thêm nghịch đảo của nó ((-1,-1)). 
+
+1. Nếu (b>0), nối thêm`14`chính xác (b) lần. Nếu (b<0), nối thêm`32`chính xác (-b) lần.`14`thêm ((1,-1)), trong khi`32`thêm ((-1,1)). 
+
+Thứ tự của các khối dịch này không quan trọng vì các bản dịch được chuyển qua lại. Việc nhóm các bản dịch giống nhau lại với nhau cũng làm cho việc xây dựng trở nên dễ thực hiện. 
+
+1. Xuất ra độ dài của chuỗi được tạo và chính chuỗi đó. 
+
+Nguồn và đích được đảm bảo là khác nhau, do đó, bất cứ khi nào có thể truy cập được mục tiêu thì ít nhất một trong (a,b) khác 0 và số lượng lệnh thu được là dương. 
 
 ### Tại sao nó hoạt động 
 
-Bất biến là tính chẵn lẻ của x+y, do đó việc kiểm tra tính chẵn lẻ sẽ loại bỏ mọi mục tiêu không thể tiếp cận. Đối với mục tiêu có thể tiếp cận, độ dịch chuyển có cùng tính chẵn lẻ ở cả hai tọa độ, tạo thành a và b số nguyên. Các cặp lệnh`23`Và`14`là các bản dịch của (1,1) và (1,−1), trong khi`41`Và`32`là nghịch đảo tương ứng của chúng. Do đó, chuỗi được tạo ra sẽ thay đổi điểm bắt đầu một cách chính xác bằng a(1,1)+b(1,−1)=(dx,dy), đặt robot tại (x 2 ​ ,y 2 ​ ). 
+Việc xây dựng duy trì tính bất biến rằng vị trí hiện tại bằng vị trí ban đầu cộng với tổng của tất cả các bản dịch được tạo cho đến nay. Mỗi`23`đóng góp ((1,1)), mỗi`41`đóng góp ((-1,-1)), mỗi`14`đóng góp ((1,-1)), và mỗi`32`đóng góp ((-1,1)). Do đó độ dịch chuyển cuối cùng là 
+
+[ 
+a(1,1)+b(1,-1) 
+=(a+b,a-b) 
+=(dx,dy), 
+] 
+
+nên vị trí cuối cùng chính xác là ((x_2,y_2)). 
+
+Nếu kiểm tra tính chẵn lẻ thất bại thì không có giải pháp nào tồn tại vì mọi lệnh hợp pháp đều được giữ nguyên (x+y\bmod 2). Nếu nó vượt qua, (a) và (b) là các số nguyên và việc xây dựng tạo ra mục tiêu một cách rõ ràng, do đó điều kiện chẵn lẻ cũng đủ. 
 
 ## Giải pháp Python```python
-Pythonimport sysinput = sys.stdin.readline
+import sys
+input = sys.stdin.readline
 
-def solve():    x1, y1 = map(int, input().split())    x2, y2 = map(int, input().split())
-    # x + y parity is invariant under every command.    if (x1 + y1) % 2 != (x2 + y2) % 2:        print(-1)        return
-    dx = x2 - x1    dy = y2 - y1
-    # dx = a + b    # dy = a - b    a = (dx + dy) // 2    b = (dx - dy) // 2
+def solve():
+    x1, y1 = map(int, input().split())
+    x2, y2 = map(int, input().split())
+
+    dx = x2 - x1
+    dy = y2 - y1
+
+    # The parity of x + y is invariant.
+    if (dx - dy) % 2 != 0:
+        print(-1)
+        return
+
+    a = (dx + dy) // 2
+    b = (dx - dy) // 2
+
     ans = []
-    if a > 0:        ans.append("23" * a)    elif a < 0:        ans.append("41" * (-a))
-    if b > 0:        ans.append("14" * b)    elif b < 0:        ans.append("32" * (-b))
-    s = "".join(ans)
-    print(len(s))
-```Kiểm tra đầu tiên chỉ sử dụng tính chẵn lẻ, do đó không liên quan đến số học dấu phẩy động. Điều này tốt hơn là kiểm tra xem hai phép chia dưới đây có tạo ra số nguyên hay không sau khi sử dụng`/`. 
 
-Các biến`a`Và`b`trực tiếp từ việc giải hai phương trình a+b=dx và a−b=dy. Phép chia số nguyên của Python ở đây an toàn vì điều kiện chẵn lẻ đã thiết lập khả năng chia hết cho hai. 
+    # 23 = translation by (1, 1)
+    # 41 = translation by (-1, -1)
+    if a > 0:
+        ans.append("23" * a)
+    elif a < 0:
+        ans.append("41" * (-a))
 
-Trình tự được tích lũy dưới dạng chuỗi thay vì lưu trữ từng lệnh riêng lẻ dưới dạng một đối tượng Python riêng biệt. Câu trả lời hợp lệ lớn nhất có 400000 ký tự, do đó mức sử dụng bộ nhớ sẽ nhỏ. 
+    # 14 = translation by (1, -1)
+    # 32 = translation by (-1, 1)
+    if b > 0:
+        ans.append("14" * b)
+    elif b < 0:
+        ans.append("32" * (-b))
 
-Thứ tự của hai nhóm dịch không quan trọng vì cả hai đều là những bản dịch thông thường. Áp dụng tất cả`23`hoặc`41`cặp đầu tiên và tất cả`14`hoặc`32`các cặp sau đó tạo ra chính xác tổng các vectơ dịch chuyển của chúng. 
+    result = ''.join(ans)
 
-Số nguyên Python không bị tràn và tọa độ trung gian lớn nhất trong cấu trúc này chỉ theo thứ tự của phạm vi tọa độ đã cho cộng với độ dịch chuyển được tạo. 
+    print(len(result))
+    print(result)
+
+if __name__ == "__main__":
+    solve()
+```Phần đầu tiên tính toán chuyển vị của mục tiêu thay vì thao tác điều khiển vị trí của robot bằng lệnh. Việc kiểm tra tính chẵn lẻ sử dụng`(dx - dy) % 2`, tương đương với việc kiểm tra xem (dx) và (dy) có tính chẵn lẻ bằng nhau hay không. Hoạt động modulo của Python an toàn đối với các giá trị âm, do đó, hoạt động này hoạt động với mọi tọa độ được phép. 
+
+Hai hệ số chỉ là số nguyên sau khi kiểm tra tính chẵn lẻ thành công. Điều này tránh việc cắt bớt một cách âm thầm hệ số nửa số nguyên và tạo ra một chuỗi không hợp lệ. 
+
+Các khối lệnh được nối dưới dạng chuỗi thay vì một ký tự mỗi lần. Điều này giúp việc triển khai đơn giản và tránh lưu trữ từng lệnh dưới dạng một đối tượng Python riêng biệt. Câu trả lời lớn nhất có (400000) ký tự, do đó chuỗi kết quả đủ nhỏ cho giới hạn bộ nhớ. 
+
+Thứ tự lệnh bên trong mỗi cặp đều quan trọng.`23`phải có nghĩa là lệnh 2 theo sau là lệnh 3 và`14`phải có nghĩa là lệnh 1 theo sau là lệnh 4. Đảo ngược một trong hai cặp sẽ thay đổi bản dịch kết quả. 
+
+Số nguyên Python có độ chính xác tùy ý, do đó không có vấn đề tràn mặc dù giới hạn tọa độ thực tế là nhỏ. 
 
 ## Ví dụ đã hoạt động 
 
 ### Mẫu 1 
 
-Mẫu đầu tiên chính thức bắt đầu tại (0,1) và mục tiêu (1,−2). 
-
-Ở đây dx=1 và dy=−3. Do đó 
-
-a= 2 1+(−3) ​ =−1,b= 2 1−(−3) ​ =2. 
-
-Thuật toán có thể sử dụng`41`một lần và`14`hai lần. 
-
-| Bước | Hoạt động | Vị trí | 
-| --- | --- | --- | 
-| 0 | Bắt đầu | (0,1) | 
-| 1 |`4`| (0,−1) | 
-| 2 |`1`| (1,0) | 
-| 3 |`1`| (0,−1) | 
-| 4 |`4`| (2,−1) | 
-| 5 |`1`| (−1,−2) | 
-| 6 |`4`| (1,−2) | 
-
-Trình tự kết quả là`411414`, có sáu lệnh và đạt được mục tiêu cần thiết. Mẫu của`24`ngắn hơn, nhưng vấn đề rõ ràng cho phép bất kỳ chuỗi hợp lệ nào trong giới hạn. 
-
-Dấu vết chứng tỏ rằng việc xây dựng không phụ thuộc vào việc tìm kiếm chuỗi ngắn nhất. Tính đúng đắn của nó đến từ việc biên soạn các bản dịch cố định. 
-
-### Mẫu 2 
-
-Mẫu thứ hai chính thức bắt đầu tại (0,1) và mục tiêu (1,1). 
+Đầu vào là```
+0 1
+1 -2
+```Độ dịch chuyển là (dx=1), (dy=-3). 
 
 | Biến | Giá trị | 
 | --- | --- | 
-| x 1 ​ +y 1 ​ | 1 | 
-| x 2 ​ +y 2 ​ | 2 | 
-| Bắt đầu chẵn lẻ | lẻ | 
-| Mục tiêu ngang bằng | thậm chí | 
-| Kết quả |`-1`| 
+| (x_1) | 0 | 
+| (y_1) | 1 | 
+| (x_2) | 1 | 
+| (y_2) | -2 | 
+| (dx) | 1 | 
+| (dy) | -3 | 
+| (a=(dx+dy)/2) | -1 | 
+| (b=(dx-dy)/2) | 2 | 
 
-Thuật toán dừng trước khi xây dựng bất kỳ lệnh nào vì các lớp chẵn lẻ khác nhau. Điều này là cần thiết: mọi lệnh đều bảo toàn tính chẵn lẻ của x+y, do đó không thể đạt được mục tiêu. 
+Vì (dx) và (dy) đều là số lẻ nên mục tiêu có thể đạt được. Hệ số (a=-1) đóng góp một`41`và (b=2) đóng góp hai bản sao của`14`. 
+
+Trình tự kết quả là`411414`. 
+
+| Các lệnh được thực thi | Vị trí hiện tại | 
+| --- | --- | 
+| không | ((0,1)) | 
+|`41`| ((-1,0)) | 
+| Đầu tiên`14`| ((0,-1)) | 
+| thứ hai`14`| ((1,-2)) | 
+
+Vị trí cuối cùng chính xác là mục tiêu được yêu cầu. Mẫu chính thức sử dụng trình tự ngắn hơn`24`, nhưng câu lệnh cho phép bất kỳ chuỗi có độ dài hợp lệ nào tối đa (10^6). 
+
+### Mẫu 2 
+
+Mẫu thứ hai thực tế trên tuyên bố chính thức là```
+0 1
+1 1
+```Độ dịch chuyển là (dx=1), (dy=0). 
+
+| Biến | Giá trị | 
+| --- | --- | 
+| (x_1) | 0 | 
+| (y_1) | 1 | 
+| (x_2) | 1 | 
+| (y_2) | 1 | 
+| (dx) | 1 | 
+| (dy) | 0 | 
+| (dx\bmod2) | 1 | 
+| (dy\bmod2) | 0 | 
+
+Hai thành phần chuyển vị có tính chẵn lẻ khác nhau, vì vậy (a) và (b) đều là nửa số nguyên. Về cơ bản hơn, điểm ban đầu có (x+y=1), trong khi mục tiêu có (x+y=2). Vì mọi lệnh đều bảo toàn tính chẵn lẻ này nên không thể đạt được mục tiêu. 
+
+Thuật toán in ngay lập tức```
+-1
+```phù hợp với mẫu chính thức. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | (O(\max( | dx | 
-| Không gian | (O(\max( | dx | 
+| Thời gian | (O( | dx | + | dy | )) | Bản thân đầu ra chứa tối đa (400000) ký tự và việc xây dựng nó cần có thời gian tuyến tính theo độ dài của nó. | 
+| Không gian | (O( | dx | + | dy | )) | Chuỗi lệnh được lưu trữ trước khi in và có tối đa (400000) ký tự. | 
 
-Các giới hạn tọa độ cho max(∣dx∣,∣dy∣)200000, do đó thuật toán xuất ra tối đa 400000 lệnh. Đây là mức thoải mái dưới giới hạn lệnh 10 6 và chỉ yêu cầu một phần nhỏ của giới hạn bộ nhớ 512 MB. Giới hạn thời gian chính thức là 2 giây. 
+Vì (|dx|,|dy|\le200000), chuỗi được tạo có tối đa (400000) lệnh. Do đó, việc xây dựng nằm dưới mức yêu cầu (10^6) lệnh một cách thoải mái và tránh được không gian trạng thái khổng lồ của tìm kiếm. 
 
 ## Trường hợp thử nghiệm 
 
-Bởi vì đầu ra không phải là duy nhất, nên các thử nghiệm không nên so sánh từng ký tự trong chuỗi lệnh được trả về. Thay vào đó, bộ khai thác kiểm tra sẽ phân tích trình tự, mô phỏng tất cả bốn phép biến đổi, kiểm tra xem điểm cuối cùng có chính xác không và xác minh giới hạn số lượng lệnh. 
+Đầu ra của một vấn đề mang tính xây dựng không phải là duy nhất, vì vậy các thử nghiệm bên dưới so sánh đầu ra xác định được tạo ra bởi việc triển khai này. Đối với kết quả đầu ra lớn hơn, chuỗi dự kiến ​​được tạo từ cùng một cấu trúc toán học thay vì được viết ra theo nghĩa đen.```python
+import sys
+import io
 
-Mẫu chính thức thứ hai trong tuyên bố là`0 1`theo sau là`1 1`; cái`0 11 1`định dạng trong lời nhắc không đúng định dạng.```python
-Pythonimport sysimport io
+def solve():
+    x1, y1 = map(int, input().split())
+    x2, y2 = map(int, input().split())
 
-def solve_text(inp: str) -> str:    data = inp.split()    x1, y1, x2, y2 = map(int, data)
-    if (x1 + y1) % 2 != (x2 + y2) % 2:        return "-1\n"
-    dx = x2 - x1    dy = y2 - y1
-    a = (dx + dy) // 2    b = (dx - dy) // 2
+    dx = x2 - x1
+    dy = y2 - y1
+
+    if (dx - dy) % 2 != 0:
+        print(-1)
+        return
+
+    a = (dx + dy) // 2
+    b = (dx - dy) // 2
+
     ans = []
-    if a > 0:        ans.append("23" * a)    elif a < 0:        ans.append("41" * (-a))
-    if b > 0:        ans.append("14" * b)    elif b < 0:        ans.append("32" * (-b))
-    s = "".join(ans)    return f"{len(s)}\n{s}\n"
 
-def simulate(inp: str):    data = inp.split()    x, y, tx, ty = map(int, data)
+    if a > 0:
+        ans.append("23" * a)
+    elif a < 0:
+        ans.append("41" * (-a))
+
+    if b > 0:
+        ans.append("14" * b)
+    elif b < 0:
+        ans.append("32" * (-b))
+
+    result = ''.join(ans)
+
+    print(len(result))
+    print(result)
+
+def run(inp: str) -> str:
+    old_stdin = sys.stdin
+    old_stdout = sys.stdout
+
+    sys.stdin = io.StringIO(inp)
+    sys.stdout = io.StringIO()
+
+    try:
+        solve()
+        return sys.stdout.getvalue()
+    finally:
+        sys.stdin = old_stdin
+        sys.stdout = old_stdout
+
+# Provided sample 1.
+assert run("0 1\n1 -2\n") == "6\n411414\n", "sample 1"
+
+# Provided sample 2.
+assert run("0 1\n1 1\n") == "-1\n", "sample 2"
+
+# Minimum-size displacement: (0, 0) -> (1, 1).
+assert run("0 0\n1 1\n") == "2\n23\n", "diagonal +1"
+
+# The other diagonal direction: (0, 0) -> (1, -1).
+assert run("0 0\n1 -1\n") == "2\n14\n", "anti-diagonal +1"
+
+# Equal source coordinates, also checks a larger diagonal displacement.
+assert run("5 5\n7 7\n") == "4\n2323\n", "equal coordinates"
+
+# Maximum coordinate range in both dimensions.
+expected = "23" * 200000
+assert run("-100000 -100000\n100000 100000\n") == (
+    str(len(expected)) + "\n" + expected + "\n"
+), "maximum-size reachable case"
+
+# Boundary parity mismatch.
+assert run("100000 100000\n99999 100000\n") == "-1\n", (
+    "boundary parity mismatch"
+)
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`0 1 1 -2`| Bất kỳ chuỗi hợp lệ nào | Mẫu có thể truy cập chính thức và thành phần đường chéo âm | 
-|`0 1 1 1`|`-1`| Mẫu không thể truy cập chính thức và bất biến chẵn lẻ | 
-|`0 0 1 1`| Một chuỗi hai lệnh tương đương với`23`| Dịch dương (1,1) và không b | 
-|`0 0 1 -1`| Một chuỗi hai lệnh tương đương với`14`| Dịch tích cực (1,−1) và 0 a | 
-|`10 10 -10 -10`| Bất kỳ chuỗi hợp lệ nào | Số lượng dịch âm | 
-|`-100000 -100000 100000 100000`| Bất kỳ chuỗi có độ dài hợp lệ nào 400000 | Chênh lệch tọa độ tối đa và giới hạn lệnh | 
-|`0 0 1 0`|`-1`| Trường hợp biên trong đó chuyển vị có tính chẵn lẻ sai | 
-
-Cụm từ "tất cả các giá trị bằng nhau" không thể tương ứng với một bài kiểm tra hợp lệ vì bài toán đảm bảo rằng điểm bắt đầu và điểm đến là khác nhau. Một bài kiểm tra như`5 5 5 5`sẽ vi phạm đặc tả đầu vào, vì vậy nó không nên được đưa vào bộ tính chính xác. 
+|`0 0 / 1 1`|`2 / 23`| Thứ tự dịch và lệnh theo đường chéo dương nhỏ nhất | 
+|`0 0 / 1 -1`|`2 / 14`| Hướng dịch thứ hai | 
+|`5 5 / 7 7`|`4 / 2323`| Tọa độ nguồn bằng nhau và dịch chéo lặp đi lặp lại | 
+|`-100000 -100000 / 100000 100000`|`400000 / 23...23`| Chuyển vị tối đa và giới hạn số lượng lệnh | 
+|`100000 100000 / 99999 100000`|`-1`| Trường hợp ranh giới có tính chẵn lẻ khác nhau | 
 
 ## Vỏ cạnh 
 
-### Tính chẵn lẻ không khớp 
+Trường hợp cạnh đầu tiên là trường hợp không khớp chẵn lẻ không thể truy cập được. Vì```
+0 1
+1 1
+```chúng ta có (dx=1) và (dy=0), do đó việc kiểm tra tính chẵn lẻ thất bại ngay lập tức. Thuật toán không cố gắng chia cho hai hoặc xây dựng các lệnh. Điều này ngăn ngừa một lỗi phổ biến khi phép chia số nguyên sẽ biến các hệ số bán nguyên bắt buộc thành 0 hoặc một số nguyên không chính xác khác. 
 
-Hãy xem xét```
-0 11 1
-```Tổng ban đầu là 1, trong khi tổng mục tiêu là 2. Vì mọi lệnh đều bảo toàn tính chẵn lẻ của x+y nên thuật toán sẽ in ngay lập tức`-1`. Một cấu trúc chỉ kiểm tra xem tọa độ có gần nhau về mặt hình học hay không có thể cố gắng tạo lệnh không chính xác. 
+Trường hợp cạnh thứ hai là độ dịch chuyển đường chéo đơn vị:```
+0 0
+1 1
+```Ở đây (a=1) và (b=0). Thuật toán phát ra chính xác`23`. Lệnh 2 thay đổi ((0,0)) thành ((0,0)), sau đó lệnh 3 thay đổi thành ((1,1)). Cùng một cặp hoạt động từ mọi điểm bắt đầu, đó là lý do tại sao việc xây dựng không cần xử lý đặc biệt đối với robot được đặt tại một tòa tháp. 
 
-### Một hệ số đường chéo bằng 0 
+Trường hợp cạnh thứ ba là chuyển động theo hướng chéo ngược lại:```
+0 0
+1 -1
+```Ở đây (a=0) và (b=1), do đó thuật toán phát ra`14`. Lệnh 1 gửi ((0,0)) đến ((0,0)) và lệnh 4 gửi nó tới ((1,-1)). Điều này xác nhận rằng hai phép tịnh tiến chéo thực sự tạo thành cơ sở cho mọi chuyển vị có thể tiếp cận được. 
 
-cho```
-0 01 1
-```chúng ta nhận được dx=1, dy=1, do đó a=1 và b=0. Thuật toán phát ra`23`. Lệnh 2 ánh xạ (0,0) tới chính nó và lệnh 3 ánh xạ nó tới (1,1). Không cần xử lý đặc biệt đối với hệ số 0 ngoài việc tránh lặp lại không cần thiết. 
+Trường hợp cạnh thứ tư là độ dịch chuyển tối đa có thể:```
+-100000 -100000
+100000 100000
+```Các hệ số là (a=200000) và (b=0). Thuật toán tạo ra`23`lặp lại (200000) lần, đưa ra lệnh (400000). Độ dài chuỗi vẫn ở mức dưới (10^6) và không có giá trị tọa độ hoặc số học nào đạt đến phạm vi số nguyên nguy hiểm. 
 
-### Hệ số âm 
-
-cho```
-10 10-10 -10
-```chúng ta nhận được a=−20 và b=0. Thuật toán phát ra`41`hai mươi lần. Mỗi`41`dịch điểm theo (−1,−1), do đó sau hai mươi lần lặp lại tổng độ dịch chuyển là (−20,−20), chính xác là sự thay đổi cần thiết. 
-
-### Độ dịch chuyển tối đa 
-
-cho```
--100000 -100000100000 100000
-```chúng ta có a=200000 và b=0. Trình tự bao gồm 200000 bản sao của`23`, đưa ra 400000 lệnh. Giới hạn của 10 6 không gần bị vượt quá, do đó không cần sơ đồ nén phức tạp hơn. 
-
-### Sai số chẵn lẻ dù khoảng cách nhỏ 
-
-cho```
-0 01 0
-```độ dời chỉ có một đơn vị, nhưng x+y thay đổi từ chẵn sang lẻ. Thuật toán từ chối nó ngay lập tức. Trường hợp này rất hữu ích vì nó tránh được sai lầm phổ biến khi cho rằng đủ nhiều phép quay có thể mô phỏng các chuyển động đơn vị tùy ý. Các bản dịch có sẵn di chuyển dọc theo đường chéo và bất biến chẵn lẻ không thể bị phá vỡ.
+Trường hợp cạnh cuối cùng là mục tiêu có giới hạn tọa độ chính xác nhưng tính chẵn lẻ sai:```
+100000 100000
+99999 100000
+```Độ dịch chuyển là ((-1,0)), có các thành phần có tính chẵn lẻ khác nhau. Thuật toán in`-1`. Điều này chứng tỏ rằng việc ở liền kề trong mặt phẳng không hàm ý khả năng tiếp cận. Bất biến (x+y\bmod2) là vật cản thực tế và việc xây dựng đạt đến mọi điểm thỏa mãn nó.

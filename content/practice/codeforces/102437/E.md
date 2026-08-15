@@ -1,7 +1,7 @@
 ---
 title: "CF 102437E - \u041f\u043e\u0445\u043e\u0436\u0438\u0435 \u0437\u0430\u043a\u0430\u0437\u044b"
-description: "Chúng ta có hai đơn hàng, mỗi đơn hàng được biểu thị bằng một chuỗi có độ dài (n). Ký tự thứ (i)-th mô tả số bài viết của hộp thứ (i)-th trong ngăn xếp. Chúng ta cần xác định xem (các) đơn hàng hiện tại có thể được chuyển đổi thành đơn hàng (t) trước đó hay không."
-date: "2026-08-12T07:59:52+07:00"
+description: "Chúng ta có hai chuỗi có độ dài (n). (Các) chuỗi mô tả ngăn xếp hộp hiện tại, trong khi (t) mô tả ngăn xếp trước đó. Chúng ta có thể xoay (các) theo chu kỳ sang trái một số (k), sau đó áp dụng cùng một phép dịch chuyển Caesar cho mọi ký tự."
+date: "2026-08-15T09:19:31+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102437
@@ -9,7 +9,7 @@ codeforces_index: "E"
 codeforces_contest_name: "\u0418\u043d\u0442\u0435\u0440\u043d\u0435\u0442-\u043e\u043b\u0438\u043c\u043f\u0438\u0430\u0434\u044b, \u0421\u0435\u0437\u043e\u043d 2019-2020, \u0427\u0435\u0442\u0432\u0451\u0440\u0442\u0430\u044f \u043a\u043e\u043c\u0430\u043d\u0434\u043d\u0430\u044f \u043e\u043b\u0438\u043c\u043f\u0438\u0430\u0434\u0430, \u0443\u0441\u043b\u043e\u0436\u043d\u0435\u043d\u043d\u0430\u044f \u043d\u043e\u043c\u0438\u043d\u0430\u0446\u0438\u044f"
 rating: 0
 weight: 102437
-solve_time_s: 836
+solve_time_s: 486
 verified: false
 draft: false
 ---
@@ -18,135 +18,131 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 13 phút 56 giây 
+**Thời gian giải:** 8m 6s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta có hai đơn hàng, mỗi đơn hàng được biểu thị bằng một chuỗi có độ dài (n). Ký tự thứ (i)-th mô tả số bài viết của hộp thứ (i)-th trong ngăn xếp. Chúng ta cần xác định xem (các) đơn hàng hiện tại có thể được chuyển đổi thành đơn hàng (t) trước đó hay không. 
+Chúng ta có hai chuỗi có độ dài (n). (Các) chuỗi mô tả ngăn xếp hộp hiện tại, trong khi (t) mô tả ngăn xếp trước đó. Chúng ta có thể xoay (các) theo chu kỳ sang trái một số (k), sau đó áp dụng cùng một phép dịch chuyển Caesar cho mọi ký tự. Nhiệm vụ là tìm bất kỳ cặp ((k,d)) nào biến đổi (s) thành (t) hoặc báo cáo rằng không có cặp nào như vậy tồn tại. 
 
-Phép biến đổi được phép có hai phần độc lập. Đầu tiên, mọi chữ cái đều được dịch chuyển bằng cùng một dịch chuyển Caesar (d), theo chu kỳ modulo 26. Thứ hai, ngăn xếp có thể được xoay, nghĩa là tiền tố của (s) được di chuyển từ trên xuống dưới. Nếu số lượng vòng quay là (k), thứ tự kết quả là 
+Đối với phép quay theo (k), ký tự kết quả ở vị trí (i) là (s[(i+k)\bmod n]). Nếu phép dịch Caesar di chuyển mọi chữ cái lùi lại một khoảng (d), thì đẳng thức cần có là 
 
 [ 
-s[k:] + s[]. 
+t_i \equiv s_{(i+k)\bmod n}-d \pmod{26}. 
 ] 
 
-Sau cả hai thao tác, chuỗi kết quả phải bằng (t). Chúng ta phải xuất ra bất kỳ cặp hợp lệ nào ((k,d)) hoặc báo cáo`Impossible`. 
+Độ dài có thể đạt tới (200.000) và giới hạn chính thức là 2 giây và 512 MB. Thuật toán (O(n^2)) có thể thực hiện khoảng (4\cdot10^{10}) so sánh ký tự trong trường hợp xấu nhất, vượt xa những gì phù hợp trong giới hạn thời gian. Chúng ta cần một giải pháp (O(n)) hoặc (O(n\log n)) và thuật toán khớp chuỗi tuyến tính là đủ. 
 
-Độ dài có thể lớn tới (200.000). Một thuật toán kiểm tra mọi phép quay và so sánh tất cả (n) ký tự sẽ thực hiện so sánh tối đa (n^2 = 40.000.000.000) ký tự trong trường hợp xấu nhất, vượt xa những gì thực tế. Chúng ta cần một giải pháp mà công việc của nó về cơ bản là tuyến tính theo độ dài chuỗi. 
-
-Có một số trường hợp khó khăn có thể phá vỡ quá trình triển khai đơn giản. Đầu tiên là (n=1). Không có sự xoay vòng có ý nghĩa nào để tìm kiếm, nhưng sự dịch chuyển Caesar có thể vẫn cần thiết. Ví dụ,```
+Có một số trường hợp đặc biệt có thể khiến việc triển khai trực tiếp bị sai lệch. Đối với (n=1), phép quay duy nhất có thể là (k=0), nhưng bất kỳ hai chữ cái nào cũng có thể được chuyển đổi thành nhau bằng phép dịch chuyển Caesar. Ví dụ,```
 1
 z
 a
-```có thể giải được với (k=0), vì dịch chuyển`z`lùi lại 25 cho`a`. Việc triển khai giả định có các ký tự liền kề cần kiểm tra sẽ không thành công trong trường hợp này. 
+```có một câu trả lời hợp lệ như`Success`theo sau là`0 25`. Phương pháp so sánh các ký tự liền kề sẽ dường như không có thông tin nào cả, bởi vì chuỗi một ký tự không có cặp liền kề thông thường. 
 
-Một trường hợp cạnh khác được bao bọc trong bảng chữ cái. Ví dụ,```
-1
-a
-z
-```cũng có thể giải quyết được. Sự dịch chuyển cần thiết có thể được biểu diễn dưới dạng (d=1), bởi vì sự dịch chuyển`z`lùi lại 1 cho`y`, trong khi dịch chuyển`a`lùi lại 1 cho`z`. Phép tính số học phải được thực hiện theo modulo 26 thay vì sử dụng sai số nguyên thông thường. 
-
-Vấn đề thứ ba là xoay vòng ở cuối chuỗi. Coi như```
+Trường hợp cạnh thứ hai là phép quay đi qua đầu chuỗi. Ví dụ,```
 5
 abcde
-bcdea
-```Xoay`bcdea`bởi (4) vị trí tạo ra`abcde`, do đó câu trả lời đúng tồn tại với (k=4) và (d=0). Một tìm kiếm chỉ kiểm tra các chuỗi con thông thường của`s`và quên ranh giới tuần hoàn sẽ bỏ lỡ giải pháp này. 
+cdeab
+```có câu trả lời`Success`với`3 0`. Xoay đúng là ba ký tự đầu tiên được chuyển xuống dưới cùng. Việc triển khai chỉ kiểm tra các chuỗi con thông thường của (s), thay vì xử lý chuỗi theo chu kỳ, sẽ bỏ lỡ câu trả lời này. 
 
-Cuối cùng, các ký tự lặp lại có thể làm cho một số phép quay hợp lệ. Ví dụ,```
+Các ký tự lặp đi lặp lại tạo ra một trường hợp tinh tế khác. Vì```
 4
 aaaa
-aaaa
-```có mọi vòng quay là một vòng quay hợp lệ và (d=0) hoạt động với tất cả chúng. Thuật toán phải chấp nhận ứng viên hợp lệ đầu tiên thay vì dựa vào tính duy nhất. 
+zzzz
+```mọi vòng quay đều hợp lệ và chỉ cần một ca Caesar là đủ. Một giải pháp không được cho rằng phép quay phù hợp là duy nhất. 
+
+Cuối cùng, các chuỗi có thể có cùng tần số ký tự trong khi vẫn không thể chuyển đổi. Ví dụ,```
+3
+abc
+aba
+```là không thể. Cả hai chuỗi đều chứa ba chữ cái viết thường, nhưng không có vòng quay tuần hoàn của`aba`có thể trở thành`abc`sau một ca làm việc thống nhất. Chỉ so sánh số lượng ký tự sẽ chấp nhận điều này không chính xác. 
 
 ## Phương pháp tiếp cận 
 
-Giải pháp trực tiếp là thử mọi phép quay có thể (k). Đối với mỗi phép quay, chúng ta sẽ so sánh mọi ký tự của (các) được xoay với ký tự tương ứng của (t). Cặp vị trí đầu tiên xác định độ dịch chuyển Caesar, sau đó mọi vị trí còn lại phải có cùng độ dịch chuyển theo modulo 26. Phương pháp này đúng vì nó kiểm tra rõ ràng mọi phép biến đổi có thể có. 
-
-Vấn đề là số lượng công việc lặp đi lặp lại. Có (n) vòng quay và việc kiểm tra một vòng quay mất (O(n)) thời gian. Tại (n=200.000), trường hợp xấu nhất đạt tới (200.000^2=40.000.000.000) kiểm tra ký tự. Lực lượng vũ phu đơn giản về mặt khái niệm, nhưng hành vi bậc hai của nó loại trừ nó. 
-
-Quan sát hữu ích là sự dịch chuyển Caesar không làm thay đổi sự khác biệt giữa các chữ cái lân cận. Nếu như`x`được đổi thành`x-d`Và`y`được đổi thành`y-d`, thì sự khác biệt của họ vẫn còn 
+Cách tiếp cận trực tiếp là thử mọi vòng quay (k). Đối với mỗi vòng quay, xây dựng hoặc kiểm tra khái niệm 
 
 [ 
-(y-d)-(x-d)=y-x \pmod {26}. 
+s[k],s[k+1],\ldots,s[n-1],s[0],\ldots,s[k-1]. 
 ] 
 
-Vì vậy, thay vì so sánh các chữ cái gốc, chúng ta có thể so sánh trình tự khác nhau theo chu kỳ giữa các chữ cái liên tiếp. 
+Ký tự đầu tiên xác định sự thay đổi Caesar duy nhất có thể. Khi đã biết sự thay đổi đó, chúng tôi so sánh mọi ký tự còn lại với ký tự tương ứng của (t). Điều này đúng vì đối với một phép quay cố định thì có nhiều nhất một phép dịch chuyển Caesar có thể làm cho các ký tự đầu tiên bằng nhau. 
 
-Đối với một chuỗi (x), hãy xác định 
+Vấn đề là số lượng so sánh. Trong trường hợp xấu nhất, có (n) vòng quay và (n) kiểm tra ký tự cho mỗi vòng quay, cho ra thời gian (O(n^2)). Đối với (n=200.000), đó là khoảng (40) tỷ so sánh. 
 
-(x[(i+1)\bmod n]-x[i])\bmod 26. 
-] 
-
-Chuỗi này có chính xác (n) phần tử vì nó cũng chứa sự khác biệt từ ký tự cuối cùng đến ký tự đầu tiên. 
-
-Giả sử xoay (các) vị trí theo (k) sẽ có sự sắp xếp chính xác trước khi chuyển Caesar. Dãy sai phân tuần hoàn của nó đơn giản là dãy sai phân tuần hoàn của (s), bắt đầu từ vị trí (k). Sự dịch chuyển Caesar sau đó thay đổi không có sự khác biệt nào cả. Do đó, một phép quay hợp lệ tồn tại chính xác khi chuỗi sai phân tuần hoàn của (t) xảy ra dưới dạng phép quay tuần hoàn của chuỗi sai phân tuần hoàn của (s). 
-
-Tìm một chuỗi tuần hoàn bên trong một chuỗi khác là một vấn đề so khớp chuỗi tiêu chuẩn. Chúng ta có thể ghép chuỗi sai phân của (các) với chính nó và sử dụng thuật toán Knuth-Morris-Pratt để tìm chuỗi sai phân của (t) trong thời gian (O(n)). Khi tìm thấy vị trí bắt đầu phù hợp (k), sự dịch chuyển Caesar được xác định bởi ký tự đầu tiên: 
+Quan sát hữu ích là phép dịch chuyển Caesar thay đổi mọi ký tự với cùng một lượng, do đó nó không làm thay đổi sự khác biệt giữa các ký tự liên tiếp. Mã hóa mọi sai phân liền kề theo chu kỳ bằng cách 
 
 [ 
-d=(s[k]-t[0])\bmod 26. 
+D_i=(x_{i+1}-x_i)\bmod 26, 
 ] 
 
-Biểu diễn sự khác biệt giải quyết vấn đề xoay vòng, trong khi KMP làm cho tìm kiếm tuyến tính. 
+ở đâu (x_n=x_0). Ví dụ, sự khác biệt của`abc`là 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
+[ 
+[1,1,24], 
+] 
+
+bởi vì`c`ĐẾN`a`là (0-2\equiv24\pmod{26}). 
+
+Giả sử một phiên bản xoay của (s) trở thành (t) sau khi dịch chuyển Caesar. Mọi chênh lệch liền kề trong (các) góc quay khi đó phải bằng chênh lệch liền kề tương ứng trong (t). Một phép quay của (các) chỉ đơn giản là xoay mảng sai phân của nó với cùng một lượng. Do đó, bài toán ban đầu trở thành bài toán so khớp chuỗi tuần hoàn tiêu chuẩn: tìm mảng sai phân của (t) bên trong hai bản sao liên tiếp của mảng sai phân của (s). 
+
+Quan sát này cũng hoạt động theo hướng khác. Nếu các mảng khác biệt khớp nhau dưới một số phép quay thì mỗi cặp liên tiếp sẽ khác nhau một lượng như nhau trong hai chuỗi. Bắt đầu từ một ký tự, độ lệch không đổi đó sẽ lan truyền trong toàn bộ chuỗi, do đó tồn tại một sự thay đổi Caesar. 
+
+Chúng ta có thể tìm góc quay cần thiết bằng thuật toán Knuth-Morris-Pratt. KMP tìm mẫu (D_t) trong (D_s+D_s) theo thời gian tuyến tính mà không cần kiểm tra từng vòng quay riêng biệt. 
+
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | (O(n^2)) | (O(n)) | Quá chậm | 
-| Tối ưu | (O(n)) | (O(n)) | Đã chấp nhận | 
+| Mảng chênh lệch + KMP | (O(n)) | (O(n)) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Chuyển đổi mọi ký tự của (s) và (t) thành giá trị số của nó từ 0 đến 25. Điều này cho phép chúng ta thực hiện tất cả số học dịch chuyển Caesar với số học mô-đun thông thường. 
-2. Xây dựng mảng sai phân tuần hoàn`ds`cho (các) cái. Đối với mọi vị trí (i), lưu trữ chênh lệch từ (s[i]) đến (s[(i+1)\bmod n]), modulo 26. Xây dựng`dt`cho (t) theo cách hoàn toàn tương tự. 
-3. Xây dựng hàm tiền tố KMP cho`dt`. Hàm tiền tố cho chúng ta biết bao nhiêu mẫu vẫn có thể sử dụng được sau khi không khớp, do đó việc tìm kiếm không bao giờ phải bắt đầu lại từ đầu. 
-4. Tìm kiếm`dt`bên trong`ds + ds`. Một phép quay của mảng tuần hoàn tương ứng với một đoạn liền kề của phiên bản nhân đôi của nó. Chúng tôi chỉ chấp nhận kết quả khớp bắt đầu từ chỉ số nhỏ hơn (n), vì đó chính xác là (n) phép quay có thể có. 
-5. Nếu không có sự trùng khớp như vậy, hãy in`Impossible`. Việc so khớp các khác biệt theo chu kỳ là cần thiết để một phép biến đổi hợp lệ, do đó, không có phép dịch chuyển Caesar nào có thể sửa chữa được một phép quay bị thiếu. 
-6. Nếu trận đấu bắt đầu ở (k), hãy tính 
+1. Chuyển đổi mọi ký tự của (s) và (t) thành số nguyên từ (0) đến (25). Xây dựng mảng khác biệt theo chu kỳ của họ. Đối với một chuỗi (x), vị trí (i) lưu trữ ((x[(i+1)\bmod n]-x[i])\bmod26). Sự khác biệt theo chu kỳ từ cuối đến đầu là cần thiết vì các phép quay cũng bảo toàn cạnh giữa vị trí cuối cùng và đầu tiên. 
+2. Gọi (A) là mảng sai phân của (s) và (B) là mảng sai phân của (t). Một phép quay trái của (s) theo (k) sẽ quay (A) sang trái chính xác (k) vị trí. Do đó, chúng ta cần tìm (B) dưới dạng đoạn có độ dài-(n) bắt đầu tại vị trí (k) nào đó trong (A+A). 
+3. Xây dựng hàm tiền tố KMP cho (B). Hàm tiền tố cho chúng ta biết lượng mẫu vẫn có thể sử dụng được sau khi không khớp, cho phép tìm kiếm bỏ qua so sánh thay vì bắt đầu lại từ đầu. 
+4. Chạy KMP trên hai bản sao của (A). Bất cứ khi nào sự xuất hiện đầy đủ của (B) bắt đầu ở vị trí (k<n), chúng ta đã tìm thấy một phép quay bảo toàn tất cả các sai phân tuần hoàn. Chúng ta có thể dừng lại ở lần xuất hiện đầu tiên như vậy. 
+5. Khi đã biết (k), hãy so sánh ký tự đầu tiên của (s) được xoay, là (s[k]), với (t[0]). Vì phép biến đổi Caesar di chuyển các ký tự lùi lại (d), 
 
 [ 
-d=(s[k]-t[0])\bmod 26. 
+t_0\equiv s_k-d\pmod{26}, 
 ] 
 
-Chuỗi xoay bắt đầu bằng`s[k]`. Dịch chuyển ký tự đó lùi lại (d) phải tạo ra`t[0]`, do đó phương trình này cho chính xác độ dịch chuyển Caesar cần thiết. 
+vậy 
 
-1. In`Success`, theo sau là (k) và (d). Giá trị được tạo bởi modulo 26 nằm trong khoảng từ 0 đến 25, thỏa mãn phạm vi yêu cầu (-26<d<26). 
+[ 
+d\equiv s_k-t_0\pmod{26}. 
+] 
+
+Việc chọn đại diện từ (0) đến (25) luôn thỏa mãn khoảng yêu cầu (-26<d<26). 
+
+1. Nếu KMP không tìm thấy sự xuất hiện nào bắt đầu ở (n) vị trí đầu tiên, thì không có phép quay nào có độ lệch chu kỳ cần thiết, do đó không tồn tại phép biến đổi hợp lệ. 
 
 ### Tại sao nó hoạt động 
 
-Bất biến trung tâm là hai chuỗi chỉ khác nhau bởi một phép dịch chuyển Caesar đều khi và chỉ khi hiệu chu kỳ tương ứng của chúng bằng nhau. Phép dịch Caesar hủy bỏ khi hai ký tự lân cận bị trừ đi, do đó nó không thể ảnh hưởng đến mảng chênh lệch. 
+Tính bất biến là một phép dịch chuyển Caesar thống nhất sẽ làm cho mọi sai phân liền kề theo chu kỳ không thay đổi. Do đó, một phép biến đổi hợp lệ ngụ ý rằng mảng sai phân của (t) là một phép quay của mảng sai phân của (các) nên KMP phải tìm ra nó. 
 
-Một phép quay theo (k) chỉ đơn giản là thay đổi điểm bắt đầu của mảng sai phân theo chu kỳ. Tìm kiếm`dt`bên trong`ds + ds`do đó tìm thấy chính xác các phép quay có cấu trúc ký tự tương đối khớp với (t). Khi tìm thấy một phép quay như vậy, mọi sai phân liền kề đều đồng ý, do đó hiệu giữa (các) và (t) được quay là không đổi trong toàn bộ chu kỳ. Hằng số đó chính xác là phép dịch chuyển Caesar được tính từ ký tự đầu tiên. Do đó, mọi cặp được báo cáo ((k,d)) đều tạo ra (t) và nếu tồn tại một cặp hợp lệ thì phép quay của nó phải xuất hiện trong tìm kiếm KMP. 
+Ngược lại, giả sử KMP tìm thấy một phép quay (k) mà hai mảng khác biệt giống hệt nhau. Sau đó, với mỗi cặp liên tiếp, hiệu giữa (s) và (t) được quay là cùng một modulo (26). Do đó tất cả các ký tự tương ứng khác nhau một giá trị không đổi. Hằng số đó chính xác là phép dịch chuyển Caesar (d) được tính từ ký tự đầu tiên, do đó việc áp dụng phép quay (k) và phép dịch chuyển đó biến đổi (s) thành (t). 
+
+Trường hợp (n=1) cũng có lý do tương tự. Cả hai mảng khác biệt đều chứa một giá trị duy nhất (0), do đó KMP tìm thấy phép xoay duy nhất có thể và phép tính ký tự đầu tiên cung cấp độ dịch chuyển Caesar được yêu cầu. 
 
 ## Giải pháp Python```python
 import sys
 input = sys.stdin.readline
 
-def build_diff(s):
+def differences(s):
     n = len(s)
-    if n == 1:
-        return []
-    return [
-        (ord(s[(i + 1) % n]) - ord(s[i])) % 26
-        for i in range(n)
-    ]
+    a = [ord(c) - 97 for c in s]
+    return [(a[(i + 1) % n] - a[i]) % 26 for i in range(n)], a
 
-def prefix_function(pattern):
-    m = len(pattern)
-    pi = [0] * m
-
-    for i in range(1, m):
+def prefix_function(p):
+    pi = [0] * len(p)
+    for i in range(1, len(p)):
         j = pi[i - 1]
-
-        while j > 0 and pattern[i] != pattern[j]:
+        while j > 0 and p[i] != p[j]:
             j = pi[j - 1]
-
-        if pattern[i] == pattern[j]:
+        if p[i] == p[j]:
             j += 1
-
         pi[i] = j
-
     return pi
 
 def solve():
@@ -154,21 +150,19 @@ def solve():
     t = input().strip()
     s = input().strip()
 
-    if n == 1:
-        d = (ord(s[0]) - ord(t[0])) % 26
-        print("Success")
-        print(0, d)
-        return
-
-    ds = build_diff(s)
-    dt = build_diff(t)
+    dt, tv = differences(t)
+    ds, sv = differences(s)
 
     pi = prefix_function(dt)
 
     j = 0
-    doubled = ds + ds
+    rotation = -1
 
-    for i, value in enumerate(doubled):
+    # We only need starts from 0 through n - 1.
+    # Two copies of ds contain every cyclic rotation.
+    for i in range(2 * n):
+        value = ds[i % n]
+
         while j > 0 and value != dt[j]:
             j = pi[j - 1]
 
@@ -177,30 +171,30 @@ def solve():
 
         if j == n:
             start = i - n + 1
-
             if start < n:
-                d = (ord(s[start]) - ord(t[0])) % 26
-                print("Success")
-                print(start, d)
-                return
-
+                rotation = start
+                break
             j = pi[j - 1]
 
-    print("Impossible")
+    if rotation == -1:
+        print("Impossible")
+        return
+
+    # t[0] = s[rotation] - d (mod 26)
+    d = (sv[rotation] - tv[0]) % 26
+
+    print("Success")
+    print(rotation, d)
 
 if __name__ == "__main__":
     solve()
-```các`build_diff`hàm chuyển đổi một chuỗi thành chuỗi sai phân tuần hoàn của nó. biểu thức`(i + 1) % n`xử lý cạnh cuối cùng đến cạnh đầu tiên, điều này là cần thiết vì các phép quay là tuần hoàn chứ không phải là các hoạt động chuỗi con thông thường. 
+```các`differences`hàm chuyển đổi các ký tự thành giá trị từ (0) đến (25) và tính toán tất cả các khác biệt theo chu kỳ. biểu thức`(i + 1) % n`xử lý cạnh cuối cùng trở lại ký tự đầu tiên, bao gồm cả trường hợp (n=1). 
 
-Trường hợp (n=1) được xử lý riêng vì chuỗi sai phân của nó sẽ trống. Chỉ có một phép quay khả thi, (k=0) và sự dịch chuyển Caesar có thể được lấy trực tiếp từ hai ký tự. 
+Chức năng tiền tố là tiền xử lý KMP tiêu chuẩn. Các chỉ số của nó luôn nằm trong mẫu và`while`vòng lặp liên tục quay trở lại độ dài tiền tố được tính toán trước đó. Vì mọi chuyển động dự phòng`j`đến một giá trị nhỏ hơn thì tổng công vẫn tuyến tính. 
 
-Hàm tiền tố chỉ được tính cho`dt`. Trong quá trình tìm kiếm KMP,`ds + ds`đại diện cho mọi vòng quay theo chu kỳ của`ds`như một đoạn liền kề bình thường. (n) vị trí bắt đầu đầu tiên có thể tương ứng chính xác với (k=0,\ldots,n-1). 
+Việc tìm kiếm lặp đi lặp lại`2 * n`vị trí và quyền truy cập`ds[i % n]`, đại diện cho hai bản sao của mảng sai phân tuần hoàn mà không phân bổ một danh sách khác. Trận đấu bắt đầu lúc`start`tương ứng chính xác với việc xoay (các) trái bởi`start`. các`start < n`điều kiện loại bỏ các lần xuất hiện trùng lặp bắt đầu sau (n) vị trí đầu tiên. 
 
-Khi KMP đạt`j == n`, toàn bộ chuỗi khác biệt mục tiêu đã khớp. biểu thức`i - n + 1`bắt đầu trận đấu đó. Chúng tôi từ chối bắt đầu bằng hoặc xa hơn (n), vì đó là những kết quả trùng lặp được tạo bằng cách nhân đôi mảng. 
-
-Cuối cùng,`d = (ord(s[start]) - ord(t[0])) % 26`theo trực tiếp từ sự chỉ đạo của hoạt động Caesar. Nếu ký tự được xoay là`c`, dịch chuyển nó lùi lại bởi (d) cho`c-d`, vì vậy chúng ta cần`c-d = t[0] (mod 26)`. Sắp xếp lại sẽ đưa ra biểu thức được sử dụng trong mã. 
-
-Số nguyên Python có độ chính xác tùy ý, do đó không có vấn đề tràn. Tất cả các chỉ số đều nằm trong (2n) và mọi chuyển đổi ký tự đều có thời gian không đổi. 
+Sự dịch chuyển Caesar chỉ được tính sau khi tìm thấy một phép quay hợp lệ. Chúng tôi sử dụng`(sv[rotation] - tv[0]) % 26`, bởi vì phép biến đổi là một phép dịch ngược. Giá trị kết quả nằm trong (0,\ldots,25), nằm trong phạm vi đầu ra được phép. Số nguyên Python không bị tràn nên không cần xử lý số học đặc biệt. 
 
 ## Ví dụ đã hoạt động 
 
@@ -210,29 +204,22 @@ Số nguyên Python có độ chính xác tùy ý, do đó không có vấn đ�
 3
 abc
 fde
-```Sự khác biệt theo chu kỳ như sau. 
+```Vì`t = abc`, sự khác biệt theo chu kỳ là`1, 1, 24`. Vì`s = fde`, họ là`24, 1, 1`. 
 
-| Chuỗi | Trình tự khác biệt | 
-| --- | --- | 
-|`t = abc`|`[1, 1, 24]`| 
-|`s = fde`|`[24, 1, 1]`| 
-
-Nhân đôi trình tự khác biệt của`s`cho`[24, 1, 1, 24, 1, 1]`. Trình tự mục tiêu`[1, 1, 24]`đầu tiên xảy ra ở vị trí (1). 
-
-| Bang KMP | Giá trị | Vị trí mẫu | Kết quả | 
+| Chỉ số mẫu |`dt`| Tìm kiếm giá trị từ`ds + ds`| Bang KMP | 
 | --- | --- | --- | --- | 
-| bắt đầu | 24 | 0 | không khớp | 
-| sau chỉ số 1 | 1 | 1 | trận đấu | 
-| sau chỉ số 2 | 1 | 2 | trận đấu | 
-| sau chỉ số 3 | 24 | 3 | trận đấu đầy đủ | 
+| 0 | 1 | 24 | 0 | 
+| 1 | 1 | 1 | 1 | 
+| 2 | 24 | 1 | 2 | 
+| 3 | 1 | 24 | 3 | 
 
-Do đó (k=1). Xoay`fde`bởi một vị trí mang lại`def`. Ký tự đầu tiên của nó là`d`, trong khi mục tiêu bắt đầu bằng`a`, vậy 
+Mẫu hoàn chỉnh bắt đầu ở vị trí tìm kiếm (1), do đó góc xoay yêu cầu là (k=1). Sau khi quay`fde`còn lại một vị trí, chúng tôi nhận được`def`. Ký tự đầu tiên thay đổi từ`d`ĐẾN`a`, đòi hỏi phải dịch chuyển ngược về (3). 
 
-[ 
-d=(d-a)\bmod26=3. 
-] 
+|`k`| Đã xoay`s`|`t[0]`|`s[k] - t[0]`| Kết quả | 
+| --- | --- | --- | --- | --- | 
+| 1 |`def`|`a`| (3-0=3) |`Success 1 3`| 
 
-Dịch chuyển`def`lùi lại 3 cho`abc`, do đó thuật toán in`Success`,`1 3`. 
+Ví dụ này chứng minh rằng sự khác biệt so khớp sẽ xác định phép quay mà không so sánh tất cả các ký tự của mọi phép quay có thể. 
 
 ### Mẫu 2 
 
@@ -240,73 +227,73 @@ Dịch chuyển`def`lùi lại 3 cho`abc`, do đó thuật toán in`Success`,`1 
 3
 abc
 aba
-```Sự khác biệt mang tính chu kỳ là 
+```Sự khác biệt mang tính chu kỳ của`abc`là`1, 1, 24`. Sự khác biệt mang tính chu kỳ của`aba`là`25, 25, 0`. 
 
-| Chuỗi | Trình tự khác biệt | 
-| --- | --- | 
-|`t = abc`|`[1, 1, 24]`| 
-|`s = aba`|`[25, 25, 0]`| 
+| Chỉ số mẫu |`dt`| Tìm kiếm giá trị từ`ds + ds`| Bang KMP | 
+| --- | --- | --- | --- | 
+| 0 | 1 | 25 | 0 | 
+| 1 | 1 | 25 | 0 | 
+| 2 | 24 | 0 | 0 | 
+| 3 | 1 | 25 | 0 | 
+| 4 | 1 | 25 | 0 | 
+| 5 | 24 | 0 | 0 | 
 
-Trình tự nhân đôi của`s`là`[25, 25, 0, 25, 25, 0]`, không chứa sự xuất hiện của`[1, 1, 24]`. 
+Không có sự xuất hiện đầy đủ của mẫu nên không có phép xoay hợp lệ. Vì phép dịch chuyển Caesar không thể thay đổi các hiệu liền kề nên không có giá trị nào của (d) có thể sửa chữa được sự không khớp này. 
 
-| Vị trí tìm kiếm | Sự khác biệt hiện tại | Tiến độ mục tiêu | 
-| --- | --- | --- | 
-| 0 | 25 | 0 | 
-| 1 | 25 | 0 | 
-| 2 | 0 | 0 | 
-| 3 | 25 | 0 | 
-| 4 | 25 | 0 | 
-| 5 | 0 | 0 | 
-
-Không có vòng quay nào có các thay đổi ký tự tương đối giống như`t`, do đó không có phép dịch chuyển Caesar nào có thể làm cho các dây bằng nhau. Câu trả lời là`Impossible`. 
-
-## Phân tích độ phức tạp 
+Do đó, đầu ra là```
+Impossible
+```## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | (O(n)) | Việc xây dựng cả hai mảng sai phân, xây dựng hàm tiền tố của KMP và tìm kiếm mảng nhân đôi đều mất thời gian tuyến tính. | 
-| Không gian | (O(n)) | Các mảng sai phân, chuỗi nhân đôi và hàm tiền tố đều yêu cầu bộ nhớ tuyến tính. | 
+| Thời gian | (O(n)) | Việc xây dựng sự khác biệt, tiền xử lý KMP và tìm kiếm đều mất thời gian tuyến tính | 
+| Không gian | (O(n)) | Hai mảng sai phân và mảng tiền tố KMP chứa số nguyên (O(n)) | 
 
-Với (n\le200.000), thuật toán chỉ thực hiện một số lần truyền tuyến tính không đổi qua đầu vào. Việc sử dụng bộ nhớ của nó cũng tuyến tính nên nó phù hợp với các ràng buộc đã nêu. 
+Với (n\le200.000), thuật toán chỉ thực hiện một số lần tuyến tính không đổi qua đầu vào, phù hợp với giới hạn 2 giây chính thức. Mức tiêu thụ bộ nhớ cũng ở mức thoải mái dưới giới hạn 512 MB chính thức. 
 
 ## Trường hợp thử nghiệm 
 
-Kết quả đầu ra thành công không phải là duy nhất, do đó, một bộ khai thác thử nghiệm mạnh mẽ sẽ xác minh phép biến đổi được trả về thay vì so sánh chuỗi đầu ra hoàn chỉnh theo nghĩa đen. Mã kiểm tra sau đây thực hiện điều đó trong khi vẫn kiểm tra chính xác`Impossible`mẫu.```python
+Khai thác kiểm tra bên dưới không so sánh các câu trả lời thành công với một cặp cố định ((k,d)), vì vấn đề rõ ràng cho phép bất kỳ chuyển đổi hợp lệ nào. Thay vào đó, nó kiểm tra xem cặp được báo cáo có nằm trong phạm vi hay không và thực sự chuyển đổi (các) thành (t). Những trường hợp bất khả thi được so sánh chính xác.```python
 import sys
 import io
 
-def solve_data(inp: str) -> str:
-    data = inp.strip().split()
-    n = int(data[0])
-    t = data[1]
-    s = data[2]
+def solve_case(inp: str) -> str:
+    old_stdin = sys.stdin
+    sys.stdin = io.StringIO(inp)
 
-    def build_diff(x):
-        if n == 1:
-            return []
+    n = int(sys.stdin.readline())
+    t = sys.stdin.readline().strip()
+    s = sys.stdin.readline().strip()
+
+    def differences(x):
+        values = [ord(c) - 97 for c in x]
         return [
-            (ord(x[(i + 1) % n]) - ord(x[i])) % 26
+            (values[(i + 1) % n] - values[i]) % 26
             for i in range(n)
-        ]
+        ], values
 
-    if n == 1:
-        d = (ord(s[0]) - ord(t[0])) % 26
-        return f"Success\n0 {d}\n"
+    def prefix_function(p):
+        pi = [0] * len(p)
+        for i in range(1, len(p)):
+            j = pi[i - 1]
+            while j > 0 and p[i] != p[j]:
+                j = pi[j - 1]
+            if p[i] == p[j]:
+                j += 1
+            pi[i] = j
+        return pi
 
-    ds = build_diff(s)
-    dt = build_diff(t)
+    dt, tv = differences(t)
+    ds, sv = differences(s)
 
-    pi = [0] * n
-    for i in range(1, n):
-        j = pi[i - 1]
-        while j > 0 and dt[i] != dt[j]:
-            j = pi[j - 1]
-        if dt[i] == dt[j]:
-            j += 1
-        pi[i] = j
+    pi = prefix_function(dt)
 
     j = 0
-    for i, value in enumerate(ds + ds):
+    rotation = -1
+
+    for i in range(2 * n):
+        value = ds[i % n]
+
         while j > 0 and value != dt[j]:
             j = pi[j - 1]
 
@@ -314,168 +301,136 @@ def solve_data(inp: str) -> str:
             j += 1
 
         if j == n:
-            k = i - n + 1
-            if k < n:
-                d = (ord(s[k]) - ord(t[0])) % 26
-                return f"Success\n{k} {d}\n"
+            start = i - n + 1
+            if start < n:
+                rotation = start
+                break
             j = pi[j - 1]
 
-    return "Impossible\n"
+    if rotation == -1:
+        result = "Impossible\n"
+    else:
+        d = (sv[rotation] - tv[0]) % 26
+        result = f"Success\n{rotation} {d}\n"
 
-def run(inp: str) -> str:
-    return solve_data(inp)
+    sys.stdin = old_stdin
+    return result
 
-def valid_output(inp: str, out: str) -> bool:
-    data = inp.strip().split()
-    n = int(data[0])
-    t = data[1]
-    s = data[2]
+def is_valid(inp: str, out: str) -> bool:
+    lines = inp.strip().splitlines()
+    n = int(lines[0])
+    t = lines[1]
+    s = lines[2]
 
-    lines = out.strip().split()
+    out_lines = out.strip().splitlines()
 
-    if lines[0] == "Impossible":
-        return len(lines) == 1
-
-    if lines[0] != "Success" or len(lines) != 3:
+    if out_lines[0] == "Impossible":
         return False
 
-    k = int(lines[1])
-    d = int(lines[2])
+    assert out_lines[0] == "Success"
+    k, d = map(int, out_lines[1].split())
 
-    if not (0 <= k < n and -26 < d < 26):
-        return False
+    assert 0 <= k < n
+    assert -26 < d < 26
 
-    rotated = s[k:] + s[:k]
+    for i in range(n):
+        source = ord(s[(i + k) % n]) - 97
+        target = (source - d) % 26
+        if target != ord(t[i]) - 97:
+            return False
 
-    transformed = "".join(
-        chr((ord(c) - ord('a') - d) % 26 + ord('a'))
-        for c in rotated
-    )
-
-    return transformed == t
+    return True
 
 # Provided samples.
-assert run("""3
+sample1 = """3
 abc
 fde
-""") == "Success\n1 3\n"
+"""
+assert is_valid(sample1, solve_case(sample1)), "sample 1"
 
-assert run("""3
+sample2 = """3
 abc
 aba
-""") == "Impossible\n"
+"""
+assert solve_case(sample2).strip() == "Impossible", "sample 2"
 
-assert valid_output(
-    """1
+sample3 = """1
 z
 a
-""",
-    run("""1
+"""
+assert is_valid(sample3, solve_case(sample3)), "sample 3"
+
+# Minimum size, where the difference arrays contain only zero.
+case1 = """1
+a
 z
-a
-""")
-)
+"""
+assert is_valid(case1, solve_case(case1)), "minimum size"
 
-# Minimum-size, no transformation needed.
-assert valid_output(
-    """1
-a
-a
-""",
-    run("""1
-a
-a
-""")
-)
-
-# All characters equal, with a non-zero Caesar shift.
-assert valid_output(
-    """4
-zzzz
-aaaa
-""",
-    run("""4
-zzzz
-aaaa
-""")
-)
-
-# Rotation by n - 1, exercising the cyclic boundary.
-assert valid_output(
-    """5
+# Rotation crosses the end of the string.
+case2 = """5
 abcde
-bcdea
-""",
-    run("""5
-abcde
-bcdea
-""")
-)
+cdeab
+"""
+assert is_valid(case2, solve_case(case2)), "wrap-around rotation"
 
-# Maximum-size input, all characters equal.
+# All characters are equal, and n is at the maximum allowed size.
 n = 200000
-max_case = f"{n}\n" + "a" * n + "\n" + "a" * n + "\n"
-assert valid_output(max_case, run(max_case))
+case3 = f"{n}\n" + "a" * n + "\n" + "z" * n + "\n"
+assert is_valid(case3, solve_case(case3)), "maximum size and all equal"
+
+# Almost matching strings, designed to reject a wrong rotation.
+case4 = """4
+abca
+caab
+"""
+assert solve_case(case4).strip() == "Impossible", "invalid rotation"
+
+print("All tests passed.")
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`1 / a / a`|`Success`, (k=0,d=0) | Kích thước tối thiểu và chuỗi chênh lệch trống | 
-|`4 / zzzz / aaaa`|`Success`, bất kỳ phép quay nào và (d=1) | Chuỗi hoàn toàn bằng nhau và số học Caesar mô-đun | 
-|`5 / abcde / bcdea`|`Success`, (k=4,d=0) | Xoay quanh cuối | 
-| (n=200000), tất cả`a`|`Success`, (k=0,d=0) | Kích thước đầu vào tối đa và hiệu suất tuyến tính | 
+|`1 / a / z`| Bất kỳ hợp lệ`Success`| Kích thước tối thiểu và thực tế là một ký tự luôn có thể được dịch chuyển | 
+|`5 / abcde / cdeab`| Bất kỳ hợp lệ`Success`, với (k=3,d=0) là một câu trả lời | Xoay quanh và hướng quay chính xác | 
+| (n=200000), cả hai chuỗi đều không đổi | Bất kỳ hợp lệ`Success`| Kích thước đầu vào tối đa, ký tự lặp lại và hiệu suất tuyến tính | 
+|`4 / abca / caab`|`Impossible`| Từ chối một vòng quay có sự khác biệt cục bộ không khớp | 
 
 ## Vỏ cạnh 
 
-Đối với (n=1), các mảng sai phân không chứa phần tử nào, vì vậy KMP không có ý nghĩa. Coi như```
+Với (n=1), hãy xem xét```
 1
 z
 a
-```Chỉ có một khả năng quay duy nhất (k=0). Sự thay đổi cần thiết là 
+```Mảng khác biệt của cả hai chuỗi là`[0]`, bởi vì vị trí duy nhất cũng là vị trí kế thừa theo chu kỳ của chính nó. KMP ngay lập tức tìm thấy kết quả phù hợp khi xoay vòng (k=0). Sự thay đổi là 
 
 [ 
-(z-a)\bmod26=25. 
+d=(25-0)\bmod26=25, 
 ] 
 
-Thuật toán trả về`Success`,`0 25`. Điều này tương đương với mẫu`0 -25`bởi vì sự dịch chuyển Caesar là tuần hoàn modulo 26 và cả hai giá trị đều biểu thị cùng một phép biến đổi. 
+để chương trình có thể in```
+Success
+0 25
+```Mẫu của`0 -25`là một cách biểu diễn khác được chấp nhận bởi quy ước dịch chuyển được phép của bài toán. Điều kiện thiết yếu là cặp được báo cáo tạo ra ký tự đích. 
 
-Đối với bảng chữ cái, hãy xem xét```
-1
-a
-z
-```Thuật toán tính toán 
-
-[ 
-(a-z)\bmod26=1. 
-] 
-
-Dịch chuyển`a`lùi lại 1 tạo ra`z`, Vì thế`Success 0 1`là hợp lệ. Hoạt động modulo ngăn không cho chênh lệch thô âm bị coi là một ca làm việc không hợp lệ. 
-
-Đối với một phép quay đi qua phần cuối của chuỗi, hãy xem xét```
+Đối với một vòng quay qua điểm cuối, hãy xem xét```
 5
 abcde
-bcdea
-```Trình tự sai phân theo chu kỳ của`s`được tìm kiếm trong`ds + ds`. Mục tiêu bắt đầu tại vị trí (4), tương ứng với vòng quay 
-
-# \texttt{a}+\texttt{bcde} 
-
-\texttt{abcde}. 
-] 
-
-KMP tìm thấy (k=4) và các ký tự đầu tiên đã đồng ý, vì vậy (d=0). 
+cdeab
+```Mảng khác biệt của`abcde`là`[1,1,1,1,22]`, trong khi mảng khác biệt của`cdeab`là`[1,1,22,1,1]`. Mảng thứ hai bắt đầu ở vị trí (3) trong chuỗi tuần hoàn của mảng thứ nhất, do đó KMP tìm thấy (k=3). Nguồn quay là`cdeab`, đã bằng mục tiêu, cho (d=0). 
 
 Đối với các ký tự lặp lại, hãy xem xét```
 4
 aaaa
-aaaa
-```Mọi sai khác theo chu kỳ đều bằng 0, nên mọi phép quay đều khớp. KMP chấp nhận ký tự đầu tiên (k=0) và ký tự đầu tiên cho (d=0). Không cần phải phân biệt giữa nhiều câu trả lời hợp lệ vì bài toán chấp nhận bất kỳ câu trả lời nào trong số đó. 
-
-Trường hợp đúng đắn nhất là khi các chuỗi khác nhau khớp nhau nhưng các chuỗi ban đầu không có cùng ký tự đầu tiên. Ví dụ,```
-3
-abc
-def
-```Chuỗi sai phân tuần hoàn của cả hai chuỗi là`[1, 1, 24]`, vì vậy (k=0) là một kết quả khớp cấu trúc hợp lệ. Sự khác biệt của ký tự đầu tiên mang lại 
+zzzz
+```Cả hai mảng sai phân theo chu kỳ đều`[0,0,0,0]`. KMP tìm phép quay (0) và các ký tự đầu tiên cho 
 
 [ 
-d=(d-a)\bmod26=3. 
+d=(25-0)\bmod26=25. 
 ] 
 
-Dịch chuyển`def`lùi lại 3 tạo ra`abc`. Điều này chứng tỏ tại sao việc so khớp những khác biệt không phải là bước cuối cùng mà nó làm giảm công việc còn lại trong việc xác định một sự dịch chuyển Caesar toàn cầu.
+Mỗi nhân vật của`zzzz`chuyển ngược lại bởi (25) trở thành`aaaa`. Thực tế là tất cả các phép quay đều hợp lệ không gây ra vấn đề gì vì câu lệnh cho phép bất kỳ câu trả lời hợp lệ nào. 
+
+Đối với một cặp không thể, hãy xem xét```
+3
+abc
+aba
+```Sự khác biệt mục tiêu là`[1,1,24]`, trong khi sự khác biệt về nguồn là`[25,25,0]`. Không có vòng quay theo chu kỳ nào có thể biến chuỗi này thành chuỗi khác, vì vậy KMP không bao giờ đạt được kết quả khớp mẫu đầy đủ. Thuật toán in`Impossible`mà không cố gắng đoán sự dịch chuyển của Caesar. Đây chính xác là lý do tại sao chỉ kiểm tra số lượng ký tự sẽ không đủ.
