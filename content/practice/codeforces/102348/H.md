@@ -1,7 +1,7 @@
 ---
 title: "CF 102348H - Triển vọng Berland"
-description: "Những chiếc đèn lồng được cho dưới dạng tọa độ tăng dần, vì vậy thứ tự đầu vào của chúng đã là thứ tự của chúng dọc theo đường phố. Chúng ta cần chọn dãy con lớn nhất của các tọa độ này để tạo thành một cấp số cộng."
-date: "2026-08-14T12:11:20+07:00"
+description: "Chúng ta có n đèn lồng được đặt ở tọa độ nguyên tăng dần x[0], x[1], ..., x[n-1]. Chúng tôi có thể bật bất kỳ tập hợp con nào trong số chúng. Các tọa độ được chọn phải tạo thành một cấp số cộng, nghĩa là mọi tọa độ được chọn liên tiếp đều có cùng sự khác biệt."
+date: "2026-08-15T17:27:44+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102348
@@ -9,7 +9,7 @@ codeforces_index: "H"
 codeforces_contest_name: "ICPC 2019-2020 NERC (NEERC), Southern and Volga Russia Qualifier"
 rating: 0
 weight: 102348
-solve_time_s: 1176
+solve_time_s: 242
 verified: false
 draft: false
 ---
@@ -18,87 +18,58 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 19 phút 36 giây 
+**Thời gian giải:** 4m 2s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
-Những chiếc đèn lồng được cho dưới dạng tọa độ tăng dần, vì vậy thứ tự đầu vào của chúng đã là thứ tự của chúng dọc theo đường phố. Chúng ta cần chọn dãy con lớn nhất của các tọa độ này để tạo thành một cấp số cộng. Nếu chúng ta chọn tọa độ (a_1,a_2,\ldots,a_k) thì mọi khoảng cách liên tiếp phải giống nhau. Bất kỳ lựa chọn nào về một hoặc hai chiếc đèn lồng đều tự động hợp lệ, vì vậy phần thú vị sẽ bắt đầu ở độ dài thứ ba. 
+chúng tôi có`n`đèn lồng được đặt ở tọa độ nguyên tăng dần`x[0], x[1], ..., x[n-1]`. Chúng tôi có thể bật bất kỳ tập hợp con nào trong số chúng. Các tọa độ được chọn phải tạo thành một cấp số cộng, nghĩa là mọi tọa độ được chọn liên tiếp đều có cùng sự khác biệt. Bất kỳ tập hợp một hoặc hai đèn lồng nào đều tự động hợp lệ, vì vậy nhiệm vụ thực sự là tìm ra dãy con lũy tiến số học dài nhất của mảng tọa độ đã sắp xếp. 
 
-Tọa độ có thể lớn bằng (10^{18}), loại trừ các phương pháp tiếp cận phụ thuộc vào phạm vi tọa độ. Tuy nhiên, chúng tôi có nhiều nhất (n=3000) đèn lồng, vì vậy thuật toán (O(n^2)) là thực tế. Có khoảng (n^2/2=4,5) triệu cặp khi (n=3000), đây là lượng công việc phù hợp cho một chương trình động bậc hai. Thuật toán (O(n^3)) sẽ thực hiện theo thứ tự (3000^3/6=4,5) tỷ lần lặp bên trong trong quá trình triển khai tự nhiên, vượt xa giới hạn hai giây. 
+Các ràng buộc ban đầu đưa ra`n <= 3000`và phối hợp lên đến`10^18`. Giới hạn tọa độ lớn loại trừ các kỹ thuật phụ thuộc vào phạm vi tọa độ nhỏ, nhưng nó không ảnh hưởng đến bản thân số học vì số nguyên Python xử lý các giá trị này một cách chính xác. Kích thước`3000`là hạn chế chính. MỘT`O(n^2)`Thuật toán thực hiện khoảng 4,5 triệu chuyển đổi cặp, phù hợp với giới hạn 2 giây khi được thực hiện cẩn thận. MỘT`O(n^3)`thuật toán đã có khoảng 27 tỷ lần lặp trong giới hạn trường hợp xấu nhất, vượt xa giới hạn. Tuyên bố chính thức xác nhận những giới hạn này và thứ tự tọa độ tăng dần một cách nghiêm ngặt. 
 
-Việc tăng tọa độ chặt chẽ cũng mang lại cho chúng ta một thuộc tính sắp xếp hữu ích. Nếu (i<j), sai sai chung của cấp số cộng tận cùng tại (x_i,x_j) là (x_j-x_i>0). Tọa độ trước đó của nó, nếu có, phải là 
+Có một số trường hợp việc triển khai có thể diễn ra sai sót một cách âm thầm. Đầu tiên, ba chiếc đèn lồng tùy ý không nhất thiết tạo thành một tiến trình hợp lệ. Ví dụ,`3 5 9`chỉ có hai khoảng trống bằng nhau,`2`Và`4`, vậy câu trả lời là`2`, không`3`. Việc triển khai bất cẩn coi mọi tiện ích mở rộng cặp là hợp lệ tự động sẽ bị tính quá mức. 
 
-[ 
-x_i-(x_j-x_i)=2x_i-x_j. 
-] 
+Thứ hai, tiến trình tốt nhất có thể bỏ qua nhiều đèn lồng. Vì`1 2 4 6 7`, câu trả lời là`3`, sử dụng`1, 4, 7`. Chỉ nhìn vào những chiếc đèn lồng liên tiếp sẽ bỏ lỡ tiến trình này vì những khoảng trống ban đầu đã bị bỏ qua.`1, 2, 2, 1`. 
 
-Vì (2x_i-x_j<x_i) nên tọa độ trước đó phải có chỉ số nhỏ hơn. Điều này cho phép mọi trạng thái chỉ phụ thuộc vào các trạng thái đã được tính toán. 
+Thứ ba, tọa độ đầu vào có thể gần với`10^18`. Ví dụ,`0 500000000000000000 1000000000000000000`có câu trả lời`3`. Việc triển khai có chiều rộng cố định phải sử dụng loại đủ rộng cho các biểu thức như`2*x[i]`, mặc dù các số nguyên có độ chính xác tùy ý của Python khiến vấn đề này trở nên đơn giản. 
 
-Có một số trường hợp đặc biệt có thể dẫn đến việc triển khai không chính xác. Với ba tọa độ liên tiếp như```
-3
-1 2 3
-```câu trả lời là 3, vì toàn bộ mảng có các khoảng trống bằng nhau. Việc triển khai khởi tạo mọi tiến trình có độ dài 2 nhưng quên mở rộng nó khi tồn tại điểm giữa sẽ trả về 2 không chính xác. 
-
-Trường hợp thứ hai là```
-5
-1 2 4 6 7
-```có câu trả lời là 3. Tọa độ (1,4,7) tạo thành một cấp số cộng, mặc dù chúng không liên tiếp trong đầu vào. Giải pháp chỉ kiểm tra các đèn lồng liên tiếp sẽ bỏ lỡ điều này và trả về 2. 
-
-Vấn đề thứ ba là một tiến trình mà tiền thân của nó vắng mặt. Ví dụ,```
-3
-1 2 4
-```có câu trả lời 2. Đối với cặp (2,4), tọa độ bắt buộc trước đó sẽ là (0), tọa độ này không có. Cặp này vẫn là một cấp số hợp lệ có độ dài 2, do đó việc triển khai không được coi phần trước bị thiếu là một lỗi. 
-
-Cuối cùng, tọa độ có thể cực kỳ lớn. Một biểu thức như (2x_i-x_j) có thể tạm thời rời khỏi khoảng ([0,10^{18}]), do đó, nó phải được xử lý dưới dạng số nguyên thay vì dựa vào việc lập chỉ mục mảng theo tọa độ. Số nguyên Python có độ chính xác tùy ý, điều này làm cho việc này trở nên đơn giản. 
+Cuối cùng, cụm từ "tất cả các giá trị bằng nhau" không thể tạo ra một phép thử hợp lệ theo các ràng buộc đầu vào của bài toán này theo đúng nghĩa đen vì tọa độ đang tăng lên một cách nghiêm ngặt. Phiên bản có ý nghĩa của trường hợp căng thẳng đó là một mảng có tất cả các khoảng trống bằng nhau, chẳng hạn như`0 1 2 3 4`, trong đó mỗi tọa độ thuộc về một cấp số cộng. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận trực tiếp là chọn hai đèn lồng đầu tiên của một tiến trình, xác định sự khác biệt của chúng và sau đó liên tục tìm kiếm tọa độ tiếp theo có cùng sự khác biệt. Có thể có (O(n^2)) cặp bắt đầu. Nếu mỗi cặp quét các tọa độ còn lại thì số lần lặp trong trường hợp xấu nhất là 
+Cách tiếp cận bạo lực trực tiếp có thể chọn đèn lồng thứ nhất và thứ hai, xác định sự khác biệt của chúng và sau đó tìm kiếm mọi tọa độ tiếp theo tiếp tục tiến trình tương tự. Nếu chúng ta quét tất cả các vị trí tiếp theo có thể một cách ngây thơ, sẽ có`O(n^2)`sự lựa chọn của hai chiếc đèn lồng đầu tiên trở lên`O(n)`làm việc cho mỗi người, đưa ra`O(n^3)`thời gian. Tương tự, kiểm tra từng bộ ba đã có nghĩa là kiểm tra`C(3000, 3) = 4,495,501,000`gấp ba lần trong trường hợp xấu nhất. Lực lượng vũ phu là chính xác bởi vì mọi cấp số cộng đều có cặp đầu tiên, do đó, việc thử từng cặp cuối cùng sẽ xem xét sự khác biệt chung chính xác của nó. Nó chỉ đơn giản là lặp lại quá nhiều công việc. 
 
-[ 
-\sum_{i=0}^{n-1}\sum_{j=i+1}^{n-1}(n-j-1)=O(n^3), 
-] 
+Quan sát hữu ích là khi biết được hai tọa độ được chọn cuối cùng, tọa độ tiếp theo sẽ được xác định hoàn toàn. Giả sử một cấp số cộng hiện kết thúc ở tọa độ`x[h], x[i]`. Tọa độ tiếp theo của nó phải là`x[j] = x[i] + (x[i] - x[h]) = 2*x[i] - x[h]`. 
 
-với khoảng (n^3/6) hoặc 4,5 tỷ lần lặp tại (n=3000). Một bộ băm có thể làm cho mỗi tìm kiếm riêng lẻ có thời gian không đổi, nhưng nó không loại bỏ yếu tố thứ ba vì mọi cặp bắt đầu vẫn có thể tạo ra một quá trình quét dài. 
+Điều đó biến vấn đề thành một chương trình động trên các cặp điểm cuối. Cho phép`dp[i][j]`là độ dài tối đa của một cấp số cộng có hai tọa độ cuối cùng là`x[i]`Và`x[j]`, với`i < j`. Nếu yêu cầu tọa độ tiền nhiệm`2*x[i] - x[j]`tồn tại ở chỉ mục`h`, thì tiến trình có thể được mở rộng từ trạng thái kết thúc tại`(h, i)`:`dp[i][j] = dp[h][i] + 1`. 
 
-Cách tiếp cận bạo lực có hiệu quả vì khi hai tọa độ đầu tiên được cố định, toàn bộ cấp số cộng sẽ được xác định. Vấn đề là nó liên tục phát hiện ra các hậu tố giống nhau. Ví dụ: nếu một số cặp bắt đầu khác nhau cuối cùng đạt đến cùng một cặp tọa độ (x_k,x_i), thì tất cả chúng sẽ làm lại công việc cần thiết một cách độc lập để mở rộng cặp tọa độ đó. 
+Nếu tiền thân đó không tồn tại, cặp`(i, j)`chính nó là một cấp số hợp lệ của độ dài`2`, Vì thế`dp[i][j] = 2`. 
 
-Quan sát quan trọng là một cặp tọa độ được chọn liên tiếp mô tả hoàn toàn trạng thái chúng ta cần cho các tiện ích mở rộng trong tương lai. Xác định (dp[i][j]), cho (i<j), là độ dài tối đa của cấp số cộng có hai tọa độ được chọn cuối cùng là (x_i,x_j). Nếu chúng ta muốn kéo dài tiến trình này về phía sau thì tọa độ trước đó của nó phải là (2x_i-x_j). Có nhiều nhất một chiếc đèn lồng như vậy vì tất cả các tọa độ đều khác nhau. 
+Thứ tự sắp xếp cung cấp thêm một thuộc tính hữu ích. Bởi vì`j > i`, tiền thân bắt buộc`2*x[i] - x[j]`thực sự nhỏ hơn`x[i]`, vậy chỉ số của nó`h`phải thỏa mãn`h < i`. Tất cả thông tin cần thiết cho quá trình chuyển đổi đã được tính toán khi xử lý`i`. 
 
-Giả sử tọa độ đó tồn tại ở chỉ số (k<i). Sau đó, tiến trình kết thúc tại (x_i,x_j) thu được bằng cách lấy tiến trình kết thúc tại (x_k,x_i) và nối thêm (x_j). Như vậy 
+Chúng ta có thể tìm thấy`h`không có bảng băm. Đối với một cố định`i`, BẰNG`j`tăng lên,`x[j]`tăng lên, do đó`2*x[i] - x[j]`giảm đi. Do đó, con trỏ quét lùi qua tọa độ chỉ di chuyển lùi trong toàn bộ vòng lặp bên trong. Trên một cố định`i`, con trỏ di chuyển nhiều nhất`i`lần, do đó tổng số chuyển động của con trỏ trên tất cả`i`là`O(n^2)`. 
 
-[ 
-dp[i][j]=dp[k][i]+1. 
-] 
-
-Nếu (2x_i-x_j) vắng mặt, cặp (x_i,x_j) vẫn có thể bắt đầu một tiến trình hợp lệ, vì vậy (dp[i][j]=2). 
-
-Phép truy toán đưa ra các trạng thái (O(n^2)) và công việc không đổi trên mỗi trạng thái sau khi tọa độ được ánh xạ tới các chỉ mục. Danh sách Python hai chiều thông thường sẽ lãng phí một lượng lớn bộ nhớ vì hàng triệu đối tượng số nguyên và tham chiếu danh sách của Python đều đắt tiền. Vì câu trả lời nhiều nhất là 3000 nên mọi giá trị DP đều khớp với số nguyên 16 bit không dấu. Chúng ta có thể lưu trữ tất cả các trạng thái DP hình tam giác trong một`array('H')`, giảm dung lượng lưu trữ DP xuống khoảng 9 MB. 
+DP chứa`n(n-1)/2`cặp trạng thái. Trong Python, việc lưu trữ từng trạng thái dưới dạng số nguyên bình thường bên trong các danh sách lồng nhau có thể tiêu tốn một lượng bộ nhớ đáng kể. Giá trị DP tối đa là nhiều nhất`3000`, do đó, số nguyên 16 bit không dấu là đủ. của Python`array('H')`lưu trữ mỗi trạng thái trong hai byte, giữ khoảng 4,5 triệu trạng thái trong một vùng nhớ nhỏ. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
-| Lực lượng vũ phu | (O(n^3)) | (O(n)) | Quá chậm | 
-| Tối ưu | (O(n^2)) | (O(n^2)) được đóng gói thành các giá trị 16 bit | Đã chấp nhận | 
+| Lực lượng vũ phu |`O(n^3)`|`O(1)`hoặc`O(n)`| Quá chậm | 
+| Ghép nối DP với con trỏ tiền nhiệm đơn điệu |`O(n^2)`|`O(n^2)`tiểu bang, mỗi tiểu bang khoảng 2 byte | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Lưu trữ tọa độ theo thứ tự đã sắp xếp và xây dựng từ điển ánh xạ mọi tọa độ vào chỉ mục của nó. Từ điển cho phép chúng tôi xác định xem tiền thân được yêu cầu (2x_i-x_j) có tồn tại trong thời gian dự kiến ​​không đổi hay không. 
-2. Phân bổ một mục nhập DP được đóng gói cho mỗi cặp (i<j). Chúng ta chỉ cần lưu trữ hình tam giác vì các trạng thái có (i\ge j) là vô nghĩa và mỗi giá trị tối đa là (n\le3000), do đó, số nguyên 16 bit không dấu là đủ. 
-3. Xử lý chỉ mục đầu tiên (i) từ trái sang phải và với mọi (j>i), xét cặp (x_i,x_j). Mọi tiền thân của cặp này phải có chỉ số nhỏ hơn (i), do đó trạng thái cần thiết cho phép truy toán đã được tính toán. 
-4. Tính tọa độ liền trước cần thiết là (p=2x_i-x_j). Nếu (p) hiện diện tại chỉ mục (k), hãy đọc trạng thái đã được tính toán (dp[k][i]) và đặt 
+1. Đọc tọa độ đã sắp xếp và khởi tạo câu trả lời cho`2`. Mỗi cặp đèn lồng riêng biệt đều là một lựa chọn hợp lệ, vì vậy câu trả lời luôn ít nhất là`2`. 
+2. Đối với mọi chỉ số`i`, tạo một hàng DP chứa các trạng thái`dp[i][j]`cho tất cả`j > i`. Khởi tạo mọi trạng thái thành`2`, bởi vì bất kỳ cặp đèn lồng nào cũng tạo thành một cấp số cộng có độ dài bằng hai. 
+3. Cố định điểm cuối giữa`i`và bắt đầu một con trỏ tiền nhiệm`k = i - 1`. Đối với mọi`j > i`, tọa độ yêu cầu ngay trước`x[i]`là`target = 2*x[i] - x[j]`. 
+4. Di chuyển`k`còn lại trong khi`x[k] > target`. Từ`target`chỉ giảm khi`j`tăng lên,`k`không bao giờ cần phải di chuyển sang phải nữa. Nếu như`x[k] == target`, chỉ số`k`chính xác là người tiền nhiệm được yêu cầu. 
+5. Khi tồn tại trạng thái tiền nhiệm, hãy đọc trạng thái đã được tính toán kết thúc tại`(k, i)`và thiết lập`dp[i][j] = dp[k][i] + 1`. Trạng thái trước đó có ít phần tử hơn và nối thêm`x[j]`duy trì sự khác biệt chung bởi vì`x[i] - x[k] = x[j] - x[i]`. 
+6. Cập nhật câu trả lời chung với trạng thái mới. Nếu giá trị trước không tồn tại, giá trị khởi tạo`2`vẫn đúng. 
+7. Xử lý mọi việc có thể`i`. Cuối cùng, giá trị DP lớn nhất là dãy con lũy tiến số học dài nhất và là câu trả lời bắt buộc. 
 
-[ 
-dp[i][j]=dp[k][i]+1. 
-] 
+### Tại sao nó hoạt động 
 
-Nhận dạng số học đằng sau bước này chính xác là điều kiện khoảng cách bằng nhau. Nếu khoảng cách từ (x_k) đến (x_i) bằng khoảng cách từ (x_i) đến (x_j), thì (x_k=2x_i-x_j). 
-
-1. Nếu không có (p), đặt (dp[i][j]=2). Bất kỳ cặp đèn lồng nào cũng có giá trị bất kể khoảng cách của chúng, vì vậy mỗi cặp đều có độ dài tăng dần ít nhất là hai. 
-2. Cập nhật câu trả lời chung với giá trị DP lớn nhất được thấy. Vì (n\ge3), câu trả lời luôn có ít nhất là 2 và nếu tồn tại một cấp số hợp lệ từ ba cấp trở lên thì phép lặp sẽ ghi lại toàn bộ chiều dài của nó. 
-
-Tại sao nó hoạt động: bất biến là sau khi xử lý một cặp (i,j),`dp[i,j]`chính xác là cấp số cộng dài nhất có hai tọa độ cuối cùng là (x_i,x_j). Nếu tồn tại cấp số trước bắt buộc (2x_i-x_j), mọi cấp số nhân kết thúc tại (i,j) phải sử dụng cấp số trước duy nhất đó, do đó, việc mở rộng cấp số tiến trình tốt nhất kết thúc tại (k,i) sẽ mang lại giá trị tối ưu. Nếu cấp trước không tồn tại thì không có cấp số nào có độ dài ít nhất ba có thể kết thúc tại (i,j), để lại chính cặp đó có độ dài tối ưu 2. Vì mọi cấp số cộng có thể có một số cặp cuối cùng, nên việc lấy giá trị lớn nhất trên tất cả các cặp sẽ cho giá trị tối ưu toàn cục. 
+Xét mọi cấp số cộng kết thúc tại`x[i], x[j]`. Tọa độ trước đó của nó, nếu có thì phải chính xác`2*x[i] - x[j]`. Bởi vì tọa độ được sắp xếp và`j > i`, tiền thân đó nằm trước`i`. Do đó, mọi cấp số nhân có độ dài ít nhất bằng ba đều có một trạng thái DP sớm hơn duy nhất mà từ đó nó có thể được mở rộng. Phép truy toán xem xét chính xác tiền thân đó khi nó tồn tại và nếu không thì sẽ rời khỏi cặp một cách chính xác ở độ dài hai. Bằng cách quy nạp vào vị trí của điểm cuối cuối cùng, mọi trạng thái DP sẽ lưu trữ tiến trình hợp lệ tối đa kết thúc ở cặp đó. Do đó, việc lấy mức tối đa trên tất cả các cặp sẽ mang lại mức tối ưu toàn cục. 
 
 ## Giải pháp Python```python
 import sys
@@ -110,97 +81,96 @@ def solve():
     n = int(input())
     x = list(map(int, input().split()))
 
-    pos = {value: i for i, value in enumerate(x)}
+    if n <= 2:
+        print(n)
+        return
 
-    # For row i, store dp[i][i+1], dp[i][i+2], ..., dp[i][n-1].
-    # Number of stored pairs is n * (n - 1) // 2.
-    total = n * (n - 1) // 2
-    dp = array('H', [0]) * total
-
-    # base[i] is the first position belonging to row i.
-    base = [0] * n
-    for i in range(1, n):
-        base[i] = base[i - 1] + (n - i)
-
-    def index(i, j):
-        return base[i] + (j - i - 1)
-
-    ans = 2
+    # rows[i][j - i - 1] stores dp[i][j] for j > i.
+    # Every state starts at 2 because every pair is valid.
+    rows = [None] * n
+    answer = 2
 
     for i in range(n - 1):
+        length = n - i - 1
+        row = array('H', [2]) * length
+
+        # For fixed i, target = 2*x[i] - x[j] decreases as j grows.
+        # Hence k only moves to the left.
+        k = i - 1
         xi = x[i]
 
         for j in range(i + 1, n):
-            previous = 2 * xi - x[j]
-            k = pos.get(previous)
+            target = 2 * xi - x[j]
 
-            if k is not None:
-                length = dp[index(k, i)] + 1
-            else:
-                length = 2
+            while k >= 0 and x[k] > target:
+                k -= 1
 
-            dp[index(i, j)] = length
+            if k >= 0 and x[k] == target:
+                value = rows[k][i - k - 1] + 1
+                row[j - i - 1] = value
 
-            if length > ans:
-                ans = length
+                if value > answer:
+                    answer = value
 
-    print(ans)
+        rows[i] = row
+
+    print(answer)
 
 if __name__ == "__main__":
     solve()
-```Từ điển tọa độ được xây dựng trước tiên, do đó việc tra cứu tiền thân không yêu cầu tìm kiếm nhị phân cho mỗi cặp. Vì tọa độ khác nhau nên`pos.get(previous)`trả về chỉ mục tiền nhiệm duy nhất hoặc`None`. 
+```các`rows`cấu trúc chỉ lưu trữ các trạng thái có`i < j`. Đối với một cố định`i`, tiểu bang`dp[i][j]`được lưu trữ ở offset`j - i - 1`, do đó hàng chứa chính xác`n-i-1`mục nhập. 
 
-Bố cục DP hình tam giác đáng được chú ý. Hàng ngang`i`chỉ chứa các cặp`(i, i+1)`bởi vì`(i, n-1)`. Vị trí bắt đầu của nó là 
+biểu thức`rows[k][i-k-1]`lấy lại`dp[k][i]`. Phần bù rất dễ bị sai vì mỗi hàng bắt đầu ở điểm cuối thứ hai hợp lệ đầu tiên của chính nó. Ví dụ, ở hàng`k`, trạng thái có chỉ số thứ hai là`i`là`(i-k-1)`-phần tử thứ. 
 
-[ 
-\text{base[i]=\sum_{r=0}^{i-1}(n-r-1). 
-] 
+Con trỏ đứng trước bắt đầu tại`i-1`, chỉ số tiền thân lớn nhất có thể. Đối với mỗi cái mới`j`, tọa độ cần thiết giảm đi. các`while`vòng lặp di chuyển con trỏ cho đến khi tìm thấy tọa độ chính xác hoặc mọi phần trước có thể trở nên quá lớn. Nó không bao giờ cần phải khởi động lại từ`i-1`, đó là điều giữ cho việc tìm kiếm ở dạng bậc hai thay vì bậc ba. 
 
-Sự tái phát sau đó lập bản đồ`(i,j)`ĐẾN`base[i] + (j-i-1)`. Việc trừ một là cần thiết vì cặp được lưu đầu tiên trong hàng`i`là`(i,i+1)`. 
+các`array('H')`loại là đủ vì không có tiến trình nào có thể chứa nhiều hơn`n <= 3000`đèn lồng. Một số nguyên không dấu 16 bit có thể biểu diễn các giá trị thông qua`65535`, vì vậy mọi trạng thái DP đều phù hợp một cách thoải mái. Điều này giúp tiết kiệm một lượng lớn bộ nhớ so với các đối tượng số nguyên đầy đủ của Python. 
 
-Sự tái phát đọc`dp[index(k, i)]`, không`dp[index(i, k)]`, bởi vì tiến trình được sắp xếp theo tọa độ và (k<i). Việc tính toán tiền thân đảm bảo thứ tự này tự động bất cứ khi nào tiền thân tồn tại. 
+Số nguyên Python cũng đánh giá một cách an toàn`2 * x[i]`ngay cả khi`x[i]`đang ở gần`10^18`, do đó không có vấn đề tràn. 
 
-Giá trị DP được lưu trữ trong mảng 16 bit không dấu. Độ dài lũy tiến tối đa có thể là 3000, thoải mái dưới 65535. Điều này tránh được việc sử dụng bộ nhớ của hàng triệu số nguyên Python. Số học số nguyên của Python cũng xử lý tọa độ gần (10^{18}) mà không bị tràn. 
-
-Không có trường hợp đặc biệt nào cho ba chiếc đèn lồng. Sự lặp lại cặp tự nhiên thay đổi trạng thái độ dài-2 thành độ dài 3 khi tồn tại tiền thân được yêu cầu, do đó mẫu`1 2 3`tạo ra 3 mà không có logic riêng biệt. 
+Đầu vào có chính xác một ca kiểm thử nên không có vòng lặp ca kiểm thử bên ngoài. 
 
 ## Ví dụ đã hoạt động 
 
-Đối với Mẫu 1, tọa độ là`1 2 3`. Tiến trình ba đèn lồng duy nhất có điểm khác biệt chung 1. 
+### Mẫu 1 
 
-| tôi | j | cặp | tọa độ trước đó | chỉ số tiền thân | dp[i][j] | trả lời | 
-| --- | --- | --- | --- | --- | --- | --- | 
-| 0 | 1 | 1, 2 | 0 | vắng mặt | 2 | 2 | 
-| 0 | 2 | 1, 3 | -1 | vắng mặt | 2 | 2 | 
-| 1 | 2 | 2, 3 | 1 | 0 | 3 | 3 | 
+Đầu vào là`1 2 3`. Ban đầu mỗi cặp đều có giá trị DP`2`. Khi cặp`(1, 2)`được xem xét trong các chỉ số dựa trên số không`(0, 1)`, không có tiền thân. Đối với cặp`(2, 3)`, số tiền trước cần thiết là`1`, tồn tại nên độ dài trở thành`dp[0][1] + 1 = 3`. 
 
-Đối với cặp cuối cùng`(2,3)`, số tiền trước cần thiết là`1`, hiện diện ở chỉ số 0. Trạng thái đã được tính toán cho`(1,2)`có độ dài 2, do đó việc thêm 3 sẽ có độ dài 3. Do đó, câu trả lời là 3. 
+|`i`|`j`|`target = 2*x[i]-x[j]`|`k`sau khi tìm kiếm | Tiểu bang | Trả lời | 
+| --- | --- | --- | --- | --- | --- | 
+| 0 | 1 | 0 | -1 |`2`|`2`| 
+| 0 | 2 | -1 | -1 |`2`|`2`| 
+| 1 | 2 | 1 | 0 |`dp[0][1]+1 = 3`|`3`| 
 
-Đối với Mẫu 2, tọa độ là`1 2 4 6 7`. Tiến triển tốt nhất là`1,4,7`, có điểm chung 3. 
+Câu trả lời cuối cùng là`3`. Phần quan trọng của dấu vết là sự chuyển đổi từ cặp`(1, 2)`ĐẾN`(1, 2, 3)`: tọa độ tiền nhiệm được xây dựng lại theo đại số thay vì quét tất cả các đèn lồng trước đó. 
 
-| tôi | j | cặp | tọa độ trước đó | chỉ số tiền thân | dp[i][j] | trả lời | 
-| --- | --- | --- | --- | --- | --- | --- | 
-| 0 | 1 | 1, 2 | 0 | vắng mặt | 2 | 2 | 
-| 0 | 2 | 1, 4 | -2 | vắng mặt | 2 | 2 | 
-| 0 | 3 | 1, 6 | -4 | vắng mặt | 2 | 2 | 
-| 0 | 4 | 1, 7 | -5 | vắng mặt | 2 | 2 | 
-| 1 | 2 | 2, 4 | 0 | vắng mặt | 2 | 2 | 
-| 1 | 3 | 2, 6 | -2 | vắng mặt | 2 | 2 | 
-| 1 | 4 | 2, 7 | -3 | vắng mặt | 2 | 2 | 
-| 2 | 3 | 4, 6 | 2 | chỉ số 1 | 3 | 3 | 
-| 2 | 4 | 4, 7 | 1 | chỉ số 0 | 3 | 3 | 
-| 3 | 4 | 6, 7 | 5 | vắng mặt | 2 | 3 | 
+### Mẫu 2 
 
-Nhà nước`(2,4)`tương ứng với tọa độ`4,7`. Tiền thân của nó là tọa độ`1`, vì vậy nó mở rộng trạng thái`(0,2)`, đại diện`1,4`, có độ dài 3. Điều này chứng tỏ tại sao DP phải xem xét các chỉ số đầu vào không liên tiếp thay vì chỉ các đèn lồng lân cận. 
+Tọa độ là`1 2 4 6 7`. Tiến trình tối ưu là`1, 4, 7`, điểm khác biệt chung của nó là`3`. 
+
+|`i`|`j`|`target`|`k`| Tiểu bang | Trả lời | 
+| --- | --- | --- | --- | --- | --- | 
+| 0 | 1 | 0 | -1 |`2`|`2`| 
+| 0 | 2 | -2 | -1 |`2`|`2`| 
+| 0 | 3 | -4 | -1 |`2`|`2`| 
+| 0 | 4 | -5 | -1 |`2`|`2`| 
+| 1 | 2 | 0 | -1 |`2`|`2`| 
+| 1 | 3 | -2 | -1 |`2`|`2`| 
+| 1 | 4 | -3 | -1 |`2`|`2`| 
+| 2 | 3 | 2 | 1 |`dp[1][2]+1 = 3`|`3`| 
+| 2 | 4 | 1 | 0 |`dp[0][2]+1 = 3`|`3`| 
+| 3 | 4 | 5 | 2 | không có người tiền nhiệm chính xác |`3`| 
+
+Nhà nước cho`(i,j) = (2,4)`tương ứng với tọa độ`4`Và`7`. Người tiền nhiệm bắt buộc của nó là`1`, hiện diện tại chỉ mục`0`. Từ`dp[0][2]`đại diện cho cặp`1,4`, trạng thái mới thể hiện chính xác`1,4,7`. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | (O(n^2)) | Mỗi cặp (i<j) được xử lý một lần, với công việc từ điển theo thời gian dự kiến ​​không đổi. | 
-| Không gian | (O(n^2)) | Có (n-1)/2) trạng thái DP, được lưu trữ dưới dạng số nguyên 16 bit, cộng với từ điển tọa độ và mảng chỉ mục. | 
+| Thời gian |`O(n^2)`| có`O(n^2)`cặp và mỗi con trỏ trước chỉ di chuyển sang trái trên hàng của nó | 
+| Không gian |`O(n^2)`| có`n(n-1)/2`trạng thái cặp, được lưu trữ dưới dạng số nguyên 16 bit | 
 
-Với (n=3000), chỉ có khoảng 4,5 triệu trạng thái DP. Bản trình bày được đóng gói sử dụng khoảng 9 MB cho chính DP, trong khi các cấu trúc dữ liệu Python còn lại vẫn nằm trong giới hạn bộ nhớ 512 MB. Vòng lặp bậc hai thực hiện khoảng 4,5 triệu lần lặp, phù hợp với giới hạn đã cho. 
+Vì`n = 3000`, chỉ có khoảng 4,5 triệu trạng thái DP. Với hai byte mỗi trạng thái, bản thân bộ nhớ DP có dung lượng khoảng 9 MB, thấp hơn nhiều so với giới hạn bộ nhớ 512 MB. Số lần chuyển đổi cặp cũng vào khoảng 4,5 triệu, do đó phương pháp bậc hai phù hợp với giới hạn 2 giây đã cho. 
 
 ## Trường hợp thử nghiệm```python
 import sys
@@ -213,43 +183,44 @@ def solve():
     n = int(input())
     x = list(map(int, input().split()))
 
-    pos = {value: i for i, value in enumerate(x)}
+    if n <= 2:
+        print(n)
+        return
 
-    total = n * (n - 1) // 2
-    dp = array('H', [0]) * total
-
-    base = [0] * n
-    for i in range(1, n):
-        base[i] = base[i - 1] + (n - i)
-
-    def index(i, j):
-        return base[i] + (j - i - 1)
-
-    ans = 2
+    rows = [None] * n
+    answer = 2
 
     for i in range(n - 1):
+        length = n - i - 1
+        row = array('H', [2]) * length
+
+        k = i - 1
         xi = x[i]
+
         for j in range(i + 1, n):
-            previous = 2 * xi - x[j]
-            k = pos.get(previous)
+            target = 2 * xi - x[j]
 
-            if k is None:
-                length = 2
-            else:
-                length = dp[index(k, i)] + 1
+            while k >= 0 and x[k] > target:
+                k -= 1
 
-            dp[index(i, j)] = length
-            ans = max(ans, length)
+            if k >= 0 and x[k] == target:
+                value = rows[k][i - k - 1] + 1
+                row[j - i - 1] = value
+                if value > answer:
+                    answer = value
 
-    print(ans)
+        rows[i] = row
+
+    print(answer)
 
 def run(inp: str) -> str:
     old_stdin = sys.stdin
     old_stdout = sys.stdout
 
+    sys.stdin = io.StringIO(inp)
+    sys.stdout = io.StringIO()
+
     try:
-        sys.stdin = io.StringIO(inp)
-        sys.stdout = io.StringIO()
         solve()
         return sys.stdout.getvalue()
     finally:
@@ -261,56 +232,34 @@ assert run("3\n1 2 3\n") == "3\n", "sample 1"
 assert run("5\n1 2 4 6 7\n") == "3\n", "sample 2"
 assert run("10\n5 10 15 20 35 60 80 85 110 120\n") == "5\n", "sample 3"
 
-# Minimum-size input
-assert run("3\n1 2 4\n") == "2\n", "no three-term progression"
+# Minimum-size input with no arithmetic progression of length 3.
+assert run("3\n0 1 3\n") == "2\n", "minimum-size non-AP case"
 
-# Boundary coordinates near 10^18
-assert run("5\n0 250000000000000000 500000000000000000 750000000000000000 1000000000000000000\n") == "5\n", "large coordinates"
+# Boundary coordinates near both ends of the allowed range.
+assert run("3\n0 500000000000000000 1000000000000000000\n") == "3\n", "large-coordinate arithmetic progression"
 
-# Off-by-one case: progression uses non-consecutive input positions
-assert run("7\n1 2 4 7 10 13 20\n") == "4\n", "non-consecutive progression"
+# Long progression with irrelevant gaps around it.
+assert run("5\n0 3 6 9 20\n") == "4\n", "extension through several DP states"
 
-# Maximum-size case: all 3000 coordinates form one progression
+# Maximum-size stress case, all gaps equal.
 n = 3000
-maximum_case = str(n) + "\n" + " ".join(map(str, range(n))) + "\n"
-assert run(maximum_case) == "3000\n", "maximum-size arithmetic progression"
-
-# The following would be an all-equal input:
-# 3
-# 5 5 5
-# It is intentionally not asserted because the problem requires
-# x_1 < x_2 < ... < x_n. Such an input is outside the specification.
+coords = " ".join(map(str, range(n)))
+assert run(f"{n}\n{coords}\n") == "3000\n", "maximum-size all-equal-gap case"
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`3 / 1 2 4`| 2 | Đầu vào hợp lệ tối thiểu khi không tồn tại tiến trình ba kỳ | 
-|`5 / 0 250000000000000000 ... 1000000000000000000`| 5 | Tọa độ gần ranh giới (10^{18}) và số học số nguyên lớn | 
-|`7 / 1 2 4 7 10 13 20`| 4 | Tiến trình có thành viên không liền kề trong đầu vào | 
-| 3000 tọa độ liên tiếp | 3000 | Tối đa (n), số trạng thái bậc hai và câu trả lời tối đa có thể | 
-|`3 / 5 5 5`| Không áp dụng | Các tọa độ hoàn toàn bằng nhau nằm ngoài ràng buộc đầu vào tăng nghiêm ngặt | 
+|`3 / 0 1 3`|`2`| Đầu vào có kích thước tối thiểu và quy tắc hai đèn lồng tùy ý luôn hợp lệ | 
+|`3 / 0 500000000000000000 1000000000000000000`|`3`| Tọa độ lớn và số học số nguyên chính xác | 
+|`5 / 0 3 6 9 20`|`4`| Các phần mở rộng DP lặp đi lặp lại và bỏ qua đèn lồng cuối cùng không liên quan | 
+|`3000 / 0 1 2 ... 2999`|`3000`| Tối đa`n`, khoảng cách bằng nhau và câu trả lời tối đa có thể | 
 
 ## Vỏ cạnh 
 
-Trường hợp cạnh đầu tiên là đầu vào nhỏ nhất có thể. Với```
-3
-1 2 3
-```cặp đôi`(1,2)`được khởi tạo ở độ dài 2. Khi thuật toán đạt`(2,3)`, nó tính toán (2\cdot2-3=1), tìm tọa độ 1 và đọc trạng thái độ dài-2 cho`(1,2)`. Nó tạo ra (2+1=3), vì vậy câu trả lời cuối cùng là 3. Không có cách xử lý đặc biệt nào cho`n=3`được yêu cầu. 
+cho`0 1 3`, lựa chọn ba chiếc đèn lồng duy nhất có thể có những khoảng trống`1`Và`2`, vậy câu trả lời là`2`. Thuật toán bắt đầu mỗi cặp ở giá trị`2`. Khi nó kiểm tra cặp`(1,3)`, số tiền trước cần thiết là`-1`, nằm ngoài mảng tọa độ nên trạng thái vẫn giữ nguyên`2`. Không có trạng thái nào đạt tới`3`, và câu trả lời cuối cùng vẫn là`2`. 
 
-Trường hợp cạnh thứ hai là một cặp không có tiền thân. Vì```
-3
-1 2 4
-```cặp đôi`(2,4)`yêu cầu tọa độ (2\cdot2-4=0). Vì không có số 0 nên thuật toán gán độ dài 2 cho cặp đó. Cặp đôi`(1,2)`cũng có độ dài 2 và không có trạng thái nào đạt tới độ dài 3. Đầu ra là 2. 
+Vì`0 500000000000000000 1000000000000000000`, tọa độ giữa chính xác là trung bình của các điểm cuối. Khi`i`trỏ đến tọa độ giữa và`j`trỏ đến tọa độ cuối cùng, mục tiêu là`2 * 500000000000000000 - 1000000000000000000 = 0`. Con trỏ tiền nhiệm tìm tọa độ`0`, do đó trạng thái trở thành`3`. Điều này xác nhận rằng phép tính vẫn chính xác ngay cả ở gần ranh giới tọa độ trên. 
 
-Trường hợp cạnh thứ ba là một cấp số ẩn giữa các tọa độ không liên quan. Vì```
-7
-1 2 4 7 10 13 20
-```tọa độ`1, 4, 7, 10`tạo thành một cấp số chênh lệch 3. Khi xử lý`(7,10)`, số trước là 4, nên trạng thái mở rộng`1,4,7`ĐẾN`1,4,7,10`. Câu trả lời trở thành 4. Điều này nắm bắt các triển khai chỉ kiểm tra các phần tử đầu vào liền kề. 
+Vì`0 3 6 9 20`, sự tiến triển`0,3,6,9`được xây dựng dần dần. Nhà nước cho`(0,3)`có chiều dài`2`. Khi xem xét`(3,6)`, số tiền trước cần thiết là`0`, do đó giá trị của nó trở thành`3`. Cuối cùng,`(6,9)`yêu cầu người tiền nhiệm`3`, trạng thái tương ứng của nó có độ dài`3`, cho chiều dài`4`. Tọa độ cuối cùng`20`không thể kéo dài tiến trình đó, vì vậy câu trả lời là`4`. 
 
-Trường hợp cạnh thứ tư sử dụng các giá trị tọa độ pháp lý lớn nhất:```
-5
-0 250000000000000000 500000000000000000 750000000000000000 1000000000000000000
-```Mỗi khoảng cách là (250000000000000000), vì vậy câu trả lời là 5. Phép tính trước đó liên tục tạo ra các giá trị lớn bằng (10^{18}) và Python xử lý chúng một cách chính xác. 
+Đối với trường hợp kích thước tối đa`0 1 2 ... 2999`, mỗi cặp thuộc về một cấp số nhân có thể được mở rộng nhiều lần. Ví dụ: các trạng thái kết thúc tại`(0,1)`,`(1,2)`,`(2,3)`, v.v., tất cả đều mở rộng đến các trạng thái dài hơn. Trạng thái cuối cùng đạt chiều dài`3000`. Điều này cũng thực hiện biểu diễn DP 16 bit, vì`3000`ở bên dưới an toàn`65535`. 
 
-Trường hợp hoàn toàn bình đẳng được yêu cầu, chẳng hạn như```
-3
-5 5 5
-```không thể xảy ra trong một bài kiểm tra hợp lệ vì bài toán đảm bảo tọa độ tăng dần. Từ điển và DP được thiết kế dựa trên sự đảm bảo đó, do đó, dữ liệu đầu vào không đúng định dạng này được loại trừ một cách có chủ ý khỏi các xác nhận có thể thực thi được thay vì coi đó là một thử nghiệm pháp lý.
+Một đầu vào bằng chữ chứa tọa độ bằng nhau, chẳng hạn như`1 1 1`, không phải là phép thử hợp lệ cho vấn đề này vì đầu vào đảm bảo mức tăng nghiêm ngặt. Việc triển khai dựa vào thuộc tính đó khi nó kết luận rằng phần trước bắt buộc của`(i,j)`phải có chỉ số nhỏ hơn`i`. Các tọa độ bằng nhau sẽ tạo ra sự khác biệt bằng 0 và vi phạm mô hình đầu vào đã nêu.

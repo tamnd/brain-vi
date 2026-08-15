@@ -1,7 +1,7 @@
 ---
 title: "CF 102348G - Hoán đổi chữ cái"
-description: "Chúng ta có hai chuỗi nhị phân s và t có cùng độ dài. Tại một thao tác, chúng ta có thể chọn bất kỳ vị trí nào trong s và bất kỳ vị trí nào trong t, sau đó hoán đổi hai ký tự đó. Hai vị trí không nhất thiết phải bằng nhau, do đó một thao tác có thể khắc phục hai điểm không khớp khác nhau cùng một lúc."
-date: "2026-08-14T02:20:45+07:00"
+description: "Chúng ta có hai chuỗi s và t có cùng độ dài. Mỗi vị trí đều chứa a hoặc b. Một thao tác chọn bất kỳ vị trí nào trong s và bất kỳ vị trí nào trong t, sau đó hoán đổi hai ký tự."
+date: "2026-08-15T17:31:33+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102348
@@ -9,7 +9,7 @@ codeforces_index: "G"
 codeforces_contest_name: "ICPC 2019-2020 NERC (NEERC), Southern and Volga Russia Qualifier"
 rating: 0
 weight: 102348
-solve_time_s: 332
+solve_time_s: 224
 verified: false
 draft: false
 ---
@@ -18,70 +18,71 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 5 phút 32 giây 
+**Thời gian giải:** 3 phút 44s 
 **Đã xác minh:** không 
 
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi có hai chuỗi nhị phân`s`Và`t`có cùng độ dài. Tại một thao tác, chúng ta có thể chọn bất kỳ vị trí nào trong`s`và bất kỳ vị trí nào trong`t`, sau đó hoán đổi hai ký tự đó. Hai vị trí không nhất thiết phải bằng nhau, do đó một thao tác có thể khắc phục hai điểm không khớp khác nhau cùng một lúc. 
+Chúng tôi có hai chuỗi`s`Và`t`có cùng độ dài. Mỗi vị trí đều chứa một trong hai`a`hoặc`b`. Một thao tác chọn bất kỳ vị trí nào trong`s`và bất kỳ vị trí nào trong`t`, sau đó hoán đổi hai ký tự. Mục tiêu là làm cho toàn bộ hai chuỗi giống hệt nhau bằng cách sử dụng ít thao tác nhất có thể, đồng thời in ra một chuỗi hoán đổi tối ưu. 
 
-Mục tiêu là làm cho toàn bộ chuỗi giống hệt nhau bằng cách sử dụng càng ít hoán đổi chuỗi chéo càng tốt. Chúng ta phải in số lần hoán đổi tối thiểu cùng với một chuỗi tối ưu hoặc in`-1`khi không có trình tự nào có thể hoạt động. 
+Cách hữu ích để xem xét một vị trí là so sánh hai ký tự chiếm vị trí đó. Nếu họ đã đồng ý rồi thì không cần quan tâm đến quan điểm đó nữa. Nếu họ không đồng ý, vị trí đó thuộc loại`ab`, nghĩa`s[i] = a`Và`t[i] = b`, hoặc gõ`ba`, nghĩa`s[i] = b`Và`t[i] = a`. 
 
-Cách hữu ích để xem xét một vị trí là so sánh hai ký tự của nó. Chỉ có bốn khả năng. Vị trí chứa`aa`hoặc`bb`đã đúng rồi. Một vị trí chứa`ab`có nghĩa`s[i] = a`Và`t[i] = b`, trong khi`ba`có nghĩa là ngược lại. Việc hoán đổi giữa các vị trí phù hợp có thể loại bỏ đồng thời hai điểm không khớp. 
+Chiều dài có thể đạt tới`2 * 10^5`, do đó, một thuật toán có công bậc hai có thể thực hiện xung quanh`4 * 10^10`lặp lại trong trường hợp xấu nhất, vượt xa giới hạn cuộc thi 2 giây cho phép. Chúng ta cần một giải pháp mà công việc của nó về cơ bản là tuyến tính theo`n`, chỉ với một lượng nhỏ sổ sách kế toán cho mỗi vị trí. Vì bảng chữ cái chỉ chứa hai ký tự nên các kiểu không khớp sẽ cung cấp cho chúng ta chính xác cấu trúc cần thiết để đạt được điều đó. 
 
-Chiều dài có thể đạt tới`2 * 10^5`, do đó thuật toán quét tất cả các cặp vị trí đã quá chậm. Một thuật toán bậc hai có thể thực hiện gần đúng`4 * 10^10`kiểm tra cặp trong trường hợp xấu nhất, vượt xa giới hạn 2 giây cho phép. Chúng tôi cần một giải pháp có công việc tăng tuyến tính theo độ dài chuỗi, ngoài số lượng thao tác chúng tôi thực sự in. 
-
-Ngoài ra còn có một điều kiện khả thi toàn cầu. Mọi thao tác chỉ trao đổi ký tự giữa hai chuỗi, do đó tổng số ký tự`a`ký tự trên cả hai chuỗi không bao giờ thay đổi. Để các chuỗi cuối cùng bằng nhau, mỗi ký tự phải xuất hiện số lần chẵn trên hai chuỗi. Theo đó, nếu tổng số`a`ký tự là lẻ, câu trả lời là không thể. Điều kiện tương tự có thể được biểu diễn trực tiếp hơn bằng cách sử dụng sự không khớp: số lượng`ab`vị trí cộng với số lượng`ba`các vị trí phải bằng nhau. 
-
-Trường hợp cạnh đầu tiên là trường hợp không khớp duy nhất. Đối với đầu vào```
+Có một số trường hợp đặc biệt có thể khiến việc triển khai có vẻ hợp lý không thành công. Đầu tiên, số lẻ không khớp là không thể xảy ra. Ví dụ,```
 1
 a
 b
-```vị trí duy nhất là`ab`, do đó tổng số điểm không khớp là số lẻ. Đầu ra đúng là`-1`. Việc triển khai bất cẩn chỉ ghi lại những điểm không khớp và ghép nối bất cứ thứ gì có sẵn có thể để lại một vị trí không khớp và in sai một chuỗi. 
+```có một`ab`không khớp. Chỉ có một`a`giữa hai ký tự và mọi cặp bằng nhau cuối cùng đều chứa 0 hoặc 2 ký tự`a`nhân vật. Không có chuỗi hoán đổi nào có thể thay đổi tổng số`a`ký tự, vì vậy đầu ra chính xác là`-1`. Việc triển khai bất cẩn chỉ đơn giản ghép các cặp không khớp mà không kiểm tra tính chẵn lẻ có thể khiến một vị trí không được giải quyết. 
 
-Trường hợp cạnh thứ hai xảy ra khi có một`ab`không phù hợp và một`ba`không khớp. Ví dụ,```
+Trường hợp cạnh thứ hai xảy ra khi cả hai loại không khớp đều có số lẻ. Ví dụ,```
 2
 ab
 ba
-```hai thao tác là cần thiết. Sự hoán đổi đầu tiên có thể biến đổi`ab`vị trí vào`ba`, nhưng nó không giải quyết được vấn đề. Cần có sự hoán đổi thứ hai để giải quyết cặp kết quả. Việc coi mọi cặp không khớp là có thể giải được trong một thao tác sẽ cho rằng một thao tác là đủ một cách không chính xác. 
+```có một`ab`vị trí và một`ba`chức vụ. Việc ghép nối một lần hoán đổi trực tiếp không thể khắc phục được chúng vì hướng của chúng trái ngược nhau. Tuy nhiên, hai lần hoán đổi là đủ. Tráo đổi`s[1]`với`t[1]`, biến sự không khớp đầu tiên từ`ab`vào trong`ba`, sau đó trao đổi`s[1]`với`t[2]`. Cả hai vị trí đều trở nên bình đẳng. Giải pháp chỉ ghép các loại không khớp bằng nhau sẽ kết luận sai rằng trường hợp này là không thể. 
 
-Trường hợp cạnh thứ ba là tất cả các vị trí đều có thể khớp nhau. Ví dụ,```
+Trường hợp cạnh thứ ba là khi không có sự không khớp nào cả:```
 3
 aba
 aba
-```không yêu cầu thao tác nào. Việc triển khai giả định tồn tại ít nhất một điểm không khớp có thể vô tình truy cập vào danh sách không khớp trống hoặc in một thao tác không cần thiết. 
+```Câu trả lời đúng là`0`, không có đường dây hoạt động. Việc triển khai giả sử có ít nhất một điểm không khớp có thể vô tình truy cập vào danh sách trống hoặc in một thao tác không cần thiết. 
 
 ## Phương pháp tiếp cận 
 
-Một cách tiếp cận đơn giản là kiểm tra các vị trí không khớp và liên tục tìm kiếm hai vị trí có ký tự có thể được trao đổi để đạt được tiến bộ. Vì có hai loại không khớp, người ta có thể thử mọi cặp chỉ số có thể và kiểm tra xem việc hoán đổi các ký tự tương ứng có làm giảm số lượng không khớp hay không. Điều này đúng vì việc tìm kiếm toàn diện sẽ xem xét mọi giao dịch hoán đổi hợp pháp, nhưng nó quá đắt. Với`n`các vị trí, có`n²`các hoán đổi chuỗi chéo có thể xảy ra và việc tìm kiếm liên tục qua chúng có thể yêu cầu theo thứ tự`n²`séc. Tại`n = 2 * 10^5`, đó là về`4 * 10^10`trao đổi ứng viên. 
+Cách tiếp cận trực tiếp là liên tục tìm ra sự không phù hợp và tìm kiếm một vị trí khác có thể sửa được. Ví dụ, sau khi tìm thấy một`ab`vị trí, chúng ta có thể quét các vị trí còn lại để tìm vị trí khác`ab`vị trí và sử dụng một trao đổi chuỗi chéo để giải quyết cả hai. Nếu không có vị trí như vậy tồn tại, chúng ta có thể xử lý trường hợp đặc biệt liên quan đến một`ba`vị trí với hai lần hoán đổi. 
 
-Quan sát quan trọng là các ký tự thực tế chỉ quan trọng thông qua loại không khớp. Giả sử vị trí`i`Và`j`cả hai đều thuộc loại`ab`. Ở cả hai vị trí ta có`s = a`Và`t = b`. Hoán đổi`s[i]`với`t[j]`trao đổi`a`Và`b`, vì vậy cả hai vị trí đều trở thành`bb`Và`aa`. Như vậy hai`ab`sự không phù hợp có thể được sửa chữa bằng một thao tác. Lập luận tương tự có tác dụng đối với hai`ba`sự không phù hợp. 
+Chiến lược này hợp lý về mặt logic, bởi vì mọi tìm kiếm đều tìm kiếm một đối tác hợp lệ và mỗi hoạt động thành công sẽ giảm số lượng kết quả không khớp. Vấn đề là việc quét lặp đi lặp lại. Trong trường hợp xấu nhất có thể có`Θ(n)`sự không phù hợp và việc tìm kiếm từng đối tác có thể kiểm tra`Θ(n)`các vị trí. Tổng số so sánh ký tự có thể đạt tới`Θ(n²)`, đó là về`4 * 10^10`vì`n = 2 * 10^5`. Đó là quá nhiều cho thời hạn. 
 
-Điều này ngay lập tức gợi ý việc lưu trữ các chỉ mục của hai loại không khớp riêng biệt. Mỗi cặp trong cùng một loại tốn chính xác một thao tác và không có lý do gì để tìm kiếm cách sắp xếp tốt hơn vì một thao tác là mức tối thiểu về mặt lý thuyết để sửa hai điểm không khớp. 
+Quan sát chính là chúng ta không cần phải tìm kiếm đối tác một cách linh hoạt. Thông tin duy nhất liên quan đến một vị trí sai là liệu nó có`ab`hoặc`ba`. Chúng tôi có thể thu thập tất cả các vị trí của từng loại trong một lần. 
 
-Trường hợp thú vị duy nhất là khi cả hai danh sách không khớp đều có kích thước lẻ. Sau khi ghép nối càng nhiều vị trí càng tốt, một`ab`và một`ba`duy trì. Chúng không thể được cố định trong một thao tác vì hướng ký tự của chúng ngược nhau. Tuy nhiên, hai thao tác là đủ. Nếu như`i`là phần còn lại`ab`vị trí và`j`là phần còn lại`ba`vị trí, trao đổi đầu tiên`s[i]`với`t[i]`. Chức vụ`i`thay đổi từ`ab`ĐẾN`ba`. Vị trí hiện tại`i`Và`j`cả hai đều`ba`, thế là đổi chỗ`s[i]`với`t[j]`sửa cả hai. 
+Hai`ab`các vị trí luôn có thể được cố định cùng với một thao tác. Giả sử vị trí`x`Và`y`cả hai đều`ab`. Hoán đổi`s[x]`với`t[y]`trao đổi`a`Và`b`. Tại`x`,`s[x]`thay đổi từ`a`ĐẾN`b`, khớp`t[x]`. Tại`y`,`t[y]`thay đổi từ`b`ĐẾN`a`, khớp`s[y]`. Lập luận tương tự có tác dụng đối với hai`ba`các vị trí. 
 
-Mức tối thiểu tuân theo cùng một cấu trúc. Mỗi thao tác chỉ có thể khắc phục tối đa hai vị trí không khớp, do đó việc ghép hai loại không khớp bằng nhau trong một thao tác là tối ưu. Khi mỗi loại vẫn còn một điểm không khớp, một thao tác không thể khắc phục cả hai, trong khi cấu trúc ở trên sẽ sửa chúng thành chính xác hai. Do đó, số lượng hoạt động kết quả là tối thiểu. 
+Điều này ngay lập tức xử lý mọi cặp loại không khớp bằng nhau. Tình huống duy nhất còn lại là khi cả hai danh sách không khớp đều chứa một vị trí không ghép đôi. Vì tổng số điểm không khớp phải là số chẵn nên hai danh sách này đều có kích thước chẵn hoặc cả hai đều có kích thước lẻ. Trong trường hợp lẻ, hãy`x`là người còn lại`ab`vị trí và`y`phần còn lại`ba`chức vụ. Trao đổi đầu tiên`s[x]`với`t[x]`. Điều này thay đổi vị trí`x`từ`ab`vào trong`ba`. Bây giờ cả hai`x`Và`y`là`ba`, do đó, trao đổi thứ hai giữa`s[x]`Và`t[y]`sửa cả hai. 
+
+Giới hạn dưới của số lượng thao tác cũng đơn giản. Một thao tác có thể khắc phục tối đa hai vị trí hiện không khớp, do đó, việc ghép hai vị trí không khớp bằng nhau cần ít nhất một thao tác và là tối ưu. Khi một`ab`và một`ba`còn lại, một thao tác không thể giải quyết được cả hai, vì hướng của chúng trái ngược nhau. Do đó, việc xây dựng hai thao tác ở trên là tối ưu. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
-| Lực lượng vũ phu |`O(n²)`hoặc tệ hơn với những tìm kiếm lặp đi lặp lại |`O(n)`| Quá chậm | 
-| Tối ưu |`O(n)`|`O(n)`| Đã chấp nhận | 
+| Tìm kiếm đối tác nhiều lần |`O(n²)`|`O(n)`| Quá chậm | 
+| Lưu trữ các vị trí không khớp và ghép chúng |`O(n)`|`O(n)`| Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Quét mọi vị trí`i`từ`0`ĐẾN`n - 1`. Nếu như`s[i] = t[i]`, không cần phải làm gì ở đó. Nếu như`s[i] = a`Và`t[i] = b`, cửa hàng`i`trong`ab`danh sách. Nếu như`s[i] = b`Và`t[i] = a`, cửa hàng`i`trong`ba`danh sách. Hai danh sách này chứa chính xác các vị trí vẫn cần được chú ý. 
-2. Kiểm tra tính chẵn lẻ của hai danh sách không khớp. Nếu như`len(ab) + len(ba)`thật kỳ lạ, hãy in`-1`. Số lượng không khớp không thể thay đổi tính chẵn lẻ theo cách cho phép mọi vị trí trở nên bằng nhau, vì tổng số mỗi ký tự trên cả hai chuỗi được giữ nguyên. 
-3. Ghép các vị trí liên tiếp trong`ab`. Đối với mỗi cặp`ab[i]`Và`ab[i + 1]`, thêm thao tác`(ab[i], ab[i + 1])`. Cả hai vị trí đều có dạng`ab`, do đó hoán đổi`a`từ vị trí đầu tiên trong`s`với`b`từ vị trí thứ hai trong`t`thay đổi cả hai vị trí thành các cặp bằng nhau. 
-4. Ghép các vị trí liên tiếp trong`ba`theo cách tương tự. Đối với mỗi cặp`ba[i]`Và`ba[i + 1]`, thêm vào`(ba[i], ba[i + 1])`. Vì cả hai vị trí đều có dạng`ba`, lý do tương tự sẽ khắc phục cả hai bằng một thao tác. 
-5. Nếu cả hai danh sách đều có độ dài lẻ, một vị trí`i`vẫn còn trong`ab`và một vị trí`j`vẫn còn trong`ba`. Thêm thao tác`(i, i)`. Kể từ vị trí`i`là`ab`, hoán đổi hai ký tự của chính nó sẽ thay đổi nó thành`ba`. 
-6. Thêm thao tác thứ hai`(i, j)`. Chức vụ`i`bây giờ là`ba`, và vị trí`j`đã rồi`ba`, thế là đổi chỗ`s[i]`với`t[j]`thay đổi cả hai vị trí thành các cặp bằng nhau. 
-7. Chuyển đổi mọi chỉ mục dựa trên số 0 được lưu trữ thành chỉ mục dựa trên một khi in. In ra số lượng thao tác theo sau là các cặp thao tác. 
+1. Quét mọi vị trí từ trái sang phải. Nếu như`s[i] == t[i]`, bỏ qua nó. Nếu như`s[i] == 'a'`Và`t[i] == 'b'`, nối thêm`i`đến`ab`danh sách. Nếu không thì nối thêm`i`đến`ba`danh sách. Điều này tách biệt mọi vị trí có vấn đề theo hai hướng duy nhất có thể có. 
+2. Kiểm tra tính chẵn lẻ của hai danh sách. Tổng số`a`các ký tự trong cả hai chuỗi được giữ nguyên sau mỗi lần hoán đổi và một cặp bằng nhau cuối cùng chứa 0 hoặc hai`a`nhân vật. Như vậy tổng số`a`các ký tự phải chẵn. Tương tự, tổng số điểm không khớp phải là số chẵn. Vì hai số đếm không khớp có cùng tính chẵn lẻ bất cứ khi nào tổng của chúng là số chẵn, nên có thể loại bỏ khi`len(ab) + len(ba)`thật kỳ quặc. 
+3. Ghép các vị trí liên tiếp trong`ab`. Đối với mỗi cặp`ab[2j]`Và`ab[2j + 1]`, xuất ra một trao đổi giữa`s[ab[2j]]`Và`t[ab[2j + 1]]`. Một thao tác sẽ cố định cả hai vị trí nên điều này là tối ưu cho cặp đó. 
+4. Ghép các vị trí liên tiếp trong`ba`theo cách hoàn toàn giống nhau. Đối với các vị trí`x = ba[2j]`Và`y = ba[2j + 1]`, tráo đổi`s[x]`với`t[y]`. Cả hai điểm không khớp đều trở thành vị trí bằng nhau sau khi thực hiện thao tác. 
+5. Nếu cả hai danh sách không khớp nhau đều có độ dài lẻ thì mỗi danh sách vẫn còn một vị trí. Hãy để những vị trí đó được`x = ab[-1]`Và`y = ba[-1]`. Đầu ra đầu tiên`(x, x)`, hoán đổi hai ký tự ở vị trí`x`và thay đổi loại của nó từ`ab`ĐẾN`ba`. Sau đó xuất ra`(x, y)`. Hai người còn lại`ba`sự không phù hợp bây giờ được ghép nối và trở thành bằng nhau. 
+6. Chuyển đổi mọi chỉ mục dựa trên số 0 được lưu trữ thành chỉ mục dựa trên một khi in. Số lượng đầu ra chỉ đơn giản là độ dài của danh sách thao tác được tạo. 
 
 ### Tại sao nó hoạt động 
 
-Điều bất biến là mọi vị trí không được lưu trữ trong`ab`hoặc`ba`đã bằng nhau, trong khi mọi vị trí được lưu trữ được biểu thị bằng chính xác một loại không khớp. Một cặp cùng loại luôn có thể tháo rời được trong một thao tác, vì vậy tất cả các cặp như vậy có thể được loại bỏ một cách độc lập. Nếu vẫn còn hai danh sách không khớp có kích thước lẻ, thao tác đầu tiên sẽ thay đổi một danh sách còn sót lại`ab`vào trong`ba`, sau đó hai phần còn lại có cùng loại và thao tác thứ hai sẽ loại bỏ chúng. Nếu tổng số không khớp là số lẻ thì tổng số ký tự được giữ nguyên sẽ khiến trạng thái mục tiêu không thể truy cập được. Mỗi thao tác sửa tối đa hai điểm không khớp và thuật toán sử dụng một thao tác bất cứ khi nào hai điểm không khớp có thể được sửa cùng nhau, với chính xác hai thao tác cho phần còn lại thuộc loại đối lập không thể tránh khỏi. Do đó chuỗi được tạo ra vừa hợp lệ vừa tối thiểu. 
+Sau lần quét đầu tiên, mọi thông tin không khớp đều thuộc về chính xác một trong hai danh sách. Việc hoán đổi giữa hai vị trí có cùng loại không khớp sẽ sửa cả hai vị trí đó mà không ảnh hưởng đến bất kỳ vị trí nào đã được cố định. Do đó, tất cả các phần có kích thước chẵn của hai danh sách có thể được loại bỏ một cách tối ưu theo cặp. 
+
+Nếu cả hai danh sách đều là số lẻ thì mỗi danh sách còn lại chính xác một vị trí. Hoán đổi bổ sung đầu tiên sẽ thay đổi phần còn lại`ab`không khớp thành một`ba`không khớp, sau đó hai điểm không khớp còn lại có cùng loại và có thể được sửa bằng một lần hoán đổi nữa. Nếu tổng số không khớp là số lẻ thì không có giải pháp nào tồn tại vì mọi thao tác đều bảo toàn điều kiện chẵn lẻ cần thiết để hai chuỗi trở nên giống hệt nhau. 
+
+Mọi thao tác được sử dụng trên hai loại không khớp bằng nhau sẽ sửa hai lỗi không khớp, đây là mức tối đa có thể. Ngoại lệ duy nhất không thể tránh khỏi là cặp đối diện cuối cùng, trong đó cần có hai thao tác. Do đó chuỗi được xây dựng có độ dài tối thiểu có thể. 
 
 ## Giải pháp Python```python
 import sys
@@ -107,101 +108,101 @@ def solve():
         print(-1)
         return
 
-    ans = []
+    operations = []
 
     for i in range(0, len(ab) - 1, 2):
-        ans.append((ab[i], ab[i + 1]))
+        operations.append((ab[i] + 1, ab[i + 1] + 1))
 
     for i in range(0, len(ba) - 1, 2):
-        ans.append((ba[i], ba[i + 1]))
+        operations.append((ba[i] + 1, ba[i + 1] + 1))
 
     if len(ab) % 2 == 1:
-        i = ab[-1]
-        j = ba[-1]
-        ans.append((i, i))
-        ans.append((i, j))
+        x = ab[-1] + 1
+        y = ba[-1] + 1
+        operations.append((x, x))
+        operations.append((x, y))
 
-    out = [str(len(ans))]
-    for x, y in ans:
-        out.append(f"{x + 1} {y + 1}")
-
-    sys.stdout.write("\n".join(out))
+    out = [str(len(operations))]
+    out.extend(f"{x} {y}" for x, y in operations)
+    print("\n".join(out))
 
 if __name__ == "__main__":
     solve()
-```Vòng lặp đầu tiên phân loại mọi vị trí chính xác một lần. Các vị trí bằng nhau sẽ bị bỏ qua, trong khi hai hướng có thể không khớp sẽ được lưu trữ riêng biệt. Vì bảng chữ cái chỉ chứa`a`Và`b`, không có loại không khớp thứ ba để xử lý. 
+```Vòng lặp đầu tiên chỉ ghi lại những điểm không khớp, do đó các vị trí bằng nhau không bao giờ được nhập vào logic sau. Điều này rất hữu ích vì mọi thao tác được tạo sau đó có thể được lý giải hoàn toàn dựa trên danh sách không khớp. 
 
-Hai vòng ghép nối tiến lên hai. Đây là lý do tại sao giới hạn trên là`len(ab) - 1`còn hơn là`len(ab)`: phần tử chưa ghép cặp cuối cùng phải được giữ nguyên cho đến khi trường hợp hai thao tác đặc biệt được xử lý. Điều tương tự cũng áp dụng cho`ba`. 
+Việc kiểm tra tính chẵn lẻ được thực hiện trước khi xây dựng các hoạt động. Vì mỗi thao tác chỉ trao đổi các ký tự hiện có nên nó không thể thay đổi tổng số ký tự`a`các ký tự trong hai chuỗi. Trạng thái cuối cùng có các chuỗi bằng nhau nhất thiết phải có tổng số chẵn`a`các ký tự, do đó số lượng ký tự không khớp kỳ lạ chứng tỏ là không thể. 
 
-Trường hợp đặc biệt chỉ kiểm tra`len(ab) % 2`. Khi tổng số điểm không khớp được biết là chẵn,`ab`Và`ba`nhất thiết phải có cùng độ chẵn lẻ. Như vậy nếu`ab`thật kỳ lạ,`ba`cũng lẻ và cả hai đều có đúng một phần tử còn sót lại sau khi ghép nối. 
+Hai vòng ghép nối sử dụng`range(0, len(list) - 1, 2)`. Giới hạn trên có chủ ý dừng trước phần tử cuối cùng khi danh sách có độ dài lẻ. Yếu tố cuối cùng đó được dành riêng cho việc xây dựng hai hoạt động đặc biệt. 
 
-Các chỉ mục hoạt động được lưu trữ nội bộ dưới dạng giá trị dựa trên 0 vì các chuỗi Python sử dụng chỉ mục dựa trên 0. Đầu ra yêu cầu các vị trí dựa trên một, vì vậy`x + 1`Và`y + 1`được in. Không cần mô phỏng các giao dịch hoán đổi. Việc phân loại một cặp chứng minh tác dụng của thao tác đó và việc tránh mô phỏng giúp việc triển khai trở nên đơn giản. 
+Trường hợp đặc biệt sử dụng cùng một chỉ mục hai lần trong thao tác đầu tiên, chẳng hạn như`(x, x)`. Điều này là hợp pháp vì chỉ mục đầu tiên thuộc về`s`và thứ hai thuộc về`t`, do đó phép toán hoán đổi`s[x]`Và`t[x]`. Nó không phải là không hoạt động. Đối với một`ab`không khớp, nó thay đổi vị trí thành`ba`. 
 
-Không có vấn đề tràn số nguyên trong Python. Số lượng hoạt động tối đa là nhiều nhất`n + 1`, đủ nhỏ để lưu trữ và in trực tiếp. Bản thân đầu ra có thể chứa`O(n)`nên việc xây dựng nó dưới dạng danh sách các chuỗi và viết nó một lần sẽ hiệu quả hơn việc thực hiện nhiều chuỗi riêng lẻ.`print`cuộc gọi. 
+Tất cả các chỉ mục bên trong đều dựa trên 0 vì các chuỗi Python sử dụng lập chỉ mục dựa trên 0. Chúng chỉ được tăng thêm một khi được lưu trữ ở đầu ra, khớp với các vị trí dựa trên một mà bài toán yêu cầu. 
+
+Không có đột biến`s`hoặc`t`là cần thiết. Các hoạt động bắt nguồn từ phân loại không khớp ban đầu và mỗi hoạt động được tạo ra được biết về mặt toán học để cố định các vị trí dự định của nó. Điều này cũng tránh được những thay đổi ngẫu nhiên đối với các quyết định phân loại sau này. 
 
 ## Ví dụ đã hoạt động 
 
 ### Mẫu 1 
 
-Đầu vào là```
+Đầu vào là:```
 4
 abab
 aabb
-```Việc phân loại vị trí là: 
+```Phân loại không phù hợp là: 
 
-| Vị trí |`s[i]`|`t[i]`| Loại | 
-| --- | --- | --- | --- | 
-| 1 |`a`|`a`| bằng | 
-| 2 |`b`|`a`|`ba`| 
-| 3 |`a`|`b`|`ab`| 
-| 4 |`b`|`b`| bằng | 
+| Chỉ mục |`s[i]`|`t[i]`| Loại |`ab`danh sách |`ba`danh sách | 
+| --- | --- | --- | --- | --- | --- | 
+| 0 | một | một | bằng | [] | [] | 
+| 1 | b | một |`ba`| [] | [1] | 
+| 2 | một | b |`ab`| [2] | [1] | 
+| 3 | b | b | bằng | [2] | [1] | 
 
-Các biến kết quả là: 
+Có một cái`ab`và một`ba`, vì vậy cả hai danh sách đều là số lẻ. Thuật toán sử dụng trường hợp đặc biệt: 
 
-|`ab`|`ba`| Đã thêm hoạt động | 
+| Bước | Hoạt động, dựa trên số không | Mục đích | 
 | --- | --- | --- | 
-|`[3]`|`[2]`| chưa có | 
-|`[3]`|`[2]`|`(3, 3)`| 
-|`[3]`|`[2]`|`(3, 3)`,`(3, 2)`| 
+| 1 |`(2, 2)`| Thay đổi vị trí 2 từ`ab`ĐẾN`ba`| 
+| 2 |`(2, 1)`| Ghép đôi cả hai`ba`không khớp | 
 
-Hoạt động đầu tiên sử dụng phần còn lại`ab`vị trí của chính nó. Vị trí 3 thay đổi từ`ab`ĐẾN`ba`. Bây giờ vị trí 3 và 2 đều là`ba`, do đó thao tác thứ hai sẽ sửa chúng lại với nhau. Câu trả lời cuối cùng có hai thao tác, khớp với mức tối thiểu của mẫu. 
+Được chuyển đổi sang lập chỉ mục một cơ sở, đầu ra là:```
+2
+3 3
+3 2
+```Thao tác đầu tiên thay đổi chuỗi từ`abab`Và`aabb`ĐẾN`abbb`Và`aaab`. Thao tác thứ hai làm cho cả hai chuỗi`abab`. Hai thao tác này là cần thiết vì sự không khớp ban đầu có hướng ngược nhau. 
 
 ### Mẫu 2 
 
-Đầu vào là```
+Đầu vào là:```
 1
 a
 b
-```Quá trình quét tạo ra: 
+```Dấu vết là: 
 
-| Vị trí |`s[i]`|`t[i]`|`ab`|`ba`| 
-| --- | --- | --- | --- | --- | 
-| 1 |`a`|`b`|`[1]`|`[]`| 
+| Chỉ mục |`s[i]`|`t[i]`| Loại |`ab`|`ba`| Tổng số không khớp | 
+| --- | --- | --- | --- | --- | --- | --- | 
+| 0 | một | b |`ab`| [0] | [] | 1 | 
 
-Tổng số không khớp là một, là số lẻ. 
-
-| Tổng số không khớp | Khả thi? | Đầu ra | 
-| --- | --- | --- | 
-| 1 | Không |`-1`| 
-
-Không có vị trí không khớp thứ hai nào có thể giải quyết được sự mất cân bằng ký tự đơn độc. Thuật toán từ chối trường hợp trước khi cố gắng truy cập đối tác không tồn tại. 
+Số đếm không khớp là số lẻ nên thuật toán sẽ in ngay:```
+-1
+```Không thể có một chuỗi hợp lệ vì hai ký tự duy nhất chứa chính xác một`a`, trong khi hai chuỗi bằng nhau sẽ chứa số chẵn`a`các ký tự trên cả hai chuỗi. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian |`O(n)`| Mỗi ký tự được quét một lần, mỗi ký tự không khớp được xử lý một lần và đầu ra chứa`O(n)`hoạt động. | 
-| Không gian |`O(n)`| Hai danh sách không khớp và danh sách thao tác đầu ra cùng nhau chứa`O(n)`các phần tử. | 
+| Thời gian |`O(n)`| Mỗi vị trí được quét một lần và mỗi vị trí không khớp được xử lý một lần khi các hoạt động được tạo. | 
+| Không gian |`O(n)`| Hai danh sách không khớp và danh sách thao tác kết quả chứa tối đa`O(n)`mục nhập. | 
 
-Với`n`lên đến`2 * 10^5`, quét tuyến tính dễ dàng phù hợp với giới hạn 2 giây. Việc sử dụng bộ nhớ cũng tuyến tính và thoải mái dưới 256 MB. Bản thân số lượng thao tác được in là tuyến tính, do đó thuật toán tối ưu tiệm cận vì chỉ cần đọc đầu vào và tạo ra câu trả lời đã yêu cầu`O(n)`làm việc trong trường hợp xấu nhất. 
+Với`n <= 2 * 10^5`, thuật toán chỉ thực hiện một vài lần tuyến tính trên chuỗi. Công việc trong trường hợp xấu nhất của nó tỷ lệ thuận với khoảng`n`, thay vì hàng chục tỷ lượt kiểm tra được tạo ra bởi tìm kiếm bậc hai, do đó, nó vừa vặn thoải mái với giới hạn 2 giây. Việc sử dụng bộ nhớ cũng tuyến tính và nằm trong khoảng 256 MB. 
 
 ## Trường hợp thử nghiệm 
 
-Bộ khai thác thử nghiệm phải xác thực các thuộc tính của đầu ra thay vì so sánh trình tự hoạt động chính xác vì bài toán cho phép bất kỳ trình tự tối ưu nào. Việc triển khai đúng khác nhau có thể tạo ra các cặp chỉ mục khác nhau, tối thiểu như nhau.```python
+Bởi vì các trình tự vận hành tối ưu không phải là duy nhất, nên một bộ khai thác thử nghiệm mạnh mẽ không nên so sánh từng ký tự đầu ra thành công với đầu ra mẫu. Thay vào đó, cần xác minh rằng đầu ra có số lượng thao tác tối thiểu chính xác và việc áp dụng các thao tác đó thực sự tạo ra các chuỗi bằng nhau.```python
+# helper: run solution on input string, return output string
 import sys
 import io
 
-def solve_io():
+def solve():
     input = sys.stdin.readline
 
     n = int(input())
@@ -223,23 +224,23 @@ def solve_io():
         print(-1)
         return
 
-    ans = []
+    operations = []
 
     for i in range(0, len(ab) - 1, 2):
-        ans.append((ab[i], ab[i + 1]))
+        operations.append((ab[i] + 1, ab[i + 1] + 1))
 
     for i in range(0, len(ba) - 1, 2):
-        ans.append((ba[i], ba[i + 1]))
+        operations.append((ba[i] + 1, ba[i + 1] + 1))
 
-    if len(ab) % 2:
-        i = ab[-1]
-        j = ba[-1]
-        ans.append((i, i))
-        ans.append((i, j))
+    if len(ab) % 2 == 1:
+        x = ab[-1] + 1
+        y = ba[-1] + 1
+        operations.append((x, x))
+        operations.append((x, y))
 
-    print(len(ans))
-    for x, y in ans:
-        print(x + 1, y + 1)
+    print(len(operations))
+    for x, y in operations:
+        print(x, y)
 
 def run(inp: str) -> str:
     old_stdin = sys.stdin
@@ -249,37 +250,38 @@ def run(inp: str) -> str:
     sys.stdout = io.StringIO()
 
     try:
-        solve_io()
+        solve()
         return sys.stdout.getvalue()
     finally:
         sys.stdin = old_stdin
         sys.stdout = old_stdout
 
-def check(inp: str):
+def validate(inp: str, out: str):
     data = inp.strip().splitlines()
     n = int(data[0])
-    s = data[1]
-    t = data[2]
+    original_s = data[1]
+    original_t = data[2]
 
-    out = run(inp).strip().splitlines()
+    lines = out.strip().splitlines()
 
-    possible = (sum(c == 'a' for c in s) +
-                sum(c == 'a' for c in t)) % 2 == 0
+    if not lines:
+        raise AssertionError("empty output")
 
-    if not possible:
-        assert out == ["-1"]
+    if lines[0].strip() == "-1":
+        mismatches = sum(a != b for a, b in zip(original_s, original_t))
+        assert mismatches % 2 == 1, "reported impossible for a solvable case"
         return
 
-    k = int(out[0])
-    assert len(out) == k + 1
+    k = int(lines[0])
+    assert len(lines) == k + 1, "wrong number of operation lines"
 
-    # The theoretical minimum.
     ab = []
     ba = []
+
     for i in range(n):
-        if s[i] == t[i]:
+        if original_s[i] == original_t[i]:
             continue
-        if s[i] == 'a':
+        if original_s[i] == 'a':
             ab.append(i)
         else:
             ba.append(i)
@@ -288,114 +290,106 @@ def check(inp: str):
     if len(ab) % 2:
         expected += 2
 
-    assert k == expected
+    assert k == expected, f"not minimum: got {k}, expected {expected}"
 
-    ss = list(s)
-    tt = list(t)
+    s = list(original_s)
+    t = list(original_t)
 
-    for line in out[1:]:
+    for line in lines[1:]:
         x, y = map(int, line.split())
         assert 1 <= x <= n
         assert 1 <= y <= n
-
         x -= 1
         y -= 1
-        ss[x], tt[y] = tt[y], ss[x]
+        s[x], t[y] = t[y], s[x]
 
-    assert ss == tt
+    assert s == t, "operations did not make strings equal"
 
 # Provided samples.
-check("""4
+sample1 = """4
 abab
 aabb
-""")
+"""
+validate(sample1, run(sample1))
 
-check("""1
+sample2 = """1
 a
 b
-""")
+"""
+validate(sample2, run(sample2))
 
-check("""8
+sample3 = """8
 babbaabb
 abababaa
-""")
+"""
+validate(sample3, run(sample3))
 
-# Minimum size, already equal.
-check("""1
+# Minimum-size solvable case: already equal.
+case1 = """1
 a
 a
-""")
+"""
+validate(case1, run(case1))
+assert run(case1).strip() == "0"
 
-# Minimum size, impossible with one mismatch.
-check("""1
+# Minimum-size impossible case: one mismatch.
+case2 = """1
+a
 b
-a
-""")
+"""
+assert run(case2).strip() == "-1"
 
-# All equal values, with a longer input.
-check("""6
-aaaaaa
-aaaaaa
-""")
-
-# Two same-type mismatches, requiring exactly one operation.
-check("""2
-aa
-bb
-""")
-
-# Opposite mismatch types, requiring the special two-operation construction.
-check("""2
+# Opposite mismatch types. This catches the special two-operation case.
+case3 = """2
 ab
 ba
-""")
+"""
+validate(case3, run(case3))
 
-# Larger boundary-style case.
-n = 200000
-s = "a" * n
-t = "b" * n
-check(f"{n}\n{s}\n{t}\n")
+# Maximum-size input, with all positions equal.
+case4 = "200000\n" + "a" * 200000 + "\n" + "a" * 200000 + "\n"
+assert run(case4).strip() == "0"
 
-print("all tests passed")
+# Boundary case with two equal mismatch types.
+case5 = """4
+aabb
+bbaa
+"""
+validate(case5, run(case5))
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`1 / a / a`|`0`hoạt động | Trường hợp có kích thước tối thiểu đã bằng nhau | 
-|`1 / b / a`|`-1`| Trường hợp không thể có kích thước tối thiểu và số lượng không khớp lẻ | 
-|`6 / aaaaaa / aaaaaa`|`0`hoạt động | Tất cả các vị trí đã bằng nhau | 
-|`2 / aa / bb`|`1`hoạt động | Hai sự không phù hợp cùng loại | 
-|`2 / ab / ba`|`2`hoạt động | Công trình xây dựng kiểu đối lập đặc biệt | 
-|`n = 200000`,`s = a...a`,`t = b...b`|`100000`hoạt động | Đầu vào có kích thước tối đa và hành vi thời gian tuyến tính | 
+|`1 / a / a`|`0`| Kích thước tối thiểu và các chuỗi đã bằng nhau | 
+|`1 / a / b`|`-1`| Trường hợp không thể tối thiểu và số lượng không khớp lẻ | 
+|`2 / ab / ba`|`2`hoạt động | Trường hợp đặc biệt khi cả hai loại không khớp xảy ra cùng một lúc | 
+|`n = 200000`, cả hai chuỗi đều`a`|`0`| Kích thước đầu vào tối đa và hành vi thời gian tuyến tính | 
+|`4 / aabb / bbaa`|`2`hoạt động | Ghép nối nhiều điểm không khớp cùng loại | 
 
-Bộ khai thác cũng kiểm tra xem mọi chỉ mục được báo cáo có nằm trong phạm vi dựa trên một hợp lệ hay không, áp dụng các thao tác cho các chuỗi, xác minh rằng các chuỗi cuối cùng bằng nhau và tính toán độc lập mức tối thiểu theo lý thuyết. Điều này phát hiện cả việc xây dựng hoạt động không chính xác và lỗi từng cái một. 
+Trình xác thực áp dụng mọi hoán đổi được in cho các bản sao có thể thay đổi của chuỗi, sau đó kiểm tra sự bằng nhau ở cuối. Nó cũng tính toán mức tối thiểu theo lý thuyết từ số lượng không khớp. Điều này phát hiện các giải pháp tình cờ làm cho các chuỗi bằng nhau nhưng sử dụng các thao tác không cần thiết, cũng như các giải pháp in các chỉ mục không hợp lệ hoặc một chuỗi trường hợp đặc biệt không chính xác. 
 
 ## Vỏ cạnh 
 
-Trường hợp không khớp lẻ được xử lý trước khi ghép nối. Vì```
-1
-a
-b
-```cái`ab`danh sách có kích thước một và`ba`danh sách có kích thước bằng không. Tổng của chúng là số lẻ nên thuật toán in ngay`-1`. Không có đối tác không hợp lệ nào được truy cập. 
-
-Trường hợp ngược lại là trường hợp tế nhị. Vì```
-2
-ab
-ba
-```chúng tôi nhận được`ab = [0]`Và`ba = [1]`. Cả hai danh sách đều kỳ quặc. Thuật toán đầu tiên thêm`(0, 0)`, thay đổi vị trí đầu tiên từ`ab`ĐẾN`ba`. Sau đó nó thêm`(0, 1)`. Tại thời điểm đó cả hai vị trí đều có loại`ba`, do đó trao đổi`s[0] = b`với`t[1] = a`làm cho vị trí 1 bằng`aa`và vị trí 2 bằng`bb`. Hai thao tác được sử dụng và một thao tác không thể đủ. 
-
-Đối với một đầu vào đã bằng nhau như```
+Khi hai chuỗi đã bằng nhau thì không có vị trí không khớp. Ví dụ,```
 3
 aba
 aba
-```cả hai danh sách không khớp vẫn trống. Tổng số không khớp bằng 0, các vòng lặp ghép nối không làm gì, trường hợp đặc biệt không làm gì và chương trình sẽ in`0`. Đây là mức tối thiểu chính xác vì không cần trao đổi. 
+```sản xuất trống`ab`Và`ba`danh sách. Cả hai vòng lặp ghép nối đều thực hiện 0 lần, trường hợp đặc biệt bị bỏ qua và câu trả lời là`0`. Không có thao tác nào là cần thiết hoặc được phép trong một câu trả lời tối ưu. 
 
-Đối với hai sự không khớp cùng loại, hãy xem xét```
+Khi có tổng số điểm không khớp là lẻ thì câu trả lời là không thể. Vì```
+1
+a
+b
+```cái`ab`danh sách là`[0]`và`ba`danh sách trống. Tổng số là một, do đó thuật toán in`-1`trước khi cố gắng truy cập một đối tác. Đây là điều kiện chẵn lẻ gây ra bởi việc bảo toàn tổng số`a`nhân vật. 
+
+Khi cả hai loại không khớp đều có kích thước lẻ, tổng số không khớp là chẵn, do đó, trường hợp này có thể giải được nhưng yêu cầu cấu trúc đặc biệt. Vì```
 2
-aa
-bb
-```Cả hai vị trí đều`ab`, Vì thế`ab = [0, 1]`. Vòng ghép nối đầu tiên thêm`(0, 1)`. Hoán đổi`s[0] = a`với`t[1] = b`sản xuất`bb`ở vị trí đầu tiên và`aa`trong lần thứ hai, do đó các chuỗi trở nên bằng nhau sau đúng một thao tác. Thuật toán đạt đến giới hạn dưới của một thao tác. 
+ab
+ba
+```các danh sách là`ab = [0]`Và`ba = [1]`. hoạt động`(1, 1)`thay đổi vị trí đầu tiên từ`ab`ĐẾN`ba`. hoạt động`(1, 2)`sau đó ghép đôi hai`ba`các vị trí. Chính xác hai thao tác được sử dụng và một thao tác không thể giải quyết các hướng ngược lại ban đầu. 
 
-Cuối cùng, trường hợp kích thước tối đa với```
-200000
-aaaaaaaaaa...aaaaaaaaaa
-bbbbbbbbbb...bbbbbbbbbb
-```có`200000` `ab`sự không phù hợp. Chúng có thể được nhóm lại thành`100000`cặp và mỗi cặp yêu cầu một lần hoán đổi. Thuật toán thực hiện một lần quét tuyến tính và tạo ra chính xác`100000`hoạt động. Nó không bao giờ kiểm tra đại khái`4 * 10^10`có thể có các cặp chỉ mục chuỗi chéo, đó là lý do chính khiến nó vẫn đủ nhanh.
+Khi danh sách không khớp có kích thước chẵn lớn hơn 0, mọi vị trí trong danh sách đó có thể được xử lý độc lập theo cặp. Vì```
+4
+aabb
+bbaa
+```sự không phù hợp là`ab`tại các vị trí`1`Và`2`, Và`ba`tại các vị trí`3`Và`4`. Thuật toán hoán đổi`(1, 2)`cho cặp đầu tiên và`(3, 4)`cho cặp thứ hai. Mỗi thao tác sẽ sửa hai điểm không khớp, tối thiểu là hai thao tác. 
+
+Ranh giới lập chỉ mục một cơ sở cũng được xử lý rõ ràng. Trong nội bộ, vị trí`0`đại diện cho ký tự đầu tiên, nhưng mọi thao tác được lưu trữ đều thêm một ký tự trước khi in. Do đó, sự không khớp ở ký tự đầu tiên được in bằng chỉ mục`1`, trong khi không khớp ở ký tự cuối cùng của độ dài-`n`chuỗi được in bằng chỉ mục`n`. Khai thác thử nghiệm sẽ kiểm tra cả hai giới hạn cho mọi hoạt động được tạo.

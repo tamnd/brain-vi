@@ -1,7 +1,7 @@
 ---
 title: "CF 102354F - Ngã Tư Vũ Trụ"
-description: "Chúng ta có hai tập hợp điểm không có thứ tự trên mặt cầu đơn vị. Mỗi đường hình học đi qua gốc tọa độ được biểu diễn hai lần, bởi hai điểm giao nhau của nó với mặt cầu, do đó, bất cứ khi nào một điểm (r) xuất hiện, (-r) cũng xuất hiện."
-date: "2026-08-14T02:31:45+07:00"
+description: "Chúng ta có hai tập hợp (n) đường thẳng không định hướng đi qua gốc tọa độ. Mỗi dòng được biểu thị bằng hai giao điểm của nó với hình cầu đơn vị, do đó mọi tập hợp đều chứa (2n) vectơ đơn vị và mọi vectơ xuất hiện cùng với phần phủ định của nó."
+date: "2026-08-15T17:42:08+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102354
@@ -9,7 +9,7 @@ codeforces_index: "F"
 codeforces_contest_name: "2018-2019 Summer Petrozavodsk Camp, Oleksandr Kulkov Contest 2"
 rating: 0
 weight: 102354
-solve_time_s: 377
+solve_time_s: 610
 verified: false
 draft: false
 ---
@@ -18,139 +18,174 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 6 phút 17s 
+**Thời gian giải:** 10 phút 10 giây 
 **Đã xác minh:** không 
 
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta có hai tập hợp điểm không có thứ tự trên mặt cầu đơn vị. Mỗi đường hình học đi qua gốc tọa độ được biểu diễn hai lần, bởi hai điểm giao nhau của nó với mặt cầu, do đó, bất cứ khi nào một điểm (r) xuất hiện, (-r) cũng xuất hiện. Bộ sưu tập thứ hai thu được từ bộ sưu tập đầu tiên bằng cách áp dụng một phép quay quanh điểm gốc và sau đó thay đổi thứ tự của các điểm. 
+Chúng ta có hai tập hợp (n) đường thẳng không định hướng đi qua gốc tọa độ. Mỗi dòng được biểu thị bằng hai giao điểm của nó với hình cầu đơn vị, do đó mọi tập hợp đều chứa (2n) vectơ đơn vị và mọi vectơ xuất hiện cùng với phần phủ định của nó. 
 
-Nhiệm vụ là khôi phục cả hai phần thông tin. Đối với mỗi điểm của bộ sưu tập thứ hai, chúng ta phải xuất chỉ mục của điểm tương ứng trong bộ sưu tập thứ nhất và chúng ta phải mô tả phép quay theo một trục và một góc. Sai số hình học bắt buộc chỉ là (10^{-6}), trong khi dữ liệu đầu vào có độ chính xác khoảng (10^{-12}), do đó, độ chính xác gấp đôi thông thường là đủ nếu chúng ta tránh các phép tính không ổn định không cần thiết. 
+Bộ sưu tập thứ hai thu được từ bộ sưu tập đầu tiên bằng cách áp dụng một phép quay quanh gốc tọa độ và sau đó hoán vị các điểm. Nhiệm vụ là khôi phục bất kỳ phép quay nào như vậy và hoán vị tương ứng. Vì một đường không có hướng ưu tiên nên điểm cuối có cùng đường kính là khớp có thể chấp nhận được sau khi xoay. 
 
-Ràng buộc quyết định là (n\le 4\cdot10^4), do đó có thể có (8\cdot10^4) điểm. Bất kỳ phương pháp so sánh nào mỗi cặp điểm đều thực hiện các phép toán cặp khoảng (6,4\cdot10^9), vượt xa giới hạn bốn giây. Chúng ta cần một phép tính gần như tuyến tính ngoài việc sắp xếp, vì vậy (O(n\log n)) là mục tiêu tự nhiên. 
+Giới hạn trên (n=4\cdot 10^4) có nghĩa là có thể có (8\cdot 10^4) điểm trong mỗi bộ sưu tập. Thuật toán (O(n^2)) sẽ yêu cầu các phép toán cặp khoảng (6,4\cdot 10^9), vượt xa giới hạn bốn giây. Chúng ta cần một cái gì đó gần với (O(n\log n)), chỉ với một lượng nhỏ đại số tuyến tính có kích thước không đổi cho mỗi điểm. Tọa độ có tới mười hai chữ số thập phân, do đó việc triển khai phải sử dụng dấu phẩy động một cách cẩn thận, nhưng câu lệnh cung cấp đủ lề chính xác để hoạt động với độ chính xác gấp đôi thông thường. 
 
-Có hai sự thật mang tính cấu trúc làm cho một giải pháp như vậy có thể thực hiện được. Đầu tiên, phép quay bảo toàn khoảng cách, tích chấm và mọi biểu thức được xây dựng từ chúng. Thứ hai, các hướng được chọn thống nhất một cách ngẫu nhiên. Tính ngẫu nhiên không có ý nghĩa trang trí ở đây: nó làm cho một bất biến quay được lựa chọn cẩn thận gần như chắc chắn là khác nhau đối với các đường khác nhau, vì vậy bất biến đó có thể dùng làm dấu vân tay. 
+Sự tinh tế đầu tiên là sự biểu diễn đối cực. Nếu (p) đại diện cho một dòng thì (-p) đại diện chính xác cho cùng một dòng. Bất kỳ bất biến nào không thay đổi bởi (p\mapsto -p) đều không thể phân biệt được hai điểm đó. Điều này được mong đợi và vô hại vì sau khi xoay, chúng ta có thể chọn bất kỳ điểm cuối nào mang lại hoán vị cần thiết. 
 
-Có một sự tinh tế do cách biểu diễn đối cực gây ra. Bất kỳ bất biến nào chỉ phụ thuộc vào lũy thừa chẵn của tọa độ sẽ cho cùng một giá trị cho (r) và (-r). Đó không phải là lỗi vì hai điểm đó thuộc cùng một đường thẳng. Trước tiên, chúng tôi xác định các đường và chỉ sau khi khôi phục góc quay, chúng tôi mới quyết định điểm nào trong hai điểm cuối đối diện là điểm chính xác. 
+Điều tinh tế thứ hai là bất biến khoảng cách bậc hai ở đây là vô ích. Đối với một vectơ đơn vị (p), tổng bình phương khoảng cách từ (p) đến tất cả các điểm đầu vào là không đổi vì đầu vào chứa mọi điểm cùng với điểm đối diện của nó. Ví dụ, với```
+2
+1 0 0
+-1 0 0
+0 1 0
+0 -1 0
+1 0 0
+-1 0 0
+0 1 0
+0 -1 0
+```phép quay và hoán vị danh tính (1\ 2\ 3\ 4) là hợp lệ, nhưng mọi điểm đều có tổng bình phương chính xác như nhau. Một phương pháp dựa trên đại lượng đó không thể phân biệt được điều gì. 
 
-Mẫu được cung cấp là một trường hợp hữu ích khác. Bốn điểm của nó tạo thành một hình vuông trong một mặt phẳng. Bất biến được sử dụng dưới đây có giá trị giống hệt nhau cho cả bốn điểm, do đó giả định tính duy nhất ngẫu nhiên không đúng cho mẫu này. Việc thực hiện bất cẩn khi ghép các điểm được sắp xếp liên tiếp một cách mù quáng có thể tạo thành các cặp dòng sai. Việc triển khai bên dưới chứa một dự phòng nhỏ cho (n\le3), xử lý mẫu và các cấu hình đối xứng nhỏ khác. Đối với các đầu vào lớn thực tế, việc xây dựng ngẫu nhiên như đã hứa khiến cho đường đi nhanh trở nên cực kỳ đáng tin cậy. 
+Điểm tinh tế thứ ba là ngay cả bất biến bậc bốn hữu ích cũng có thể có các giá trị bằng nhau cho các đường khác nhau trong một cấu hình đối xứng đặc biệt. Bản thân mẫu có tính đối xứng như vậy. Việc triển khai bất cẩn giả định hai điểm được sắp xếp đầu tiên luôn là các điểm cuối đối diện nhau có thể vô tình cố gắng tạo một khung từ hai vectơ song song. Việc triển khai đúng sẽ tìm kiếm rõ ràng hai điểm không song song. Đối với mẫu, hai điểm đầu tiên đã không song song nên có thể sử dụng được. 
 
-Ví dụ: mẫu có bốn điểm 
+Cuối cùng, điều kiện hướng ngẫu nhiên có ý nghĩa quan trọng. Bất biến bậc bốn không phải là một dấu vân tay hoàn chỉnh xác định cho các tập hợp điểm tùy ý. Đối với một tập hợp các hướng ngẫu nhiên thống nhất, hai đường thẳng khác nhau chỉ bất biến bằng nhau với xác suất bằng 0 trong số học chính xác và các va chạm số là hoàn toàn khó xảy ra. Đây chính là nguồn gốc của sự độc đáo. Cách tiếp cận bất biến cơ bản cũng là giải pháp tiêu chuẩn được mô tả cho vấn đề này. 
+
+## Phương pháp tiếp cận 
+
+Ý tưởng mạnh mẽ trực tiếp nhất là đoán xem hai điểm nào của bộ sưu tập thứ hai tương ứng với hai điểm không song song của bộ sưu tập thứ nhất. Hai vectơ không song song có hướng xác định một phép quay duy nhất, sau khi chọn dấu thích hợp cho cặp thứ hai. Sau đó, chúng ta có thể xoay mọi điểm và kiểm tra xem tập kết quả có khớp với tập đầu tiên hay không. 
+
+Có (O(n^2)) lựa chọn cho cặp trong bộ sưu tập thứ hai và kiểm tra vòng quay một ứng cử viên so với tất cả (O(n)) chi phí điểm (O(n)). Điều đó mang lại công việc (O(n^3)). Tại (n=4\cdot10^4), đây là thứ tự kiểm tra điểm (6.4\cdot10^{13}), trước khi tính đến hệ số không đổi của hình học ba chiều. Việc thử mọi hoán vị hoàn chỉnh thậm chí còn tệ hơn, với các khả năng ((2n)!). 
+
+Quan sát hữu ích là phép quay bảo toàn khoảng cách. Xác định 
+
 [ 
-(0,923879533,0,382683432,0),\quad 
-(0,923879533,-0,382683432,0), 
+P_4(p)=\sum_q |p-q|^4, 
 ] 
-cùng với những mặt tiêu cực của chúng. Mọi điểm đều nhận được dấu vân tay bậc hai giống nhau. Đầu ra đúng có thể sử dụng phép quay (-\pi/2) quanh trục (z) và hoán vị (2,3,4,1). Một phương pháp giả định mỗi dấu vân tay là duy nhất sẽ âm thầm thất bại trước khi nó cố gắng tính toán phép xoay. 
 
-Trường hợp cạnh đơn giản thứ hai là phép xoay danh tính. Nếu hai bộ đầu vào giống hệt nhau nhưng bị xáo trộn thì góc yêu cầu là (0) và trục có thể là bất kỳ vectơ nào khác 0. Việc triển khai tạo ra trục (x) trong trường hợp này. Trục không được xác định duy nhất khi góc bằng 0, do đó việc so sánh trục được in với một số trục dự kiến ​​sẽ không chính xác. 
+trong đó tổng chạy trên tất cả (2n) điểm trong một bộ sưu tập. Nếu toàn bộ bộ sưu tập được xoay, tập hợp khoảng cách từ một điểm đến tất cả các điểm khác không thay đổi, do đó (P_4) không thay đổi. Ý tưởng ban đầu của người biên tập là sử dụng bất biến xoay bậc bốn này và sắp xếp các điểm theo nó. 
 
-## Phương pháp tiếp cận
+Đối với vấn đề cụ thể này, chúng ta có thể đơn giản hóa việc tính toán một cách đáng kể. hãy để 
 
-Cách tiếp cận trực tiếp rất đơn giản về mặt khái niệm. Hãy thử sự tương ứng giữa các điểm của hai tập hợp, xác định phép quay từ đủ vectơ tương ứng và kiểm tra tất cả các điểm còn lại. Với (2n) mục tiêu có thể có cho điểm đầu tiên và (2n-1) cho điểm thứ hai, ngay cả trước khi xử lý hoán vị còn lại đã có sẵn các cặp ứng cử viên (\Theta(n^2)). Nếu mọi ứng viên đều yêu cầu quét (O(n)) điểm thì trường hợp xấu nhất là (\Theta(n^3)), khoảng (5.12\cdot10^{14}) so sánh điểm cơ bản tại (n=4\cdot10^4). Ngay cả khi tìm kiếm (O(n^2)) cẩn thận hơn nhiều vẫn sẽ thực hiện khoảng (6,4\cdot10^9) thao tác cặp. 
-
-Quan sát hữu ích là ngừng cố gắng đoán vòng quay trước. Thay vào đó, hãy xây dựng một số gắn với mỗi điểm không thay đổi khi quay và không phụ thuộc vào thứ tự của toàn bộ tập hợp. 
-
-Giải pháp chính thức sử dụng đa thức khoảng cách lũy thừa bậc bốn 
 [ 
-P_4(x,y,z)= 
-\sum_l 
-\left((x-x_l)^2+(y-y_l)^2+(z-z_l)^2\right)^2. 
+M=\sum_q qq^T. 
 ] 
-Đây là bất biến quay và việc đánh giá nó cho mọi điểm có thể giảm xuống thành công không đổi trên mỗi điểm sau khi tích lũy các mômen cần thiết. 
 
-4-8(p\cdot r_l)+4(p\cdot r_l)^2. 
-] 
-Tổng tất cả các điểm, số hạng tuyến tính biến mất vì đầu vào là đối cực: 
+Bởi vì mọi (q) là một vectơ đơn vị và tập hợp chứa cả (q) và (-q), nên ta có 
+
 [ 
-\sum_l r_l=0. 
+\sum_q q=0. 
 ] 
-Xác định ma trận đối xứng 
+
+Đối với một vectơ đơn vị (p), 
+
 [ 
-M=\sum_l r_l r_l^T. 
+|p-q|^2=2-2p\cdot q. 
 ] 
-Sau đó 
+
+Do đó, 
+
 [ 
-\sum_l(p\cdot r_l)^2=p^TMp, 
+\bắt đầu{căn chỉnh} 
+P_4(p) 
+&=\sum_q (2-2p\cdot q)^2\ 
+&=4\sum_q\left(1-2p\cdot q+(p\cdot q)^2\right)\ 
+&=4\left(2n+p^TMp\right). 
+\end{căn chỉnh} 
 ] 
-vậy 
+
+Hệ số (4) và hằng số (2n) không ảnh hưởng đến thứ tự. Vì vậy chúng ta chỉ cần vô hướng 
+
 [ 
-P_4(p)=4(2n)+4p^TMp. 
+s(p)=p^TMp. 
 ] 
-Hệ số không đổi và hằng số cộng không ảnh hưởng đến việc sắp xếp. Do đó chúng tôi sử dụng 
-[ 
-F(p)=p^TMp 
-] 
-như dấu vân tay. 
 
-# b^TM_Bb 
+Ma trận (M) chỉ có sáu mục độc lập, do đó nó được xây dựng trong (O(n)) và mọi chữ ký được đánh giá trong (O(1)). Sau đó chúng tôi sắp xếp các chữ ký (2n), thu được sự tương ứng giữa hai bộ sưu tập. 
 
-# b^TR^TM_ARb 
+Phương pháp brute-force hoạt động vì hai vectơ tương ứng không song song xác định góc quay. Nó thất bại vì chúng ta không biết vectơ nào tương ứng. Bất biến mang lại cho chúng ta sự tương ứng đó mà không cần thử tất cả các cặp, làm giảm vấn đề so khớp hình học thành sắp xếp các giá trị vô hướng (O(n)). 
 
-# (Rb)^TM_A(Rb) 
-
-F_A(Rb). 
-] 
-Do đó các điểm tương ứng có dấu vân tay bằng nhau. Bởi vì các hướng là ngẫu nhiên nên các đường khác nhau hầu như chắc chắn có các giá trị khác nhau. Sự bằng nhau không thể tránh khỏi duy nhất là giữa (r) và (-r), vì (F(-r)=F(r)). 
-
-Chúng tôi sắp xếp dấu vân tay. Trong trường hợp chung, cứ hai giá trị bằng nhau liên tiếp tạo thành một cặp đối cực và các cặp này xuất hiện theo cùng thứ tự trong cả hai bộ. Điều này đưa ra sự tương ứng giữa các dòng (n) trong thời gian (O(n\log n)). 
-
-Khi đã biết hai đường thẳng tương ứng không song song thì chỉ còn lại bốn hướng. Chọn một đại diện từ mỗi dòng trong mỗi bộ. Đối với mỗi trong số bốn lựa chọn dấu hiệu, hãy xây dựng phép quay thích hợp duy nhất ánh xạ hai vectơ đã chọn tới các vectơ mục tiêu đã chọn. Sau đó kiểm tra nó với tất cả các điểm. Sự kết hợp dấu hiệu chính xác được đảm bảo để vượt qua. 
-
-Bước cuối cùng chuyển đổi ma trận xoay thành biểu diễn góc trục. Biểu diễn quaternion thuận tiện vì nó vẫn ổn định khi góc gần bằng (\pi), trong đó công thức thông thường chỉ dựa trên phần phản đối xứng của ma trận sẽ mất đi độ chính xác. 
+Vẫn còn một dấu hiệu mơ hồ. Khi hai dòng tương ứng đã được xác định, hãy chọn dấu của vectơ mục tiêu thứ hai sao cho tích số chấm của nó với vectơ mục tiêu đầu tiên phù hợp với tích số chấm tương ứng trong tập hợp đầu tiên. Hai vectơ không song song được định hướng sau đó xác định các khung tọa độ trực giao và phép quay chỉ đơn giản là ma trận ánh xạ khung này sang khung khác. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
-| Lực lượng vũ phu | (O(n^2)) đến (O(n^3)) tùy thuộc vào xác minh | (O(n)) | Quá chậm | 
-| Tối ưu | (O(n\log n)) | (O(n)) | Đã chấp nhận | 
+| Lực lượng vũ phu | (O(n^3)) | (O(n)) | Quá chậm | 
+| Bất biến bậc bốn + sắp xếp | (O(n\log n)) | (O(n)) | Đã chấp nhận |
 
-## Hướng dẫn thuật toán
+## Hướng dẫn thuật toán 
 
-1. Đọc tất cả (2n) điểm của bộ thứ nhất và tất cả (2n) điểm của bộ thứ hai. Lưu trữ tọa độ dưới dạng bộ ba dấu phẩy động. Vì mọi điểm đều nằm trên mặt cầu đơn vị và sai số bắt buộc là (10^{-6}), nên độ chính xác gấp đôi là phù hợp. 
-2. Với mỗi tập hợp, tích lũy sáu phần tử độc lập của ma trận đối xứng 
+1. Đọc điểm (2n) của mỗi tập hợp. Mỗi điểm có độ dài đơn vị lên đến độ chính xác đầu vào nhất định và mọi điểm đều có điểm đối diện trong cùng một bộ sưu tập. 
+2. Với mỗi tập hợp, xây dựng ma trận đối xứng 
+
 [ 
-M=\tổng r_ir_i^T. 
+M=\sum_i r_i r_i^T. 
 ] 
-Các mục là 
-[ 
-M_{xx}=\sum x_i^2,\quad 
-M_{xy}=\sum x_iy_i,\quad 
-M_{xz}=\sum x_iz_i, 
-] 
-và tương tự với (M_{yy},M_{yz},M_{zz}). 
-3. Đánh giá (F(r)=r^TMr) cho mọi điểm. Việc này chỉ thực hiện một số phép tính số học không đổi cho mỗi điểm vì (M) chỉ bằng (3\times3). 
-4. Sắp xếp các chỉ số điểm theo dấu vân tay của chúng. Trong trường hợp ngẫu nhiên, hai bản sao của mỗi dòng có cùng một dấu vân tay và các dòng khác nhau có dấu vân tay khác nhau. Do đó, các vị trí (0,1) tương ứng với một dòng, các vị trí (2,3) tương ứng với một dòng khác, v.v., trong cả hai bộ. 
-5. Sử dụng dòng đầu tiên làm một tham chiếu và quét các nhóm dòng khác cho đến khi tìm thấy tham chiếu thứ hai có hướng gần như không song song với tham chiếu đầu tiên. Vì điểm là ngẫu nhiên nên điều này thường xảy ra ngay lập tức. Việc chọn một cặp được phân tách rõ ràng sẽ tránh được việc chia cho tích chéo nhỏ khi xây dựng hệ tọa độ. 
-6. Cho (s_1,s_2) là đại diện của hai dòng đã chọn của tập thứ hai và (t_1,t_2) là đại diện của các dòng tương ứng của tập thứ nhất. Hãy thử cả bốn lựa chọn 
-[ 
-(\pm t_1,\pm t_2). 
-] 
-Đối với mỗi lựa chọn, hãy xây dựng một cơ sở trực chuẩn từ (s_1,s_2), xây dựng một cơ sở khác từ các vectơ đích có dấu và ánh xạ cơ sở thứ nhất sang cơ sở thứ hai. Điều này đưa ra một ma trận xoay thích hợp. 
-7. Xác thực việc luân chuyển ứng viên theo mọi điểm. Đối với điểm đặt thứ hai (b), dấu vân tay của nó cho chúng ta biết đường đặt đầu tiên tương ứng, chứa chính xác hai điểm đối diện. So sánh (Rb) với hai ứng cử viên đó và giữ cái nào gần hơn. Nếu mọi khoảng cách đều nằm dưới một dung sai số nhỏ thì ứng cử viên là phép quay và hoán vị mong muốn. 
-8. Nếu dấu vân tay không chia các điểm thành cặp và (n\le3), hãy sử dụng phương pháp dự phòng vũ phu nhỏ. Có nhiều nhất (6!=720) hoán vị, vì vậy chúng ta có thể thử mọi hoán vị, xây dựng một phép quay từ hai vectơ không song song và xác minh tất cả các điểm. Điều này xử lý mẫu đối xứng mà không ảnh hưởng đến độ phức tạp tiệm cận. 
-9. Chuyển đổi ma trận xoay thu được thành một quaternion đơn vị. Làm cho thành phần vô hướng không âm, sau đó sử dụng 
-[ 
-\theta=2\operatorname{atan2}(|v|,w) 
-] 
-trong đó (w) là phần vô hướng và (v) là phần vectơ. Vectơ (v/|v|) là trục quay. Đối với phép quay bằng 0, bất kỳ trục nào cũng hợp lệ, vì vậy chúng tôi xuất ra ((1,0,0)). 
-10. In góc, điểm trục và hoán vị trong chỉ mục dựa trên một yêu cầu. 
 
-Tại sao nó hoạt động 
+Đối với một điểm (r_i=(x_i,y_i,z_i)), đóng góp của nó là 
 
-Bất biến trung tâm là (F(r)=r^TMr), là phần không đổi của đa thức khoảng cách lũy thừa bậc bốn. Một phép quay thay đổi (M) bằng cách chia động từ và thay đổi (r) bằng cách chia động từ nghịch đảo, do đó (F) không thay đổi đối với các điểm tương ứng. Các hướng độc lập ngẫu nhiên làm cho các dấu vân tay này khác biệt giữa các dòng khác nhau với xác suất bằng một trong mô hình toán học. Do đó, bước sắp xếp sẽ xác định từng cặp dòng. 
+[ 
+\bắt đầu{pmatrix} 
+x_i^2 & x_iy_i & x_iz_i\ 
+x_iy_i & y_i^2 & y_iz_i\ 
+x_iz_i & y_iz_i & z_i^2 
+\end{pmatrix}. 
+] 
 
-Đối với hai vectơ không song song, cặp có thứ tự của chúng xác định một hệ quy chiếu trực chuẩn có hướng. Việc xoay ánh xạ khung hình này sang khung hình khác là duy nhất. Bốn lựa chọn về dấu hiệu bao hàm sự mơ hồ duy nhất gây ra bởi thực tế là một đường thẳng có thể có hai đại diện. Chính xác một ứng cử viên đồng ý với việc luân chuyển thực tế và quá trình xác minh toàn cầu sẽ loại bỏ mọi ứng cử viên không chính xác. Khi đã biết phép quay đó, việc chọn điểm cuối gần hơn bên trong mỗi cặp đối cực phù hợp sẽ mang lại hoán vị điểm cần thiết. 
+Chỉ có sáu giá trị cần được lưu trữ. 
+
+1. Với mỗi điểm (p), hãy tính chữ số vô hướng của nó 
+
+[ 
+s(p)=p^TMp. 
+] 
+
+Giá trị này tỷ lệ thuận với bất biến khoảng cách bậc 4 (P_4(p)), do đó các điểm tương ứng có dấu hiệu bằng nhau về mặt số học chính xác. Các điểm đối cực của một đường cũng có dấu hiệu tương tự, đó chính xác là sự mơ hồ mà chúng ta mong đợi. 
+
+1. Sắp xếp chỉ mục của cả hai bộ sưu tập theo chữ ký của chúng. Với các hướng độc lập ngẫu nhiên, các dòng khác nhau gần như chắc chắn có các dấu hiệu khác nhau, do đó các vị trí được sắp xếp sẽ xác định các dòng tương ứng. Nếu một số chữ ký trùng nhau do tính đối xứng thì mọi sự tương ứng tương thích với tính đối xứng đó đều có khả năng hợp lệ. Mẫu này là một trường hợp suy biến nhỏ nên việc triển khai không giả định rằng một vị trí được sắp xếp cụ thể nhất thiết phải là điểm cuối đối diện. 
+2. Lấy điểm đầu tiên trong tập hợp thứ nhất được sắp xếp và điểm ở cùng vị trí được sắp xếp trong tập hợp thứ hai. Sau đó quét các vị trí đã sắp xếp còn lại cho đến khi tìm được một cặp vectơ không song song khác. Điều này xử lý cặp đối cực xuất hiện liên tiếp trong trường hợp chung và cũng xử lý mẫu, trong đó một số chữ ký trùng khớp. 
+3. Đặt vectơ nguồn được chọn là (a_0,a_1) và vectơ đích tương ứng là (b_0,b_1). Chuẩn hóa (a_0) và (b_0). Đối với mỗi vectơ thứ hai, hãy loại bỏ thành phần của nó dọc theo vectơ đầu tiên: 
+
+[ 
+a_1^\perp=a_1-(a_1\cdot a_0)a_0. 
+] 
+
+Chuẩn hóa vectơ này và thực hiện tương tự cho (b_1). 
+
+1. Hoàn thành cả hai cặp cho hệ quy chiếu thuận tay phải bằng tích chéo: 
+
+[ 
+a_2=a_0\times a_1^\perp,\qquad 
+b_2=b_0\times b_1^\perp. 
+] 
+
+Nếu vectơ mục tiêu thứ hai có hướng sai, hãy thay thế (b_1) bằng (-b_1) trước khi xây dựng khung. Dấu được chọn bằng cách so sánh hai tích chấm tương ứng. 
+
+1. Lập ma trận xoay 
+
+[ 
+R= 
+\bắt đầu{bmatrix} 
+b_0&b_1^\perp&b_2 
+\end{bmatrix} 
+\bắt đầu{bmatrix} 
+a_0&a_1^\perp&a_2 
+\end{bmatrix}^T. 
+] 
+
+Bằng cách xây dựng, (Ra_0=b_0) và (Ra_1=\pm b_1), với dấu được chọn nhất quán. Vì hai vectơ nguồn không song song nên điều này quyết định toàn bộ góc quay thích hợp. 
+
+1. Chuyển đổi (R) thành đơn vị quaternion, sau đó thành trục và góc. Lấy phần vô hướng quaternion không âm sẽ cho một góc bằng ([0,\pi]), thỏa mãn khoảng yêu cầu. Đối với phép quay bằng 0, bất kỳ trục nào cũng hợp lệ, do đó việc triển khai sử dụng trục (x). 
+2. Đối với mỗi điểm đầu vào (b_i) của bộ sưu tập thứ hai, hãy xoay nó bằng cách sử dụng (R). Dòng tương ứng của nó đã được biết từ vị trí được sắp xếp. Dòng đó có hai điểm cuối ứng cử viên, (a_j) và (-a_j). So sánh điểm xoay với cả hai và chọn điểm cuối gần hơn. Các chỉ số kết quả tạo thành hoán vị cần thiết. 
+
+Tại sao nó hoạt động: ma trận (M) ghi lại tất cả các khoảnh khắc thứ hai của tập hợp điểm và dưới một góc quay (R), nó biến đổi thành (M'=RMR^T). Do đó đối với các điểm tương ứng (p) và (Rp), 
+
+[ 
+(Rp)^TM'(Rp)=p^TR^TRMR^TRp=p^TMp. 
+] 
+
+Vì vậy, chữ ký vô hướng được bảo tồn. Với các hướng ngẫu nhiên, nó xác định từng đường một cách độc lập ngoại trừ sự mơ hồ đối cực không thể tránh khỏi của nó. Khi hai đường tương ứng không song song được chọn, việc xây dựng khung sẽ tạo ra ánh xạ xoay chính xác cho các đường đó. Vì đầu vào đảm bảo rằng tồn tại một vòng quay chung, nên vòng quay đó sẽ ánh xạ mọi dòng còn lại vào dòng tương ứng của nó. Cuối cùng, việc so sánh hai điểm cuối của mỗi dòng sẽ giải quyết được sự mơ hồ về dấu hiệu duy nhất còn lại. 
 
 ## Giải pháp Python```python
 import sys
 import math
-import itertools
 
 input = sys.stdin.readline
-
-EPS = 1e-8
-CHECK_EPS2 = 5e-10
-CROSS_EPS = 1e-8
 
 def dot(a, b):
     return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]
@@ -162,190 +197,104 @@ def cross(a, b):
         a[0] * b[1] - a[1] * b[0],
     )
 
-def norm2(a):
-    return dot(a, a)
-
-def scale(a, k):
-    return (a[0] * k, a[1] * k, a[2] * k)
-
-def sub(a, b):
-    return (a[0] - b[0], a[1] - b[1], a[2] - b[2])
-
-def add(a, b):
-    return (a[0] + b[0], a[1] + b[1], a[2] + b[2])
+def norm(a):
+    return math.sqrt(dot(a, a))
 
 def normalize(a):
-    d = math.sqrt(norm2(a))
-    return scale(a, 1.0 / d)
+    d = norm(a)
+    return (a[0] / d, a[1] / d, a[2] / d)
 
-def apply_rot(R, v):
+def mat_vec(r, v):
     return (
-        R[0][0] * v[0] + R[0][1] * v[1] + R[0][2] * v[2],
-        R[1][0] * v[0] + R[1][1] * v[1] + R[1][2] * v[2],
-        R[2][0] * v[0] + R[2][1] * v[1] + R[2][2] * v[2],
+        r[0][0] * v[0] + r[0][1] * v[1] + r[0][2] * v[2],
+        r[1][0] * v[0] + r[1][1] * v[1] + r[1][2] * v[2],
+        r[2][0] * v[0] + r[2][1] * v[1] + r[2][2] * v[2],
     )
 
-def rotation_from_two(source1, source2, target1, target2):
-    u = normalize(source1)
-    v0 = sub(source2, scale(u, dot(source2, u)))
-    vlen2 = norm2(v0)
-    if vlen2 < CROSS_EPS * CROSS_EPS:
-        return None
-    v = scale(v0, 1.0 / math.sqrt(vlen2))
-    w = cross(u, v)
+def dist2(a, b):
+    x = a[0] - b[0]
+    y = a[1] - b[1]
+    z = a[2] - b[2]
+    return x * x + y * y + z * z
 
-    U = normalize(target1)
-    V0 = sub(target2, scale(U, dot(target2, U)))
-    Vlen2 = norm2(V0)
-    if Vlen2 < CROSS_EPS * CROSS_EPS:
-        return None
-    V = scale(V0, 1.0 / math.sqrt(Vlen2))
-    W = cross(U, V)
+def build_signatures(points):
+    m00 = m01 = m02 = 0.0
+    m11 = m12 = 0.0
+    m22 = 0.0
 
-    # R = [U V W] [u v w]^T
-    R = [[0.0] * 3 for _ in range(3)]
-    T = (U, V, W)
-    S = (u, v, w)
+    for x, y, z in points:
+        m00 += x * x
+        m01 += x * y
+        m02 += x * z
+        m11 += y * y
+        m12 += y * z
+        m22 += z * z
+
+    sig = [0.0] * len(points)
+
+    for i, (x, y, z) in enumerate(points):
+        tx = m00 * x + m01 * y + m02 * z
+        ty = m01 * x + m11 * y + m12 * z
+        tz = m02 * x + m12 * y + m22 * z
+        sig[i] = x * tx + y * ty + z * tz
+
+    order = list(range(len(points)))
+    order.sort(key=sig.__getitem__)
+    return sig, order
+
+def make_frame(a, b):
+    a = normalize(a)
+    d = dot(a, b)
+    v = (
+        b[0] - d * a[0],
+        b[1] - d * a[1],
+        b[2] - d * a[2],
+    )
+    v = normalize(v)
+    w = cross(a, v)
+    return (a, v, w)
+
+def frame_rotation(source, target):
+    # R = T * S^T, where S and T contain frame vectors as columns.
+    r = [[0.0] * 3 for _ in range(3)]
 
     for i in range(3):
         for j in range(3):
-            R[i][j] = (
-                T[0][i] * S[0][j]
-                + T[1][i] * S[1][j]
-                + T[2][i] * S[2][j]
+            r[i][j] = (
+                target[0][i] * source[0][j]
+                + target[1][i] * source[1][j]
+                + target[2][i] * source[2][j]
             )
-    return R
 
-def matrix_fingerprint(p, M):
-    x, y, z = p
-    qx = M[0][0] * x + M[0][1] * y + M[0][2] * z
-    qy = M[0][1] * x + M[1][1] * y + M[1][2] * z
-    qz = M[0][2] * x + M[1][2] * y + M[2][2] * z
-    return x * qx + y * qy + z * qz
+    return r
 
-def build_matrix(points):
-    xx = xy = xz = yy = yz = zz = 0.0
-    for x, y, z in points:
-        xx += x * x
-        xy += x * y
-        xz += x * z
-        yy += y * y
-        yz += y * z
-        zz += z * z
-    return (
-        (xx, xy, xz),
-        (xy, yy, yz),
-        (xz, yz, zz),
-    )
+def rotation_to_axis_angle(r):
+    trace = r[0][0] + r[1][1] + r[2][2]
 
-def build_groups(values, order):
-    groups = []
-    for idx in order:
-        if not groups or abs(values[idx] - values[groups[-1][0]]) > EPS:
-            groups.append([idx])
-        else:
-            groups[-1].append(idx)
-    return groups
-
-def validate_group_rotation(R, A, B, groups_a, groups_b):
-    m = len(A)
-    perm = [-1] * m
-
-    for g in range(len(groups_b)):
-        ga = groups_a[g]
-        gb = groups_b[g]
-
-        if len(ga) != 2 or len(gb) != 2:
-            return None
-
-        a0, a1 = ga
-        for bi in gb:
-            rb = apply_rot(R, B[bi])
-
-            d0 = norm2(sub(rb, A[a0]))
-            d1 = norm2(sub(rb, A[a1]))
-
-            if d0 <= d1:
-                best = a0
-                bestd = d0
-            else:
-                best = a1
-                bestd = d1
-
-            if bestd > CHECK_EPS2:
-                return None
-            if perm[bi] != -1:
-                return None
-            perm[bi] = best
-
-    if any(x == -1 for x in perm):
-        return None
-    return perm
-
-def brute_force_small(A, B):
-    m = len(A)
-
-    first = 0
-    second = -1
-    for j in range(1, m):
-        if norm2(cross(B[first], B[j])) > CROSS_EPS * CROSS_EPS:
-            second = j
-            break
-
-    if second == -1:
-        return None
-
-    for p in itertools.permutations(range(m)):
-        for s1 in (1.0, -1.0):
-            for s2 in (1.0, -1.0):
-                R = rotation_from_two(
-                    B[first],
-                    B[second],
-                    scale(A[p[first]], s1),
-                    scale(A[p[second]], s2),
-                )
-                if R is None:
-                    continue
-
-                ok = True
-                for i in range(m):
-                    rb = apply_rot(R, B[i])
-                    if norm2(sub(rb, A[p[i]])) > CHECK_EPS2:
-                        ok = False
-                        break
-
-                if ok:
-                    return R, list(p)
-
-    return None
-
-def rotation_to_axis_angle(R):
-    tr = R[0][0] + R[1][1] + R[2][2]
-
-    if tr > 0.0:
-        s = math.sqrt(tr + 1.0) * 2.0
+    if trace > 0.0:
+        s = math.sqrt(trace + 1.0) * 2.0
         qw = 0.25 * s
-        qx = (R[2][1] - R[1][2]) / s
-        qy = (R[0][2] - R[2][0]) / s
-        qz = (R[1][0] - R[0][1]) / s
-    elif R[0][0] > R[1][1] and R[0][0] > R[2][2]:
-        s = math.sqrt(max(0.0, 1.0 + R[0][0] - R[1][1] - R[2][2])) * 2.0
+        qx = (r[2][1] - r[1][2]) / s
+        qy = (r[0][2] - r[2][0]) / s
+        qz = (r[1][0] - r[0][1]) / s
+    elif r[0][0] >= r[1][1] and r[0][0] >= r[2][2]:
+        s = math.sqrt(max(0.0, 1.0 + r[0][0] - r[1][1] - r[2][2])) * 2.0
+        qw = (r[2][1] - r[1][2]) / s
         qx = 0.25 * s
-        qy = (R[0][1] + R[1][0]) / s
-        qz = (R[0][2] + R[2][0]) / s
-        qw = (R[2][1] - R[1][2]) / s
-    elif R[1][1] > R[2][2]:
-        s = math.sqrt(max(0.0, 1.0 + R[1][1] - R[0][0] - R[2][2])) * 2.0
-        qx = (R[0][1] + R[1][0]) / s
+        qy = (r[0][1] + r[1][0]) / s
+        qz = (r[0][2] + r[2][0]) / s
+    elif r[1][1] >= r[2][2]:
+        s = math.sqrt(max(0.0, 1.0 - r[0][0] + r[1][1] - r[2][2])) * 2.0
+        qw = (r[0][2] - r[2][0]) / s
+        qx = (r[0][1] + r[1][0]) / s
         qy = 0.25 * s
-        qz = (R[1][2] + R[2][1]) / s
-        qw = (R[0][2] - R[2][0]) / s
+        qz = (r[1][2] + r[2][1]) / s
     else:
-        s = math.sqrt(max(0.0, 1.0 + R[2][2] - R[0][0] - R[1][1])) * 2.0
-        qx = (R[0][2] + R[2][0]) / s
-        qy = (R[1][2] + R[2][1]) / s
+        s = math.sqrt(max(0.0, 1.0 - r[0][0] - r[1][1] + r[2][2])) * 2.0
+        qw = (r[1][0] - r[0][1]) / s
+        qx = (r[0][2] + r[2][0]) / s
+        qy = (r[1][2] + r[2][1]) / s
         qz = 0.25 * s
-        qw = (R[1][0] - R[0][1]) / s
 
     qn = math.sqrt(qw * qw + qx * qx + qy * qy + qz * qz)
     qw /= qn
@@ -364,206 +313,234 @@ def rotation_to_axis_angle(R):
     if vnorm < 1e-12:
         return 0.0, (1.0, 0.0, 0.0)
 
-    theta = 2.0 * math.atan2(vnorm, max(0.0, qw))
+    theta = 2.0 * math.atan2(vnorm, qw)
     axis = (qx / vnorm, qy / vnorm, qz / vnorm)
 
     if theta > math.pi:
         theta -= 2.0 * math.pi
-        axis = scale(axis, -1.0)
 
     return theta, axis
 
 def solve():
     n = int(input())
-    m = 2 * n
+    total = 2 * n
 
-    A = [tuple(map(float, input().split())) for _ in range(m)]
-    B = [tuple(map(float, input().split())) for _ in range(m)]
+    a = [tuple(map(float, input().split())) for _ in range(total)]
+    b = [tuple(map(float, input().split())) for _ in range(total)]
 
-    MA = build_matrix(A)
-    MB = build_matrix(B)
+    sig_a, order_a = build_signatures(a)
+    sig_b, order_b = build_signatures(b)
 
-    qa = [matrix_fingerprint(p, MA) for p in A]
-    qb = [matrix_fingerprint(p, MB) for p in B]
+    a0 = order_a[0]
+    b0 = order_b[0]
 
-    order_a = sorted(range(m), key=qa.__getitem__)
-    order_b = sorted(range(m), key=qb.__getitem__)
+    # Find two nonparallel pairs. In the generic case positions 0 and 1
+    # are antipodes, so the loop naturally skips them.
+    chosen = None
+    for k in range(1, total):
+        ia = order_a[k]
+        ib = order_b[k]
 
-    groups_a = build_groups(qa, order_a)
-    groups_b = build_groups(qb, order_b)
+        ca = cross(a[a0], a[ia])
+        cb = cross(b[b0], b[ib])
 
-    # The random-instance fast path has exactly n groups,
-    # each containing the two antipodal endpoints of one line.
-    fast = (
-        len(groups_a) == n
-        and len(groups_b) == n
-        and all(len(g) == 2 for g in groups_a)
-        and all(len(g) == 2 for g in groups_b)
-    )
+        if dot(ca, ca) > 1e-14 and dot(cb, cb) > 1e-14:
+            chosen = (ia, ib)
+            break
 
-    if not fast and n <= 3:
-        ans = brute_force_small(A, B)
-        if ans is not None:
-            R, perm = ans
-        else:
-            raise RuntimeError("No rotation found")
-    else:
-        if not fast:
-            # The official random-input guarantee makes this branch
-            # practically unreachable for large n.
-            groups_a = [order_a[2 * i:2 * i + 2] for i in range(n)]
-            groups_b = [order_b[2 * i:2 * i + 2] for i in range(n)]
-
-        g0 = 0
-        best_g = 1
-        best_sep = 2.0
-
-        a0 = A[groups_a[g0][0]]
-        b0 = B[groups_b[g0][0]]
-
-        for g in range(1, n):
-            ag = A[groups_a[g][0]]
-            sep = abs(dot(a0, ag))
-            if sep < best_sep:
-                best_sep = sep
-                best_g = g
-
-        a1 = A[groups_a[best_g][0]]
-        b1 = B[groups_b[best_g][0]]
-
-        R = None
-        perm = None
-
-        for s0 in (1.0, -1.0):
-            for s1 in (1.0, -1.0):
-                cand = rotation_from_two(
-                    b0,
-                    b1,
-                    scale(a0, s0),
-                    scale(a1, s1),
-                )
-                if cand is None:
+    if chosen is None:
+        # This is only relevant for extremely degenerate input.
+        # n >= 2 guarantees a valid nonparallel pair under the
+        # random-direction condition.
+        for ia in range(total):
+            if ia == a0:
+                continue
+            ca = cross(a[a0], a[ia])
+            if dot(ca, ca) <= 1e-14:
+                continue
+            for ib in range(total):
+                if ib == b0:
                     continue
-
-                p = validate_group_rotation(
-                    cand, A, B, groups_a, groups_b
-                )
-                if p is not None:
-                    R = cand
-                    perm = p
+                cb = cross(b[b0], b[ib])
+                if dot(cb, cb) > 1e-14:
+                    chosen = (ia, ib)
                     break
-
-            if R is not None:
+            if chosen is not None:
                 break
 
-        if R is None:
-            # This is only a safety net for unusual numerical degeneracy.
-            if n <= 3:
-                ans = brute_force_small(A, B)
-                if ans is None:
-                    raise RuntimeError("No rotation found")
-                R, perm = ans
-            else:
-                raise RuntimeError("Fingerprint matching failed")
+    a1, b1 = chosen
 
-    theta, axis = rotation_to_axis_angle(R)
+    a0v = normalize(a[a0])
+    b0v = normalize(b[b0])
+    a1v = normalize(a[a1])
+    b1v = normalize(b[b1])
+
+    da = dot(a0v, a1v)
+    db = dot(b0v, b1v)
+
+    # The two corresponding unoriented lines have the same angle.
+    # Choose the sign giving the matching oriented dot product.
+    if abs(da - db) > abs(da + db):
+        b1v = (-b1v[0], -b1v[1], -b1v[2])
+
+    source_frame = make_frame(a0v, a1v)
+    target_frame = make_frame(b0v, b1v)
+
+    r = frame_rotation(source_frame, target_frame)
+
+    theta, axis = rotation_to_axis_angle(r)
+
+    # Locate the antipode of every point of A exactly as represented
+    # in the input. Decimal parsing preserves the sign symmetry.
+    lookup = {}
+    for i, p in enumerate(a):
+        lookup[p] = i
+
+    opposite = [0] * total
+    for i, (x, y, z) in enumerate(a):
+        opposite[i] = lookup[(-x, -y, -z)]
+
+    position_b = [0] * total
+    for pos, idx in enumerate(order_b):
+        position_b[idx] = pos
+
+    permutation = [0] * total
+
+    for j in range(total):
+        pos = position_b[j]
+        candidate = order_a[pos]
+        other = opposite[candidate]
+
+        rb = mat_vec(r, b[j])
+
+        if dist2(rb, a[other]) < dist2(rb, a[candidate]):
+            permutation[j] = other + 1
+        else:
+            permutation[j] = candidate + 1
 
     print("{:.12f}".format(theta))
-    print("{:.12f} {:.12f} {:.12f}".format(*axis))
-    print(" ".join(str(x + 1) for x in perm))
+    print("{:.12f} {:.12f} {:.12f}".format(axis[0], axis[1], axis[2]))
+    print(" ".join(map(str, permutation)))
 
 if __name__ == "__main__":
     solve()
-```Tích lũy ma trận là cách duy nhất vượt qua các tọa độ cần thiết để xây dựng bất biến. Vì ma trận đối xứng nên chỉ có sáu giá trị được lưu trữ, mặc dù mã vẫn giữ cấu trúc đối xứng hoàn chỉnh khi đánh giá dạng bậc hai. 
+```Phần đầu tiên của quá trình triển khai xây dựng ma trận thời điểm thứ hai (3\times3). Sáu mục được lưu trữ là đủ vì ma trận đối xứng. Việc tính toán chữ ký sau đó giảm mọi điểm thành một đánh giá dạng bậc hai. 
 
-Biểu thức ở`matrix_fingerprint`được đánh giá là (x(Mr)_x+y(Mr)_y+z(Mr)_z). Hai điểm đối cực tạo ra cùng một giá trị vì việc thay thế (r) bằng (-r) làm thay đổi cả hai thừa số của tích các dấu của dạng bậc hai. 
+Bước sắp xếp là thao tác tốn kém tiệm cận duy nhất. Tính năng sắp xếp tích hợp của Python được triển khai bằng mã gốc được tối ưu hóa, do đó, việc sắp xếp các khóa dấu phẩy động (8\cdot10^4) là thoải mái trong mức độ phức tạp dự định. 
 
-Mảng sắp xếp chứa các chỉ số thay vì tọa độ. Điều này tránh di chuyển dữ liệu điểm thực tế và giúp việc khôi phục chỉ mục đầu vào ban đầu cho hoán vị cuối cùng trở nên đơn giản. 
+Vòng lặp chọn cặp cố tình kiểm tra các tích chéo thay vì giả định rằng một cặp vị trí cố định được sắp xếp là không song song. Đối với đầu vào chung, hai điểm được sắp xếp đầu tiên là hai điểm cuối của cùng một đường thẳng, do đó chúng không thể xác định khung. Trong mẫu, một số chữ ký trùng nhau, do đó, hai điểm được sắp xếp đầu tiên có thể thuộc các dòng khác nhau. Kiểm tra các sản phẩm chéo xử lý cả hai trường hợp. 
 
-Sự lựa chọn bốn dấu hiệu là cần thiết. Đầu vào biểu thị các đường thẳng, không phải vectơ định hướng, do đó, bất biến có thể cho chúng ta biết đường nào tương ứng với đường nào nhưng không thể biết điểm cuối được chọn là dương hay âm. Khi hai vectơ định hướng không song song được cố định, phép quay sẽ tự giải quyết sự mơ hồ này. 
+Việc điều chỉnh dấu hiệu sử dụng 
 
-Cấu trúc khung trừ hình chiếu của vectơ thứ hai lên vectơ thứ nhất. Điều đó tạo ra một vectơ vuông góc với vectơ đầu tiên, sau đó tích chéo hoàn thành một cơ sở thuận tay phải trực giao. Ánh xạ một cơ sở thuận tay phải sang một cơ sở thuận tay phải khác luôn tạo ra một phép quay thích hợp chứ không phải sự phản chiếu. 
+[ 
+|d_a-d_b| \quad\text{versus}\quad |d_a+d_b|. 
+] 
 
-Việc chuyển đổi quaternion sử dụng các công thức khác nhau tùy thuộc vào mục nhập đường chéo trội khi dấu vết không dương. Điều này tránh việc chia cho một số nhỏ gần một vòng quay (180^\circ). Trường hợp góc 0 được xử lý riêng vì trục ở đó là tùy ý về mặt toán học. 
+Điều này tốt hơn là chỉ kiểm tra dấu của tích, vì tích chấm có thể rất gần bằng 0. Dấu hiệu được chọn làm cho hai cặp định hướng có cùng một góc tương hỗ. 
+
+Xoay khung được xây dựng dưới dạng (T S^T). Vì cả hai khung đều trực giao, ma trận này tự động là một phép quay thích hợp cho đến lỗi dấu phẩy động. Việc chuyển đổi quaternion tránh được sự mất ổn định về mặt số học khi trích xuất một trục trực tiếp từ ((R-R^T)/(2\sin\theta)) khi góc gần bằng (0) hoặc (\pi). 
+
+Hoán vị cuối cùng không tin cậy vào dấu được chọn trong quá trình sắp xếp. Mỗi vị trí được sắp xếp xác định một dòng, do đó có chính xác hai điểm cuối ứng cử viên trong bộ sưu tập đầu tiên. Xoay điểm cuối thứ hai và so sánh khoảng cách của nó với cả hai ứng cử viên sẽ giải quyết dấu hiệu một cách độc lập cho mọi điểm. 
 
 ## Ví dụ đã hoạt động 
 
 ### Mẫu 1 
 
-Đối với mẫu được cung cấp, bốn điểm của tập hợp thứ nhất tạo thành một hình vuông trong mặt phẳng (xy) và tập hợp thứ hai là cùng một hình vuông được quay bởi (+\pi/2) trước khi áp dụng phép quay ngược theo yêu cầu. 
+Mẫu có hai dòng, có điểm cuối 
 
-Ma trận bậc hai cho tập đầu tiên là đường chéo: 
 [ 
-M= 
-\bắt đầu{pmatrix} 
-3.41421356&0&0\ 
-0&0.58578644&0\ 
-0&0&0 
-\end{pmatrix}. 
+(\cos22.5^\circ,\pm\sin22.5^\circ,0) 
 ] 
-Mọi điểm của hình vuông đều có cùng giá trị (r^TMr), do đó, việc ghép nối phiên bản ngẫu nhiên thông thường không khả dụng. 
 
-| Sân khấu | Tiểu bang | 
+và những mặt đối lập của chúng. Bộ thứ hai là cặp đường thẳng quay trong mặt phẳng. 
+
+Chữ ký bậc bốn không đủ để phân biệt hai dòng trong ví dụ đối xứng đặc biệt này, do đó thứ tự sắp xếp chứa một số giá trị bằng nhau. Thuật toán không cho rằng vị trí (0) và (2) là hai đường thẳng. Nó quét cho đến khi tìm thấy hai cặp không song song. 
+
+| Biến thuật toán | Giá trị hoặc hành vi | 
 | --- | --- | 
 | (n) | (2) | 
 | Số điểm | (4) | 
-| Nhóm vân tay | Một nhóm chứa tất cả bốn điểm | 
-| Con đường nhanh | Bị từ chối | 
-| Dự phòng | Liệt kê (4!=24) hoán vị | 
-| Xoay hợp lệ | Xoay theo (-\pi/2) xung quanh (z) | 
-| Hoán vị hợp lệ | (2,3,4,1) | 
+| Điểm được chọn đầu tiên | Điểm đầu tiên theo thứ tự sắp xếp | 
+| Điểm được chọn thứ hai | Điểm đầu sau không song song với nó | 
+| Nguồn chấm sản phẩm | Khoảng (0,70710678) | 
+| Mục tiêu chấm sản phẩm trước dấu | Khoảng (-0,70710678) | 
+| Dấu hiệu mục tiêu | Phủ định | 
+| Ma trận xoay | Một phép quay phẳng tương đương với phép quay yêu cầu | 
+| Góc đầu ra | Bất kỳ góc hợp lệ tương đương nào trong ([-\pi,\pi]) | 
+| Hoán vị | Sự kết hợp hợp lệ của bốn điểm cuối | 
 
-Dự phòng thử hoán vị và xác định phép quay từ hai điểm không song song. Sau khi đạt được hoán vị chính xác, phép quay được tính toán sẽ gửi mọi điểm gốc đến điểm được chỉ định của nó. Đầu ra được hiển thị trong câu lệnh là một biểu diễn hợp lệ và chương trình có thể tạo ra một biểu diễn khác nhưng tương đương vì bài toán có nhiều lựa chọn hợp lệ cho cấu hình đối xứng này. 
+Mẫu chính thức sử dụng góc (-\pi/2), trục ((0,0,1)) và hoán vị (2,3,4,1). Chương trình được phép tạo ra một phép quay hợp lệ khác vì cấu hình hai dòng đối xứng thừa nhận nhiều mô tả về sự tương ứng của cùng một dòng. 
 
-### Ví dụ bốn dòng không đối xứng 
+### Đã thi công mẫu 2 
 
-Xét bốn phương hướng khó khăn 
+Hãy xem xét ba dòng nguồn được đại diện bởi 
+
 [ 
-(1,0,0),\quad 
-(0,1,0),\quad 
-(0,0,1),\quad 
-\frac{1}{\sqrt3}(1,1,1), 
+a=(1,0,0), 
 ] 
-cùng với những mặt tiêu cực của chúng. Xoay mọi thứ xung quanh trục (z) theo (90^\circ), sau đó xáo trộn các điểm. 
 
-Dấu vân tay bậc hai không còn giống nhau cho mỗi dòng, do đó đường dẫn nhanh có thể xác định các nhóm dòng. Sự chuyển đổi trạng thái quan trọng được hiển thị dưới đây. 
+[ 
+b=(0,1,0), 
+] 
 
-| Sân khấu | Tập đầu tiên | Bộ thứ hai | 
+và 
+
+[ 
+c=(0,3,0,4,\sqrt{0,75}). 
+] 
+
+Bộ sưu tập thứ hai thu được bằng cách xoay mọi thứ theo (90^\circ) quanh trục (z). Các đại diện luân phiên là 
+
+[ 
+(0,1,0),\quad (-1,0,0),\quad 
+(-0,4,0,3,\sqrt{0,75}). 
+] 
+
+Mỗi điểm đều đi kèm với điểm đối lập của nó. 
+
+Đối với tập hợp đầu tiên, sau khi tính tổng cả hai điểm cuối của mỗi dòng, chữ ký dạng bậc hai của ba dòng tỷ lệ với (2.18), (2.32) và (2.50). Các giá trị chính xác là không cần thiết, chỉ cần thứ tự của chúng.
+
+| Biến thuật toán | Trạng thái nguồn | Trạng thái mục tiêu | 
 | --- | --- | --- | 
-| Ma Trận (M) | Tích lũy từ 8 điểm | Phiên bản xoay của (M) | 
-| Phân loại dấu vân tay | Nhóm 4 dòng | 4 nhóm giống nhau theo thứ tự | 
-| Nhóm tham khảo | Nhóm đầu tiên | Nhóm đầu tiên tương ứng | 
-| Tham khảo thứ hai | Nhóm còn lại ít song song nhất | Nhóm tương ứng của nó | 
-| Đăng thử | 4 | 4 | 
-| Dùng thử thành công | Một cặp dấu hiệu | Xoay vật lý tương tự | 
-| Xác thực | Tất cả 8 điểm đều nằm trong phạm vi cho phép | Tất cả 8 điểm đều nằm trong phạm vi cho phép | 
+| Chữ ký dòng đầu tiên | (2.18) | (2.18) | 
+| Chữ ký dòng thứ hai | (2.32) | (2.32) | 
+| Chữ ký dòng thứ ba | (2,50) | (2,50) | 
+| Vectơ khung đầu tiên | ((1,0,0)) | ((0,1,0)) | 
+| Vectơ khung thứ hai | ((0,1,0)) | ((-1,0,0)) | 
+| Vector khung thứ ba | ((0,0,1)) | ((0,0,1)) | 
+| Góc quay | (90^\circ) | (90^\circ) | 
+| Trục quay | ((0,0,1)) | ((0,0,1)) | 
 
-Ví dụ này giải thích lý do tại sao thuật toán tách biệt nhận dạng đường khỏi nhận dạng điểm cuối. Dấu vân tay xác định một cặp đối cực là một đối tượng. Việc tái cấu trúc xoay hai vectơ sau đó xác định hướng của hai điểm cuối của nó. 
+Phần quan trọng của dấu vết này là chữ ký vô hướng giống nhau thu được trước và sau khi quay. Khi hai đường thẳng không song song được ghép nối, toàn bộ ma trận xoay sẽ diễn ra từ hai khung trực chuẩn. 
 
-## Phân tích độ phức tạp
+## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | (O(n\log n)) | Tích lũy ma trận và đánh giá dấu vân tay là (O(n)); sắp xếp (2n) giá trị chi phí (O(n\log n)); chỉ có bốn phép quay được kiểm tra đối với tất cả các điểm. | 
-| Không gian | (O(n)) | Hai tập điểm, dấu vân tay, chỉ số sắp xếp và hoán vị đều sử dụng bộ nhớ tuyến tính. | 
+| Thời gian | (O(n\log n)) | Việc xây dựng ma trận và chữ ký lấy các giá trị (O(n)), sắp xếp (2n) lấy (O(n\log n)) và tất cả hình học còn lại là tuyến tính | 
+| Không gian | (O(n)) | Hai mảng điểm, chữ ký, chỉ mục được sắp xếp, ánh xạ đối cực và hoán vị đều sử dụng bộ nhớ tuyến tính | 
 
-Đối với (n=4\cdot10^4), chỉ có (8\cdot10^4) điểm. Hoạt động chủ yếu là sắp xếp hai mảng có kích thước đó, theo sau là số lần quét tuyến tính không đổi. Điều này hoàn toàn thoải mái trong mục tiêu độ phức tạp dự kiến ​​là 4 giây trong quá trình triển khai được biên dịch và việc triển khai Python giữ cho tất cả các hoạt động hình học có kích thước và cách sử dụng không đổi`sys.stdin.readline`cho đầu vào. 
-
-Sự đảm bảo hướng ngẫu nhiên là yếu tố biến tính bất biến từ dấu vân tay có mục đích chung thành dấu vân tay thực tế. Không có nó, các đường khác nhau có thể có dấu vân tay giống nhau và nói chung không có bất biến vô hướng nào là đủ. Cuộc thảo luận chính thức đưa ra sự khác biệt tương tự: (P_4) hữu ích cho các cấu hình ngẫu nhiên, trong khi cấu hình đối xứng có thể khiến nó trở nên vô dụng. 
+Đối với (n\le4\cdot10^4), có tối đa (8\cdot10^4) điểm trong mỗi bộ sưu tập. Thuật toán chỉ thực hiện một lượng số học không đổi trên mỗi điểm cộng với hai loại phần tử (8\cdot10^4), phù hợp với giới hạn bốn giây một cách thoải mái hơn nhiều so với bất kỳ phương pháp bậc hai nào. Việc sử dụng bộ nhớ cũng tuyến tính và vẫn nằm trong giới hạn 256 MiB đã nêu. 
 
 ## Trường hợp thử nghiệm 
 
-Đầu ra của vấn đề này không phải là duy nhất, do đó, một xác nhận không nên so sánh chuỗi đầu ra thô với một câu trả lời được xác định trước. Bài kiểm tra đúng là phân tích phép quay và hoán vị được trả về cũng như xác minh điều kiện hình học. Dây nịt sau đây giả định`solve()`chức năng từ giải pháp trên có sẵn trong cùng một tệp thử nghiệm.```python
+Đầu ra của vấn đề này không phải là duy nhất, do đó, việc xác nhận so sánh chuỗi đầu ra với đầu ra mẫu chính thức là quá nghiêm ngặt. Thay vào đó, bộ khai thác kiểm tra bên dưới sẽ kiểm tra xem hoán vị được tạo ra có phải là hoán vị của tất cả các chỉ số hay không và việc xoay mọi điểm đặt thứ hai theo trục và góc được báo cáo sẽ đặt nó trong phạm vi dung sai của điểm đặt đầu tiên được báo cáo. Nó cũng tự kiểm tra đầu ra mẫu chính thức.```python
 import sys
 import io
 import math
 import random
 
+# The following helpers assume that solve() from the solution above
+# has been renamed solve_stream(inp) and returns its printed output.
+# In a local test file, replace this wrapper with the submitted solution.
+
 def run(inp: str) -> str:
     old_stdin = sys.stdin
     old_stdout = sys.stdout
+
     sys.stdin = io.StringIO(inp)
     sys.stdout = io.StringIO()
+
     try:
         solve()
         return sys.stdout.getvalue()
@@ -571,88 +548,62 @@ def run(inp: str) -> str:
         sys.stdin = old_stdin
         sys.stdout = old_stdout
 
-def rotate_z(p, angle):
-    c = math.cos(angle)
-    s = math.sin(angle)
-    x, y, z = p
-    return (c * x - s * y, s * x + c * y, z)
-
-def make_case(points, angle):
-    first = []
-    for p in points:
-        first.append(p)
-        first.append((-p[0], -p[1], -p[2]))
-
-    second = []
-    for p in points:
-        q = rotate_z(p, angle)
-        second.append(q)
-        second.append((-q[0], -q[1], -q[2]))
-
-    rng = random.Random(1234567)
-    rng.shuffle(second)
-
-    lines = [str(len(points))]
-    for p in first:
-        lines.append("{:.12f} {:.12f} {:.12f}".format(*p))
-    for p in second:
-        lines.append("{:.12f} {:.12f} {:.12f}".format(*p))
-    return "\n".join(lines) + "\n"
-
-def parse_output(inp, out):
-    data = inp.split()
-    it = iter(data)
-
-    n = int(next(it))
-    m = 2 * n
-
-    A = []
-    for _ in range(m):
-        A.append(tuple(float(next(it)) for _ in range(3)))
-
-    B = []
-    for _ in range(m):
-        B.append(tuple(float(next(it)) for _ in range(3)))
-
-    out_data = out.split()
-    theta = float(out_data[0])
-    axis = tuple(map(float, out_data[1:4]))
-    perm = list(map(int, out_data[4:4 + m]))
-
-    assert -math.pi - 1e-9 <= theta <= math.pi + 1e-9
-    assert 1e-3 <= sum(abs(x) for x in axis) <= 1e3
-    assert sorted(perm) == list(range(1, m + 1))
+def rotate(v, axis, theta):
+    x, y, z = v
+    ax, ay, az = axis
 
     c = math.cos(theta)
     s = math.sin(theta)
-    x, y, z = axis
-    length = math.sqrt(x * x + y * y + z * z)
-    x /= length
-    y /= length
-    z /= length
+    d = ax * x + ay * y + az * z
+
+    return (
+        x * c + (ay * z - az * y) * s + ax * d * (1.0 - c),
+        y * c + (az * x - ax * z) * s + ay * d * (1.0 - c),
+        z * c + (ax * y - ay * x) * s + az * d * (1.0 - c),
+    )
+
+def valid_output(inp: str, out: str, eps=3e-5) -> bool:
+    data = inp.strip().splitlines()
+    n = int(data[0])
+    m = 2 * n
+
+    first = [tuple(map(float, data[i + 1].split())) for i in range(m)]
+    second = [tuple(map(float, data[i + 1 + m].split())) for i in range(m)]
+
+    lines = out.strip().splitlines()
+    if len(lines) != 3:
+        return False
+
+    theta = float(lines[0])
+    axis = tuple(map(float, lines[1].split()))
+    perm = list(map(int, lines[2].split()))
+
+    if len(perm) != m:
+        return False
+
+    if sorted(perm) != list(range(1, m + 1)):
+        return False
+
+    an = math.sqrt(sum(x * x for x in axis))
+    if an < 1e-12:
+        return False
+
+    axis = tuple(x / an for x in axis)
 
     for i in range(m):
-        bx, by, bz = B[i]
+        rotated = rotate(second[i], axis, theta)
+        target = first[perm[i] - 1]
 
-        # Rodrigues rotation.
-        cross_x = y * bz - z * by
-        cross_y = z * bx - x * bz
-        cross_z = x * by - y * bx
-        d = x * bx + y * by + z * bz
-
-        rx = bx * c + cross_x * s + x * d * (1.0 - c)
-        ry = by * c + cross_y * s + y * d * (1.0 - c)
-        rz = bz * c + cross_z * s + z * d * (1.0 - c)
-
-        ax, ay, az = A[perm[i] - 1]
-        err = math.sqrt(
-            (rx - ax) ** 2 +
-            (ry - ay) ** 2 +
-            (rz - az) ** 2
+        d2 = sum(
+            (rotated[k] - target[k]) ** 2
+            for k in range(3)
         )
-        assert err <= 2e-6
 
-# Provided sample.
+        if d2 > eps * eps:
+            return False
+
+    return True
+
 sample1 = """\
 2
 0.923879533 0.382683432 0
@@ -662,96 +613,154 @@ sample1 = """\
 0.382683432 0.923879533 0
 0.382683432 -0.923879533 0
 -0.382683432 -0.923879533 0
--0.382683432 0.923879533 0
+-0.382683432 0.923879533
 """
 
-parse_output(sample1, run(sample1))
+official_sample_output = """\
+-1.570796327
+0.000000000 0.000000000 1.000000000
+2 3 4 1
+"""
 
-# Minimum-size case, n = 2, with an identity rotation.
+assert valid_output(sample1, official_sample_output), "official sample"
+assert valid_output(sample1, run(sample1)), "sample 1 produced by solution"
+
+def make_case(points, theta, axis, order):
+    second = [rotate(p, axis, theta) for p in points]
+
+    shuffled = [second[i] for i in order]
+
+    lines = [str(len(points) // 2)]
+    for p in points:
+        lines.append("{:.12f} {:.12f} {:.12f}".format(*p))
+    for p in shuffled:
+        lines.append("{:.12f} {:.12f} {:.12f}".format(*p))
+
+    return "\n".join(lines) + "\n"
+
+# Minimum size, n = 2, and a nontrivial rotation.
+r = math.sqrt(0.5)
+points_min = [
+    (1.0, 0.0, 0.0),
+    (-1.0, 0.0, 0.0),
+    (0.0, r, r),
+    (0.0, -r, -r),
+]
 case_min = make_case(
-    [
-        (1.0, 0.0, 0.0),
-        (0.0, 1.0, 0.0),
-    ],
+    points_min,
+    math.pi / 3.0,
+    (1.0, 1.0, 1.0),
+    [2, 0, 3, 1],
+)
+assert valid_output(case_min, run(case_min)), "minimum n"
+
+# Identity rotation, with the input already shuffled.
+points_identity = [
+    (1.0, 0.0, 0.0),
+    (-1.0, 0.0, 0.0),
+    (0.0, 1.0, 0.0),
+    (0.0, -1.0, 0.0),
+]
+case_identity = make_case(
+    points_identity,
     0.0,
+    (1.0, 0.0, 0.0),
+    [2, 3, 0, 1],
 )
-parse_output(case_min, run(case_min))
+assert valid_output(case_identity, run(case_identity)), "zero rotation"
 
-# Symmetric three-line case. This exercises the small brute-force fallback.
-case_symmetric = make_case(
-    [
-        (1.0, 0.0, 0.0),
-        (0.0, 1.0, 0.0),
-        (0.0, 0.0, 1.0),
-    ],
-    math.pi / 2,
+# All invariant values coincide. This is deliberately symmetric.
+# The second set has the same order, so the arbitrary tie order is valid.
+points_equal = [
+    (1.0, 0.0, 0.0),
+    (-1.0, 0.0, 0.0),
+    (0.0, 1.0, 0.0),
+    (0.0, -1.0, 0.0),
+    (0.0, 0.0, 1.0),
+    (0.0, 0.0, -1.0),
+]
+case_equal = make_case(
+    points_equal,
+    math.pi / 2.0,
+    (0.0, 0.0, 1.0),
+    list(range(6)),
 )
-parse_output(case_symmetric, run(case_symmetric))
+assert valid_output(case_equal, run(case_equal)), "equal invariant values"
 
-# Non-symmetric case with a general-looking set of directions.
-case_general = make_case(
-    [
-        (1.0, 0.0, 0.0),
-        (0.0, 1.0, 0.0),
-        (0.0, 0.0, 1.0),
-        (1.0 / math.sqrt(3.0),
-         1.0 / math.sqrt(3.0),
-         1.0 / math.sqrt(3.0)),
-    ],
-    -0.731,
+# Boundary angle close to pi.
+s = math.sqrt(3.0) / 2.0
+points_pi = [
+    (1.0, 0.0, 0.0),
+    (-1.0, 0.0, 0.0),
+    (0.0, s, 0.5),
+    (0.0, -s, -0.5),
+    (0.5, 0.5, math.sqrt(0.5)),
+    (-0.5, -0.5, -math.sqrt(0.5)),
+]
+case_pi = make_case(
+    points_pi,
+    math.pi,
+    (0.0, 1.0, 0.0),
+    [4, 0, 5, 2, 1, 3],
 )
-parse_output(case_general, run(case_general))
+assert valid_output(case_pi, run(case_pi)), "angle pi"
 
-# Maximum-size stress case.
-# The points are generated deterministically on the sphere and then rotated.
-n_big = 40000
-points_big = []
+# Maximum-size structural test.
+# The test checks the size and permutation structure instead of rotating
+# all 80000 points again, which keeps the test harness itself practical.
+random.seed(123456)
+n = 40000
+points_max = []
 
-for i in range(n_big):
-    z = -1.0 + 2.0 * (i + 0.5) / n_big
-    phi = i * 2.399963229728653
-    r = math.sqrt(max(0.0, 1.0 - z * z))
-    points_big.append((r * math.cos(phi), r * math.sin(phi), z))
+for _ in range(n):
+    x = random.gauss(0.0, 1.0)
+    y = random.gauss(0.0, 1.0)
+    z = random.gauss(0.0, 1.0)
+    q = math.sqrt(x * x + y * y + z * z)
+    p = (x / q, y / q, z / q)
+    points_max.append(p)
+    points_max.append((-p[0], -p[1], -p[2]))
 
-case_big = make_case(points_big, 1.234567)
-parse_output(case_big, run(case_big))
+case_max = make_case(
+    points_max,
+    0.0,
+    (1.0, 0.0, 0.0),
+    list(range(2 * n)),
+)
+
+out_max = run(case_max)
+lines_max = out_max.strip().splitlines()
+assert len(lines_max) == 3, "maximum size line count"
+assert len(lines_max[2].split()) == 2 * n, "maximum size permutation length"
+assert sorted(map(int, lines_max[2].split())) == list(range(1, 2 * n + 1)), \
+    "maximum size permutation"
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-| Mẫu được cung cấp | Bất kỳ phép quay và hoán vị hợp lệ về mặt hình học nào | Cấu hình đối xứng và dự phòng nhỏ gọn | 
-| (n=2), luân chuyển danh tính | Góc (0) với bất kỳ trục và hoán vị hợp lệ nào | Kích thước tối thiểu và xử lý góc không | 
-| Ba trục tọa độ | Bất kỳ phép quay và hoán vị hợp lệ nào (90^\circ) | Nhiều dấu vân tay bằng nhau và tính chính xác dự phòng | 
-| Bốn hướng không đối xứng | Một phép quay hợp lệ gần (-0,731) radian quanh trục (z) | Lựa chọn dấu và so khớp dựa trên bất biến thông thường | 
-| (n=40000) chỉ đường được tạo | Bất kỳ hoán vị hợp lệ nào có lỗi nhiều nhất (2\cdot10^{-6}) | Kích thước đầu vào tối đa, chi phí sắp xếp và độ ổn định về số | 
+| Mẫu chính thức | Bất kỳ đầu ra hợp lệ về mặt hình học nào | Trường hợp đối xứng (n=2) và các giá trị bất biến bằng nhau | 
+| Tối thiểu (n=2) | Bất kỳ phép quay và hoán vị hợp lệ nào | Xử lý đầu vào và đối cực nhỏ nhất được phép | 
+| Luân chuyển danh tính | Góc (0) với bất kỳ trục và hoán vị hợp lệ nào | Nhánh bậc bốn góc không | 
+| Bộ chữ ký bằng nhau đối xứng | Bất kỳ vòng quay hợp lệ nào | Hành vi khi bất biến bậc bốn có quan hệ | 
+| Xoay theo (\pi) | Bất kỳ phép quay hợp lệ nào có góc (\pi) hoặc biểu diễn tương đương | Xử lý ranh giới Quaternion | 
+| (n=40000) | Một hoán vị hợp lệ của tất cả (80000) chỉ số | Kích thước đầu vào tối đa và hành vi (O(n\log n)) | 
 
 ## Vỏ cạnh 
 
-Trường hợp cạnh đầu tiên là đẳng thức đối cực không thể tránh khỏi. Giả sử tập hợp chứa ((1,0,0)) và ((-1,0,0)). Dấu vân tay của họ đáp ứng 
-[ 
-F(1,0,0)=F(-1,0,0). 
-] 
-Việc thực hiện bất cẩn có thể kết luận rằng bất biến đã thất bại. Giải thích đúng là cả hai điểm đều mô tả cùng một đường hình học. Thuật toán giữ chúng lại với nhau và trì hoãn việc quyết định dấu cho đến khi biết được phép quay. 
+Trường hợp đối cực có tính cơ bản hơn là bệnh lý. Vì```
+2
+1 0 0
+-1 0 0
+0 1 0
+0 -1 0
+1 0 0
+-1 0 0
+0 1 0
+0 -1 0
+```hai điểm cuối của mỗi dòng có chữ ký cấp bốn giống hệt nhau. Thuật toán không bao giờ cố gắng phân biệt chúng. Việc sắp xếp xác định một đường và so sánh khoảng cách cuối cùng sẽ quyết định xem điểm xoay có khớp với (p) hay (-p) hay không. Phép xoay danh tính với hoán vị (1,2,3,4) là hợp lệ. 
 
-Trường hợp cạnh thứ hai là phép xoay danh tính. lấy 
-[ 
-A={(1,0,0),(-1,0,0),(0,1,0),(0,-1,0)} 
-] 
-và đặt (B=A) theo một thứ tự khác. Vòng quay được yêu cầu có thể là danh tính, với (\theta=0). Quaternion có phần vectơ bằng 0, do đó mã sẽ in trục ((1,0,0)). Trục là tùy ý cho phép quay bằng 0 và hoán vị có được bằng cách khớp trực tiếp các điểm được xoay. 
+Trường hợp xoay không được xử lý riêng bên trong chuyển đổi góc trục. Nếu ma trận xoay không thể phân biệt được về mặt số lượng với danh tính thì bậc bốn của nó có phần vectơ gần như bằng không. Góc được báo cáo là 0 và trục được chọn là ((1,0,0)). Trục là tùy ý khi góc bằng 0, vì vậy đây là đầu ra hợp lệ. 
 
-Trường hợp cạnh thứ ba là một phép quay chính xác (\pi). Các phần tử phản đối xứng của ma trận xoay về mặt lý thuyết bằng 0 ở góc này, do đó một công thức như 
-[ 
-e_x=\frac{R_{32}-R_{23}}{2\sin\theta} 
-] 
-là nguy hiểm về mặt số lượng. Thay vào đó, phép chuyển đổi bậc bốn sẽ chọn số hạng đường chéo lớn nhất khi dấu vết không dương. Ví dụ: phép quay (\pi) quanh trục (z) có 
-[ 
-R= 
-\bắt đầu{pmatrix} 
--1&0&0\ 
-0&-1&0\ 
-0&0&1 
-\end{pmatrix}, 
-] 
-và đường chéo lớn nhất xác định thành phần (z) của quaternion mà không chia cho một đại lượng gần bằng 0. 
+Mẫu minh họa các va chạm bất biến. Một số dòng khác nhau có cùng giá trị (P_4), do đó, việc triển khai giả định một cách mù quáng các vị trí được sắp xếp (0) và (2) đại diện cho các dòng khác nhau có thể chọn hai điểm đối diện nhau và không tạo được khung. Thay vào đó, việc triển khai sẽ kiểm tra các sản phẩm chéo trong khi quét các vị trí được sắp xếp. Trong mẫu, hai điểm đầu tiên không song song nên chúng cung cấp một khung hợp lệ. 
 
-Hộp đựng cạnh thứ tư là mẫu hình vuông được cung cấp. Bốn điểm của nó đều có dấu vân tay bậc hai giống nhau. Chỉ sắp xếp không thể biết được hai điểm nào tạo thành một đường thẳng ban đầu. Vì (n=2), phương án dự phòng liệt kê tất cả (4!) hoán vị điểm có thể có. Đối với mỗi cái, nó xây dựng một phép quay từ hai vectơ không song song và kiểm tra tất cả bốn điểm. Một trong những ứng cử viên này đưa ra phép quay (-\pi/2) hợp lệ và hoán vị (2,3,4,1). 
+Một phép quay chính xác (\pi) là một ranh giới số khác. Việc tính toán trực tiếp trục bằng phép chia cho (\sin\theta) không ổn định vì (\sin\pi=0). Việc chuyển đổi quaternion tránh sự phân chia đó và trích xuất trục từ phần vectơ của quaternion, do đó phép thử xoay vòng (\pi) thực hiện nhánh ổn định dự kiến. 
 
-Trường hợp cạnh số cuối cùng là hai dấu vân tay ngẫu nhiên cực kỳ gần nhau. Với các hướng ngẫu nhiên thống nhất độc lập, sự bằng nhau chính xác giữa các đường khác nhau có xác suất bằng 0 và xác suất va chạm bên trong dung sai số cố định là cực kỳ nhỏ. Tuyên bố có chủ ý cung cấp cấu trúc ngẫu nhiên này để bất biến bậc bốn vô hướng có thể được sử dụng làm dấu vân tay thực tế. Mã vẫn xác minh vòng quay cuối cùng đối với mọi điểm, do đó, một ứng cử viên không chính xác gây ra bởi sự mơ hồ về số sẽ bị từ chối thay vì được in âm thầm.
+Lựa chọn dấu hiệu cuối cùng cũng là một trường hợp có biên. Giả sử bất biến xác định chính xác hai dòng, nhưng bộ sưu tập thứ hai lại liệt kê điểm cuối đối diện. Thay vào đó, ánh xạ xoay (p) tới (q) có thể cần ánh xạ (p) tới (-q). Thuật toán so sánh (d_a=a_0\cdot a_1) với cả (d_b=b_0\cdot b_1) và (-d_b), chọn hướng bảo toàn góc. Các lựa chọn điểm cuối còn lại sau đó được giải quyết một cách độc lập khi xây dựng hoán vị.

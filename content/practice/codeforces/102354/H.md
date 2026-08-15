@@ -1,7 +1,7 @@
 ---
 title: "CF 102354H - Thách Thức Trọng Lực"
-description: "Chúng ta có số lượng vệ tinh chẵn xung quanh điểm gốc. Mỗi vệ tinh được mô tả bằng một góc cực nguyên, khoảng cách từ gốc và khối lượng. Không có hai vệ tinh nào có chung một góc, vì vậy mỗi vị trí góc nguyên chứa nhiều nhất một vệ tinh."
-date: "2026-08-14T12:25:29+07:00"
+description: "Chúng tôi có một tập hợp các vệ tinh điểm xung quanh gốc tọa độ. Mỗi vệ tinh có một vị trí góc, khoảng cách từ điểm gốc và khối lượng."
+date: "2026-08-15T17:51:14+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102354
@@ -9,7 +9,7 @@ codeforces_index: "H"
 codeforces_contest_name: "2018-2019 Summer Petrozavodsk Camp, Oleksandr Kulkov Contest 2"
 rating: 0
 weight: 102354
-solve_time_s: 466
+solve_time_s: 357
 verified: false
 draft: false
 ---
@@ -18,404 +18,334 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 7 phút 46 giây 
+**Thời gian giải:** 5 phút 57 giây 
 **Đã xác minh:** không 
 
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta có số lượng vệ tinh chẵn xung quanh điểm gốc. Mỗi vệ tinh được mô tả bằng một góc cực nguyên, khoảng cách từ gốc và khối lượng. Không có hai vệ tinh nào có chung một góc, vì vậy mỗi vị trí góc nguyên chứa nhiều nhất một vệ tinh. 
+Chúng tôi có một tập hợp các vệ tinh điểm xung quanh gốc tọa độ. Mỗi vệ tinh có một vị trí góc, khoảng cách từ điểm gốc và khối lượng. Elphaba chọn một tia bắt đầu từ gốc tọa độ và muốn tổng lực hấp dẫn dọc theo tia đó không có thành phần nào vuông góc với tia tại bất kỳ điểm nào cô đi qua. 
 
-Elphaba chọn một tia bắt đầu từ gốc tọa độ. Cô ấy cần mọi lực hấp dẫn dọc theo tia đó để hướng chính xác dọc theo tia đó, ở mọi khoảng cách dương tính từ gốc tọa độ. Đầu ra là tập hợp tất cả các hướng tia như vậy, được đo bằng cung giây. Vì một đường thẳng có hai tia đối nhau nên một trục đối xứng hợp lệ sẽ cho hai hướng ra cách nhau 64.800 giây cung. 
+Quan sát trọng tâm là đường bay hợp lệ phải là trục phản ánh của toàn bộ cấu hình vệ tinh có trọng số. Sự phản xạ qua đường này phải bảo toàn cả vị trí của mọi vệ tinh và khối lượng của nó. Đây cũng là cách rút gọn hình học dự định cho bài toán: các đường hợp lệ chính xác là các trục đối xứng của cấu hình có trọng số, sau đó bài toán trở thành bài toán palindrome. 
 
-Công thức vật lý có vẻ phức tạp nhưng tính chất liên quan lại đơn giản hơn nhiều. Đối với một đường thẳng ứng cử viên đi qua điểm gốc, mọi vệ tinh ở một bên của đường thẳng phải có một vệ tinh phù hợp ở phía bên kia, có khoảng cách chính xác đến điểm gốc và cùng khối lượng. Sự phản xạ trên đường truyền phải bảo toàn cấu hình vệ tinh có trọng số hoàn chỉnh. Đây là sự giảm thiểu trung tâm của vấn đề. Quan sát tính đối xứng tương tự cũng nhằm mục đích đơn giản hóa bài toán ban đầu. 
+Góc được tính bằng cung giây nguyên, với một vòng quay đầy đủ chứa chính xác 129600 vị trí. Độ phân giải góc hữu hạn này cực kỳ hữu ích. Chúng ta có thể tạo một mảng có độ dài 129600, đặt cặp`(rho, mass)`ở mọi góc bị chiếm dụng và sử dụng điểm đánh dấu trống ở nơi khác. 
 
-Miền góc chỉ chứa 129.600 vị trí số nguyên. Mặc dù câu lệnh cho phép (n) tối đa (2\cdot10^5), tính duy nhất của các góc nguyên thực sự ngụ ý (n\le129600). Thuật toán bậc hai vẫn yêu cầu so sánh khoảng (1,7\cdot10^{10}) ở đầu vào lớn nhất có thể, vượt xa giới hạn hai giây. Chúng ta cần một thuật toán tuyến tính hoặc gần tuyến tính trong miền góc cố định. 
+Giá trị của`n`có thể lớn tới 200000, nhưng tọa độ góc là các số nguyên riêng biệt từ 0 đến 129599, do đó, đầu vào hợp lệ có thể chứa tối đa 129600 vệ tinh. Giới hạn thời gian hai giây loại trừ mọi thứ bậc hai trong`n`. Ngay cả 129600 bình phương cũng là khoảng 16,8 tỷ phép so sánh, vượt xa những gì Python có thể thực hiện kịp thời. Một thuật toán tuyến tính hoặc gần tuyến tính trên vũ trụ góc cố định là mục tiêu phù hợp. Vấn đề chính thức có giới hạn bộ nhớ 256 MiB, đủ cho một vài mảng có kích thước khoảng 260000. 
 
-Có ba điểm dễ khiến việc triển khai sai không thành công. Đầu tiên, trục có thể nằm chính xác trên một vệ tinh. Vì```
+Có một số trường hợp đặc biệt mà việc triển khai hình học trực tiếp có thể xử lý sai. Đầu tiên, một trục đối xứng có thể đi qua một vệ tinh, nhưng khi đó tia bay tương ứng sẽ bị cấm nếu vệ tinh nằm theo hướng di chuyển. Ví dụ,```
 2
 1 0 1
 1 64800 1
-```cấu hình có trục phản xạ tại (0^\circ) và (90^\circ), nhưng trục (0^\circ) đi qua cả hai vệ tinh và bị cấm. Chỉ có dòng (90^\circ) tồn tại, cho```
+```có trục đối xứng ở 0 và 32400 giây cung theo modulo 64800. Hướng 0 và 64800 bị vệ tinh chặn, trong khi 32400 và 97200 thì rõ ràng, do đó đầu ra chính xác là```
 2
 32400.0000000
 97200.0000000
-```Trình kiểm tra đối xứng không loại bỏ rõ ràng các vệ tinh cố định sẽ đưa ra bốn hướng không chính xác. 
+```Việc triển khai bất cẩn báo cáo trục đối xứng mà không kiểm tra tia thực tế sẽ tạo ra bốn hướng không chính xác. 
 
-Thứ hai, trục đối xứng không nhất thiết phải có góc nguyên. Với```
+Thứ hai, một trục không nhất thiết phải nằm ở một góc nguyên. Hai vệ tinh bằng nhau ở góc 0 và 1 có trục đối xứng ở 0,5 độ theo đơn vị cung-giây của bài toán, chính xác hơn là 0,5 giây cung:```
 2
 1 0 1
 1 1 1
-```hai vệ tinh được phản xạ vào nhau qua đường thẳng ở (0,5) giây cung. Đầu ra đúng là```
+```Đầu ra đúng là```
 2
 0.5000000000
 64800.5000000000
-```Một giải pháp chỉ lưu trữ câu trả lời dưới dạng số nguyên cung giây sẽ làm mất trục này. 
+```Việc triển khai chỉ kiểm tra các trung tâm số nguyên sẽ âm thầm bỏ lỡ cả hai câu trả lời. 
 
-Thứ ba, các góc bao quanh ở (129600). Với```
-2
-1 1 1
-1 129599 1
-```các vệ tinh đối xứng nhau về góc (0), nên câu trả lời là```
-2
-0.0000000000
-64800.0000000000
-```Việc triển khai xử lý (1) và (129599) cách xa nhau thay vì liền kề trên vòng tròn có thể bỏ lỡ tính đối xứng này. 
+Thứ ba, tính đối xứng hình học là không đủ nếu khối lượng khác nhau. Coi như```
+4
+1 0 1
+1 64800 2
+1 32400 3
+1 97200 3
+```Các vị trí hình học đối xứng quanh trục hoành, nhưng hai vệ tinh trên trục đó có khối lượng khác nhau. Cấu hình không phải là đối xứng phản xạ có trọng số và các hướng ngang cũng bị chặn. Đầu ra đúng là```
+0
+```Chỉ kiểm tra tọa độ và bỏ qua khối lượng sẽ chấp nhận hướng không chính xác. 
+
+Cuối cùng, vị trí góc trống cũng quan trọng. Nếu hai vệ tinh cách nhau một khoảng góc lớn thì sự phản xạ phải bảo toàn khoảng cách đó cũng như chính các vệ tinh. Việc điền vào mảng góc 129600 vị trí hoàn chỉnh bằng một ký hiệu trống rõ ràng sẽ tự động xử lý việc này. Việc nén đầu vào chỉ vào các vị trí bị chiếm giữ sẽ làm mất thông tin về khoảng cách góc và có thể tạo ra sự đối xứng sai. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận bạo lực bắt đầu từ đặc tính hình học. Đối với mọi trục phản xạ có thể, hãy phản xạ mọi vệ tinh và kiểm tra xem một vệ tinh có cùng bán kính và khối lượng có tồn tại ở góc phản xạ hay không. Có thể có (129600) vị trí trục kép và mỗi lần kiểm tra có thể kiểm tra (n) vệ tinh, cho ra (O(129600n)), tức là khoảng (1,7\cdot10^{10}) hoạt động ở kích thước tối đa. Ngay cả việc tạo các trục ứng cử viên từ các cặp vệ tinh và kiểm tra trực tiếp từng ứng cử viên cũng có cùng một nút thắt cổ chai bậc hai. 
+Cách tiếp cận bạo lực là chọn một đường có thể, phản chiếu mọi vệ tinh qua nó và kiểm tra xem cấu hình phản xạ có giống nhau hay không, bao gồm cả khối lượng. Vì mọi trục hợp lệ được xác định bởi hành động của nó trên tọa độ góc, nên chỉ có thể có O(129600), bởi vì một trục được xác định modulo 180 độ và có thể nằm ở cung số nguyên hoặc nửa số nguyên thứ hai. Kiểm tra một trục so với tất cả`n`các vệ tinh lấy O(n), cho O(129600n) hoặc khoảng 1,7 × 10^10 so sánh ở đầu vào khả thi lớn nhất. Ngay cả trước khi xem xét chi phí hoạt động của Python, tốc độ này vẫn quá chậm. 
 
-Brute-force hoạt động vì sự phản chiếu chính xác là điều kiện chúng ta cần, nhưng nó liên tục kiểm tra gần như cùng một cấu hình. Quan sát quan trọng là miền góc là một vòng tròn nhỏ cố định có chiều dài 129.600. Chúng ta có thể đưa thông tin vệ tinh hoàn chỉnh vào một mảng được lập chỉ mục theo góc. Mỗi phần tử mảng chứa cặp ((\rho,m)), trong khi một góc trống sẽ có một điểm đánh dấu đặc biệt. 
+Có một cách tốt hơn vì tọa độ góc là rời rạc. Dán nhãn vệ tinh`(rho, mass)`ở góc của nó và đặt một giá trị trống ở mọi góc nguyên khác. Phản xạ quanh một trục có góc gấp đôi`k`gửi góc`x`ĐẾN`k-x`modulo 129600. Như vậy, khi mảng hình tròn được cắt ở điểm thích hợp thì các nhãn ở hai bên trục phải tạo thành một bảng màu. 
 
-Bây giờ bài toán trở thành tổ hợp thuần túy. Giả sử trục phản xạ có góc gấp đôi (s), nghĩa là góc thực của nó là (s/2). Một vệ tinh ở góc (x) bị phản xạ tới 
+Ranh giới hình tròn là sự phức tạp duy nhất. Chúng tôi giải quyết nó bằng cách nhân đôi mảng góc. Đối xứng của hình tròn ban đầu trở thành một palindrome có chiều dài 129600 ở giữa ở đâu đó trong mảng nhân đôi. Cả tâm nguyên và tâm nửa số nguyên đều xuất hiện, vì vậy chúng tôi sử dụng bán kính chẵn và lẻ từ thuật toán Manacher. Manacher tính toán tất cả bán kính palindrome tối đa trong thời gian tuyến tính. 
 
-[ 
-s-x \pmod {129600}. 
-] 
+Các tham số vật lý hoàn toàn không yêu cầu tính toán dấu phẩy động. Hai vị trí phản xạ bằng nhau một cách chính xác khi chúng`(rho, mass)`các cặp đều bằng nhau. Điều này có nghĩa là so sánh bộ dữ liệu là đủ và tránh hoàn toàn xung đột băm. 
 
-Do đó cấu hình đối xứng chính xác khi 
-
-[ 
-A[x]=A[s-x\bmod129600] 
-] 
-
-với mọi vị trí góc (x). 
-
-Xác định một mảng tròn đảo ngược 
-
-[ 
-B[x]=A[-x\bmod129600]. 
-] 
-
-Khi đó điều kiện đối xứng trở thành 
-
-[ 
-A[x]=B[x-s\bmod129600]. 
-] 
-
-Nói cách khác, (A) phải bằng một phép dịch chuyển theo chu kỳ của (B). Tìm mọi phép dịch chuyển tuần hoàn trong đó hai chuỗi bằng nhau là một bài toán so khớp chuỗi tuyến tính tiêu chuẩn. Chúng ta có thể sao chép (B), tìm kiếm (A) bên trong (B+B) bằng KMP và thu được mọi trục phản xạ có thể có trong thời gian (O(129600+n)). 
-
-Sau khi tìm được trục đối xứng, ta vẫn phải thực hiện yêu cầu đường bay không chứa vệ tinh. Nếu (s) lẻ thì phương trình 
-
-[ 
-2x=s\pmod{129600} 
-] 
-
-không có nghiệm nguyên nên không có vệ tinh nào có thể nằm trên trục. Nếu (s) chẵn thì hai vị trí góc cố định là 
-
-[ 
-x=\frac{s}{2} 
-] 
-
-và 
-
-[ 
-x=\frac{s}{2}+64800. 
-] 
-
-Nếu một trong hai vị trí chứa vệ tinh thì trục đối xứng đó sẽ bị từ chối. 
-
-Cuối cùng, một đường hợp lệ có (các) góc gấp đôi biểu thị hai hướng bay. Các góc nhân đôi của chúng là (s) và (s+129600), vì vậy các góc thực tế của chúng là (s/2) và (s/2+64800). 
+Khi mọi trục phản xạ đã được tìm thấy, mỗi trục biểu thị hai hướng bay ngược nhau. Một hướng chỉ hợp lệ nếu không có vệ tinh chính xác trên tia đó. Vì tất cả các góc vệ tinh đều là số nguyên nên các hướng nửa số nguyên không bao giờ có thể chứa vệ tinh, trong khi hướng số nguyên có thể được kiểm tra trực tiếp trong mảng góc. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
-| Lực lượng vũ phu | (O(n\cdot129600)) | (O(n)) | Quá chậm | 
-| Tối ưu | (O(n+129600)) | (O(129600)) | Đã chấp nhận | 
+| Lực lượng vũ phu | O(129600n) | O(n) | Quá chậm | 
+| Tối ưu | O(129600 + n + A) | O(129600 + n) | Đã chấp nhận | 
+
+Đây`A`là số hướng đầu ra. Lần quét cuối cùng thực sự là O (259200), do đó toàn bộ giải pháp là tuyến tính một cách hiệu quả trong vũ trụ góc cố định. 
 
 ## Hướng dẫn thuật toán 
 
-1. Tạo một mảng (A) có độ dài (L=129600). Tại vị trí (\varphi_i), lưu trữ cặp ((\rho_i,m_i)). Lưu trữ một giá trị trống đặc biệt ở mọi góc độ mà không cần vệ tinh. Cặp này phải chứa cả bán kính và khối lượng vì sự phản xạ phải bảo toàn vệ tinh thực sự chứ không chỉ là vị trí góc của nó. 
-2. Xây dựng mảng tròn đảo ngược (B) bằng cách đặt 
+1. Tạo một mảng góc`a`chiều dài`C = 129600`. Tại vị trí`phi`, cửa hàng`(rho, mass)`cho vệ tinh có góc đó. Mọi cửa hàng vị trí khác`None`. Tuple là thông tin đầy đủ mà sự phản ánh phải lưu giữ. 
+2. Nhân đôi mảng này để có được`s = a + a`. Trục phản xạ có thể vượt qua ranh giới nhân tạo giữa góc 129599 và góc 0, do đó, chỉ làm việc trên một bản sao sẽ làm mất các bảng màu hợp lệ. Bản sao thứ hai có đủ chỗ để biểu diễn mọi palindrome hình tròn như một palindrome thông thường. 
+3. Chạy thuật toán Manacher trên`s`và tính bán kính palindrome lẻ`d1`và thậm chí bán kính palindrome`d2`. Bán kính lẻ`d1[i]`là số lớp phù hợp bao gồm cả vị trí`i`, trong khi`d2[i]`là số lớp phù hợp xung quanh khoảng trống ngay trước`i`. 
+4. Biểu diễn một trục có thể bằng`k = 2alpha`, Ở đâu`alpha`là góc của nó Vì một trục và cùng một trục quay 180 độ là giống hệt nhau nên`k`chỉ cần các giá trị từ 0 đến`C-1`. Thậm chí`k`cho một góc trục nguyên, trong khi số lẻ`k`cho một góc trục nửa số nguyên. 
+5. Thậm chí`k`, trục có tâm tại vị trí`C + k/2`trong mảng nhân đôi. Sự phản xạ tròn hoàn toàn đòi hỏi sự bằng nhau về khoảng cách lên đến`C/2 - 1`từ trung tâm này. Theo ký hiệu của Manacher thì đây chính xác là điều kiện`d1[C + k/2] >= C/2`. 
+6. Đối với số lẻ`k`, trục nằm giữa hai vị trí mảng. Trung tâm của nó được đại diện bởi chỉ số chẵn-palindrome`C + (k+1)/2`. Chúng tôi cần`C/2`cặp phù hợp, vì vậy điều kiện là`d2[C + (k+1)/2] >= C/2`. 
+7. Đánh dấu mọi`k`thỏa mãn điều kiện palindrom tương ứng làm trục phản xạ hợp lệ. Palindrome chứa toàn bộ vòng tròn góc, do đó thử nghiệm này không chỉ đơn thuần là kiểm tra một phần cục bộ của cấu hình. Nó kiểm tra mọi vệ tinh và mọi vị trí góc trống so với đối tác phản chiếu của nó. 
+8. Quét các góc hướng gấp đôi`x`từ 0 đến`2C-1`. Hướng bay thực tế là`x/2`cung giây và trục phản xạ của nó là`k = x mod C`. Nếu trục đó không đối xứng thì hướng bị từ chối. Nếu như`x`là số lẻ, hướng là một góc nửa nguyên và không thể chứa vệ tinh. Nếu như`x`chẵn, kiểm tra xem`a[x/2]`trống rỗng. Chỉ có hướng trống được phát ra. 
+9. In các góc hướng gấp đôi theo thứ tự tăng dần, chia đôi khi định dạng. Đang quét`x`theo thứ tự tăng dần đã cung cấp đầu ra được sắp xếp theo yêu cầu, do đó không cần sắp xếp riêng. 
+
+### Tại sao nó hoạt động 
+
+Đối với đường bay cố định, hãy phân tách vị trí của từng vệ tinh thành tọa độ song song và vuông góc với đường bay. Thành phần vuông góc của lực hấp dẫn của nó tỉ lệ với 
 
 [ 
-B[x]=A[-x\bmod L]. 
+\frac{m_i b_i} 
+{(t^2-2a_i t+\rho_i^2)^{3/2}}, 
 ] 
 
-Ở dạng mảng, đây là (A[0]), tiếp theo là (A[L-1]), (A[L-2]), v.v. cho đến (A[1]). Việc lập chỉ mục chính xác này là thứ biến sự phản ánh thành một sự thay đổi theo chu kỳ. 
+ở đâu`t`là khoảng cách của Elphaba từ gốc dọc theo tia,`a_i`là tọa độ song song của vệ tinh và`b_i`là tọa độ vuông góc của nó. Tổng phải biến mất cho mọi`t > 0`. 
 
-1. Xây dựng hàm tiền tố KMP cho (A). Hàm tiền tố cho phép chúng ta tìm mọi lần xuất hiện của (A) bên trong một chuỗi khác theo thời gian tuyến tính mà không cần khởi động lại phép so sánh sau khi không khớp. 
-2. Quét chuỗi (B+B), nhưng chỉ xem xét các lần xuất hiện bắt đầu tại các vị trí (0,\ldots,L-1). Nếu (A) bắt đầu ở vị trí (p), thì 
+Một vệ tinh ngoài trục có đóng góp duy nhất được xác định bởi tọa độ song song của nó, khoảng cách từ điểm gốc và khối lượng của nó. Sự hủy bỏ duy nhất có thể xảy ra là từ hình ảnh phản chiếu của nó trên đường thẳng, bởi vì gương có cùng`a_i`Và`rho_i`nhưng ngược lại`b_i`. Sự hủy bỏ đòi hỏi khối lượng cũng phải bằng nhau. Một vệ tinh trên trục có`b_i = 0`và không đóng góp lực vuông góc. Do đó, cấu hình vệ tinh có trọng số phải bất biến dưới sự phản xạ trên đường bay. 
 
-[ 
-A[x]=B[p+x]=A[-p-x]. 
-] 
+Mảng góc ghi lại chính xác cấu hình này. Phản xạ quanh một trục có góc gấp đôi`k`bản đồ vị trí`i`ĐẾN`k-i`modulo`C`, đó chính xác là quan hệ đẳng thức xác định một bảng màu hình tròn. Mảng nhân đôi chuyển đổi bảng màu hình tròn đó thành một bảng màu thông thường và Manacher tìm xem liệu bảng màu có độ dài đầy đủ cần thiết có tồn tại hay không. Do đó, mọi trục được đánh dấu đều là trục đối xứng thực sự và mọi trục đối xứng thực sự đều được đánh dấu. 
 
-So sánh điều này với (A[x]=A[s-x]), chúng ta nhận được 
-
-[ 
-s\equiv-p\pmod L. 
-] 
-
-Vì vậy, mỗi trận đấu KMP sẽ mang lại cho một ứng cử viên góc trục gấp đôi (s=(-p)\bmod L).
-
-1. Loại bỏ (các) ứng cử viên nếu nó chẵn và vị trí cố định (s/2) hoặc (s/2+L/2) chứa vệ tinh. Đó chính xác là những điểm nằm trên đường bay được đề xuất. 
-2. Đối với mỗi (các) còn lại, hãy thêm (các) hướng bay gấp đôi và (s+L). Việc lưu trữ các góc được nhân đôi sẽ tránh hoàn toàn số học dấu phẩy động trong quá trình thuật toán và cũng xử lý chính xác các câu trả lời nửa cung giây. 
-3. Sắp xếp tất cả các hướng nhân đôi và in mỗi hướng chia cho hai. Góc nhân đôi chẵn được in dưới dạng số nguyên có phần phân số bằng 0, trong khi góc nhân đôi lẻ kết thúc bằng`.5`. 
-
-Tại sao nó hoạt động: một đường bay hợp lệ có thành phần lực hấp dẫn bằng 0 vuông góc với đường bay tại mọi điểm trên đó. Xem xét tọa độ trong đó đường ứng cử viên là trục (x). Một vệ tinh tại ((a,b)) đóng góp thành phần vuông góc tỷ lệ với 
-
-[ 
-\frac{m b}{((x-a)^2+b^2)^{3/2}}. 
-] 
-
-Để tổng này biến mất đối với mọi (x), đóng góp đơn lẻ do mọi vệ tinh ngoài trục tạo ra phải bị triệt tiêu bởi vệ tinh phản xạ tại ((a,-b)), có cùng khối lượng và do đó có cùng bán kính và cặp khối lượng. Do đó, mỗi đường hợp lệ là một trục đối xứng phản xạ của cấu hình vệ tinh có trọng số. Ngược lại, nếu cấu hình đối xứng thì mỗi cặp vệ tinh phản xạ sẽ tạo ra các lực vuông góc bằng nhau và ngược chiều trên trục, do đó tổng lực song song với trục ở mọi nơi. Bước KMP tìm thấy chính xác các đối xứng phản xạ đó và kiểm tra vị trí cố định sẽ loại bỏ chính xác các trục bị cấm chứa vệ tinh. 
+Kiểm tra tia cuối cùng sẽ loại bỏ chính xác những nửa đường chứa vệ tinh. Do đó, các hướng phát ra chính xác là các hướng bay được phép về mặt vật lý. 
 
 ## Giải pháp Python```python
 import sys
 input = sys.stdin.readline
 
-L = 129600
-EMPTY = (-1, -1)
+C = 129600
+HALF = C // 2
+
+def manacher_odd_even(s):
+    n = len(s)
+
+    d1 = [0] * n
+    l = 0
+    r = -1
+
+    for i in range(n):
+        if i > r:
+            k = 1
+        else:
+            k = min(d1[l + r - i], r - i + 1)
+
+        while i - k >= 0 and i + k < n and s[i - k] == s[i + k]:
+            k += 1
+
+        d1[i] = k
+
+        k -= 1
+        if i + k > r:
+            l = i - k
+            r = i + k
+
+    d2 = [0] * n
+    l = 0
+    r = -1
+
+    for i in range(n):
+        if i > r:
+            k = 0
+        else:
+            k = min(d2[l + r - i + 1], r - i + 1)
+
+        while i - k - 1 >= 0 and i + k < n and s[i - k - 1] == s[i + k]:
+            k += 1
+
+        d2[i] = k
+
+        k -= 1
+        if i + k > r:
+            l = i - k - 1
+            r = i + k
+
+    return d1, d2
 
 def solve():
     n = int(input())
 
-    a = [EMPTY] * L
+    a = [None] * C
 
     for _ in range(n):
         rho, phi, mass = map(int, input().split())
         a[phi] = (rho, mass)
 
-    # B[x] = A[-x mod L].
-    b = [a[0]] + a[:0:-1]
+    s = a + a
+    d1, d2 = manacher_odd_even(s)
 
-    # KMP prefix function for pattern A.
-    pi = [0] * L
-    j = 0
+    good = [False] * C
 
-    for i in range(1, L):
-        while j and a[i] != a[j]:
-            j = pi[j - 1]
-        if a[i] == a[j]:
-            j += 1
-        pi[i] = j
-
-    candidates = []
-
-    # Search A inside B+B.
-    # We only need starts p in [0, L-1], so the text needs 2L-1 elements.
-    j = 0
-
-    for i in range(2 * L - 1):
-        value = b[i] if i < L else b[i - L]
-
-        while j and value != a[j]:
-            j = pi[j - 1]
-
-        if value == a[j]:
-            j += 1
-
-        if j == L:
-            p = i - L + 1
-            if p < L:
-                s = (-p) % L
-
-                # If s is even, these are the two fixed angular positions.
-                if s % 2 == 0:
-                    x = s // 2
-                    y = x + L // 2
-                    if a[x] != EMPTY or a[y] != EMPTY:
-                        j = pi[j - 1]
-                        continue
-
-                candidates.append(s)
-
-            j = pi[j - 1]
-
-    # Each reflection axis gives two opposite flight directions.
-    directions = []
-    for s in candidates:
-        directions.append(s)
-        directions.append(s + L)
-
-    directions.sort()
-
-    out = [str(len(directions))]
-    for d in directions:
-        if d & 1:
-            out.append(f"{d // 2}.5000000000")
+    for k in range(C):
+        if k & 1:
+            center = C + (k + 1) // 2
+            if d2[center] >= HALF:
+                good[k] = True
         else:
-            out.append(f"{d // 2}.0000000000")
+            center = C + k // 2
+            if d1[center] >= HALF:
+                good[k] = True
 
+    out = []
+
+    for x in range(2 * C):
+        k = x % C
+
+        if not good[k]:
+            continue
+
+        if x & 1:
+            out.append(f"{x / 2:.10f}")
+        else:
+            phi = x // 2
+            if a[phi] is None:
+                out.append(f"{phi:.10f}")
+
+    sys.stdout.write(str(len(out)) + "\n")
     sys.stdout.write("\n".join(out))
+    if out:
+        sys.stdout.write("\n")
 
 if __name__ == "__main__":
     solve()
-```Phần đầu tiên của quá trình triển khai lưu trữ toàn bộ cấu hình góc trong một mảng có độ dài 129.600. Một bộ dữ liệu ((\rho,m)) là đủ để xác định thông tin vệ tinh cần thiết cho sự phản chiếu, vì góc đã được biểu thị bằng chỉ số mảng. 
+```Phần đầu tiên của`solve`xây dựng chuỗi vòng tròn hoàn chỉnh. Việc sử dụng`None`là cố ý. Điều đó có nghĩa là một vị trí trống được phản ánh phải khớp với một vị trí trống khác, do đó việc kiểm tra bảng màu cũng xác minh tất cả các khoảng trống góc. 
 
-Việc xây dựng`a[0] + a[:0:-1]`xứng đáng được quan tâm. Phần tử mong muốn tại chỉ mục (x) là (A[-x\bmod L]), do đó chỉ số 0 vẫn ở phía trước và các phần tử còn lại xuất hiện theo thứ tự ngược lại. Một điều bình thường`a[::-1]`sẽ đặt (A[L-1]) ở chỉ số 0 và thay vào đó sẽ biểu thị sự phản ánh đã dịch chuyển. 
+các`manacher_odd_even`là hàm tính toán chẵn và lẻ theo thời gian tuyến tính tiêu chuẩn. Hai mảng của nó là cần thiết vì một trục có thể đi trực tiếp qua một vị trí góc nguyên hoặc giữa hai vị trí nguyên. Thuật toán chỉ sử dụng so sánh đẳng thức, do đó các bộ dữ liệu vệ tinh có thể được so sánh trực tiếp mà không cần chuyển đổi tọa độ lớn của chúng thành dấu phẩy động. 
 
-Hàm tiền tố KMP sử dụng trực tiếp đẳng thức tuple. Số nguyên Python có thể giữ bán kính và khối lượng đầu vào mà không bị tràn và không cần số học liên quan đến (\rho_i) hoặc (m_i) sau khi xây dựng mảng. 
+Trường hợp trục chẵn sử dụng`d1`. Vì`k = 2alpha`, tâm của mảng trùng lặp là`C + alpha`, và bán kính cần tìm là`C/2`. Ngưỡng chính xác là`HALF`, bởi vì`d1`tính chính tâm là một lớp và do đó bán kính là`HALF`bao gồm các khoảng cách từ 0 đến`HALF-1`. Cặp đôi ở khoảng cách chính xác`HALF`đại diện cho cùng một vị trí góc sau một vòng quay hoàn chỉnh và không áp đặt điều kiện bổ sung nào. 
 
-Quét KMP sử dụng vị trí văn bản (2L-1). Một mẫu đầy đủ xuất hiện bắt đầu từ vị trí (p<L) kết thúc ở (p+L-1), do đó các vị trí xuyên qua (2L-2) là đủ. Sự chuyển đổi`s = (-p) % L`suy ra trực tiếp từ mối quan hệ giữa sự trùng khớp theo trình tự đảo ngược và sự phản chiếu. 
+Trường hợp trục lẻ sử dụng`d2`. Ở đây trục nằm giữa hai vị trí góc nguyên và có chính xác`HALF`các cặp phản xạ riêng biệt xung quanh một vòng tròn hoàn chỉnh. Do đó, bán kính chẵn-palindrome yêu cầu chính xác là`HALF`. 
 
-Bài kiểm tra điểm cố định tách biệt với bài kiểm tra tính đối xứng. Một cấu hình thực sự có thể đối xứng xung quanh một đường trong khi có các vệ tinh nằm trên đường đó. Elphaba không thể sử dụng dòng như vậy nên những ứng cử viên đó phải bị loại bỏ. 
+Lần quét cuối cùng sử dụng các góc gấp đôi. Điều này tránh tích lũy các lỗi dấu phẩy động và cũng cung cấp đầu ra được sắp xếp miễn phí. Đối với góc nhân đôi lẻ, hướng là cung giây nửa số nguyên và không thể trùng với vệ tinh đầu vào. Đối với một góc chẵn nhân đôi, vị trí số nguyên tương ứng được kiểm tra`a`. 
 
-Đầu ra được thể hiện bằng các góc nhân đôi cho đến khi định dạng cuối cùng. Điều này tránh hoàn toàn việc làm tròn dấu phẩy động. Cụ thể, một trục tại (0,5) cung giây được biểu thị bằng góc nhân đôi (1) và in chính xác như`0.5000000000`. 
+Không có vấn đề tràn số nguyên trong Python. Số nguyên được lưu trữ lớn nhất chỉ khoảng`10^18`và số nguyên Python vẫn xử lý chính xác. Quan trọng hơn, thuật toán không bao giờ thực hiện các phép tính lượng giác, do đó`rho`cũng không`phi`cần phải được chuyển đổi sang dấu phẩy động. 
 
 ## Ví dụ đã hoạt động 
 
 ### Mẫu 1 
 
-Đối với hai vệ tinh ở góc (0) và (64800), mảng góc chứa hai mục giống hệt nhau đối diện nhau. Mảng hình tròn đảo ngược giống hệt với mảng ban đầu nên KMP tìm thấy hai kết quả trùng khớp theo chu kỳ. 
+Hai vệ tinh chiếm các góc 0 và 64800 và có cùng`(rho, mass)`đôi. Dãy góc trống ở mọi nơi ngoại trừ hai vị trí đối diện đó. 
 
-| Xuất phát KMP (p) | Trục nhân đôi (s=(-p)\bmod L) | Vệ tinh cố định | hợp lệ | 
-| --- | --- | --- | --- | 
-| 0 | 0 | Góc 0 và 64800 | Không | 
-| 64800 | 64800 | Không có | Có | 
+Trục đối xứng ở 0 có góc gấp đôi`k = 0`. Sự phản chiếu của nó không trao đổi vệ tinh nào với một nhãn khác, vì vậy nó là một trục hình học hợp lệ. Tuy nhiên, cả hai hướng của trục này đều chứa các vệ tinh và bị loại bỏ trong lần quét cuối cùng. 
 
-Ứng cử viên (s=0) đại diện cho trục hoành, nhưng cả hai vệ tinh đều nằm trực tiếp trên trục hoành. Ứng cử viên (s=64800) đại diện cho trục tung, không có vệ tinh trên đó. Hai hướng bay của nó là (64800/2=32400) và ((64800+129600)/2=97200). 
+Trục vuông góc có`k = 64800`, tương ứng với góc 32400. Nó cũng đối xứng và cả hai tia của nó đều không chứa vệ tinh. 
 
-### Ví dụ nửa cung giây 
+| Tiểu bang | Giá trị | 
+| --- | --- | 
+|`C`|`129600`| 
+|`HALF`|`64800`| 
+| góc chiếm đóng |`0`,`64800`| 
+| trục đối xứng`k`|`0`,`64800`| 
+| chỉ đường bị chặn |`0`,`64800`| 
+| hướng phát ra |`32400`,`97200`| 
 
-Hãy xem xét```
+Do đó, đầu ra là```
 2
+32400.0000000000
+97200.0000000000
+```Ví dụ này chứng tỏ tại sao việc tìm trục đối xứng không phải là bước cuối cùng. Một đường đối xứng vẫn có thể không sử dụng được vì một trong các tia của nó đi qua vệ tinh. 
+
+### Hình vuông tùy chỉnh 
+
+Xét bốn vệ tinh bằng nhau ở bốn hướng chính:```
+4
 1 0 1
-1 1 1
-```Trục đối xứng hợp lệ nằm giữa hai vị trí bị chiếm giữ. 
+1 32400 1
+1 64800 1
+1 97200 1
+```Cấu hình là một hình vuông. Trục đối xứng của nó là trục ngang, trục dọc và hai trục chéo. 
 
-| Xuất phát KMP (p) | Trục nhân đôi | Vị trí cố định | hợp lệ | 
-| --- | --- | --- | --- | 
-| 129599 | 1 | Không có | Có | 
+Trục ngang và trục dọc bị chặn vì chứa các vệ tinh. Hai trục chéo rõ ràng. 
 
-Ở đây (s=1), nên góc trục là (1/2=0,5). Hướng ngược lại của nó là (0,5+64800=64800,5). 
+| Trục nhân đôi góc`k`| Góc trục | Đối xứng | Hướng 1 | Hướng 2 | Kết quả | 
+| --- | --- | --- | --- | --- | --- | 
+|`0`|`0`| vâng |`0`bị chặn |`64800`bị chặn | từ chối | 
+|`32400`|`16200`| vâng |`16200`rõ ràng |`81000`rõ ràng | chấp nhận | 
+|`64800`|`32400`| vâng |`32400`bị chặn |`97200`bị chặn | từ chối | 
+|`97200`|`48600`| vâng |`48600`rõ ràng |`113400`rõ ràng | chấp nhận | 
 
-Dấu vết này chứng tỏ tại sao góc nhân đôi lại hữu ích. Không cần tính toán dấu phẩy động để khám phá hoặc so sánh câu trả lời nửa số nguyên. 
+Đầu ra là```
+4
+16200.0000000000
+48600.0000000000
+81000.0000000000
+113400.0000000000
+```Dấu vết thể hiện sự khác biệt giữa trục đối xứng và tia bay được phép, cũng như thực tế là mỗi trục đóng góp hai hướng ngược nhau. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | (O(n+129600)) | Việc điền chi phí mảng góc (O(n)), trong khi KMP xử lý các mảng có độ dài cố định (129600) theo thời gian tuyến tính. | 
-| Không gian | (O(129600)) | Mảng góc, hàm tiền tố, ứng viên và câu trả lời đều sử dụng không gian tuyến tính trong miền góc. | 
+| Thời gian | O(C + n + A) | Xây dựng mảng góc, chạy Manacher trên`2C`vị trí và quét`2C`chỉ đường | 
+| Không gian | O(C + n) | Lưu trữ các nhãn góc và hai mảng bán kính Manacher | 
 
-Giá trị tối đa hiệu dụng (n) là 129.600 vì tất cả các góc đầu vào là các số nguyên riêng biệt trong phạm vi chính xác là 129.600 vị trí. Do đó, thuật toán chỉ thực hiện vài trăm nghìn phép tính mảng cộng với so sánh KMP, vừa vặn với giới hạn hai giây. 
+Đây`C = 129600`Và`A`là số hướng được báo cáo. Từ`C`được cố định bởi tuyên bố và`A <= 200000`, khối lượng công việc thực tế là vài trăm nghìn thao tác mảng cộng với xử lý đầu vào và đầu ra. Điều này phù hợp một cách thoải mái trong giới hạn dự định và việc triển khai không thực hiện bất kỳ công việc O(n²) nào. 
 
 ## Trường hợp thử nghiệm```python
 import sys
 import io
+from contextlib import redirect_stdout
 
-L = 129600
-EMPTY = (-1, -1)
+C = 129600
 
-def solve_case(inp: str) -> str:
-    global input
-
+def run(inp: str) -> str:
     old_stdin = sys.stdin
-    old_input = input
-
     sys.stdin = io.StringIO(inp)
-    input = sys.stdin.readline
+    out = io.StringIO()
 
-    n = int(input())
-    a = [EMPTY] * L
-
-    for _ in range(n):
-        rho, phi, mass = map(int, input().split())
-        a[phi] = (rho, mass)
-
-    b = [a[0]] + a[:0:-1]
-
-    pi = [0] * L
-    j = 0
-
-    for i in range(1, L):
-        while j and a[i] != a[j]:
-            j = pi[j - 1]
-        if a[i] == a[j]:
-            j += 1
-        pi[i] = j
-
-    candidates = []
-    j = 0
-
-    for i in range(2 * L - 1):
-        value = b[i] if i < L else b[i - L]
-
-        while j and value != a[j]:
-            j = pi[j - 1]
-
-        if value == a[j]:
-            j += 1
-
-        if j == L:
-            p = i - L + 1
-
-            if p < L:
-                s = (-p) % L
-
-                if s % 2 == 0:
-                    x = s // 2
-                    y = x + L // 2
-                    if a[x] != EMPTY or a[y] != EMPTY:
-                        j = pi[j - 1]
-                        continue
-
-                candidates.append(s)
-
-            j = pi[j - 1]
-
-    directions = []
-    for s in candidates:
-        directions.append(s)
-        directions.append(s + L)
-
-    directions.sort()
-
-    out = [str(len(directions))]
-    for d in directions:
-        if d & 1:
-            out.append(f"{d // 2}.5000000000")
-        else:
-            out.append(f"{d // 2}.0000000000")
+    with redirect_stdout(out):
+        solve()
 
     sys.stdin = old_stdin
-    input = old_input
+    return out.getvalue()
 
-    return "\n".join(out)
+def parse_output(out: str):
+    tokens = out.split()
+    count = int(tokens[0])
+    values = list(map(float, tokens[1:]))
+    assert count == len(values)
+    return count, values
 
-# Provided sample.
+# Provided sample
 sample1 = """\
 2
 1 0 1
 1 64800 1
 """
 
-assert solve_case(sample1) == """\
-2
-32400.0000000000
-97200.0000000000
-""", "sample 1"
+assert run(sample1) == (
+    "2\n"
+    "32400.0000000000\n"
+    "97200.0000000000\n"
+), "sample 1"
 
-# Minimum-size input with a half-arc-second symmetry axis.
+# Minimum-size input with a half-integer symmetry axis.
 case2 = """\
 2
 1 0 1
 1 1 1
 """
 
-assert solve_case(case2) == """\
-2
-0.5000000000
-64800.5000000000
-""", "half-arc-second axis"
+count, values = parse_output(run(case2))
+assert count == 2, "half-integer axis count"
+assert abs(values[0] - 0.5) < 1e-9, "half-integer first direction"
+assert abs(values[1] - 64800.5) < 1e-9, "half-integer second direction"
 
-# Boundary wrap-around: angles 1 and 129599 are reflections around angle 0.
+# Weighted configuration with geometric symmetry but no valid weighted symmetry.
 case3 = """\
-2
-1 1 1
-1 129599 1
+4
+1 0 1
+1 64800 2
+1 32400 3
+1 97200 3
 """
 
-assert solve_case(case3) == """\
-2
-0.0000000000
-64800.0000000000
-""", "circular boundary"
+count, values = parse_output(run(case3))
+assert count == 0, "unequal masses must break symmetry"
 
-# Four equally spaced identical satellites.
-# The axes through the satellites are forbidden.
+# Square: cardinal axes are blocked, diagonal axes are clear.
 case4 = """\
 4
 1 0 1
@@ -424,61 +354,76 @@ case4 = """\
 1 97200 1
 """
 
-assert solve_case(case4) == """\
-4
-16200.0000000000
-48600.0000000000
-81000.0000000000
-113400.0000000000
-""", "fourfold symmetry with forbidden axes"
+count, values = parse_output(run(case4))
+expected = [16200.0, 48600.0, 81000.0, 113400.0]
+assert count == 4, "square direction count"
+for got, want in zip(values, expected):
+    assert abs(got - want) < 1e-9, "square directions"
 
-# Maximum possible number of distinct angular positions.
-# Every angle is occupied by an identical satellite.
-# Exactly the odd doubled axes avoid all occupied fixed positions.
+# Maximum feasible number of satellites.
+# Every integer angle is occupied with the same (rho, mass).
+# All half-integer directions are clear, and every such direction
+# is an axis of reflection.
 parts = ["129600"]
-for phi in range(L):
+for phi in range(129600):
     parts.append(f"1 {phi} 1")
+case5 = "\n".join(parts) + "\n"
 
-max_case = "\n".join(parts) + "\n"
-max_out = solve_case(max_case)
-max_lines = max_out.splitlines()
+count, values = parse_output(run(case5))
+assert count == 129600, "maximum feasible input"
+assert abs(values[0] - 0.5) < 1e-9, "first half-integer direction"
+assert abs(values[-1] - 129599.5) < 1e-9, "last half-integer direction"
+assert all(abs(values[i] - (i + 0.5)) < 1e-9 for i in range(count)), \
+    "all half-integer directions"
 
-assert max_lines[0] == "129600", "maximum number of valid directions"
-assert len(max_lines) == 129601, "maximum output size"
-assert max_lines[1] == "0.5000000000", "first maximum-case direction"
-assert max_lines[-1] == "129599.5000000000", "last maximum-case direction"
+# Boundary around angle 129599 and angle 0.
+case6 = """\
+2
+1 129599 7
+1 0 7
+"""
+
+count, values = parse_output(run(case6))
+assert count == 2, "wrap-around symmetry count"
+assert abs(values[0] - 64800.5) < 1e-9
+assert abs(values[1] - 129599.5) < 1e-9
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`2`vệ tinh ở góc 0 và 64800 | 2 hướng | Cung cấp mẫu và loại bỏ trục chứa vệ tinh | 
-|`2`vệ tinh ở góc 0 và 1 | 0,5 và 64800,5 | Câu trả lời nửa giây | 
-|`2`vệ tinh ở góc 1 và 129599 | 0 và 64800 | Bao bọc xung quanh | 
-| Bốn vệ tinh giống hệt nhau ở 0, 32400, 64800, 97200 | 16200, 48600, 81000, 113400 | Nhiều đối xứng và trục cấm | 
-| 129600 vệ tinh giống hệt nhau ở mọi góc độ | 129600 chỉ đường | Kích thước miền góc tối đa và kích thước đầu ra tối đa | 
+| Mẫu 1 |`32400`,`97200`| Ví dụ được cung cấp và trục đối xứng bị chặn | 
+|`0, 1`có nhãn bằng nhau |`0.5`,`64800.5`| Trục nửa số nguyên | 
+| Bốn vệ tinh có khối lượng không bằng nhau |`0`| Khối lượng phải là một phần của nhãn phản chiếu | 
+| Bốn vệ tinh hồng y |`16200`,`48600`,`81000`,`113400`| Một số trục và hướng bị chặn | 
+| Đã chiếm hết 129600 góc nguyên | 129600 hướng nửa số nguyên | Đầu vào khả thi tối đa và tính đối xứng dày đặc | 
+| Góc 129599 và 0 |`64800.5`,`129599.5`| Bao bọc xung quanh | 
+
+Trường hợp kích thước tối đa cũng hữu ích để kiểm tra xem thuật toán không vô tình phụ thuộc vào số lượng vị trí bị chiếm giữ nhỏ. Bản thân vũ trụ góc bị giới hạn nên việc xử lý tất cả 129600 vị trí vẫn thực tế. 
 
 ## Vỏ cạnh 
 
-Trường hợp cạnh đầu tiên là cấu hình đối xứng có trục đi qua các vệ tinh. Vì```
+Trường hợp cạnh đầu tiên là trục đối xứng chứa các vệ tinh. Vì```
 2
 1 0 1
 1 64800 1
-```ứng cử viên (s=0) là một đối xứng phản xạ thực sự vì cả hai vị trí chiếm giữ đều được cố định bởi sự phản xạ. Kiểm tra vị trí cố định nhìn thấy các vệ tinh ở vị trí (0) và (64800) nên ứng viên bị loại. Ứng viên còn lại (s=64800) không có vị trí chiếm cố định và tạo ra hai hướng hợp lệ (32400) và (97200). 
+```trục ở 0 được phát hiện vì sự phản xạ gửi góc 0 tới chính nó và 64800 cho chính nó. Chỉ số trục kép tương ứng là`k = 0`. Trong quá trình quét đầu ra, hướng`x = 0`ánh xạ tới góc 0, trong đó`a[0]`bị chiếm đóng nên nó bị từ chối. Phương hướng`x = 129600`ánh xạ tới góc 64800, trong đó`a[64800]`cũng bị chiếm giữ nên nó bị từ chối. Trục vuông góc tồn tại và tạo ra 32400 và 97200. 
 
-Trường hợp cạnh thứ hai là hướng nửa số nguyên. Vì```
+Trường hợp cạnh thứ hai là trục nửa số nguyên. Vì```
 2
 1 0 1
 1 1 1
-```sự dịch chuyển theo chu kỳ phù hợp sẽ cho (s=1). Vì (s) là số lẻ nên không có vị trí góc nguyên nào thỏa mãn (2x=s) nên không có vệ tinh nào có thể nằm trên trục. Thuật toán lưu trữ hướng nhân đôi (1), sau đó in (1/2=0,5) và cũng in hướng ngược lại (64800,5). 
+```phản xạ khoảng 0,5 trao đổi hai vệ tinh. Giá trị trục nhân đôi của nó là`k = 1`, do đó thuật toán sử dụng bán kính chẵn-palindrome. Vì cả hai tia đều có góc gấp đôi 1 và 129601 nên chúng có hướng nửa nguyên. Không có góc đầu vào nào có thể bằng một góc nào đó, vì vậy cả hai hướng đều an toàn. Đầu ra là 0,5 và 64800,5. 
 
-Vỏ cạnh thứ ba được bao bọc theo góc cạnh. Vì```
+Trường hợp cạnh thứ ba có khối lượng không bằng nhau. Vì```
+4
+1 0 1
+1 64800 2
+1 32400 3
+1 97200 3
+```các vị trí tại 32400 và 97200 có nhãn bằng nhau, nhưng các nhãn ở 0 và 64800 khác nhau. Bất kỳ sự phản xạ nào trao đổi hai vị trí đó đều làm thay đổi khối lượng, do đó nó không phải là sự đối xứng của trường hấp dẫn. Trục hình học duy nhất giữ cố định cả hai vệ tinh có khối lượng không bằng nhau là trục hoành, nhưng cả hai tia của trục đó đều chứa các vệ tinh. Câu trả lời cuối cùng là trống rỗng. 
+
+Trường hợp cạnh thứ tư là sự đối xứng đi qua ranh giới hình tròn. Vì```
 2
-1 1 1
-1 129599 1
-```vị trí phản xạ của góc (1) quanh trục (0) là 
+1 129599 7
+1 0 7
+```hai vệ tinh liền kề nhau qua ranh giới 0 độ. Trục đối xứng của chúng là 129599,5, được biểu thị bằng modulo 180 độ bằng 64799,5. Cấu trúc mảng kép là điều làm cho bảng màu thông thường này có thể nhìn thấy được. Nếu không sao chép chuỗi góc, cặp này sẽ dường như nằm ở hai đầu đối diện của cấu trúc dữ liệu và việc triển khai bảng màu cục bộ có thể bỏ lỡ nó. 
 
-[ 
-0-1\equiv129599\pmod{129600}. 
-] 
-
-Mảng đảo ngược hình tròn và kết hợp KMP hoạt động theo mô-đun đường tròn góc hoàn chỉnh, do đó, sự đối xứng này được tìm thấy mà không cần trường hợp đặc biệt cho các góc gần bằng 0. Các hướng kết quả là (0) và (64800). 
-
-Trường hợp cạnh cuối cùng là một vòng tròn góc được chiếm hoàn toàn. Với một vệ tinh giống hệt nhau ở mọi góc nguyên, mọi (các) trục kép lẻ đều là một đối xứng phản xạ hợp lệ vì nó hoán đổi các vị trí nguyên theo cặp và không có vị trí nguyên cố định. Mọi chẵn đều có vị trí chiếm giữ cố định và bị cấm. Có 64.800 giá trị lẻ của (s) trong ([0,129600)), mỗi giá trị tạo ra hai hướng ngược nhau, do đó đầu ra chứa chính xác 129.600 hướng. Đây cũng là đầu ra lớn nhất có thể được miền góc cho phép.
+Trường hợp cạnh thứ năm là một vòng tròn góc bị chiếm hoàn toàn. Nếu mọi góc nguyên từ 0 đến 129599 đều chứa cùng một`(rho, mass)`, mọi trục phản xạ đều có giá trị như một đối xứng hình học. Mọi tia nguyên đều bị chặn, trong khi mọi tia nửa số nguyên đều rõ ràng. Có chính xác 129600 hướng hợp lệ, mỗi hướng ở mỗi góc nửa số nguyên. Thuật toán xử lý việc này mà không có bất kỳ trường hợp đặc biệt nào vì thử nghiệm palindrome nhìn thấy một chuỗi hoàn toàn đồng nhất và thử nghiệm tia cuối cùng sẽ loại bỏ chính xác các vị trí số nguyên bị chiếm giữ.
