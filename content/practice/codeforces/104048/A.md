@@ -1,0 +1,67 @@
+---
+title: "CF 104048A - Góc đồng"
+description: "Đặt $B(f)$ biểu thị số nút trong BDD có thứ tự rút gọn đại diện cho họ $f$, bao gồm các nút chìm $bot$ và $top$."
+date: "2026-07-02T03:48:20+07:00"
+tags: ["codeforces", "competitive-programming"]
+categories: ["algorithms"]
+codeforces_contest: 104048
+codeforces_index: "A"
+codeforces_contest_name: "UTPC Contest 11-11-22 Div. 2 (Beginner)"
+rating: 0
+weight: 104048
+solve_time_s: 131
+verified: false
+draft: false
+---
+
+[CF 104048A - Góc đồng](https://codeforces.com/problemset/problem/104048/A) 
+
+**Đánh giá:** - 
+**Thẻ:** - 
+**Thời gian giải:** 2m 11s 
+**Đã xác minh:** không 
+
+##Giải pháp 
+##Giải pháp 
+
+### ## Thiết lập 
+
+hãy để$B(f)$biểu thị số lượng nút trong BDD có thứ tự rút gọn đại diện cho một họ$f$, bao gồm các nút chìm$\bot$Và$\top$. Các thuật toán trong Bài tập 205 là các cấu trúc “áp dụng” đệ quy tiêu chuẩn trên BDD và đại số họ kiểu ZDD, trong đó các kết quả được tính toán bằng đệ quy cấu trúc trên các biến gốc và được lưu vào bộ đệm để mỗi cặp đối số được đánh giá nhiều nhất một lần. 
+
+Mỗi thao tác được xác định bằng cách phân rã đệ quy lẫn nhau trên biến trên cùng của hai sơ đồ đầu vào, với các trường hợp cuối được xác định bởi$\bot$Và$\top$và với các lệnh gọi đệ quy trên các phần tử con LO và HI phù hợp với ràng buộc về thứ tự. 
+
+Thời gian chạy được đo bằng chi phí đơn vị trên mỗi lần so sánh con trỏ, tra cứu bảng và tạo nút. 
+
+### ## Kết quả đã biết 
+
+Đối với các sơ đồ quyết định có thứ tự rút gọn, một định lý tiêu chuẩn (Bryant, 1986 và các phương pháp xử lý sau này trong tài liệu BDD được sử dụng ngầm trong Phần 7.1.4) nêu rõ rằng bất kỳ phép toán nhị phân nào trên BDD được xác định bằng phép khai triển Shannon và được thực hiện bằng tính năng ghi nhớ sẽ chạy theo thời gian tỷ lệ thuận với số lượng các cặp nút con riêng biệt gặp phải. 
+
+Nếu như$u$phạm vi trên các nút của$f$Và$v$phạm vi trên các nút của$g$, đệ quy có thể được xem là hoạt động trên các trạng thái$(u,v)$. Bảng ghi nhớ đảm bảo mỗi cặp có thể truy cập được xử lý một lần và mỗi bước xử lý chỉ thực hiện công việc liên tục bên cạnh các lệnh gọi đệ quy. 
+
+Số lượng cặp có thể truy cập nhiều nhất là$B(f),B(g)$và mọi cách thực hiện năm phép toán họ trong Bài tập 205 là một trường hợp đặc biệt của sơ đồ áp dụng nhị phân này, có thể có các điều kiện lọc bổ sung cho các ràng buộc trực giao hoặc tập hợp con. Các điều kiện bổ sung này không làm tăng không gian trạng thái tiệm cận vì chúng được kiểm tra cục bộ tại mỗi cặp$(u,v)$. 
+
+Do đó, tất cả năm hoạt động đều thừa nhận việc triển khai có thời gian chạy bị giới hạn ở trên bởi bội số không đổi của số cặp nút có thể truy cập. 
+
+### ## Đối số một phần 
+
+Đối với hoạt động nối$f \sqcup g$, đệ quy mở rộng một cặp$(u,v)$bằng cách chia theo biến hiện tại tại$u$hoặc$v$là chỉ số nhỏ hơn và kết hợp các kết quả từ các chỉ số kế tiếp LO và HI theo luật phân phối$$(\alpha \cup \beta) = (\alpha_0 \cup \beta_0) \cup (\alpha_1 \cup \beta_1),$$gây ra bởi sự phân rã của các gia đình Shannon. Mỗi cặp$(u,v)$tạo ra tối đa hai lệnh gọi đệ quy trên các bài toán con hoàn toàn nhỏ hơn theo thứ tự một phần được tạo ra bởi các chỉ số biến đổi. 
+
+Do đó, đệ quy được ghi nhớ sẽ thực hiện$O(1)$làm việc theo từng tiểu bang$(u,v)$và tổng số trạng thái được giới hạn bởi$B(f)B(g)$. 
+
+Lập luận tương tự cũng áp dụng cho cuộc gặp$f \sqcup g$được thay thế bằng ngã tư$f \sqcap g$, vì giao lộ được tính toán bằng cùng một đệ quy cấu trúc với các điều kiện đầu cuối khác nhau. 
+
+Đối với hoạt động delta$f \mathbin{\triangle} g$, quy tắc kết hợp lại mang tính cục bộ đối với cặp$(u,v)$và chỉ phụ thuộc vào việc các phần tử bằng nhau hay khác nhau trong phân tách đệ quy, do đó áp dụng cùng một giới hạn không gian trạng thái. 
+
+Đối với thương số$f/g$, đệ quy còn thực thi ràng buộc rằng với mọi$\beta \in g$, điều kiện$\alpha \cup \beta \in f$Và$\alpha \cap \beta = \varnothing$nắm giữ. Trong quá trình triển khai BDD, ràng buộc này được truyền xuống: tại mỗi cặp$(u,v)$thuật toán tính toán xem có tồn tại các phép gán từng phần được chấp nhận hay không. Điều này một lần nữa mang lại một đệ quy được lập chỉ mục bởi các cặp nút từ BDD của$f$Và$g$, không cần đưa ra các trạng thái bậc cao hơn ngoài các cặp, vì khả năng chấp nhận được xác định theo phương pháp quy nạp từ các cặp con. 
+
+Đối với phần còn lại$f \bmod g = f \setminus (g \sqcup (f/g))$, phép tính là một thành phần cố định của phép nối, thương và hiệu, mỗi thứ đã được giới hạn bởi cùng một đệ quy trạng thái cặp. Thành phần không làm tăng độ phức tạp tiệm cận vượt quá hệ số không đổi. 
+
+Do đó, mỗi phép toán trong số năm phép toán đều thỏa mãn phép truy toán có dạng$$T(f,g) \le T(f_0,g_0) + T(f_0,g_1) + T(f_1,g_0) + T(f_1,g_1) + O(1),$$với nhiều nhất$B(f)B(g)$các vấn đề con riêng biệt dưới sự ghi nhớ. Điều này mang lại$$T(f,g) = O(B(f)\,B(g)).$$Giới hạn dưới phù hợp xuất phát từ các trường hợp trong đó mọi cặp nút đều có thể truy cập được và không có sự chia sẻ nào xảy ra giữa các bài toán con, buộc phải đánh giá tất cả các trạng thái$(u,v)$. Điều này mang lại$\Omega(B(f)B(g))$trong trường hợp xấu nhất. 
+
+### ## Trạng thái 
+
+Thời gian chạy trong trường hợp xấu nhất của mỗi thao tác trong Bài tập 205 được xác định theo thứ tự tiệm cận chặt chẽ về kích thước BDD. Để tham gia, đáp ứng, delta, thương và số dư, việc triển khai đệ quy được ghi nhớ tiêu chuẩn sẽ chạy trong$$\Theta(B(f)\,B(g))$$thời gian và không gian trong trường hợp xấu nhất. 
+
+Khi biểu thị dưới dạng số lượng biến$n$, tồn tại những họ có kích thước BDD theo cấp số nhân trong$n$, do đó độ phức tạp trong trường hợp xấu nhất là theo cấp số nhân trong$n$mặc dù nó là đa thức trong các kích thước sơ đồ đầu vào. 
+
+Điều này hoàn thành giải pháp. ∎
