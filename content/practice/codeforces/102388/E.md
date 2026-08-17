@@ -1,7 +1,7 @@
 ---
 title: "CF 102388E - Chuồng ngựa"
-description: "Chúng tôi có một biểu đồ vô hướng với tối đa 50 thành phố và tối đa 2500 con đường. Một con đường có thể kết nối hai thành phố khác nhau hoặc kết nối một thành phố với chính nó, vì vậy cho phép đi vòng. Bắt đầu từ một thành phố, chúng ta phải đi theo đúng (k) con đường và về đích tại cùng một thành phố."
-date: "2026-08-14T13:55:45+07:00"
+description: "Chúng tôi có một đồ thị vô hướng với nhiều nhất là 50 thành phố. Đường cho phép ngựa di chuyển giữa hai điểm cuối của nó trong một bước và đường cũng có thể là đường vòng. Đối với một thành phố cố định v, chúng ta cần quyết định xem có tồn tại một cuộc đi bộ bắt đầu tại v, sử dụng chính xác k đường và kết thúc tại v hay không."
+date: "2026-08-16T08:50:32+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102388
@@ -9,7 +9,7 @@ codeforces_index: "E"
 codeforces_contest_name: "SUFE ICPC Team Formation Test"
 rating: 0
 weight: 102388
-solve_time_s: 313
+solve_time_s: 360
 verified: false
 draft: false
 ---
@@ -18,445 +18,232 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 5 phút 13s 
+**Thời gian giải:** 6 phút 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi có một biểu đồ vô hướng với tối đa 50 thành phố và tối đa 2500 con đường. Một con đường có thể kết nối hai thành phố khác nhau hoặc kết nối một thành phố với chính nó, vì vậy cho phép đi vòng. Bắt đầu từ một thành phố, chúng ta phải đi theo đúng (k) con đường và về đích tại cùng một thành phố. Một thành phố là hợp lệ nếu tồn tại một lối đi khép kín có chiều dài chính xác (k). 
+Chúng tôi có một đồ thị vô hướng với nhiều nhất là 50 thành phố. Đường cho phép ngựa di chuyển giữa hai điểm cuối của nó trong một bước và đường cũng có thể là đường vòng. Đối với một thành phố cố định v, chúng ta cần quyết định xem có tồn tại một lối đi bắt đầu tại v, sử dụng chính xác k đường và kết thúc ở v hay không. Câu trả lời là số lượng thành phố tồn tại một lối đi khép kín như vậy. 
 
-Nhiệm vụ là đếm tất cả các thành phố xuất phát hợp lệ một cách độc lập. Các thành phố khác nhau có thể sử dụng các lối đi hoàn toàn khác nhau và việc đi bộ được phép lặp lại cả thành phố và đường. 
+Đầu vào chứa tối đa 20 biểu đồ độc lập. Đồ thị có số đỉnh nhỏ, với n<50, nhưng k có thể lớn bằng 10 9. Sự kết hợp đó chính là khó khăn chính. Bất kỳ thuật toán nào thực hiện một thao tác mỗi ngày hoặc một lần duyệt đồ thị mỗi bước đều không thể tồn tại được sau một tỷ bước. Mặt khác, n=50 đủ nhỏ để chúng ta có thể thực hiện các thuật toán liên quan đến khoảng n 2 công việc trên mỗi bit của k. Vì 10 9 chỉ có khoảng 30 chữ số nhị phân nên phép lũy thừa logarit là mục tiêu tự nhiên. 
 
-Giá trị nhỏ của (n) là đầu mối chính. Chỉ với 50 đỉnh, một phương thức (O(n^3)) hoặc thậm chí là (O(n^3 \log k)) sẽ hợp lý trong một ngôn ngữ được biên dịch, trong khi giá trị khổng lồ (k \le 10^9) loại trừ mọi thứ xử lý trực tiếp hàng ngày. Chúng ta cần tránh thực hiện công tỷ lệ với (k). Thực tế là có nhiều nhất 2500 con đường cũng có nghĩa là việc duyệt đồ thị và các chương trình động nhỏ sẽ rẻ. 
-
-Có một số trường hợp đặc biệt có thể đánh lừa một giải pháp chỉ dựa trên tính chẵn lẻ. 
-
-Đầu tiên, (k=0) có nghĩa là con ngựa không di chuyển, vì vậy mọi thành phố đều đã quay trở lại chính nó. Ví dụ,```
-1
-1 0 0
+Có một số trường hợp nguy hiểm có thể dễ dàng phá vỡ quá trình triển khai. Khi k=0, mọi thành phố đều đủ điều kiện vì chặng đi bộ trống đã bắt đầu và kết thúc tại cùng một thành phố. Ví dụ,```
+13 0 0
 ```có đầu ra```
-1
-```Một giải pháp yêu cầu ít nhất một lần đi qua đường sẽ trả về 0 không chính xác. 
+3
+```Giải pháp yêu cầu ít nhất một con đường sẽ trả về số 0 không chính xác. 
 
-Thứ hai, một đỉnh cô lập không thể thực hiện bất kỳ bước đi có độ dài dương nào. Ví dụ,```
-1
-2 0 2
-```có đầu ra```
-0
-```Không có đường ở cả hai thành phố, vì vậy mặc dù 2 là số chẵn, đối số thông thường "mọi chiều dài dương đều có tác dụng" không được áp dụng. 
+Vòng lặp tự quan trọng đặc biệt khi k = 1. Vì```
+12 1 10 0
+```câu trả lời là`1`, bởi vì thành phố 0 có thể tự lặp lại một lần và quay trở lại chính nó, trong khi thành phố 1 bị cô lập. Một giải pháp coi biểu đồ là một biểu đồ đơn giản mà không bảo toàn các mục đường chéo sẽ bỏ sót thành phố 0. 
 
-Thứ ba, một vòng lặp tạo ra một bước đi khép kín có độ dài bằng một. Ví dụ,```
-1
-1 1 1
-0 0
-```có đầu ra```
-1
-```Kiểm tra lưỡng cực coi biểu đồ là biểu đồ đơn giản và bỏ qua các vòng lặp sẽ phân loại không chính xác thành phần này là lưỡng cực. 
+Đường song song không cần xử lý đặc biệt. Nếu hai con đường nối cùng một cặp thành phố thì chúng không tạo thêm khả năng nào cho việc đi bộ. Chúng tôi chỉ quan tâm liệu có tồn tại ít nhất một quá trình chuyển đổi hay không. Ví dụ,```
+12 3 20 10 10 1
+```có đầu ra`2`. Cả hai thành phố đều có thể đi đến thành phố kia và quay trở lại ngay lập tức. 
 
-Thứ tư, việc nằm trong một thành phần không lưỡng cực tự nó không đủ cho (k) số lẻ nhỏ. Coi như```
-1
-3 3 1
-0 1
-1 2
-2 0
-```Tam giác không có hai bên, nhưng không có bước đi khép kín một bước vì không có vòng lặp. Đầu ra đúng là```
-0
-```Đây là lý do tại sao thuật toán xử lý chính xác (k) nhỏ trước khi sử dụng thuộc tính chẵn lẻ cuối cùng. 
+Cuối cùng, tính chẵn lẻ có thể gây nhầm lẫn. Trong đồ thị hai bên, mỗi bước đi khép kín có độ dài chẵn, nhưng sự tồn tại của một chu trình lẻ sẽ làm thay đổi tình hình. Ví dụ,```
+13 3 30 11 22 0
+```có đầu ra`3`, vì mọi thành phố đều nằm trên hình tam giác. Cố gắng giải quyết vấn đề chỉ sử dụng tính chất lưỡng cực của đồ thị cũng sẽ bỏ lỡ các trường hợp đặc biệt, chẳng hạn như một đỉnh gắn liền với một chu trình lẻ, trong đó các bước đi khép kín lẻ đủ dài có thể tồn tại nhưng các bước đi ngắn thì có thể không. Việc xây dựng ma trận tránh phải mô tả thủ công tất cả các trường hợp này. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận trực tiếp là mô phỏng các bước đi bằng lập trình động. Đối với mỗi (các) thành phố bắt đầu, hãy giữ cho tập hợp các thành phố có thể truy cập được sau chính xác (t) bước. Ban đầu chỉ có thể truy cập được. Đối với mỗi bước, hãy đi theo từng con đường sự cố từ mọi thành phố hiện có thể tiếp cận. Sau (k) bước, hãy kiểm tra xem (các) bước đó có thể truy cập được hay không. 
+Cách tiếp cận trực tiếp nhất là mô phỏng các vị trí có thể có sau mỗi bước. Sửa một thành phố bắt đầu s, giữ cho tập hợp các thành phố có thể truy cập được sau đúng t bước và liên tục mở rộng tập hợp đó thông qua biểu đồ. Sau k vòng, kiểm tra xem s có thể truy cập được không. Điều này đúng vì tập hợp sau vòng t biểu thị chính xác điểm cuối của các bước đi có độ dài t bắt đầu từ s. 
 
-Điều này đúng vì trạng thái sau (t) bước chứa chính xác các điểm cuối có thể có của tất cả các bước có độ dài (t). Vấn đề là giá trị của (k). Trong trường hợp xấu nhất, chương trình động sẽ thực hiện xử lý lân cận (O(k n m)) khi nó được chạy cho mọi thành phố bắt đầu. Với (k=10^9), (n=50) và (m=2500), đây là thứ tự chuyển đổi đồ thị (1,25 \cdot 10^{14}). (k) lớn làm cho điều này không thể thực hiện được. 
+Vấn đề là K. Trong trường hợp xấu nhất, một vòng có thể kiểm tra mọi con đường, do đó việc xử lý một thành phố xuất phát mất O(km). Lặp lại điều này cho tất cả n thành phố bắt đầu sẽ cho O(knm). Ở những hạn chế tối đa, điều này gần như 
 
-Quan sát quan trọng là đồ thị vô hướng có mô hình dài hạn rất đơn giản cho các bước đi khép kín. Mọi độ dài chẵn dương đều có thể xảy ra ở mọi đỉnh không cô lập, bởi vì chúng ta có thể đi qua bất kỳ cạnh nào tới và ngay lập tức đi qua nó trở lại. Việc lặp lại bước đi hai bước đó sẽ mang lại độ dài chẵn dương. 
+10 9 ⋅50⋅2500=1,25×10 14 
 
-Độ dài lẻ hành xử khác nhau. Một thành phần liên thông là lưỡng cực chính xác khi nó không chứa chu trình lẻ. Trong thành phần lưỡng cực, mọi bước đi khép kín đều có độ dài chẵn, do đó không có giá trị lẻ nào của (k) có thể hoạt động. Trong thành phần không lưỡng cực, mỗi đỉnh cuối cùng đều có các bước đi khép kín của cả hai điểm chẵn lẻ. Cụ thể hơn, mỗi đỉnh có độ dài bước đi khép kín lẻ nhiều nhất là (2n-1). Khi tồn tại một bước đi khép kín lẻ, chúng ta có thể thêm bất kỳ số bước lùi hai bước nào, do đó mọi độ dài lẻ đủ lớn cũng tồn tại. 
+kỳ thi đường bộ, vượt xa thời hạn. 
 
-Điều này mang lại cho chúng tôi sự phân chia rõ ràng. Nếu (k) lớn nhất là (2n), chúng ta chỉ cần tính toán chính xác câu trả lời bằng một chương trình động bitset nhỏ. Nếu (k) lớn hơn (2n), chúng ta không cần cấu trúc bước đi chính xác nữa. Đối với (k), mọi đỉnh không cô lập đều hoạt động. Đối với số lẻ (k), chính xác các đỉnh thuộc các thành phần không lưỡng cực đều hoạt động. 
+Biểu đồ đủ nhỏ để thay thế mô phỏng từng bước bằng phép lũy thừa ma trận. Xác định ma trận kề Boolean A, trong đó A[i][j] đúng khi một con đường cho phép di chuyển từ i đến j. Trong phép nhân ma trận Boolean, mục (A t )[i][j] cho chúng ta biết liệu có tồn tại một bước đi chính xác t bước từ i đến j hay không. Do đó, thành phố i hợp lệ chính xác khi mục nhập đường chéo (A k )[i][i] là đúng. 
 
-Việc biểu diễn bitset làm cho phần chính xác trở nên đặc biệt rẻ. Một tập hợp các thành phố có thể truy cập được biểu thị bằng một số nguyên Python, trong đó bit (j) được đặt khi có thể truy cập thành phố (j). Để tiến lên một bước, đối với mỗi thành phố có thể tiếp cận (v), chúng tôi HOẶC tập hợp bit lân cận của nó vào tập hợp có thể tiếp cận mới. Vì (n\le50), tất cả những thứ này nằm gọn trong một vài số nguyên Python có kích thước bằng máy. 
+Lũy thừa nhị phân làm giảm số phép nhân ma trận từ k xuống O(logk). Phép nhân ma trận thông thường sẽ tốn O(n 3 ), điều này vốn đã hợp lý với n=50, nhưng Python thậm chí còn có thể làm tốt hơn ở đây bằng cách biểu diễn mỗi hàng ma trận dưới dạng một tập hợp số nguyên duy nhất. Sau đó, một hàng chứa tập hợp các đỉnh có thể tiếp cận dưới dạng bit và việc nhân hai ma trận Boolean sẽ trở thành một chuỗi các phép toán OR theo bit. 
+
+Đối với hàng i của ma trận bên trái, mỗi tập bit j có nghĩa là i có thể đạt đến j. Hàng tương ứng B[j] của ma trận bên phải chứa tất cả các đỉnh có thể tới được từ j. Do đó, hàng kết quả chỉ đơn giản là OR của B[j] trên tất cả các bit được đặt j trong hàng i. Điều này làm giảm phép nhân thực tế đối với các phép toán hàng O(n 2 ), với mỗi phép toán sử dụng các số nguyên có độ chính xác tùy ý được tối ưu hóa cao của Python. 
+
+Phương pháp brute-force hoạt động vì nó tuân theo rõ ràng các bước đi từng bước một, nhưng không thành công vì k rất lớn. Nhận xét rằng chỉ có biểu diễn nhị phân của k quan trọng mới cho phép chúng ta thực hiện nhiều bước theo cấp số nhân cùng một lúc. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
-| Brute Force DP cho tất cả (k) bước | (O(k n m)) | (O(n^2)) | Quá chậm | 
-| Tập bit chính xác DP lên tới (2n), sau đó phân tích chẵn lẻ/thành phần | (O(n^2 \min(k,n) + n+m)) | (O(n+m)) | Đã chấp nhận | 
+| Lực lượng vũ phu | O(knm) | O(n) | Quá chậm | 
+| Hàm mũ ma trận Boolean với Bitset | Hoạt động bitset O (n 2 logk) | O(n) bit | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Xây dựng cả danh sách kề và tập bit kề cho biểu đồ. Danh sách kề được sử dụng để xác định các thành phần được kết nối và tính lưỡng cực. Bitset cho phép chương trình động chính xác cập nhật tất cả các điểm cuối có thể bằng cách sử dụng các phép toán OR số nguyên nhanh. 
-2. Nếu (k=0), trả về (n). Cuộc đi bộ trống bắt đầu và kết thúc tại cùng một thành phố bất kể biểu đồ. 
-3. Nếu (k\le2n), hãy tính kết quả chính xác. Đối với mỗi thành phố (i), tập hợp có thể truy cập ban đầu chỉ là ({i}), được biểu thị bằng số nguyên (1\ll i). Sau một bước, hãy thay thế tập hợp có thể tiếp cận bằng tập hợp các tập hợp kề của tất cả các thành phố hiện có thể tiếp cận. Lặp lại điều này chính xác (k) lần.
-
-Sau lần lặp thứ (t), bit ở vị trí (j) được đặt chính xác khi tồn tại một quãng đường có độ dài (t) từ thành phố ban đầu (i) đến thành phố (j). Do đó, các bit đường chéo sau (k) lần lặp cho chúng ta biết chính xác thành phố nào có chiều dài đi bộ khép kín (k). 
-4. Nếu (k>2n), hãy chạy BFS hoặc DFS trên mọi thành phần được kết nối trong khi gán cho mỗi đỉnh một màu nhị phân. Dọc theo mọi cạnh thông thường, các điểm cuối của nó phải có màu đối lập nhau trong biểu đồ hai bên. Nếu một cạnh nối hai đỉnh có cùng màu thì thành phần đó chứa chu trình lẻ và không có lưỡng cực. Một vòng lặp ngay lập tức tạo ra xung đột như vậy vì hai điểm cuối của nó có cùng một đỉnh. 
-5. Đối với (k) chẵn lớn, hãy đếm mọi đỉnh có bậc dương. Từ một đỉnh như vậy, chọn một cạnh tới và đi qua nó qua lại. Việc lặp lại bước đi hai bước này sẽ tạo ra độ dài chẵn dương. 
-6. Đối với (k) số lẻ lớn, hãy đếm mọi đỉnh có thành phần được tìm thấy là không lưỡng cực. Một thành phần không lưỡng cực chứa một chu trình lẻ. Từ bất kỳ đỉnh nào, đi đến chu trình đó, đi qua chu trình đó một lần và quay lại theo cùng một đường đi. Điều này mang lại một bước đi khép kín kỳ lạ. Cấu trúc có độ dài tối đa (2n-1) và vì (k>2n), hiệu giữa (k) và độ dài lẻ đó là số chẵn dương. Chúng ta có thể lấp đầy sự khác biệt đó bằng việc quay lại hai bước lặp đi lặp lại. 
+1. Xây dựng mối quan hệ kề cận như một tập hợp nhỏ cho mọi thành phố. Bit j ở hàng i được thiết lập khi có một con đường nằm giữa i và j. Bởi vì đồ thị là vô hướng, nên cạnh đầu vào (x,y) đặt cả x→y và y→x. Đối với vòng lặp tự, điều này tự nhiên đặt bit đường chéo. 
+2. Biểu diễn ma trận nhận dạng dưới dạng bitset. Hàng i của nó chỉ chứa bit i, bởi vì ma trận danh tính biểu thị một bước đi có độ dài bằng 0 ở cùng một thành phố. 
+3. Duy trì hai ma trận Boolean,`result`Và`base`. Ban đầu,`result`là ma trận nhận dạng và`base`là ma trận kề. Tính bất biến đó là`result`đại diện cho tích các lũy thừa của ma trận kề ban đầu đã được chọn từ các bit được xử lý của k, trong khi`base`đại diện cho sức mạnh hiện tại A 2 p. 
+4. Kiểm tra biểu diễn nhị phân của k từ bit có trọng số nhỏ nhất của nó. Nếu bit hiện tại là một, hãy nhân`result`qua`base`. Điều này kết hợp lũy thừa tương ứng A 2 p vào câu trả lời. 
+5. Hình vuông`base`để có được sức mạnh tiếp theo của hai. Phép nhân ma trận Boolean được sử dụng ở đây vì chúng tôi quan tâm liệu có tồn tại ít nhất một bước đi chứ không phải có bao nhiêu bước tồn tại. 
+6. Dịch k sang phải một bit và tiếp tục cho đến khi mọi bit được xử lý. Cần nhiều nhất 30 bit vì k 10 9. 
+7. Sau khi tính lũy thừa, xét đường chéo của`result`. Nếu bit i được đặt ở hàng i thì sẽ phải đi bộ chính xác k bước từ thành phố i trở lại thành phố i. Đếm tất cả các thành phố như vậy. 
 
 ### Tại sao nó hoạt động 
 
-Đối với phần chính xác, bất biến là sau (t) lần lặp,`reach[i]`chứa chính xác các đỉnh có thể tiếp cận từ (i) bằng một bước đi chính xác (t) cạnh. Bản cập nhật lấy mọi đỉnh hiện có thể tiếp cận và đi theo một cạnh nữa, do đó, nó không bỏ lỡ một bước đi khả thi cũng như không đưa ra một điểm cuối không thể thực hiện được. Do đó, các lần lặp bit (i) sau (k) được đặt chính xác khi có bước đi khép kín có độ dài-(k) tại (i). 
-
-Đối với (k lớn), trước tiên hãy xem xét độ dài chẵn. Bất kỳ đỉnh không cô lập nào đều có bước đi khép kín hai cạnh, có được bằng cách đi qua cạnh tới theo cả hai hướng. Lặp đi lặp lại nó sẽ cho mỗi độ dài chẵn dương. Một đỉnh cô lập không có bước đi dương nào cả. 
-
-Đối với độ dài lẻ, một thành phần lưỡng cực không thể chứa một bước đi khép kín lẻ vì mỗi cạnh đều thay đổi phía lưỡng cực, vì vậy sau một số cạnh lẻ thì bước đi phải ở phía đối diện. Một thành phần không lưỡng cực chứa một chu trình lẻ. Đối với một đỉnh (v), hãy lấy đường đi ngắn nhất có độ dài (d) từ (v) đến chu trình đó và đặt chu trình lẻ có độ dài (l). Đường đi và chu trình có thể được chọn để chỉ gặp nhau ở điểm cuối, do đó (d+l\le n). Bước đi khép kín thu được có độ dài (2d+l), tối đa là (d+n\le2n-1). Việc thêm bất kỳ số lượng dấu lùi hai cạnh nào sẽ cho mỗi độ dài lẻ lớn hơn. Vì thuật toán chỉ sử dụng đối số này khi (k>2n), độ dài lẻ lớn cần thiết luôn có thể đạt được. 
+Bất biến trung tâm là sau khi xử lý một số tiền tố của biểu diễn nhị phân của k,`result`bằng tích Boolean có lũy thừa chính xác tương ứng với các bit một được xử lý. Vì phép nhân ma trận Boolean tạo nên sự tồn tại của các bước đi, nên A t [i][j] đúng chính xác khi một số bước đi có độ dài t nối i với j. Phép lũy thừa nhị phân cuối cùng xây dựng nên A k, do đó đường chéo của nó chứa chính xác các thành phố thừa nhận một quãng đường khép kín có chiều dài k. Việc triển khai bitset chỉ thay đổi cách tính phép nhân Boolean chứ không thay đổi kết quả toán học mà nó biểu thị. 
 
 ## Giải pháp Python```python
-import sys
-input = sys.stdin.readline
+Pythonimport sysinput = sys.stdin.readline
 
-def solve_case(n, m, k, edges):
-    graph = [[] for _ in range(n)]
-    adj_bits = [0] * n
-    degree = [0] * n
+def multiply(A, B, n):    """    Boolean matrix multiplication.
+    Each row is a bitset. For every set bit j in A[i],    row B[j] contributes all vertices reachable after the    second part of the walk.    """    C = [0] * n
+    for i in range(n):        mask = A[i]        row = 0
+        while mask:            bit = mask & -mask            j = bit.bit_length() - 1            row |= B[j]            mask ^= bit
+        C[i] = row
+    return C
 
-    for u, v in edges:
-        graph[u].append(v)
-        graph[v].append(u)
+def solve():    T = int(input())    answers = []
+    for _ in range(T):        n, m, k = map(int, input().split())
+        adj = [0] * n
+        for _ in range(m):            x, y = map(int, input().split())            adj[x] |= 1 << y            adj[y] |= 1 << x
+        # A^0 = I.        result = [1 << i for i in range(n)]
+        # A^(2^p), starting with A^1.        base = adj
+        while k:            if k & 1:                result = multiply(result, base, n)
+            k >>= 1
+            if k:                base = multiply(base, base, n)
+        answer = 0        for i in range(n):            if result[i] & (1 << i):                answer += 1
+        answers.append(str(answer))
+    sys.stdout.write("\n".join(answers))
 
-        adj_bits[u] |= 1 << v
-        adj_bits[v] |= 1 << u
+if __name__ == "__main__":    solve()
+```Việc xây dựng kề sử dụng một số nguyên cho mỗi thành phố. Chút`j`đại diện cho thành phố`j`, vì vậy việc thiết lập`1 << j`ghi lại sự tồn tại của quá trình chuyển đổi đến thành phố đó. Việc đặt cả hai hướng sẽ xử lý đường vô hướng và thực hiện cùng một thao tác hai lần cho một cạnh song song không có tác dụng, đó chính xác là những gì chúng ta muốn.`result = [1 << i for i in range(n)]`tạo ra ma trận nhận dạng. Điều này là cần thiết ngay cả khi k=0, vì A 0 =I và đường chéo của đồng dạng chứa mọi thành phố. các`while k`do đó vòng lặp xử lý k=0 mà không có bất kỳ nhánh đặc biệt nào. 
 
-        degree[u] += 1
-        degree[v] += 1
+Thói quen nhân xứng đáng được chú ý nhất. Giả sử bit j được đặt trong`A[i]`. Điều đó có nghĩa là có một đoạn bước đầu tiên từ i đến j. Mỗi bit được đặt vào`B[j]`đại diện cho đoạn thứ hai từ j tới đích nào đó. Lấy OR trên tất cả như vậy`B[j]`do đó cung cấp chính xác các điểm đến có thể tiếp cận thông qua việc đi bộ được nối. 
 
-    if k == 0:
-        return n
+biểu thức`mask & -mask`trích xuất bit được đặt thấp nhất.`bit.bit_length() - 1`chuyển đổi bit đó thành chỉ số đỉnh của nó. Loại bỏ nó với`mask ^= bit`đảm bảo rằng mọi đỉnh trung gian có thể tiếp cận đều được xử lý một lần. 
 
-    # Small k: compute the exact set of endpoints after k steps.
-    if k <= 2 * n:
-        reach = [1 << i for i in range(n)]
+Không có vấn đề tràn số nguyên. Số nguyên Python tự động tăng lên và bitset lớn nhất chỉ có 50 bit có ý nghĩa. Giá trị của k cũng được xử lý trực tiếp dưới dạng số nguyên Python, do đó giới hạn 10 9 không yêu cầu số học đặc biệt. 
 
-        for _ in range(k):
-            new_reach = [0] * n
-
-            for start in range(n):
-                bits = reach[start]
-                result = 0
-
-                while bits:
-                    low = bits & -bits
-                    v = low.bit_length() - 1
-                    result |= adj_bits[v]
-                    bits -= low
-
-                new_reach[start] = result
-
-            reach = new_reach
-
-        answer = 0
-        for i in range(n):
-            if (reach[i] >> i) & 1:
-                answer += 1
-
-        return answer
-
-    # Large k: only the parity structure of each component matters.
-    color = [-1] * n
-    component = [-1] * n
-    component_bad = []
-
-    for start in range(n):
-        if color[start] != -1:
-            continue
-
-        cid = len(component_bad)
-        component_bad.append(False)
-
-        color[start] = 0
-        component[start] = cid
-        stack = [start]
-
-        while stack:
-            u = stack.pop()
-
-            for v in graph[u]:
-                if color[v] == -1:
-                    color[v] = color[u] ^ 1
-                    component[v] = cid
-                    stack.append(v)
-                elif color[v] == color[u]:
-                    component_bad[cid] = True
-
-    if k % 2 == 0:
-        return sum(degree[i] > 0 for i in range(n))
-
-    return sum(component_bad[component[i]] for i in range(n))
-
-def solve():
-    t = int(input())
-
-    for _ in range(t):
-        n, m, k = map(int, input().split())
-        edges = [tuple(map(int, input().split())) for _ in range(m)]
-
-        print(solve_case(n, m, k, edges))
-
-if __name__ == "__main__":
-    solve()
-```Phần đầu tiên của`solve_case`xây dựng hai biểu diễn đồ thị.`graph`lưu trữ các cạnh cho quá trình truyền tải thành phần và lưỡng cực sau này.`adj_bits[u]`lưu trữ mọi lân cận của (u) trong một số nguyên, do đó thực hiện thêm một bước biểu đồ sẽ trở thành một chuỗi các phép toán OR số nguyên. 
-
-Chương trình động chính xác bắt đầu bằng`1 << i`đối với thành phố (i), bởi vì trước khi đi đến bất kỳ cạnh nào, thành phố duy nhất có thể tiếp cận là chính (i). Đối với mọi đỉnh có thể tiếp cận`v`,`adj_bits[v]`chứa tất cả các đích đến có thể sau một bước bổ sung. HOẶC-ing tất cả các mặt nạ đó sẽ mang lại chính xác bộ có thể truy cập tiếp theo. 
-
-Vòng lặp được giới hạn ở`k <= 2 * n`. Ranh giới này là có chủ ý. Chúng ta không cần biết chính xác độ dài bước đi vượt quá (2n), vì cấu trúc thành phần hoàn toàn xác định câu trả lời ở đó. 
-
-Quá trình truyền tải lưỡng cực gán màu sắc`0`Và`1`. Một vòng lặp xuất hiện trong`graph[u]`như một cạnh từ`u`với chính nó, vì vậy`color[v] == color[u]`ngay lập tức đánh dấu thành phần là không lưỡng cực. Các cạnh song song không gây ra vấn đề gì vì việc lặp lại cùng một phép kiểm tra kề không làm thay đổi kết quả. 
-
-Đối với (k) thậm chí lớn,`degree[i] > 0`là điều kiện hoàn chỉnh. Đối với (k lớn lẻ), mã định danh thành phần ánh xạ từng đỉnh tới trạng thái lưỡng cực của nó, do đó`component_bad[component[i]]`trực tiếp cho biết thành phố (i) có thuộc thành phần không lưỡng đảng hay không. 
-
-Không có vấn đề tràn số nguyên trong Python. Bitset lớn nhất chỉ có 50 bit liên quan và (k) được lưu trữ dưới dạng số nguyên Python thông thường. 
+Thứ tự của các phép tính trong vòng lũy ​​thừa cũng được cân nhắc kỹ lưỡng. Nếu bit hiện tại của k là một thì công suất hiện tại phải được nhân thành`result`. Sau đó, công suất hiện tại được bình phương để chuẩn bị chữ số nhị phân tiếp theo. các`if k`bảo vệ tránh một bình phương cuối cùng không cần thiết. 
 
 ## Ví dụ đã hoạt động 
 
-### Mẫu 1, testcase đầu tiên 
+Trường hợp thử nghiệm mẫu đầu tiên là```
+3 2 30 10 2
+```Đồ thị là một đường đi có độ dài bằng 2, với thành phố 0 ở giữa. Chúng tôi muốn một cuộc đi bộ khép kín có chiều dài 3. 
 
-Đồ thị là một đường đi có độ dài bằng 2, với thành phố 0 ở giữa. 
+Các hàng liền kề được biểu diễn bằng các tập hợp bit. Vị trí bit 0, 1 và 2 tương ứng với ba thành phố. 
 
-Đối với (k=3), chúng ta ở trong phạm vi DP chính xác vì (3\le2n=6). 
-
-| Bước | Thành phố 0 có thể truy cập | Thành phố 1 có thể tiếp cận | Thành phố 2 có thể tiếp cận | 
+| Sân khấu | k |`result`hàng |`base`đại diện cho | 
 | --- | --- | --- | --- | 
-| 0 | {0} | {1} | {2} | 
-| 1 | {1,2} | {0} | {0} | 
-| 2 | {0} | {1,2} | {1,2} | 
-| 3 | {1,2} | {0} | {0} | 
+| Ban đầu | 3 |`001`,`010`,`100`| A 1 | 
+| Bit 0 = 1 | 3 | A | A 1 | 
+| Thay đổi | 1 | A | A 2 | 
+| Bit 1 = 1 | 1 | A 3 | A 2 | 
+| Kết thúc | 0 | A 3 | A 2 | 
 
-Không có hàng nào chứa thành phố bắt đầu sau ba bước, vì vậy câu trả lời là 0. 
+Không có chu trình lẻ và không có vòng tự lặp, nên đồ thị là hai phần và mọi bước đi khép kín đều có độ dài chẵn. Đường chéo của A 3 sai hoàn toàn, cho đáp án`0`. 
 
-Biểu đồ có tính chất lưỡng cực, điều này cũng giải thích tại sao các bước đi khép kín lẻ không thể tồn tại. DP chính xác vẫn được sử dụng vì thuật toán phải xử lý tất cả các giá trị nhỏ của (k), bao gồm cả trường hợp chỉ tính chẵn lẻ cuối cùng là không đủ. 
+Trường hợp thử nghiệm mẫu thứ hai là```
+3 2 40 10 2
+```Đây là cùng một biểu đồ, nhưng bây giờ k=4. 
 
-### Mẫu 1, testcase thứ ba 
+| Sân khấu | k |`result`|`base`| 
+| --- | --- | --- | --- | 
+| Ban đầu | 4 | Tôi | A | 
+| Thay đổi | 2 | Tôi | A 2 | 
+| Thay đổi | 1 | Tôi | A 4 | 
+| Bit 2 = 1 | 1 | A 4 | A 4 | 
+| Kết thúc | 0 | A 4 | A 4 | 
 
-Biểu đồ chứa một hình tam giác (0,1,2), cộng với đường dẫn (3-4-0). Ở đây (n=5) và (k=5), do đó (k\le2n) và DP chính xác được sử dụng. 
+Mỗi thành phố đều có một lối đi dài 4 chiều. Ví dụ từ thành phố 1, chúng ta có thể sử dụng 
 
-| Bước | Thành Phố 0 | Thành phố 1 | Thành phố 2 | Thành phố 3 | Thành phố 4 | 
-| --- | --- | --- | --- | --- | --- | 
-| 0 | {0} | {1} | {2} | {3} | {4} | 
-| 1 | {1,2,4} | {0,2} | {0,1} | {4} | {0,3} | 
-| 2 | {0,2,3,4} | {0,1,4} | {0,1,2,4} | {0,3} | {1,2,4} | 
-| 3 | {0,1,2,3,4} | {0,1,2,3} | {0,1,2,3,4} | {4} | {0,1,2,3} | 
-| 4 | {0,1,2,3,4} | {0,1,2,3,4} | {0,1,2,3,4} | {0,3} | {0,1,2,4} | 
-| 5 | {0,1,2,3,4} | {0,1,2,3,4} | {0,1,2,3,4} | {4} | {0,1,2,3,4} | 
+1→0→1→0→1. 
 
-Các thành phố 0, 1, 2 và 4 chứa chính chúng sau năm bước. Thành phố 3 thì không nên đáp án là 4. 
+Công trình xây dựng tương tự cho thành phố 2, trong khi thành phố 0 có thể xen kẽ với một trong hai thành phố lân cận. Do đó mọi mục nhập chéo của A 4 đều đúng và câu trả lời là`3`. 
 
-Ví dụ này cũng cho thấy tại sao chỉ kết nối thôi là chưa đủ. Thành phố 3 được kết nối với tam giác không lưỡng cực, tuy nhiên nó không có lối đi khép kín dài 5. Tính toán chính xác xử lý hạn chế khoảng cách ngắn đó một cách chính xác. 
+Hai dấu vết này cũng cho thấy lý do tại sao chỉ nhìn vào khả năng tiếp cận mà không theo dõi độ dài bước đi chính xác sẽ là không đủ. Biểu đồ được kết nối trong cả hai trường hợp, nhưng độ dài 3 tạo ra không có đường đi khép kín trong khi độ dài 4 tạo ra một đường đi ở mọi thành phố. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | (O(n^2\min(k,2n)+n+m)) | Mỗi bước DP chính xác xử lý tối đa (n) bộ có thể truy cập, mỗi bộ chứa tối đa (n) đỉnh. Lớn (k) chỉ yêu cầu duyệt một đồ thị. | 
-| Không gian | (O(n+m)) | Danh sách kề, bitset, màu sắc, ID thành phần và mảng DP đều sử dụng tối đa không gian (O(n+m)). | 
+| Thời gian | Hoạt động bitset O (n 2 logk) | Có các sản phẩm ma trận O(logk) và mỗi sản phẩm xử lý tối đa n 2 tập bit | 
+| Không gian | O(n) Số nguyên Python | Hai ma trận Boolean n hàng được lưu trữ, mỗi hàng chỉ chứa n bit liên quan | 
 
-Với (n\le50), pha chính xác thực hiện tối đa (2n=100) lần lặp. Ngay cả trong một biểu đồ dày đặc, mỗi lần lặp chỉ xử lý 50 bit nhỏ, do đó khối lượng công việc rất nhỏ. Pha lớn (k) chỉ là một phép truyền đồ thị tuyến tính. Giải pháp thoải mái phù hợp với giới hạn 3 giây và 256 MB. 
+Với n 50 và k 10 9, có nhiều nhất 30 mức lũy thừa. Mỗi phép nhân ma trận Boolean xử lý tối đa 50 mối quan hệ hàng 2 = 2500 và mỗi mối quan hệ được xử lý thông qua các phép toán bit số nguyên gốc. Điều này thoải mái trong giới hạn thời gian 3 giây và thấp hơn nhiều so với giới hạn bộ nhớ 256 MB. 
 
-## Trường hợp thử nghiệm 
+Sự khác biệt giữa cách triển khai này và phép nhân ma trận O(n 3 logk) thông thường rất hữu ích trong Python. Biểu diễn bitset nén toàn bộ hàng Boolean thành một số nguyên, do đó phép toán bên trong tốn kém được thực hiện bằng số học số nguyên được tối ưu hóa thay vì vòng lặp cấp Python trên tất cả các đích có thể. 
 
-Khai thác thử nghiệm sau đây tái tạo thuật toán thông qua`solve_case`và kiểm tra các mẫu cùng với một số trường hợp biên.```python
-import io
+## Trường hợp thử nghiệm```python
+Pythonimport sysimport io
 
-def solve_case(n, m, k, edges):
-    graph = [[] for _ in range(n)]
-    adj_bits = [0] * n
-    degree = [0] * n
+def solve_data(inp: str) -> str:    old_stdin = sys.stdin    old_stdout = sys.stdout
+    sys.stdin = io.StringIO(inp)    out = io.StringIO()    sys.stdout = out
+    try:        T = int(sys.stdin.readline())        answers = []
+        def multiply(A, B, n):            C = [0] * n
+            for i in range(n):                mask = A[i]                row = 0
+                while mask:                    bit = mask & -mask                    j = bit.bit_length() - 1                    row |= B[j]                    mask ^= bit
+                C[i] = row
+            return C
+        for _ in range(T):            n, m, k = map(int, sys.stdin.readline().split())            adj = [0] * n
+            for _ in range(m):                x, y = map(int, sys.stdin.readline().split())                adj[x] |= 1 << y                adj[y] |= 1 << x
+            result = [1 << i for i in range(n)]            base = adj
+            while k:                if k & 1:                    result = multiply(result, base, n)
+                k >>= 1
+                if k:                    base = multiply(base, base, n)
+            answer = sum(                1 for i in range(n)                if result[i] & (1 << i)            )            answers.append(str(answer))
+        sys.stdout.write("\n".join(answers))        return out.getvalue()
+    finally:        sys.stdin = old_stdin        sys.stdout = old_stdout
 
-    for u, v in edges:
-        graph[u].append(v)
-        graph[v].append(u)
-        adj_bits[u] |= 1 << v
-        adj_bits[v] |= 1 << u
-        degree[u] += 1
-        degree[v] += 1
+# Provided sampleassert solve_data("""\33 2 30 10 23 2 40 10 25 5 50 11 22 03 44 0""") == "0\n3\n4", "provided sample"
 
-    if k == 0:
-        return n
+# Minimum-size graph, k = 0.# The empty walk is valid at the only city.assert solve_data("""\11 0 0""") == "1", "k = 0"
 
-    if k <= 2 * n:
-        reach = [1 << i for i in range(n)]
+# One vertex with a self-loop.# The loop can be traversed any positive number of times.assert solve_data("""\11 1 10 0""") == "1", "self-loop and k = 1"
 
-        for _ in range(k):
-            new_reach = [0] * n
+# Two isolated vertices, k > 0.# There is no road at all, so no positive-length walk exists.assert solve_data("""\12 0 7""") == "0", "isolated vertices"
 
-            for start in range(n):
-                bits = reach[start]
-                result = 0
+# Parallel edges and an even walk.# Multiplicity does not matter because we only ask whether a walk exists.assert solve_data("""\12 3 20 10 10 1""") == "2", "parallel edges"
 
-                while bits:
-                    low = bits & -bits
-                    v = low.bit_length() - 1
-                    result |= adj_bits[v]
-                    bits -= low
+# A triangle, k = 3.# Every vertex can traverse the triangle once and return.assert solve_data("""\13 3 30 11 22 0""") == "3", "odd cycle"
 
-                new_reach[start] = result
-
-            reach = new_reach
-
-        return sum((reach[i] >> i) & 1 for i in range(n))
-
-    color = [-1] * n
-    component = [-1] * n
-    component_bad = []
-
-    for start in range(n):
-        if color[start] != -1:
-            continue
-
-        cid = len(component_bad)
-        component_bad.append(False)
-
-        color[start] = 0
-        component[start] = cid
-        stack = [start]
-
-        while stack:
-            u = stack.pop()
-
-            for v in graph[u]:
-                if color[v] == -1:
-                    color[v] = color[u] ^ 1
-                    component[v] = cid
-                    stack.append(v)
-                elif color[v] == color[u]:
-                    component_bad[cid] = True
-
-    if k % 2 == 0:
-        return sum(degree[i] > 0 for i in range(n))
-
-    return sum(component_bad[component[i]] for i in range(n))
-
-def run(inp):
-    data = list(map(int, inp.split()))
-    p = 0
-
-    t = data[p]
-    p += 1
-    out = []
-
-    for _ in range(t):
-        n, m, k = data[p], data[p + 1], data[p + 2]
-        p += 3
-
-        edges = []
-        for _ in range(m):
-            u, v = data[p], data[p + 1]
-            p += 2
-            edges.append((u, v))
-
-        out.append(str(solve_case(n, m, k, edges)))
-
-    return "\n".join(out) + "\n"
-
-# Provided sample.
-sample = """\
-3
-3 2 3
-0 1
-0 2
-3 2 4
-0 1
-0 2
-5 5 5
-0 1
-1 2
-2 0
-3 4
-4 0
-"""
-assert run(sample) == "0\n3\n4\n", "sample"
-
-# Minimum-size graph, no edges, k = 0.
-assert run("""\
-1
-1 0 0
-""") == "1\n", "k = 0"
-
-# One vertex with several loops, all endpoints equal.
-# Every positive k is possible.
-assert run("""\
-1
-1 5 1000000000
-0 0
-0 0
-0 0
-0 0
-0 0
-""") == "1\n", "all-equal loop edges"
-
-# Boundary between the exact and large-k phases.
-# A single edge is bipartite, so even lengths work and odd lengths do not.
-assert run("""\
-4
-2 1 4
-0 1
-2 1 5
-0 1
-3 2 6
-0 1
-1 2
-3 2 7
-0 1
-1 2
-""") == "2\n0\n3\n0\n", "parity boundary"
-
-# Large odd k in a non-bipartite component.
-# Triangle plus a leaf. Every vertex belongs to the same non-bipartite component.
-assert run("""\
-1
-4 4 1000000001
-0 1
-1 2
-2 0
-2 3
-""") == "4\n", "large odd non-bipartite"
-
-# Maximum-size graph: complete graph on 50 vertices.
-# There are 50^2 = 2500 roads when loops are included.
-# Every vertex has a loop, so every positive k works.
-n = 50
-edges = [(i, j) for i in range(n) for j in range(n)]
-max_input = "1\n50 2500 1000000000\n"
-max_input += "\n".join(f"{u} {v}" for u, v in edges) + "\n"
-
-assert run(max_input) == "50\n", "maximum-size dense graph"
+# Maximum-size vertex count and a huge k.# Complete graph has a closed walk of every positive length at every vertex.edges = []n = 50for i in range(n):    for j in range(i + 1, n):        edges.append(f"{i} {j}")
+max_case = "1\n50 1225 1000000000\n" + "\n".join(edges) + "\n"assert solve_data(max_case) == "50", "maximum n and huge k"
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`1 / 1 0 0`|`1`| Bước đi trống và kích thước biểu đồ tối thiểu | 
-|`1 / 1 5 1000000000 / 0 0 ...`|`1`| Vòng lặp và độ dài lẻ lớn tùy ý | 
-| Các trường hợp một cạnh và đường dẫn với (k=4,5,6,7) |`2,0,3,0`| Các bước đi khép kín chẵn và lẻ và ranh giới nhỏ/lớn | 
-| Tam giác có một chiếc lá và số lẻ rất lớn (k) |`4`| Xử lý thành phần không lưỡng cực cho số lẻ lớn (k) | 
-| Đồ thị hoàn chỉnh trên 50 đỉnh với 2500 con đường |`50`| Tối đa (n), tối đa (m) và lân cận dày đặc | 
+|`1 0 0`|`1`| Đồ thị tối thiểu và ranh giới k=0 | 
+| Một đỉnh có một vòng lặp, k=1 |`1`| Tự lặp và quay lại chính xác một bước | 
+| Hai đỉnh cô lập, k=7 |`0`| Không đi bộ dài tích cực | 
+| Ba cạnh song song giữa hai đỉnh, k=2 |`2`| Các cạnh song song không ảnh hưởng đến sự tồn tại | 
+| Tam giác, k=3 |`3`| Đi dạo khép kín | 
+| Đồ thị hoàn chỉnh trên 50 đỉnh, k=10 9 |`50`| N tối đa, k lớn và lũy thừa nhị phân | 
 
 ## Vỏ cạnh 
 
-Với (k=0), hãy xem xét```
-1
-1 0 0
-```Thuật toán trả về ngay lập tức với`n`, bằng 1. Không cần thông tin kề cận vì quãng đường đi bộ có độ dài bằng 0 không yêu cầu đường. Điều này tránh được sai lầm phổ biến là yêu cầu thành phố xuất phát phải có mức độ tích cực. 
+### Không bước 
 
-Đối với một đỉnh cô lập có số chẵn dương (k), hãy xem xét```
-1
-2 0 2
-```Phím tắt lớn-(k) không được sử dụng vì (2\le2n), do đó DP chính xác bắt đầu bằng`{0}`Và`{1}`. Sau một bước, cả hai tập hợp trở nên trống vì không có cạnh liên quan và chúng vẫn trống. Không có bit chéo nào xuất hiện, cho kết quả 0. Nếu trường hợp tương tự có (k) chẵn lớn hơn nhiều, thì nhánh lớn-(k) sẽ kiểm tra rõ ràng`degree[i] > 0`, ngăn cản việc một thành phố bị cô lập được chấp nhận. 
+Hãy xem xét```
+13 0 0
+```Thuật toán khởi tạo`result`vào ma trận nhận dạng và không bao giờ đi vào vòng lũy ​​thừa vì`k`là số không. Ma trận đồng nhất có mọi tập hợp mục nhập đường chéo, vì vậy cả ba thành phố đều được tính. Điều này phù hợp với định nghĩa về chiều dài đi bộ bằng không. 
 
-Đối với một vòng lặp, hãy xem xét```
-1
-1 1 1
-0 0
-```DP chính xác bắt đầu bằng bit 0 được đặt. Sau một bước, nó OR mặt nạ kề của đỉnh 0, chứa bit 0 do vòng lặp. Bit đường chéo vẫn được đặt, vì vậy câu trả lời là 1. Trong nhánh lớn-(k), cùng một vòng lặp làm cho quá trình truyền tải lưỡng cực gặp một cạnh có điểm cuối cùng màu, đánh dấu thành phần không phải lưỡng cực. 
+### Tự lặp với một bước 
 
-Đối với đồ thị không lưỡng cực có số lẻ (k) nhỏ, hãy xét tam giác```
-1
-3 3 1
-0 1
-1 2
-2 0
-```Đồ thị chứa một chu trình lẻ nhưng không có vòng lặp. Với (k=1), không có đỉnh nào có thể quay về chính nó trong một cạnh. Vì (1\le2n), DP chính xác được sử dụng và trả về đúng 0. Đây là lý do phân loại chẵn lẻ lớn (k) không thể áp dụng đơn giản cho mọi (k lẻ). 
+Hãy xem xét```
+12 1 10 0
+```Hàng kề của thành phố 0 chứa bit 0, trong khi thành phố 1 có hàng trống. Vì k=1 nên`result`trở thành ma trận kề. Đường chéo của nó chỉ chứa giá trị thực tại thành phố 0, vì vậy câu trả lời là`1`. 
 
-Cuối cùng, hãy xem xét một biểu đồ lưỡng cực có số lẻ (k) rất lớn:```
-1
-3 2 1000000001
-0 1
-1 2
-```Ở đây (k>2n), do đó thuật toán chạy kiểm tra lưỡng cực thay vì lặp lại một tỷ lần. Thành phần này là lưỡng cực, vì vậy`component_bad`là sai. Vì (k) là số lẻ nên không có thành phố nào được tính và câu trả lời là 0. Kết quả rút ra từ thực tế là mọi bước đi khép kín trong biểu đồ hai bên đều có độ dài chẵn.
+Trường hợp này phát hiện các triển khai vô tình bỏ qua các vòng tự lặp hoặc chỉ chèn một cạnh khi điểm cuối của nó khác nhau. 
+
+### Đỉnh cô lập 
+
+Hãy xem xét```
+12 0 7
+```Ma trận kề đều bằng 0. Mọi lũy thừa dương của ma trận Boolean bằng 0 vẫn bằng 0, do đó không có mục nhập đường chéo nào được đặt. Câu trả lời là`0`. Ma trận nhận dạng không gây ra kết quả dương tính giả vì nó chỉ được sử dụng cho số mũ bằng 0 và ở đây số mũ là số dương. 
+
+### Đường song song 
+
+Hãy xem xét```
+12 3 20 10 10 1
+```Ba đường đầu vào đều đặt hai bit kề nhau giống nhau. Sau khi xây dựng, ma trận chính xác là ma trận kề của một cạnh vô hướng. Bình phương nó sẽ cho một đường chéo đúng ở cả hai đỉnh, tương ứng với các bước đi 0→1→0 và 1→0→1. Câu trả lời là`2`. 
+
+Việc xử lý đầu vào dưới dạng đa đồ thị với số lượng sẽ không cần thiết vì bài toán yêu cầu sự tồn tại thay vì số lần đi bộ có thể. 
+
+### Chu kỳ lẻ 
+
+Hãy xem xét```
+13 3 30 11 22 0
+```Hàm mũ thứ nhất cho phép một cạnh và lập phương ma trận kề Boolean sẽ phát hiện đường đi của tam giác từ mọi đỉnh trở về chính nó. Đường chéo của A 3 hoàn toàn đúng nên đáp án là`3`. 
+
+Đây cũng là lý do tại sao giải pháp chỉ dựa trên k chẵn hoặc lẻ là không đủ. Cấu trúc biểu đồ xác định độ dài chính xác nào có thể và lũy thừa ma trận Boolean biểu thị trực tiếp cấu trúc đó.

@@ -1,7 +1,7 @@
 ---
 title: "CF 102354I - Từ mô-đun đến hợp lý"
-description: "Đối với mỗi trường hợp kiểm tra, giám khảo đã chọn một số hữu tỷ [ x=frac pq, qquad 1le p,qle 10^9. ] Chúng tôi không thể yêu cầu (x) một cách trực tiếp. Thay vào đó, đối với số nguyên tố (m10^9), chúng ta yêu cầu số dư (y) thỏa mãn [ yequiv p q^{-1}pmod m. ] Tương đương, [ pequiv yqpmod m."
-date: "2026-08-15T17:45:14+07:00"
+description: "Chúng ta cần khôi phục một số hữu tỉ dương (x=p/q), trong đó cả (p) và (q) nhiều nhất là (10^9). Chúng ta không thể nhìn thấy (p) và (q) một cách trực tiếp. Thay vào đó, đối với mô đun nguyên tố được chọn (m), giám khảo đưa ra số nguyên (r) trong phạm vi (0le r<m) thỏa mãn [ requiv p q^{-1}pmod m."
+date: "2026-08-16T08:43:50+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102354
@@ -9,7 +9,7 @@ codeforces_index: "I"
 codeforces_contest_name: "2018-2019 Summer Petrozavodsk Camp, Oleksandr Kulkov Contest 2"
 rating: 0
 weight: 102354
-solve_time_s: 182
+solve_time_s: 315
 verified: false
 draft: false
 ---
@@ -18,473 +18,477 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 3m 2s 
+**Thời gian giải:** 5 phút 15s 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Đối với mỗi trường hợp kiểm tra, thẩm phán đã chọn một số hữu tỷ 
+Chúng ta cần khôi phục một số hữu tỉ dương (x=p/q), trong đó cả (p) và (q) nhiều nhất là (10^9). Chúng ta không thể nhìn thấy (p) và (q) một cách trực tiếp. Thay vào đó, đối với môđun nguyên tố được chọn (m), giám khảo đưa ra số nguyên (r) trong khoảng (0\le r<m) thỏa mãn 
 
 [ 
-x=\frac pq, 
-\qquad 1\le p,q\le 10^9. 
+r\equiv p q^{-1}\pmod m. 
 ] 
 
-Chúng ta không thể yêu cầu (x) một cách trực tiếp. Thay vào đó, đối với số nguyên tố (m>10^9), chúng ta yêu cầu dư lượng (y) thỏa mãn 
+Vì (m) là số nguyên tố và (q<m) nên tồn tại nghịch đảo (q^{-1}). Tương tự, thông tin được truy vấn trả về chính xác là câu lệnh 
 
 [ 
-y\equiv p q^{-1}\pmod m. 
+rq\equiv p\pmod m. 
 ] 
 
-Tương đương, 
+Nhiệm vụ này mang tính tương tác, do đó, đối với mọi trường hợp thử nghiệm, chương trình của chúng tôi sẽ in các truy vấn, đọc câu trả lời của giám khảo và cuối cùng in ra một cặp (p,q) đại diện cho số hữu tỷ ẩn. Cặp đôi không cần phải giảm. Ví dụ: (1/2), (2/4) và (500000000/1000000000) đều đại diện cho cùng một giá trị và bất kỳ giá trị nào trong số đó đều được chấp nhận. Tuyên bố chính thức chỉ định tối đa (10^5) trường hợp thử nghiệm và tối đa mười truy vấn cho mỗi trường hợp. 
+
+Giới hạn (p,q\le10^9) là ràng buộc cấu trúc trung tâm. Việc tìm kiếm trực tiếp trên các mẫu số có thể yêu cầu tối đa (10^9) lần lặp cho một trường hợp thử nghiệm. Với (10^5) trường hợp, điều đó trở thành (10^{14}) phép tính mô-đun, vượt xa giới hạn sáu giây có thể hỗ trợ. Chúng ta cần biến thông tin mô-đun thành một bản tái cấu trúc hợp lý chính xác bằng cách sử dụng lý thuyết số logarit theo thời gian. 
+
+Ngoài ra còn có một sự khác biệt tinh tế giữa tính độc đáo và sự tái thiết. Nếu bằng cách nào đó chúng ta biết giá trị theo mô đun (M>10^{18}), thì số hữu tỉ sẽ là duy nhất trong số tất cả các phân số có tử số và mẫu số nhiều nhất là (10^9). Thật vậy, nếu cả (p_1/q_1) và (p_2/q_2) đều tạo ra cùng một dư lượng thì 
 
 [ 
-p\equiv yq\pmod m. 
+p_1q_2\equiv p_2q_1\pmod M. 
 ] 
 
-Mục tiêu là khôi phục bất kỳ cặp hợp lệ nào (p,q) mô tả cùng một số hữu tỷ. Cặp này không nhất thiết phải là cặp chính xác được chọn ban đầu, bởi vì (1/2), (2/4) và (500000004/1000000008) đại diện cho cùng một số hữu tỷ và giao thức chấp nhận bất kỳ cặp nào trong giới hạn đại diện cho giá trị đó. Mẫu chính thức chứng minh rõ ràng điều này với (1/2) được trả lời là (2/4). 
+Do đó (M) chia hết (p_1q_2-p_2q_1). Giá trị tuyệt đối của chênh lệch đó lớn nhất là (10^{18}), do đó, mô đun lớn hơn (10^{18}) sẽ buộc chênh lệch bằng 0. Quan sát tính duy nhất này cũng là cơ sở của các giải pháp tiêu chuẩn cho vấn đề. 
 
-Giới hạn (10) truy vấn đủ rộng để xây dựng lại lý thuyết số, nhưng quá nhỏ để thử nhiều mô đun hoặc tìm kiếm thông qua các mẫu số có thể. Vì có thể có (10^5) trường hợp thử nghiệm, nên ngay cả thuật toán hoạt động (O(10^9)) cho mỗi trường hợp cũng có nghĩa là (10^{14}) hoạt động trong trường hợp xấu nhất. Giải pháp dự định chỉ sử dụng hai truy vấn cho mỗi trường hợp thử nghiệm và sau đó thực hiện số bước thuật toán Euclide theo logarit. 
+Có một số trường hợp nghiêm trọng mà việc triển khai bất cẩn có thể dẫn đến xử lý sai. Đầu tiên là một phân số không rút gọn. Ví dụ: giá trị ẩn có thể là (2/4). Một đầu ra đúng là`1 2`, mặc dù mẫu chọn`2 4`. Việc triển khai nhấn mạnh vào việc khôi phục cặp gốc chính xác thay vì giá trị hợp lý sẽ từ chối câu trả lời hoàn toàn hợp lệ. 
 
-Cách hữu ích nhất để suy nghĩ về vấn đề này là một câu trả lời mô-đun cho chúng ta sự đồng dạng tuyến tính giữa tử số và mẫu số chưa biết. Một mô đun xung quanh (10^9) không đủ lớn để làm cho sự đồng dạng đó là duy nhất, nhưng tích của hai số nguyên tố cho phép có thể xấp xỉ (10^{24}). Nó lớn hơn nhiều so với (2\cdot10^{18}), là thang đo cần thiết để phân biệt hai phân số khác nhau có tử số và mẫu số được giới hạn bởi (10^9). 
+Số thứ hai là một số nguyên như (2/1). Ở đây thặng dư mô-đun chỉ đơn giản là (2), vì vậy câu trả lời đúng có thể là`2 1`. Một quy trình xây dựng lại chỉ tìm kiếm mẫu số phân số tiếp tục không cần thiết có thể vô tình bỏ qua phần dư ban đầu và thất bại trong trường hợp này. 
 
-Có ba trường hợp khó khăn dễ dẫn đến giải pháp sai. 
+Thứ ba là giá trị (1/1). Đối với mỗi mô đun được truy vấn, phần dư được trả về là (1). Việc triển khai CRT hoặc Euclide bất cẩn giả định phần dư lớn có thể xử lý sai hợp lý nhỏ nhất có thể này. Đầu ra đúng là`1 1`. 
 
-Đầu tiên, một mô-đun là không đủ. Lấy (m=1000000007) và giả sử phản hồi là (500000004). Phân số (1/2) tạo ra phần dư này vì (2\cdot500000004\equiv1\pmod m). Nhưng phân số nguyên (500000004/1) tạo ra cùng một lượng dư. Cả tử số và mẫu số đều thỏa mãn giới hạn, do đó, giải pháp chỉ sử dụng mô đun này không thể biết số hữu tỉ nào đã được chọn. Hai mô-đun loại bỏ sự mơ hồ này. 
-
-Thứ hai, cặp ẩn không cần phải giảm. Ví dụ: biểu diễn ẩn (1000000000/1000000000) chỉ đơn giản là số hữu tỷ (1). Một thuật toán tái thiết đòi hỏi phải khôi phục chính xác tử số và mẫu số ban đầu sẽ giải quyết được một vấn đề mà thẩm phán không yêu cầu. Câu trả lời đúng có thể là (1/1). 
-
-Thứ ba, cặp phục hồi từ việc tái thiết hợp lý dự kiến ​​sẽ giảm đi. Giả sử giá trị ẩn là (2/4). Các phương trình mô-đun mô tả giá trị hữu tỷ (1/2) và việc tái cấu trúc Euclide tự nhiên tìm thấy (1/2), chứ không phải (2/4). Điều này hợp lệ vì cả hai cặp đều đại diện cho cùng một giá trị. 
+Thứ tư là một phân số ở ranh giới số. Ví dụ: (1000000000/999999999) là hợp lệ ngay cả khi tử số và mẫu số của nó đều gần giới hạn trên. Việc tái tạo dấu phẩy động ở đây không an toàn vì các số nguyên liên quan có thể ở khoảng (10^{24}) sau CRT. Giải pháp phải sử dụng số học số nguyên chính xác xuyên suốt. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận trực tiếp sẽ truy vấn một số nguyên tố (m), sau đó thử mọi mẫu số có thể có (q) từ (1) đến (10^9). Với mỗi (q), chúng tôi tính toán 
+Cách tiếp cận vũ phu bắt đầu từ sự phù hợp 
 
 [ 
-p=(yq\bmod m) 
+rq\equiv p\pmod M. 
 ] 
 
-và kiểm tra xem (1\le p\le10^9). Mẫu số thực phải vượt qua bài kiểm tra này, vì vậy phương pháp này đúng nếu chúng ta chấp nhận bất kỳ cặp hợp lệ nào. 
-
-Vấn đề là mẫu số có thể có (10^9). Với (10^5) trường hợp kiểm thử, trường hợp xấu nhất đạt tới (10^{14}) phép nhân và rút gọn theo mô-đun. Ngay cả một trường hợp thử nghiệm cũng đã quá lớn so với giới hạn sáu giây. 
-
-Quan sát quan trọng là hai câu trả lời mô-đun có thể được kết hợp thành một câu trả lời theo mô-đun tích của hai số nguyên tố. Đây chính xác là Định lý số dư Trung Hoa. Sau khi kết hợp các phần dư, chúng ta biết một số nguyên (r) sao cho 
+Với mọi (q) có thể có từ (1) đến (10^9), chúng ta có thể tính được 
 
 [ 
-r\equiv pq^{-1}\pmod M, 
+p=(rq)\bmod M 
 ] 
 
-ở đâu 
+và kiểm tra xem (1\le p\le10^9). Cặp ẩn được đảm bảo vượt qua bài kiểm tra này, vì vậy cặp hợp lệ đầu tiên sẽ đưa ra câu trả lời đúng. Điều này đơn giản về mặt khái niệm và hoàn toàn chính xác vì truy vấn cho chúng ta biết chính xác (rq\bmod M) phải bằng gì đối với mẫu số thực. 
+
+Vấn đề là số lượng hoạt động. Trong trường hợp xấu nhất, một trường hợp thử nghiệm cần (10^9) phép nhân mô-đun. Trên (10^5) trường hợp thử nghiệm, điều này có thể đạt tới (10^{14}) lần lặp. Lực lượng vũ phu hoạt động vì mọi mẫu số có thể có thể được kiểm tra độc lập, nhưng nó không thành công vì phạm vi mẫu số quá lớn. 
+
+Quan sát quan trọng là chúng ta được phép chọn các mô đun. Thay vì sử dụng mô đun chỉ lớn hơn (10^9), hãy chọn hai số nguyên tố cố định cực kỳ gần với (10^{12}): 
+
+[ 
+m_1=999999999989,\qquad 
+m_2=999999999997. 
+] 
+
+Cả hai đều thỏa mãn hạn chế truy vấn và đều là số nguyên tố. 
+
+Hai truy vấn là đủ. Theo Định lý phần dư Trung Hoa, hai phần dư có thể được kết hợp thành một phần dư (r) modulo 
 
 [ 
 M=m_1m_2. 
 ] 
 
-Tương đương, 
-
-[ 
-p\equiv rq\pmod M. 
-] 
-
-Hai số nguyên tố cố định 
-
-[ 
-m_1=999999999989,\qquad 
-m_2=1000000000039 
-] 
-
-đều là số nguyên tố hợp lệ trong phạm vi được yêu cầu. Chúng được liệt kê dưới dạng các số nguyên tố liên tiếp trong khoảng (10^{12}) trong các bảng nguyên tố tiêu chuẩn. Tích của họ xấp xỉ (10^{24}), vì vậy 
+Mô đun này xấp xỉ (10^{24}), do đó, cụ thể 
 
 [ 
 M>2\cdot10^{18}. 
-]
-
-Bây giờ giả sử hai phân số giới hạn khác nhau (p_1/q_1) và (p_2/q_2) tạo ra cùng một dư lượng. Sau đó 
-
-[ 
-p_1q_2\equiv p_2q_1\pmod M, 
 ] 
 
-nên (M) chia 
+Giới hạn mạnh hơn đó cho phép chúng ta sử dụng phép tái cấu trúc hợp lý phân số tiếp tục tiêu chuẩn. 
+
+Từ 
 
 [ 
-p_1q_2-p_2q_1. 
+rq\equiv p\pmod M 
 ] 
 
-Nhưng mỗi tử số và mẫu số nhiều nhất là (10^9), vì vậy 
+tồn tại một số nguyên (k) sao cho 
 
 [ 
-|p_1q_2-p_2q_1|\le2\cdot10^{18<M. 
+rq-kM=p. 
 ] 
 
-Bội số duy nhất của (M) trong khoảng đó bằng 0. Do đó 
+Chia cho (Mq): 
 
 [ 
-p_1q_2=p_2q_1, 
+\frac rM-\frac{k}{q}=\frac{p}{Mq}. 
 ] 
 
-nghĩa là hai phân số bằng nhau. 
-
-Vì vậy, sau CRT, bài toán trở thành bài toán tái thiết hợp lý tiêu chuẩn. Tái cấu trúc hợp lý được kết nối chặt chẽ với thuật toán Euclide mở rộng và các phân số tiếp tục. 
-
-Thuật toán Euclide mở rộng tạo ra phần dư có dạng 
+Bởi vì (p,q\le10^9) và (M>2\cdot10^{18}), 
 
 [ 
-r_i=s_iM+t_ir. 
+\left|\frac rM-\frac{k}{q}\right| 
+=\frac{p}{Mq} 
+<\frac{1}{2q^2}. 
 ] 
 
-Do đó mọi cặp trung gian đều thỏa mãn 
+Một tính chất phân số tiếp tục cổ điển nói rằng một xấp xỉ hữu tỉ gần với (r/M) này phải là một trong những giá trị hội tụ của nó. Do đó, mẫu số ẩn (q) xuất hiện một cách tự nhiên trong quá trình thuật toán Euclide áp dụng cho (M) và (r). Kết nối phân số liên tục là một cách tiêu chuẩn để giải quyết vấn đề tái thiết hợp lý chính xác này. 
 
-[ 
-r_i\equiv t_ir\pmod M. 
-] 
-
-Khi phần dư đầu tiên đạt tối đa (10^9), điều kiện mô đun lớn đảm bảo rằng hệ số tương ứng (t_i) cũng nằm trong giới hạn yêu cầu và cho tử số và mẫu số mong muốn. Đây là cách tiếp cận thuật toán Euclide cổ điển để tái thiết hợp lý. 
+Điều này biến việc tìm kiếm (10^9) mẫu số có thể thành thuật toán Euclide (O(\log M)). Vì (M) chỉ có khoảng 24 chữ số thập phân nên chỉ có vài chục lần lặp Euclide cho mỗi trường hợp thử nghiệm. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | (O(10^9)) mỗi trường hợp thử nghiệm | (O(1)) | Quá chậm | 
-| Tối ưu | (O(\log M)) bước số học cho mỗi ca kiểm thử | (O(1)) | Đã chấp nhận | 
+| CRT + phân số tiếp theo | (O(\log M)) cho mỗi trường hợp thử nghiệm | (O(1)) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Yêu cầu modulo dư lượng (m_1=999999999989), sau đó yêu cầu modulo dư lượng (m_2=10000000000039). Cả hai số đều là số nguyên tố và nằm hoàn toàn giữa (10^9) và (10^{12}), vì vậy cả hai truy vấn đều hợp pháp. Việc sử dụng các số nguyên tố lớn như vậy làm cho tích của chúng vượt xa giới hạn tích chéo (10^{18}). 
-2. Kết hợp hai thặng dư với Định lý số dư Trung Hoa. Đặt câu trả lời là (y_1) và (y_2). Viết 
+1. Truy vấn số nguyên tố cố định đầu tiên (m_1=999999999989) và gọi phần dư được trả về (r_1). Truy vấn này hợp lệ vì (m_1) là số nguyên tố và nằm hoàn toàn giữa (10^9) và (10^{12}). 
+2. Truy vấn số nguyên tố cố định thứ hai (m_2=999999999997), thu được (r_2). Hai mô đun là nguyên tố cùng nhau vì chúng là các số nguyên tố riêng biệt, đó chính là điều mà Định lý số dư Trung Hoa yêu cầu. 
+3. Kết hợp hai đồng dư 
 
 [ 
-r=y_1+m_1k. 
+R\equiv r_1\pmod {m_1}, 
+\qquad 
+R\equiv r_2\pmod {m_2} 
 ] 
 
-Chúng tôi cần 
+thành một dư lượng (R) modulo (M=m_1m_2). Viết 
 
 [ 
-y_1+m_1k\equiv y_2\pmod {m_2}, 
+R=r_1+m_1t. 
+] 
+
+Thay thế vào đồng đẳng thứ hai sẽ cho 
+
+[ 
+m_1t\equiv r_2-r_1\pmod {m_2}. 
+] 
+
+Vì (m_1) có modulo nghịch đảo (m_2), nên chúng ta có thể tính (t) với một nghịch đảo mô đun. 
+
+1. Sau CRT, chúng ta biết 
+
+[ 
+R\equiv pq^{-1}\pmod M, 
 ] 
 
 vậy 
 
 [ 
-k\equiv(y_2-y_1)m_1^{-1}\pmod {m_2}. 
+Rq\equiv p\pmod M. 
 ] 
 
-Việc chọn số không âm (k) nhỏ nhất sẽ cho phần dư (r) modulo duy nhất 
+Do đó tồn tại số nguyên (k) thỏa mãn 
 
 [ 
-M=m_1m_2. 
+Rq-kM=p. 
 ] 
 
-Bước CRT biến hai phương trình mô đun nhỏ thành một phương trình có mô đun xung quanh (10^{24}). 
+Mục tiêu bây giờ là khôi phục các số nguyên dương nhỏ (p,q) từ phương trình này. 
 
-1. Chạy thuật toán Euclide mở rộng trên (M) và (r), đồng thời theo dõi hệ số của (r). Khởi tạo 
+1. Xét số hữu tỷ (k/q). Từ phương trình trước, 
 
 [ 
-R_0=M,\quad R_1=r, 
+\frac RM-\frac{k}{q} 
+=\frac{p}{Mq}. 
+] 
+
+Vì (p,q\le10^9) và (M>2\cdot10^{18}), vế phải hoàn toàn nhỏ hơn (1/(2q^2)). Do đó (k/q) là sự hội tụ của phân số liên tục của (R/M).
+
+1. Chạy thuật toán Euclide trên (M) và (R), đồng thời theo dõi hệ số của (R) trong mọi phần còn lại. Khởi tạo 
+
+[ 
+M=0\cdot R+1\cdot M 
 ] 
 
 và 
 
 [ 
-T_0=0,\quad T_1=1. 
+R=1\cdot R+0\cdot M. 
 ] 
 
-Bất biến là 
+Khi Euclid biến đổi hai số dư liên tiếp bằng cách sử dụng 
 
 [ 
-R_i=S_iM+T_ir. 
+a\leftarrow b,\qquad 
+b\leftarrow a-\lfloor a/b\rfloor b, 
 ] 
 
-Do đó, 
+phép biến đổi tương tự có thể được áp dụng cho các hệ số (R) của chúng. Do đó mọi phần còn lại Euclide đều có dạng 
 
 [ 
-R_i\equiv T_ir\pmod M. 
+s=cR+dM. 
 ] 
 
-Hệ số (T_i) là mẫu số ứng viên tương ứng với tử số ứng cử viên (R_i). 
-
-1. Thực hiện nhiều lần phép chia Euclide thông thường 
+1. Tìm (các) số dư có (1\le s\le10^9) và hệ số dương (c\le10^9). Đối với phần ẩn, mối quan hệ chính xác là 
 
 [ 
-R_{i-1}=a_iR_i+R_{i+1}, 
+p=qR-kM, 
 ] 
 
-và cập nhật 
+vì vậy tử số (p) của nó là phần dư Euclide và mẫu số (q) của nó là hệ số dương của (R). 
 
-[ 
-T_{i+1}=T_{i-1}-a_iT_i. 
-] 
-
-Dừng khi số dư hiện tại lớn nhất là (10^9). Phần còn lại đang giảm chính xác như trong thuật toán Euclide thông thường, do đó chỉ cần lặp lại (O(\log M)). 
-
-1. Chuẩn hóa các dấu sao cho mẫu số dương. Đối với lý trí tích cực được thẩm phán che giấu, việc tái thiết thành công có tử số và mẫu số dương. 
-2. Xuất ra tử số và mẫu số. Nếu cặp ẩn không bị rút gọn, thuật toán Euclide sẽ đưa ra biểu diễn rút gọn của cùng một số hữu tỷ, đây vẫn là một câu trả lời hợp lệ. 
+1. Xuất cặp đó. Nếu phân số ban đầu không được rút gọn, việc tái cấu trúc Euclide có thể trả về dạng rút gọn, đại diện cho cùng một số hữu tỷ và được chấp nhận. 
 
 ### Tại sao nó hoạt động 
 
-Bất biến trung tâm là 
+Bất biến trung tâm là mọi phần dư Euclide được biểu diễn dưới dạng tổ hợp tuyến tính nguyên của (R) và (M), và hệ số được theo dõi của nó ghi lại số nhân của (R). Cặp ẩn thỏa mãn 
 
 [ 
-R_i=S_iM+T_ir, 
+p=qR-kM, 
 ] 
 
-vì vậy mọi trạng thái Euclide đại diện cho một ứng cử viên hợp lý (R_i/T_i) có giá trị mô-đun là (r). Phân số ẩn rút gọn thực tế (p/q) thỏa mãn 
+nên (p) là một trong số dư có hệ số (q). Mô đun CRT lớn cho giới hạn gần đúng 
 
 [ 
-p\equiv rq\pmod M. 
+\left|\frac RM-\frac{k}{q}\right|<\frac1{2q^2}, 
 ] 
 
-Bởi vì (M>2\cdot10^{18}), hai giá trị hữu tỉ khác nhau có tử số và mẫu số nhiều nhất là (10^9) không thể thỏa mãn cùng một sự đồng dạng. Tái cấu trúc hợp lý cổ điển nói rằng phần dư Euclide đầu tiên vượt qua giới hạn (10^9) chính xác là nghiệm bị chặn. 
-
-Lập luận về tính duy nhất đặc biệt đơn giản. Nếu tồn tại hai ứng cử viên, tích chéo của họ sẽ là bội số của (M), nhưng giá trị tuyệt đối của nó tối đa là (2\cdot10^{18}), hoàn toàn nhỏ hơn (M). Do đó tích chéo phải bằng 0, nên cả hai ứng cử viên đều đại diện cho cùng một số hữu tỷ. 
+buộc (k/q) là một phân số hội tụ liên tục. Euclid liệt kê chính xác cấu trúc hội tụ cần thiết cho việc tái thiết. Vì (M>10^{18}), không thể có hai giá trị hữu tỉ khác nhau có cả tử số và mẫu số giới hạn bởi (10^9), nên ứng cử viên được thuật toán tìm thấy nhất thiết phải là số hữu tỷ ẩn. 
 
 ## Giải pháp Python```python
 import sys
+
 input = sys.stdin.readline
 
+B = 10**9
+
+# Both are primes and satisfy 10^9 < m < 10^12.
 M1 = 999999999989
-M2 = 1000000000039
-LIMIT = 10**9
+M2 = 999999999997
 
-def crt(a1, a2):
-    # x = a1 (mod M1)
-    # x = a2 (mod M2)
-    inv = pow(M1, -1, M2)
-    k = ((a2 - a1) * inv) % M2
-    return a1 + M1 * k
+def crt(a1, m1, a2, m2):
+    """
+    Return x in [0, m1*m2) such that
+        x == a1 (mod m1)
+        x == a2 (mod m2)
+    """
+    t = ((a2 - a1) % m2) * pow(m1, -1, m2) % m2
+    x = a1 + m1 * t
+    return x, m1 * m2
 
-def reconstruct(r, mod):
-    # Extended Euclidean algorithm.
-    #
-    # rem = s * mod + t * r
-    # so rem == t * r (mod mod).
-    old_rem, rem = mod, r
-    old_t, t = 0, 1
+def recover(r, mod):
+    """
+    Recover p, q with 1 <= p, q <= B from
+        r == p * q^{-1} (mod mod).
+    We have mod > 2 * B^2.
+    """
+    # r0 = s0 * r + ...
+    # r1 = s1 * r + ...
+    r0, r1 = mod, r
+    s0, s1 = 0, 1
 
-    while rem > LIMIT:
-        q = old_rem // rem
+    while r1:
+        # The first remainder is r itself, which matters for
+        # integer answers such as 2/1.
+        if 1 <= r1 <= B and 1 <= s1 <= B:
+            if (r * s1) % mod == r1:
+                return r1, s1
 
-        old_rem, rem = rem, old_rem - q * rem
-        old_t, t = t, old_t - q * t
+        q = r0 // r1
 
-    numerator = rem
-    denominator = t
+        r0, r1 = r1, r0 - q * r1
+        s0, s1 = s1, s0 - q * s1
 
-    if denominator < 0:
-        numerator = -numerator
-        denominator = -denominator
-
-    # The original fraction may not have been reduced.
-    # The Euclidean reconstruction is normally already reduced,
-    # but reducing here also makes the returned representation explicit.
-    g = __import__("math").gcd(numerator, denominator)
-    numerator //= g
-    denominator //= g
-
-    return numerator, denominator
+    raise RuntimeError("rational reconstruction failed")
 
 def ask(m):
     print("?", m, flush=True)
-    return int(input())
+    ans = int(input())
+    if ans == -1:
+        sys.exit(0)
+    return ans
 
 def main():
     t = int(input())
 
     for _ in range(t):
-        y1 = ask(M1)
-        y2 = ask(M2)
+        r1 = ask(M1)
+        r2 = ask(M2)
 
-        r = crt(y1, y2)
-        p, q = reconstruct(r, M1 * M2)
+        r, mod = crt(r1, M1, r2, M2)
+        p, q = recover(r, mod)
 
         print("!", p, q, flush=True)
 
 if __name__ == "__main__":
     main()
-```Hai hằng số ở trên cùng là các số nguyên tố pháp lý cố định nên không có kiểm tra tính nguyên tố trong quá trình tương tác. Tích của các số nguyên tố này nằm trong khoảng (10^{24}), cao hơn ngưỡng yêu cầu (2\cdot10^{18}). 
-
-các`crt`hàm thực hiện phương trình 
+```Hai hằng số được chọn có chủ ý gần với (10^{12}). Sản phẩm của họ là 
 
 [ 
-r=y_1+m_1k. 
+M=999999999986000000000033, 
 ] 
 
-Sự đồng đẳng thứ hai xác định (k) và`pow(M1, -1, M2)`tính toán nghịch đảo mô đun. Ba đối số của Python`pow`hỗ trợ số mũ âm cho nghịch đảo mô-đun trong Python 3.8 trở lên. 
+lớn hơn nhiều so với (2\cdot10^{18}). Việc sử dụng các mô đun lớn như vậy là điều cho phép chứng minh phân số liên tục sử dụng giới hạn gần đúng tiêu chuẩn (1/(2q^2)). 
 
-các`reconstruct`hàm chỉ lưu trữ phần dư và hệ số của nó là (r). Hệ số của mô đun là không cần thiết sau khi bất biến đã được thiết lập, điều này khiến việc thực hiện ở mức nhỏ. 
+các`ask`hàm in một truy vấn và ngay lập tức xóa thiết bị xuất chuẩn. Việc xóa là bắt buộc trong một bài toán tương tác vì nếu không, trọng tài có thể đợi mãi một truy vấn vẫn còn trong bộ đệm đầu ra của Python. Phản hồi của thẩm phán`-1`thông thường báo hiệu một tương tác không hợp lệ nên chương trình sẽ kết thúc ngay lập tức. 
 
-Điều kiện vòng lặp là`rem > LIMIT`, không`rem >= LIMIT`. Phần dư bằng (10^9) đã hợp pháp và phải được chấp nhận. Đây là một điều kiện biên dễ mắc sai lầm. 
+các`crt`hàm sử dụng biểu diễn 
 
-Số nguyên Python có độ chính xác tùy ý, do đó sản phẩm CRT xung quanh (10^{24}) không bị tràn. Việc triển khai C++ sử dụng số nguyên 64-bit đã ký cũng sẽ phải tránh lưu trữ sản phẩm này trong một số nguyên đã ký.`long long`, bởi vì (10^{24}) nằm ngoài phạm vi của nó. Python không có vấn đề này. 
+[ 
+R=r_1+m_1t. 
+] 
 
-Việc rút gọn gcd cuối cùng xử lý thực tế là cặp ban đầu (p,q) không nhất thiết phải nguyên tố cùng nhau. Ví dụ: giá trị ẩn (2/4) được xây dựng lại thành (1/2), đây là một câu trả lời hợp lệ. 
+Giá trị của (t) được tìm thấy bằng cách sử dụng nghịch đảo mô đun của (m_1) modulo (m_2). Số nguyên Python có độ chính xác tùy ý, do đó mô đun CRT xấp xỉ (10^{24}) không gây ra tràn. Trong ngôn ngữ có chiều rộng cố định, sản phẩm này sẽ yêu cầu loại số nguyên rộng hơn số học 64-bit có dấu. 
 
-Mọi truy vấn đều được xóa ngay lập tức. Không có`flush=True`, một giải pháp tương tác có thể chờ vô thời hạn vì người đánh giá có thể không nhận được truy vấn vẫn còn trong bộ đệm đầu ra. 
+các`recover`hàm là phiên bản mở rộng của thuật toán Euclide.`r1`là số dư hiện tại và`s1`là hệ số của nó so với dư lượng ban đầu (r). Điều bất biến là phần dư hiện tại có thể được viết là 
+
+[ 
+r_1=s_1r+cM 
+] 
+
+đối với một số nguyên (c). 
+
+Việc kiểm tra ứng viên được thực hiện trước khi cập nhật Euclide. Ranh giới này là cần thiết cho các trường hợp như (2/1), trong đó bản thân phần dư đã là tử số mong muốn và mẫu số là (1). Bỏ qua bước kiểm tra này sẽ làm mất câu trả lời số nguyên. 
+
+Việc kiểm tra mô-đun bổ sung```
+(r * s1) % mod == r1
+```không cần thiết cho chứng minh toán học, nhưng nó làm cho điều kiện ứng cử viên trở nên rõ ràng và bảo vệ việc thực hiện khỏi chấp nhận phần dư có hệ số không liên quan. 
+
+Không có số học dấu phẩy động được sử dụng. Đặc biệt, cả (R/M) lẫn câu trả lời hợp lý đều không bao giờ được chuyển thành`float`, vì mô đun CRT nằm trong khoảng (10^{24}), vượt xa phạm vi mà biểu diễn dấu phẩy động có thể lưu giữ tất cả thông tin số nguyên có liên quan. 
 
 ## Ví dụ đã hoạt động 
 
-Mẫu được cung cấp sử dụng một truy vấn cho mỗi trường hợp thử nghiệm và thể hiện giao thức tương tác. Với (m=1000000007), câu trả lời (500000004) tương ứng với (1/2), trong khi giám khảo chấp nhận câu trả lời (2/4). Giải pháp tối ưu được mô tả ở đây yêu cầu hai số nguyên tố lớn hơn thay vào đó, vì một mô đun đơn lẻ không cung cấp đủ thông tin. 
+Mẫu được cung cấp là bản ghi tương tác chứ không phải cặp đầu vào/đầu ra hàng loạt thông thường. Nó sử dụng mô đun đơn (1000000007), trong khi giải pháp trên có chủ ý sử dụng hai số nguyên tố lớn hơn để việc tái cấu trúc phân số tiếp tục có mô đun đủ mạnh. Mẫu của`1/2`trường hợp trả lại`500000004`và mẫu chấp nhận`2/4`; thay vào đó, thuật toán của chúng tôi sẽ trả về biểu diễn rút gọn`1/2`. 
 
-Đối với dấu vết tái thiết đầu tiên, hãy xem xét cùng một giá trị hữu tỉ (x=1/2), sử dụng hai số nguyên tố từ nghiệm. Dư lượng là 
-
-[ 
-y_1=\frac{m_1+1}{2}=499999999995 
-] 
-
-và 
+Đối với ví dụ hoạt động đầu tiên, hãy lấy giá trị của mẫu (x=1/2). Với 
 
 [ 
-y_2=\frac{m_2+1}{2}=500000000020. 
+m_1=999999999989 
 ] 
 
-Kết quả CRT là phần dư của (1/2) modulo (M=m_1m_2), cụ thể là 
+nghịch đảo của (2) là (500000000000), do đó thẩm phán trả về (500000000000). Với 
 
 [ 
-r=\frac{M+1}{2}. 
+m_2=999999999997, 
 ] 
 
-| Trạng thái Euclide | Phần còn lại | Hệ số (r) | Ý nghĩa | 
+nghịch đảo của (2) là (499999999999). CRT kết hợp những điều này thành 
+
+[ 
+R=499999999993000000000017. 
+] 
+
+Mô đun kết hợp là 
+
+[ 
+M=999999999986000000000033. 
+] 
+
+Vì (M=2R-1), các bước Euclide đầu tiên đặc biệt đơn giản. 
+
+| Trạng thái Euclide | Phần còn lại hiện tại | Hệ số (R) | Ứng viên | 
 | --- | --- | --- | --- | 
-| Ban đầu | (M) | (0) | (M=1\cdot M+0\cdot r) | 
-| Ban đầu | ((M+1)/2) | (1) | (r=0\cdot M+1\cdot r) | 
-| Sau (q=1) | ((M-1)/2) | (-1) | (R=-M+r) | 
-| Sau (q=1) | (1) | (2) | (1=2r-M) | 
+| Ban đầu | 4999999999930000000000017 | 1 | Quá lớn | 
+| Sau (MR) | 499999999992999999999? | -1 | Hệ số âm | 
+| Sau khi phân chia tiếp theo | 1 | 2 | (p=1,q=2) | 
 
-Hàng cuối cùng có phần dư (1) và hệ số (2), do đó phân số được xây dựng lại là (1/2). Bất biến trực tiếp xác minh mối quan hệ mô đun vì (2r\equiv1\pmod M). 
-
-Đối với dấu vết thứ hai, sử dụng (x=2/3). Vì (M\equiv2\pmod3) nên dư lượng của (2/3) modulo (M) là 
+Phần còn lại ở giữa chính xác là (R-1=499999999993000000000016). Phần dư nhỏ cuối cùng thỏa mãn 
 
 [ 
-r=\frac{M+2}{3}. 
+1=2R-M, 
 ] 
 
-Trình tự Euclide trở nên đặc biệt ngắn. 
+nên hệ số của (R) là (2), cho ra (p=1,q=2). Điều này chứng tỏ tại sao việc theo dõi hệ số lại hữu ích: thuật toán Euclide đồng thời tìm ra tử số nhỏ và mẫu số tương ứng của nó. 
 
-| Trạng thái Euclide | Phần còn lại | Hệ số (r) | Ý nghĩa | 
+Đối với ví dụ hoạt động thứ hai, lấy giá trị nguyên của mẫu (x=2/1). Thẩm phán trả về (2) cho cả hai số nguyên tố lớn, do đó CRT ngay lập tức đưa ra 
+
+[ 
+R=2. 
+] 
+
+Việc tái thiết Euclide bắt đầu với chính phần dư. 
+
+| Trạng thái Euclide | Phần còn lại hiện tại | Hệ số (R) | Ứng viên | 
 | --- | --- | --- | --- | 
-| Ban đầu | (M) | (0) | (M=1\cdot M+0\cdot r) | 
-| Ban đầu | ((M+2)/3) | (1) | (r=0\cdot M+1\cdot r) | 
-| Sau (q=2) | ((M-4)/3) | (-2) | (R=M-2r) | 
-| Sau (q=1) | (2) | (3) | (2=3r-M) | 
+| Ban đầu | 2 | 1 | (p=2,q=1) | 
+| Tiếp theo | 1 | Hệ số âm lớn | Bị từ chối | 
+| Cuối cùng | 0 | Không được xem xét | Dừng lại | 
 
-Số dư đầu tiên bên dưới (10^9) là (2), có hệ số (3). Do đó kết quả là (2/3). Điều này chứng tỏ tại sao việc theo dõi hệ số Euclide là đủ và tại sao chúng ta không cần phải tìm kiếm các mẫu số có thể có. 
-
-Mẫu chính thức cũng bao gồm các trường hợp (1/1), (1/2) và (2/1), đồng thời chỉ ra cụ thể rằng câu trả lời không rút gọn như (2/4) hợp lệ cho (1/2). 
+Trạng thái đầu tiên đã là một câu trả lời hợp lệ. Đây là trường hợp đặc biệt thúc đẩy việc kiểm tra số dư ban đầu trước khi thực hiện phép chia Euclide đầu tiên. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | (O(t\log M)) bước số học | Hai thao tác CRT và một thuật toán Euclide mở rộng cho mỗi trường hợp thử nghiệm | 
+| Thời gian | (O(t\log M)) | Hai truy vấn, CRT và một thuật toán Euclide cho mỗi trường hợp thử nghiệm | 
 | Không gian | (O(1)) | Chỉ một số nguyên không đổi được lưu trữ | 
 
-Ở đây (M=m_1m_2) là khoảng (10^{24}), do đó độ dài bit của nó chỉ khoảng (80). Do đó, thuật toán Euclide chỉ mất vài chục lần lặp cho mỗi trường hợp thử nghiệm. Trong (10^5) trường hợp, điều này vẫn thực tế, trong khi cách tiếp cận bạo lực sẽ yêu cầu kiểm tra mẫu số lên tới (10^{14}). 
-
-Bản thân sự tương tác sử dụng chính xác hai truy vấn cho mỗi trường hợp thử nghiệm, thấp hơn nhiều so với giới hạn mười. 
+Ở đây (M) xấp xỉ (10^{24}), do đó thuật toán Euclide chỉ mất (O(\log M)), khoảng vài chục lần lặp. Đối với (10^5) trường hợp thử nghiệm, điều này có thể dễ dàng quản lý được về mặt công việc số học. Bản thân giao thức tương tác chiếm ưu thế về chi phí thực tế vì mọi trường hợp thử nghiệm đều yêu cầu hai lần trao đổi phản hồi truy vấn, vẫn nằm trong số mười truy vấn được phép cho mỗi trường hợp. 
 
 ## Trường hợp thử nghiệm 
 
-Vì tác vụ ban đầu có tính tương tác nên đầu vào mẫu của nó không phải là một tệp đầu vào hoàn chỉnh thông thường. Các dòng hiển thị dưới dạng đầu vào là phản hồi từ giám khảo ẩn, do đó, ngoại tuyến`run()`chức năng không thể phát lại mẫu theo nghĩa đen. Cách hữu ích để kiểm tra đơn vị logic đã gửi là kiểm tra quy trình xây dựng lại thuần túy bằng cách tạo ra hai phản hồi mô-đun từ các giá trị hợp lý đã biết.```python
-import sys
+Vì đây là sự cố tương tác nên mẫu được cung cấp không thể được chuyển vào chương trình dưới dạng đầu vào hàng loạt thông thường. Đầu vào mẫu bao gồm các câu trả lời của thẩm phán, trong khi chương trình dự kiến ​​​​sẽ in các truy vấn trước khi nhận được những câu trả lời đó. Thay vào đó, khai thác thử nghiệm sau đây sẽ kiểm tra việc tái cấu trúc toán học một cách độc lập bằng cách mô phỏng đánh giá cho một số phân số ẩn.```python
 import io
-from math import gcd
+import sys
 
+B = 10**9
 M1 = 999999999989
-M2 = 1000000000039
-LIMIT = 10**9
+M2 = 999999999997
 
-def crt(a1, a2):
-    inv = pow(M1, -1, M2)
-    k = ((a2 - a1) * inv) % M2
-    return a1 + M1 * k
+def crt(a1, m1, a2, m2):
+    t = ((a2 - a1) % m2) * pow(m1, -1, m2) % m2
+    return a1 + m1 * t, m1 * m2
 
-def reconstruct(r, mod):
-    old_rem, rem = mod, r
-    old_t, t = 0, 1
+def recover(r, mod):
+    r0, r1 = mod, r
+    s0, s1 = 0, 1
 
-    while rem > LIMIT:
-        q = old_rem // rem
-        old_rem, rem = rem, old_rem - q * rem
-        old_t, t = t, old_t - q * t
+    while r1:
+        if 1 <= r1 <= B and 1 <= s1 <= B:
+            if (r * s1) % mod == r1:
+                return r1, s1
 
-    if t < 0:
-        rem = -rem
-        t = -t
+        q = r0 // r1
+        r0, r1 = r1, r0 - q * r1
+        s0, s1 = s1, s0 - q * s1
 
-    g = gcd(rem, t)
-    return rem // g, t // g
+    raise AssertionError("reconstruction failed")
 
-def modular_image(p, q, m):
-    return (p * pow(q, -1, m)) % m
+def residue(p, q, mod):
+    return p * pow(q, -1, mod) % mod
 
-def run(inp: str) -> str:
-    # Offline test harness.
-    # Each line contains the hidden p and q.
-    out = []
+def solve_hidden(p, q):
+    r1 = residue(p, q, M1)
+    r2 = residue(p, q, M2)
 
-    for line in inp.strip().splitlines():
-        if not line.strip():
-            continue
+    r, mod = crt(r1, M1, r2, M2)
+    return recover(r, mod)
 
-        p, q = map(int, line.split())
+# Sample-derived cases.
+assert solve_hidden(1, 1) == (1, 1), "sample value 1/1"
+assert solve_hidden(1, 2) == (1, 2), "sample value 1/2"
+assert solve_hidden(2, 1) == (2, 1), "sample value 2/1"
 
-        y1 = modular_image(p, q, M1)
-        y2 = modular_image(p, q, M2)
+# Minimum numerator and denominator.
+assert solve_hidden(1, 1) == (1, 1), "minimum values"
 
-        r = crt(y1, y2)
-        a, b = reconstruct(r, M1 * M2)
+# Maximum values, with a reducible fraction.
+assert solve_hidden(10**9, 10**9) == (1, 1), "maximum equal values"
 
-        out.append(f"{a} {b}")
+# Both numerator and denominator are at the upper boundary,
+# but the fraction is not reducible.
+assert solve_hidden(10**9, 999999999) == (1000000000, 999999999), \
+    "maximum boundary fraction"
 
-    return "\n".join(out)
-
-# Values represented by the provided interactive sample.
-assert run("1 1\n1 2\n2 1\n") == (
-    "1 1\n"
-    "1 2\n"
-    "2 1"
-), "provided sample values"
-
-# Minimum-size numerator and denominator.
-assert run("1 1\n") == "1 1", "minimum-size values"
-
-# Maximum allowed numerator and denominator, both equal.
-# The rational value is 1, so 1/1 is the canonical answer.
-assert run("1000000000 1000000000\n") == "1 1", "maximum equal values"
-
-# Numerator and denominator are both close to the upper boundary
-# and are coprime.
-assert run("999999999 1000000000\n") == "999999999 1000000000", (
-    "upper-bound coprime fraction"
-)
-
-# Small denominator and maximum numerator.
-assert run("1000000000 1\n") == "1000000000 1", (
-    "maximum numerator with denominator 1"
-)
+# A fraction just below the upper numerator boundary.
+assert solve_hidden(999999999, 1000000000) == (999999999, 1000000000), \
+    "boundary numerator and denominator"
 
 print("all tests passed")
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`1 1`,`1 2`,`2 1`|`1 1`,`1 2`,`2 1`| Các giá trị được biểu thị trong mẫu được cung cấp | 
-|`1 1`|`1 1`| Ranh giới kích thước tối thiểu | 
-|`1000000000 1000000000`|`1 1`| Biểu diễn không rút gọn và giá trị bằng nhau tối đa | 
-|`999999999 1000000000`|`999999999 1000000000`| Cả hai giới hạn đồng thời, với phần giảm | 
-|`1000000000 1`|`1000000000 1`| Hành vi ranh giới tử số và mẫu số tối đa | 
+| (1/1) | (1/1) | Giá trị tối thiểu và dư lượng không đổi | 
+| (1/2) | (1/2) | Mẫu hữu tỉ không nguyên | 
+| (2/1) | (2/1) | Phần dư Euclide ban đầu | 
+| (10^9/10^9) | (1/1) | Phân số có kích thước tối đa có thể giảm | 
+| (10^9/999999999) | (10^9/999999999) | Cả hai giá trị gần ranh giới trên | 
+| (999999999/10^9) | (999999999/10^9) | Mẫu số và tử số biên | 
+
+Việc kiểm tra (10^9/10^9) đặc biệt hữu ích vì cặp ban đầu không nguyên tố cùng nhau. Việc xây dựng lại trả về (1/1), có cùng giá trị hợp lý và là một câu trả lời hợp pháp. Hai kiểm tra ranh giới cũng xác nhận rằng việc triển khai không bao giờ dựa vào bất đẳng thức nghiêm ngặt như (p<10^9) hoặc (q<10^9). 
 
 ## Vỏ cạnh 
 
-Va chạm một mô đun là dạng hư hỏng cơ bản nhất. Với (m=1000000007), phản hồi (500000004) được tạo ra bởi (1/2), bởi vì 
+Đối với phân số không rút gọn (2/4), giá trị ẩn là (1/2). Đối với số nguyên tố lớn đầu tiên, số dư là (5000000000000) và đối với số nguyên tố thứ hai là (499999999999). CRT tạo ra phần dư kết hợp giống như đối với (1/2), bởi vì phép chia theo mô-đun chỉ phụ thuộc vào giá trị hữu tỷ, chứ không phụ thuộc vào biểu diễn tử số và mẫu số nào được sử dụng. Việc xây dựng lại trả về (1/2), được chấp nhận mặc dù bản ghi mẫu sử dụng (2/4). 
 
-[ 
-2\cdot500000004=1000000008\equiv1\pmod m. 
-] 
+Đối với số nguyên (2/1), cả hai phần dư được truy vấn đều chính xác là (2), do đó CRT trả về (R=2). Việc xây dựng lại kiểm tra trạng thái Euclide ban đầu (R=2) với hệ số (1), ngay lập tức thu được (p=2,q=1). Đây là lý do tại sao việc kiểm tra ứng viên phải diễn ra trước phép chia Euclide đầu tiên. 
 
-Phản hồi tương tự cũng được tạo ra bởi (500000004/1). Một giải pháp chỉ sử dụng mô đun này không có cách toán học nào để phân biệt hai giá trị. Giải pháp tối ưu yêu cầu một số nguyên tố độc lập thứ hai, kết hợp các câu trả lời thành một mô đun ở trên (10^{18}) và làm cho việc xung đột như vậy là không thể. 
+Đối với (1/1), mọi truy vấn đều trả về (1) và CRT cũng trả về (R=1). Trạng thái ban đầu có phần dư (1) và hệ số (1), do đó thuật toán đưa ra (1/1) ngay lập tức. Không có nhánh trường hợp đặc biệt nào cho số (1) được yêu cầu. 
 
-Biểu diễn không rút gọn là một trường hợp tế nhị khác. Đối với giá trị đầu vào (1000000000/1000000000), cả hai số gốc đều ở kích thước tối đa cho phép, nhưng bản thân số hữu tỷ là (1). Phản hồi mô-đun là (1) cho mọi số nguyên tố được truy vấn. Việc tái cấu trúc hợp lý trả về (1/1) và câu trả lời được chấp nhận vì giao thức yêu cầu biểu thị giá trị hợp lý chứ không phải khôi phục cặp ẩn chính xác. 
+Đối với cặp bằng nhau tối đa (10^9/10^9), giá trị mô-đun vẫn chính xác là (1), vì phân số giảm xuống (1/1). Thuật toán trả về (1/1), chứng minh tại sao đầu ra phải được hiểu là một giá trị hợp lý chứ không phải là cặp ẩn chính xác. 
 
-Đối với một giá trị chẳng hạn như (2/4), các quan sát mô-đun tương tự được tạo ra như đối với (1/2). Việc tái cấu trúc Euclide tìm thấy cặp rút gọn (1/2). Việc chia cả hai thành phần cho gcd của chúng không làm thay đổi giá trị hợp lý được biểu diễn, do đó kết quả vẫn hợp lệ. 
+Đối với một phân số biên, chẳng hạn như (1000000000/999999999), cả tử số và mẫu số đều nằm trong phạm vi cho phép nhưng tích của chúng gần bằng (10^{18}). Mô-đun CRT nằm trong khoảng (10^{24}), để lại giới hạn an toàn rất lớn. Thuật toán Euclide hoạt động hoàn toàn với các số nguyên và xây dựng lại phân số mà không làm mất đi độ chính xác. 
 
-Cuối cùng, số dư chính xác bằng (10^9) phải được chấp nhận. Vòng lặp tái thiết sử dụng`rem > LIMIT`, không`rem >= LIMIT`. Việc coi đẳng thức quá lớn sẽ bỏ qua tử số hợp pháp và có thể chuyển quá trình Euclide qua quá trình tái thiết chính xác. 
-
-Do đó, ý tưởng hoàn chỉnh khá nhỏ gọn: hai truy vấn nguyên tố lớn cung cấp một mô-đun khổng lồ thông qua CRT và mô-đun khổng lồ biến việc khôi phục hợp lý mô-đun thành một vấn đề tái thiết hợp lý giới hạn tiêu chuẩn được giải quyết bằng Euclid mở rộng. Vấn đề ban đầu và các bài xã luận độc lập mô tả cùng quan điểm tái thiết CRT và Euclide.
+Lỗi triển khai nguy hiểm nhất là chỉ sử dụng mô đun xung quanh (10^9) và sau đó giả sử các phân số tiếp tục tự động đủ. Giới hạn hội tụ tiêu chuẩn yêu cầu (M>2B^2), trong khi mô đun truy vấn riêng lẻ của vấn đề ban đầu nhỏ hơn nhiều. Hai số nguyên tố lớn giải quyết chính xác vấn đề này: tích của chúng lớn hơn nhiều so với (2B^2), trong khi mỗi truy vấn riêng lẻ vẫn nằm trong phạm vi cho phép. Đây là lý do chính khiến thuật toán cuối cùng vừa ngắn vừa nghiêm ngặt.

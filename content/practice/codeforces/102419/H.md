@@ -1,7 +1,7 @@
 ---
 title: "CF 102419H - Bằng cấp"
-description: "Chúng ta có một đồ thị vô hướng có tới 2000 đỉnh và 2000 cạnh. Mỗi cạnh cuối cùng phải được định hướng chính xác về một trong hai điểm cuối của nó. Đối với đỉnh i, giá trị a[i] chỉ định chính xác số cạnh liên quan phải trỏ vào i."
-date: "2026-08-14T15:12:06+07:00"
+description: "Chúng ta có một đồ thị vô hướng và mỗi cạnh cuối cùng phải hướng về đúng một trong hai điểm cuối của nó. Đối với một đỉnh có giá trị được xác định là (ai), chính xác (ai) các cạnh liên quan phải trỏ vào đỉnh đó. Một đỉnh có (ai=-1) không bị hạn chế về bậc cuối cùng của nó."
+date: "2026-08-16T09:02:42+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102419
@@ -9,7 +9,7 @@ codeforces_index: "H"
 codeforces_contest_name: "SPC 2019"
 rating: 0
 weight: 102419
-solve_time_s: 1099
+solve_time_s: 287
 verified: false
 draft: false
 ---
@@ -18,86 +18,106 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 18m 19s 
+**Thời gian giải:** 4 phút 47 giây 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta có một đồ thị vô hướng có tới 2000 đỉnh và 2000 cạnh. Mỗi cạnh cuối cùng phải được định hướng chính xác về một trong hai điểm cuối của nó. Đối với một đỉnh`i`, giá trị`a[i]`chỉ định chính xác số cạnh liên quan phải trỏ vào`i`. Một giá trị của`-1`loại bỏ yêu cầu đó, vì vậy mọi kết quả bằng cấp đều được chấp nhận. 
+Chúng ta có một đồ thị vô hướng và mỗi cạnh cuối cùng phải hướng về đúng một trong hai điểm cuối của nó. Đối với một đỉnh có giá trị được chỉ định là (a_i), chính xác (a_i) các cạnh liên quan phải trỏ vào đỉnh đó. Một đỉnh có (a_i=-1) không bị hạn chế về bậc cuối cùng của nó. 
 
-Đầu ra là một trong hai`NO`khi không có định hướng nào thỏa mãn tất cả các mức độ cố định, hoặc`YES`theo sau là một phiên bản có hướng của mọi cạnh ban đầu. Nếu cạnh ban đầu là`{u, v}`, in ấn`u v`có nghĩa là`v`là phần đầu của nó, do đó cạnh đó đóng góp một phần vào mức độ của`v`. 
+Nhiệm vụ là tìm ra một định hướng như vậy hoặc chứng minh rằng không có định hướng nào tồn tại. Đầu ra chứa một trong hai`NO`, hoặc`YES`theo sau là hướng của mỗi cạnh ban đầu. Đối với cạnh gốc ((u,v)), in`u v`có nghĩa là cạnh được hướng từ (u) đến (v), do đó (v) nhận được một đơn vị độ. 
 
-Các ràng buộc đủ nhỏ để xây dựng dòng chảy chỉ với vài nghìn đỉnh và cạnh. Điều quan trọng hơn là câu trả lời là một phép gán toàn cục: việc quyết định hướng của một cạnh có thể ảnh hưởng đến việc liệu cạnh khác có thể thỏa mãn một đỉnh bị ràng buộc hay không. Một lựa chọn tham lam cục bộ có thể dễ dàng tiêu tốn cạnh duy nhất mà một đỉnh khác cần. Một thuật toán xung quanh`O(m(n+m))`dễ dàng nằm trong phạm vi dự định, trong khi sức mạnh vũ phu đối với mọi hướng là vô vọng. 
+Các ràng buộc ban đầu có (n,m\le 2000), không có cạnh song song hoặc vòng tự. Giá trị này đủ nhỏ đối với thuật toán đồ thị đa thức, nhưng nó loại trừ các thuật toán liệt kê các hướng. Có (2^m) hướng có thể có và khi (m=2000), ngay cả việc kiểm tra một hướng trong thời gian không đổi cũng đã là vô vọng. Mạng luồng có (O(n+m)) đỉnh và cạnh nằm trong giới hạn bộ nhớ và thuật toán luồng cực đại tích phân tiêu chuẩn là phù hợp. 
 
-Trường hợp cạnh thứ nhất là đỉnh có bậc được yêu cầu lớn hơn bậc thực tế của nó. Ví dụ,```
+Có một số trường hợp rất dễ xử lý sai. 
+
+Coi như```
+2 1
+0 0
+1 2
+```Cả hai đỉnh đều yêu cầu độ 0, nhưng cạnh duy nhất phải chỉ vào đâu đó. Câu trả lời đúng là`NO`. Chỉ kiểm tra xem mọi giá trị được yêu cầu có nhiều nhất là ở mức độ tương ứng hay không sẽ chấp nhận trường hợp này một cách sai lầm. 
+
+Bây giờ hãy xem xét```
 2 1
 2 -1
 1 2
-```chỉ có một cạnh tới đỉnh 1, do đó bậc bậc của nó không bao giờ có thể là 2. Kết quả đúng là`NO`. Việc thực hiện bất cẩn chỉ kiểm tra`a[i] <= m`sẽ chấp nhận nó một cách sai lầm. 
+```Đỉnh 1 có bậc một nhưng yêu cầu ở bậc hai. Câu trả lời đúng là`NO`. Việc xây dựng luồng phải tôn trọng số lượng được yêu cầu chính xác thay vì coi nó như giới hạn trên. 
 
-Trường hợp cạnh thứ hai là một đỉnh bị ràng buộc với yêu cầu bằng 0. Ví dụ,```
+Ngoài ra còn có một vấn đề ít rõ ràng hơn khi một cạnh nối hai đỉnh bị ràng buộc. Ví dụ,```
 2 1
-0 -1
+0 1
 1 2
-```phải định hướng cạnh như`2 1`. Nếu việc triển khai coi số 0 là "không bị ràng buộc" hoặc khởi tạo số lượng yêu cầu của nó không chính xác, thì nó có thể tạo ra hướng ngược lại và vi phạm yêu cầu. 
+```Cạnh buộc phải trỏ vào đỉnh 2. Một cách tiếp cận chỉ cố gắng chọn một số cạnh để thỏa mãn các đỉnh bị ràng buộc phải đảm bảo rằng mọi cạnh giữa hai đỉnh bị ràng buộc đều được gán cho một trong số chúng. Việc để lại một cạnh như vậy không được chỉ định sau này không thể được sửa chữa bằng cách hướng nó về phía một đỉnh không bị ràng buộc, bởi vì không có điểm cuối nào là không bị ràng buộc. 
 
-Trường hợp cạnh thứ ba xảy ra khi tất cả các đỉnh đều bị ràng buộc. Vì```
-3 3
-1 1 1
-1 2
-2 3
-3 1
-```trình tự theo cấp độ duy nhất có thể đạt được bằng cách định hướng tam giác như một chu trình có hướng. Câu trả lời là`YES`. Không có đỉnh tự do nào có sẵn để hấp thụ một cạnh không thể được gán cho điểm cuối bị ràng buộc. 
-
-Trường hợp cạnh thứ tư là giá trị`-1`. Coi như```
-2 1
-1 -1
-1 2
-```Cạnh duy nhất phải trỏ đến đỉnh 1, trong khi đỉnh 2 được phép nhận không có cạnh nào. điều trị`-1`như một mức độ bắt buộc theo nghĩa đen rõ ràng là sai. các`-1`các đỉnh cần dung lượng nhưng chúng không có giới hạn dưới. 
+Cuối cùng, một cạnh có hai điểm cuối không bị ràng buộc hoàn toàn không cần tham gia vào phần giải quyết ràng buộc. Sau khi tất cả các mức độ ràng buộc đã được thỏa mãn, cạnh đó có thể được định hướng tùy ý. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận bạo lực là chọn hướng độc lập cho mọi cạnh. Một cạnh có hai khả năng, do đó có chính xác`2^m`định hướng kiểm tra. Đối với mỗi hướng, chúng ta có thể tính toán tất cả các mức độ theo`O(n+m)`và kiểm tra các yêu cầu. Do đó, số lượng hoạt động trong trường hợp xấu nhất là`O(2^m(n+m))`. Với`m = 2000`, số hướng là`2^2000`, đại khái`10^602`, vì vậy cách tiếp cận này không chỉ chậm mà còn hoàn toàn không thể sử dụng được. 
+Cách tiếp cận bạo lực trực tiếp là thử cả hai hướng cho mọi cạnh. Tìm kiếm theo chiều sâu có thể đưa ra một quyết định nhị phân trên mỗi cạnh và sau khi đạt được hướng hoàn chỉnh, hãy đếm tất cả các mức độ và kiểm tra các ràng buộc. Điều này đúng vì mọi hướng có thể đều xuất hiện ở đúng một nhánh của cây tìm kiếm. Vấn đề là kích thước của nó: có (2^m) lá và việc kiểm tra hướng mất (O(m+n)), cho (O(2^m(m+n))) công việc. Tại (m=2000), điều này hoàn toàn không thể thực hiện được. 
 
-Quan sát hữu ích là mỗi cạnh đóng góp chính xác một đơn vị vào cấp độ chính xác của một điểm cuối. Đó chính xác là một vấn đề phân công. Giới thiệu một nút luồng cho mỗi cạnh ban đầu. Gửi một đơn vị qua nút cạnh đó có nghĩa là chọn nơi mà cạnh vô hướng tương ứng sẽ kết thúc. Nút cạnh có thể gửi đơn vị của nó tới một trong hai đỉnh điểm cuối của nó. 
+Quan sát hữu ích là một cạnh định hướng có thể được xem như là gán một đơn vị độ cho chính xác một điểm cuối. Thay vì quyết định trực tiếp hướng của một cạnh, chúng ta có thể tạo quyết định luồng cho biết điểm cuối nào sẽ nhận đơn vị đó. 
 
-Khó khăn còn lại là các đỉnh bị ràng buộc yêu cầu số lượng đơn vị đến chính xác, trong khi các đỉnh không bị ràng buộc có thể nhận được bất kỳ số lượng nào. Các yêu cầu chính xác được thể hiện một cách tự nhiên bằng các giới hạn dưới và trên của luồng. Chúng ta có thể biến toàn bộ vấn đề thành một vòng tuần hoàn khả thi. 
+Đối với mọi cạnh gốc có liên quan, hãy tạo một nút luồng. Từ nút biên, chúng ta có thể gửi một đơn vị đến một trong hai điểm cuối. Một đỉnh bị ràng buộc có một lượng chính xác (a_i) phải đến đó. Một cạnh nối hai đỉnh bị ràng buộc phải gửi đơn vị của nó đến một nơi nào đó, trong khi một cạnh có điểm cuối không bị ràng buộc có thể rời khỏi mạng luồng mà không đóng góp vào một đỉnh bị ràng buộc. 
 
-Tạo một đỉnh giống như nguồn`S`và một đỉnh dạng chìm`T`. Đối với mọi cạnh ban đầu`e`, tạo một nút cạnh`E_e`. Mạng lưới dòng chảy chứa`S -> E_e`với giới hạn dưới và giới hạn trên đều bằng 1, buộc mỗi cạnh ban đầu phải đóng góp chính xác một đơn vị. Từ`E_e`, thêm các cạnh dung lượng một vào hai điểm cuối của cạnh ban đầu. Cuối cùng, kết nối mọi đỉnh ban đầu`v`ĐẾN`T`. Nếu như`a[v]`được cố định, cạnh đó có giới hạn dưới và giới hạn trên`a[v]`. Nếu như`a[v] = -1`, giới hạn dưới của nó bằng 0 và giới hạn trên của nó có thể là bậc đồ thị của nó. 
+Các yêu cầu chính xác về đỉnh và các cạnh bị ràng buộc bắt buộc được thể hiện một cách tự nhiên bằng các giới hạn dưới và giới hạn trên của luồng. Điều này đưa ra một vấn đề lưu thông khả thi. 
 
-Cạnh phụ`T -> S`với năng lực`m`đóng cái này thành một vòng tuần hoàn. Bảo toàn luồng bây giờ có nghĩa chính xác như những gì chúng ta muốn: mỗi nút cạnh nhận một đơn vị và gửi nó đến một điểm cuối, trong khi mỗi đỉnh bị ràng buộc sẽ gửi chính xác số lượng đơn vị được yêu cầu của nó tới`T`. 
+Đối với mỗi cạnh, chúng tôi phân biệt ba trường hợp. Nếu cả hai điểm cuối đều bị ràng buộc, nút biên của nó phải nhận chính xác một đơn vị. Nếu chính xác một điểm cuối bị ràng buộc, nút cạnh của nó có thể gửi 0 hoặc một đơn vị đến điểm cuối bị ràng buộc đó. Nếu cả hai điểm cuối đều không bị ràng buộc, chúng ta sẽ bỏ qua nó trong khi giải quyết các ràng buộc và định hướng nó một cách tùy ý sau đó. 
 
-Giới hạn dưới được loại bỏ bằng cách sử dụng mức giảm lưu thông tiêu chuẩn. Đối với một cạnh`u -> v`có giới hạn`[L, R]`, đầu tiên chúng tôi dự trữ`L`đơn vị và để lại công suất còn lại`R-L`. Giới hạn dưới dành riêng tạo ra sự mất cân bằng ở các điểm cuối của nó. Sau đó, một siêu nguồn và siêu chìm được sử dụng để sửa chữa tất cả những sự mất cân bằng đó bằng tính toán luồng cực đại thông thường. Với khả năng tích phân, một luồng khả thi tích hợp tồn tại bất cứ khi nào có bất kỳ luồng khả thi nào tồn tại, do đó, mỗi nút cạnh ban đầu cuối cùng sẽ gửi chính xác một đơn vị nguyên vẹn đến một điểm cuối. 
+Đối với mọi đỉnh bị ràng buộc (v), cạnh từ (v) đến điểm chìm có cả giới hạn dưới và giới hạn trên bằng (a_v). Như vậy chính xác (a_v) các đơn vị cạnh được chọn phải đạt tới (v). 
 
-Đối với bước luồng tối đa, Ford-Fulkerson với DFS ở đây là đủ. Giới hạn dung lượng số nguyên thông thường của nó là`O(EF)`, Ở đâu`F`là lưu lượng tối đa. Trong cấu trúc cụ thể này, tất cả luồng bắt nguồn từ một nút cạnh bị giới hạn bởi công suất đơn vị`S -> E_e`các cạnh và chỉ có`m`những đơn vị như vậy. Dòng cân bằng còn lại có thể được xử lý thông qua một`T -> S`sự liên quan. Do đó, số lượng tăng cường hữu ích được giới hạn bởi`O(m)`, cho`O(mE) = O(m(n+m))`thời gian cho vấn đề này. 
+Phép biến đổi giới hạn dưới tiêu chuẩn sẽ loại bỏ các giới hạn dưới và ghi lại sự mất cân bằng dẫn đến ở mọi nút. Sau đó, một siêu nguồn và siêu chìm được thêm vào và một luồng tối đa thông thường sẽ xác định xem liệu tuần hoàn cần thiết có tồn tại hay không. 
 
-Phương pháp brute-force hoạt động hiệu quả vì nó xem xét rõ ràng mọi nhiệm vụ có thể thực hiện được. Nó thất bại vì số lượng bài tập là theo cấp số nhân. Mô hình luồng chỉ giữ lại các lựa chọn có liên quan, cụ thể là điểm cuối nào nhận đơn vị của mỗi cạnh và cho phép thuật toán luồng cực đại giải quyết đồng thời tất cả các lựa chọn. 
+Mối liên hệ chính là một đơn vị luồng đạt đến đỉnh (v) tương ứng chính xác với một cạnh ban đầu hướng vào (v). Vì luồng là tích phân nên mỗi cạnh được chọn sẽ được gán cho một điểm cuối, không bao giờ bị phân chia một phần. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
-| Lực lượng vũ phu |`O(2^m(n+m))`|`O(n+m)`| Quá chậm | 
-| Dòng chảy giới hạn dưới + Ford-Fulkerson |`O(m(n+m))`|`O(n+m)`| Đã chấp nhận | 
+| Lực lượng vũ phu | (O(2^m(m+n))) | (O(m+n)) | Quá chậm | 
+| Lưu thông giới hạn dưới + Dinic | (O(V^2E)) trường hợp xấu nhất | (O(V+E)) | Đã chấp nhận | 
+
+Ở đây (V=O(n+m)) và (E=O(n+m)) cho mạng được xây dựng. Với (n,m\le2000), mạng chỉ có vài nghìn đỉnh và cạnh, và hoạt động thực tế của Dinic trên mạng thưa thớt, chủ yếu có dung lượng đơn vị này là đủ cho giới hạn. 
 
 ## Hướng dẫn thuật toán 
 
-1. Đọc đồ thị và tính bậc của mỗi đỉnh ban đầu. Bậc đưa ra giới hạn trên tự nhiên cho một đỉnh không bị ràng buộc, bởi vì không có đỉnh nào có thể nhận được nhiều cạnh đến hơn số cạnh chạm vào nó. 
-2. Xây dựng một nút luồng`E_e`với mọi cạnh vô hướng ban đầu`e = {u, v}`. Thêm một cạnh giới hạn`S -> E_e`có giới hạn`[1, 1]`. Điều này buộc mỗi cạnh ban đầu phải đóng góp chính xác một đơn vị dòng, do đó không có cạnh nào có thể biến mất khỏi hướng cuối cùng. 
-3. Thêm`E_e -> u`Và`E_e -> v`, mỗi cái có giới hạn`[0, 1]`. Từ`E_e`nhận đúng một đơn vị, bảo toàn dòng chảy buộc đúng một trong hai cung này để mang đơn vị đó. Chọn cạnh đầu tiên có nghĩa là cạnh ban đầu kết thúc tại`u`; chọn thứ hai có nghĩa là nó kết thúc tại`v`. 
-4. Với mọi đỉnh ban đầu`v`, thêm một cạnh`v -> T`. Nếu như`a[v]`đã được sửa, hãy đưa ra giới hạn cạnh này`[a[v], a[v]]`. Nếu như`a[v] = -1`, cho nó giới hạn`[0, degree[v]]`. Giới hạn dưới và giới hạn trên bằng nhau đối với một đỉnh bị ràng buộc, do đó nó phải nhận được chính xác số lượng đơn vị cạnh được yêu cầu. 
-5. Thêm cạnh mô hình`T -> S`có giới hạn`[0, m]`. Nếu không có cạnh này,`S`sẽ có dòng chảy đi và`T`sẽ có dòng chảy vào, đó là dòng nguồn-bồn thông thường chứ không phải là dòng tuần hoàn. Việc đóng mạng làm cho mọi đỉnh đều tuân theo sự bảo toàn. 
-6. Thay thế mọi cạnh giới hạn`[L, R]`bởi cạnh dư thông thường của công suất`R-L`. Đồng thời, duy trì`balance[u] -= L`Và`balance[v] += L`cho một cạnh`u -> v`. Các dấu hiệu mô tả sự mất cân bằng được tạo ra sau khi điều chỉnh luồng giới hạn dưới. 
-7. Thêm siêu nguồn`SS`và siêu chìm`TT`. Đối với mọi đỉnh có cân bằng dương, hãy thêm`SS -> v`với năng lực`balance[v]`. Đối với mỗi đỉnh có số dư âm, hãy thêm`v -> TT`với năng lực`-balance[v]`. Dòng phụ trợ phải bão hòa tất cả các cạnh cân bằng này. 
-8. Chạy Ford-Fulkerson từ`SS`ĐẾN`TT`. Nếu tổng dòng tiền nhỏ hơn tổng của tất cả số dư dương thì giới hạn dưới không thể tương thích được, vì vậy hãy in`NO`. 
-9. Nếu tất cả các cạnh cân bằng đã bão hòa, hãy khôi phục dòng chảy trên mỗi cạnh`E_e -> u`Và`E_e -> v`vòng cung. Chính xác một trong số họ mang theo một đơn vị. Nếu như`E_e -> u`mang một đơn vị, đầu ra`v u`, bởi vì cạnh vô hướng ban đầu`{u,v}`phải kết thúc tại`u`. Nếu không thì xuất ra`u v`. 
+1. Đọc biểu đồ và đánh dấu mọi đỉnh bằng (a_i\ne-1) là bị ràng buộc. Lưu trữ điểm cuối ban đầu của mỗi cạnh vì đáp án cuối cùng phải được in theo thứ tự cạnh ban đầu. 
+2. Xây dựng mạng luồng chứa một nguồn (S), một điểm chìm (T), một nút cho mỗi cạnh ban đầu chạm vào ít nhất một đỉnh bị ràng buộc và một nút cho mỗi đỉnh bị ràng buộc. 
 
-Tại sao nó hoạt động 
+Một cạnh có hai điểm cuối không bị ràng buộc sẽ bị bỏ qua vì nó không bao giờ có thể ảnh hưởng đến mức độ bắt buộc. Nó có thể được định hướng một cách an toàn sau đó. 
+3. Đối với mọi cạnh gốc có liên quan (e=(u,v)), hãy tạo một nút cạnh (E_e). 
 
-Bất biến trung tâm là mọi nút cạnh ban đầu luôn biểu diễn chính xác một đơn vị cạnh. Giới hạn dưới cố định trên`S -> E_e`cung cấp đơn vị đó và hai đích đến duy nhất có thể là điểm cuối ban đầu. Do đó, một chu trình khả thi xác định một hướng hợp lệ của mọi cạnh ban đầu. 
+Nếu cả (u) và (v) đều bị ràng buộc, hãy thêm
 
-Đối với một đỉnh bị ràng buộc`v`, cạnh`v -> T`có cả giới hạn dưới và giới hạn trên bằng`a[v]`. Lực bảo toàn chính xác`a[v]`đơn vị để đến`v`, vì vậy mức độ cuối cùng của nó là hoàn toàn chính xác. Một đỉnh không bị ràng buộc có đủ dung lượng trên để nhận bất kỳ số nào từ 0 đến bậc của nó. 
+[ 
+S\rightarrow E_e 
+] 
 
-Phép biến đổi giới hạn dưới tương đương với vòng tuần hoàn ban đầu vì nó bắt đầu bằng cách sửa mọi đơn vị giới hạn dưới bắt buộc và yêu cầu luồng tối đa phụ trợ sửa chữa sự mất cân bằng đỉnh gây ra. Nếu luồng phụ bão hòa mọi cạnh cân bằng cần thiết, việc thêm các giới hạn dưới trở lại sẽ tạo ra một vòng tuần hoàn hợp lệ. Nếu nó không thể bão hòa chúng, thì việc phân công công suất còn lại không thể khôi phục sự bảo toàn, do đó không tồn tại định hướng ban đầu. 
+với giới hạn dưới và giới hạn trên đều bằng (1). Cạnh phải đóng góp một cạnh đến cho (u) hoặc (v). 
+
+Nếu ít nhất một điểm cuối không bị ràng buộc, hãy sử dụng giới hạn dưới (0) và giới hạn trên (1). Một cạnh như vậy được phép đóng góp vào điểm cuối bị ràng buộc, nhưng không nhất thiết phải làm như vậy. 
+
+Từ (E_e), thêm các cạnh dung lượng (1) vào mọi điểm cuối bị ràng buộc của cạnh ban đầu. Gửi một đơn vị qua (E_e\rightarrow v) có nghĩa là hướng cạnh ban đầu về phía (v). 
+4. Với mỗi đỉnh bị ràng buộc (v), hãy thêm một cạnh 
+
+[ 
+v\rightarrow T 
+] 
+
+có giới hạn dưới và giới hạn trên đều là (a_v). 
+
+Vì lượng rời khỏi (v) buộc phải chính xác (a_v), nên việc bảo toàn dòng chảy sẽ buộc các đơn vị chính xác (a_v) phải đi vào (v). Đây chính xác là yêu cầu ở mức độ. 
+5. Thêm một cạnh (T\rightarrow S) có dung lượng (m). Điều này đóng mạng thành một vòng tuần hoàn. Số lượng chính xác của nó không thành vấn đề, bởi vì việc bảo toàn buộc nó phải bằng tổng số đơn vị được gán cho các đỉnh bị ràng buộc. 
+6. Chuyển đổi mọi cạnh giới hạn ((u,v)) có giới hạn dưới (L) và giới hạn trên (R) thành cạnh thông thường có dung lượng (R-L). Duy trì một mảng cân bằng. Trừ (L) từ số dư của (u) và cộng (L) vào số dư của (v). 
+
+Số dư ghi lại tác động của luồng đã bị giới hạn dưới ép buộc. Dòng chảy thông thường còn lại phải bù đắp cho những mất cân bằng này. 
+7. Thêm siêu nguồn (SS) và siêu chìm (TT). Nếu nút có số dư dương thì thêm (SS\rightarrow v) với công suất bằng số dư đó. Nếu nó có số dư âm thì cộng (v\rightarrow TT) với công suất bằng số dư tuyệt đối của nó. 
+
+Một vòng tuần hoàn khả thi tồn tại chính xác khi luồng cực đại từ (SS) đến (TT) bão hòa tất cả các cạnh cân bằng này. Nếu không, hãy in`NO`. 
+8. Nếu quá trình lưu thông khả thi, hãy kiểm tra luồng của từng cạnh liên quan ban đầu từ nút cạnh đến điểm cuối bị ràng buộc của nó. Nếu một đơn vị tiến tới (u), hãy hướng cạnh ban đầu về phía (u). Nếu một đơn vị đi tới (v), hãy hướng nó về phía (v). 
+
+Một cạnh bị ràng buộc-bị ràng buộc luôn có chính xác một đơn vị như vậy bởi vì luồng từ nguồn đến cạnh của nó bị buộc phải có một đơn vị. Đối với một cạnh có một điểm cuối không bị ràng buộc, luồng bằng 0 chỉ đơn giản có nghĩa là chúng ta hướng nó về điểm cuối không bị ràng buộc đó. Đối với một cạnh có hai điểm cuối không bị ràng buộc, hãy chọn một trong hai hướng. 
+9. In`YES`và hướng kết quả của mỗi cạnh ban đầu. 
+
+Bất biến trong suốt quá trình xây dựng là mỗi đơn vị đi vào một đỉnh bị ràng buộc đại diện cho một và chỉ một cạnh ban đầu có đầu là đỉnh đó. Giới hạn dưới và giới hạn trên chính xác trên một đỉnh bị ràng buộc buộc chính xác số lượng đơn vị như vậy được yêu cầu. Luồng bắt buộc thông qua một nút cạnh đảm bảo rằng mọi cạnh nối hai đỉnh bị ràng buộc đều nhận được một đầu. Do đó, một vòng tuần hoàn khả thi ánh xạ trực tiếp tới một hướng hợp lệ. Ngược lại, bất kỳ hướng hợp lệ nào đều tạo ra một vòng tuần hoàn khả thi bằng cách gửi một đơn vị qua mỗi nút cạnh đến đỉnh là đầu của cạnh đó, do đó, kiểm tra luồng không thể từ chối một phiên bản hợp lệ thực sự. 
 
 ## Giải pháp Python```python
 import sys
@@ -105,273 +125,370 @@ input = sys.stdin.readline
 
 sys.setrecursionlimit(1_000_000)
 
-class Flow:
+class Dinic:
     def __init__(self, n):
         self.n = n
         self.g = [[] for _ in range(n)]
 
     def add_edge(self, u, v, cap):
         idx = len(self.g[u])
-        rev = len(self.g[v])
-        self.g[u].append([v, rev, cap])
-        self.g[v].append([u, idx, 0])
+        self.g[u].append([v, cap, len(self.g[v])])
+        self.g[v].append([u, 0, idx])
         return idx
 
+    def bfs(self, s, t):
+        level = [-1] * self.n
+        level[s] = 0
+        q = [s]
+        head = 0
+
+        while head < len(q):
+            u = q[head]
+            head += 1
+
+            for v, cap, rev in self.g[u]:
+                if cap > 0 and level[v] == -1:
+                    level[v] = level[u] + 1
+                    q.append(v)
+
+        self.level = level
+        return level[t] != -1
+
+    def dfs(self, u, t, pushed):
+        if u == t:
+            return pushed
+
+        g_u = self.g[u]
+        while self.it[u] < len(g_u):
+            i = self.it[u]
+            v, cap, rev = g_u[i]
+
+            if cap > 0 and self.level[v] == self.level[u] + 1:
+                got = self.dfs(v, t, min(pushed, cap))
+                if got:
+                    g_u[i][1] -= got
+                    self.g[v][rev][1] += got
+                    return got
+
+            self.it[u] += 1
+
+        return 0
+
     def max_flow(self, s, t):
-        n = self.n
-        total = 0
+        flow = 0
+        INF = 10**9
 
-        while True:
-            used = [False] * n
+        while self.bfs(s, t):
+            self.it = [0] * self.n
+            while True:
+                pushed = self.dfs(s, t, INF)
+                if not pushed:
+                    break
+                flow += pushed
 
-            def dfs(v, pushed):
-                if v == t:
-                    return pushed
+        return flow
 
-                used[v] = True
+def solve(data):
+    it = iter(map(int, data.split()))
+    n = next(it)
+    m = next(it)
 
-                for e in self.g[v]:
-                    to, rev, cap = e
-                    if cap <= 0 or used[to]:
-                        continue
+    a = [next(it) for _ in range(n)]
+    edges = [(next(it), next(it)) for _ in range(m)]
 
-                    got = dfs(to, min(pushed, cap))
-                    if got:
-                        e[2] -= got
-                        self.g[to][rev][2] += got
-                        return got
-
-                return 0
-
-            pushed = dfs(s, 10**9)
-            if pushed == 0:
-                break
-
-            total += pushed
-
-        return total
-
-def solve_case(n, m, a, edges):
-    deg = [0] * n
-    for u, v in edges:
-        deg[u] += 1
-        deg[v] += 1
+    constrained = [x != -1 for x in a]
 
     # Node layout:
-    # 0 .. n-1          original vertices
-    # n .. n+m-1        one node per original edge
-    # S, T              circulation source/sink
-    # SS, TT            lower-bound reduction source/sink
-    S = n + m
+    # 0 ... n-1                 constrained vertex slots
+    # edge_base ... edge nodes
+    # S, T, SS, TT
+    #
+    # We only need vertex nodes for constrained vertices.
+    vertex_id = [-1] * n
+    vertex_nodes = []
+
+    for v in range(n):
+        if constrained[v]:
+            vertex_id[v] = len(vertex_nodes)
+            vertex_nodes.append(v)
+
+    k = len(vertex_nodes)
+    edge_base = k
+    relevant = []
+
+    for i, (u, v) in enumerate(edges):
+        u -= 1
+        v -= 1
+
+        if constrained[u] or constrained[v]:
+            relevant.append(i)
+
+    r = len(relevant)
+
+    S = k + r
     T = S + 1
     SS = T + 1
     TT = SS + 1
     N = TT + 1
 
-    flow = Flow(N)
+    dinic = Dinic(N)
     balance = [0] * N
 
-    def add_bounded(u, v, low, high):
-        idx = flow.add_edge(u, v, high - low)
+    # Store references to edge-node -> constrained-vertex arcs.
+    # Each entry is (edge_index, original_endpoint, network_u, arc_index).
+    choice_arcs = []
 
-        # Lower bound low is already sent on u -> v.
-        # It contributes one unit of outgoing lower flow at u
-        # and one unit of incoming lower flow at v.
+    def add_bounded(u, v, low, high):
+        if low > high:
+            return False
+
+        cap = high - low
+        dinic.add_edge(u, v, cap)
+
         balance[u] -= low
         balance[v] += low
+        return True
 
-        return idx
+    # Source -> edge node.
+    for pos, ei in enumerate(relevant):
+        u, v = edges[ei]
+        u -= 1
+        v -= 1
 
-    # For reconstruction:
-    # (edge_node, arc_index_to_u, arc_index_to_v, u, v)
-    original_refs = []
+        enode = edge_base + pos
 
-    for i, (u, v) in enumerate(edges):
-        edge_node = n + i
-
-        # Every original edge contributes exactly one unit.
-        add_bounded(S, edge_node, 1, 1)
-
-        idx_u = add_bounded(edge_node, u, 0, 1)
-        idx_v = add_bounded(edge_node, v, 0, 1)
-
-        original_refs.append((edge_node, idx_u, idx_v, u, v))
-
-    for v in range(n):
-        if a[v] == -1:
-            add_bounded(v, T, 0, deg[v])
+        if constrained[u] and constrained[v]:
+            low = high = 1
         else:
-            add_bounded(v, T, a[v], a[v])
+            low, high = 0, 1
 
-    # Close the S -> ... -> T flow into a circulation.
+        if not add_bounded(S, enode, low, high):
+            return "NO\n"
+
+        if constrained[u]:
+            idx = dinic.add_edge(enode, vertex_id[u], 1)
+            choice_arcs.append((ei, u, enode, idx))
+
+        if constrained[v]:
+            idx = dinic.add_edge(enode, vertex_id[v], 1)
+            choice_arcs.append((ei, v, enode, idx))
+
+    # Every constrained vertex must receive exactly a[v] units.
+    for v in vertex_nodes:
+        need = a[v]
+        if need < 0:
+            continue
+
+        # A vertex cannot receive more than its graph degree.
+        # The lower-bound construction would reject this anyway,
+        # but this check avoids creating an obviously impossible edge.
+        degree = 0
+        for u, w in edges:
+            u -= 1
+            w -= 1
+            if u == v or w == v:
+                degree += 1
+
+        if need > degree:
+            return "NO\n"
+
+        if not add_bounded(vertex_id[v], T, need, need):
+            return "NO\n"
+
+    # Close the network into a circulation.
     add_bounded(T, S, 0, m)
 
-    need = 0
+    # Satisfy all lower-bound imbalances.
+    required = 0
 
-    for v in range(N):
+    for v in range(N - 2):
         if balance[v] > 0:
-            flow.add_edge(SS, v, balance[v])
-            need += balance[v]
+            dinic.add_edge(SS, v, balance[v])
+            required += balance[v]
         elif balance[v] < 0:
-            flow.add_edge(v, TT, -balance[v])
+            dinic.add_edge(v, TT, -balance[v])
 
-    got = flow.max_flow(SS, TT)
+    got = dinic.max_flow(SS, TT)
 
-    if got != need:
-        return None
+    if got != required:
+        return "NO\n"
 
+    # Start with arbitrary directions.
     answer = []
+    for u, v in edges:
+        answer.append([u, v])
 
-    for edge_node, idx_u, idx_v, u, v in original_refs:
-        # The transformed capacity was 1, so residual capacity 0
-        # means one unit of flow was sent through that arc.
-        flow_to_u = 1 - flow.g[edge_node][idx_u][2]
-        flow_to_v = 1 - flow.g[edge_node][idx_v][2]
+    # A relevant edge with flow into a constrained endpoint is directed
+    # toward that endpoint.
+    selected = {}
 
-        if flow_to_u == 1:
-            # The edge ends at u.
-            answer.append((v + 1, u + 1))
-        elif flow_to_v == 1:
-            # The edge ends at v.
-            answer.append((u + 1, v + 1))
+    for ei, endpoint, enode, idx in choice_arcs:
+        # The residual capacity of the forward edge is 0 exactly when
+        # one unit of flow is using it.
+        if dinic.g[enode][idx][1] == 0:
+            selected[ei] = endpoint
+
+    for ei in relevant:
+        u, v = edges[ei]
+        u -= 1
+        v -= 1
+
+        if ei in selected:
+            head = selected[ei]
+
+            if head == u:
+                answer[ei] = [v + 1, u + 1]
+            else:
+                answer[ei] = [u + 1, v + 1]
         else:
-            # This cannot happen in a feasible circulation.
-            return None
-
-    return answer
-
-def solve():
-    n, m = map(int, input().split())
-    a = list(map(int, input().split()))
-
-    edges = []
-    for _ in range(m):
-        u, v = map(int, input().split())
-        edges.append((u - 1, v - 1))
-
-    answer = solve_case(n, m, a, edges)
-
-    if answer is None:
-        print("NO")
-        return
+            # No constrained endpoint receives this edge.
+            # This is possible only when at least one endpoint is free.
+            if not constrained[u]:
+                answer[ei] = [v + 1, u + 1]
+            else:
+                answer[ei] = [u + 1, v + 1]
 
     out = ["YES"]
-    out.extend(f"{u} {v}" for u, v in answer)
-    sys.stdout.write("\n".join(out))
+    for u, v in answer:
+        out.append(f"{u} {v}")
+
+    return "\n".join(out) + "\n"
+
+def main():
+    data = sys.stdin.buffer.read()
+    sys.stdout.write(solve(data.decode()))
 
 if __name__ == "__main__":
-    solve()
-```các`Flow`lớp lưu trữ mọi cạnh dư dưới dạng`[destination, reverse-index, residual-capacity]`. Chỉ mục ngược là thứ cho phép đường dẫn tăng cường hoàn tác một phần của lựa chọn trước đó. Điều này quan trọng vì đường dẫn đầu có thể gán một cạnh cho một điểm cuối và đường dẫn sau có thể cần định tuyến lại nhiệm vụ đó.`add_bounded`thực hiện phép biến đổi giới hạn dưới. Công suất còn lại trở thành`high - low`, trong khi mảng cân bằng ghi lại tác dụng của lệnh bắt buộc`low`đơn vị. Bản thân giới hạn dưới ban đầu không bị mất vì nó được ngầm bao gồm khi luồng cuối cùng được xây dựng lại. 
+    main()
+```các`Dinic`lớp lưu trữ mọi cạnh dư dưới dạng`[to, capacity, reverse_index]`. Chỉ số đảo ngược là thứ cho phép phần mở rộng cập nhật ngay công suất dư ngược mà không cần tìm kiếm trong danh sách kề. 
 
-Các nút cạnh được tạo sau các đỉnh ban đầu, giúp việc lập chỉ mục trở nên đơn giản. Đối với cạnh gốc`i`, nút luồng của nó là`n + i`. Hai cung đi được lưu trữ theo chỉ mục của chúng trong danh sách kề của nút đó. Vì dung lượng ban đầu của chúng đều là một nên dung lượng còn lại cuối cùng của chúng sẽ trực tiếp cho chúng ta biết điểm cuối nào đã nhận được đơn vị. 
+các`add_bounded`là cốt lõi của phép biến đổi giới hạn dưới. Đối với giới hạn ban đầu (L\le f\le R), nó tạo ra dung lượng dư (R-L), sau đó ghi các đơn vị (L) bắt buộc vào`balance`. Số dư dương có nghĩa là nút có luồng đến bắt buộc phải được bù bằng luồng đi bổ sung, đó là lý do tại sao siêu nguồn được kết nối với nó. 
 
-các`T -> S`cạnh có công suất`m`, bởi vì chính xác`m`đơn vị nhập`T`tổng cộng, một cho mỗi cạnh ban đầu. Công suất lớn hơn cũng có tác dụng, nhưng`m`là một ràng buộc chặt chẽ và thuận tiện. 
+Chỉ các đỉnh bị ràng buộc mới cần các nút đỉnh thực sự. Một cạnh giữa hai đỉnh tự do không ảnh hưởng đến bất kỳ yêu cầu nào, do đó, việc loại bỏ nó khỏi mạng luồng sẽ làm cho việc xây dựng nhỏ hơn mà không làm thay đổi tính khả thi. 
 
-Việc sử dụng giảm giới hạn dưới`balance[u] -= low`Và`balance[v] += low`. Số dư dương có nghĩa là các giới hạn dưới cố định sẽ để lại luồng đến dư thừa ở đỉnh đó, do đó mạng dư phải định tuyến lượng đó đi. Số dư âm có nghĩa là đỉnh cần luồng dư thừa đến. Các cạnh siêu nguồn và siêu chìm mã hóa chính xác hai trường hợp đó. 
+các`choice_arcs`mảng ghi nhớ chính xác cạnh dư nào tương ứng với mỗi đầu có thể có của mỗi cạnh ban đầu. Sau khi luồng tối đa thành công, cung lựa chọn bão hòa có nghĩa là một đơn vị đã được gửi đến điểm cuối đó. Vì mỗi nút biên có liên quan nhận được chính xác một đơn vị khi cả hai điểm cuối bị ràng buộc hoặc nhiều nhất là một đơn vị khi tồn tại một điểm cuối rảnh, nên không bao giờ có sự mơ hồ về đầu được chọn. 
 
-Không có vấn đề tràn số nguyên trong Python. Tất cả số lượng liên quan nhiều nhất là vài nghìn, nhưng số nguyên Python cũng loại bỏ mọi sự phụ thuộc vào độ rộng số nguyên của máy. 
+Việc kiểm tra mức độ là dư thừa về mặt kỹ thuật vì bản thân vòng tuần hoàn phát hiện giới hạn dưới không thể, nhưng nó xử lý trường hợp không thể rõ ràng nhất trước khi chạy luồng. Số nguyên Python có độ chính xác tùy ý, do đó không có vấn đề tràn số nguyên. 
+
+Việc xây dựng lại đầu ra có chủ ý bắt đầu với các hướng tùy ý. Chỉ các cạnh tham gia vào mạng ràng buộc mới bị ghi đè. Một cạnh liên quan không được chọn phải có một điểm cuối tự do, do đó, việc hướng nó tới điểm cuối đó không thể vi phạm bất kỳ yêu cầu cấp độ chính xác nào. 
 
 ## Ví dụ đã hoạt động 
 
-Đối với Mẫu 1, mức độ được yêu cầu là`[1, 2, 1, -1, 0]`. Một hướng hợp lệ chính xác là hướng được hiển thị trong mẫu. 
+Đối với Mẫu 1, các đỉnh bị ràng buộc là (1,2,3,5), với độ được yêu cầu (1,2,1,0). Vertex 4 là miễn phí. 
 
-| Cạnh gốc | Người đứng đầu được chọn | Bằng cấp sau khi xử lý | 
+Một chuỗi hợp lệ của các đầu được chọn được hiển thị bên dưới. Nhu cầu còn lại là số cạnh đến vẫn cần thiết cho mỗi đỉnh bị ràng buộc. 
+
+| Cạnh | Đầu được chọn | Nhu cầu còn lại sau khi vượt biên | 
 | --- | --- | --- | 
-|`1 2`|`2`|`[0,1,0,0,0]`| 
-|`1 3`|`1`|`[1,1,0,0,0]`| 
-|`2 3`|`2`|`[1,2,0,0,0]`| 
-|`3 4`|`3`|`[1,2,1,0,0]`| 
-|`4 5`|`5`|`[1,2,1,0,1]`| 
+| (1-2) | 2 | (a=(1,1,1,0)) | 
+| (1-3) | 1 | (a=(0,1,1,0)) | 
+| (2-3) | 2 | (a=(0,0,1,0)) | 
+| (3-4) | 3 | (a=(0,0,0,0)) | 
+| (4-5) | 4 | (a=(0,0,0,0)) | 
 
-Bậc cuối cùng tại các đỉnh 1, 2, 3 và 5 là`1, 2, 1, 0`, đúng như yêu cầu. Vertex 4 không bị ràng buộc. Mô hình luồng đạt được cùng một nhiệm vụ bằng cách gửi một đơn vị qua mỗi nút cạnh và chọn cung điểm cuối tương ứng. 
+Cạnh cuối cùng không được gán cho đỉnh 5 bị ràng buộc vì nhu cầu của nó đã bằng 0. Thay vào đó, nó hướng tới đỉnh tự do 4. Các hướng kết quả chính xác là hướng mẫu:```
+1 2
+3 1
+3 2
+4 3
+5 4
+```Dấu vết thể hiện sự bất biến trung tâm. Mỗi khi một điểm cuối bị ràng buộc được chọn làm đầu, nhu cầu còn lại của nó sẽ giảm đi một và lưu thông chỉ chấp nhận định hướng khi tất cả các nhu cầu chính xác được thỏa mãn. 
 
-Đối với Mẫu 2, thay đổi duy nhất là đỉnh 5 hiện yêu cầu bậc 1. 
+Đối với Mẫu 2, điểm khác biệt duy nhất là đỉnh 5 hiện yêu cầu một cạnh tới. Bốn cạnh đầu tiên có thể được xử lý chính xác như trước, để lại một đơn vị nhu cầu ở đỉnh 5. 
 
-| Cạnh gốc | Người đứng đầu được chọn | Bằng cấp sau khi xử lý | 
+| Cạnh | Đầu được chọn | Nhu cầu còn lại sau khi vượt biên | 
 | --- | --- | --- | 
-|`1 2`|`2`|`[0,1,0,0,0]`| 
-|`1 3`|`1`|`[1,1,0,0,0]`| 
-|`2 3`|`2`|`[1,2,0,0,0]`| 
-|`3 4`|`3`|`[1,2,1,0,0]`| 
-|`4 5`|`5`|`[1,2,1,0,1]`| 
+| (1-2) | 2 | (a=(1,1,1,1)) | 
+| (1-3) | 1 | (a=(0,1,1,1)) | 
+| (2-3) | 2 | (a=(0,0,1,1)) | 
+| (3-4) | 3 | (a=(0,0,0,1)) | 
+| (4-5) | 5 | (a=(0,0,0,0)) | 
 
-Cạnh cuối cùng bây giờ phải trỏ vào đỉnh 5. Điều này chứng tỏ tại sao đỉnh 4 không bị ràng buộc không thể đơn giản hấp thụ mọi cạnh còn sót lại. Dung lượng của nó đã có sẵn nhưng yêu cầu chính xác ở đỉnh 5 vẫn phải được thỏa mãn. 
-
-Hai dấu vết thể hiện sự bất biến giống nhau từ các phía khác nhau. Mỗi cạnh đóng góp chính xác một đơn vị và mỗi đỉnh cố định sẽ sử dụng chính xác số lượng đơn vị đó được yêu cầu. 
+Do đó, cạnh cuối cùng hướng từ 4 đến 5. Hướng kết quả là```
+1 2
+3 1
+3 2
+4 3
+4 5
+```Ở đây, đường vẽ thực hiện một cạnh có một điểm cuối tự do và một điểm cuối bị ràng buộc. Trong Mẫu 1, cạnh đó được phép tránh điểm cuối bị ràng buộc, trong khi ở Mẫu 2, nhu cầu chính xác ở đỉnh 5 buộc nó phải trỏ đến đó. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian |`O(m(n+m))`| Đồ thị phụ có`O(n+m)`các cạnh và nhu cầu xây dựng dòng tăng cường tích hợp`O(m)`tăng cường có liên quan | 
-| Không gian |`O(n+m)`| Đồ thị chứa`O(n+m)`đỉnh và cạnh, với số cạnh dư không đổi trên mỗi cạnh được mô hình hóa | 
+| Thời gian | (O(V^2E)) trường hợp xấu nhất đối với Dinic | Mạng lưới lưu thông được xây dựng có (V=O(n+m)) và (E=O(n+m)) | 
+| Không gian | (O(V+E)) | Đồ thị dư, số dư, cạnh gốc và dữ liệu tái tạo đều là tuyến tính | 
 
-Những ràng buộc ban đầu có`n,m <= 2000`, do đó đồ thị phụ chỉ chứa vài nghìn đỉnh và gần như bội số không đổi của`n+m`các cung dư. Giá trị luồng được đóng góp bởi các nút cạnh ban đầu được giới hạn bởi`m`và mọi cung phía nguồn như vậy đều có dung lượng bằng một. Kết quả`O(m(n+m))`ràng buộc là nhỏ thoải mái ở quy mô này. 
+Với (n,m\le2000), mạng được xây dựng chỉ có các đỉnh (O(4000)) và các cạnh logic (O(4000)) đến (O(6000)) trước khi các cạnh dư được thêm vào. Biểu đồ thưa thớt và hầu như tất cả khả năng lựa chọn cạnh đều là một. Điều này nằm trong giới hạn bộ nhớ 256 MB và phù hợp với giới hạn 1 giây khi triển khai Dinic được tối ưu hóa. 
 
 ## Trường hợp thử nghiệm 
 
-Hướng đầu ra không phải là duy nhất, vì vậy các bài kiểm tra nên xác thực câu trả lời được tạo ra thay vì so sánh từng ký tự với một hướng cụ thể. Khai thác sau đây giả định giải pháp trên được lưu dưới dạng`solution.py`.```python
-# Test harness for solution.py
-import io
-import sys
+Vì bài toán cho phép mọi hướng hợp lệ nên bài kiểm tra không thể so sánh văn bản đầu ra hoàn chỉnh với một câu trả lời cố định một cách an toàn. Dây nịt bên dưới kiểm tra`YES`hoặc`NO`kết quả và, cho`YES`, xác minh rằng mọi cạnh có hướng được in đều tương ứng với một cạnh ban đầu và mọi đỉnh bị ràng buộc đều nhận được chính xác cấp độ được yêu cầu của nó.```python
+# Save the editorial solution as solution.py before running these tests.
 
-from solution import solve_case
+from solution import solve
 
 def run(inp: str) -> str:
-    old_stdin = sys.stdin
-    old_stdout = sys.stdout
+    out = solve(inp)
+    tokens = out.split()
 
-    sys.stdin = io.StringIO(inp)
-    out = io.StringIO()
-    sys.stdout = out
+    data = list(map(int, inp.split()))
+    p = 0
 
-    try:
-        from solution import solve
-        solve()
-        return out.getvalue()
-    finally:
-        sys.stdin = old_stdin
-        sys.stdout = old_stdout
+    n = data[p]
+    m = data[p + 1]
+    p += 2
 
-def validate(inp: str, out: str, possible: bool):
-    data = inp.strip().splitlines()
-    n, m = map(int, data[0].split())
-    a = list(map(int, data[1].split()))
+    a = data[p:p + n]
+    p += n
 
     edges = []
-    for line in data[2:]:
-        u, v = map(int, line.split())
+    for _ in range(m):
+        u = data[p]
+        v = data[p + 1]
+        p += 2
         edges.append((u, v))
 
-    lines = out.strip().splitlines()
+    if not tokens:
+        raise AssertionError("empty output")
 
-    if not possible:
-        assert lines == ["NO"], f"expected NO, got:\n{out}"
-        return
+    if tokens[0] == "NO":
+        return "NO"
 
-    assert lines[0] == "YES", f"expected YES, got:\n{out}"
-    assert len(lines) == m + 1
+    assert tokens[0] == "YES", f"bad first token: {tokens[0]}"
+    assert len(tokens) == 1 + 2 * m, "wrong number of output vertices"
 
     original = {tuple(sorted(e)) for e in edges}
-    indeg = [0] * n
+    used = set()
+    indeg = [0] * (n + 1)
 
-    for line in lines[1:]:
-        u, v = map(int, line.split())
+    q = 1
+    for _ in range(m):
+        u = int(tokens[q])
+        v = int(tokens[q + 1])
+        q += 2
+
         assert 1 <= u <= n
         assert 1 <= v <= n
         assert u != v
-
         assert tuple(sorted((u, v))) in original
-        indeg[v - 1] += 1
+        assert tuple(sorted((u, v))) not in used, "an original edge was repeated"
 
-    for i in range(n):
-        if a[i] != -1:
-            assert indeg[i] == a[i], (
-                f"vertex {i + 1}: expected {a[i]}, got {indeg[i]}"
+        used.add(tuple(sorted((u, v))))
+        indeg[v] += 1
+
+    assert len(used) == m
+
+    for v in range(1, n + 1):
+        if a[v - 1] != -1:
+            assert indeg[v] == a[v - 1], (
+                f"vertex {v}: expected {a[v - 1]}, got {indeg[v]}"
             )
 
+    return "YES"
+
 # Sample 1
-sample1 = """\
+assert run("""\
 5 5
 1 2 1 -1 0
 1 2
@@ -379,11 +496,10 @@ sample1 = """\
 2 3
 3 4
 4 5
-"""
-validate(sample1, run(sample1), True)
+""") == "YES", "sample 1"
 
 # Sample 2
-sample2 = """\
+assert run("""\
 5 5
 1 2 1 -1 1
 1 2
@@ -391,91 +507,81 @@ sample2 = """\
 2 3
 3 4
 4 5
-"""
-validate(sample2, run(sample2), True)
+""") == "YES", "sample 2"
 
 # Minimum-size valid graph.
-case_min = """\
+assert run("""\
 2 1
-1 -1
+0 1
 1 2
-"""
-validate(case_min, run(case_min), True)
+""") == "YES", "minimum valid case"
 
-# Boundary case: requested degree equals m and is actually attainable.
-case_boundary = """\
-3 2
-2 0 -1
-1 2
-1 3
-"""
-validate(case_boundary, run(case_boundary), True)
-
-# All vertices constrained with equal requested values.
-case_equal = """\
-4 4
-1 1 1 1
-1 2
-2 3
-3 4
-4 1
-"""
-validate(case_equal, run(case_equal), True)
-
-# Impossible because vertex 1 has degree 1 but requests in-degree 2.
-case_impossible = """\
+# Boundary case: requested in-degree exceeds the actual degree.
+assert run("""\
 2 1
 2 -1
 1 2
-"""
-validate(case_impossible, run(case_impossible), False)
+""") == "NO", "degree upper boundary"
 
-# Maximum-size graph: a 2000-cycle, every vertex requests in-degree 1.
+# Both endpoints are constrained and both demand zero.
+# The single edge has nowhere valid to point.
+assert run("""\
+2 1
+0 0
+1 2
+""") == "NO", "mandatory constrained-constrained edge"
+
+# Maximum-size graph with all vertices unconstrained.
+# A 2000-cycle has 2000 edges and needs no constrained flow at all.
 n = 2000
-m = 2000
-a = " ".join(["1"] * n)
 cycle_edges = "\n".join(
-    f"{i} {i % n + 1}" for i in range(1, n + 1)
-)
-case_max = f"{n} {m}\n{a}\n{cycle_edges}\n"
+    f"{i} {i + 1}" for i in range(1, n)
+) + f"\n{n} 1\n"
 
-validate(case_max, run(case_max), True)
+max_case = f"{n} {n}\n" + ("-1 " * (n - 1)) + "-1\n" + cycle_edges
+
+assert run(max_case) == "YES", "maximum-size all-free case"
+
+# All-equal exact demands on a cycle.
+all_equal_case = f"{n} {n}\n" + ("1 " * (n - 1)) + "1\n" + cycle_edges
+
+assert run(all_equal_case) == "YES", "maximum-size all-equal case"
+
+print("all tests passed")
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-| Mẫu 1 |`YES`với định hướng hợp lệ | Các đỉnh bị ràng buộc và không bị ràng buộc hỗn hợp cơ bản | 
-| Mẫu 2 |`YES`với định hướng hợp lệ | Điểm cuối miễn phí trước đây trở nên bị ràng buộc chính xác | 
-|`2 1 / 1 -1 / 1 2`|`YES`| Biểu đồ hợp lệ tối thiểu và độ chính xác một | 
-|`3 2 / 2 0 -1`|`YES`| Bằng cấp tương đương`m`, không yêu cầu và định hướng chính xác | 
-| Bốn chu kỳ với tất cả`1`|`YES`| Yêu cầu hoàn toàn bằng nhau và không có đỉnh không bị ràng buộc | 
-|`2 1 / 2 -1 / 1 2`|`NO`| Bằng cấp yêu cầu lớn hơn bằng cấp thực tế | 
-| Chu kỳ 2000 với tất cả`1`|`YES`| Mạng đầu vào có kích thước tối đa và luồng lớn | 
+|`2 1`, yêu cầu`0 1`, bờ rìa`1 2`|`YES`| Phiên bản hợp lệ tối thiểu và nhu cầu một đơn vị chính xác | 
+|`2 1`, yêu cầu`2 -1`, bờ rìa`1 2`|`NO`| Yêu cầu bằng cấp lớn hơn bằng cấp hiện có | 
+|`2 1`, yêu cầu`0 0`, bờ rìa`1 2`|`NO`| Không thể bỏ gán cạnh giữa hai đỉnh bị ràng buộc | 
+| Chu kỳ 2000 với mọi nhu cầu`-1`|`YES`| Biểu đồ kích thước tối đa và xử lý các cạnh tự do không liên quan | 
+| Chu kỳ 2000 với mọi nhu cầu`1`|`YES`| Đồ thị có kích thước tối đa với tất cả các đỉnh bị ràng buộc và yêu cầu chính xác bằng nhau | 
 
 ## Vỏ cạnh 
 
-Mức độ được yêu cầu lớn hơn mức độ đỉnh sẽ bị chính mạng luồng từ chối. Vì```
+Trường hợp cạnh đầu tiên là bậc được yêu cầu lớn hơn bậc đỉnh. Vì```
 2 1
 2 -1
 1 2
-```nút cạnh có sẵn một đơn vị, trong khi cạnh của đỉnh 1`T`yêu cầu hai đơn vị vì giới hạn dưới và giới hạn trên của nó đều bằng 2. Không có cách nào để gửi hai đơn vị vào đỉnh 1 từ một nút cạnh. Luồng tối đa phụ trợ không thể bão hòa tất cả các cạnh cân bằng, do đó chương trình sẽ in`NO`. 
+```đỉnh 1 có bậc 1 nhưng cần có 2 cạnh vào. Việc xây dựng thêm giới hạn dưới và giới hạn trên của hai trên cạnh từ đỉnh 1 đến (T), trong khi cạnh liên quan duy nhất có thể đóng góp nhiều nhất một đơn vị. Sự tuần hoàn không thể thỏa mãn giới hạn dưới, do đó luồng tối đa không thành công và thuật toán in ra`NO`. 
 
-Yêu cầu bằng 0 được xử lý dưới dạng giới hạn trên và dưới chính xác của 0. Vì```
+Trường hợp cạnh thứ hai là cạnh có điểm cuối đều bị ràng buộc. Vì```
+2 1
+0 0
+1 2
+```nút cạnh cho (1-2) nhận một đơn vị bắt buộc từ (S), vì cả hai điểm cuối đều bị ràng buộc. Nó chỉ có thể gửi đơn vị đó đến đỉnh 1 hoặc đỉnh 2, nhưng cả hai đỉnh đều có yêu cầu gửi đi đến (T) chính xác bằng 0. Sự mất cân bằng dẫn đến không thể sửa chữa được nên dòng chảy báo cáo là không khả thi. Điều này mắc phải lỗi phổ biến là coi mọi cạnh là tùy chọn trong mạng ràng buộc. 
+
+Trường hợp cạnh thứ ba là cạnh giữa một đỉnh bị ràng buộc và một đỉnh không bị ràng buộc. Coi như```
 2 1
 0 -1
 1 2
-```nút cạnh phải gửi một đơn vị của nó tới đỉnh 2, vì đỉnh 1 không có dung lượng trên`v -> T`bờ rìa. Do đó, luồng được phục hồi sẽ in`2 1`, cho đỉnh 1 bậc 0. 
+```Nút cạnh có khả năng tùy chọn là một đối với đỉnh bị ràng buộc 1. Vì đỉnh 1 yêu cầu bằng 0 nên luồng không gửi gì qua lựa chọn đó. Trong quá trình xây dựng lại, thuật toán thấy rằng cạnh không được chọn cho điểm cuối bị ràng buộc và thay vào đó hướng nó về phía đỉnh 2. Đầu ra có hiệu quả`1 2`, cho đỉnh 1 độ 0 theo yêu cầu. 
 
-Một giá trị của`-1`trở thành một khoảng linh hoạt`[0, degree[v]]`. Vì```
-2 1
-1 -1
-1 2
-```đỉnh 1 có khoảng`[1,1]`, do đó phép gán khả thi duy nhất sẽ gửi cạnh vào đỉnh 1. Đỉnh 2 có thể nhận bất cứ thứ gì từ 0 đến 1, do đó bậc 0 cuối cùng của nó là hợp lệ. 
+Trường hợp cạnh thứ tư là một đồ thị trong đó mọi đỉnh đều không bị ràng buộc. Trong chu kỳ 2000 với tất cả (a_i=-1), mạng luồng không có yêu cầu về đỉnh bị ràng buộc và các cạnh của chu trình không cần tham gia vào vòng tuần hoàn. Thuật toán chỉ đơn giản chọn các hướng tùy ý cho tất cả chúng và in ra`YES`. Đây là lý do tại sao các cạnh tự do có thể được loại bỏ một cách an toàn khỏi mô hình dòng chảy. 
 
-Khi mọi đỉnh bị ràng buộc, sẽ không có điểm cuối dự phòng nào có thể hấp thụ luồng dư thừa. TRONG```
+Trường hợp cuối cùng là tình huống bị ràng buộc hoàn toàn. Đối với một hình tam giác có```
 3 3
 1 1 1
 1 2
 2 3
 3 1
-```mỗi nút cạnh phải gửi một đơn vị và mỗi đỉnh tới`T`edge chấp nhận chính xác một. Sự tuần hoàn có thể định tuyến ba đơn vị xung quanh tam giác, tạo ra một chu trình có hướng. Khả năng chính xác là thứ ngăn không cho bất kỳ đỉnh nào nhận được hai cạnh trong khi đỉnh khác không nhận được. 
-
-Trường hợp kích thước tối đa là chu kỳ 2000 với mỗi cấp độ được yêu cầu bằng một. Mỗi đỉnh có thể nhận được một trong hai cạnh tới của nó và bản thân chu trình có hướng là một hướng hợp lệ. Cấu trúc luồng có 2000 nút cạnh và 2000 nút đỉnh ban đầu, tuy nhiên cấu trúc của nó vẫn tuyến tính ở kích thước đầu vào, do đó, thuật toán tương tự được áp dụng mà không cần xử lý đặc biệt.
+```mỗi cạnh nối hai đỉnh bị ràng buộc, do đó mỗi nút cạnh buộc phải mang chính xác một đơn vị. Ba đỉnh, mỗi đỉnh cần một đơn vị, do đó vòng tuần hoàn có thể gửi ba đơn vị đó đến ba đỉnh, ví dụ tạo ra chu trình có hướng (1\rightarrow2), (2\rightarrow3), (3\rightarrow1). Mỗi đỉnh nhận đúng một cạnh. Trường hợp này chứng tỏ rằng việc xây dựng giới hạn dưới cũng giải quyết được vấn đề định hướng theo bậc quy định ban đầu khi không có đỉnh không bị ràng buộc.
