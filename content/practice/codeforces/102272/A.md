@@ -1,7 +1,7 @@
 ---
 title: "CF 102272A - Ch\u01a1i Bi-a"
-description: "Chúng ta có một bàn carom hình chữ nhật có góc dưới bên trái là (0, 0) và góc trên bên phải là (N, M). Một quả bóng xuất phát ở vị trí nguyên (x0, y0) bên trong bàn và chuyển động với vận tốc không đổi (vx, vy). Bất cứ khi nào nó chạm tới một bức tường thẳng đứng, dấu của vx sẽ thay đổi."
-date: "2026-08-17T11:07:09+07:00"
+description: "Chúng ta có một bàn carom hình chữ nhật có kích thước ngang là (N) và kích thước dọc là (M). Quả bóng bắt đầu ở vị trí nguyên ((x0,y0)), nằm ngay bên trong bàn và trong mỗi giây, vị trí của nó thay đổi theo vận tốc hiện tại ((vx,vy))."
+date: "2026-08-19T05:08:06+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102272
@@ -9,7 +9,7 @@ codeforces_index: "A"
 codeforces_contest_name: "HCW 19 Individual Day 1"
 rating: 0
 weight: 102272
-solve_time_s: 222
+solve_time_s: 375
 verified: false
 draft: false
 ---
@@ -18,165 +18,241 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 3 phút 42s 
+**Thời gian giải:** 6 phút 15s 
 **Đã xác minh:** không 
 
 ## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta có một bàn carom hình chữ nhật có góc dưới bên trái là`(0, 0)`và góc trên bên phải là`(N, M)`. Một quả bóng bắt đầu ở vị trí số nguyên`(x0, y0)`bên trong bàn và chuyển động với vận tốc không đổi`(vx, vy)`. Bất cứ khi nào nó chạm tới một bức tường thẳng đứng, dấu hiệu của`vx`những thay đổi. Bất cứ khi nào nó chạm tới một bức tường nằm ngang, dấu hiệu của`vy`những thay đổi. Đến một góc chỉ cần thay đổi cả hai dấu hiệu. 
+Chúng ta có một bàn carom hình chữ nhật có kích thước ngang là (N) và kích thước dọc là (M). Quả bóng bắt đầu ở vị trí nguyên ((x_0,y_0)), nằm ngay bên trong bàn và trong mỗi giây, vị trí của nó thay đổi theo vận tốc hiện tại của nó ((v_x,v_y)). Khi quả bóng chạm vào một bức tường thẳng đứng, dấu (v_x) thay đổi. Khi nó chạm vào một bức tường nằm ngang thì dấu (v_y) thay đổi. Nếu cả hai xảy ra ở cùng một góc thì cả hai dấu hiệu đều thay đổi. 
 
-Nhiệm vụ là tìm ra vị trí chính xác của quả bóng sau`S`giây. Vị trí được đảm bảo là tích phân cho số nguyên`S`, nhưng việc mô phỏng trực tiếp chuyển động thì quá tốn kém. 
+Nhiệm vụ là tìm vị trí chính xác của quả bóng sau (S) giây. Các thành phần vận tốc có thể âm và có thể lớn bằng (10^9), trong khi (S) cũng có thể bằng (10^9). Có thể có tới (10^4) trường hợp thử nghiệm. 
 
-Kích thước, vận tốc và thời gian đều có thể lớn bằng`10^9`, trong khi có thể có tới`10^4`trường hợp thử nghiệm. Một mô phỏng thực hiện một thao tác mỗi giây có thể yêu cầu`10^9`lặp đi lặp lại cho một trường hợp duy nhất và lên đến`10^13`lặp lại trên toàn bộ đầu vào. Điều đó không thể phù hợp với giới hạn thời gian một giây. Chúng ta cần một công thức có thời gian chạy không phụ thuộc vào`S`. 
+Các giá trị lớn ngay lập tức loại trừ việc mô phỏng quả bóng từng giây một. Một thử nghiệm duy nhất có thể yêu cầu (10^9) lần lặp và (10^4) các thử nghiệm như vậy sẽ cho ra tới (10^{13}) lần lặp. Mặc dù mỗi lần lặp lại đơn giản nhưng điều đó vượt xa giới hạn thời gian một giây. Chúng ta cần một phép tính thời gian không đổi cho mỗi tọa độ. 
 
-Hai tọa độ cũng độc lập. Bức tường thẳng đứng chỉ ảnh hưởng đến tọa độ x, trong khi bức tường ngang chỉ ảnh hưởng đến tọa độ y. Điều này cho phép chúng ta giải bài toán một chiều và áp dụng nó hai lần. 
+Hai tọa độ độc lập. Chuyển động theo phương ngang chỉ phụ thuộc vào (N,x_0,v_x,S) và chuyển động theo chiều dọc chỉ phụ thuộc vào (M,y_0,v_y,S). Vì vậy, vấn đề chính giảm xuống việc hiểu chuyển động một chiều giữa hai bức tường phản xạ tại (0) và (L). 
 
-Một số trường hợp ranh giới có thể khiến việc triển khai đơn giản trở nên sai lầm. Xem xét đầu vào```
+Có một số trường hợp nguy hiểm có thể âm thầm phá vỡ quá trình triển khai trực tiếp. Đầu tiên là một quả bóng rơi chính xác vào một bức tường. Ví dụ,```
 1
-5 4 2 1 3 0 1
-```Sau một giây, tọa độ x chính xác là`5`, vậy câu trả lời là`(5, 1)`. Việc thực hiện bất cẩn sẽ phản ánh ngay lập tức bất cứ khi nào tọa độ lớn hơn hoặc bằng`N`có thể vô tình di chuyển quả bóng trở lại`0`hoặc để`2`, tùy thuộc vào cách mã hóa sự phản chiếu. Bản thân bức tường là một vị trí hợp lệ nên công thức sóng tam giác phản xạ phải cho phép chính xác`N`. 
+3 4 1 2 2 0 1
+```đưa ra vị trí ((3,2)). Bóng chạm tới bức tường bên phải đúng thời điểm (1), nên đáp án là`3 2`. Việc thực hiện bất cẩn, ngay lập tức thay đổi lại vị trí sau khi phát hiện va chạm có thể vô tình quay trở lại`1 2`. 
 
-Vấn đề thứ hai là vận tốc âm. Vì```
+Trường hợp thứ hai là vận tốc âm. Ví dụ,```
 1
-5 4 2 1 -3 0 1
-```quả bóng chạm tới`x = -1`trong bức tranh được mở ra. Vị trí thực tế là`1`, vậy câu trả lời là`(1, 1)`. Ngôn ngữ ở đâu`%`giữ phần dư âm yêu cầu xử lý đặc biệt, trong khi modulo của Python đã trả về phần dư không âm. 
+5 4 2 2 -3 -2 1
+```đưa ra tọa độ chưa mở (-1) và (0). Vị trí phản ánh là (1) và (0), do đó đầu ra đúng là`1 0`. Việc triển khai sử dụng một ngôn ngữ trong đó`%`giữ dấu của số bị chia phải chuẩn hóa số dư âm. của Python`%`đã trả về phần dư không âm nên công thức trực tiếp là an toàn. 
 
-Một góc có thể đạt được đồng thời ở cả hai tọa độ. Ví dụ,```
+Trường hợp thứ ba xảy ra khi cả hai tọa độ đều chạm tới tường cùng một lúc. Ví dụ,```
 1
-3 5 2 4 1 1 1
-```di chuyển quả bóng tới`(3, 5)`, chính xác là góc trên bên phải. Đầu ra đúng là```
-3 5
-```Một phương pháp phản ánh ngay sau khi phát hiện ranh giới có thể xuất ra không chính xác`(2, 4)`trong thời gian được yêu cầu. Vị trí tại thời điểm va chạm chính xác vẫn là góc cua. 
+3 3 1 1 2 2 1
+```di chuyển trực tiếp đến góc trên bên phải, đưa ra`3 3`. Va chạm ở góc đảo ngược cả hai thành phần vận tốc, nhưng sự đảo ngược đó ảnh hưởng đến chuyển động trong tương lai chứ không phải vị trí tại thời điểm va chạm. 
 
-Cuối cùng, một thành phần vận tốc có thể bằng không. Vì```
+Cuối cùng, vận tốc bằng không trong một tọa độ phải bằng không. Ví dụ,```
 1
-7 6 3 4 0 0 1000000000
-```quả bóng không bao giờ chuyển động nên câu trả lời đơn giản là`(3, 4)`. Một công thức dựa trên việc chia cho vận tốc hoặc đếm các va chạm của tường phải xử lý rõ ràng trường hợp này, trong khi công thức khai triển hoạt động mà không cần bất kỳ cách xử lý toán học đặc biệt nào. 
+2 5 1 3 0 2 3
+```giữ nguyên (x=1), trong khi tọa độ dọc di chuyển từ (3) đến (9) trong biểu diễn mở rộng. Vì (9\bmod 10=9), phép phản xạ cho (1), nên câu trả lời là`1 1`. 
 
 ## Phương pháp tiếp cận 
 
-Giải pháp trực tiếp nhất là mô phỏng quả bóng từng giây một. Tại mỗi giây, thêm`(vx, vy)`đến vị trí hiện tại. Nếu tọa độ x rời khỏi khoảng`[0, N]`, phản ánh nó và đảo ngược`vx`; tương tự, phản ánh tọa độ y và đảo ngược`vy`. Điều này đúng vì nó tuân theo chính xác các quy tắc vật lý của bảng. 
+Giải pháp đơn giản là mô phỏng từng giây. Ở mỗi bước, chúng tôi thêm vận tốc hiện tại vào vị trí, kiểm tra xem tọa độ có chạm vào tường hay không và đảo ngược thành phần vận tốc tương ứng. Điều này đúng vì nó tuân theo chính xác các quy luật vật lý của bài toán. 
 
-Vấn đề là số lần lặp lại. Với`S = 10^9`, một trường hợp thử nghiệm có thể yêu cầu`10^9`các bước mô phỏng Với`10^4`trường hợp thử nghiệm, trường hợp xấu nhất về mặt lý thuyết là`10^13`các bước. Ngay cả khi mỗi bước chỉ chứa một vài phép tính số nguyên, điều đó vẫn vượt xa giới hạn một giây. 
+Vấn đề là giá trị của (S). Trong trường hợp xấu nhất, một bài kiểm tra yêu cầu (10^9) giây mô phỏng. Với (10^4) thử nghiệm, số lượng thao tác trong trường hợp xấu nhất nằm ở thứ tự (10^{13}), không thể vừa với giới hạn thời gian. 
 
-Quan sát quan trọng là tọa độ nảy chỉ là một sóng tam giác tuần hoàn. Chỉ xem xét tọa độ x. Nếu chiều rộng của bảng là`N`, hãy tưởng tượng loại bỏ các bức tường và cho phép quả bóng tiếp tục di chuyển vô tận. Tọa độ của nó được mở ra sau`S`giây là`u = x0 + vx * S`. 
+Quan sát quan trọng là sự phản chiếu có thể được loại bỏ bằng cách tưởng tượng một đường thẳng lớn hơn, trải rộng hơn. Chỉ xét tọa độ (x) và đặt chiều rộng của bảng là (N). Thay vì phản chiếu quả bóng tại (0) và (N), hãy tưởng tượng rằng đường thẳng đó kéo dài mãi mãi: 
 
-Bảng thực có thể được xây dựng lại bằng cách gấp đường vô hạn này lại thành từng khoảng độ dài`N`. Mô hình lặp đi lặp lại mỗi`2N`: tọa độ di chuyển từ`0`ĐẾN`N`, sau đó quay lại từ`N`ĐẾN`0`, và lặp lại. 
+[ 
+\ldots,-2N,-N,0,N,2N,3N,\ldots 
+] 
 
-Như vậy chúng ta chỉ cần`r = u mod (2N)`. 
+Quả bóng chỉ đơn giản di chuyển dọc theo đường vô hạn này với vận tốc ban đầu của nó. Mỗi khoảng có độ dài (2N) tương ứng với một chuyển động qua lại hoàn chỉnh bên trong bảng thực. 
 
-Nếu như`r <= N`, tọa độ x thực tế là`r`. Nếu như`r > N`, tọa độ là`2N - r`. Phép tính tương tự sẽ cho ra tọa độ y một cách độc lập với khoảng thời gian sử dụng`2M`. 
+Sau (S) giây, tọa độ mở ra là 
 
-Điều này loại bỏ hoàn toàn việc mô phỏng. Giá trị lớn của`S`và vận tốc được xử lý bằng số học số nguyên, và số lần va chạm vào tường không bao giờ cần phải đếm. 
+[ 
+p=x_0+v_xS. 
+] 
+
+Chỉ có vị trí modulo (2N) của nó là quan trọng. hãy để 
+
+[ 
+r=p\bmod 2N, 
+] 
+
+với (0\le r<2N). Nếu (r\le N), tọa độ thực là (r). Nếu (r>N), quả bóng nằm trên nửa phản xạ của khoảng trải ra, do đó tọa độ thực là (2N-r). 
+
+Do đó, sự phản xạ một chiều có thể được tính toán theo thời gian không đổi. Công thức tương tự hoạt động độc lập cho (y), thay thế (N) bằng (M). 
+
+Đây thực chất là một sóng tam giác định kỳ. Chuyển động nảy có chu kỳ (2N) trong tọa độ trải rộng, do đó modulo (2N) nắm bắt hoàn toàn mọi số lần va chạm vào tường có thể xảy ra mà không cần mô phỏng rõ ràng bất kỳ lần va chạm nào trong số đó. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
-| Lực lượng vũ phu |`O(S)`mỗi trường hợp thử nghiệm |`O(1)`| Quá chậm | 
-| Tối ưu |`O(1)`mỗi trường hợp thử nghiệm |`O(1)`| Đã chấp nhận | 
+| Lực lượng vũ phu | (O(S)) mỗi lần kiểm tra | (O(1)) | Quá chậm | 
+| Tối ưu | (O(1)) mỗi lần kiểm tra | (O(1)) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Đọc`N`,`M`, vị trí ban đầu`(x0, y0)`, vận tốc`(vx, vy)`, và thời gian yêu cầu`S`. Chuyển động x và y có thể được xử lý độc lập vì va chạm thẳng đứng không bao giờ làm thay đổi thành phần y và va chạm ngang không bao giờ làm thay đổi thành phần x. 
-2. Đối với tọa độ x, tính vị trí gấp`u = x0 + vx * S`. Điều này thể hiện vị trí của quả bóng nếu không có bức tường thẳng đứng nào cả. 
-3. Giảm`u`modulo`2N`, thu được`r`. Khoảng thời gian`[0, 2N]`mô tả một chu kỳ qua lại hoàn chỉnh của tọa độ x. Giảm modulo`2N`xóa mọi chu trình hoàn chỉnh mà không thay đổi vị trí cuối cùng bên trong bảng. 
-4. Chuyển đổi`r`trở lại bảng sử dụng quy tắc sóng tam giác. Nếu như`r <= N`, tọa độ là`r`, vì đây là nửa đầu của chu kỳ. Ngược lại tọa độ là`2N - r`, vì nửa sau đang tiến về 0. 
-5. Áp dụng chính xác phép tính tương tự cho y, thay thế`x0`,`vx`, Và`N`với`y0`,`vy`, Và`M`. 
-6. In kết quả`(x, y)`. Vì cả hai tọa độ đều được tính ở cùng một thời điểm tuyệt đối`S`, va chạm góc đồng thời được xử lý một cách tự nhiên. Tại một góc, cả hai sóng tam giác đều nằm chính xác tại ranh giới tương ứng của chúng. 
+1. Đọc (N,M,x_0,y_0,v_x,v_y,S). Vị trí cuối cùng có thể được tính toán độc lập cho hai tọa độ, do đó không cần mô phỏng va chạm giữa chúng. 
+2. Đối với tọa độ ngang, tính vị trí gấp 
+
+[ 
+p_x=x_0+v_xS. 
+] 
+
+Điều này thể hiện vị trí của quả bóng sau (S) giây nếu các bức tường thẳng đứng không phản chiếu nó. 
+
+1. Giảm vị thế này theo modulo trong toàn bộ thời gian mở ra: 
+
+[ 
+r_x=p_x\bmod 2N. 
+] 
+
+Việc sử dụng (2N), thay vì (N), là cần thiết vì chuyển động từ (0) đến (N) và quay lại (0) tạo thành mẫu lặp lại hoàn chỉnh. 
+
+1. Phản ánh tọa độ đã giảm trở lại bảng thực tế. Nếu (r_x\le N), đặt (x_S=r_x). Nếu không thì đặt 
+
+[ 
+x_S=2N-r_x. 
+] 
+
+Giá trị tương tự xuất hiện hai lần ở hai đầu của khoảng mở ra, thể hiện chính xác vị trí của bức tường. 
+
+1. Lặp lại phép tính tương tự theo chiều dọc. Tính toán 
+
+[ 
+p_y=y_0+v_yS, 
+] 
+
+sau đó 
+
+[ 
+r_y=p_y\bmod 2M, 
+] 
+
+và cuối cùng sử dụng (r_y) khi (r_y\le M), nếu không thì sử dụng (2M-r_y). 
+
+1. In (x_S) và (y_S). Hai phép tính này độc lập, kể cả khi cả hai tọa độ chạm vào tường cùng một lúc. 
 
 ### Tại sao nó hoạt động 
 
-Đối với một tọa độ, việc mở bảng sẽ loại bỏ mọi phản chiếu. Quả bóng sau đó tuân theo phương trình tuyến tính đơn giản`x0 + vx*S`. Gấp dòng này lại thành`[0, N]`tái tạo mọi phản xạ vì khoảng độ dài đầu tiên`N`tương ứng với chuyển động về phía bức tường bên phải, trong khi khoảng thứ hai tương ứng với chuyển động phản xạ về phía bức tường bên trái. Mẫu hoàn chỉnh có dấu chấm`2N`, vậy lấy modulo`2N`không mất thông tin. Lập luận tương tự áp dụng độc lập cho y. Do đó, hai tọa độ được xây dựng lại chính xác là vị trí của quả bóng sau`S`giây. 
+Đối với một tọa độ, hãy tưởng tượng việc thay thế mọi bản sao phản ánh của bảng bằng một bản sao khác đặt bên cạnh nó. Quả bóng sau đó chuyển động mãi mãi theo một đường thẳng với vận tốc không đổi. Việc gấp đường vô hạn này trở lại khoảng ban đầu sẽ tái tạo chính xác mọi phản xạ: vượt qua bội số của (N) sẽ đảo ngược hướng sau khi gấp. 
+
+Mẫu chưa mở lặp lại mỗi (2N), do đó, hai vị trí chưa mở khác nhau bội số của (2N) luôn xếp vào cùng một tọa độ bảng. Do đó, việc lấy vị trí modulo (2N) sẽ loại bỏ một số lượng hành trình tới lui hoàn chỉnh tùy ý. Gấp giá trị còn lại với (r) cho nửa đầu và (2N-r) cho nửa sau sẽ cho vị trí vật lý chính xác. 
+
+Vì tọa độ ngang và tọa độ dọc tuân theo cùng một đối số độc lập nên việc áp dụng phép biến đổi cho cả hai tọa độ sẽ tạo ra vị trí chính xác của quả bóng sau (S) giây. 
 
 ## Giải pháp Python```python
 import sys
 input = sys.stdin.readline
 
-def reflected_position(start, velocity, length, time):
+def reflected_position(length, start, velocity, seconds):
     period = 2 * length
-    r = (start + velocity * time) % period
+    pos = (start + velocity * seconds) % period
 
-    if r <= length:
-        return r
-    return period - r
+    if pos <= length:
+        return pos
+    return period - pos
 
 def solve():
     t = int(input())
 
+    out = []
+
     for _ in range(t):
-        N, M, x0, y0, vx, vy, S = map(int, input().split())
+        n, m, x0, y0, vx, vy, s = map(int, input().split())
 
-        x = reflected_position(x0, vx, N, S)
-        y = reflected_position(y0, vy, M, S)
+        x = reflected_position(n, x0, vx, s)
+        y = reflected_position(m, y0, vy, s)
 
-        print(x, y)
+        out.append(f"{x} {y}")
+
+    sys.stdout.write("\n".join(out))
 
 if __name__ == "__main__":
     solve()
-```các`reflected_position`hàm chứa toàn bộ nghiệm một chiều.`start + velocity * time`tính toán vị trí chưa được gấp và phép toán modulo nén nó thành một chu kỳ của chuyển động nảy. 
+```các`reflected_position`hàm chứa toàn bộ phép biến đổi một chiều từ thuật toán. Đầu tiên nó tạo thành vị trí mở ra`start + velocity * seconds`. Số nguyên Python có độ chính xác tùy ý, do đó sản phẩm có thể đạt tới khoảng (10^{18}) một cách an toàn mà không bị tràn. 
 
-Thời kỳ là`2 * length`, không`length`. Một tọa độ mất`length`đơn vị khoảng cách được mở ra để đi từ bức tường này sang bức tường khác, rồi đến bức tường khác`length`các đơn vị để quay trở lại bức tường bắt đầu. Chỉ sử dụng`length`vì dấu chấm sẽ xác định không chính xác một điểm trên đường tới bức tường bên phải với điểm tương ứng trên đường quay lại. 
+Modulo được thực hiện bởi`period = 2 * length`. Python đảm bảo rằng kết quả của`%`nằm trong khoảng từ (0) đến`period - 1`, ngay cả khi vị trí ban đầu là âm. Đó là lý do tại sao trường hợp vận tốc âm không cần nhánh đặc biệt. 
 
-Sự so sánh`r <= length`cũng là cố ý. Khi`r == length`, quả bóng nằm chính xác trên tường và đó là vị trí hợp lệ tại thời điểm được yêu cầu. Chỉ các giá trị thực sự lớn hơn`length`thuộc nửa phản xạ của chu kỳ. 
+Điều kiện là`pos <= length`, không`pos < length`. Nếu quả bóng tiếp đất chính xác trên một bức tường thì tọa độ đó đã là vị trí vật lý chính xác. Ví dụ, khi`pos == length`, trở về`length`là hoàn toàn đúng. 
 
-Hoạt động modulo của Python đặc biệt thuận tiện cho vận tốc âm. Ví dụ: nếu tọa độ mở rộng là`-1`và thời kỳ là`10`, Python đánh giá`-1 % 10`BẰNG`9`, chính xác là điểm tương đương trong giai đoạn hiện tại. 
+Không cần cập nhật vận tốc sau khi tìm thấy va chạm. Chúng ta chỉ cần vị trí tại một thời điểm xác định và mô hình chưa được mở đã mã hóa mọi sự đảo chiều vận tốc thông qua sự phản xạ. 
 
-Không có nguy cơ tràn số nguyên trong Python. Sản phẩm lớn nhất theo thứ tự`10^18`, mà số nguyên Python xử lý trực tiếp. Trong ngôn ngữ có chiều rộng cố định, cần có loại số nguyên đủ rộng cho`velocity * S`. 
+Đầu vào được xử lý bằng`sys.stdin.readline`, và các câu trả lời sẽ được tích lũy trước lần viết cuối cùng. Với tối đa (10^4) trường hợp thử nghiệm, điều này giúp giảm chi phí I/O. 
 
 ## Ví dụ đã hoạt động 
 
-Đối với trường hợp thử nghiệm mẫu đầu tiên, bảng có chiều rộng`3`và chiều cao`5`, quả bóng bắt đầu lúc`(2, 2)`, chuyển động với vận tốc`(2, 1)`, và chúng ta cần vị trí của nó sau`3`giây. 
+Đối với trường hợp mẫu đầu tiên,```
+3 5 2 2 2 1 3
+```kích thước bàn ngang là (3), do đó khoảng thời gian mở ra là (6). Kích thước bảng dọc là (5) nên chu kỳ của nó là (10). 
 
-| Bước | x mở ra | kỳ x | vị trí x | y mở ra | kỳ y | vị trí y | 
+| Tọa độ | Bắt đầu | Vận tốc | Thời gian | Vị trí mở ra | Thời kỳ modulo | Vị trí phản ánh | 
 | --- | --- | --- | --- | --- | --- | --- | 
-| Ban đầu | 2 | 6 | 2 | 2 | 10 | 2 | 
-| Sau 3 giây | 8 | 2 | 2 | 5 | 5 | 5 | 
+| (x) | 2 | 2 | 3 | 8 | 2 | 2 | 
+| (y) | 2 | 1 | 3 | 5 | 5 | 5 | 
 
-Đối với x, tọa độ mở rộng là`2 + 2*3 = 8`. Giảm modulo`6`cho`2`, vậy quả bóng đã quay về tọa độ x`2`. Đối với y, tọa độ mở rộng là`2 + 1*3 = 5`, chính xác là bức tường phía trên, nên tọa độ y vẫn giữ nguyên`5`vào thời điểm được yêu cầu. Vị trí kết quả là`(2, 5)`, phù hợp với mẫu 
+Câu trả lời là`2 5`. Về mặt vật lý, quả bóng di chuyển theo chiều ngang từ (2) đến bức tường bên phải tại (3), quay lại (1) tại thời điểm (2), rồi đến (2) tại thời điểm (3). Phép tính mở ra sẽ nhận được kết quả tương tự mà không cần mô phỏng những va chạm đó. 
 
-Đối với trường hợp thử nghiệm mẫu thứ hai, bảng là`6 x 8`, vị trí ban đầu là`(3, 2)`, vận tốc là`(5, 1)`, Và`S = 1`. 
+Đối với trường hợp mẫu thứ hai,```
+6 8 3 2 5 1 1
+```chu kỳ ngang là (12), trong khi chu kỳ dọc là (16). 
 
-| Bước | x mở ra | kỳ x | vị trí x | y mở ra | kỳ y | vị trí y | 
+| Tọa độ | Bắt đầu | Vận tốc | Thời gian | Vị trí mở ra | Thời kỳ modulo | Vị trí phản ánh | 
 | --- | --- | --- | --- | --- | --- | --- | 
-| Ban đầu | 3 | 12 | 3 | 2 | 16 | 2 | 
-| Sau 1 giây | 8 | 8 | 4 | 3 | 3 | 3 | 
+| (x) | 3 | 5 | 1 | 8 | 8 | 4 | 
+| (y) | 2 | 1 | 1 | 3 | 3 | 3 | 
 
-Tọa độ x mở rộng là`8`. Vì chiều rộng của bảng là`6`, nửa sau của khoảng thời gian đang hoạt động, do đó tọa độ thực tế là`12 - 8 = 4`. Tọa độ y là`3`, vẫn còn ở trong bảng. Vị trí cuối cùng là`(4, 3)`. 
+Vị trí mở ngang là (8). Vì bảng kết thúc ở (6) nên tọa độ phản ánh là (12-8=4). Tọa độ dọc chưa tới tường nên giữ nguyên (3). Câu trả lời kết quả là`4 3`. 
 
-Hai dấu vết này thể hiện cả hai mặt của sóng tam giác. Thử nghiệm đầu tiên tiếp đất chính xác trên tường, trong khi thử nghiệm thứ hai đạt đến nửa phản xạ của chu kỳ tọa độ x. 
+Những dấu vết này cho thấy tại sao sự phản xạ phải xảy ra sau khi lấy modulo (2L), chứ không phải modulo (L). Modulo (L) sẽ mất đi sự phân biệt giữa việc di chuyển về phía bức tường và di chuyển trở lại từ nó. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian |`O(T)`| Mỗi trường hợp thử nghiệm thực hiện một số phép tính số học không đổi. | 
-| Không gian |`O(1)`| Chỉ một số biến số nguyên cố định được lưu trữ cho mỗi trường hợp thử nghiệm. | 
+| Thời gian | (O(T)) | Mỗi trường hợp thử nghiệm thực hiện một số phép tính số học không đổi. | 
+| Không gian | (O(T)) | Các chuỗi đầu ra được lưu trữ trước khi được viết. Không gian làm việc cho mỗi bài kiểm tra là (O(1)). | 
 
-Với nhiều nhất`10^4`trường hợp thử nghiệm, thuật toán chỉ thực hiện một vài phép tính số nguyên cho mỗi trường hợp. Điều này dễ dàng tương thích với giới hạn một giây và mức sử dụng bộ nhớ không tăng theo`S`, kích thước của bàn hoặc số lần va chạm vào tường. 
+Với (T\le10^4), thuật toán chỉ thực hiện một vài phép tính số nguyên cho mỗi trường hợp thử nghiệm. Mặc dù (N,M,v_x,v_y,S) có thể làm cho tích trung gian rất lớn, Python xử lý trực tiếp các số nguyên này và số lượng phép tính số học vẫn không đổi. Giải pháp này tránh được mô phỏng bước (10^9) một cách thoải mái mà giới hạn ban đầu không thể thực hiện được. 
 
 ## Trường hợp thử nghiệm```python
 import sys
 import io
 
-def reflected_position(start, velocity, length, time):
+def reflected_position(length, start, velocity, seconds):
     period = 2 * length
-    r = (start + velocity * time) % period
-    if r <= length:
-        return r
-    return period - r
+    pos = (start + velocity * seconds) % period
 
-def solve_data(data):
-    inp = io.StringIO(data)
-    t = int(inp.readline())
-    out = []
+    if pos <= length:
+        return pos
+    return period - pos
 
-    for _ in range(t):
-        N, M, x0, y0, vx, vy, S = map(int, inp.readline().split())
-        x = reflected_position(x0, vx, N, S)
-        y = reflected_position(y0, vy, M, S)
-        out.append(f"{x} {y}")
+def solve_input(inp: str) -> str:
+    old_stdin = sys.stdin
+    old_stdout = sys.stdout
 
-    return "\n".join(out) + "\n"
+    try:
+        sys.stdin = io.StringIO(inp)
+        output = io.StringIO()
+        sys.stdout = output
+
+        t = int(sys.stdin.readline())
+        ans = []
+
+        for _ in range(t):
+            n, m, x0, y0, vx, vy, s = map(
+                int, sys.stdin.readline().split()
+            )
+
+            x = reflected_position(n, x0, vx, s)
+            y = reflected_position(m, y0, vy, s)
+
+            ans.append(f"{x} {y}")
+
+        sys.stdout.write("\n".join(ans))
+        return output.getvalue()
+    finally:
+        sys.stdin = old_stdin
+        sys.stdout = old_stdout
 
 # Provided sample
 sample = """\
@@ -185,88 +261,73 @@ sample = """\
 6 8 3 2 5 1 1
 100 200 13 45 -20 111 9969
 """
-assert solve_data(sample) == """\
-2 5
-4 3
-33 196
-""", "provided sample"
+assert solve_input(sample) == "2 5\n4 3\n33 196", "provided sample"
 
-# Minimum-size table, exact wall hit, and zero velocity component.
+# Minimum-size table, immediate hit on the right wall.
 case_min = """\
-3
-2 2 1 1 1 0 1
-2 2 1 1 1 0 2
-2 2 1 1 0 0 1000000000
-"""
-assert solve_data(case_min) == """\
-2 1
-1 1
-1 1
-""", "minimum dimensions and zero velocity"
-
-# Negative velocity.
-case_negative = """\
 1
-5 4 2 1 -3 0 1
+2 2 1 1 1 0 1
 """
-assert solve_data(case_negative) == """\
-1 1
-""", "negative velocity"
+assert solve_input(case_min) == "2 1", "minimum-size table"
 
-# Exact corner hit.
+# Both coordinates move equally and hit a corner.
 case_corner = """\
 1
-3 5 2 4 1 1 1
+2 2 1 1 1 1 1
 """
-assert solve_data(case_corner) == """\
-3 5
-""", "corner collision"
+assert solve_input(case_corner) == "2 2", "corner collision"
+
+# Negative velocities, including a coordinate that lands exactly on a wall.
+case_negative = """\
+1
+5 4 2 2 -3 -2 1
+"""
+assert solve_input(case_negative) == "1 0", "negative velocity"
+
+# Zero velocity in one coordinate and multiple reflections in the other.
+case_zero_velocity = """\
+1
+2 5 1 3 0 2 3
+"""
+assert solve_input(case_zero_velocity) == "1 1", "zero velocity"
 
 # Maximum-scale values.
-case_max = """\
+case_maximum = """\
 1
-1000000000 1000000000 1 999999999 1000000000 -1000000000 1000000000
+1000000000 1000000000 999999999 999999999 1000000000 -1000000000 1000000000
 """
-assert solve_data(case_max) == """\
-1 999999999
-""", "maximum values"
-
-# Equal dimensions, equal positions, equal velocities, and repeated reflection.
-case_equal = """\
-1
-10 10 3 3 4 4 3
-"""
-assert solve_data(case_equal) == """\
-8 8
-""", "equal values and reflection"
+assert solve_input(case_maximum) == "999999999 999999999", "maximum values"
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`2 2 1 1 1 0 1`và các vụ việc liên quan |`2 1`,`1 1`,`1 1`| Kích thước tối thiểu, ranh giới chính xác và vận tốc bằng không | 
-|`5 4 2 1 -3 0 1`|`1 1`| Modulo âm và vận tốc âm | 
-|`3 5 2 4 1 1 1`|`3 5`| Va chạm đồng thời với hai bức tường ở một góc | 
-|`1000000000 1000000000 1 999999999 1000000000 -1000000000 1000000000`|`1 999999999`| Giới hạn số tối đa và sản phẩm rất lớn | 
-|`10 10 3 3 4 4 3`|`8 8`| Chuyển động x và y đối xứng và phản xạ lặp đi lặp lại | 
+|`2 2 1 1 1 0 1`|`2 1`| Kích thước bàn tối thiểu và độ nhấn tường chính xác | 
+|`2 2 1 1 1 1 1`|`2 2`| Va chạm đồng thời ở một góc | 
+|`5 4 2 2 -3 -2 1`|`1 0`| Vận tốc âm và vị trí trải rộng âm | 
+|`2 5 1 3 0 2 3`|`1 1`| Vận tốc bằng không và phản xạ thẳng đứng lặp đi lặp lại | 
+|`1000000000 1000000000 999999999 999999999 1000000000 -1000000000 1000000000`|`999999999 999999999`| Maximum-scale arithmetic and large periods |
 
-## Vỏ cạnh 
+ ## Vỏ cạnh 
 
-Bóng rơi chính xác vào tường không được phản ánh trước khi vị trí yêu cầu của nó được báo cáo. Vì```
+An exact wall hit is handled by the`<= length`tình trạng. Coi như```
 1
-5 4 2 1 3 0 1
-```tọa độ x mở rộng là`5`, và chu kỳ là`10`. Từ`5 <= 5`, tọa độ phản ánh vẫn là`5`. Đầu ra là`5 1`. Điều kiện phải là`r <= length`, không`r < length`. 
+3 4 1 2 2 0 1
+```Đối với (x), vị trí mở là (1+2=3). Chu kì là (6) nên vị trí rút gọn là (3). Vì (3\le3), hàm trả về (3). Tọa độ dọc vẫn giữ nguyên (2). Đầu ra là`3 2`. Không có phản xạ bổ sung nào được áp dụng tại thời điểm va chạm vì câu hỏi yêu cầu vị trí tại thời điểm chính xác đó. 
 
-Vận tốc âm được xử lý theo cùng một công thức. Vì```
+Vận tốc âm yêu cầu hoạt động modulo để bình thường hóa vị trí chưa được mở. Vì```
 1
-5 4 2 1 -3 0 1
-```tọa độ x mở rộng là`-1`. modulo còn lại của nó`10`là`9`, và bởi vì`9 > 5`, tọa độ thực tế trở thành`10 - 9 = 1`. Đầu ra là`1 1`. Không cần mô phỏng riêng biệt việc di chuyển về phía bức tường bên trái. 
+5 4 2 2 -3 -2 1
+```vị trí mở ngang là (-1). Giá trị chuẩn hóa của nó modulo (10) là (9), do đó vị trí phản ánh là (10-9=1). Theo chiều dọc, vị trí mở ra là (0), giữ nguyên (0). Đầu ra là`1 0`. Công thức vẫn hoạt động ngay cả khi quả bóng đã vượt qua ranh giới bên trái trong mô hình được mở ra. 
 
-Một va chạm ở góc được tự động thể hiện bằng việc cả hai tọa độ đều đạt đến ranh giới trên của chúng cùng một lúc. Vì```
+Va chạm ở góc không cần xử lý đặc biệt. Vì```
 1
-3 5 2 4 1 1 1
-```tọa độ mở ra là`3`Và`5`. Chu kỳ của họ là`6`Và`10`và cả hai phần dư đều bằng độ dài bảng tương ứng của chúng. Kết quả là chính xác`3 5`. Nếu phép tính phản ánh ngay sau khi chạm vào tường, nó sẽ trả lời vị trí ở thời điểm tiếp theo thay vì vị trí được yêu cầu. 
+3 3 1 1 2 2 1
+```cả hai tọa độ mở ra đều trở thành (3). Cả hai chu kỳ đều là (6) và cả hai tọa độ rút gọn đều chính xác là (3), vì vậy câu trả lời là`3 3`. Việc cả hai thành phần vận tốc đảo chiều sau đó không ảnh hưởng đến vị trí tại thời điểm (1). Sự độc lập của hai phép biến đổi một chiều xử lý góc một cách tự nhiên. 
 
-Thành phần vận tốc bằng 0 không yêu cầu nhánh đặc biệt nào trong thuật toán chính. Vì```
+Vận tốc bằng không cũng được bao phủ mà không có nhánh riêng biệt. Vì```
 1
-7 6 3 4 0 0 1000000000
-```tọa độ chưa được mở vẫn còn`3`Và`4`bất kể thời gian. Lấy modulo tương ứng và gấp lại để chúng không thay đổi, tạo ra`3 4`. Đây là một lý do tại sao công thức tọa độ trải rộng được ưu tiên hơn các công thức đếm va chạm có thể cố gắng chia cho vận tốc. 
+2 5 1 3 0 2 3
+```tọa độ mở theo chiều ngang vẫn giữ nguyên (1), trong khi tọa độ mở theo chiều dọc trở thành (9). Chu kỳ thẳng đứng là (10) nên (9) gấp thành (1). Câu trả lời là`1 1`. Một mô phỏng có thể liên tục kiểm tra tọa độ ngang mặc dù không có gì có thể xảy ra ở đó, trong khi công thức chỉ tính toán nó một lần. 
 
-Các giá trị lớn nhất cũng đòi hỏi phải chú ý đến số học. Với vận tốc và thời gian xung quanh`10^9`, sản phẩm của họ có thể tiếp cận`10^18`. Python xử lý việc này một cách chính xác, vì vậy biểu thức`start + velocity * time`là an toàn. Trong các ngôn ngữ có số nguyên 32 bit, biểu thức tương tự sẽ tràn, do đó cần phải có loại số nguyên 64 bit.
+Cuối cùng, các giá trị lớn không làm thay đổi thuật toán. Với```
+1
+1000000000 1000000000 999999999 999999999 1000000000 -1000000000 1000000000
+```tọa độ mở ngang là (999999999+10^{18}) và tọa độ dọc là (999999999-10^{18}). Vì (10^{18}) chia hết cho (2\cdot10^9), cả hai tọa độ đều giảm xuống (999999999) modulo chu kỳ tương ứng của chúng. Cả hai đều đã ở nửa đầu của khoảng thời gian mở ra, mang lại`999999999 999999999`. Ví dụ này chứng minh tại sao giải pháp phải sử dụng số học thay vì mô phỏng, đồng thời thực hiện các giá trị gần với giới hạn lớn nhất cho phép.

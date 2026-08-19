@@ -1,7 +1,7 @@
 ---
 title: "CF 102268I - Đồ thị thú vị"
-description: "Chúng ta có một đồ thị vô hướng có tối đa (10^5) đỉnh và (10^5) cạnh. Đối với mỗi số màu có sẵn (k=1,2,ldots,n), chúng ta cần số lần gán màu thích hợp, trong đó các đỉnh liền kề phải nhận các màu khác nhau. Mỗi câu trả lời được lấy modulo (998244353)."
-date: "2026-08-17T18:57:31+07:00"
+description: "Chúng ta được cung cấp một đồ thị vô hướng đơn giản có tối đa (10^5) đỉnh và (10^5) cạnh. Đối với mọi số màu có sẵn (k) từ (1) đến (n), chúng ta cần số lượng màu đỉnh thích hợp bằng cách sử dụng các màu được gắn nhãn (k) đó, modulo (998244353)."
+date: "2026-08-19T04:33:06+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102268
@@ -9,7 +9,7 @@ codeforces_index: "I"
 codeforces_contest_name: "300iq Contest 1"
 rating: 0
 weight: 102268
-solve_time_s: 367
+solve_time_s: 860
 verified: false
 draft: false
 ---
@@ -18,118 +18,100 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 6 phút 7 giây 
+**Thời gian giải:** 14p 20s 
 **Đã xác minh:** không 
 
 ## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta có một đồ thị vô hướng có tối đa (10^5) đỉnh và (10^5) cạnh. Đối với mỗi số màu có sẵn (k=1,2,\ldots,n), chúng ta cần số lần gán màu thích hợp, trong đó các đỉnh liền kề phải nhận các màu khác nhau. Mỗi câu trả lời được lấy modulo (998244353). 
+Chúng ta được cung cấp một đồ thị vô hướng đơn giản có tối đa (10^5) đỉnh và (10^5) cạnh. Đối với mọi số màu có sẵn (k) từ (1) đến (n), chúng ta cần số lượng màu đỉnh thích hợp bằng cách sử dụng các màu được gắn nhãn (k) đó, modulo (998244353). 
 
-Điều kiện bất thường trên mỗi bảy đỉnh là hạn chế cấu trúc quan trọng. Giả sử một thành phần được kết nối có ít nhất bảy đỉnh. Bởi vì thành phần được kết nối, chúng ta có thể bắt đầu từ một đỉnh và liên tục thêm một đỉnh lân cận của tập hợp đã chọn cho đến khi chúng ta có chính xác bảy đỉnh. Bảy đỉnh kết quả tạo ra một sơ đồ con được kết nối. Giữa hai đỉnh bất kỳ có một đường đi chỉ sử dụng bảy đỉnh đó, vì vậy không có đỉnh nào ngoài bảy đỉnh đó có thể thuộc về mọi đường đi giữa cặp đó. Điều đó mâu thuẫn với điều kiện đã cho. Do đó, mọi thành phần được kết nối có nhiều nhất sáu đỉnh. 
+Điều kiện bất thường trên biểu đồ là điều làm cho vấn đề có thể giải quyết được. Lấy bảy đỉnh bất kỳ. Trong số đó, hai phải có đỉnh thứ ba nào đó ngoài bảy đỉnh nằm trên mọi đường đi giữa hai đỉnh đó. Điều kiện này buộc mọi thành phần được kết nối hai chiều, còn được gọi là khối, phải chứa tối đa sáu đỉnh. 
 
-Đây là toàn bộ lý do khiến vấn đề trở nên có thể quản lý được. Đồ thị ban đầu có thể có (10^5) đỉnh, nhưng mọi phần độc lập liên quan đến bài toán tô màu chỉ có sáu đỉnh. 
+Để biết lý do tại sao, hãy giả sử một thành phần được kết nối hai chiều có ít nhất bảy đỉnh. Chọn bảy đỉnh bất kỳ của nó là (A). Đối với hai đỉnh phân biệt bất kỳ (a,b\in A) và với bất kỳ (c\notin A), đỉnh (c) không thể tách rời (a) và (b). Nếu (c) nằm ngoài thành phần thì nó không liên quan đến các đường dẫn bên trong thành phần. Nếu (c) là một đỉnh khác của thành phần, thì khả năng kết nối kép sẽ tạo ra một đường tránh (a)-(b) (c). Điều này mâu thuẫn với tính chất cần thiết. 
 
-Tìm kiếm màu trực tiếp là vô vọng. Với (k=n=10^5), việc thử mọi bài tập sẽ kiểm tra 
+Giới hạn (n,m\le 10^5) loại trừ mọi thứ khám phá các tập hợp con đỉnh tùy ý, liệt kê các màu hoặc thực hiện phép toán bậc hai cho mọi đỉnh. Chẵn (O(n^2)) đã có nghĩa là khoảng (10^{10}) phép toán cơ bản ở giới hạn trên. Việc phân tách hữu ích về cơ bản phải tuyến tính theo kích thước đầu vào, chỉ với một lượng công việc không đổi nhỏ cho mỗi khối. 
 
-[ 
-n^n=(10^5)^{10^5}=10^{500000} 
-] 
-
-bài tập. Ngay cả việc tính toán một đa thức sắc độ tổng quát bằng các phương pháp dựa trên tập hợp con trên tất cả (n) đỉnh cũng sẽ yêu cầu thời gian hàm mũ tính bằng (n). 
-
-Kích thước đầu vào cũng loại trừ các thuật toán liên tục thực hiện công việc tốn kém trên toàn bộ biểu đồ. Quét tuyến tính hoặc gần tuyến tính các đỉnh và cạnh (10^5) là được, trong khi (O(n^2)) đã có nghĩa là các thao tác đại khái là (10^{10}). Do đó, công thức hàm mũ hữu ích phải chỉ phụ thuộc vào hằng số sáu chứ không phụ thuộc vào (n). 
-
-Có một số trường hợp khó xử lý. Với hai đỉnh được nối bởi một cạnh, câu trả lời là (0,2), vì một màu không thể tô màu chính xác cho một cạnh và hai màu đưa ra hai lựa chọn mà điểm cuối nhận được màu nào.```
-2 1
-1 2
-```Đầu ra là```
-0 2
-```Thành phần đầy đủ của sáu đỉnh là một trường hợp biên quan trọng khác. Đa thức sắc độ của nó là 
-
-[ 
-k(k-1)(k-2)(k-3)(k-4)(k-5), 
-] 
-
-vì vậy nó không có màu với ít hơn sáu màu và chính xác (6!=720) màu có sáu màu.```
-6 15
-1 2
-1 3
-1 4
-1 5
-1 6
-2 3
-2 4
-2 5
-2 6
-3 4
-3 5
-3 6
-4 5
-4 6
-5 6
-```Đầu ra là```
-0 0 0 0 0 720
-```Một lỗi phổ biến khác là quên rằng các thành phần bị ngắt kết nối có thể được tô màu độc lập. Mẫu chứa một hình tam giác và hai đỉnh cô lập. Tam giác có (k(k-1)(k-2)) màu, trong khi các đỉnh cô lập đóng góp (k^2), cho ra (k^3(k-1)(k-2)). Tại (k=3), đây là (27\cdot2=54), khớp với mẫu. 
+Có một số trường hợp ranh giới rất dễ bị xử lý sai. Đồ thị có hai đỉnh và một cạnh có số lượng màu (0,2), vì một màu không thể phân tách các điểm cuối trong khi hai màu cho hai phép gán. Một đồ thị có ba đỉnh trên một đường đi có (0,2,12), vì đa thức sắc độ của nó là (k(k-1)^2). Biểu đồ bị ngắt kết nối phải được xử lý theo từng thành phần. Ví dụ: hai cạnh rời nhau trên bốn đỉnh có đa thức (k^2(k-1)^2), cho ra (0,4,36,144). Cuối cùng, một biểu đồ hoàn chỉnh trên sáu đỉnh là một khối được phép duy nhất và câu trả lời của nó là (0,0,0,0,0,720). Việc triển khai bất cẩn cho rằng mọi khối đều là cạnh cây hoặc chia cho (k) không đúng điểm sẽ dẫn đến những trường hợp sai. 
 
 ## Phương pháp tiếp cận 
 
-Lực lượng vũ phu bắt đầu bằng cách gán một trong các màu (k) cho mọi đỉnh và kiểm tra mọi cạnh sau khi việc gán hoàn tất. Điều này đúng vì mọi màu có thể xuất hiện chính xác một lần, nhưng với (k=n=10^5) nó kiểm tra (10^{500000}) phép gán. Không có sự cắt tỉa hữu ích nào làm thay đổi bản chất hàm mũ cơ bản của phương pháp này. 
+Cách tiếp cận trực tiếp là liệt kê mọi cách gán màu cho các đỉnh. Đối với một (k) cố định, có các phép gán (k^n) và kiểm tra một phép gán với tất cả các chi phí cạnh (O(m)). Thực hiện điều này với mọi (k) sẽ được (O(m\sum_{k=1}^n k^n)), vốn đã ở mức (m n^n). Với (n=10^5), điều này không chỉ là quá chậm mà còn hoàn toàn không khả thi. 
 
-Quan sát hữu ích là điều kiện bảy đỉnh buộc mọi thành phần được kết nối phải chứa tối đa sáu đỉnh. Màu sắc phù hợp của các thành phần liên thông khác nhau không có tương tác, vì vậy nếu các thành phần đó là (G_1,G_2,\ldots,G_s) thì đa thức màu của chúng thỏa mãn 
+Quan sát hữu ích là đồ thị có thể được phân chia ở các đỉnh khớp nối. Khi một biểu đồ được kết nối được phân tách thành các thành phần được kết nối đôi của nó, các khối khác nhau chỉ tương tác thông qua một đỉnh khớp nối chung duy nhất. Màu của một khối có thể được kết hợp độc lập với màu của khối tiếp theo sau khi màu của đỉnh khớp nối chung của chúng đã được cố định. 
 
-[ 
-P_G(k)=\prod_{i=1}^{s}P_{G_i}(k). 
-] 
-
-Do đó chúng ta chỉ cần giải một bài toán nhỏ cho mỗi thành phần. 
-
-Đối với một thành phần có các đỉnh (t\le6), hãy xem xét việc phân chia các đỉnh của nó thành các lớp màu. Một lớp màu hợp lệ chính xác khi nó là một tập hợp độc lập. Nếu thành phần có thể được phân chia thành (r) các tập độc lập theo các cách (S_r), thì các tập hợp (r) đó có thể được gán (r) các màu riêng biệt theo 
+Giả sử một đồ thị liên thông có các khối (B_1,\ldots,B_t). Nếu (P_B(k)) biểu thị đa thức sắc độ của khối (B), thì 
 
 [ 
-(k)_r=r!\binom{k}{r} 
+P_G(k)=\frac{\prod_{i=1}^{t}P_{B_i}(k)}{k^{t-1}}. 
 ] 
 
-cách. Do đó, 
+Mỗi khối chứa ít nhất một cạnh, vì vậy (P_B(k)) chia hết cho (k). Xác định 
 
 [ 
-P_G(k)=\sum_{r=1}^{t} S_r(k)_r. 
+Q_B(k)=\frac{P_B(k)}{k}. 
 ] 
 
-Chúng ta có thể liệt kê trực tiếp tất cả các phân vùng đã đặt. Chỉ có (B_6=203) tập hợp các phân vùng gồm sáu đỉnh được gắn nhãn, vì vậy con số này nhỏ hơn nhiều so với việc liệt kê các màu tùy ý. Chúng tôi chỉ tính các phân vùng có khối độc lập. 
+Sau đó, một thành phần được kết nối sẽ đóng góp 
 
-Có một quan sát kích thước không đổi thứ hai. Mặc dù có nhiều đồ thị được gắn nhãn trên sáu đỉnh, nhưng chỉ có 50 đa thức màu riêng biệt trong số các đồ thị được kết nối trên sáu đỉnh và trên các kích thước thành phần từ một đến sáu, số lượng tương ứng là (1,1,2,5,14,50). Như vậy có nhiều nhất 73 đa thức màu thành phần riêng biệt có thể xảy ra. 
+[ 
+k\prod_B Q_B(k). 
+] 
 
-Chúng ta nhóm các thành phần có cùng đa thức. Nếu một đa thức cụ thể (f(k)) xuất hiện (c) lần thì tổng đóng góp của nó là (f(k)^c). Thay vì xử lý từng thành phần riêng biệt cho mỗi (k), chúng tôi xử lý từng đa thức riêng biệt một lần và nâng giá trị của nó lên bội số. 
+Đối với đồ thị có các thành phần liên thông (C), câu trả lời đầy đủ là 
 
-Việc triển khai bên dưới tiến thêm một bước đối với Python. Mỗi đa thức thành phần có nhiều nhất là sáu bậc, vì vậy các giá trị của nó ở các số nguyên liên tiếp có thể được tạo ra với sai phân hữu hạn chỉ bằng phép cộng. Điều này tránh việc đánh giá sáu hệ số nhị thức cho mỗi cặp (k) và loại đa thức. 
+[ 
+P_G(k)=k^C\prod_B Q_B(k). 
+] 
+
+Khó khăn còn lại là đánh giá tất cả các yếu tố này cho mọi (k). Mỗi khối có tối đa sáu đỉnh, vì vậy chúng ta có thể liệt kê tất cả các phân vùng của các đỉnh của nó thành các tập độc lập. Chỉ có (203) bộ phân vùng gồm sáu phần tử. Nếu (c_t) là số phân vùng hợp lệ thành chính xác (t) tập hợp độc lập, thì 
+
+[ 
+P_B(k)=\sum_{t=1}^{|B|}c_t(k)_t, 
+] 
+
+ở đâu 
+
+[ 
+(k)_t=k(k-1)\cdots(k-t+1). 
+] 
+
+Sau khi chia cho (k), 
+
+[ 
+Q_B(k)=\sum_{t=1}^{|B|}c_t(k-1)_{t-1}. 
+]
+
+Do đó, mỗi khối được biểu diễn bằng một bộ gồm tối đa sáu số nguyên nhỏ. 
+
+Có rất ít đa thức sắc độ khác nhau cho đồ thị liên thông trên nhiều nhất là sáu đỉnh. Số lượng đã biết là (1,1,2,5,14,50) cho các kích thước từ (1) đến (6), do đó chỉ có (72) đa thức màu được kết nối khác nhau trên các kích thước (2) đến (6). Do đó, chúng ta có thể nhóm các khối có cùng bộ hệ số và chỉ xử lý mỗi loại một lần. Cuộc thảo luận ban đầu của cuộc thi mô tả chính xác cách tiếp cận phân loại trạng thái nhỏ này, nhận thấy rằng số lượng đa thức địa phương có liên quan là dưới (100). 
+
+Do đó, tính toán mạnh mẽ bên trong một khối là rất nhỏ, trong khi biểu đồ lớn được xử lý bằng cách phân tách khối. Đây là sự chuyển đổi quan trọng từ một bài toán tô màu đồ thị tùy ý sang một tập hợp các bài toán có kích thước không đổi. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
-| Lực lượng vũ phu | (O(n^n m)) cho (k=n) | (O(n+m)) | Quá chậm | 
-| Tối ưu | (O(n+m+3^6n+nT\log n)), (T\le73) | (O(n+m)) | Đã chấp nhận | 
+| Lực lượng vũ phu | (O(mn^n)) | (O(n+m)) | Quá chậm | 
+| Phân rã khối và phân loại đa thức cục bộ | (O(n+m+Un)), với (U<100) loại cục bộ | (O(n+m)) | Đã chấp nhận | 
 
-Thuật ngữ (3^6) mô tả công việc chung của tập hợp con thành phần nhỏ, trong khi việc triển khai ở đây sử dụng các phân vùng đã đặt và do đó thực sự khám phá tối đa vài trăm trạng thái cho mỗi thành phần. Giới hạn (T\le73) xuất phát từ tập hợp hữu hạn các đa thức sắc độ có thể có của các đồ thị liên thông có tối đa sáu đỉnh. 
+## Hướng dẫn thuật toán 
 
-## Hướng dẫn thuật toán
+1. Chạy DFS của Tarjan cho các thành phần được kết nối hai chiều. Duy trì thời gian khám phá và giá trị liên kết thấp của mỗi đỉnh và một chồng các cạnh đi qua. Bất cứ khi nào một phần tử con DFS (v) thỏa mãn (\operatorname{low[v]\ge\operatorname{tin[u]), hãy bật các cạnh cho đến khi cạnh (uv) bị loại bỏ. Những cạnh bật lên đó tạo thành một khối. Thuộc tính biểu đồ đã cho đảm bảo rằng mọi khối kết quả đều chứa tối đa sáu đỉnh. 
+2. Đếm các thành phần được kết nối trong khi chạy DFS. Một đỉnh cô lập không có khối cạnh nhưng nó vẫn đóng góp một thừa số (k) vào đa thức màu. Đây chính xác là lý do tại sao hệ số toàn cầu cuối cùng là (k^C). 
+3. Với mỗi khối, thu thập các đỉnh của nó và dịch chúng sang các chỉ số cục bộ (0,\ldots,s-1), trong đó (s\le6). Mã hóa các cạnh của khối dưới dạng mặt nạ bit. Vì có nhiều nhất (\binom 62=15) cạnh cục bộ có thể có nên toàn bộ khối vừa với một số nguyên 15 bit. 
+4. Liệt kê mọi phân vùng tập hợp của (các) đỉnh cục bộ. Phân vùng thể hiện một cách để quyết định đỉnh nào nhận được cùng màu. Phân vùng có thể sử dụng được chính xác khi không có cạnh đồ thị nào có cả hai điểm cuối trong cùng một phần. Đếm xem có bao nhiêu phân vùng hợp lệ có (t) phần. Các số đếm này là các hệ số (c_t) trong khai triển giai thừa giảm dần của đa thức màu của khối. 
+5. Lưu trữ bộ hệ số làm loại khối và đếm xem mỗi loại có bao nhiêu khối. Các khối có cùng bộ dữ liệu có cùng một bộ (Q_B(k)), vì vậy không có lý do gì để đánh giá chúng một cách riêng biệt. 
+6. Đối với từng loại khối riêng biệt, hãy đánh giá 
 
-1. Xây dựng danh sách kề và tìm mọi thành phần được kết nối bằng DFS hoặc BFS. Đối số cấu trúc ở trên đảm bảo rằng mọi thành phần được phát hiện đều có tối đa sáu đỉnh, vì vậy chúng ta có thể biểu diễn sự kề bên bên trong của nó một cách an toàn bằng mặt nạ bit. 
-2. Dán nhãn lại các đỉnh của một thành phần từ (0) đến (t-1) và lưu trữ cho mỗi đỉnh cục bộ một mặt nạ bit (t) chứa các đỉnh lân cận của nó. Bitmask đặt câu hỏi "đỉnh này có thể được đưa vào lớp màu này không?" một thao tác AND theo từng bit. 
-3. Liệt kê tất cả các phân vùng của các đỉnh thành phần thành các khối. Xử lý các đỉnh theo thứ tự tăng dần. Đối với đỉnh hiện tại, hãy chèn nó vào một khối hiện có có các đỉnh không liền kề với nó hoặc tạo một khối mới. Việc xử lý các đỉnh theo thứ tự cố định làm cho mỗi phân vùng đã đặt xuất hiện đúng một lần. 
-4. Gọi (S_r) là số phân vùng hợp lệ thành đúng (r) khối độc lập. Chuyển đổi giá trị này thành hệ số của (\binom{k}{r}) bằng cách nhân với (r!). Vectơ kết quả mô tả duy nhất đa thức màu của thành phần. 
-5. Lưu vectơ hệ số này vào từ điển và đếm xem mỗi vectơ có bao nhiêu thành phần. Các thành phần có cùng một vectơ có cùng số lượng màu thích hợp cho mọi (k), vì vậy chúng có thể được nhóm lại một cách an toàn. 
-6. Với mỗi đa thức riêng biệt, trước tiên hãy tính giá trị của nó tại (k=0,1,\ldots,t). Các giá trị (t+1) này xác định hoàn toàn đa thức bậc (t). Xây dựng bảng sai phân hữu hạn của nó, giữ nguyên giá trị đầu tiên của mọi bậc sai phân. 
-7. Tạo lần lượt các giá trị đa thức cho (k=1,2,\ldots,n). Nếu mảng chênh lệch hiện tại là (\Delta^0f,\Delta^1f,\ldots,\Delta^tf), việc tăng từ (k) lên (k+1) được thực hiện bằng cách thêm từng chênh lệch vào mảng tiếp theo từ bậc thấp đến bậc cao. Mục nhập đầu tiên trở thành giá trị mới của (f). 
-8. Nhân câu trả lời tổng thể ở mọi (k) với giá trị đa thức hiện tại được nâng lên thành số thành phần được biểu thị bằng đa thức này. Vì số mũ là bội số của kiểu nên toàn bộ tập hợp các thành phần bằng nhau được xử lý cùng một lúc. 
-9. In các giá trị kết quả từ (k=1) đến (n). Tất cả số học được thực hiện modulo (998244353). 
+[ 
+Q(k)=\sum_t c_t(k-1)_{t-1} 
+] 
 
-### Tại sao nó hoạt động 
+với tất cả (k=1,\ldots,n). Bởi vì (Q) có bậc nhiều nhất là năm, nên các giá trị của nó có thể được tạo ra bằng cách sử dụng sai phân hữu hạn, tránh việc đánh giá đa thức mới liên quan đến năm phép nhân tại mọi điểm. 
 
-Đối với mọi thành phần được kết nối, phân vùng đệ quy liệt kê chính xác các phân vùng có khối có thể nhận được các màu bằng nhau. Việc phân vùng thành (r) các khối độc lập tương ứng với việc gán chính xác (r!\binom{k}{r}) các màu riêng biệt cho các khối đó. Do đó đa thức nhỏ được tính toán chính xác là đa thức màu của thành phần. 
+1. Nhân phần đóng góp của loại vào câu trả lời. Nếu loại xảy ra (r) lần thì đóng góp của nó là (Q(k)^r). Đối với một lần xuất hiện, chúng tôi nhân trực tiếp; đối với nhiều lần xuất hiện, chúng tôi sử dụng lũy ​​thừa mô-đun. 
+2. Sau khi tất cả các loại khối đã được xử lý, nhân mỗi câu trả lời với (k^C). Giá trị kết quả là số lượng màu (k) thích hợp của toàn bộ đồ thị. 
 
-Các thành phần được kết nối khác nhau không có cạnh giữa chúng, vì vậy màu sắc của chúng có thể được chọn độc lập. Do đó đa thức màu của chúng nhân lên. Việc nhóm các đa thức thành phần bằng nhau chỉ thay thế phép nhân lặp lại bằng lũy ​​thừa và không làm thay đổi kết quả. 
-
-Pha sai phân hữu hạn không xấp xỉ đa thức. Một đa thức bậc nhiều nhất là sáu được xác định hoàn toàn bởi bảy giá trị liên tiếp và sai phân hữu hạn thứ bảy của nó bằng không. Việc nâng cao bảng hiệu sẽ tái tạo giá trị chính xác ở mọi số nguyên tiếp theo. Do đó, mỗi giá trị nhân với câu trả lời cuối cùng là số lượng màu chính xác do loại thành phần đó đóng góp. 
+Tại sao nó hoạt động: Sự phân rã của Tarjan tách một biểu đồ thành các khối chỉ giao nhau ở các đỉnh khớp nối. Khi màu của đỉnh khớp nối như vậy được cố định, màu của các khối tới sẽ độc lập. Màu khối có khả năng (P_B(k)), nhưng màu khớp nối chung được tính một lần trong mỗi khối sự cố, do đó, mỗi khối bổ sung sẽ đóng góp một phép chia cho (k). Điều này mang lại (k^C\prod_B(P_B(k)/k)). Khai triển giai thừa giảm cục bộ đếm mỗi màu thích hợp chính xác một lần bằng cách phân chia các đỉnh đầu tiên thành các lớp màu khác rỗng của nó và sau đó gán các màu được gắn nhãn riêng biệt cho các lớp đó. Vì mỗi khối có tối đa sáu đỉnh nên việc liệt kê đầy đủ các phân vùng độc lập của nó là chính xác và có kích thước không đổi.
 
 ## Giải pháp Python```python
 import sys
@@ -137,242 +119,305 @@ input = sys.stdin.readline
 
 MOD = 998244353
 
-def component_signature(adj_masks):
-    """Return coefficients c[r-1] such that
-       P(k) = sum_{r=1}^t c[r-1] * C(k, r).
-    """
-    t = len(adj_masks)
-    ways = [0] * (t + 1)
-    blocks = []
+def generate_partitions(n):
+    """Return (number_of_parts, internal_pair_mask) for every set partition."""
+    if n == 0:
+        return [(0, 0)]
 
-    def dfs(v):
-        if v == t:
-            ways[len(blocks)] += 1
+    pair_id = [[-1] * n for _ in range(n)]
+    bit = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            pair_id[i][j] = pair_id[j][i] = bit
+            bit += 1
+
+    res = []
+
+    # Restricted-growth strings describe set partitions uniquely.
+    a = [0] * n
+
+    def dfs(pos, mx):
+        if pos == n:
+            mask = 0
+            for i in range(n):
+                for j in range(i + 1, n):
+                    if a[i] == a[j]:
+                        mask |= 1 << pair_id[i][j]
+            res.append((mx + 1, mask))
             return
 
-        bit = 1 << v
-        forbidden = adj_masks[v]
+        for x in range(mx + 2):
+            a[pos] = x
+            dfs(pos + 1, max(mx, x))
 
-        for i in range(len(blocks)):
-            block = blocks[i]
-            if forbidden & block == 0:
-                blocks[i] = block | bit
-                dfs(v + 1)
-                blocks[i] = block
+    a[0] = 0
+    dfs(1, 0)
+    return res
 
-        blocks.append(bit)
-        dfs(v + 1)
-        blocks.pop()
+PARTITIONS = {s: generate_partitions(s) for s in range(2, 7)}
 
-    dfs(0)
+def block_signature(vertices, edge_ids, edges):
+    """Return the falling-factorial coefficient tuple of one block."""
+    s = len(vertices)
 
-    res = [0] * t
-    fact = 1
-    for r in range(1, t + 1):
-        fact = fact * r % MOD
-        res[r - 1] = ways[r] * fact % MOD
+    where = {v: i for i, v in enumerate(vertices)}
 
-    return tuple(res)
+    edge_mask = 0
+    for eid in edge_ids:
+        u, v = edges[eid]
+        a = where[u]
+        b = where[v]
+        if a > b:
+            a, b = b, a
 
-def component_values(signature, n):
-    """Generate P(1), P(2), ..., P(n) using finite differences."""
-    t = len(signature)
+        # Pair (a,b) among the s vertices.
+        bit = 0
+        for i in range(a):
+            bit += s - 1 - i
+        bit += b - a - 1
+        edge_mask |= 1 << bit
 
-    # Evaluate at k = 0, 1, ..., t.
-    initial = []
-    for k in range(t + 1):
-        comb = 1
-        value = 0
-        for r in range(1, t + 1):
-            comb = comb * (k - r + 1) % MOD
-            comb = comb * pow(r, MOD - 2, MOD) % MOD
-            value = (value + signature[r - 1] * comb) % MOD
-        initial.append(value)
+    cnt = [0] * s
 
-    # Build the first element of every finite-difference row.
-    diff = initial[:]
-    first = [diff[0]]
-    for length in range(t, 0, -1):
-        diff = [(diff[i + 1] - diff[i]) % MOD for i in range(length)]
-        first.append(diff[0])
+    for parts, inside in PARTITIONS[s]:
+        if edge_mask & inside == 0:
+            cnt[parts - 1] += 1
 
-    # first[j] = Delta^j f(0).
-    cur = first
-    values = [0] * n
-
-    for k in range(n):
-        # Advance from x=k to x=k+1.
-        for j in range(t):
-            cur[j] = (cur[j] + cur[j + 1]) % MOD
-        values[k] = cur[0]
-
-    return values
+    return tuple(cnt)
 
 def solve():
     n, m = map(int, input().split())
 
+    edges = []
     graph = [[] for _ in range(n)]
-    for _ in range(m):
+
+    for eid in range(m):
         u, v = map(int, input().split())
         u -= 1
         v -= 1
-        graph[u].append(v)
-        graph[v].append(u)
+        edges.append((u, v))
+        graph[u].append((v, eid))
+        graph[v].append((u, eid))
 
-    seen = [False] * n
-    pos = [-1] * n
-    types = {}
+    sys.setrecursionlimit(max(1_000_000, 2 * n + 100))
 
-    for start in range(n):
-        if seen[start]:
-            continue
+    tin = [0] * n
+    low = [0] * n
+    timer = 0
 
-        stack = [start]
-        seen[start] = True
-        vertices = []
+    edge_stack = []
+    type_count = {}
+    components = 0
 
-        while stack:
-            u = stack.pop()
-            vertices.append(u)
-            for v in graph[u]:
-                if not seen[v]:
-                    seen[v] = True
-                    stack.append(v)
+    def process_component(edge_ids):
+        verts = set()
+        for eid in edge_ids:
+            u, v = edges[eid]
+            verts.add(u)
+            verts.add(v)
 
-        t = len(vertices)
+        vertices = list(verts)
+        sig = block_signature(vertices, edge_ids, edges)
+        type_count[sig] = type_count.get(sig, 0) + 1
 
-        # The input guarantee implies t <= 6.
-        for i, v in enumerate(vertices):
-            pos[v] = i
+    def dfs(u, parent_edge):
+        nonlocal timer
 
-        masks = [0] * t
-        for i, u in enumerate(vertices):
-            mask = 0
-            for v in graph[u]:
-                mask |= 1 << pos[v]
-            masks[i] = mask
+        timer += 1
+        tin[u] = low[u] = timer
 
-        signature = component_signature(masks)
-        types[signature] = types.get(signature, 0) + 1
+        for v, eid in graph[u]:
+            if eid == parent_edge:
+                continue
 
-    answer = [1] * n
+            if tin[v] == 0:
+                edge_stack.append(eid)
 
-    for signature, count in types.items():
-        values = component_values(signature, n)
+                dfs(v, eid)
 
-        if count == 1:
-            for i, value in enumerate(values):
-                answer[i] = answer[i] * value % MOD
-        elif count == 2:
-            for i, value in enumerate(values):
-                answer[i] = answer[i] * value * value % MOD
-        elif count == 3:
-            for i, value in enumerate(values):
-                answer[i] = answer[i] * value * value % MOD
-                answer[i] = answer[i] * value % MOD
+                low[u] = min(low[u], low[v])
+
+                if low[v] >= tin[u]:
+                    comp_edges = []
+
+                    while True:
+                        x = edge_stack.pop()
+                        comp_edges.append(x)
+                        if x == eid:
+                            break
+
+                    process_component(comp_edges)
+
+            elif tin[v] < tin[u]:
+                edge_stack.append(eid)
+                low[u] = min(low[u], tin[v])
+
+    for root in range(n):
+        if tin[root] == 0:
+            components += 1
+            dfs(root, -1)
+
+    # ans[k] is the contribution accumulated from all Q_B(k).
+    ans = [1] * (n + 1)
+
+    for sig, multiplicity in type_count.items():
+        # Q(k) = sum_{t=1}^s c_t * (k-1)_(t-1)
+        #
+        # Q is degree at most 5. Build its first six values and
+        # turn them into forward differences.
+        s = len(sig)
+
+        vals = []
+        for k in range(1, s + 2):
+            x = k - 1
+            falling = 1
+            value = 0
+
+            for j in range(s):
+                if j > 0:
+                    falling *= x - (j - 1)
+                value += sig[j] * falling
+
+            vals.append(value % MOD)
+
+        # Forward differences.
+        diff = vals[:]
+
+        for level in range(s):
+            for i in range(s - level):
+                diff[i] = (diff[i + 1] - diff[i]) % MOD
+
+        # The current value at k=1 is diff[0].
+        cur = diff[:]
+        q = diff[0]
+
+        # Apply k=1 first.
+        if multiplicity == 1:
+            ans[1] = ans[1] * q % MOD
         else:
-            for i, value in enumerate(values):
-                answer[i] = answer[i] * pow(value, count, MOD) % MOD
+            ans[1] = ans[1] * pow(q, multiplicity, MOD) % MOD
 
-    print(*answer)
+        # Advance from k to k+1 using finite differences.
+        for k in range(2, n + 1):
+            for level in range(s - 1):
+                cur[level] = (cur[level] + cur[level + 1]) % MOD
+
+            q = cur[0]
+
+            if multiplicity == 1:
+                ans[k] = ans[k] * q % MOD
+            else:
+                ans[k] = ans[k] * pow(q, multiplicity, MOD) % MOD
+
+    # Each connected component contributes one free root color.
+    for k in range(1, n + 1):
+        ans[k] = ans[k] * pow(k, components, MOD) % MOD
+
+    print(*ans[1:])
 
 if __name__ == "__main__":
     solve()
-```Phần đầu vào lưu trữ biểu đồ dưới dạng danh sách kề, sau đó ngăn xếp sẽ tìm các thành phần được kết nối theo thời gian tuyến tính. Bởi vì mọi thành phần hợp lệ có tối đa sáu đỉnh, đồ thị cục bộ có thể được chuyển đổi thành mặt nạ bit mà không cần bất kỳ cấu trúc phụ trợ lớn nào. 
+```Danh sách kề lưu trữ ID cạnh thay vì chỉ các đỉnh lân cận. Điều này là cần thiết vì hai điểm cuối DFS chỉ có thể có cùng một đỉnh cha trong các biểu đồ có các cạnh song song, điều này bị cấm ở đây, nhưng việc sử dụng ID cạnh giúp kiểm tra cạnh gốc chính xác và tránh các trường hợp đặc biệt. 
 
-các`component_signature`thường trình là cốt lõi của tính toán đồ thị nhỏ. các`blocks`mảng chứa các lớp màu hiện được xây dựng. Khi đỉnh (v) được chèn vào một khối,`adj_masks[v] & block`kiểm tra xem một cạnh có cả hai điểm cuối trong lớp màu đó hay không. Kết quả bằng 0 có nghĩa là khối vẫn độc lập. 
+Ngăn xếp Tarjan chứa mỗi cạnh đúng một lần. Một cạnh của cây được đẩy khi con của nó được phát hiện lần đầu tiên, trong khi cạnh sau chỉ được đẩy khi nó trỏ về phía tổ tiên đã được phát hiện. Khi (\operatorname{low[v]\ge\operatorname{tin[u]), đoạn ngăn xếp kết thúc tại (uv) chính xác là một thành phần được kết nối hai chiều. 
 
-Đệ quy đếm các phân vùng không có thứ tự. Đây là cố ý. Một phân vùng thành các khối (r) tương ứng với các phép gán màu được gắn nhãn (r!\binom{k}{r}), đó chính xác là lý do tại sao mã nhân lên`ways[r]`qua`r!`. 
+Mã hóa khối cục bộ sử dụng tối đa 15 bit cạnh. Việc tính toán vị trí bit hơi khác thường chỉ là một sơ đồ lập chỉ mục cho các cặp đỉnh cục bộ không có thứ tự. Vì một khối có tối đa sáu đỉnh nên từ điển được sử dụng để dịch ID đỉnh toàn cầu sang ID cục bộ vẫn rất nhỏ. 
 
-các`component_values`hàm sử dụng biểu diễn kết quả 
+Trình tạo phân vùng sử dụng các chuỗi tăng trưởng bị hạn chế. Ví dụ: một phân vùng gồm bốn đỉnh thành ba nhóm có thể được biểu diễn bằng một chuỗi như (0,1,2,0). Mỗi phân vùng được thiết lập có chính xác một biểu diễn như vậy, do đó không có sự trùng lặp hay phân vùng bị thiếu. Sáu đỉnh chỉ cho (203) khả năng. 
+
+Chữ ký chứa số lượng phân vùng độc lập với mỗi số phần có thể có. Nhận dạng giai thừa rơi 
 
 [ 
-P(k)=\sum_{r=1}^{t} c_r\binom{k}{r}. 
+P_B(k)=\sum_t c_t(k)_t 
 ] 
 
-Đánh giá ban đầu nhỏ sử dụng phép truy hồi cho các hệ số nhị thức. Vì (t\le6), tác phẩm này có kích thước không đổi. Các giá trị tiếp theo được tạo ra bởi sự khác biệt hữu hạn, tránh việc đánh giá đa thức lặp lại cho mỗi lần đếm màu. 
+chính xác là tại sao chữ ký này là đủ. Nhãn thực tế của các đỉnh của khối sẽ biến mất sau phép tính này. 
 
-Phần lũy thừa xử lý bội số của từng loại đa thức. Các trường hợp đặc biệt cho bội số một, hai và ba tránh gọi hàm tới lũy thừa mô-đun cho các số đếm nhỏ phổ biến nhất. Đối với các bội số lớn hơn, tính năng tích hợp sẵn của Python`pow(a,b,MOD)`thực hiện lũy thừa mô-đun trong mã gốc được tối ưu hóa. 
+Việc đánh giá sai phân hữu hạn đáng được quan tâm. Một đa thức bậc-(d) có thể được đánh giá ở các đối số nguyên liên tiếp bằng cách duy trì bảng vi phân thuận của nó. Tiến lên bằng một đối số sẽ thay đổi chênh lệch thứ nhất thành chênh lệch thứ hai, chênh lệch thứ hai thành chênh lệch thứ ba, v.v. Vì bậc nhiều nhất là năm nên mỗi giá trị mới chỉ cần một số ít phép cộng. 
 
-Tất cả các giá trị đều được giảm modulo (998244353). Số nguyên Python không bị tràn, nhưng việc giữ giá trị ở mức giảm sau khi nhân sẽ ngăn chúng tăng lên một cách không cần thiết. 
+Cuối cùng, Python`pow(a,b,MOD)`thực hiện phép lũy thừa mô-đun mà không cần xây dựng số nguyên khổng lồ (a^b). Mọi phép nhân đều được rút gọn theo modulo (998244353), do đó không có vấn đề tăng trưởng số nguyên. 
 
 ## Ví dụ đã hoạt động 
 
-Đối với mẫu được cung cấp, biểu đồ bao gồm một hình tam giác trên các đỉnh (1,3,5) và hai đỉnh cô lập. Hình tam giác có một phân vùng hợp lệ thành ba khối đơn độc lập và không có phân vùng hợp lệ thành ít hơn ba khối. Do đó, vectơ hệ số của nó là ((0,0,6)). Một đỉnh cô lập có đa thức (k), được biểu thị bằng ((1)). 
+### Mẫu 1 
 
-| (k) | Tam giác (P(k)) | Hai đỉnh cô lập | Tổng cộng | 
+Đồ thị có năm đỉnh, với một hình tam giác ở các đỉnh (1,3,5) và hai đỉnh cô lập. Tam giác là một khối, trong khi mỗi đỉnh cô lập là thành phần được kết nối riêng của nó. 
+
+Tam giác có đa thức màu 
+
+[ 
+P_B(k)=k(k-1)(k-2), 
+] 
+
+vậy hệ số rút gọn của nó là 
+
+[ 
+Q_B(k)=(k-1)(k-2). 
+] 
+
+Có ba thành phần được kết nối, tạo ra hệ số chung (k^3). 
+
+| (k) | (Q_B(k)) | (k^3) | Trả lời | 
 | --- | --- | --- | --- | 
-| 1 | 0 | (1^2=1) | 0 | 
-| 2 | 0 | (2^2=4) | 0 | 
-| 3 | 6 | (3^2=9) | 54 | 
-| 4 | 24 | (4^2=16) | 384 | 
-| 5 | 60 | (5^2=25) | 1500 | 
+| 1 | 0 | 1 | 0 | 
+| 2 | 0 | 8 | 0 | 
+| 3 | 2 | 27 | 54 | 
+| 4 | 6 | 64 | 384 | 
+| 5 | 12 | 125 | 1500 | 
 
-Do đó, đầu ra cuối cùng là`0 0 54 384 1500`. Bảng hiển thị trực tiếp bất biến của tích thành phần: các đỉnh cô lập không bao giờ tương tác với tam giác, do đó đóng góp của chúng chỉ được nhân lên sau đó. Mẫu chính thức là cùng một tam giác cộng với hai đỉnh cô lập. 
+Kết quả đầu ra là`0 0 54 384 1500`. Dấu vết chứng tỏ tại sao các đỉnh biệt lập được xử lý bởi yếu tố thành phần được kết nối chứ không phải bởi các khối nhân tạo. 
 
-Đối với ví dụ thứ hai, lấy ba cạnh rời nhau.```
-6 3
-1 2
-3 4
+### Hai tam giác có chung một đỉnh 
+
+Hãy xem xét```
 5 6
-```Mọi thành phần đều là (K_2), có đa thức là (k(k-1)). Biểu diễn hệ số của nó chỉ chứa số hạng (2\binom{k}{2}), vì vậy cả ba thành phần đều có cùng chữ ký và được nhóm lại với nhau bằng bội số ba. 
+1 2
+2 3
+3 1
+3 4
+4 5
+5 3
+```Có hai khối hình tam giác có chung đỉnh (3). Đồ thị được kết nối nên có một thừa số toàn cục (k). Mỗi tam giác đóng góp ((k-1)(k-2)). 
 
-| (k) | Một cạnh | Đa bội | Tổng cộng | 
-| --- | --- | --- | --- | 
-| 1 | 0 | 3 | 0 | 
-| 2 | 2 | 3 | 8 | 
-| 3 | 6 | 3 | 216 | 
-| 4 | 12 | 3 | 1728 | 
-| 5 | 20 | 3 | 8000 | 
-| 6 | 30 | 3 | 27000 | 
+| (k) | Yếu tố tam giác | Sản phẩm của hai yếu tố | Toàn cầu (k) | Trả lời | 
+| --- | --- | --- | --- | --- | 
+| 1 | 0 | 0 | 1 | 0 | 
+| 2 | 0 | 0 | 2 | 0 | 
+| 3 | 2 | 4 | 3 | 12 | 
+| 4 | 6 | 36 | 4 | 144 | 
+| 5 | 12 | 144 | 5 | 720 | 
 
-Đầu ra là```
-0 8 216 1728 8000 27000
-```Ví dụ này chứng minh tại sao việc nhóm các loại thành phần giống hệt nhau lại quan trọng. Thay vì đánh giá ba thừa số riêng biệt cho mỗi (k), thuật toán đánh giá một đa thức và nâng nó lên lũy thừa thứ ba. 
+Ví dụ này thực hiện quy tắc nhân khớp nối-đỉnh. Đỉnh chung có một màu chứ không phải hai màu được chọn độc lập, đó chính xác là lý do tại sao tích của các đa thức khối phải chia cho (k). 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | (O(n+m+3^6n+nT\log n)) | Các thành phần có kích thước không đổi, (T\le73) và mỗi loại được đánh giá trên tất cả (n) số lượng màu | 
-| Không gian | (O(n+m)) | Danh sách kề, dữ liệu thành phần, mảng trả lời và trạng thái thành phần có kích thước không đổi chiếm ưu thế | 
+| Thời gian | (O(n+m+Un)) | Tarjan là tuyến tính, mỗi khối có tối đa sáu đỉnh và có ít hơn (100) loại đa thức cục bộ có liên quan | 
+| Không gian | (O(n+m)) | Lưu trữ đồ thị, mảng DFS, ngăn xếp cạnh và thông tin khối đều là tuyến tính | 
 
-Việc truyền tải đồ thị là tuyến tính ở kích thước đầu vào. Việc tính toán đồ thị đắt tiền bị giới hạn bởi một hằng số vì không có thành phần nào có nhiều hơn sáu đỉnh. Số loại đa thức sắc độ khác nhau cho các đồ thị liên thông có kích thước tối đa là sáu là nhiều nhất (1+1+2+5+14+50=73). 
+Thực tế cấu trúc quan trọng là điều kiện bảy đỉnh giới hạn mỗi khối bằng sáu đỉnh. Do đó, phép liệt kê cục bộ có kích thước không đổi, trong khi số lượng đa thức màu liên kết riêng biệt trên nhiều nhất sáu đỉnh là rất nhỏ. Với (n,m\le10^5), tính toán kết quả vẫn nằm trong phạm vi độ phức tạp dự định và thoải mái tránh mọi sự phụ thuộc vào (k^n). 
 
-Với (n,m\le10^5), điều này giữ cho phần phụ thuộc vào biểu đồ gần tuyến tính và giới hạn tất cả hành vi hàm mũ ở hằng số sáu. Bước nhóm là điều khiến việc đánh giá một đa thức cho mỗi một trong số tối đa (10^5) thành phần là không cần thiết. 
+## Trường hợp thử nghiệm 
 
-## Trường hợp thử nghiệm```python
-import io
+Dây nịt sau đây giả định`solve()`Hàm từ giải pháp trên có sẵn trong cùng một quy trình Python.```python
 import sys
-
-MOD = 998244353
+import io
+from contextlib import redirect_stdout
 
 def run(inp: str) -> str:
     old_stdin = sys.stdin
+    sys.stdin = io.StringIO(inp)
+    out = io.StringIO()
     try:
-        sys.stdin = io.StringIO(inp)
-        solve()
-        # The competitive-programming solve() writes directly to stdout,
-        # so this helper is normally replaced by a captured stdout in a
-        # local test harness.
+        with redirect_stdout(out):
+            solve()
     finally:
         sys.stdin = old_stdin
+    return out.getvalue().strip()
 
-# A convenient self-contained harness for the same algorithm.
-def run_captured(inp: str) -> str:
-    old_stdin = sys.stdin
-    old_stdout = sys.stdout
-    try:
-        sys.stdin = io.StringIO(inp)
-        sys.stdout = io.StringIO()
-        solve()
-        return sys.stdout.getvalue().strip()
-    finally:
-        sys.stdin = old_stdin
-        sys.stdout = old_stdout
-
-# Provided sample.
-assert run_captured(
+# Sample 1: triangle plus two isolated vertices.
+assert run(
     """5 3
 3 5
 5 1
@@ -380,36 +425,31 @@ assert run_captured(
 """
 ) == "0 0 54 384 1500", "sample 1"
 
-# Minimum valid input: one edge.
-assert run_captured(
+# Custom 1: minimum valid n with one edge.
+assert run(
     """2 1
 1 2
 """
 ) == "0 2", "single edge"
 
-# Complete graph K4.
-assert run_captured(
-    """4 6
+# Custom 2: a path on three vertices.
+assert run(
+    """3 2
 1 2
-1 3
-1 4
 2 3
-2 4
-3 4
 """
-) == "0 0 0 24", "K4 boundary"
+) == "0 2 12", "path"
 
-# Three identical components.
-assert run_captured(
-    """6 3
+# Custom 3: disconnected graph with two independent edges.
+assert run(
+    """4 2
 1 2
 3 4
-5 6
 """
-) == "0 8 216 1728 8000 27000", "repeated components"
+) == "0 4 36 144", "disconnected components"
 
-# Complete graph K6, the largest possible connected component.
-assert run_captured(
+# Custom 4: maximum-size block, K6.
+assert run(
     """6 15
 1 2
 1 3
@@ -429,40 +469,63 @@ assert run_captured(
 """
 ) == "0 0 0 0 0 720", "K6 boundary"
 
-# Maximum-size graph allowed by the constraints, consisting of 50,000
-# identical edges. Its chromatic polynomial is (k(k-1))^50000.
+# Large-size structural test.
+# A path is useful for stress-testing the implementation of the block
+# decomposition, although it does not satisfy the original seven-vertex
+# promise once it becomes long.
 n = 100000
-lines = [f"{n} 50000"]
-for i in range(1, n + 1, 2):
-    lines.append(f"{i} {i + 1}")
+edges = "\n".join(f"{i} {i+1}" for i in range(1, n))
+large_input = f"{n} {n-1}\n{edges}\n"
+large_output = run(large_input).split()
 
-large_input = "\n".join(lines) + "\n"
-large_output = run_captured(large_input)
-
-expected = []
-for k in range(1, n + 1):
-    expected.append(str(pow(k * (k - 1) % MOD, 50000, MOD)))
-
-assert large_output == " ".join(expected), "maximum-size repeated components"
+assert len(large_output) == n, "large output length"
+assert large_output[0] == "0", "one-color boundary"
+assert large_output[1] == str(2), "two-color path boundary"
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`2 1 / 1 2`|`0 2`| Đồ thị hợp lệ tối thiểu và đa thức sắc độ một cạnh | 
-|`K4`|`0 0 0 24`| Giá trị 0 bên dưới số màu và ranh giới (k=n) | 
-| Ba cạnh rời rạc |`0 8 216 1728 8000 27000`| Nhóm thành phần giống hệt nhau và bội số | 
-|`K6`|`0 0 0 0 0 720`| Kích thước thành phần tối đa và ranh giới sáu màu | 
-| 100000 đỉnh trong 50000 cạnh rời nhau | ((k(k-1))^{50000}) với mọi (k) | Kích thước đầu vào tối đa, các loại lặp lại và lũy thừa mô-đun | 
+|`2 1 / 1 2`|`0 2`| Đồ thị tối thiểu và khối một cạnh | 
+|`3 2 / 1 2, 2 3`|`0 2 12`| Khối cây và các đỉnh khớp nối lặp lại | 
+|`4 2 / 1 2, 3 4`|`0 4 36 144`| Nhiều thành phần được kết nối | 
+| (K_6) |`0 0 0 0 0 720`| Kích thước khối tối đa được phép và liệt kê giai thừa giảm dần | 
+| Đường đi có (10^5) đỉnh | (10^5) giá trị | Đường ranh giới đầu ra và đường ngang Tarjan đầu vào lớn | 
+
+Kiểm tra căng thẳng lớn có chủ ý kiểm tra việc thực hiện trên biểu đồ có số đỉnh tối đa. Nó không được trình bày như một phiên bản hợp lệ của lời hứa ban đầu vì một đường đi dài chứa bảy đỉnh liên tiếp không có dấu phân cách bên ngoài. Mục đích của nó là phát hiện các lỗi ngăn xếp, truyền tải và hiệu suất một cách độc lập với sự đảm bảo về cấu trúc. 
 
 ## Vỏ cạnh 
 
-Đồ thị hai đỉnh```
+Đối với đồ thị chứa một cạnh, khối duy nhất là (K_2). Các phân vùng tập hợp độc lập hợp lệ của nó là phân vùng thành hai tập đơn, vì vậy 
+
+[ 
+P_{K_2}(k)=(k)_2=k(k-1). 
+] 
+
+Hệ số khối giảm là (k-1) và một thành phần được kết nối cung cấp hệ số bổ sung (k). Đối với đầu vào```
 2 1
 1 2
-```có một thành phần liên thông với hai đỉnh. Phân vùng thích hợp duy nhất của nó là thành hai lớp màu đơn, vì vậy đa thức của nó là (2\binom{k}{2}=k(k-1)). Thuật toán ghi lại chữ ký`(0, 2)`, đánh giá nó tại (k=1,2) và thu được`0 2`. 
+```thuật toán thu được (0,2). 
 
-Đối với một nhóm sáu đỉnh, mỗi lớp màu chỉ có thể chứa một đỉnh. Đệ quy phân vùng đạt chính xác một phân vùng hợp lệ, chứa sáu khối đơn. Hệ số của (\binom{k}{6}) là (6!=720), nên đa thức là (720\binom{k}{6}). Điều này mang lại giá trị 0 cho (k<6) và (720) cho (k=6), phát hiện các lỗi trong đó vòng lặp qua số khối vô tình dừng lại ở (t-1). 
+Đối với đường đi trên ba đỉnh, Tarjan tạo ra hai khối (K_2). Mỗi thành phần đóng góp (k-1) và thành phần được kết nối đóng góp (k). Sản phẩm là 
 
-Đối với đồ thị mẫu, tam giác và các đỉnh cô lập được phát hiện dưới dạng ba thành phần liên thông. Tam giác đóng góp (k(k-1)(k-2)), trong khi mỗi đơn vị đóng góp (k). Do đó, sản phẩm toàn cầu là (k^3(k-1)(k-2)). Điều này mắc phải sai lầm phổ biến khi coi toàn bộ biểu đồ là một thành phần nhỏ chỉ vì một số thành phần của nó nhỏ. 
+[ 
+k(k-1)^2. 
+] 
 
-Đối với nhiều thành phần giống hệt nhau, chẳng hạn như 50.000 cạnh rời rạc trong thử nghiệm kích thước tối đa, mọi thành phần đều tạo ra cùng một chữ ký. Từ điển rút gọn tất cả chúng thành một mục có bội số là 50.000. Câu trả lời ở số màu (k) là ((k(k-1))^{50000}). Đây là trường hợp khiến việc phân nhóm trở nên cần thiết, bởi vì việc xử lý từng cạnh một cách độc lập cho mỗi (k) sẽ yêu cầu đánh giá thành phần khoảng (5\cdot10^9). 
+Tại (k=1,2,3), điều này cho ra (0,2,12). Trường hợp này phát hiện lỗi trong đó một đỉnh khớp nối vô tình được đếm hai lần. 
 
-Bản thân điều kiện chỉ được sử dụng theo hướng quan trọng đối với thuật toán. Đầu vào hợp lệ không thể chứa thành phần được kết nối có bảy đỉnh trở lên. Thuật toán không cần điều ngược lại và nó không cố gắng xác minh điều kiện bảy đỉnh. Sự khác biệt này quan trọng vì sự đảm bảo là một lời hứa mang tính cấu trúc do vấn đề cung cấp chứ không phải là điều kiện mà việc triển khai cần phải kiểm tra.
+Đối với các biểu đồ bị ngắt kết nối, mọi thành phần được kết nối đều có sự lựa chọn miễn phí về màu sắc của một đỉnh gốc. Với hai cạnh rời nhau thì có hai khối và hai thành phần liên thông nên công thức là 
+
+[ 
+k^2(k-1)^2. 
+] 
+
+Tại (k=2), điều này cho ra (4), tương ứng với hai lựa chọn nhị phân độc lập về hướng của hai cạnh. 
+
+Với (K_6), có một khối chứa tất cả sáu đỉnh. Mỗi màu thích hợp cần sáu màu riêng biệt, vì vậy đa thức màu của nó là 
+
+[ 
+(k)_6. 
+] 
+
+Chữ ký khối có chính xác một phân vùng hợp lệ cho mọi số phần từ (1) đến (6) chỉ khi phân vùng tương ứng tương thích với biểu đồ hoàn chỉnh. Trên thực tế, chỉ có phân vùng sáu đơn còn tồn tại, cho ra (P(k)=(k)_6). Do đó tất cả các giá trị của (k<6) đều bằng 0 và giá trị tại (k=6) là (6!=720). Điều này phát hiện từng lỗi một trong cả phép liệt kê phân vùng và đánh giá hệ số giảm cục bộ. 
+
+Lỗi triển khai nguy hiểm nhất là coi khối có kích thước 6 như thể nó có thể có bảy màu cục bộ hoặc quên rằng (Q_B(k)=P_B(k)/k) sử dụng ((k-1)_{t-1}), chứ không phải ((k)_t). Bài kiểm tra (K_6) cho thấy cả hai lỗi ngay lập tức.

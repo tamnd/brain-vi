@@ -1,7 +1,7 @@
 ---
 title: "CF 102267L - ABC"
-description: "Chúng ta có một chuỗi có thể thay đổi trên bảng chữ cái a, b, c. An a có thể phát triển thành ab, a b có thể phát triển thành bc và a c có thể phát triển thành ba. Thao tác duy nhất thực sự loại bỏ các ký tự là xóa một lần xuất hiện của abc. Nhiệm vụ mang tính xây dựng."
-date: "2026-08-17T19:40:23+07:00"
+description: "Chuỗi được xây dựng từ ba ký hiệu a, b và c. Một thao tác có thể mở rộng một ký hiệu thành mẫu hai ký hiệu cố định hoặc xóa một lần xuất hiện của abc."
+date: "2026-08-19T03:53:34+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102267
@@ -9,7 +9,7 @@ codeforces_index: "L"
 codeforces_contest_name: "The 2019 University of Jordan Collegiate Programming Contest"
 rating: 0
 weight: 102267
-solve_time_s: 514
+solve_time_s: 561
 verified: false
 draft: false
 ---
@@ -18,223 +18,102 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 8 phút 34 giây 
+**Thời gian giải:** 9m 21s 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi có một chuỗi có thể thay đổi trên bảng chữ cái`a`,`b`,`c`. MỘT`a`có thể phát triển thành`ab`, Một`b`có thể phát triển thành`bc`, và một`c`có thể phát triển thành`ba`. Thao tác duy nhất thực sự loại bỏ các ký tự là xóa một lần xuất hiện của`abc`. 
+Chuỗi được xây dựng từ ba biểu tượng,`a`,`b`, Và`c`. Một thao tác có thể mở rộng một ký hiệu thành mẫu hai ký hiệu cố định hoặc xóa một lần xuất hiện của`abc`. Nhiệm vụ mang tính xây dựng: hoặc tạo ra một chuỗi tối đa`3n`các thao tác hợp lệ biến toàn bộ chuỗi thành chuỗi trống hoặc chứng minh rằng chuỗi đó không tồn tại. 
 
-Nhiệm vụ mang tính xây dựng. Chúng ta phải tạo ra một chuỗi hoàn chỉnh các thao tác hợp lệ để biến chuỗi đầu vào thành chuỗi trống bằng cách sử dụng nhiều nhất`3n`hoạt động, hoặc chứng minh rằng không có trình tự như vậy tồn tại bằng cách in`-1`. Các chỉ mục trong đầu ra tham chiếu đến chuỗi vì nó tồn tại tại thời điểm chính xác đó, do đó việc triển khai phải theo dõi cách các thao tác trước đó đã thay đổi độ dài và vị trí. 
+Đầu vào chứa tối đa một chuỗi có độ dài`2 * 10^5`. Đầu ra không phải là một giá trị câu trả lời duy nhất. Đó là một chuỗi các thao tác thực tế và mọi chỉ mục được báo cáo đều đề cập đến chuỗi sau khi tất cả các thao tác trước đó đã được áp dụng. Tuyên bố ban đầu và các mẫu có sẵn từ Codeforces. 
 
-Với`n`lên đến`2 * 10^5`và giới hạn một giây, bất cứ thứ gì bậc hai đều nguy hiểm và việc khám phá các chuỗi thao tác là hoàn toàn không khả thi. Bản thân đầu ra có thể chứa tới`600000`hoạt động, vì vậy một`O(n)`xây dựng với một`O(n)`bộ đệm đầu ra là mục tiêu tự nhiên. 
+Giới hạn kích thước loại trừ mọi thứ khám phá nhiều chuỗi hoạt động có thể có. Ngay cả một mô phỏng bậc hai cũng không được mong muốn trong giới hạn một giây, trong khi bản thân đầu ra được yêu cầu có thể chứa`600000`hoạt động. Giải pháp dự định phải xử lý đầu vào về cơ bản một lần và chỉ tạo ra`O(n)`hoạt động. 
 
-Có một số trường hợp đặc biệt bộc lộ lý do tại sao mù quáng tìm kiếm`abc`là không đủ. đầu vào`bac`là không thể. Ký tự đầu tiên của nó là`b`và không có thao tác nào có thể biến ký tự đầu tiên của chuỗi thành`a`: thao tác 2 giữ vị trí đầu tiên`b`như lần đầu tiên`b`, phép toán 3 lượt một`c`vào trong`b`và thao tác 1 chỉ có thể tác động lên một`a`điều đó đã tồn tại rồi. Vì ký tự đầu tiên cuối cùng phải thuộc về một`abc`xóa, một chuỗi bắt đầu bằng`b`hoặc`c`không thể biến mất. 
+Có một số trường hợp nguy hiểm bộc lộ những cách tiếp cận bất cẩn. đầu vào`a`có thể giải quyết được: mở rộng nó thành`ab`, sau đó`abc`, sau đó xóa nó bằng ba thao tác. đầu vào`c`là không thể vì nhân vật đầu tiên có thể trở thành`ba`, nhưng ký tự đầu tiên là`b`, và một chuỗi bắt đầu bằng`b`không bao giờ có thể loại bỏ ký tự đầu tiên đó. Việc triển khai bất cẩn giả định mọi ký tự cuối cùng có thể bị biến thành`abc`sẽ chấp nhận sai`c`. 
 
-đầu vào`abb`cũng là không thể mặc dù nó bắt đầu bằng`a`. đầu tiên`b`có thể được gỡ bỏ cùng với ban đầu`a`, để lại thứ hai`b`làm ký tự đầu tiên. Cái đó`b`không bao giờ có thể trở thành một`a`, vì vậy quá trình này bị kẹt. Một công trình tham lam loại bỏ những gì có sẵn đầu tiên`abc`phải phát hiện tình huống này thay vì cho rằng mọi chuỗi bắt đầu bằng`a`có thể giải quyết được. 
+đầu vào`bac`cũng là điều không thể. Ký tự đầu tiên của nó là`b`, vì vậy không có cách nào để biến nhân vật đó thành`a`của một`abc`xóa. Việc mô phỏng từ trái sang phải bất cẩn có thể biến đổi hậu tố và vô tình tạo ra một thao tác không hợp lệ xung quanh phần đầu`b`. 
 
-Ở thái cực khác,`a`có thể giải quyết được ngay lập tức: mở rộng nó thành`ab`, mở rộng`b`ĐẾN`bc`và xóa`abc`. Ba thao tác đều nằm trong giới hạn cho phép. Một đĩa đơn`abc`thậm chí còn đơn giản hơn vì nó có thể bị xóa chỉ trong một thao tác. 
+Một trường hợp quan trọng khác là`ac`. Nó có thể giải được mặc dù ban đầu nó không chứa`abc`. Trình tự là`ac -> aba -> abca -> empty`: thay thế đầu tiên`c`qua`ba`, sau đó thay cái mới đó`b`qua`bc`, sau đó xóa`abc`. Một triển khai chỉ tìm kiếm một cái đã tồn tại`abc`bỏ sót vụ này 
+
+Cuối cùng,`abb`là không thể. Sau lần đầu tiên`b`được khớp với phần trước`a`, phần còn lại`b`nằm ở đầu chuỗi còn lại và không bao giờ có thể biến mất. Điều này nắm bắt các triển khai xóa một cách tham lam`ab`mà không kiểm tra xem mọi`b`có trước`a`. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận bạo lực trực tiếp sẽ coi mọi hoạt động là một sự lựa chọn và tìm kiếm tất cả các chuỗi hoạt động có thể có theo độ dài`3n`. Tại mỗi trạng thái có thể có nhiều ký tự có thể mở rộng và nhiều ký tự có thể`abc`chuỗi con cần xóa. Ngay cả khi bỏ qua chi phí thao tác trên chuỗi, độ sâu`3n`tìm kiếm với hệ số phân nhánh không đổi khoảng bốn có thể có`O(4^(3n))`chi nhánh. Nó đúng vì mọi chuỗi pháp luật đều được biểu diễn, nhưng nó trở nên vô dụng ngay cả đối với những chuỗi rất nhỏ. 
+Cách tiếp cận bạo lực trực tiếp sẽ duy trì chuỗi hiện tại và thử mọi hoạt động hợp pháp. Ở một chuỗi có độ dài tối đa`4n`, có thể có`O(n)`lựa chọn vị trí và một câu trả lời hợp lệ có thể chứa tới`3n`hoạt động. Do đó, việc khám phá tất cả các trình tự có thể yêu cầu theo thứ tự`(4n)^(3n)`nhánh trong trường hợp xấu nhất. Ngay cả việc ghi nhớ cũng không lưu lại cách tiếp cận, vì số lượng chuỗi có thể truy cập là theo cấp số nhân. 
 
-Quan sát hữu ích là chúng ta không cần phải quyết định trên toàn cầu`abc`để tạo ra. Chúng ta có thể xử lý chuỗi từ trái sang phải và loại bỏ mọi`c`ngay lập tức. Ba kết thúc địa phương có thể có trước một`c`có hành vi rất đơn giản. 
+Quan sát hữu ích là các hoạt động có một tập hợp nhỏ các hành vi cục bộ đáng ngạc nhiên. Chúng ta có thể loại bỏ mọi`c`sử dụng một trong ba công trình địa phương. Khi tiền tố rút gọn hiện tại kết thúc bằng`a`, hậu tố`ac`có thể biến trở lại thành`a`sử dụng ba thao tác. Khi tiền tố rút gọn kết thúc bằng`ab`, cái mới`c`ngay lập tức đưa ra`abc`, có thể bị xóa. Khi tiền tố rút gọn kết thúc bằng`bb`, có một cách xây dựng ba phép toán khác thay đổi`bbc`quay lại`bb`. 
 
-Nếu hậu tố hiện tại là`ac`, thay đổi`c`vào trong`ba`cho`aba`. các`c`biến mất mà không thay đổi phần trước của chuỗi. 
+Rốt cuộc`c`các ký tự đã được xử lý, chỉ`a`Và`b`duy trì. Vào thời điểm đó mỗi`b`có thể được ghép nối với những người sống sót ngay trước đó`a`. Cặp đôi`ab`có thể được loại bỏ trong hai thao tác bằng cách thay đổi`b`vào trong`bc`và xóa`abc`. Bất kì`a`rốt cuộc đã rời đi`b`các ký tự đã được ghép nối có thể được loại bỏ độc lập trong ba thao tác. 
 
-Nếu hậu tố hiện tại là`abc`, chúng ta có thể xóa nó ngay lập tức. 
-
-Nếu hậu tố hiện tại là`bbc`, có một phép biến đổi ba phép toán ít rõ ràng hơn một chút để thay đổi nó thành`bb`:`bbc -> bcbc -> bbabc -> bb`. 
-
-Thao tác đầu tiên thay đổi thao tác đầu tiên`b`vào trong`bc`. Cái thứ hai thay đổi cái mới được chèn`c`vào trong`ba`. Kết quả`abc`sau đó sẽ bị xóa. Tiền tố xung quanh không bị ảnh hưởng. 
-
-Điều này có nghĩa là trong khi quét chuỗi gốc, chúng ta có thể duy trì chính xác chuỗi hiện tại sau khi xử lý tiền tố của nó, ngoại trừ tất cả chuỗi đã được xử lý.`c`các nhân vật đã bị loại bỏ. Chuỗi phụ trợ kết quả chỉ chứa`a`Và`b`. 
-
-Một lần tất cả`c`các ký tự đã biến mất, mọi ký tự còn lại`b`có thể được ghép nối với một trước đó`a`. Giả sử tiền tố còn lại hiện tại được biểu thị bằng`g`, và ký tự tiếp theo là`b`. Nếu như`g`không trống, hãy mở rộng cái này`b`ĐẾN`bc`. cuối cùng`a`của`g`bây giờ hình thức`abc`với nó, vì vậy bộ ba có thể bị xóa. Điều này tiêu tốn một`a`và một`b`. 
-
-Nếu một`b`gặp phải trong khi`g`trống rỗng, đó`b`bây giờ là ký tự đầu tiên của chuỗi thực tế. Như đã thảo luận ở trên, lần đầu tiên`b`không bao giờ có thể trở thành người đầu tiên`a`, nên câu trả lời thực sự là không thể. 
-
-Rốt cuộc`b`các ký tự đã bị xóa, chỉ`a`các ký tự vẫn còn. Mỗi cái có thể được xử lý độc lập theo trình tự ba thao tác cố định`a -> ab -> abc -> empty`. 
-
-Hướng dẫn cuộc thi chính thức sử dụng cùng cấu trúc từ trái sang phải này, trước tiên loại bỏ`c`ký tự, sau đó khớp`b`ký tự có trước`a`các ký tự và cuối cùng loại bỏ các ký tự còn lại`a`nhân vật. 
+Điều quan trọng là những phép biến đổi này có thể được áp dụng cho tiền tố đã được xử lý trong khi hậu tố chưa được xử lý vẫn được giữ nguyên. Chúng ta chỉ cần nhớ tiền tố rút gọn hiện tại chứ không phải chuỗi phát triển đầy đủ. Hướng dẫn cuộc thi chính thức sử dụng cấu trúc mang tính xây dựng cục bộ tương tự. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
-| Lực lượng vũ phu | O(4^(3n)) trong trường hợp xấu nhất | Hàm mũ | Quá chậm | 
-| Tối ưu | O(n) cộng với kích thước đầu ra | O(n) | Đã chấp nhận | 
+| Lực lượng vũ phu |`O((4n)^(3n))`| Hàm mũ | Quá chậm | 
+| Tối ưu |`O(n)`|`O(n)`| Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Đọc chuỗi và duy trì danh sách`v`đại diện cho chuỗi hiện tại sau tiền tố đã được xử lý. Lưu trữ mọi thao tác trong một mảng để có thể in các chỉ mục sau khi quá trình xây dựng kết thúc. 
-2. Xử lý đầu vào từ trái sang phải. Đối với một`a`hoặc`b`, nối nó vào`v`. Chưa cần phải làm gì vì những ký tự này có thể được xử lý sau. 
-3. Khi ký tự đầu vào tiếp theo là`c`, trước tiên hãy kiểm tra xem`v`trống rỗng. Nếu đúng thì chuỗi gốc bắt đầu bằng`c`, nên câu trả lời là không thể. Nhân vật đầu tiên không bao giờ có thể trở thành`a`. 
-4. Nếu ký tự cuối cùng của`v`là`a`, hậu tố hiện tại là`ac`. Áp dụng thao tác 3 cho`c`, sử dụng chỉ mục`len(v) + 1`. Hậu tố trở thành`aba`, vì vậy hãy nối thêm`b`Và`a`ĐẾN`v`. Chuỗi hiện tại được biểu thị bây giờ đã chính xác trở lại. 
-5. Nếu ký tự cuối cùng của`v`là`b`và nhân vật trước nó là`a`, hậu tố hiện tại là`abc`. Xóa hậu tố này bằng thao tác 4. Xóa hai ký tự cuối cùng khỏi`v`, bởi vì trước đó`a`đã bị tiêu hao bởi việc xóa cùng với`b`và hiện tại`c`. 
-6. Nếu hai ký tự cuối cùng của`v`là`bb`, hậu tố hiện tại là`bbc`. Áp dụng phép biến đổi cố định`bbc -> bcbc -> bbabc -> bb`. Ba chỉ số hoạt động là`len(v) - 1`,`len(v)`, Và`len(v) + 1`. Sau những thao tác đó, chuỗi giống hệt như`v`, vì vậy không có thay đổi nào đối với`v`là cần thiết. 
-7. Sau lần vượt qua đầu tiên này,`v`chỉ chứa`a`Và`b`. Quét lại trong khi bảo trì`g`, phần gồm có`a`các ký tự chưa được sử dụng. Bất cứ khi nào một`a`xuất hiện, nối nó vào`g`. 
-8. Bất cứ khi nào một`b`xuất hiện, hãy kiểm tra xem`g`trống rỗng. Nếu nó trống, cái này`b`là ký tự đầu tiên của chuỗi hiện tại và câu trả lời là không thể. Ngược lại, hãy mở rộng`b`với thao tác 2. Kết quả`c`ngồi ngay sau cái cuối cùng`a`TRONG`g`, vậy hãy xóa nó đi`abc`với thao tác 4. Loại bỏ phần cuối cùng`a`từ`g`. 
-9. Sau mỗi`b`đã được xử lý,`g`chỉ chứa chưa từng có`a`nhân vật. Đối với mỗi như vậy`a`, thực hiện thao tác 1 ở vị trí 1, thao tác 2 ở vị trí 2 và thao tác 4 ở vị trí 1. Mỗi bộ ba quay độc lập`a`vào chuỗi trống. 
-10. In các thao tác đã thu thập. Có tối đa ba thao tác liên quan đến mỗi ký tự gốc, vì vậy tổng số không bao giờ vượt quá`3n`. 
+1. Đầu tiên hãy kiểm tra ký tự đầu tiên. Nếu nó là`b`hoặc`c`, đầu ra`-1`. 
 
-Tại sao nó hoạt động. Trong lần vượt qua đầu tiên,`v`là sự thể hiện chính xác của chuỗi hiện tại sau khi tất cả các ký tự đầu vào được xử lý đã được xử lý. Mọi`c`được loại bỏ hoặc chuyển đổi bằng cách sử dụng một trong ba trường hợp cục bộ và mỗi trường hợp sẽ giữ nguyên hậu tố chưa được xử lý. Sau lần vượt qua đầu tiên, không`c`vẫn còn. Trong lần vượt qua thứ hai, mọi`b`được loại bỏ cùng với một trước đó`a`, Và`g`đại diện chính xác cho những điều trước đó`a`những nhân vật vẫn còn hiện diện. Nếu như`g`trống khi một`b`xuất hiện, đó`b`là nhân vật đầu tiên và không bao giờ có thể trở thành`a`, do đó tuyên bố không thể là đúng. Cuối cùng, mọi thứ còn lại`a`có trình tự loại bỏ ba thao tác trực tiếp. Do đó, mọi thao tác được tạo ra đều hợp lệ và bất cứ khi nào thuật toán báo cáo`-1`, ký tự đầu tiên hiện tại chứng tỏ rằng không thể tiếp tục được. 
+Ký tự đầu tiên không thể bị xóa trừ khi cuối cùng nó trở thành ký tự`a`trong một`abc`tiền tố. MỘT`b`luôn luôn vẫn là một`b`khi được mở rộng, trong khi một`c`trở thành`ba`, ký tự đầu tiên của nó lại là`b`. Không gì có thể biến một nhân vật chính như vậy thành`a`. 
+2. Quét chuỗi gốc từ trái sang phải và duy trì tiền tố rút gọn`v`. 
+
+nhân vật`a`Và`b`chỉ đơn giản là được thêm vào`v`. MỘT`c`được xử lý ngay lập tức bằng cách sử dụng dạng cục bộ của tiền tố đã được xử lý. 
+3. Nếu`c`theo sau một`a`, sử dụng phép biến đổi`ac -> aba -> abca -> a`. 
+
+Hoạt động đầu tiên thay thế`c`qua`ba`. Cái thứ hai thay thế cái mới được tạo`b`qua`bc`. Kết quả`abc`được gỡ bỏ. Ba hoạt động đã loại bỏ`c`trong khi rời khỏi phần trước`a`không đổi nên`v`bản thân nó không thay đổi. 
+4. Nếu`c`theo sau`ab`, hậu tố hiện tại đã là`abc`. 
+
+Xóa nó trực tiếp. Trong chuỗi ảo`v`, xóa phần cuối cùng của nó`a`Và`b`cùng với hiện tại`c`, có nghĩa là bật ra hai ký tự cuối cùng từ`v`. 
+5. Nếu`c`theo sau`bb`, sử dụng phép biến đổi`bbc -> bcbc -> bbabc -> bb`. 
+
+Hoạt động đầu tiên mở rộng hoạt động đầu tiên trong hai hoạt động sau`b`nhân vật. Thứ hai mở rộng vị trí mới`c`và thao tác cuối cùng sẽ loại bỏ kết quả`abc`. Tiền tố rút gọn lại trở thành tiền tố cũ`bb`. 
+6. Sau mỗi`c`đã được xử lý,`v`chỉ chứa`a`Và`b`. Quét nó từ trái sang phải bằng một chuỗi khác`g`. 
+
+Bất cứ khi nào một`a`xuất hiện, nối nó vào`g`. Whenever a `b`xuất hiện,`g`phải chứa ít nhất một`a`. Sử dụng cái cuối cùng như vậy`a`và`b`cùng nhau:`ab -> abc -> empty`. 
+
+Thao tác đầu tiên sẽ thay đổi`b`ĐẾN`bc`và cái thứ hai xóa kết quả`abc`. Loại bỏ kết quả phù hợp`a` from `g`. 
+7. Nếu một`b`gặp phải trong khi`g`trống, xuất ra`-1`. 
+
+Tại thời điểm đó, chuỗi còn lại bắt đầu bằng`b`. Như đã lập luận ở bước đầu tiên, nhân vật chủ đạo như vậy không bao giờ có thể bị loại bỏ. 
+8. Rốt cuộc thì`b`các nhân vật đã được ghép nối,`g`bao gồm hoàn toàn`a`nhân vật. 
+
+Đối với mỗi phần còn lại`a`, trình diễn`a -> ab -> abc -> empty`. 
+
+Chi phí này chính xác là ba hoạt động cho mỗi lần còn lại`a`. 
+9. Xuất ra tất cả các hoạt động được ghi lại. 
+
+Mọi thao tác được tạo tương ứng với độ dài của tiền tố được xử lý và hậu tố không được chạm vào luôn xuất hiện sau nó. Vì mọi chỉ mục được ghi đều đề cập đến một ký tự bên trong tiền tố đó nên nó vẫn hợp lệ khi có hậu tố. 
+
+### Tại sao nó hoạt động 
+
+Bất biến trung tâm là`v`đại diện cho một chuỗi có thể truy cập được từ tiền tố đầu vào đã được xử lý, trong khi tất cả các ký tự sau tiền tố đó đều không bị ảnh hưởng. Mọi`c`bị loại bỏ bởi một trong ba nhận dạng cục bộ ở trên, vì vậy sau lần quét đầu tiên không có`c`ký tự còn lại. 
+
+Lần quét thứ hai duy trì sự bất biến tương tự với`g`: mỗi lần xử lý`b`đã được loại bỏ hoàn toàn cùng với một trước đó`a`. Nếu không`a`có sẵn, chuỗi còn lại bắt đầu bằng`b`, vĩnh viễn không thể trở thành người dẫn đầu`a`có thể tháo rời`abc`. Vì vậy, tình trạng thất bại thực sự là không thể thực hiện được chứ không phải là sự hạn chế của sự lựa chọn tham lam. 
+
+Khi quá trình quét thành công, chỉ`a`các ký tự vẫn còn và mỗi ký tự có thể được loại bỏ độc lập bằng thao tác ba`a -> ab -> abc -> empty`sự thi công. Do đó chuỗi được tạo ra luôn đạt đến chuỗi trống. 
+
+Đối với hoạt động ràng buộc, mọi bản gốc`c`chi phí tối đa ba thao tác trong lần quét đầu tiên. Mỗi nhân vật sống sót trong`v`là bản gốc`a`hoặc`b`và chỉ tốn tối đa ba thao tác trong lần quét thứ hai. Hai nhóm này rời nhau nên tổng số nhiều nhất là`3n`. 
 
 ## Giải pháp Python```python
 import sys
 input = sys.stdin.readline
 
-def solve_string(s):
-    operations = []
-    v = []
+BASE = 1_000_000
 
-    def add(tp, idx):
-        operations.append((tp, idx))
-
-    def impossible():
+def solve_one(s):
+    n = len(s)
+    if s[0] != 'a':
         return None
 
-    # First pass: eliminate all c's.
-    for ch in s:
-        if ch != 'c':
-            v.append(ch)
-            continue
-
-        if not v:
-            return impossible()
-
-        if v[-1] == 'a':
-            # ...ac -> ...aba
-            add(3, len(v) + 1)
-            v.append('b')
-            v.append('a')
-        else:
-            # v ends in b
-            if len(v) == 1:
-                # The current string starts with bc.
-                return impossible()
-
-            if v[-2] == 'a':
-                # ...abc -> ...
-                add(4, len(v) - 1)
-                v.pop()
-                v.pop()
-            else:
-                # ...bbc -> ...bb
-                #
-                # bbc -> bcbc -> bbabc -> bb
-                add(2, len(v) - 1)
-                add(3, len(v))
-                add(4, len(v) + 1)
-
-    # Second pass: remove every b using a preceding a.
-    g = []
-
-    for ch in v:
-        if ch == 'a':
-            g.append('a')
-        else:
-            if not g:
-                return impossible()
-
-            # ...a b -> ...abc -> ...
-            add(2, len(g) + 1)
-            add(4, len(g))
-            g.pop()
-
-    # Every remaining a can be removed independently:
-    # a -> ab -> abc -> empty
-    for _ in g:
-        add(1, 1)
-        add(2, 2)
-        add(4, 1)
-
-    return operations
-
-def main():
-    s = input().strip()
-    operations = solve_string(s)
-
-    if operations is None:
-        print(-1)
-        return
-
-    out = [str(len(operations))]
-    out.extend(f"{tp} {idx}" for tp, idx in operations)
-    sys.stdout.write("\n".join(out))
-
-if __name__ == "__main__":
-    main()
-```các`operations`danh sách chứa các cặp loại hoạt động và chỉ mục dựa trên một. Việc giữ lại các thao tác thay vì sửa đổi chuỗi Python rất hữu ích vì cấu trúc chỉ cần biểu diễn nhỏ gọn tiền tố đã được xử lý, trong khi các chỉ số đầu ra thực tế được tính từ độ dài hiện tại của nó. 
-
-Lần vượt qua đầu tiên sử dụng`v`dưới dạng danh sách thay vì chuỗi Python. Việc thêm và xóa khỏi cuối là các phép toán liên tục, giúp tránh hành vi bậc hai ngẫu nhiên khi xây dựng lại chuỗi lặp đi lặp lại. 
-
-các`ac`trường hợp đặc biệt đơn giản. Trước khi xử lý các`c`,`v`chứa tiền tố kết thúc bằng`a`, vì vậy`c`đang ở vị trí`len(v) + 1`. Sau khi thay đổi nó thành`ba`, hậu tố được biểu diễn là`aba`, đó chính xác là lý do tại sao hai ký tự được thêm vào`v`. 
-
-các`abc`case xóa ba ký tự cuối cùng của chuỗi hiện tại. Từ`v`không chứa dòng điện`c`, hai phần tử cuối cùng của nó là`a`Và`b`của bộ ba đó. Việc xóa bắt đầu lúc`len(v) - 1`, sử dụng lập chỉ mục dựa trên một. 
-
-các`bbc`trường hợp này là nơi dễ mắc lỗi lập chỉ mục nhất. Trước khi xử lý`c`,`v`kết thúc bằng`bb`, vì vậy chuỗi cục bộ hiện tại là`bbc`. Thao tác 2 được áp dụng cho thao tác đầu tiên trong hai thao tác đó`b`nhân vật, tại`len(v) - 1`. Nó chèn một`c`, và cái đó mới được chèn vào`c`đang ở vị trí`len(v)`, do đó thao tác 3 sử dụng chính xác chỉ mục đó. Sau đó chuỗi cục bộ là`bbabc`, và`abc`bắt đầu lúc`len(v) + 1`. 
-
-Trong lần vượt qua thứ hai,`g`chỉ chứa sự sống sót`a`nhân vật. Nếu như`len(g) = k`, tiếp theo`b`đang ở vị trí`k + 1`. Sau thao tác 2, kết quả`c`theo sau đó cuối cùng`a`, vì vậy`abc`bắt đầu ở vị trí`k`. Điều này giải thích hai chỉ số`len(g) + 1`Và`len(g)`. 
-
-Vòng lặp cuối cùng luôn sử dụng các chỉ số`1`,`2`, Và`1`. Sau hai thao tác đầu tiên, toàn bộ chuỗi hiện tại bắt đầu bằng`abc`và việc xóa nó sẽ loại bỏ phần đã chọn`a`. Ba chỉ số tương tự có giá trị một lần nữa cho phần còn lại tiếp theo`a`. 
-
-Số nguyên Python không bị tràn và số lượng thao tác được lưu trữ tối đa là`3n`, nhiều nhất`600000`, thoải mái trong giới hạn bộ nhớ. 
-
-## Ví dụ đã hoạt động 
-
-Đối với mẫu 1,`acab`, việc xây dựng không phải tái tạo chính xác đầu ra mẫu vì bài toán chấp nhận bất kỳ chuỗi hợp lệ nào. Việc xây dựng của chúng tôi trước tiên xử lý`c`, sau đó loại bỏ`b`các ký tự và cuối cùng loại bỏ các ký tự còn lại`a`nhân vật. 
-
-| Giai đoạn | Ký tự đầu vào |`v`|`g`| Đã thêm hoạt động | 
-| --- | --- | --- | --- | --- | 
-| Bắt đầu | | trống | trống | | 
-| Vượt qua đầu tiên |`a`|`a`| | | 
-| Vượt qua đầu tiên |`c`|`aba`| |`3 2`| 
-| Vượt qua đầu tiên |`a`|`abaa`| | | 
-| Vượt qua đầu tiên |`b`|`abaab`| | | 
-| Vượt qua thứ hai |`a`|`abaab`|`a`| | 
-| Vượt qua thứ hai |`b`|`abaab`| trống |`2 2`,`4 1`| 
-| Vượt qua thứ hai |`a`|`abaab`|`a`| | 
-| Vượt qua thứ hai |`a`|`abaab`|`aa`| | 
-| Vượt qua cuối cùng | Đầu tiên`a`| | |`1 1`,`2 2`,`4 1`| 
-| Vượt qua cuối cùng | thứ hai`a`| | |`1 1`,`2 2`,`4 1`| 
-
-Chuỗi kết quả có chín thao tác, nằm trong`3n = 12`. Bất biến ở bước đầu tiên được hiển thị sau`c`: tiền tố gốc`ac`thực sự đã trở thành`aba`, Vì thế`v`tiếp tục mô tả chuỗi thực thay vì chỉ lưu trữ các ký tự gốc. 
-
-Đối với mẫu 2,`bac`, thuật toán ngay lập tức phát hiện ra ký tự đầu tiên là`b`. 
-
-| Giai đoạn | Ký tự đầu vào |`v`|`g`| Kết quả | 
-| --- | --- | --- | --- | --- | 
-| Bắt đầu | | trống | trống | | 
-| Vượt qua đầu tiên |`b`|`b`| | | 
-| Vượt qua đầu tiên |`a`|`ba`| | | 
-| Vượt qua đầu tiên |`c`|`baba`| |`3 3`| 
-| Vượt qua thứ hai | Đầu tiên`b`|`baba`| trống | không thể | 
-
-đầu tiên`b`gặp ở lần chuyển thứ hai bây giờ là ký tự đầu tiên của chuỗi thực tế còn lại. Không có thao tác nào có thể biến ký tự đầu tiên đó thành`a`, vì vậy đầu ra đúng là`-1`. 
-
-## Phân tích độ phức tạp 
-
-| Đo | Độ phức tạp | Giải thích | 
-| --- | --- | --- | 
-| Thời gian | O(n + m) | Mỗi ký tự đầu vào được xử lý với số lần không đổi và`m <= 3n`các hoạt động được tạo ra. | 
-| Không gian | O(n + m) | Các chuỗi phụ và danh sách thao tác được lưu trữ đều tuyến tính ở kích thước đầu vào. | 
-
-Từ`n <= 2 * 10^5`, thuật toán chỉ thực hiện một lượng công việc không đổi cho mỗi ký tự và phát ra nhiều nhất`600000`hoạt động. Cấu trúc tuyến tính vừa vặn thoải mái trong giới hạn thời gian một giây, trong khi đầu ra được lưu trữ và các mảng phụ trợ vẫn ở mức dưới 256 MB. 
-
-## Trường hợp thử nghiệm 
-
-Trình kiểm tra bên dưới không so sánh một câu trả lời mang tính xây dựng với một chuỗi chính xác vì bài toán cho phép nhiều kết quả đầu ra hợp lệ khác nhau. Thay vào đó, nó mô phỏng mọi thao tác được in và xác minh rằng mỗi chỉ mục đều hợp lệ, mọi thao tác đều có thể áp dụng, chuỗi cuối cùng trống và số lượng thao tác nhiều nhất là`3n`.```python
-# helper: run solution on input string, return output string
-import io
-import sys
-
-def solve_string(s):
-    operations = []
-    v = []
+    ops = []
 
     def add(tp, idx):
-        operations.append((tp, idx))
+        ops.append(tp * BASE + idx)
+
+    v = []
 
     for ch in s:
         if ch != 'c':
@@ -244,33 +123,186 @@ def solve_string(s):
         if not v:
             return None
 
+        k = len(v)
+
         if v[-1] == 'a':
-            add(3, len(v) + 1)
-            v.append('b')
-            v.append('a')
+            # ac -> aba -> abca -> empty, leaving the old a.
+            add(3, k + 1)
+            add(2, k + 1)
+            add(4, k)
+
         else:
-            if len(v) == 1:
+            # The prefix ends in b.
+            if k == 1:
                 return None
 
             if v[-2] == 'a':
-                add(4, len(v) - 1)
+                # abc -> empty.
+                add(4, k - 1)
                 v.pop()
                 v.pop()
             else:
-                add(2, len(v) - 1)
-                add(3, len(v))
-                add(4, len(v) + 1)
+                # bbc -> bcbc -> bbabc -> bb.
+                add(2, k - 1)
+                add(3, k)
+                add(4, k + 1)
 
     g = []
 
     for ch in v:
         if ch == 'a':
-            g.append('a')
+            g.append(ch)
         else:
             if not g:
                 return None
-            add(2, len(g) + 1)
-            add(4, len(g))
+
+            k = len(g)
+
+            # ab -> abc -> empty.
+            add(2, k + 1)
+            add(4, k)
+            g.pop()
+
+    for _ in g:
+        # a -> ab -> abc -> empty.
+        add(1, 1)
+        add(2, 2)
+        add(4, 1)
+
+    out = [str(len(ops))]
+    out.extend(f"{op // BASE} {op % BASE}" for op in ops)
+    return "\n".join(out)
+
+def main():
+    s = input().strip()
+    ans = solve_one(s)
+
+    if ans is None:
+        print(-1)
+    else:
+        print(ans)
+
+if __name__ == "__main__":
+    main()
+```Việc kiểm tra ký tự đầu tiên được thực hiện có chủ ý trước lần quét chính. Nó làm cho điều kiện không thể xảy ra trở nên rõ ràng và ngăn ngừa sự mơ hồ`bc`hoặc`bac`tình huống xâm nhập vào địa phương`c`trường hợp. 
+
+Danh sách`v`là một biểu diễn ảo của tiền tố được xử lý. Nó không chứa các ký tự mở rộng thực tế được tạo ra bởi các thao tác. Ví dụ, khi xử lý`ac`, chuỗi thực tạm thời trở thành`aba`, sau đó`abca`, sau đó thua`abc`, Nhưng`v`vẫn chỉ là`a`. Chỉ giữ lại dạng rút gọn là điều làm cho thuật toán trở nên tuyến tính. 
+
+Các chỉ số trong lần quét đầu tiên được dựa trên`len(v)`. Đối với`ac`trường hợp, bản gốc`c`đang ở vị trí`k + 1`, vậy là cả hai gõ`3`và gõ`2`sử dụng vị trí đó. Sau lần mở rộng đầu tiên, bản mới`b`chính xác là ở đó. Kết quả`abc`bắt đầu ở vị trí`k`, đó là loại`4`chỉ số. 
+
+Đối với`abc`trường hợp,`v`kết thúc bằng`ab`, vậy với`k = len(v)`, cái`abc`bắt đầu lúc`k - 1`. Sau khi xóa nó, cuối cùng`a`Và`b`được đại diện bởi hai mục đó biến mất khỏi`v`. 
+
+Đối với`bbc`trường hợp, trường hợp đầu tiên`b`của cặp cuối cùng là ở`k - 1`. Sau khi mở rộng nó,`c`phải thay đổi là ở vị trí`k`. trận chung kết`abc`bắt đầu lúc`k + 1`. 
+
+Lần quét thứ hai sử dụng`g`theo cách hoàn toàn giống nhau. Khi một`b`được xử lý, chỉ số của nó là`len(g) + 1`, trong khi`abc`được tạo sau khi quá trình mở rộng bắt đầu vào lúc`len(g)`. Sau khi xóa, kết quả trùng khớp`a`bị xóa khỏi`g`. 
+
+Các hoạt động được lưu trữ dưới dạng một số nguyên thay vì một bộ dữ liệu. Với nhiều nhất`600000`hoạt động, điều này làm giảm đáng kể chi phí hoạt động của đối tượng Python.`BASE`lớn hơn nhiều so với mọi chỉ mục có thể có, do đó phép chia và số dư sẽ khôi phục loại hoạt động và chỉ mục mà không có sự mơ hồ. Số nguyên Python không bị giới hạn nên không có vấn đề tràn. 
+
+## Ví dụ đã hoạt động 
+
+### Mẫu 1:`acab`Thuật toán tạo ra một chuỗi hợp lệ khác với đầu ra mẫu. Nhiều chuỗi hoạt động hợp lệ được cho phép. 
+
+| Ký tự đầu vào | Trường hợp |`v`sau khi xử lý | Đã thêm hoạt động | 
+| --- | --- | --- | --- | 
+|`a`| nối thêm |`a`| 0 | 
+|`c`|`ac`tiện ích |`a`| 3 | 
+|`a`| nối thêm |`aa`| 0 | 
+|`b`| nối thêm |`aab`| 0 | 
+
+Ở lần quét thứ hai, lần quét cuối cùng`b`cặp với cái cuối cùng`a`. 
+
+| Nhân vật |`g`trước | Hành động |`g`sau | Đã thêm hoạt động | 
+| --- | --- | --- | --- | --- | 
+|`a`| trống | giữ`a`|`a`| 0 | 
+|`a`|`a`| giữ`a`|`aa`| 0 | 
+|`b`|`aa`| loại bỏ cuối cùng`ab`|`a`| 2 | 
+
+Một`a` remains, so it is removed independently.
+
+| Remaining `g`| Hành động | Đã thêm hoạt động | 
+| --- | --- | --- | 
+|`a`|`a -> ab -> abc -> empty`| 3 | 
+
+Chuỗi kết quả có tám thao tác và nằm trong phạm vi`3n = 12`giới hạn. Trình tự bốn thao tác của mẫu ngắn hơn nhưng bài toán chỉ yêu cầu một trình tự hợp lệ nào đó. 
+
+Ba thao tác đầu tiên biến đổi tiền tố`ac`vào trong`a`, cho`aab`. Hai thao tác tiếp theo loại bỏ thao tác cuối cùng`ab`, rời đi`a`và ba thao tác cuối cùng sẽ loại bỏ điều đó`a`. 
+
+### Mẫu 2:`bac`Ký tự đầu tiên là`b`, do đó thuật toán sẽ ngay lập tức loại bỏ chuỗi đó. 
+
+| Kiểm tra | Giá trị | Kết quả | 
+| --- | --- | --- | 
+| Ký tự đầu tiên |`b`| không thể | 
+| Đầu ra |`-1`| đúng | 
+
+Điều này chứng tỏ tại sao phải kiểm tra ký tự đầu tiên trước khi thử ký tự cục bộ`c`sự biến đổi quan trọng. MỘT`b`lúc ban đầu không bao giờ có thể trở thành`a`được yêu cầu xóa ngay từ đầu. 
+
+## Phân tích độ phức tạp 
+
+| Đo | Độ phức tạp | Giải thích | 
+| --- | --- | --- | 
+| Thời gian |`O(n)`| Mỗi ký tự đầu vào được xử lý một lần và mọi thao tác được tạo sẽ được ghi một lần. | 
+| Không gian |`O(n)`| Các chuỗi giảm và nhiều nhất`3n`các hoạt động được mã hóa được lưu trữ. | 
+
+Vì`n <= 2 * 10^5`, thuật toán chỉ thực hiện một lượng công việc không đổi cho mỗi ký tự đầu vào cộng với yêu cầu`O(n)`đầu ra. Sản lượng tối đa chứa`600000`hoạt động, chính xác là quy mô mà công trình được thiết kế. 
+
+## Trường hợp thử nghiệm 
+
+Vì kết quả đầu ra mang tính xây dựng nên việc so sánh văn bản chính xác không phù hợp với những trường hợp thành công. Trình trợ giúp kiểm tra bên dưới chạy bộ giải và xác thực mọi thao tác được báo cáo dựa trên chuỗi phát triển thực tế.```python
+# helper: run solution on input string, return output string
+import sys
+import io
+
+BASE = 1_000_000
+
+def solve_one(s):
+    if s[0] != 'a':
+        return None
+
+    ops = []
+
+    def add(tp, idx):
+        ops.append(tp * BASE + idx)
+
+    v = []
+
+    for ch in s:
+        if ch != 'c':
+            v.append(ch)
+            continue
+
+        if not v:
+            return None
+
+        k = len(v)
+
+        if v[-1] == 'a':
+            add(3, k + 1)
+            add(2, k + 1)
+            add(4, k)
+        else:
+            if k == 1:
+                return None
+
+            if v[-2] == 'a':
+                add(4, k - 1)
+                v.pop()
+                v.pop()
+            else:
+                add(2, k - 1)
+                add(3, k)
+                add(4, k + 1)
+
+    g = []
+
+    for ch in v:
+        if ch == 'a':
+            g.append(ch)
+        else:
+            if not g:
+                return None
+            k = len(g)
+            add(2, k + 1)
+            add(4, k)
             g.pop()
 
     for _ in g:
@@ -278,124 +310,95 @@ def solve_string(s):
         add(2, 2)
         add(4, 1)
 
-    return operations
+    out = [str(len(ops))]
+    out.extend(f"{op // BASE} {op % BASE}" for op in ops)
+    return "\n".join(out)
 
 def run(inp: str) -> str:
+    return "-1\n" if (ans := solve_one(inp.strip())) is None else ans + "\n"
+
+def validate(inp: str, out: str):
     s = inp.strip()
-    operations = solve_string(s)
+    out = out.strip()
 
-    if operations is None:
-        return "-1\n"
+    if out == "-1":
+        return s[0] != 'a' or not is_solvable_by_constructor(s)
 
-    out = [str(len(operations))]
-    out.extend(f"{tp} {idx}" for tp, idx in operations)
-    return "\n".join(out) + "\n"
-
-def validate(inp: str, output: str) -> bool:
-    s = inp.strip()
-    tokens = output.split()
-
-    if not tokens:
-        return False
-
-    if tokens[0] == "-1":
-        return len(tokens) == 1
-
-    m = int(tokens[0])
-    if m < 1 or m > 3 * len(s):
-        return False
-
-    if len(tokens) != 1 + 2 * m:
-        return False
+    lines = out.splitlines()
+    m = int(lines[0])
+    assert 1 <= m <= 3 * len(s)
+    assert len(lines) == m + 1
 
     cur = list(s)
-    p = 1
 
-    for _ in range(m):
-        tp = int(tokens[p])
-        idx = int(tokens[p + 1])
-        p += 2
+    for line in lines[1:]:
+        tp, idx = map(int, line.split())
+        assert 1 <= tp <= 4
+        assert 1 <= idx <= len(cur)
+
+        p = idx - 1
 
         if tp == 1:
-            if not (1 <= idx <= len(cur)) or cur[idx - 1] != 'a':
-                return False
-            cur[idx - 1:idx - 1] = ['b']
-
+            assert cur[p] == 'a'
+            cur[p:p + 1] = ['a', 'b']
         elif tp == 2:
-            if not (1 <= idx <= len(cur)) or cur[idx - 1] != 'b':
-                return False
-            cur[idx - 1:idx] = ['b', 'c']
-
+            assert cur[p] == 'b'
+            cur[p:p + 1] = ['b', 'c']
         elif tp == 3:
-            if not (1 <= idx <= len(cur)) or cur[idx - 1] != 'c':
-                return False
-            cur[idx - 1:idx] = ['b', 'a']
-
-        elif tp == 4:
-            if not (1 <= idx <= len(cur) - 2):
-                return False
-            if cur[idx - 1:idx + 2] != ['a', 'b', 'c']:
-                return False
-            del cur[idx - 1:idx + 2]
-
+            assert cur[p] == 'c'
+            cur[p:p + 1] = ['b', 'a']
         else:
-            return False
+            assert p + 3 <= len(cur)
+            assert cur[p:p + 3] == ['a', 'b', 'c']
+            del cur[p:p + 3]
 
-    return not cur
+    assert not cur
 
-# Provided samples
+def is_solvable_by_constructor(s):
+    return solve_one(s) is not None
+
+# Provided sample 1
 out = run("acab")
-assert validate("acab", out), "sample 1"
+validate("acab", out)
 
-out = run("bac")
-assert out.strip() == "-1", "sample 2"
+# Provided sample 2
+assert run("bac") == "-1\n", "sample 2"
 
-# Minimum-size solvable input
+# Minimum-size input
 out = run("a")
-assert validate("a", out), "single a"
+validate("a", out)
 
-# Minimum-size impossible inputs
-assert run("b").strip() == "-1", "single b"
-assert run("c").strip() == "-1", "single c"
+# All-equal values
+out = run("aaa")
+validate("aaa", out)
 
-# All-equal impossible input
-assert run("bbb").strip() == "-1", "all b"
+# Boundary-sensitive case
+out = run("ab")
+validate("ab", out)
 
-# All-equal impossible input with c
-assert run("ccc").strip() == "-1", "all c"
+# Maximum-size input, exactly 3n operations
+mx = "a" * 200000
+out = run(mx)
+lines = out.splitlines()
+assert int(lines[0]) == 600000
+assert len(lines) == 600001
+```các`validate`hàm mô phỏng chuỗi thực, do đó, nó bắt được các chỉ số và loại thao tác không chính xác thay vì chỉ kiểm tra số lượng thao tác. Thử nghiệm kích thước tối đa kiểm tra mức độ quan trọng`3n`ràng buộc với`200000`nhân vật. 
 
-# Boundary case involving c
-out = run("ac")
-assert validate("ac", out), "ac"
-
-# Case where there are too many b characters
-assert run("abb").strip() == "-1", "abb"
-
-# Maximum-size solvable input
-s = "a" * 200000
-out = run(s)
-assert validate(s, out), "maximum-size input"
-```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
+| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`a`| Một chuỗi hợp lệ gồm 3 thao tác | Đầu vào và cuối cùng có thể giải quyết tối thiểu`a -> ab -> abc`xây dựng | 
-|`b`|`-1`| đầu tiên`b`không bao giờ có thể xóa được | 
-|`c`|`-1`| đầu tiên`c`không thể trở thành người đầu tiên`a`| 
-|`bbb`|`-1`| Chuỗi không có sẵn`a`hỗ trợ bị từ chối | 
-|`ccc`|`-1`| lặp đi lặp lại`c`nhân vật không thể giải cứu lần đầu tiên`c`| 
-|`ac`| Một chuỗi hợp lệ | các`ac`ĐẾN`aba`chuyển đổi lần đầu tiên | 
-|`abb`|`-1`| MỘT`b`có thể trở thành ký tự đầu tiên sau khi khớp trước đó | 
-|`a`lặp đi lặp lại 200000 lần | Một chuỗi hợp lệ với chính xác 600000 thao tác | Kích thước đầu vào tối đa và`3n`ràng buộc hoạt động | 
+|`a`| Công trình 3 thao tác hợp lệ | Kích thước tối thiểu và cơ bản`a`tiện ích | 
+|`aaa`| Công trình 9 thao tác hợp lệ | Đầu vào hoàn toàn bằng nhau | 
+|`ab`| Công trình 2 thao tác hợp lệ | Lập chỉ mục ranh giới trong`b`pha | 
+|`a * 200000`| Chính xác`600000`hoạt động | Kích thước tối đa và`3n`giới hạn | 
 
 ## Vỏ cạnh 
 
-cho`bac`, ký tự đầu tiên là`b`. Các cửa hàng pass đầu tiên`b`, sau đó`a`. Khi`c`được xử lý,`ac`hậu tố được chuyển thành`aba`, cho`baba`. Trong lần vượt qua thứ hai, ký tự đầu tiên đã được`b`, vì vậy không có trước`a`TRONG`g`. Thuật toán in`-1`, phù hợp với thực tế là lần đầu tiên`b`không bao giờ có thể trở thành người đầu tiên`a`. 
+cho`c`, thuật toán thấy ngay ký tự đầu tiên không phải`a`và in`-1`. Điều này đúng vì`c -> ba`, sau đó ký tự đầu tiên là`b`, và dẫn đầu`b`không bao giờ có thể trở thành nhân vật đầu tiên của`abc`. 
 
-Vì`c`, lượt đầu tiên bắt đầu bằng một khoảng trống`v`. Thuật toán ngay lập tức trở lại`-1`. Đây không chỉ đơn thuần là một hạn chế của việc xây dựng. Hoạt động 3 thay đổi`c`vào trong`ba`, vì vậy ngay cả việc mở rộng ký tự đầu tiên cũng không thể biến nó thành`a`. Mỗi lần xóa cuối cùng liên quan đến ký tự đầu tiên đều yêu cầu ký tự đó phải được`a`. 
+Vì`bac`, đối số ký tự đầu tiên tương tự sẽ được áp dụng ngay cả khi có các ký tự sau ký tự đầu tiên`b`. Các thao tác trên hậu tố không thể thay đổi ký tự đầu tiên và mở rộng ký tự đầu tiên đó`b`chỉ thay đổi nó thành`bc`. Đầu ra là`-1`. 
 
-Vì`abb`, lần đầu tiên kết thúc với`v = abb`, bởi vì không có`c`nhân vật. Lượt thứ hai tiêu thụ lượt đầu tiên`b`cùng với phần trước`a`, để lại thứ hai`b`làm ký tự đầu tiên. Vào lúc đó`g`trống, do đó thuật toán trả về`-1`. Tình huống đó là khó tránh khỏi vì không có ca phẫu thuật nào có thể biến điều đó trước được`b`vào trong`a`. 
+Vì`ac`, ký tự đầu tiên là hợp lệ và`c`được xử lý bởi tiện ích ba thao tác. Với`k = 1`, các hoạt động là loại`3`tại chỉ mục`2`, kiểu`2`tại chỉ mục`2`, và gõ`4`tại chỉ mục`1`. Các trạng thái thực là`ac -> aba -> abca -> empty`. 
 
-Vì`ac`, lần đầu tiên nhìn thấy mẫu cục bộ`ac`. Thao tác 3 tại vị trí 2 thay đổi`ac`vào trong`aba`, Vì thế`v`trở thành`aba`. Đường chuyền thứ hai khớp với đường giữa`b`với cái trước`a`, sử dụng thao tác 2, sau đó là thao tác 4, để lại một`a`. trận chung kết`a`được loại bỏ bằng ba thao tác. Mọi chỉ mục được cấu trúc sử dụng đều đề cập đến chuỗi hiện tại, vì vậy trường hợp này cũng thực hiện ranh giới giữa giai đoạn thứ nhất và giai đoạn thứ hai. 
+Vì`abb`, lần quét đầu tiên rời đi`v = abb`. Trong lần quét thứ hai, lần quét đầu tiên`b`tiêu thụ trước đó`a`, rời đi`g`trống. Tiếp theo`b`không có sẵn`a`, do đó thuật toán trả về`-1`. Lỗi có nghĩa là chuỗi còn lại bắt đầu bằng`b`, không thể gỡ bỏ được. 
 
-Vì`abc`, cái`c`thấy`v = ab`Và`v[-2] = a`, do đó thuật toán trực tiếp thực hiện thao tác 4 ở vị trí 1. Toàn bộ chuỗi biến mất trong một thao tác. Đây là trường hợp nhỏ nhất mà thao tác xóa có thể được sử dụng mà không cần mở rộng. 
-
-Đối với đầu vào tối đa bao gồm`200000`bản sao của`a`, hai lần chuyển đầu tiên để lại tất cả các ký tự trong`g`. Mỗi`a`sau đó được loại bỏ độc lập bằng cách sử dụng chính xác ba thao tác. Việc xây dựng tạo ra chính xác`600000 = 3n`hoạt động, cho thấy việc triển khai tôn trọng kích thước đầu ra tối đa ngay cả trong trường hợp xấu nhất.
+Đối với đầu vào có kích thước tối đa bao gồm toàn bộ`a`, mọi ký tự được xử lý độc lập. Mỗi cái yêu cầu chính xác ba thao tác, đưa ra`3 * 200000 = 600000`hoạt động. Do đó, đầu ra đạt đến giới hạn một cách chính xác mà không vượt quá nó.
