@@ -1,7 +1,7 @@
 ---
 title: "CF 102219F - Hạng quân sự"
-description: "Chúng ta có hai hàng lính, mỗi hàng chứa các vị trí từ (1) đến (n). Một người lính ở vị trí (i) ở hàng đầu tiên phải được ghép đôi với đúng một người lính ở hàng thứ hai."
-date: "2026-08-17T22:54:43+07:00"
+description: "Chúng tôi có hai hàng (n) lính. Việc so khớp sẽ chọn chính xác một người lính từ hàng thứ hai cho mỗi người lính ở hàng đầu tiên, với mỗi người lính ở hàng thứ hai được sử dụng đúng một lần."
+date: "2026-08-18T23:37:15+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102219
@@ -9,7 +9,7 @@ codeforces_index: "F"
 codeforces_contest_name: "2019 ICPC Malaysia National"
 rating: 0
 weight: 102219
-solve_time_s: 180
+solve_time_s: 746
 verified: false
 draft: false
 ---
@@ -18,83 +18,99 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 3 phút 
+**Thời gian giải:** 12m 26s 
 **Đã xác minh:** không 
 
 ## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta có hai hàng lính, mỗi hàng chứa các vị trí từ (1) đến (n). Một người lính ở vị trí (i) ở hàng đầu tiên phải được ghép đôi với đúng một người lính ở hàng thứ hai. Cặp ((i,j)) thường được phép khi (|i-j|\le e) và một số cặp bổ sung bị cấm rõ ràng. 
+Chúng tôi có hai hàng (n) lính. Việc so khớp sẽ chọn chính xác một người lính từ hàng thứ hai cho mỗi người lính ở hàng đầu tiên, với mỗi người lính ở hàng thứ hai được sử dụng đúng một lần. Vì vậy, câu trả lời là số hoán vị hợp lệ (p) của (1,\ldots,n) sao cho người lính (i) ở hàng đầu tiên khớp với người lính (p_i) ở hàng thứ hai, (|i-p_i|\le e), và không có cặp nào bị cấm rõ ràng ((u_i,v_i)) được sử dụng. 
 
-Do đó, một cặp hoàn chỉnh là một hoán vị (p) của (1,\ldots,n), trong đó người lính (i) ở hàng đầu tiên được ghép với người lính (p_i) ở hàng thứ hai. Chúng ta cần đếm các hoán vị thỏa mãn cả giới hạn khoảng cách và mọi giới hạn cặp cấm rõ ràng, modulo (10^9+7). 
+Hạn chế thú vị không chỉ là (e) nhỏ. Nó cho biết mọi người lính (i) chỉ có thể tương tác với các vị trí ở hàng thứ hai trong khoảng thời gian ngắn ([i-e,i+e]). Vì (e\le4), có nhiều nhất (9) vị trí ở hàng thứ hai phù hợp cho bất kỳ người lính ở hàng đầu tiên nào. Số lượng binh sĩ hàng đầu có thể lên tới (2000) nên cần có thuật toán đa thức. Một thuật toán (O(n^2)) đã có khoảng bốn triệu phép tính cơ bản, điều này là hợp lý, trong khi bất kỳ thuật toán nào theo cấp số nhân trong (n) là không thể. Hằng số nhỏ (e) là đặc điểm cho phép chúng ta giữ một không gian trạng thái hàm mũ có kích thước phụ thuộc vào (e), không phụ thuộc vào (n). 
 
-Ràng buộc quan trọng là (e\le4). Giá trị của (n) có thể đạt tới (2000), do đó, một giải pháp phụ thuộc bậc hai hoặc tệ hơn vào (n) đã không còn phù hợp với giới hạn một giây, trong khi mọi giai thừa đều hoàn toàn không thể thực hiện được. Tuy nhiên, giá trị nhỏ của (e) có nghĩa là mỗi người lính chỉ có thể tương tác với tối đa (2e+1\le9) vị trí ở hàng khác. Phạm vi tương tác bị giới hạn đó là điều khiến trạng thái bitmask nhỏ trở nên khả thi. 
-
-Có một số trường hợp ranh giới trong đó việc triển khai bất cẩn có thể âm thầm đếm các cặp không hợp lệ. Với (e=0), mỗi người lính có chính xác một đối tác khả thi, vì vậy```
+Việc triển khai ngây thơ cũng có thể thất bại ở ranh giới. Ví dụ, với```
 1 0 0
-```phải sản xuất```
-1
-```trong khi```
-1 0 1
-1 1
-```phải sản xuất```
-0
-```Một giải pháp xử lý danh sách bị cấm tách biệt với giới hạn khoảng cách có thể vô tình tính đến việc ghép cặp danh tính trong trường hợp thứ hai. 
+```có chính xác một kết quả phù hợp, vì vậy câu trả lời là (1). Một DP mù quáng đảm nhận các vị trí (i-e,\ldots,i+e) đều tồn tại có thể vô tình coi một người lính ở hàng thứ hai không tồn tại là có thể sử dụng được. 
 
-Điểm bắt đầu và kết thúc của các hàng cũng đặc biệt vì cửa sổ bình thường xung quanh một người lính mở rộng ra ngoài phạm vi (1,\ldots,n). Ví dụ,```
+Một trường hợp ranh giới khác là```
 2 1 0
-```có hai cặp hợp lệ là ((1,1),(2,2)) và ((1,2),(2,1)), nên đáp án là (2). Việc triển khai mặt nạ chỉ đơn giản giả định mọi vị trí trong cửa sổ là một người lính thực sự có thể giới thiệu các vị trí không tồn tại làm đối tác khả thi. 
+```câu trả lời của họ là (2). Cả hai kết quả đều có thể thực hiện được: (1\to1,2\to2) và (1\to2,2\to1). Việc triển khai cửa sổ trượt bất cẩn có thể làm mất một trong các trạng thái này khi cửa sổ di chuyển qua đầu bên phải. 
 
-Cuối cùng, cặp bị cấm phải được kiểm tra đối với người lính thực sự đang được xử lý, không chỉ đối với vị trí trên mặt nạ. Vì```
+Các cặp bị cấm chỉ được áp dụng khi lính hàng đầu tương ứng được xử lý. Ví dụ,```
 2 1 1
 1 2
-```câu trả lời không hạn chế là (2), nhưng việc ghép đôi (1\to2) bị cấm, chỉ để lại duy nhất một cặp hợp lệ. Một quá trình chuyển đổi chỉ kiểm tra xem một cột có được sử dụng hay không mà bỏ qua mối quan hệ bị cấm sẽ tạo ra (2) thay vì (1). 
+```có câu trả lời (1), vì việc khớp (1\to2,2\to1) bị cấm trong khi (1\to1,2\to2) vẫn hợp lệ. Nếu cặp bị cấm được lưu trữ trên toàn cầu mà không kết nối nó với đúng hàng của DP thì rất dễ loại bỏ quá trình chuyển đổi sai. 
+
+Trường hợp (e=0) cũng có cấu trúc khác. Với```
+3 0 0
+```câu trả lời là (1), bởi vì mỗi người lính đều có chính xác một đối tác khả thi. Việc triển khai chuyển đổi trạng thái giả định ít nhất hai vị trí ứng cử viên có thể đưa ra các chuyển đổi không hợp lệ hoặc xử lý sai mặt nạ một bit. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận trực tiếp là tạo ra mọi hoán vị của (n) binh sĩ ở hàng thứ hai. Đối với mỗi hoán vị, hãy kiểm tra tất cả (n) cặp và xác minh điều kiện khoảng cách và điều kiện cặp cấm. Điều này đúng vì mọi kết quả khớp hoàn toàn giữa hai hàng đều tương ứng với chính xác một hoán vị. 
+Giải pháp bạo lực trực tiếp nhất là xây dựng từng người lính ở hàng đầu tiên phù hợp. Đối với người lính (i), nó thử mọi người lính hàng thứ hai (j) thỏa mãn (|i-j|\le e), kiểm tra xem (j) đã được sử dụng chưa và tiếp tục đệ quy. Khi tất cả (n) binh sĩ đã được xử lý, một kết quả khớp hoàn chỉnh đã được tìm thấy. 
 
-Vấn đề là số lượng hoán vị. Có (n!) Trong số chúng và việc kiểm tra một hoán vị mất (O(n)) thời gian, vì vậy công việc trong trường hợp xấu nhất là (O(n\cdot n!)). Tại (n=2000), điều này có nghĩa là theo thứ tự kiểm tra cặp (2000\cdot2000!), vượt xa những gì có thể thử. 
+Điều này đúng vì mọi kết quả phù hợp có thể tương ứng với chính xác một chuỗi lựa chọn và đệ quy sẽ từ chối chính xác một lựa chọn khi nó vi phạm giới hạn khoảng cách, cặp bị cấm hoặc yêu cầu mỗi người lính ở hàng thứ hai phải được sử dụng một lần. 
 
-Phương pháp brute-force hoạt động vì nó giữ toàn bộ lịch sử khớp. Quan sát giúp có thể tạo ra trạng thái nhỏ hơn là khi xử lý lính từ trái sang phải, lính (i) chỉ có thể sử dụng các cột từ (i-e) đến (i+e). Khi chúng ta di chuyển đủ xa về bên phải, cột cũ sẽ không bao giờ được sử dụng lại. Chúng ta chỉ cần nhớ những vị trí nào bên trong cửa sổ di chuyển hẹp này đã được chiếm giữ. 
+Vấn đề là số lượng các trạng thái được khám phá. Mặc dù mỗi người lính có nhiều nhất (2e+1\le9) ứng viên, nhưng tìm kiếm đệ quy có giới hạn trên theo cấp số nhân là (9^n). Đối với (n=2000), giới hạn đó là (9^{2000}), gần đúng (10^{1908}), vượt xa mọi số lượng thao tác thực tế. Một cách tiếp cận bạo lực thậm chí còn đơn giản hơn để tạo ra tất cả (n!) hoán vị sẽ thực hiện kiểm tra cặp (n\cdot n!), điều này thậm chí còn tệ hơn. 
 
-Có nhiều nhất (2e+1) vị trí trong cửa sổ đó (9). Chúng ta có thể biểu thị trạng thái bị chiếm dụng hoặc rảnh rỗi của chúng bằng mặt nạ bit chứa tối đa (9) bit, cho ra nhiều nhất (2^9=512) trạng thái. Đối với mỗi người lính ở hàng đầu tiên, chúng tôi thử từng vị trí trống trong cửa sổ, từ chối các cặp bị cấm và sau đó di chuyển cửa sổ sang bên phải một vị trí. 
+Lực lượng vũ phu hoạt động vì đối tác hợp pháp của một người lính là người địa phương, nhưng nó liên tục tính toán lại các tình huống từng phần giống nhau. Giả sử chúng ta đã xử lý các lính (1,\ldots,i-1). Đối với những người lính tương lai, chúng ta không cần phải nhớ toàn bộ lịch sử về những người lính ở hàng thứ hai đã được sử dụng. Chúng ta chỉ cần biết vị trí nào trong khoảng cục bộ hiện tại đang được chiếm giữ. 
 
-Quá trình chuyển đổi cũng cho chúng tôi một cách để thực thi rằng mọi người lính ở hàng thứ hai cuối cùng đều được sử dụng. Khi cửa sổ di chuyển, vị trí ngoài cùng bên trái của nó sẽ biến mất vĩnh viễn. Nếu vị trí đó là một người lính thực sự và bit của nó vẫn bằng 0 thì việc khớp một phần không bao giờ có thể trở nên hoàn chỉnh, vì vậy chúng tôi loại bỏ trạng thái. 
+Quan sát quan trọng là một người lính ở hàng đầu trong tương lai không bao giờ có thể sử dụng vị trí ở hàng thứ hai nhiều hơn (e) vị trí phía sau nó. Khi chúng ta chuyển từ lính (i) sang lính (i+1), vị trí ngoài cùng bên trái trong cửa sổ hiện tại sẽ vĩnh viễn rời khỏi cửa sổ. Nó chắc chắn đã được khớp rồi. Đồng thời, chỉ có một vị trí mới vào cửa sổ. 
+
+Điều này mang lại một mặt nạ bit DP cửa sổ trượt. Cửa sổ có nhiều nhất là (2e+1) vị trí (9), do đó có nhiều nhất 
+
+[ 
+2^{2e+1}\le2^9=512 
+] 
+
+các trạng thái có thể. Chúng tôi xử lý tất cả (n) binh sĩ ở hàng đầu tiên và đối với mỗi tiểu bang, hãy thử tối đa (2e+1\le9) đối tác ứng cử viên. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
-| Lực lượng vũ phu | (O(n\cdot n!)) | (O(n)) | Quá chậm | 
-| Tối ưu | (O(n\cdot 2^{2e+1}\cdot(2e+1)+k)) | (O(2^{2e+1}+k)) | Đã chấp nhận | 
+| Lực lượng vũ phu | (O((2e+1)^n)) trong tìm kiếm được cắt tỉa | (O(n)) độ sâu đệ quy | Quá chậm | 
+| Tối ưu | (O(n(2e+1)2^{2e+1})) | (O(2^{2e+1}+k+n)) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Biểu thị cửa sổ hiện tại cho người lính ở hàng đầu tiên (i) là vị trí ở hàng thứ hai 
-[ 
-i-e,\ i-e+1,\ldots,i+e. 
-] 
-Bit (b) của mặt nạ tương ứng với vị trí (i-e+b). Bit được đặt có nghĩa là vị trí đó đã được chiếm giữ, trong khi bit không được đặt có nghĩa là vị trí đó vẫn khả dụng.
+1. Xác định cửa sổ trượt (2e+1) vị trí hàng thứ hai xung quanh người lính hàng đầu hiện tại (i). Bit (b) thể hiện vị trí 
 
-Các vị trí bên ngoài (1,\ldots,n) được coi là đã được sử dụng. Họ không phải là những người lính thực sự nên không có người chuyển giới nào được phép chọn họ. 
-2. Xây dựng bitmask bị cấm cho mọi binh sĩ ở hàng đầu. Nếu ((u,v)) bị cấm và (v) nằm trong cửa sổ của (u), hãy đặt bit tương ứng với (v). Sau đó, quá trình chuyển đổi có thể từ chối tất cả các lựa chọn bị cấm rõ ràng bằng cách sử dụng thao tác một bit. 
-3. Khởi tạo mặt nạ trước khi xử lý lính (1). Cửa sổ của nó là 
-[ 
-1-e,\ldots,1+e. 
-] 
-Mọi vị trí bên dưới (1) và mọi vị trí trên (n) đều bắt đầu như bị chiếm đóng vì những vị trí đó không tương ứng với những người lính thực sự. DP ban đầu có giá trị (1) cho mặt nạ này. 
-4. Đối với mỗi người lính ở hàng đầu tiên (i), lặp lại mọi mặt nạ có thể tiếp cận. Với mỗi bit 0 (b), hãy xem xét việc ghép đôi người lính (i) với 
 [ 
 j=i-e+b. 
 ] 
-Đây chính xác là tập hợp các đối tác thỏa mãn (|i-j|\le e), do đó không có đối tác hợp lệ nào bị bỏ sót. 
-5. Từ chối quá trình chuyển đổi nếu bit (b) đã bị chiếm dụng hoặc nếu cặp ((i,j)) tương ứng bị cấm. Nếu không thì đặt bit (b), vì người lính (j) hiện được sử dụng. 
-6. Trước khi chuyển sang hàng tiếp theo, yêu cầu đặt bit ngoài cùng bên trái. Bit ngoài cùng bên trái đại diện cho vị trí (i-e). Sau khi xử lý người lính (i), vị trí này sẽ không bao giờ xuất hiện trong bất kỳ cửa sổ nào trong tương lai. Nếu là một người lính thực sự không được sử dụng, sau này sẽ không có cơ hội sánh đôi, vì vậy việc ghép một phần phải bị loại bỏ. 
-7. Dịch chuyển mặt nạ sang phải một chút để di chuyển từ cửa sổ xung quanh (i) sang cửa sổ xung quanh (i+1). Vị trí ngoài cùng bên phải mới là (i+e+1). Nếu nó lớn hơn (n), hãy đặt bit của nó ngay lập tức vì đó là vị trí không tồn tại. Nếu không thì hãy bỏ cài đặt này vì đây là một người lính thực sự mới, chưa được sử dụng. 
-8. Sau khi người lính (n) đã được xử lý, mọi vị trí thực sự ở hàng thứ hai chỉ rời khỏi cửa sổ di chuyển sau khi được xác nhận đã chiếm giữ. Tất cả các vị trí còn lại đều nằm ngoài hàng và được đánh dấu là đã có người sử dụng. Do đó, mặt nạ đầy đủ, với mỗi bit được đặt, thể hiện chính xác các kết quả khớp đã hoàn thành. Giá trị DP của nó là câu trả lời. 
+
+Một bit bằng (1) có nghĩa là vị trí này đã không sẵn có, vì nó đã được khớp trước đó hoặc vì nó nằm ngoài phạm vi thực tế (1,\ldots,n). Việc xử lý các vị trí bên ngoài mảng như đã được chiếm giữ sẽ cho phép logic chuyển tiếp giống nhau hoạt động ở cả hai đầu của mảng. 
+
+1. Trước khi xử lý lính (1), hãy tạo mặt nạ ban đầu cho cửa sổ 
+
+[ 
+1-e,\ldots,1+e. 
+] 
+
+Mọi vị trí bên dưới (1) đều được đánh dấu là đã có người sử dụng. Mọi vị trí thực ban đầu đều miễn phí trừ khi nó đã bị loại trừ bởi vấn đề này, mặc dù các cặp bị cấm được xử lý như các hạn chế chuyển tiếp chứ không phải như các vị trí được chiếm giữ ban đầu. 
+
+1. Đối với mỗi người lính hàng đầu (i), hãy tạo một bitmask`allowed`chứa các vị trí (j) trong cửa sổ hiện tại mà (1\le j\le n), (|i-j|\le e) và ((i,j)) không bị cấm. 
+2. Đối với mỗi mặt nạ DP có thể tiếp cận, hãy tìm các vị trí ứng cử viên miễn phí với 
+
+[ 
+\text{choices}=\text{allowed}\ &\ \sim\text{mask}. 
+] 
+
+Mỗi bộ bit trong`choices`đại diện cho một đối tác có thể có cho người lính (i). Việc chọn bit đó tương ứng với việc tạo một phần mở rộng có thể có của mọi kết quả khớp từng phần được biểu thị bằng trạng thái hiện tại. 
+
+1. Sau khi chọn đối tác, hãy kiểm tra phần ngoài cùng bên trái của mặt nạ thu được. Vị trí ngoài cùng bên trái là (i-e). Sau khi người lính (i) đã được khớp, không người lính hàng đầu nào trong tương lai có thể sử dụng vị trí đó. Do đó, nếu bit đó vẫn bằng 0 thì việc khớp từng phần không bao giờ có thể hoàn thành và phải bị loại bỏ. 
+
+Đây là kiểm tra tính hợp lệ trung tâm của DP cửa sổ trượt. Nó ngăn chúng tôi hoãn một trận đấu ngoài người lính hàng đầu cuối cùng có thể sử dụng hợp pháp một vị trí cụ thể ở hàng thứ hai. 
+
+1. Dịch chuyển mặt nạ sang phải một chút. Vị trí cũ (i-e) biến mất, mọi vị trí còn lại di chuyển một bit về phía bên trái và vị trí mới (i+e+1) đi vào ở bit cao nhất. 
+
+Nếu vị trí mới lớn hơn (n), thì nó nằm ngoài hàng thứ hai thực, do đó bit của nó được chèn vào là (1). Ngược lại, nó được chèn vào dưới dạng (0), vì không có người lính nào trước đó có thể sử dụng vị trí mới được giới thiệu này. 
+
+1. Lưu trữ số lượng khớp một phần cho mặt nạ kết quả trong mảng DP tiếp theo. Tất cả các phép cộng được thực hiện theo modulo (10^9+7). 
+2. Sau khi xử lý tất cả (n) binh sĩ hàng đầu, trạng thái cuối cùng hợp lệ duy nhất là mặt nạ tất cả mọi người. Mọi vị trí thực tế ở hàng thứ hai đều phải được sử dụng, trong khi mọi vị trí bên ngoài (1,\ldots,n) cũng được đánh dấu là đã được sử dụng. Giá trị của trạng thái này là câu trả lời bắt buộc. 
 
 ### Tại sao nó hoạt động 
 
-Điều bất biến là sau khi xử lý (i) lính đầu tiên và dịch chuyển cửa sổ, mọi vị trí thực của hàng thứ hai nhỏ hơn điểm cuối bên trái của cửa sổ hiện tại đã được sử dụng chính xác một lần, trong khi mặt nạ ghi lại chính xác những vị trí nào vẫn hiển thị trong cửa sổ đã được sử dụng. Quá trình chuyển đổi chọn một đối tác được phép, chưa được sử dụng cho người lính (i), do đó, nó sẽ mở rộng mọi kết quả khớp từng phần hợp lệ đúng một lần. Việc kiểm tra bit gửi đi sẽ ngăn không cho một người lính không được sử dụng biến mất vĩnh viễn. Vì những người lính trong tương lai chỉ có thể kết nối trong khoảng cách (e), nên không có thông tin nào bên ngoài cửa sổ hiện tại có thể ảnh hưởng đến bất kỳ quyết định nào trong tương lai. Do đó, mọi trạng thái DP còn sót lại biểu thị các kết quả khớp một phần hợp lệ và mọi kết quả khớp hoàn chỉnh hợp lệ tuân theo chính xác một chuỗi chuyển đổi sang mặt nạ đầy đủ. 
+Sau khi xử lý các lính hàng đầu tiên (1,\ldots,i), bất biến DP là`dp[mask]`đếm chính xác sự trùng khớp một phần của những người lính có vị trí hàng thứ hai đã sử dụng và không có sẵn trong cửa sổ hiện tại được mô tả bởi`mask`. Các vị trí đã rời khỏi cửa sổ không còn cần thiết nữa và quá trình chuyển đổi yêu cầu rõ ràng vị trí đi phải được chiếm giữ trước khi loại bỏ nó. Mỗi đối tác hợp pháp được biểu thị bằng một bit được phép miễn phí, do đó, mọi kết quả khớp một phần hợp lệ đều có chính xác các phần tiếp theo có thể được biểu thị bằng các chuyển đổi, không bị trùng lặp. Cuối cùng, trạng thái tất cả một có nghĩa là mỗi người lính ở hàng thứ hai thực sự đã được ghép đúng một lần, vì vậy số lượng của nó chính xác là số lượng khớp hoàn toàn hợp lệ. 
 
 ## Giải pháp Python```python
 import sys
@@ -105,77 +121,75 @@ MOD = 1_000_000_007
 def solve():
     n, e, k = map(int, input().split())
 
-    width = 2 * e + 1
-    states = 1 << width
-    full = states - 1
-    top_bit = 1 << (width - 1)
-
-    # banned[i] has a bit set for every forbidden second-row
-    # position inside the window of first-row soldier i.
-    banned = [0] * (n + 1)
+    # bad[i] is a bitmask of second-row positions forbidden for first-row i.
+    bad = [0] * (n + 1)
 
     for _ in range(k):
         u, v = map(int, input().split())
+        # v is relevant only if it can be within e of u.
+        d = v - (u - e)
+        if 0 <= d <= 2 * e:
+            bad[u] |= 1 << d
 
-        # Pairs outside the distance window can never be used anyway.
-        if abs(u - v) <= e:
-            bit = v - (u - e)
-            if 0 <= bit < width:
-                banned[u] |= 1 << bit
+    width = 2 * e + 1
+    states = 1 << width
+    top_bit = 1 << (width - 1)
+    full = states - 1
 
-    # Before processing row 1, the window is [1-e, 1+e].
-    # Positions outside [1,n] are considered already occupied.
-    initial = 0
-    for bit in range(width):
-        col = 1 - e + bit
-        if col < 1 or col > n:
-            initial |= 1 << bit
-
-    # For every mask, precompute which free bits can be selected,
-    # together with the mask before inserting the new rightmost bit.
-    transitions = [[] for _ in range(states)]
-
-    for mask in range(states):
-        free = full ^ mask
-        while free:
-            bit = free & -free
-            free -= bit
-
-            new_mask = mask | bit
-
-            # The outgoing position must already be occupied.
-            if new_mask & 1:
-                transitions[mask].append(
-                    (bit, new_mask >> 1)
-                )
-
-    dp = [0] * states
-    dp[initial] = 1
+    # For every first-row position, build the set of legal real
+    # second-row positions in its current window.
+    allowed = [0] * (n + 1)
 
     for i in range(1, n + 1):
+        mask = 0
+        base = i - e
+        for b in range(width):
+            j = base + b
+            if 1 <= j <= n and not (bad[i] >> b & 1):
+                mask |= 1 << b
+        allowed[i] = mask
+
+    # Initial window for i = 1 is [1-e, 1+e].
+    # Positions <= 0 are outside the array, so mark them occupied.
+    start_mask = 0
+    base = 1 - e
+    for b in range(width):
+        j = base + b
+        if j < 1 or j > n:
+            start_mask |= 1 << b
+
+    dp = [0] * states
+    dp[start_mask] = 1
+
+    for i in range(1, n + 1):
+        cur_allowed = allowed[i]
+        out_of_range = i + e + 1 > n
+
         ndp = [0] * states
-        forbidden = banned[i]
 
-        # The new rightmost position after this transition.
-        new_col = i + e + 1
-        new_col_is_virtual = new_col > n
-
-        for mask, value in enumerate(dp):
-            if value == 0:
+        for mask, ways in enumerate(dp):
+            if ways == 0:
                 continue
 
-            for bit, shifted in transitions[mask]:
-                if forbidden & bit:
+            choices = cur_allowed & ~mask
+
+            while choices:
+                bit = choices & -choices
+                choices -= bit
+
+                used = mask | bit
+
+                # The position leaving the window must already be used.
+                if (used & 1) == 0:
                     continue
 
-                nxt = shifted
-                if new_col_is_virtual:
-                    nxt |= top_bit
+                new_mask = used >> 1
 
-                x = ndp[nxt] + value
-                if x >= MOD:
-                    x -= MOD
-                ndp[nxt] = x
+                # Introduce position i+e+1.
+                if out_of_range:
+                    new_mask |= top_bit
+
+                ndp[new_mask] = (ndp[new_mask] + ways) % MOD
 
         dp = ndp
 
@@ -183,180 +197,93 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Giai đoạn đầu vào chuyển đổi mọi cặp bị cấm thành một bit bên trong cửa sổ cục bộ của hàng tương ứng. Các cặp bị cấm đã nằm ngoài giới hạn khoảng cách có thể bị bỏ qua vì dù sao thì chúng cũng không bao giờ có thể tham gia vào một trận đấu hợp lệ. 
+```các`bad`mảng lưu trữ các vị trí hàng thứ hai bị cấm dưới dạng bit cục bộ. Đối với cặp bị cấm ((u,v)), vị trí bit là (v-(u-e)), vì bit (0) của cửa sổ hàng (u) đại diện cho (u-e). Điều này giúp việc kiểm tra cạnh cấm diễn ra liên tục. 
 
-các`initial`mặt nạ xử lý ranh giới bên trái. Ví dụ: với (e=2), cửa sổ đầu tiên là ([-1,0,1,2,3]), do đó, hai vị trí đầu tiên là ảo và bắt đầu bằng tập bit của chúng. 
+các`allowed`mảng được tính toán trước để vòng lặp DP chính không lặp lại việc kiểm tra điều kiện khoảng cách hoặc tìm kiếm cấu trúc cặp cấm. Vì mỗi cửa sổ chứa tối đa chín vị trí nên việc xây dựng tất cả các mặt nạ này chỉ tốn (O(ne)). 
 
-Việc tính toán trước`transitions`mảng chứa phần cấu trúc của mọi chuyển đổi mặt nạ. Điều kiện duy nhất tùy thuộc vào hàng đầu vào hiện tại là liệu bit đã chọn có bị cấm hay không. Việc tách hai phần này sẽ tránh việc xây dựng lại nhiều lần các chuyển đổi mặt nạ giống nhau cho tất cả (n) hàng. 
+Mặt nạ ban đầu yêu cầu xử lý đặc biệt vì cửa sổ đầu tiên mở rộng đến các vị trí nhỏ hơn (1). Những vị trí như vậy không thể được chọn, do đó các bit của chúng bắt đầu bằng (1). Ý tưởng tương tự được sử dụng khi vị trí mới được nhập từ bên phải: một lần (i+e+1>n), bit mới được chèn vào là (1). 
 
-Séc`new_mask & 1`là điều kiện chính xác chính. Sau khi người lính hiện tại được ghép, cột ngoài cùng bên trái sắp biến mất. Nó nhất định đã bị chiếm đóng, nếu không thì không một người lính hàng đầu nào trong tương lai có thể tiếp cận được. 
+biểu thức`choices = cur_allowed & ~mask`cô lập mọi vị trí pháp lý chưa được sử dụng. Vòng lặp`bit = choices & -choices`trích xuất một ứng cử viên tại một thời điểm mà không cần quét lại tất cả chín bit. 
 
-Bit ngoài cùng bên phải mới chỉ được đặt khi vị trí mới lớn hơn (n). Vị trí như vậy nằm ngoài hàng thứ hai thực tế và không bao giờ được chọn, vì vậy việc đánh dấu vị trí đó bị chiếm giữ tương đương với việc loại bỏ nó khỏi vị trí xem xét. 
+Việc kiểm tra bit gửi đi phải diễn ra sau khi thêm đối tác mới được chọn. Nếu bit gửi đi bằng 0, người lính hiện tại không khớp được với vị trí hàng thứ hai sắp trở thành không thể truy cập được. Trạng thái như vậy không thể dẫn đến sự phù hợp hoàn toàn. 
 
-Số nguyên Python không bị tràn, nhưng tất cả các phép cộng DP vẫn bị giảm modulo (10^9+7). Việc triển khai sử dụng hai mảng một chiều, do đó bộ nhớ chỉ phụ thuộc vào số lượng mặt nạ chứ không phụ thuộc vào (n) lần số lượng mặt nạ. 
+Số nguyên Python không bị tràn, nhưng giá trị DP vẫn giảm modulo (10^9+7) sau mỗi lần cộng. Hai mảng được sử dụng thay vì giữ tất cả (n) lớp, vì chỉ cần lớp trước đó. 
 
 ## Ví dụ đã hoạt động 
 
-Đối với mẫu 1,```
+### Mẫu 1 
+
+Đầu vào là```
 2 1 0
-```có hai kết quả khớp hoàn chỉnh hợp lệ. Ở đây (e=1), vậy mỗi mặt nạ có ba bit. Cửa sổ đầu tiên là ([0,1,2]), trong đó vị trí (0) là ảo. 
+```Ở đây cửa sổ có ba vị trí. Đối với người lính đầu tiên, cửa sổ là (0,1,2), do đó vị trí (0) bắt đầu được chiếm giữ. Sau mỗi bước, các vị trí bên ngoài (1,2) cũng được đánh dấu đã chiếm dụng. 
 
-| Người lính hàng đầu | Mặt nạ hiện tại | Cột được chọn | Mặt nạ sau ca | Ý nghĩa | 
-| --- | --- | --- | --- | --- | 
-| 1 |`001`| 1 |`101`| cột 1 được sử dụng | 
-| 1 |`001`| 2 |`110`| cột 2 được sử dụng | 
-| 2 |`101`| 2 |`111`| cột 1 và 2 được sử dụng | 
-| 2 |`110`| 1 |`111`| cột 1 và 2 được sử dụng | 
+| Lính hàng đầu (i) | Mặt nạ hiện tại | Đối tác được chọn | Mặt nạ mới | 
+| --- | --- | --- | --- | 
+| 1 |`001`| 1 |`101`| 
+| 1 |`001`| 2 |`110`| 
+| 2 |`101`| 2 |`111`| 
+| 2 |`110`| 1 |`111`| 
 
-Hai nhánh tương ứng chính xác với hai hoán vị. Cả hai kết thúc ở mặt nạ`111`, vậy đáp án là (2). Dấu vết cũng giải thích tại sao các vị trí ảo phải bắt đầu như bị chiếm đóng và tại sao trạng thái cuối cùng là mặt nạ đầy đủ. 
+Hai đường dẫn tương ứng với (1\to1,2\to2) và (1\to2,2\to1). Cả hai đều kết thúc ở trạng thái tất cả, vì vậy câu trả lời là (2). 
 
-Đối với mẫu 2,```
+Dấu vết cho thấy tại sao mặt nạ phải bao gồm các vị trí bên ngoài mảng thực tế. Nếu không đánh dấu vị trí (0) và các vị trí ngoài (n) là đã được sử dụng, trạng thái cuối cùng sẽ không thể hiện chính xác rằng tất cả các vị trí thực ở hàng thứ hai đã được sử dụng. 
+
+### Mẫu 2 
+
+Đầu vào là```
 2 1 1
 1 2
-```cặp giữa vị trí hàng thứ nhất (1) và vị trí hàng thứ hai (2) bị cấm. 
+```Cặp (1\to2) bị cấm nên người lính đầu tiên chỉ có một lần chuyển tiếp hợp pháp. 
 
-| Người lính hàng đầu | Mặt nạ hiện tại | Ứng viên | Kết quả | 
-| --- | --- | --- | --- | 
-| 1 |`001`| cột 1 | được chấp nhận, mặt nạ tiếp theo`101`| 
-| 1 |`001`| cột 2 | bị từ chối bởi mặt nạ cấm | 
-| 2 |`101`| cột 2 | chấp nhận, mặt nạ cuối cùng`111`| 
+| Lính hàng đầu (i) | Mặt nạ hiện tại | Lựa chọn được phép | Đối tác được chọn | Mặt nạ mới | 
+| --- | --- | --- | --- | --- | 
+| 1 |`001`| 1 | 1 |`101`| 
+| 2 |`101`| 2 | 2 |`111`| 
 
-Chỉ có sự phù hợp về danh tính mới tồn tại. Câu trả lời là (1). Dấu vết này xác nhận rằng mặt nạ cặp cấm được áp dụng cho đối tác đã chọn trước khi thêm quá trình chuyển đổi DP. 
+Kết quả phù hợp duy nhất còn sót lại là (1\to1,2\to2), vì vậy câu trả lời là (1). 
+
+Dấu vết này chứng tỏ rằng các cặp bị cấm không yêu cầu kích thước DP mới. Họ chỉ cần loại bỏ một bit khỏi tập hợp các chuyển đổi có sẵn cho người lính ở hàng đầu tiên tương ứng. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | (O(n\cdot2^{2e+1}\cdot(2e+1)+k)) | Có (n) hàng, nhiều nhất (2^{2e+1}) mặt nạ và nhiều nhất (2e+1) lựa chọn đối tác cho mỗi mặt nạ | 
-| Không gian | (O(2^{2e+1}+n+k)) | Hai mảng DP, các chuyển tiếp được tính toán trước và mặt nạ bị cấm | 
+| Thời gian | (O(n(2e+1)2^{2e+1}+k)) | Có (n) lớp, nhiều nhất (2^{2e+1}) mặt nạ trên mỗi lớp và nhiều nhất (2e+1) đối tác ứng cử viên trên mỗi mặt nạ. | 
+| Không gian | (O(2^{2e+1}+n+k)) | Hai mảng DP giữ các trạng thái, trong khi mặt nạ bị cấm và được phép yêu cầu lưu trữ tuyến tính. | 
 
-Vì (e\le4) nên số lượng mặt nạ nhiều nhất là (2^9=512) và mỗi trạng thái có nhiều nhất (9) chuyển đổi ứng cử viên. Với (n\le2000), DP chỉ thực hiện vài triệu thao tác trạng thái nhỏ, trong khi đầu vào bị cấm chỉ đóng góp (O(k)) công việc tiền xử lý. Việc sử dụng bộ nhớ cũng rất nhỏ so với giới hạn 256 MB. 
+Với (e\le4), DP có nhiều nhất (2^9=512) trạng thái và nhiều nhất là chín lần chuyển đổi cho mỗi trạng thái. Đối với (n=2000), giới hạn chính là khoảng (2000\cdot512\cdot9), khoảng (9,2) triệu lần chuyển đổi trạng thái, phù hợp với các ràng buộc dự kiến. Việc sử dụng bộ nhớ nhỏ vì chỉ giữ lại hai lớp không gian trạng thái có kích thước không đổi. 
 
-## Trường hợp thử nghiệm```python
-# This test harness assumes solve_data is the same algorithm as the
-# solve() function above, but accepts a string and returns the answer.
+## Trường hợp thử nghiệm 
 
-import io
+Bộ khai thác thử nghiệm sau đây sử dụng cùng một`solve`thực hiện đúng như chương trình đã đệ trình. Trường hợp kích thước tối đa có chủ ý sử dụng (e=0), trong đó câu trả lời được xác định ngay lập tức bằng kết quả khớp duy nhất có thể, do đó, nó cũng kiểm tra xem việc triển khai có xử lý được không (n=2000).```python
 import sys
+import io
 
 MOD = 1_000_000_007
 
-def solve_data(data: str) -> str:
-    it = iter(data.split())
-    n = int(next(it))
-    e = int(next(it))
-    k = int(next(it))
+def solve():
+    input = sys.stdin.readline
+
+    n, e, k = map(int, input().split())
+
+    bad = [0] * (n + 1)
+
+    for _ in range(k):
+        u, v = map(int, input().split())
+        d = v - (u - e)
+        if 0 <= d <= 2 * e:
+            bad[u] |= 1 << d
 
     width = 2 * e + 1
     states = 1 << width
-    full = states - 1
     top_bit = 1 << (width - 1)
+    full = states - 1
 
-    banned = [0] * (n + 1)
-
-    for _ in range(k):
-        u = int(next(it))
-        v = int(next(it))
-        if abs(u - v) <= e:
-            bit = v - (u - e)
-            if 0 <= bit < width:
-                banned[u] |= 1 << bit
-
-    initial = 0
-    for bit in range(width):
-        col = 1 - e + bit
-        if col < 1 or col > n:
-            initial |= 1 << bit
-
-    transitions = [[] for _ in range(states)]
-
-    for mask in range(states):
-        free = full ^ mask
-        while free:
-            bit = free & -free
-            free -= bit
-            new_mask = mask | bit
-            if new_mask & 1:
-                transitions[mask].append((bit, new_mask >> 1))
-
-    dp = [0] * states
-    dp[initial] = 1
+    allowed = [0] * (n + 1)
 
     for i in range(1, n + 1):
-        ndp = [0] * states
-        forbidden = banned[i]
-        virtual_right = i + e + 1 > n
-
-        for mask, value in enumerate(dp):
-            if value == 0:
-                continue
-
-            for bit, shifted in transitions[mask]:
-                if forbidden & bit:
-                    continue
-
-                nxt = shifted
-                if virtual_right:
-                    nxt |= top_bit
-
-                ndp[nxt] = (ndp[nxt] + value) % MOD
-
-        dp = ndp
-
-    return str(dp[full])
-
-# Provided sample 1
-assert solve_data("2 1 0\n") == "2", "sample 1"
-
-# Provided sample 2
-assert solve_data("2 1 1\n1 2\n") == "1", "sample 2"
-
-# Minimum size, only possible matching.
-assert solve_data("1 0 0\n") == "1", "minimum size"
-
-# Minimum size with its only pair forbidden.
-assert solve_data("1 0 1\n1 1\n") == "0", "forbidden only pair"
-
-# e = 0 means only the identity matching exists.
-assert solve_data("5 0 0\n") == "1", "zero distance"
-
-# e = 1, n = 3 gives identity, swap (1,2), or swap (2,3).
-assert solve_data("3 1 0\n") == "3", "boundary window"
-
-# Removing the (1,2) matching leaves two possibilities.
-assert solve_data("3 1 1\n1 2\n") == "2", "forbidden boundary edge"
-
-# For n = e + 1, every pair is allowed, so all 3! permutations work.
-assert solve_data("3 2 0\n") == "6", "all positions allowed"
-
-# Maximum n with the smallest state space.
-assert solve_data("2000 0 0\n") == "1", "maximum n"
-```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
-| --- | --- | --- | 
-|`1 0 0`|`1`| Phiên bản có kích thước tối thiểu và trường hợp nhận dạng (e=0) | 
-|`1 0 1\n1 1`|`0`| Một cặp bị cấm có thể loại bỏ cặp trùng khớp duy nhất | 
-|`5 0 0`|`1`| Điều kiện biên khoảng cách bằng không | 
-|`3 1 0`|`3`| Ranh giới cửa sổ di chuyển và một số hoán vị hợp lệ | 
-|`3 1 1\n1 2`|`2`| Cặp cấm ở rìa cửa sổ được phép | 
-|`3 2 0`|`6`| Mọi vị trí ở hàng thứ hai đều có thể truy cập được | 
-|`2000 0 0`|`1`| Tối đa (n) với không gian trạng thái nhỏ nhất có thể | 
-
-## Vỏ cạnh 
-
-Khi (e=0), mọi binh sĩ hàng đầu chỉ có thể sử dụng binh sĩ hàng thứ hai có cùng chỉ số. Vì```
-1 0 1
-1 1
-```mặt nạ ban đầu là`0`. Bit ứng cử viên duy nhất tương ứng với cột (1), nhưng mặt nạ bị cấm chứa bit đó, do đó không có chuyển đổi và giá trị DP mặt nạ đầy đủ cuối cùng là (0). Nếu không kiểm tra mặt nạ bị cấm trong quá trình chuyển đổi, thuật toán sẽ trả về sai (1). 
-
-Ở ranh giới bên trái, các vị trí không tồn tại phải được coi là bị chiếm dụng. Coi như```
-2 1 0
-```Cửa sổ ban đầu là ([0,1,2]), vì vậy mặt nạ ban đầu của nó là`001`. Người lính đầu tiên có thể chọn cột (1) hoặc cột (2). Sau một trong hai lựa chọn, cột ảo đi (0) đã được sử dụng nên trạng thái có thể di chuyển sang phải một cách an toàn. Điều này ngăn không cho cột không tồn tại (0) bị vô tình chọn. 
-
-Tại ranh giới bên phải, vị trí mới đi vào cửa sổ cuối cùng sẽ lớn hơn (n). Trong ví dụ tương tự, sau khi xử lý người lính đầu tiên, vị trí mới là (3), vị trí này không tồn tại. Bit của nó được thiết lập ngay lập tức. Khi người lính thứ hai được xử lý, vị trí ảo đó không thể được chọn, trong khi cột thực còn lại vẫn có thể được chọn. Do đó, cả hai kết quả khớp hợp lệ đều đạt được mặt nạ đầy đủ. 
-
-Một cặp bị cấm chỉ có thể loại bỏ một nhánh của trạng thái hợp lệ. Vì```
-2 1 1
-1 2
-```người lính đầu tiên có thể có hai cột trước khi xem xét hạn chế rõ ràng. Việc chuyển sang cột (2) bị xóa, chỉ còn lại cột (1). Người lính thứ hai sau đó buộc phải sử dụng cột (2), đưa ra chính xác một kết quả khớp hoàn chỉnh. 
-
-Trạng thái cuối cùng phải là mặt nạ đầy đủ chứ không phải là mặt nạ sống sót tùy ý. Mỗi cột thực phải được xác nhận đã được sử dụng trước khi nó rời khỏi cửa sổ, trong khi các vị trí ngoài (n) được chèn rõ ràng là đã được sử dụng. Do đó, sau ca cuối cùng, tất cả các vị trí (2e+1) trong cửa sổ cuối cùng đều bị chiếm giữ. Đối với Mẫu 1, trạng thái cuối cùng là`111`và giá trị DP của nó chính xác là số lượng khớp hoàn chỉnh.
+        mask = 0
+        base = i - e
+        for b in range(width):
+            j
+```
