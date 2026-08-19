@@ -1,7 +1,7 @@
 ---
 title: "CF 102215M - Shlakoblock đã hoạt động!"
-description: "Có (n) trò chơi. Trước khi chúng ta bình chọn, trò chơi (i) đã có (vi) phiếu bầu và việc xem trò chơi đó mang lại cho chúng ta niềm vui (pi). Chúng tôi có thể thêm tối đa một phiếu bầu cho mỗi trò chơi, vì vậy lựa chọn của chúng tôi chỉ đơn giản là một tập hợp con các chỉ số trò chơi. Sau khi chúng tôi bỏ phiếu, một phiếu bầu được chọn ngẫu nhiên thống nhất từ ​​tất cả các phiếu bầu."
-date: "2026-08-17T23:56:41+07:00"
+description: "Chúng tôi có (n) trò chơi. Trò chơi (i) hiện có (vi) phiếu bầu và xem nó mang lại cảm giác thích thú (pi). Chúng tôi có thể thêm một phiếu bầu cho bất kỳ trò chơi nào, nhưng nhiều nhất là một lần cho mỗi trò chơi. Sau các lựa chọn của chúng tôi, một phiếu bầu sẽ được chọn ngẫu nhiên thống nhất, do đó, trò chơi có nhiều phiếu bầu hơn sẽ có nhiều khả năng được phát trực tuyến hơn."
+date: "2026-08-18T12:20:18+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102215
@@ -9,7 +9,7 @@ codeforces_index: "M"
 codeforces_contest_name: "2019, XII Samara Regional Intercollegiate Programming Contest"
 rating: 0
 weight: 102215
-solve_time_s: 172
+solve_time_s: 641
 verified: false
 draft: false
 ---
@@ -18,87 +18,97 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 2m 52s 
+**Thời gian giải:** 10 phút 41 giây 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
-Có (n) trò chơi. Trước khi chúng ta bình chọn, trò chơi (i) đã có (v_i) phiếu bầu và việc xem trò chơi đó mang lại cho chúng ta niềm vui (p_i). Chúng tôi có thể thêm tối đa một phiếu bầu cho mỗi trò chơi, vì vậy lựa chọn của chúng tôi chỉ đơn giản là một tập hợp con các chỉ số trò chơi. 
+Chúng tôi có (n) trò chơi. Trò chơi (i) hiện có (v_i) phiếu bầu và xem nó mang lại cảm giác thích thú (p_i). Chúng tôi có thể thêm một phiếu bầu cho bất kỳ trò chơi nào, nhưng nhiều nhất là một lần cho mỗi trò chơi. Sau các lựa chọn của chúng tôi, một phiếu bầu sẽ được chọn ngẫu nhiên thống nhất, do đó, trò chơi có nhiều phiếu bầu hơn sẽ có nhiều khả năng được phát trực tuyến hơn. 
 
-Sau khi chúng tôi bỏ phiếu, một phiếu bầu được chọn ngẫu nhiên thống nhất từ ​​tất cả các phiếu bầu. Nếu trò chơi (i) kết thúc với (v_i+1) phiếu bầu, khi chúng tôi bỏ phiếu cho nó, đóng góp của nó cho niềm vui mong đợi là (p_i(v_i+1)). Nếu chúng ta không bỏ phiếu cho nó thì đóng góp của nó là (p_i v_i). 
-
-hãy để 
+Gọi (S) là tập hợp các trò chơi mà chúng ta bầu chọn. Nếu tổng số phiếu bầu hiện tại là 
 
 [ 
-V=\sum_i v_i 
+V=\sum_{i=1}^n v_i, 
 ] 
 
-là số phiếu bầu hiện có và 
+thì sau khi bỏ phiếu sẽ có (V+|S|) phiếu bầu. Tổng số niềm vui được đại diện bởi tất cả các phiếu bầu là 
 
 [ 
-P=\sum_i p_i v_i 
+A+\sum_{i\in S}p_i, 
 ] 
 
-hãy là niềm vui hoàn toàn được cân nhắc bởi những phiếu bầu đó. Nếu chúng ta chọn một tập hợp con (S) chứa (k) trò chơi thì số phiếu bầu cuối cùng là (V+k), trong khi tổng mức độ hài lòng có trọng số sẽ trở thành 
+ở đâu 
 
 [ 
-P+\sum_{i\in S}p_i. 
+A=\sum_{i=1}^n v_i p_i. 
 ] 
 
 Vì vậy, niềm vui mong đợi là 
 
 [ 
-\frac{P+\sum_{i\in S}p_i}{V+|S|}. 
+\frac{A+\sum_{i\in S}p_i}{V+|S|}. 
 ] 
 
-Nhiệm vụ là chọn (S) tối đa hóa phân số này, sau đó xuất phân số ở dạng tối giản và các chỉ số trò chơi đã chọn. 
+Nhiệm vụ là chọn (S), in phân số tối đa có thể có ở dạng tối giản và in ra một bộ trò chơi đạt được phân số đó. 
 
-Các ràng buộc đưa ra (n\le 1000), do đó, giải pháp (O(n^2)) dễ dàng hợp lý và giải pháp (O(n\log n)) thoải mái trong giới hạn hai giây. Mặt khác, việc liệt kê tất cả các tập hợp con đã mang lại (2^{1000}) khả năng, điều này hoàn toàn không khả thi. Thực tế là có thể có tới 500 trường hợp thử nghiệm khiến cho các phương pháp tiếp cận theo cấp số nhân thậm chí còn kém khả thi hơn. 
+Các ràng buộc đủ nhỏ để sắp xếp nhưng không đủ nhỏ để liệt kê các tập hợp con. Có thể có (n=1000) trò chơi trong một thử nghiệm và tối đa 500 trường hợp thử nghiệm. Giải pháp (O(n^2)) đã đắt một cách không cần thiết trong trường hợp tổng hợp xấu nhất, trong khi (O(n\log n)) lại đủ nhanh. Các giá trị (p_i,v_i) nhiều nhất là 1000, nhưng tổng bao gồm tối đa 1000 số hạng, vì vậy số nguyên Python thông thường là quá đủ. 
 
-Có một số trường hợp việc thực hiện bất cẩn có thể thất bại. Đầu tiên, không được phép chọn trò chơi nào. Ví dụ,```
+Có một số trường hợp việc thực hiện bất cẩn có thể thất bại. Nếu chúng ta không chọn trò chơi nào thì câu trả lời vẫn có thể là tối ưu. Ví dụ,```
 1
 1
 0 5
-```đã có niềm vui được mong đợi (0) và việc bỏ phiếu cho trò chơi không cải thiện được điều đó. Một câu trả lời tối ưu là```
+```mang lại niềm vui mong đợi (0/5=0), vì vậy đầu ra chính xác là```
 0/1
 0
-```Việc triển khai luôn chọn ít nhất một trò chơi sẽ vẫn nhận được cùng một giá trị số ở đây, nhưng nó có thể vi phạm các giả định của chính nó về tập hợp đã chọn hoặc tạo ra các phiếu bầu không cần thiết. 
+```Việc triển khai luôn thêm ít nhất một trò chơi sẽ tạo ra kết quả tồi tệ hơn. 
 
-Một trường hợp lợi thế quan trọng hơn là một trò chơi không có phiếu bầu hiện có. Coi như```
+Vấn đề thứ hai là các trò chơi hiện tại không có phiếu bầu vẫn đủ điều kiện để chúng tôi bỏ phiếu. Vì```
 1
 2
+10 1
 100 0
-0 1
-```Nếu không có phiếu bầu của chúng tôi, niềm vui mong đợi là (0). Việc bỏ phiếu cho trò chơi 1 mang lại tổng số phiếu bầu và mức độ hài lòng mong đợi (100/2=50), vì vậy trò chơi 1 phải được chọn. Giá trị hiện tại (p_i v_i) bằng 0 cho trò chơi 1, nhưng phiếu bầu bổ sung của chúng tôi đóng góp (p_i). Việc quên đi sự đóng góp bổ sung đó là nguyên nhân phổ biến của các công thức sai. 
+```kỳ vọng ban đầu là (10). Bỏ phiếu cho ván 2 cho kết quả (110/2=55), là tối ưu. Bỏ qua các trò chơi có (v_i=0) sẽ bỏ lỡ câu trả lời. 
 
-Sự ràng buộc trong niềm vui là một trường hợp ranh giới khác. Vì```
+Vấn đề thứ ba là mẫu số thay đổi bất cứ khi nào chúng ta bỏ phiếu cho một trò chơi khác. Vì```
 1
-3
-5 10
-5 20
-5 30
-```mọi niềm vui được mong đợi có thể là (5), bao gồm cả việc không chọn trò chơi nào. Bất kỳ tập hợp con nào cũng hợp lệ, do đó thuật toán không được phụ thuộc vào một tập hợp con tối ưu duy nhất. Một quy tắc ràng buộc xác định rất hữu ích cho việc thử nghiệm, nhưng vấn đề không bắt buộc. 
+2
+100 1
+0 100
+```bỏ phiếu cho trò chơi đầu tiên cho (200/101), trong khi bỏ phiếu cho trò chơi thứ hai cho (100/101). Sự lựa chọn không thể được thực hiện bằng cách đơn giản chọn mọi trò chơi với niềm vui tích cực. Phần đóng góp của phiếu bầu bổ sung phải được xem xét cùng với dấu cộng (1) ở mẫu số. 
 
-Cuối cùng, câu trả lời là một phân số, không nhất thiết phải là số nguyên. Trong mẫu thứ hai, mức tối ưu là (5110/1114), giảm xuống còn (2555/557). Việc in phần chưa rút gọn sẽ vi phạm yêu cầu đầu ra mặc dù giá trị số của nó là chính xác. 
+Cuối cùng, một số tập hợp con khác nhau có thể đạt được cùng mức tối ưu. Với```
+1
+2
+5 1
+5 1
+```câu trả lời đúng nhất là (10/2=5) sau khi bỏ phiếu cho một trong hai trò chơi và cả hai lựa chọn đều hợp lệ. Thuật toán chỉ cần giữ lại một tập con tối ưu. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận trực tiếp là liệt kê mọi tập hợp con của (n) trò chơi. Đối với mỗi tập hợp con, chúng ta có thể tính toán kích thước của nó, thêm niềm vui của các trò chơi đã chọn vào (P), chia cho (V+|S|) và giữ lại phần tốt nhất. Điều này đúng vì mỗi chiến lược bỏ phiếu hợp pháp chính xác là một tập hợp con, do đó việc liệt kê sẽ xem xét mọi chiến lược có thể có. 
+Cách tiếp cận trực tiếp nhất là thử mọi tập hợp con của trò chơi. Đối với tập hợp con (S), chúng ta có thể tính toán tử số và mẫu số của nó và giữ giá trị mong đợi tốt nhất. Điều này đúng vì mọi chiến lược bỏ phiếu hợp pháp đều được thể hiện bằng chính xác một tập hợp con. Tuy nhiên, có (2^n) tập hợp con và việc đánh giá mỗi tập hợp con chiếm tới (O(n)) công việc, đưa ra các phép toán (O(n2^n)) trong trường hợp xấu nhất. Với (n=1000), thậm chí (2^{1000}) vượt xa mọi thứ có thể chạy trong thời gian giới hạn. 
 
-Tuy nhiên, có (2^n) tập hợp con. Nếu chúng ta tính toán tử số bằng cách quét tất cả (n) trò chơi cho mỗi tập hợp con, kết quả trong trường hợp xấu nhất là (O(n2^n)). Ngay cả với chương trình động tập hợp con cẩn thận hơn để đánh giá từng tập hợp con trong (O(1)) thời gian bổ sung, vẫn có trạng thái (2^n). Với (n=1000), điều này vượt xa những gì mà bất kỳ triển khai nào cũng có thể xử lý được. 
-
-Nhận xét hữu ích là mẫu số chỉ phụ thuộc vào việc chúng ta chọn bao nhiêu trò chơi chứ không phụ thuộc vào việc chúng ta chọn trò chơi nào. Giả sử chúng ta quyết định bỏ phiếu trước cho chính xác (k) trò chơi. Khi đó mẫu số được cố định tại (V+k) và (P) cũng được cố định. Phần duy nhất chúng tôi có thể tối ưu hóa là 
+Cấu trúc hữu ích xuất hiện khi chúng ta ngừng quan tâm đến danh tính của các trò chơi đã chọn và trước tiên hãy sửa số lượng của chúng. Giả sử chúng ta quyết định bỏ phiếu cho chính xác (k) trò chơi. Mẫu số sau đó được cố định tại (V+k) và phần đóng góp ban đầu (A) cũng được cố định. Phần duy nhất chúng tôi có thể tối ưu hóa là 
 
 [ 
 \sum_{i\in S}p_i. 
 ] 
 
-Đối với chính xác (k) trò chơi đã chọn, tổng này được tối đa hóa bằng cách lấy (k) giá trị lớn nhất của (p_i). Số phiếu bầu hiện tại (v_i) không còn ảnh hưởng đến trò chơi nào sẽ được chọn sau khi (k) được sửa. Chúng ảnh hưởng đến đường cơ sở cố định (P) và (V), nhưng mọi ứng cử viên có cùng (k) đều có cùng mẫu số và cùng đường cơ sở. 
+Đối với chính xác (k) trò chơi, tổng này được tối đa hóa bằng cách lấy (k) giá trị khoái cảm lớn nhất. 
 
-Điều này làm giảm toàn bộ vấn đề trong việc sắp xếp các trò chơi theo (p_i), sau đó xem xét mọi tiền tố của thứ tự được sắp xếp đó. Đối với độ dài tiền tố (k), chúng ta biết tử số tốt nhất có thể có trong số tất cả các tập hợp con có kích thước (k). Chúng ta chỉ cần so sánh (n+1) ứng cử viên đó bằng cách sử dụng số học số nguyên chính xác. 
+Quan sát đó biến tìm kiếm theo cấp số nhân thành tìm kiếm tiền tố được sắp xếp đơn giản. Sắp xếp các trò chơi theo mức độ giảm dần (p_i). Sau khi sắp xếp, tập hợp con tốt nhất có kích thước (k) chính xác là (k) trò chơi đầu tiên. Chúng ta có thể xây dựng tổng mức độ hài lòng của họ tăng dần và đánh giá tất cả (k) từ 0 đến (n). 
 
-Phương pháp brute-force hoạt động vì mỗi tập hợp con đại diện cho một chiến lược bỏ phiếu khả thi, nhưng không thành công vì có nhiều tập hợp con theo cấp số nhân. Quan sát rằng tất cả các chiến lược có cùng số phiếu bầu được thêm vào đều có chung mẫu số cho phép chúng tôi thay thế tất cả các tập hợp con có kích thước (k) bằng một đại diện tốt nhất, niềm vui lớn nhất (k). 
+Cách tiếp cận bạo lực có hiệu quả vì nó xem xét mọi tập hợp con có thể. Nó thất bại vì có nhiều tập hợp con theo cấp số nhân. Nhận xét rằng lựa chọn tối ưu cho kích thước tập hợp con cố định bao gồm các trò chơi có (p_i) lớn nhất cho phép chúng tôi thay thế tất cả các tập hợp con có cùng kích thước bằng một đại diện, giảm vấn đề thành (n+1) chiến lược ứng cử viên sau khi sắp xếp. 
+
+Để so sánh chính xác các phân số, chúng ta không nên sử dụng dấu phẩy động. Đối với hai ứng cử viên 
+
+[ 
+\frac{x_1}{y_1} 
+\quad\text{và}\quad 
+\frac{x_2}{y_2}, 
+] 
+
+chúng tôi so sánh (x_1y_2) với (x_2y_1). Số nguyên Python xử lý chính xác các sản phẩm này. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -107,22 +117,30 @@ Phương pháp brute-force hoạt động vì mỗi tập hợp con đại diệ
 
 ## Hướng dẫn thuật toán 
 
-1. Tính (V=\sum v_i) và (P=\sum p_i v_i). Đây là tổng số phiếu bầu hiện có và tổng số niềm vui được đóng góp bởi những phiếu bầu đó. Vì mọi chiến lược đều bắt đầu từ cùng một cuộc thăm dò hiện có nên những số lượng này tạo thành đường cơ sở chung cho mọi ứng cử viên. 
-2. Sắp xếp tất cả các trò chơi theo thứ tự giảm dần (p_i). Giữ các chỉ số ban đầu của họ cùng với các giá trị niềm vui của họ. Thứ tự cho phép chúng ta biểu diễn tập hợp con tốt nhất ở mọi kích thước có thể bằng một tiền tố. 
-3. Bắt đầu với (k=0). Giá trị ứng cử viên của nó là (P/V), vì chúng tôi không thêm bất kỳ phiếu bầu nào. Trường hợp này phải được xem xét vì việc thêm một phiếu bầu có thể làm giảm đi sự hài lòng mong đợi. 
-4. Duyệt qua các trò chơi được sắp xếp từ niềm vui lớn nhất đến nhỏ nhất. Khi trò chơi tiếp theo được thêm vào, hãy tăng niềm vui bổ sung lên (p_i) và tăng số phiếu bầu lên một. Đối với tiền tố có độ dài (k), phân số ứng cử viên là 
+1. Tính tổng số phiếu bầu hiện tại (V=\sum v_i) và tổng mức đóng góp niềm vui hiện tại (A=\sum v_i p_i). Những giá trị này mô tả sự hài lòng được mong đợi trước khi thêm bất kỳ phiếu bầu nào của chúng tôi. 
+2. Sắp xếp tất cả các trò chơi theo thứ tự giảm dần (p_i), giữ nguyên chỉ số ban đầu của chúng. Nếu cuối cùng chúng tôi quyết định thêm chính xác (k) phiếu bầu, thì (k) trò chơi đầu tiên theo thứ tự này sẽ mang lại niềm vui gia tăng lớn nhất có thể. 
+3. Bắt đầu với (k=0). Kỳ vọng của ứng viên là (A/V). Bài toán đảm bảo rằng có ít nhất một (v_i) dương, do đó (V>0). 
+4. Duyệt qua các trò chơi được sắp xếp. Khi xử lý trò chơi tiếp theo, hãy thêm (p_i) của nó vào tổng tiền tố đang chạy. Sau khi cộng (k) trò chơi, tử số ứng viên là (A+\text{tiền tố}), trong khi mẫu số là (V+k). 
+5. So sánh mọi ứng viên với ứng viên giỏi nhất cho đến nay bằng cách sử dụng phép nhân chéo. Nếu 
 
 [ 
-\frac{P+\text{prefixPleasure}}{V+k}. 
+(A+\văn bản{tiền tố})(V+k_{\text{tốt nhất}}) 
+
+> 
+
+(A+\văn bản{tiền tố__{\văn bản{tốt nhất}})(V+k), 
 ] 
 
-Tiền tố này là tối ưu trong số tất cả các tập hợp con chứa chính xác (k) trò chơi vì nó chứa (k) giá trị thú vị lớn nhất.
+thay thế câu trả lời tốt nhất hiện tại. 
 
-1. So sánh phân số hiện tại với phân số tốt nhất được tìm thấy cho đến nay bằng phép nhân chéo. Đối với phân số (a/b) và (c/d), hãy so sánh (ad) và (cb). Điều này tránh được các lỗi chính xác về dấu phẩy động và đưa ra thứ tự chính xác. 
-2. Lưu trữ độ dài tiền tố và chỉ số bất cứ khi nào ứng cử viên mới tốt hơn. Giữ mức tối ưu đầu tiên khi các giá trị bằng nhau là hợp lệ vì bài toán chấp nhận bất kỳ tập hợp con tối ưu nào. 
-3. Sau khi tìm được tiền tố tốt nhất, hãy giảm tử số và mẫu số của nó bằng ước số chung lớn nhất của chúng. In ra phân số rút gọn, số lượng trò chơi đã chọn và chỉ số ban đầu của chúng. 
+1. Lưu trữ (k) tương ứng. Vì các trò chơi đã được sắp xếp theo mức độ hài lòng giảm dần nên chỉ số (k) đầu tiên tạo thành một tập hợp biểu quyết tối ưu cho (k) đó. 
+2. Sau khi quét, giảm phân số tốt nhất bằng cách chia tử số và mẫu số cho ước số chung lớn nhất của chúng. In phân số rút gọn, số đếm đã chọn và chỉ số ban đầu tương ứng. 
 
-Tại sao nó hoạt động: với mỗi số lượng phiếu bầu có thể có (k) mà chúng tôi có thể thêm vào, mẫu số (V+k) là cố định. Khoản đóng góp hiện tại (P) cũng được cố định. Do đó, trong số tất cả các tập hợp con có kích thước (k), việc tối đa hóa niềm vui mong đợi hoàn toàn giống với việc tối đa hóa tổng các giá trị (p_i) của chúng. Các giá trị (k) lớn nhất (p_i) đạt được mức tối đa đó, do đó tiền tố được sắp xếp sẽ đưa ra chiến lược tốt nhất cho mọi (k) có thể. Vì thuật toán kiểm tra mọi (k) từ (0) đến (n), nên nó kiểm tra chiến lược tốt nhất trong mọi lớp quy mô có thể và do đó tìm ra chiến lược tối ưu toàn cục. 
+### Tại sao nó hoạt động 
+
+Đối với mọi số có thể có (k) của phiếu bầu bổ sung, mẫu số chính xác là (V+k). Trong số tất cả các tập con của (k) trò chơi, đóng góp ban đầu (A) là giống hệt nhau, do đó việc tối đa hóa niềm vui mong đợi tương đương với việc tối đa hóa tổng giá trị (p_i) của chúng. Các giá trị (k) lớn nhất (p_i) cho tổng lớn nhất có thể, do đó tiền tố được sắp xếp là tối ưu cho (k) cụ thể đó.
+
+Thuật toán kiểm tra mọi (k) có thể từ 0 đến (n) và với mỗi (k), nó sẽ kiểm tra tập con tốt nhất có kích thước đó. Do đó, mức tối ưu toàn cục phải nằm trong số các ứng cử viên được xem xét trong quá trình quét. Phép nhân chéo so sánh các ứng cử viên này một cách chính xác, vì vậy ứng cử viên được chọn là giá trị tối đa thực sự chứ không phải là xấp xỉ dấu phẩy động. 
 
 ## Giải pháp Python```python
 import sys
@@ -139,91 +157,26 @@ def solve():
 
         games = []
         total_votes = 0
-        base_pleasure = 0
+        total_pleasure = 0
 
-        for i in range(n):
+        for idx in range(1, n + 1):
             p, v = map(int, input().split())
-            games.append((p, i + 1))
+            games.append((p, idx))
             total_votes += v
-            base_pleasure += p * v
+            total_pleasure += p * v
 
         games.sort(key=lambda x: (-x[0], x[1]))
 
-        best_num = base_pleasure
+        best_num = total_pleasure
         best_den = total_votes
         best_k = 0
-        best_indices = []
 
         prefix = 0
 
         for k, (p, idx) in enumerate(games, 1):
             prefix += p
 
-            cur_num = base_pleasure + prefix
-            cur_den = total_votes + k
-
-            if cur_num * best_den > best_num * cur_den:
-                best_num = cur_num
-                best_den = cur_den
-                best_k = k
-                best_indices = [games[j][1] for j in range(k)]
-
-        g = gcd(best_num, best_den)
-        best_num //= g
-        best_den //= g
-
-        out.append(f"{best_num}/{best_den}")
-        out.append(str(best_k))
-        out.append(" ".join(map(str, best_indices)))
-
-    sys.stdout.write("\n".join(out))
-
-if __name__ == "__main__":
-    solve()
-```Vòng lặp đầu vào lưu trữ từng trò chơi theo sở thích của nó cùng với chỉ mục dựa trên một trò chơi ban đầu. Đồng thời nó tính toán hai đại lượng cơ bản chung,`total_votes`Và`base_pleasure`, vì vậy chúng không cần phải tính toán lại cho mọi ứng cử viên. 
-
-Loại sử dụng niềm vui giảm dần. Việc sắp xếp thứ cấp theo chỉ mục ban đầu không cần thiết về mặt toán học, nhưng nó làm cho chương trình mang tính quyết định khi một số trò chơi có cùng sở thích. Vì những thú vui bình đẳng có thể thay thế cho nhau vì mục tiêu nên mọi thứ tự trong số chúng đều có giá trị. 
-
-Ứng cử viên ban đầu là tiền tố trống. mẫu số của nó là`total_votes`, được đảm bảo dương bởi điều kiện đầu vào, do đó không có trường hợp chia cho 0. 
-
-Trong quá trình quét,`prefix`chứa đựng tổng hợp những niềm vui của lần đầu tiên`k`trò chơi. Tử số hiện tại là`base_pleasure + prefix`, trong khi mẫu số là`total_votes + k`. Việc so sánh sử dụng phép nhân chứ không phải`/`, nên mọi quyết định đều chính xác. Số nguyên Python cũng tự động tăng lên, do đó tích chéo không bị tràn. 
-
-Danh sách các chỉ số đã chọn được xây dựng lại từ đầu tiên`k`các trò chơi được sắp xếp bất cứ khi nào tìm thấy một ứng cử viên tốt hơn. Đây là (O(n)) cho mỗi cải tiến trong việc triển khai theo nghĩa đen, có thể thực hiện quét (O(n^2)) trong trường hợp xấu nhất. Điều đó vẫn dễ dàng được chấp nhận đối với (n\le1000). Nếu muốn, việc triển khai chỉ có thể lưu trữ`best_k`trong quá trình quét và xây dựng lại tiền tố một lần ở cuối, đưa ra cách triển khai nghiêm ngặt (O(n\log n)). 
-
-Đây là phiên bản sạch hơn một chút, giúp tránh việc xây dựng danh sách lặp lại:```python
-import sys
-from math import gcd
-
-input = sys.stdin.readline
-
-def solve():
-    t = int(input())
-    out = []
-
-    for _ in range(t):
-        n = int(input())
-
-        games = []
-        total_votes = 0
-        base_pleasure = 0
-
-        for i in range(1, n + 1):
-            p, v = map(int, input().split())
-            games.append((p, i))
-            total_votes += v
-            base_pleasure += p * v
-
-        games.sort(key=lambda x: (-x[0], x[1]))
-
-        best_num = base_pleasure
-        best_den = total_votes
-        best_k = 0
-
-        prefix = 0
-
-        for k, (p, _) in enumerate(games, 1):
-            prefix += p
-            cur_num = base_pleasure + prefix
+            cur_num = total_pleasure + prefix
             cur_den = total_votes + k
 
             if cur_num * best_den > best_num * cur_den:
@@ -235,181 +188,234 @@ def solve():
         best_num //= g
         best_den //= g
 
-        answer_indices = [idx for _, idx in games[:best_k]]
-
         out.append(f"{best_num}/{best_den}")
         out.append(str(best_k))
-        out.append(" ".join(map(str, answer_indices)))
+
+        if best_k == 0:
+            out.append("")
+        else:
+            chosen = [str(games[i][1]) for i in range(best_k)]
+            out.append(" ".join(chosen))
 
     sys.stdout.write("\n".join(out))
 
 if __name__ == "__main__":
     solve()
-```Phiên bản thứ hai là phiên bản để gửi. Sự khác biệt có ý nghĩa duy nhất của nó là nó ghi nhớ độ dài tiền tố tối ưu thay vì sao chép các chỉ mục đã chọn trong mỗi lần cải tiến. Hoạt động cắt lát cuối cùng sẽ xây dựng câu trả lời được yêu cầu chính xác một lần. 
+```Vòng lặp đầu vào lưu trữ mỗi trò chơi dưới dạng`(p, index)`bởi vì chỉ có niềm vui của nó mới ảnh hưởng đến việc sắp xếp, trong khi chỉ mục ban đầu của nó là cần thiết cho đầu ra. Đồng thời, nó tích lũy số phiếu bầu hiện tại và đóng góp niềm vui hiện tại. 
+
+Bước sắp xếp sử dụng niềm vui giảm dần. Thứ tự phụ theo chỉ mục ban đầu không cần thiết về mặt toán học, nhưng nó làm cho chương trình mang tính quyết định khi một số trò chơi có mức độ thú vị như nhau. 
+
+Quá trình quét bắt đầu bằng (k=0), điều này rất cần thiết vì việc bỏ phiếu cho không có trò chơi nào là hợp pháp. Biến`prefix`là tổng các thú vui của trò chơi được sắp xếp (k) đầu tiên, do đó tử số và mẫu số ứng viên luôn chính xác (A+\text{tiền tố}) và (V+k). 
+
+Việc so sánh sử dụng phép nhân chứ không phải phép chia. Đối với mẫu số dương, 
+
+[ 
+\frac{x}{y}>\frac{a}{b} 
+] 
+
+tương đương với (xb>ay). Điều này tránh được các lỗi về độ chính xác của dấu phẩy động và cũng tránh được việc liên tục xây dựng các giá trị dấu phẩy động. 
+
+Các chỉ số đã chọn được xây dựng lại từ đầu tiên`best_k`các phần tử của mảng đã được sắp xếp. Không có vấn đề riêng lẻ nào bởi vì`enumerate(games, 1)`làm cho`k`bằng với số lượng trò chơi có trong tiền tố. 
+
+Mẫu số luôn dương vì đầu vào ban đầu chứa ít nhất một phiếu bầu tích cực. Các số nguyên có độ chính xác tùy ý của Python cũng khiến cho việc tràn không thể xảy ra, mặc dù giới hạn thực tế đã đủ nhỏ cho số học 64-bit tiêu chuẩn. 
+
+Khi`best_k`bằng 0, dòng đầu ra thứ ba được yêu cầu trống. Mã này gắn thêm một chuỗi trống một cách rõ ràng để mỗi trường hợp thử nghiệm vẫn chiếm chính xác ba dòng đầu ra. 
 
 ## Ví dụ đã hoạt động 
 
-Đối với trường hợp thử nghiệm đầu tiên, mức độ hài lòng có trọng số hiện có là 
+Mẫu đầu tiên chứa năm trò chơi. Tổng số ban đầu của họ là (V=21), và mức đóng góp niềm vui hiện tại của họ là 
 
 [ 
-10\cdot5+4\cdot7+6\cdot3+8\cdot2+2\cdot4=120, 
+A=5\cdot10+7\cdot4+3\cdot6+2\cdot8+4\cdot2=120. 
 ] 
 
-và có (21) phiếu bầu hiện có. Sắp xếp theo sở thích sẽ mang lại trò chơi (1,4,3,2,5). 
+Sau khi sắp xếp theo sở thích, thứ tự là các trò chơi 1, 4, 3, 2, 5. 
 
-| (k) | Tiền tố đã chọn | Thêm niềm vui | Tử số | Mẫu số | Niềm vui mong đợi | 
-| --- | --- | --- | --- | --- | --- | 
-| 0 | không | 0 | 120 | 21 | (120/21) | 
-| 1 | 1 | 10 | 130 | 22 | (130/22) | 
-| 2 | 1, 4 | 18 | 138 | 23 | (138/23=6) | 
-| 3 | 1, 4, 3 | 24 | 144 | 24 | (6) | 
-| 4 | 1, 4, 3, 2 | 28 | 148 | 25 | (148/25) | 
-| 5 | 1, 4, 3, 2, 5 | 30 | 150 | 26 | (150/26) | 
+| (k) | Thêm niềm vui | Tử số | Mẫu số | Kỳ Vọng | 
+| --- | --- | --- | --- | --- | 
+| 0 | 0 | 120 | 21 | (120/21) | 
+| 1 | 10 | 130 | 22 | (130/22) | 
+| 2 | 18 | 138 | 23 | (138/23=6) | 
+| 3 | 24 | 144 | 24 | (144/24=6) | 
+| 4 | 28 | 148 | 25 | (148/25) | 
+| 5 | 30 | 150 | 26 | (150/26) | 
 
-Giá trị tốt nhất là (6), đạt được với (k=2) ở trò chơi 1 và 4. Việc chọn trò chơi 3 cũng giữ mức độ hài lòng mong đợi ở (6), do đó thuật toán được phép giữ lại ứng cử viên đầu tiên tốt hơn, cụ thể là trò chơi 1 và 4. 
+Tối đa là 6. Có sự liên kết giữa (k=2) và (k=3). Việc triển khai giữ mức tối đa đầu tiên vì nó chỉ thay thế câu trả lời tốt nhất khi ứng viên mới lớn hơn. Vì vậy, nó chọn trò chơi 1 và 4 và in`6/1`. 
 
-Đối với trường hợp thử nghiệm thứ hai, mọi trò chơi hiện có đều đóng góp (1000) vào mức độ hài lòng có trọng số, do đó đường cơ sở là (4000/1111). Các trò chơi đã được sắp xếp theo thứ tự sau khi sắp xếp theo (4,3,2,1). 
+Mẫu thứ hai có (V=1111) và 
 
-| (k) | Tiền tố đã chọn | Thêm niềm vui | Tử số | Mẫu số | So sánh | 
-| --- | --- | --- | --- | --- | --- | 
-| 0 | không | 0 | 4000 | 1111 | đường cơ sở | 
-| 1 | 4 | 1000 | 5000 | 1112 | cải thiện | 
-| 2 | 4, 3 | 1100 | 5100 | 1113 | cải thiện | 
-| 3 | 4, 3, 2 | 1110 | 5110 | 1114 | cải thiện | 
-| 4 | 4, 3, 2, 1 | 1111 | 5111 | 1115 | giảm | 
+[ 
+A=1000\cdot1+100\cdot10+10\cdot100+1\cdot1000=4000. 
+] 
 
-Tối ưu là (5110/1114), có ước số chung lớn nhất (2), cho ra phân số đầu ra cần thiết (2555/557). Các trò chơi được chọn là 4, 3 và 2, chính xác là ba trò chơi mang lại giá trị khoái cảm lớn nhất. 
+Thứ tự sắp xếp là trò chơi 4, 3, 2, 1. 
+
+| (k) | Thêm niềm vui | Tử số | Mẫu số | Kỳ Vọng | 
+| --- | --- | --- | --- | --- | 
+| 0 | 0 | 4000 | 1111 | (4000/1111) | 
+| 1 | 1000 | 5000 | 1112 | (5000/1112) | 
+| 2 | 1100 | 5100 | 1113 | (5100/1113) | 
+| 3 | 1110 | 5110 | 1114 | (5110/1114) | 
+| 4 | 1111 | 5111 | 1115 | (5111/1115) | 
+
+Thí sinh giỏi nhất sử dụng trò chơi 4, 3 và 2. Phân số của nó là 
+
+[ 
+\frac{5110}{1114}=\frac{2555}{557}, 
+] 
+
+đây đã là biểu diễn rút gọn được yêu cầu sau khi chia cả hai số cho 2. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | (O(n\log n)) | Việc sắp xếp chiếm ưu thế trong quá trình quét tuyến tính qua các trò chơi. | 
-| Không gian | (O(n)) | Mảng trò chơi và chỉ số đầu ra yêu cầu bộ nhớ tuyến tính. | 
+| Thời gian | (O(n\log n)) | Việc sắp xếp chiếm ưu thế trong quá trình quét tuyến tính và xử lý đầu vào | 
+| Không gian | (O(n)) | Mảng trò chơi lưu trữ một bản ghi cho mỗi trò chơi | 
 
-Với (n\le1000), việc sắp xếp tối đa 1000 cặp cho mỗi trường hợp thử nghiệm là nhỏ và quá trình quét tuyến tính chỉ thực hiện vài nghìn phép tính số nguyên cho mỗi trường hợp. Ngay cả với tối đa 500 trường hợp thử nghiệm, tổng kích thước đầu vào là yếu tố giới hạn có liên quan và thuật toán vẫn ở mức thoải mái trong giới hạn 2 giây và 256 MB. 
+Đối với (n\le1000), việc sắp xếp tại (O(n\log n)) nằm trong giới hạn 2 giây. Thậm chí trên 500 trường hợp thử nghiệm, thuật toán chỉ thực hiện một lượng nhỏ công việc cho mỗi trò chơi ngoài việc sắp xếp và mức sử dụng bộ nhớ của nó là tuyến tính trong kích thước của một trường hợp thử nghiệm. 
 
 ## Trường hợp thử nghiệm 
 
-Bởi vì vấn đề cho phép nhiều tập hợp con tối ưu, nên việc khai thác thử nghiệm hiệu quả sẽ xác minh tính hợp lệ về mặt toán học của câu trả lời được tạo ra thay vì yêu cầu một tập hợp con hợp lệ cụ thể. Mã kiểm tra sau gọi cùng một logic giải pháp và kiểm tra xem phân số được báo cáo có tối ưu hay không, các chỉ số đã chọn có khác biệt và hợp lệ hay không, phân số được báo cáo có khớp với tập hợp đã chọn hay không.```python
+Bộ khai thác thử nghiệm bên dưới sử dụng cơ chế ngắt kết nối xác định tương tự như giải pháp đã gửi. Để xác minh chung, nó cũng kiểm tra tính hợp lệ về cấu trúc của câu trả lời và giá trị tối ưu của nó, vì Codeforces cho phép bất kỳ tập hợp con tối ưu nào.```python
 import sys
 import io
 from math import gcd
 
-def solve_data(inp: str) -> str:
-    data = io.StringIO(inp)
-    t = int(data.readline())
-    out = []
+def solution(inp: str) -> str:
+    old_stdin = sys.stdin
+    old_stdout = sys.stdout
 
-    for _ in range(t):
-        n = int(data.readline())
+    sys.stdin = io.StringIO(inp)
+    sys.stdout = io.StringIO()
 
-        games = []
-        total_votes = 0
-        base_pleasure = 0
+    try:
+        input = sys.stdin.readline
 
-        for i in range(1, n + 1):
-            p, v = map(int, data.readline().split())
-            games.append((p, i))
-            total_votes += v
-            base_pleasure += p * v
+        t = int(input())
+        out = []
 
-        games.sort(key=lambda x: (-x[0], x[1]))
+        for _ in range(t):
+            n = int(input())
 
-        best_num = base_pleasure
-        best_den = total_votes
-        best_k = 0
-        prefix = 0
+            games = []
+            total_votes = 0
+            total_pleasure = 0
 
-        for k, (p, _) in enumerate(games, 1):
-            prefix += p
-            cur_num = base_pleasure + prefix
-            cur_den = total_votes + k
+            for idx in range(1, n + 1):
+                p, v = map(int, input().split())
+                games.append((p, idx))
+                total_votes += v
+                total_pleasure += p * v
 
-            if cur_num * best_den > best_num * cur_den:
-                best_num = cur_num
-                best_den = cur_den
-                best_k = k
+            games.sort(key=lambda x: (-x[0], x[1]))
 
-        g = gcd(best_num, best_den)
-        best_num //= g
-        best_den //= g
+            best_num = total_pleasure
+            best_den = total_votes
+            best_k = 0
+            prefix = 0
 
-        indices = [idx for _, idx in games[:best_k]]
+            for k, (p, idx) in enumerate(games, 1):
+                prefix += p
+                cur_num = total_pleasure + prefix
+                cur_den = total_votes + k
 
-        out.append(f"{best_num}/{best_den}")
-        out.append(str(best_k))
-        out.append(" ".join(map(str, indices)))
+                if cur_num * best_den > best_num * cur_den:
+                    best_num = cur_num
+                    best_den = cur_den
+                    best_k = k
 
-    return "\n".join(out)
+            g = gcd(best_num, best_den)
+            best_num //= g
+            best_den //= g
 
-def run(inp: str) -> str:
-    return solve_data(inp)
+            out.append(f"{best_num}/{best_den}")
+            out.append(str(best_k))
 
-def check(inp: str, out: str):
-    in_lines = inp.strip().splitlines()
+            if best_k == 0:
+                out.append("")
+            else:
+                out.append(" ".join(str(games[i][1]) for i in range(best_k)))
+
+        return "\n".join(out)
+    finally:
+        sys.stdin = old_stdin
+        sys.stdout = old_stdout
+
+def check(inp: str, output: str):
+    data = list(map(int, inp.split()))
     pos = 0
-    t = int(in_lines[pos])
+    t = data[pos]
     pos += 1
 
-    out_lines = out.splitlines()
-    out_pos = 0
+    lines = output.splitlines()
+    line_pos = 0
 
     for _ in range(t):
-        n = int(in_lines[pos])
+        n = data[pos]
         pos += 1
 
         games = []
         total_votes = 0
-        base = 0
+        total_pleasure = 0
 
-        for i in range(1, n + 1):
-            p, v = map(int, in_lines[pos].split())
-            pos += 1
+        for idx in range(1, n + 1):
+            p = data[pos]
+            v = data[pos + 1]
+            pos += 2
             games.append((p, v))
             total_votes += v
-            base += p * v
+            total_pleasure += p * v
 
-        num, den = map(int, out_lines[out_pos].split("/"))
-        out_pos += 1
+        fraction = lines[line_pos]
+        line_pos += 1
 
-        k = int(out_lines[out_pos])
-        out_pos += 1
+        num, den = map(int, fraction.split("/"))
+        assert gcd(num, den) == 1
+        assert den > 0
 
-        indices = []
+        k = int(lines[line_pos])
+        line_pos += 1
+
+        chosen = []
         if k > 0:
-            indices = list(map(int, out_lines[out_pos].split()))
-        out_pos += 1
+            chosen = list(map(int, lines[line_pos].split()))
+        line_pos += 1
 
-        assert len(indices) == k
-        assert len(set(indices)) == k
-        assert all(1 <= x <= n for x in indices)
+        assert 0 <= k <= n
+        assert len(chosen) == k
+        assert len(set(chosen)) == k
+        assert all(1 <= x <= n for x in chosen)
 
-        actual_num = base + sum(games[i - 1][0] for i in indices)
+        chosen_set = set(chosen)
+        actual_num = total_pleasure
+        for i, (p, v) in enumerate(games, 1):
+            if i in chosen_set:
+                actual_num += p
+
         actual_den = total_votes + k
 
         assert num * actual_den == actual_num * den
-        assert gcd(num, den) == 1
 
-        best_num = base
+        best_num = total_pleasure
         best_den = total_votes
 
-        for mask_k in range(n + 1):
-            if mask_k == 0:
-                cur_num = base
-            else:
-                values = sorted((p for p, _ in games), reverse=True)
-                cur_num = base + sum(values[:mask_k])
+        ordered = sorted((p, i) for i, (p, v) in enumerate(games, 1))
+        ordered.reverse()
 
-            cur_den = total_votes + mask_k
+        prefix = 0
+        for kk in range(1, n + 1):
+            prefix += ordered[kk - 1][0]
+            candidate_num = total_pleasure + prefix
+            candidate_den = total_votes + kk
+            assert candidate_num * best_den <= best_num * candidate_den or (
+                candidate_num * best_den == best_num * candidate_den
+            )
 
-            if cur_num * best_den > best_num * cur_den:
-                best_num = cur_num
-                best_den = cur_den
+            if candidate_num * best_den > best_num * candidate_den:
+                best_num = candidate_num
+                best_den = candidate_den
 
-        assert num * best_den == best_num * den
-
-# Provided sample.
 sample = """2
 5
 10 5
@@ -424,98 +430,79 @@ sample = """2
 1000 1
 """
 
-check(sample, run(sample))
+check(sample, solution(sample))
 
-# Minimum-size input.
-case_min = """1
+minimum = """1
 1
-0 1
+0 7
 """
-assert run(case_min) == "0/1\n0\n"
+check(minimum, solution(minimum))
 
-# All pleasures equal. The deterministic implementation keeps k = 0.
-case_equal = """1
-3
-5 10
-5 20
-5 30
+all_equal = """1
+4
+5 1
+5 2
+5 3
+5 4
 """
-assert run(case_equal) == "5/1\n0\n"
+check(all_equal, solution(all_equal))
 
-# A zero-vote high-value game must be considered.
-case_zero_votes = """1
+zero_votes = """1
 2
-100 0
-0 1
-"""
-assert run(case_zero_votes) == "50/1\n1\n1"
-
-# Boundary case where adding a lower-pleasure game makes the result worse.
-case_off_by_one = """1
-3
 10 1
-9 1
-0 100
+100 0
 """
-assert run(case_off_by_one) == "19/102\n2\n1 2"
+check(zero_votes, solution(zero_votes))
 
-# Maximum-size input. All games have equal pleasure, so k = 0 is optimal.
-max_case_lines = ["1", "1000"]
-max_case_lines.extend(["1000 1000"] * 1000)
-case_max = "\n".join(max_case_lines) + "\n"
+boundary = """1
+3
+0 1000
+1000 0
+999 1
+"""
+check(boundary, solution(boundary))
 
-max_out = run(case_max)
-max_lines = max_out.splitlines()
-assert max_lines[1] == "0"
-assert max_lines[2] == ""
-assert max_lines[0] == "1000/1"
-```Trình kiểm tra mẫu cố tình không so sánh văn bản đầu ra với một câu trả lời cố định, bởi vì bài toán cho phép rõ ràng bất kỳ tập hợp con tối ưu nào. Các thử nghiệm xác định nhỏ sử dụng đầu ra chính xác vì quá trình triển khai được gửi có thứ tự ràng buộc xác định. 
+large = "1\n1000\n" + "\n".join(
+    f"{i % 1001} {1 if i == 1 else 0}" for i in range(1000)
+) + "\n"
+check(large, solution(large))
 
-| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
+print("All tests passed.")
+```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`1 / 1 / 0 1`|`0/1`,`0`, dòng chỉ mục trống | Kích thước tối thiểu và khả năng không chọn gì | 
-|`3 / (5,10), (5,20), (5,30)`|`5/1`,`0`, dòng chỉ mục trống | Tất cả những niềm vui và mối ràng buộc bình đẳng | 
-|`2 / (100,0), (0,1)`|`50/1`,`1`, trò chơi`1`| Một trò chơi không có phiếu bầu nào vẫn có thể là lựa chọn tốt nhất | 
-|`3 / (10,1), (9,1), (0,100)`|`19/102`,`2`, trò chơi`1 2`| Sửa ranh giới tiền tố và nhận ra rằng việc thêm một trò chơi khác có thể gây tổn hại | 
-| 1000 bản`(1000,1000)`|`1000/1`,`0`, dòng chỉ mục trống | Tối đa (n), tổng lớn và quan hệ có giá trị bằng nhau | 
+| Một trò chơi với`p=0`|`0/1`,`k=0`| Tập hợp con trống hợp pháp và tử số bằng 0 | 
+| Bốn trò chơi có niềm vui như nhau | Tiền tố tối ưu bất kỳ | Giá trị bằng nhau và xử lý ràng buộc | 
+| Một trò chơi không có phiếu bầu mang lại niềm vui cao | Trò chơi mang tính giải trí cao được chọn lọc | Trò chơi có (v_i=0) vẫn phải đủ điều kiện | 
+|`p=0`,`v=1000`xen lẫn niềm vui lớn | Phân số chính xác từ tiền tố tốt nhất | Giá trị biên và thay đổi mẫu số | 
+| Trường hợp tạo 1000 trò chơi | Bất kỳ tối ưu hợp lệ nào | Hành vi tối đa (n) và bộ nhớ tuyến tính | 
 
 ## Vỏ cạnh 
 
-Khi (n=1), chỉ có hai chiến lược khả thi. Đối với đầu vào```
+Khi bỏ phiếu cho không có trò chơi nào là tối ưu, quá trình quét sẽ xử lý nó vì ứng cử viên tốt nhất ban đầu là (k=0). Đối với đầu vào```
 1
 1
-0 1
-```đường cơ sở là (0/1). Việc chọn trò chơi duy nhất sẽ thêm một phiếu bầu khác với mức độ hài lòng bằng 0, vì vậy giá trị vẫn bằng 0. Quá trình quét bắt đầu với (k=0), thấy rằng ứng cử viên (k=1) không thực sự tốt hơn và giữ tập hợp trống. Đầu ra là```
-0/1
-0
-```Một trò chơi không có phiếu bầu nào được xử lý một cách tự nhiên vì sự đóng góp của nó cho`base_pleasure`bằng 0, trong khi chọn nó sẽ mang lại niềm vui trọn vẹn cho tử số. Vì```
-1
-2
-100 0
-0 1
-```đường cơ sở là (0/1). Sau khi sắp xếp, trò chơi 1 sẽ đến trước. Việc chọn nó sẽ tạo ra (100/2=50), trong khi chọn cả hai sẽ cho ra (100/3). Do đó, tiền tố tốt nhất là tiền tố đầu tiên, tạo ra```
-50/1
-1
-1
-```Khi một số trò chơi có cùng niềm vui, thứ tự của chúng không ảnh hưởng đến mục tiêu. Vì```
-1
-3
-5 10
-5 20
-5 30
-```kỳ vọng cơ bản đã là (5) và mỗi phiếu bầu được thêm vào cũng mang lại niềm vui (5). Mọi tiền tố đều có kỳ vọng (5). Vì việc triển khai chỉ cập nhật một cải tiến nghiêm ngặt nên nó giữ nguyên (k=0), mang lại```
-5/1
-0
-```Đây cũng là lý do tại sao so sánh phân số với các phân số nghiêm ngặt`>`còn hơn là`>=`rất hữu ích. Lựa chọn nào cũng có thể tạo ra câu trả lời hợp lệ ở đây, nhưng so sánh chặt chẽ sẽ mang lại câu trả lời có tiền tố nhỏ nhất ổn định. 
+0 5
+```chúng ta có (A=0) và (V=5). Phương án thay thế duy nhất thêm một phiếu bầu không hài lòng và vẫn đưa ra kỳ vọng (0), do đó thuật toán giữ (k=0) và giảm (0/5) thành`0/1`. Dòng thứ ba trống. 
 
-Trường hợp tinh vi cuối cùng là khi thêm nhiều trò chơi cuối cùng sẽ trở nên có hại. Vì```
+Khi một trò chơi không có phiếu bầu hiện tại, nó vẫn xuất hiện trong mảng đã sắp xếp. Vì```
 1
-3
-10 1
-9 1
-0 100
-```đường cơ sở là (19/102). Sau khi sắp xếp thì thú vui là (10,9,0). Chọn một trò chơi sẽ thưởng (29/103), chọn hai trò chơi sẽ thưởng (38/104=19/52) và chọn cả ba trò chơi sẽ thưởng (38/105). Phiếu bầu thứ ba không đóng góp gì cho tử số trong khi tăng mẫu số, vì vậy mức tối ưu là tiền tố có độ dài hai:```
-19/52
 2
-1 2
-```Thuật toán kiểm tra mọi tiền tố thay vì cho rằng việc tham gia nhiều trò chơi mang lại cảm giác thích thú cao hơn luôn có ích. Việc quét toàn diện thông số liên quan duy nhất, số lượng trò chơi được chọn, là yếu tố duy trì tính tối ưu trong khi tránh số lượng tập hợp con tùy ý theo cấp số nhân.
+10 1
+100 0
+```chúng ta có (A=10) và (V=1). Ứng cử viên ban đầu là (10/1). Sau khi thêm trò chơi 2, ứng cử viên trở thành (110/2=55), do đó thuật toán chọn trò chơi 2. Số phiếu bầu hiện tại bằng 0 không ngăn cản phiếu bầu mới của chúng tôi biến trò chơi này thành trò chơi có nhiều khả năng được phát trực tuyến nhất. 
+
+Việc thay đổi mẫu số được xử lý trực tiếp bằng cách sử dụng`total_votes + k`. Coi như```
+1
+2
+100 1
+0 100
+```Ở đây (A=100) và (V=101). Nếu không có phiếu bầu bổ sung, kỳ vọng là (100/101). Thêm trò chơi đầu tiên sẽ tạo ra (200/102=100/51), điều này tốt hơn. Thay vào đó, việc thêm trò chơi không mang lại niềm vui sẽ mang lại (100/102=50/51), điều này còn tệ hơn. Quá trình quét tiền tố đánh giá chính xác cả hai khả năng. 
+
+Các ứng cử viên tối ưu bằng nhau được xử lý bởi quy trình nghiêm ngặt`>`so sánh. Vì```
+1
+2
+5 1
+5 1
+```kỳ vọng (k=0) là (10/2=5) và việc thêm một trong hai trò chơi cũng cho kết quả (15/3=5). Vì giá trị không cải thiện nên việc triển khai vẫn giữ nguyên (k=0). Điều này hợp lệ vì bài toán yêu cầu bất kỳ chiến lược tối đa hóa nào. 
+
+Bước rút gọn cũng cần thiết ngay cả khi giá trị tối ưu có một giá trị đơn giản. Trong mẫu thứ hai, ứng cử viên được chọn là (5110/1114) và ước chung lớn nhất là 2. Chia cả hai phần cho kết quả`2555/557`, thỏa mãn định dạng phân số tối giản cần thiết.

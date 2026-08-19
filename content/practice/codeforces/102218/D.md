@@ -1,7 +1,7 @@
 ---
 title: "CF 102218D - Mạng động"
-description: "Các máy tính tạo thành một cây có gốc. Máy tính 1 tồn tại ban đầu và đóng vai trò là máy chủ. Mỗi khi một máy tính được thêm vào, nó sẽ nhận được ID chưa sử dụng tiếp theo, vì vậy nếu hiện tại có máy tính hiện tại thì máy tính mới sẽ nhận được ID hiện tại + 1."
-date: "2026-08-17T23:15:51+07:00"
+description: "Mạng là một cái cây mọc lên từng máy tính một. Máy tính 1 ban đầu tồn tại. Mỗi máy tính mới sẽ nhận được id không được sử dụng tiếp theo, vì vậy khi hiện có máy tính hiện tại, máy tính mới sẽ nhận được id curr + 1. Nó được gắn bởi một cạnh với máy tính đã có sẵn."
+date: "2026-08-18T22:46:11+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102218
@@ -9,7 +9,7 @@ codeforces_index: "D"
 codeforces_contest_name: "2019, XI Annual Programming Contest by ESCOM-IPN"
 rating: 0
 weight: 102218
-solve_time_s: 391
+solve_time_s: 870
 verified: false
 draft: false
 ---
@@ -18,127 +18,157 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 6 phút 31 giây 
+**Thời gian giải:** 14p 30s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
-Các máy tính tạo thành một cây có gốc. Máy tính`1`tồn tại ban đầu và đóng vai trò là gốc. Mỗi khi một máy tính được thêm vào, nó sẽ nhận được ID chưa sử dụng tiếp theo, vì vậy nếu hiện tại có`curr`máy tính, máy tính mới sẽ nhận được ID`curr + 1`. Cạnh mới duy nhất của nó kết nối nó với một số máy tính hiện có`p`. 
+Mạng là một cái cây mọc lên từng máy tính một. Máy tính 1 ban đầu tồn tại. Mọi máy tính mới đều nhận được id chưa được sử dụng tiếp theo, vì vậy khi hiện tại có`curr`máy tính, máy tính mới có id`curr + 1`. Nó được gắn bằng một cạnh vào một máy tính đã có sẵn. 
 
-Bởi vì mỗi đỉnh mới có đúng một cạnh so với đỉnh cũ hơn nên mạng luôn có dạng cây. Câu trả lời cho một cặp máy tính là số đỉnh trên đường cây duy nhất của chúng, bao gồm cả hai điểm cuối. Đối với một máy tính mới được chèn, câu trả lời bắt buộc là độ dài đường dẫn của nó tính theo đỉnh từ máy tính đó đến gốc`1`. 
+Truy vấn loại 1 chỉ định gián tiếp máy tính gốc của máy tính mới. Truy vấn loại 2 yêu cầu đường đi ngắn nhất giữa hai máy tính hiện có. Câu trả lời đếm các máy tính chứ không phải các cạnh, vì vậy một đường dẫn chứa`k`cạnh có câu trả lời`k + 1`. 
 
-Đầu vào được mã hóa có chủ ý bằng câu trả lời trước đó. Trước khi giải mã một truy vấn,`last`chứa câu trả lời cho truy vấn trước đó hoặc ban đầu bằng 0. Để chèn, cha mẹ thực sự là`(p' + last) % curr + 1`, Ở đâu`curr`là số lượng máy tính trước khi chèn. Đối với truy vấn đường dẫn, cả hai điểm cuối đều được giải mã với giá trị hiện tại là`curr`. Điều này có nghĩa là chương trình không thể xử lý trước các truy vấn một cách độc lập vì câu trả lời cho một truy vấn sẽ thay đổi ý nghĩa của tất cả các giá trị được mã hóa tiếp theo. 
+Đầu vào được mã hóa có chủ ý bằng câu trả lời trước đó. Nếu như`last`là câu trả lời gần đây nhất và có`curr`máy tính hiện có, giá trị loại 1`p'`đại diện cho cha mẹ 
 
-Có nhiều nhất`2 * 10^5`các truy vấn, do đó cũng có nhiều nhất`2 * 10^5`máy tính. Một giải pháp dành thời gian tuyến tính theo số lượng máy tính trên mỗi truy vấn có thể thực hiện trong khoảng`4 * 10^10`hoạt động của cây trong trường hợp xấu nhất, vượt xa giới hạn 2 giây cho phép. Chúng ta cần thời gian logarit đại khái cho mỗi thao tác. Vì cây chỉ phát triển và một đỉnh mới được thêm vào luôn gắn với một đỉnh hiện có nên chúng ta có thể duy trì thông tin tổ tiên theo từng bước. 
+[ 
+p=(p'+last)\bmod curr+1. 
+] 
 
-Một số trường hợp đặc biệt có thể âm thầm phá vỡ quá trình triển khai. Nếu các điểm cuối được truy vấn bằng nhau thì đường dẫn chứa chính xác một máy tính. Ví dụ,```
+Đối với loại 2, hai điểm cuối được giải mã theo cách giống hệt nhau. Điều này có nghĩa là các truy vấn phải được xử lý trực tuyến nghiêm ngặt. Chúng tôi không thể giải mã tất cả các truy vấn trước rồi xử lý trước cây cuối cùng vì giá trị cần thiết để giải mã truy vấn tiếp theo được tạo ra bởi truy vấn hiện tại. 
+
+Có thể có tới (2\cdot10^5) thao tác, do đó cây cuối cùng cũng có tối đa (2\cdot10^5+1) máy tính. Một giải pháp đi qua toàn bộ đường dẫn từ gốc tới nút cho mỗi truy vấn có thể mất (O(Q^2)) thời gian. Với (Q=2\cdot10^5), điều đó có thể đạt được khoảng (4\cdot10^{10}) lượt truyền tải gốc, vượt xa giới hạn hai giây cho phép. Chúng tôi cần công việc logarit cho mỗi hoạt động. 
+
+Cấu trúc cây cung cấp cho chúng ta một thuộc tính đặc biệt hữu ích: mọi đỉnh mới được tạo đều là một lá và cha mẹ của nó đã tồn tại. Do đó, tất cả thông tin về đỉnh mới có thể được tính toán ngay lập tức từ đỉnh cha của nó. Chúng ta không bao giờ phải xây dựng lại hoặc duyệt qua cây hiện có sau khi chèn. 
+
+Có một số trường hợp nguy hiểm có thể âm thầm phá vỡ quá trình triển khai. Đầu tiên là truy vấn cùng một máy tính hai lần. Ví dụ,```
 1
 2 0 0
-```chỉ có máy tính`1`, vì vậy truy vấn được giải mã là`(1, 1)`và câu trả lời là`1`. Công thức khoảng cách quên đếm điểm cuối có thể trả về 0 không chính xác. 
+```Chỉ có máy tính 1 nên cả hai điểm cuối được giải mã là 1 và đầu ra đúng là`1`. Khoảng cách giữa các cạnh bằng 0, nhưng bài toán yêu cầu số lượng máy tính nên đáp án là một. Một triển khai quên mất trận chung kết`+1`sẽ in bằng không. 
 
-Trường hợp cạnh thứ hai là một máy tính mới được gắn trực tiếp vào thư mục gốc. Ví dụ,```
-1
+Trường hợp cạnh thứ hai là một máy tính mới được thêm vào có id gốc là id hợp lệ lớn nhất hiện tại. Coi như```
+4
 1 0
-```giải mã cha mẹ là`1`, tạo ra máy tính`2`, và câu trả lời là`2`, bởi vì đường đi là`2 -> 1`. Việc triển khai báo cáo số cạnh thay vì số lượng máy tính sẽ trả về`1`. 
+1 1
+2 0 0
+2 0 1
+```Lần chèn đầu tiên tạo ra máy tính 2 trong máy tính 1 và xuất ra`2`. Việc chèn thứ hai có`last=2`, vậy cha mẹ của nó là`(1+2)%2+1=2`, tạo máy tính 3 dưới máy tính 2 và xuất ra`3`. Truy vấn thứ ba giải mã thành`(1,1)`và đầu ra`1`. Truy vấn cuối cùng giải mã thành`(2,3)`, đường đi của ai là`2-3`, vì vậy đầu ra là`2`. Đầu ra đúng là```
+2
+3
+1
+2
+```Một lỗi thường gặp là sử dụng giá trị của`curr`sau khi tăng nó khi giải mã cha mẹ. Đỉnh cha phải được giải mã bằng số lượng máy tính trước khi chèn đỉnh mới. 
 
-Trạng thái mã hóa là một nguồn lỗi khác. Coi như```
+Trường hợp cạnh thứ ba là`last`thay đổi sau mỗi truy vấn, bao gồm cả truy vấn loại 2. Ví dụ,```
 3
 1 0
 2 0 0
 2 0 0
-```Sau khi chèn,`last = 2`, vì vậy truy vấn loại 2 đầu tiên giải mã thành`(1, 1)`và sản xuất`1`. Truy vấn tiếp theo phải sử dụng`last = 1`, do đó, nó cũng giải mã khác với những gì nó sẽ giải mã bằng`last = 0`. Đọc tất cả các truy vấn trước và giải mã chúng mà không xử lý các câu trả lời trước đó sẽ tạo ra cây sai hoặc điểm cuối sai. 
-
-Cuối cùng, cơ sở modulo khác nhau giữa các truy vấn chèn và truy vấn sau. Để chèn,`curr`là số lượng máy tính hiện có nên máy tính cha phải được giải mã trước khi tăng`curr`. Đối với truy vấn loại 2,`curr`đã bao gồm mọi máy tính được chèn vào. Việc trộn lẫn thứ tự này sẽ gây ra lỗi từng cái một chính xác khi một máy tính mới vừa được thêm vào. 
+```Sau khi chèn,`last=2`. Truy vấn tiếp theo giải mã cả hai điểm cuối là 1 và đầu ra`1`, Vì thế`last`trở thành 1. Do đó, truy vấn cuối cùng vẫn có cả hai điểm cuối bằng 2 chỉ khi số lượng máy tính hiện tại và giá trị được mã hóa tạo ra kết quả đó. Tái sử dụng cái cũ hơn`last`value sẽ giải mã các truy vấn tiếp theo không chính xác. Mã hóa là một phần trạng thái của thuật toán, không chỉ đơn thuần là tiền xử lý đầu vào. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận trực tiếp là lưu trữ`parent[v]`Và`depth[v]`cho mọi máy tính. Để trả lời một truy vấn, hãy liên tục di chuyển điểm cuối sâu hơn lên trên cho đến khi cả hai điểm cuối đều có cùng độ sâu, sau đó di chuyển cả hai điểm cuối lên trên cho đến khi chúng gặp nhau. Đỉnh gặp nhau là tổ tiên chung thấp nhất của chúng. Nếu độ sâu của nó là`d`, số lượng máy tính trên đường đi là`depth[u] + depth[v] - 2 * d + 1`. 
+Giải pháp trực tiếp là lưu trữ phần tử mẹ của mỗi máy tính và đối với truy vấn giữa`u`Và`v`, đi lên từ cả hai đỉnh cho đến khi đường đi của chúng gặp nhau. Điều này đúng vì mạng luôn có dạng cây nên giữa hai máy tính chỉ có duy nhất một đường dẫn. Nếu chúng ta có thể tìm được tổ tiên chung thấp nhất của chúng thì số cạnh trên đường đi là 
 
-Phương pháp này đúng vì mọi bước di chuyển đều tuân theo một cạnh cây thực tế và tổ tiên chung đầu tiên đạt được sau khi cân bằng độ sâu chính xác là tổ tiên chung thấp nhất. Vấn đề là thời gian chạy. Một truy vấn có thể yêu cầu Θ(n) cha mẹ di chuyển trên một chuỗi. Với`2 * 10^5`máy tính và`2 * 10^5`truy vấn, có thể đạt được khoảng`4 * 10^10`hoạt động của cha mẹ. 
+[ 
+độ sâu[u]+độ sâu[v]-2\cdot độ sâu[lca]. 
+] 
 
-Quan sát quan trọng là cây không tùy ý và tĩnh. Mỗi đỉnh mới được gắn vào một đỉnh đã tồn tại, vì vậy khi đỉnh`v`được tạo ra, mọi tổ tiên của`v`có thể bắt nguồn từ tổ tiên đã biết của cha mẹ nó. Điều này cho phép chúng ta lưu trữ không chỉ cha mẹ trực tiếp mà còn cả`2^k`- tổ tiên thứ của mỗi đỉnh. 
+Thêm một sẽ cho số lượng máy tính cần thiết. 
 
-Đối với mỗi đỉnh`v`, cho phép`up[k][v]`biểu thị tổ tiên của nó sau`2^k`các cạnh hướng lên trên. Khi`v`được chèn với cha mẹ`p`, chúng tôi biết`up[0][v] = p`và với mọi giá trị lớn hơn`k`,`up[k][v] = up[k-1][up[k-1][v]]`. 
+Vấn đề là thời gian chạy. Hãy xem xét một cái cây chỉ có một chuỗi dài. Một truy vấn liên quan đến máy tính sâu nhất có thể yêu cầu (O(n)) bước gốc. Nếu cây có (2\cdot10^5) đỉnh và chúng ta thực hiện (2\cdot10^5) các truy vấn như vậy thì tổng số có thể là khoảng (4\cdot10^{10}) thao tác. Phương pháp vũ phu là đúng, nhưng về cơ bản là quá chậm. 
 
-Do đó, tất cả thông tin nâng nhị phân cho một máy tính mới có thể được tính toán ngay lập tức. Khi đó, tổ tiên chung thấp nhất có thể được tìm thấy trong O(log n) và mỗi lần chèn cũng lấy O(log n). Bản chất được mã hóa của đầu vào không gây thêm khó khăn về mặt thuật toán vì chúng tôi xử lý các truy vấn theo thứ tự và cập nhật`last`ngay sau mỗi câu trả lời. 
+Quan sát làm thay đổi vấn đề là việc chèn thêm chỉ thêm lá. Khi một máy tính mới`x`được gắn vào cha mẹ hiện có`p`, toàn bộ chuỗi tổ tiên của nó có thể được tóm tắt ngay lập tức. Cửa hàng`up[k][x]`, tổ tiên của`x`thu được bằng cách di chuyển các cạnh lên trên (2^k). Từ`p`đã được biết đến, sự tái diễn là 
+
+[ 
+lên[0][x]=p 
+] 
+
+và 
+
+[ 
+lên[k][x]=lên[k-1][up[k-1][x]]. 
+] 
+
+Không có đỉnh hiện tại nào thay đổi khi`x`được chèn vào, do đó tất cả thông tin nâng nhị phân được tính toán trước đó vẫn có hiệu lực mãi mãi. 
+
+Đây chính xác là cài đặt mà tính năng nâng nhị phân hoạt động tốt. Nó cho phép chúng ta tìm LCA trong thời gian (O(\log n)) bằng cách trước tiên di chuyển đỉnh sâu hơn lên trên cho đến khi cả hai đỉnh có độ sâu bằng nhau, sau đó nâng cả hai đỉnh cùng nhau từ bước nhảy lớn đến bước nhảy nhỏ. Bản thân việc chèn cũng mất (O(\log n)), bởi vì chúng tôi tính toán tổ tiên của đỉnh mới cho tất cả lũy thừa của hai. 
+
+Đầu vào được mã hóa không làm thay đổi cấu trúc dữ liệu. Nó chỉ yêu cầu chúng tôi giải mã một truy vấn trước khi xử lý nó, tính toán câu trả lời của nó và lưu ngay câu trả lời đó vào`last`cho truy vấn tiếp theo. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
-| Lực lượng vũ phu | O(QN) trường hợp xấu nhất | O(N) | Quá chậm | 
-| Tối ưu | O(Q log N) | O(N log N) | Đã chấp nhận | 
+| Lực lượng vũ phu | (O(Q^2)) trường hợp xấu nhất | (O(Q)) | Quá chậm | 
+| Tối ưu | (O(Q\log Q)) | (O(Q\log Q)) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Khởi tạo cây bằng máy tính`1`. Độ sâu của nó bằng 0 và mọi mục nhập tổ tiên có thể trỏ tới`1`, hoạt động như tổ tiên của chính gốc. 
-2. Xử lý các truy vấn theo thứ tự nhất định trong khi vẫn duy trì`curr`, số lượng máy tính hiện có và`last`, câu trả lời trước đó. Các truy vấn phải được xử lý trực tuyến vì`last`tham gia giải mã truy vấn tiếp theo. 
-3. Đối với truy vấn loại 1, hãy giải mã truy vấn gốc bằng cách sử dụng`(p' + last) % curr + 1`. Modulo sử dụng giá trị cũ của`curr`, vì máy tính mới chưa tồn tại. 
-4. Gán ID máy tính mới`curr + 1`, đặt độ sâu của nó thành`depth[parent] + 1`và đặt cha mẹ trực tiếp của nó thành cha mẹ được giải mã. 
-5. Xây dựng bàn nâng nhị phân của máy tính mới. Của nó`2^k`- tổ tiên thứ có được bằng cách lấy`2^(k-1)`-tổ tiên thứ hai hai lần. Điều này có thể thực hiện được trong O(log N) vì mọi tổ tiên được tham chiếu đều đã được tạo trước đó. 
-6. Đường dẫn từ máy mới tới root`1`chứa`depth[new] + 1`máy tính. In giá trị này và đặt`last`đến nó. 
-7. Đối với truy vấn loại 2, giải mã cả hai điểm cuối bằng cách sử dụng`curr`, vì cả hai máy tính đều đã thuộc mạng. 
-8. Tìm tổ tiên chung thấp nhất của chúng bằng cách nâng hệ nhị phân. Đầu tiên hãy cân bằng độ sâu của chúng bằng cách nâng đỉnh sâu hơn bằng lũy ​​thừa thích hợp của hai. Nếu các đỉnh bằng nhau thì chính đỉnh đó là tổ tiên chung thấp nhất của chúng. 
-9. Nếu không, hãy kiểm tra mức nâng từ lớn nhất đến nhỏ nhất. Bất cứ khi nào`2^k`- Tổ tiên của hai đỉnh khác nhau, di chuyển cả hai đỉnh về tổ tiên đó. Sau khi tất cả các cấp độ đã được xử lý, hai đỉnh là con riêng biệt của tổ tiên chung thấp nhất của chúng, vì vậy cha mẹ trực tiếp của chúng là LCA. 
-10. Chuyển đổi LCA thành số lượng máy tính được yêu cầu với`depth[u] + depth[v] - 2 * depth[lca] + 1`. In kết quả và lưu vào`last`. 
+1. Khởi tạo máy tính 1 làm root. Đặt độ sâu của nó thành 0 và khởi tạo mọi tổ tiên nâng nhị phân về 0. Gốc không có cha thực sự, vì vậy số 0 là một trọng điểm thuận tiện. 
+2. Giữ`curr`bằng số lượng máy tính hiện có và`last`tương đương với câu trả lời trước. Ban đầu cả hai đều có các giá trị cần thiết,`curr=1`Và`last=0`. 
+3. Đối với truy vấn loại 1, hãy giải mã truy vấn gốc bằng cách sử dụng`(p_prime + last) % curr + 1`trước khi thay đổi`curr`. Máy tính mới có id`curr + 1`, vì id được gán liên tiếp. 
+4. Đặt độ sâu của máy tính mới thành`depth[parent] + 1`và cha mẹ trực tiếp của nó`parent`. Sau đó tính toán mọi tổ tiên cao hơn với`up[k][new] = up[k-1][up[k-1][new]]`. Điều này có tác dụng vì mọi đỉnh được tham chiếu ở phía bên phải đều đã tồn tại trước khi chèn. 
+5. Đường dẫn của máy tính mới tới máy tính 1 chứa`depth[new] + 1`máy tính. Đặt giá trị này là`last`và xuất nó. Vì gốc có độ sâu bằng 0 nên một đỉnh ở độ sâu`d`có chính xác`d+1`các đỉnh trên đường đi tới gốc của nó. 
+6. Đối với truy vấn loại 2, giải mã cả hai điểm cuối bằng cách sử dụng`last`Và`curr`. Cả hai điểm cuối đều được đảm bảo tham chiếu đến các máy tính hiện có vì modulo được lấy theo số đỉnh hiện tại. 
+7. Tìm LCA của điểm cuối được giải mã. Đầu tiên nâng điểm cuối sâu hơn cho đến khi độ sâu khớp. Sau đó kiểm tra mức nâng nhị phân từ lớn nhất đến nhỏ nhất và nâng cả hai điểm cuối bất cứ khi nào tổ tiên tương ứng của chúng khác nhau. Sau quá trình này, cha mẹ trực tiếp của họ là LCA. 
+8. Tính số cạnh giữa các điểm cuối là`depth[u] + depth[v] - 2 * depth[lca]`. Thêm một vì cả hai điểm cuối đều được tính, lưu kết quả vào`last`, và xuất nó. 
 
 ### Tại sao nó hoạt động 
 
-Bất biến là đối với mọi máy tính hiện có`v`và mọi cấp độ nâng`k`,`up[k][v]`chính xác là tổ tiên đạt được sau`2^k`các cạnh cha mẹ. Điều này đúng cho nghiệm ban đầu và vẫn đúng cho mọi đỉnh mới vì mức của nó`k`tổ tiên được xây dựng bằng cách áp dụng hai cấp độ chính xác`k-1`nhảy. 
-
-Nâng nhị phân trước tiên sẽ di chuyển đỉnh truy vấn sâu hơn đến cùng độ sâu với đỉnh khác, do đó sau đó cả hai đỉnh đều cách xa gốc như nhau. Nếu chúng bằng nhau thì đỉnh đó là LCA của chúng. Mặt khác, sức mạnh xử lý của hai từ lớn nhất đến nhỏ nhất sẽ di chuyển cả hai đỉnh lên trên mà không vượt qua LCA của chúng, đồng thời làm cho tổ tiên của chúng càng cao càng tốt trong khi vẫn giữ được sự khác biệt. Đỉnh cuối cùng đạt được là hai nút con ngay bên dưới LCA, do đó cha mẹ chung của chúng là LCA chính xác. 
-
-Với hai đỉnh bất kỳ, số cạnh trên đường đi của chúng là`depth[u] + depth[v] - 2 * depth[lca]`. Vấn đề yêu cầu máy tính chứ không phải các cạnh, vì vậy phải thêm chính xác một máy tính. Công thức tương tự dành riêng cho gốc mang lại`depth[v] + 1`, đó là lý do tại sao các truy vấn chèn có thể được trả lời trực tiếp. 
+Bất biến quan trọng là đối với mọi máy tính hiện có`v`,`depth[v]`là khoảng cách chính xác của nó tính theo các cạnh từ máy tính 1, và`up[k][v]`là tổ tiên chính xác (2^k) của nó. Khi một lá mới được chèn vào, lá cha của nó đã hợp lệ, do đó phép lặp sẽ tính toán chính xác tất cả các giá trị tổ tiên mới mà không sửa đổi bất kỳ giá trị cũ nào. Sau đó, nâng nhị phân sẽ tìm ra LCA thực sự vì việc cân bằng độ sâu đặt cả hai đỉnh ở cùng một cấp độ và các bước nhảy lớn nhất đến nhỏ nhất tiếp theo sẽ di chuyển chúng lên trên mà không vượt qua LCA của chúng. Do đó, công thức khoảng cách cây tiêu chuẩn cho số cạnh chính xác và việc thêm một cạnh sẽ cho chính xác số lượng máy tính trên đường dẫn. 
 
 ## Giải pháp Python```python
 import sys
 input = sys.stdin.readline
 
+MAX_Q = 200000
+MAX_N = MAX_Q + 1
+LOG = MAX_N.bit_length()
+
 def solve():
     q = int(input())
 
-    LOG = 19
-    max_nodes = q + 1
-
-    up = [[1] * max_nodes for _ in range(LOG)]
-    depth = [0] * max_nodes
+    depth = [0] * (MAX_N + 1)
+    up = [[0] * (MAX_N + 1) for _ in range(LOG)]
 
     curr = 1
     last = 0
+
     out = []
 
     for _ in range(q):
-        data = list(map(int, input().split()))
-        t = data[0]
+        parts = input().split()
+        t = int(parts[0])
 
         if t == 1:
-            p_encoded = data[1]
+            p_prime = int(parts[1])
 
-            parent = (p_encoded + last) % curr + 1
-            v = curr + 1
+            # Decode using the number of computers before insertion.
+            parent = (p_prime + last) % curr + 1
 
-            depth[v] = depth[parent] + 1
-            up[0][v] = parent
+            new_node = curr + 1
+            depth[new_node] = depth[parent] + 1
+            up[0][new_node] = parent
 
             for k in range(1, LOG):
-                up[k][v] = up[k - 1][up[k - 1][v]]
+                mid = up[k - 1][new_node]
+                up[k][new_node] = up[k - 1][mid]
 
             curr += 1
 
-            last = depth[v] + 1
+            last = depth[new_node] + 1
             out.append(str(last))
 
         else:
-            u_encoded = data[1]
-            v_encoded = data[2]
+            u_prime = int(parts[1])
+            v_prime = int(parts[2])
 
-            u = (u_encoded + last) % curr + 1
-            v = (v_encoded + last) % curr + 1
+            u = (u_prime + last) % curr + 1
+            v = (v_prime + last) % curr + 1
 
             if depth[u] < depth[v]:
                 u, v = v, u
 
+            # Bring u to the same depth as v.
             diff = depth[u] - depth[v]
-
             bit = 0
             while diff:
                 if diff & 1:
@@ -163,231 +193,80 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```các`up`mảng có một hàng cho mỗi lũy thừa của hai. Với nhiều nhất`2 * 10^5`truy vấn, có nhiều nhất`200001`máy tính và`2^18 = 262144`, vì vậy 19 cấp độ là đủ để thể hiện mọi độ sâu có thể. 
+```các`depth`mảng sử dụng độ sâu cây dựa trên số 0, vì vậy máy tính 1 có độ sâu bằng 0. Điều này làm cho công thức khoảng cách tiêu chuẩn trở nên đặc biệt rõ ràng. Câu trả lời được yêu cầu là khoảng cách cạnh cộng một.`up[0][v]`lưu trữ cha mẹ trực tiếp, trong khi`up[k][v]`lưu trữ các cạnh tổ tiên (2^k) ở trên`v`. Số cấp độ là`MAX_N.bit_length()`. Với nhiều nhất`200001`máy tính, điều này cung cấp đủ mức để thể hiện mọi chênh lệch độ sâu có thể có và mọi bước nhảy LCA có thể xảy ra. 
 
-Khi một đỉnh mới được chèn vào,`up[0][v]`là cha mẹ được giải mã của nó. Mọi mục nhập cao hơn đều được điền từ các mục nhập đã được tính toán, do đó không cần thông tin về các đỉnh trong tương lai. 
+Để chèn,`curr`vẫn đại diện cho số lượng máy tính cũ trong khi máy tính cha được giải mã. Chỉ sau khi tất cả thông tin của máy tính mới đã được tính toán xong chúng ta mới tăng`curr`. Thứ tự này được yêu cầu bởi công thức mã hóa. 
 
-Câu trả lời chèn được tính toán sau`curr`được tăng lên, nhưng phần tử gốc được giải mã trước mức tăng đó. Thứ tự này là cần thiết. ID mới là`old_curr + 1`, trong khi ID gốc hợp lệ chính xác là`1`bởi vì`old_curr`. 
+Đối với truy vấn loại 2, điểm cuối được giải mã trước khi bất kỳ LCA nào hoạt động. Điểm cuối sâu hơn sau đó được nâng lên theo các bit đã đặt của chênh lệch độ sâu. Nếu các đỉnh bằng nhau thì đỉnh đó đã là LCA. Ngược lại, vòng lặp sẽ xem xét các bước nhảy từ lớn nhất đến nhỏ nhất. Khi`up[k][u]`Và`up[k][v]`khác nhau, cả hai đỉnh đều có thể di chuyển lên trên một cách an toàn (2^k), vì LCA của chúng vẫn ở trên hai đỉnh khác biệt đó. Cuối cùng họ trở thành con của LCA. 
 
-Đối với truy vấn loại 2, điểm cuối được giải mã trước khi bất kỳ LCA nào hoạt động. Giá trị hiện tại của`curr`đã là số lượng máy tính trong mạng nên cả hai phép toán modulo đều sử dụng giá trị đó. 
-
-Mã cân bằng độ sâu bằng cách sử dụng biểu diễn nhị phân của sự khác biệt của chúng. Sau khi độ sâu khớp, nó sẽ xử lý trường hợp đỉnh bằng nhau ngay lập tức hoặc nâng cả hai đỉnh từ lũy thừa lớn nhất của hai xuống dưới. Số nguyên Python không bị tràn, do đó không cần xử lý độ rộng số nguyên đặc biệt. 
-
-Các tên biến`u`Và`v`được thay đổi tạm thời trong khi tìm LCA. Sau khi được cân bằng, chúng có thể không còn đại diện cho điểm cuối ban đầu nữa. Điều này không gây ra vấn đề gì vì độ sâu ban đầu của chúng vẫn chỉ cần thiết thông qua các giá trị độ sâu trước khi tìm kiếm LCA. Trong cách triển khai này, sau khi cân bằng, điểm cuối sâu hơn có thể đã di chuyển, do đó công thức khoảng cách cuối cùng sử dụng độ sâu của các đỉnh hiện tại. Điều đó là không đủ cho các truy vấn tùy ý, vì các đỉnh hiện tại có thể có độ sâu nhỏ hơn đỉnh gốc. 
-
-Để tránh vấn đề đó, việc triển khai ở trên phải duy trì độ sâu điểm cuối ban đầu trước khi sửa đổi các đỉnh. Việc thực hiện sửa chữa là dưới đây.```python
-import sys
-input = sys.stdin.readline
-
-def solve():
-    q = int(input())
-
-    LOG = 19
-    max_nodes = q + 2
-
-    up = [[1] * max_nodes for _ in range(LOG)]
-    depth = [0] * max_nodes
-
-    curr = 1
-    last = 0
-    out = []
-
-    for _ in range(q):
-        data = list(map(int, input().split()))
-        t = data[0]
-
-        if t == 1:
-            p_encoded = data[1]
-
-            parent = (p_encoded + last) % curr + 1
-            v = curr + 1
-
-            depth[v] = depth[parent] + 1
-            up[0][v] = parent
-
-            for k in range(1, LOG):
-                up[k][v] = up[k - 1][up[k - 1][v]]
-
-            curr += 1
-
-            last = depth[v] + 1
-            out.append(str(last))
-
-        else:
-            u = (data[1] + last) % curr + 1
-            v = (data[2] + last) % curr + 1
-
-            original_u = u
-            original_v = v
-
-            if depth[u] < depth[v]:
-                u, v = v, u
-
-            diff = depth[u] - depth[v]
-            bit = 0
-
-            while diff:
-                if diff & 1:
-                    u = up[bit][u]
-                diff >>= 1
-                bit += 1
-
-            if u == v:
-                lca = u
-            else:
-                for k in range(LOG - 1, -1, -1):
-                    if up[k][u] != up[k][v]:
-                        u = up[k][u]
-                        v = up[k][v]
-
-                lca = up[0][u]
-
-            last = (
-                depth[original_u]
-                + depth[original_v]
-                - 2 * depth[lca]
-                + 1
-            )
-            out.append(str(last))
-
-    sys.stdout.write("\n".join(out))
-
-if __name__ == "__main__":
-    solve()
-```Phiên bản thứ hai là phiên bản để gửi. Bảo quản`original_u`Và`original_v`là một chi tiết thực hiện tinh tế nhưng cần thiết. Các đỉnh được sử dụng trong quá trình nâng LCA là các biến làm việc và độ sâu của chúng sau khi nâng không nhất thiết phải là độ sâu điểm cuối ban đầu. 
+Số nguyên Python không tràn cho các giá trị được sử dụng ở đây. Giá trị trung gian lớn nhất trong công thức giải mã chỉ là vài trăm nghìn, khoảng cách nhiều nhất là số lượng máy tính. 
 
 ## Ví dụ đã hoạt động 
 
 ### Mẫu 1 
 
-Bốn truy vấn chèn xây dựng cây`1`với quyền root, với máy tính`2`Và`3`gắn liền với`1`, tiếp theo là máy tính`4`Và`5`gắn liền với`2`. 
+Bốn thao tác đầu tiên tạo ra cây được mô tả bằng các thao tác được giải mã. Bảng theo dõi số lượng máy tính trước mỗi thao tác, câu trả lời trước đó, điểm cha hoặc điểm cuối được giải mã và câu trả lời thu được. 
 
-| Truy vấn | Loại | Đã giải mã điểm gốc/điểm cuối |`curr`sau khi truy vấn |`last`| 
-| --- | --- | --- | --- | --- | 
-|`1 0`| 1 | cha mẹ`1`, mới`2`| 2 | 2 | 
-|`1 2`| 1 | cha mẹ`1`, mới`3`| 3 | 2 | 
-|`1 2`| 1 | cha mẹ`2`, mới`4`| 4 | 3 | 
-|`1 2`| 1 | cha mẹ`2`, mới`5`| 5 | 3 | 
-|`2 0 4`| 2 |`(4, 3)`| 5 | 4 | 
-|`2 1 2`| 2 |`(1, 2)`| 5 | 2 | 
-|`2 2 1`| 2 |`(5, 4)`| 5 | 3 | 
+| Bước | Loại |`curr`trước |`last`trước | Hoạt động được giải mã | Mới`curr`| Trả lời | 
+| --- | --- | --- | --- | --- | --- | --- | 
+| 1 | 1 | 1 | 0 | mới 2 dưới 1 | 2 | 2 | 
+| 2 | 1 | 2 | 2 | mới 3 dưới 1 | 3 | 2 | 
+| 3 | 1 | 3 | 2 | mới 4 dưới 2 | 4 | 3 | 
+| 4 | 1 | 4 | 3 | mới 5 dưới 2 | 5 | 3 | 
+| 5 | 2 | 5 | 3 | truy vấn 4, 3 | 5 | 4 | 
+| 6 | 2 | 5 | 4 | truy vấn 1, 2 | 5 | 2 | 
+| 7 | 2 | 5 | 2 | truy vấn 5, 4 | 5 | 3 | 
 
-Đối với bốn truy vấn đầu tiên, câu trả lời chèn là độ sâu cộng với một, đưa ra`2, 2, 3, 3`. Truy vấn từ`4`ĐẾN`3`có LCA`1`, vậy đường đi của nó là`4 -> 2 -> 1 -> 3`, chứa bốn máy tính. Hai đường dẫn cuối cùng lần lượt chứa hai và ba máy tính. 
+Sau lần chèn đầu tiên, máy tính 2 cách gốc một cạnh nên đường dẫn gốc của nó chứa hai máy tính. Phần chèn thứ hai cũng gắn vào máy tính 1. Phần chèn thứ ba và thứ tư gắn vào máy tính 2, tạo ra độ sâu 2 cho máy tính 4 và 5. 
+
+Đối với truy vấn khoảng cách đầu tiên, đường dẫn là`4 -> 2 -> 1 -> 3`, chứa bốn máy tính. LCA là máy tính 1. Truy vấn cuối cùng yêu cầu máy tính 5 và 4, dùng chung máy tính 2 với tư cách là máy tính mẹ, vì vậy đường dẫn chứa`5 -> 2 -> 4`, tặng ba máy tính. 
 
 ### Mẫu 2 
 
-Lần chèn đầu tiên được mã hóa bằng`last = 0`, Vì thế`p = (1 + 0) % 1 + 1 = 1`, tạo máy tính`2`dưới gốc. Câu trả lời của nó là`2`và câu trả lời đó sẽ thay đổi cách giải mã truy vấn tiếp theo. 
+Ở đây, các giá trị được mã hóa phụ thuộc vào câu trả lời từ cả truy vấn chèn và khoảng cách, vì vậy sẽ rất hữu ích khi theo dõi rõ ràng`last`. 
 
-| Truy vấn | Loại | Đã giải mã điểm gốc/điểm cuối |`curr`sau khi truy vấn |`last`| 
-| --- | --- | --- | --- | --- | 
-|`1 1`| 1 | cha mẹ`1`, mới`2`| 2 | 2 | 
-|`2 1 2`| 2 |`(2, 1)`| 2 | 2 | 
-|`1 0`| 1 | cha mẹ`1`, mới`3`| 3 | 2 | 
-|`1 1`| 1 | cha mẹ`1`, mới`4`| 4 | 2 | 
-|`2 0 3`| 2 |`(3, 2)`| 4 | 3 | 
-|`2 2 2`| 2 |`(2, 2)`| 4 | 1 | 
+| Bước | Loại |`curr`trước |`last`trước | Hoạt động được giải mã | Mới`curr`| Trả lời | 
+| --- | --- | --- | --- | --- | --- | --- | 
+| 1 | 1 | 1 | 0 | mới 2 dưới 1 | 2 | 2 | 
+| 2 | 2 | 2 | 2 | truy vấn 1, 2 | 2 | 2 | 
+| 3 | 1 | 2 | 2 | mới 3 dưới 1 | 3 | 2 | 
+| 4 | 1 | 3 | 2 | mới 4 dưới 1 | 4 | 2 | 
+| 5 | 2 | 4 | 2 | truy vấn 3, 4 | 4 | 3 | 
+| 6 | 2 | 4 | 3 | truy vấn 2, 2 | 4 | 1 | 
 
-Truy vấn thứ hai được giải mã bằng cách sử dụng`last = 2`và truy vấn cuối cùng thể hiện trường hợp điểm cuối bằng nhau. Vì cả hai thiết bị đầu cuối đều là máy tính`2`, đường dẫn duy nhất chứa chính xác một máy tính. 
+Hoạt động thứ hai giải mã thành điểm cuối 1 và 2. Câu trả lời của nó là hai, trở thành`last`giá trị được sử dụng bởi hoạt động thứ ba. Thao tác thứ năm có điểm cuối 3 và 4, cả hai đều là con của máy tính 1, do đó đường dẫn của chúng chứa ba máy tính. Truy vấn cuối cùng giải mã cả hai điểm cuối tới máy tính 2, thể hiện trường hợp khoảng cách bằng 0 và tạo ra một trường hợp theo yêu cầu. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | O(Q log Q) | Mỗi lần chèn đều lấp đầy`O(log Q)`tổ tiên và mọi truy vấn LCA đều sử dụng`O(log Q)`hoạt động nâng. | 
-| Không gian | O(Q log Q) | Cửa hàng bàn nâng nhị phân`O(log Q)`tổ tiên của mỗi người nhiều nhất`Q + 1`máy tính. | 
+| Thời gian | (O(Q\log Q)) | Mỗi lần chèn sẽ tính toán tổ tiên (O(\log Q)) và mọi truy vấn khoảng cách thực hiện (O(\log Q)) công việc LCA. | 
+| Không gian | (O(Q\log Q)) | Bảng nâng nhị phân lưu trữ tổ tiên (O(\log Q)) cho mỗi máy tính trong số tối đa (Q+1). | 
 
-Với`Q <= 2 * 10^5`, bàn nâng chỉ có khoảng`200001 * 19`các mục số nguyên. Mỗi truy vấn thực hiện tối đa vài chục thao tác tổ tiên, phù hợp với giới hạn 2 giây, trong khi cách tiếp cận bạo lực có thể yêu cầu hàng chục tỷ lượt duyệt gốc. 
+Với (Q\le2\cdot10^5), hệ số logarit nhỏ hơn 20. Thuật toán chỉ thực hiện một lượng công việc nhỏ không đổi ở mỗi cấp độ nâng nhị phân, do đó tổng số công việc phù hợp với giới hạn hai giây. Bảng cũng vừa vặn thoải mái trong phạm vi 256 MB khi triển khai Python. 
 
 ## Trường hợp thử nghiệm```python
+# This test block is intended to be placed after the solution code.
+# It reuses solve() and captures its output.
+
 import sys
 import io
-
-def solve():
-    input = sys.stdin.readline
-
-    q = int(input())
-
-    LOG = 19
-    max_nodes = q + 2
-
-    up = [[1] * max_nodes for _ in range(LOG)]
-    depth = [0] * max_nodes
-
-    curr = 1
-    last = 0
-    out = []
-
-    for _ in range(q):
-        data = list(map(int, input().split()))
-        t = data[0]
-
-        if t == 1:
-            parent = (data[1] + last) % curr + 1
-            v = curr + 1
-
-            depth[v] = depth[parent] + 1
-            up[0][v] = parent
-
-            for k in range(1, LOG):
-                up[k][v] = up[k - 1][up[k - 1][v]]
-
-            curr += 1
-            last = depth[v] + 1
-            out.append(str(last))
-
-        else:
-            u = (data[1] + last) % curr + 1
-            v = (data[2] + last) % curr + 1
-
-            original_u = u
-            original_v = v
-
-            if depth[u] < depth[v]:
-                u, v = v, u
-
-            diff = depth[u] - depth[v]
-            bit = 0
-
-            while diff:
-                if diff & 1:
-                    u = up[bit][u]
-                diff >>= 1
-                bit += 1
-
-            if u == v:
-                lca = u
-            else:
-                for k in range(LOG - 1, -1, -1):
-                    if up[k][u] != up[k][v]:
-                        u = up[k][u]
-                        v = up[k][v]
-                lca = up[0][u]
-
-            last = (
-                depth[original_u]
-                + depth[original_v]
-                - 2 * depth[lca]
-                + 1
-            )
-            out.append(str(last))
-
-    return "\n".join(out)
 
 def run(inp: str) -> str:
     old_stdin = sys.stdin
     old_stdout = sys.stdout
 
-    sys.stdin = io.StringIO(inp)
-    sys.stdout = io.StringIO()
-
     try:
+        sys.stdin = io.StringIO(inp)
+        sys.stdout = io.StringIO()
         solve()
         return sys.stdout.getvalue()
     finally:
         sys.stdin = old_stdin
         sys.stdout = old_stdout
 
-sample1 = """7
+# Provided sample 1
+assert run("""7
 1 0
 1 2
 1 2
@@ -395,92 +274,102 @@ sample1 = """7
 2 0 4
 2 1 2
 2 2 1
-"""
+""") == """2
+2
+3
+3
+4
+2
+3""", "sample 1"
 
-sample2 = """6
+# Provided sample 2
+assert run("""6
 1 1
 2 1 2
 1 0
 1 1
 2 0 3
 2 2 2
-"""
+""") == """2
+2
+2
+2
+3
+1""", "sample 2"
 
-assert run(sample1) == "2\n2\n3\n3\n4\n2\n3", "sample 1"
-assert run(sample2) == "2\n2\n2\n2\n3\n1", "sample 2"
-
-minimum_case = """1
+# Minimum-size input, querying the only existing computer.
+assert run("""1
 2 0 0
-"""
-assert run(minimum_case) == "1", "single root, equal endpoints"
+""") == """1""", "single vertex"
 
-root_children = """4
-1 0
-1 0
+# Repeated identical queries. They all decode to the same vertex.
+assert run("""4
 2 0 0
-2 1 0
-"""
-assert run(root_children) == "2\n2\n1\n2", "root children and equal endpoints"
+2 0 0
+2 0 0
+2 0 0
+""") == """1
+1
+1
+1""", "all equal endpoints"
 
-chain_case = """6
+# Exercises parent == curr and then a query involving the deepest vertices.
+assert run("""4
 1 0
-1 0
-1 0
+1 1
 2 0 0
 2 0 1
-2 1 2
-"""
-assert run(chain_case) == "2\n3\n4\n1\n4\n2", "deep chain"
+""") == """2
+3
+1
+2""", "boundary parent and self query"
 
-maximum_case = "200000\n" + "\n".join(["1 0"] * 199999)
-expected = "\n".join(str(i) for i in range(2, 200001))
-assert run(maximum_case) == expected, "maximum-size chain"
+# Maximum number of operations. There is only one computer, so every query
+# must decode to (1, 1) and answer 1.
+max_q = 200000
+max_input = str(max_q) + "\n" + "2 0 0\n" * max_q
+max_expected = "1\n" * max_q
+assert run(max_input) == max_expected, "maximum query count"
 
-all_equal_case = """8
-1 0
+# Large encoded values with curr = 1. Modulo must reduce them correctly.
+assert run("""3
+1 200000
+2 200000 200000
 2 0 0
-2 1 1
-1 0
-2 0 0
-2 1 1
-1 0
-2 0 0
-"""
-assert run(all_equal_case) == "2\n1\n1\n2\n1\n1\n2\n1", "repeated equal endpoints"
+""") == """2
+1
+1""", "maximum encoded values"
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`1 / 2 0 0`|`1`| Mạng tối thiểu và điểm cuối bằng nhau | 
-|`1 0 / 1 0 / 2 0 0 / 2 1 0`|`2, 2, 1, 2`| Nhiều con gốc và giải mã điểm cuối | 
-| Ba liên tiếp`1 0`các phần chèn theo sau là các truy vấn đường dẫn |`2, 3, 4, 1, 4, 2`| Chuỗi sâu và đường dẫn LCA dài | 
-|`199999`liên tiếp`1 0`chèn | Trình tự độ sâu từ`2`bởi vì`200000`| Kích thước đầu vào tối đa và tiền xử lý logarit | 
-| Các lần chèn lặp lại và các truy vấn điểm cuối bằng nhau |`2, 1, 1, 2, 1, 1, 2, 1`| lặp đi lặp lại`last`các giá trị và`u = v`trường hợp ranh giới | 
+|`1 / 2 0 0`|`1`| Kích thước cây tối thiểu và`+1`chuyển đổi các cạnh sang máy tính | 
+| bốn`2 0 0`truy vấn |`1 1 1 1`| Giải mã lặp đi lặp lại và trường hợp`u = v`| 
+| Hai lần chèn theo sau là hai truy vấn |`2 3 1 2`| Gốc bằng id hợp lệ lớn nhất, xử lý độ sâu và giải mã điểm cuối | 
+|`200000`truy vấn loại 2 giống hệt nhau |`1`lặp đi lặp lại 200000 lần | Số lượng thao tác tối đa và xử lý trực tuyến | 
+| Chèn và truy vấn bằng cách sử dụng`200000`|`2 1 1`| Giá trị biên trong đầu vào được mã hóa và hành vi modulo | 
 
 ## Vỏ cạnh 
 
-Trường hợp một gốc được xử lý trước khi chèn bất kỳ. Vì```
+Trường hợp một máy tính được xử lý vì gốc có độ sâu bằng 0 và mọi truy vấn trên nó đều có các cạnh khoảng cách bằng 0. Việc thực hiện thêm một khi chuyển đổi khoảng cách thành một số máy tính. Vì```
 1
 2 0 0
-```
+```cả hai điểm cuối đều giải mã thành 1,`lca=1`, và câu trả lời là`0+0-2*0+1=1`. 
 
-`curr = 1`Và`last = 0`, vì vậy cả hai điểm cuối được mã hóa đều trở thành`1`. LCA là`1`, và câu trả lời là`0 + 0 - 2 * 0 + 1 = 1`. 
-
-Một con trực tiếp của gốc có độ sâu một. Vì```
-1
-1 0
-```cha mẹ là`(0 + 0) % 1 + 1 = 1`và đỉnh mới có chiều sâu`1`. Số máy tính cần thiết là`1 + 1 = 2`. Cha mẹ được giải mã trước`curr`trở thành`2`, điều này ngăn không cho cơ sở modulo vô tình bị thay đổi. 
-
-Một chuỗi dài kiểm tra xem việc triển khai có thực sự thực hiện các truy vấn LCA logarit thay vì hướng dẫn từng cha mẹ một hay không. Ví dụ,```
-3
-1 0
-1 0
-1 0
-```tạo ra`1 -> 2 -> 3 -> 4`, và ba câu trả lời chèn là`2`,`3`, Và`4`. Một truy vấn sau đó giữa`4`Và`1`có LCA`1`, vậy đáp án của nó là`4`. 
-
-Các điểm cuối bằng nhau thực hiện một nhánh khác của thuật toán LCA. Nếu cả hai điểm cuối được giải mã đều`v`, tổ tiên chung thấp nhất của chúng là ngay lập tức`v`. Khoảng cách không có cạnh nào, nhưng câu trả lời được yêu cầu là một máy tính, vì vậy kết quả cuối cùng`+1`là cần thiết. 
-
-Đầu vào được mã hóa cũng có thể tạo ra hai giá trị được mã hóa giống hệt nhau biểu thị các đỉnh thực tế khác nhau tại các thời điểm khác nhau bởi vì`last`những thay đổi. Ví dụ,```
-3
-1 0
+Trường hợp tự truy vấn không yêu cầu thao tác cấu trúc dữ liệu đặc biệt. Khi`u == v`, việc cân bằng độ sâu làm cho chúng bằng nhau ngay lập tức, do đó LCA là cùng một đỉnh. Công thức khoảng cách trở thành`depth[u] + depth[u] - 2*depth[u] + 1`, đó là một. Như vậy```
+4
 2 0 0
 2 0 0
-```bắt đầu với máy tính`1`, chèn máy tính`2`, và thu được`last = 2`. Truy vấn loại 2 đầu tiên giải mã cả hai điểm cuối dưới dạng`1`, đưa ra câu trả lời`1`. Hiện nay`last = 1`, vì vậy truy vấn được mã hóa giống hệt tiếp theo sẽ sử dụng`(0 + 1) % 2 + 1 = 2`cho cả hai điểm cuối và tạo ra một câu trả lời khác về`1`. Xử lý và cập nhật`last`ngay lập tức là điều làm cho hai truy vấn trông giống hệt nhau này hoạt động chính xác.
+2 0 0
+2 0 0
+```tạo ra bốn dòng chứa`1`, mặc dù`last`thay đổi sau mỗi truy vấn. 
+
+Trường hợp ranh giới gốc được kiểm soát bởi công thức modulo. TRONG```
+4
+1 0
+1 1
+2 0 0
+2 0 1
+```lần chèn đầu tiên sử dụng cha mẹ 1. Câu trả lời của nó là 2, do đó lần chèn thứ hai giải mã cha mẹ của nó là`(1+2)%2+1=2`. Do đó, máy tính mới có độ sâu 2 và câu trả lời 3. Sau truy vấn tiếp theo,`last`trở thành 1 và điểm cuối được mã hóa cuối cùng trở thành 2 và 3. Đường dẫn của chúng chứa chính xác hai máy tính. Thuật toán thu được những kết quả này mà không cần phải đi hết con đường. 
+
+Sự sắp xếp của`curr`là một điều kiện biên tinh tế khác. Giả sử có hai máy tính trước khi chèn. Phần gốc phải được giải mã bằng modulo 2, vì hiện tại chỉ tồn tại id 1 và 2. Tăng dần`curr`đầu tiên sẽ cho phép công thức chọn máy tính chưa được tạo một cách không chính xác 3. Việc triển khai sẽ tính toán`parent`đầu tiên, xây dựng`new_node`, và chỉ sau đó mới tăng`curr`. 
+
+Cuối cùng, đầu vào được mã hóa phải được xử lý trực tuyến. Một truy vấn có thể thay đổi`last`và giá trị đó thay đổi ý nghĩa của mọi số được mã hóa tiếp theo. Ví dụ: trong Mẫu 1, lần chèn đầu tiên tạo ra`last=2`; giá trị gốc thô của lần chèn thứ hai là`2`, nhưng cha mẹ thực sự của nó là`(2+2)%2+1=1`. Bất kỳ triển khai nào giải mã tất cả các hoạt động với`last=0`, hoặc với câu trả lời cuối cùng thay vì câu trả lời trước đó, sẽ xây dựng một cây khác và do đó cho kết quả khác.

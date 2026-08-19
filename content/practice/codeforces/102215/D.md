@@ -1,7 +1,7 @@
 ---
 title: "CF 102215D - Bộ phận Quốc gia"
-description: "Mạng lưới đường bộ là một cái cây, vì có (n) thành phố, chính xác là (n-1) đường và mọi thành phố đều có thể đến được từ mọi thành phố khác. Trong mỗi dự đoán, một số thành phố có màu đỏ, một số có màu xanh lam và tất cả các thành phố còn lại đều không liên quan. Chúng tôi có thể đóng bất kỳ con đường nào."
-date: "2026-08-17T23:34:59+07:00"
+description: "Chúng ta có một cây thành phố. Đối với mỗi dự đoán, một số đỉnh có màu đỏ, một số có màu xanh lam và tất cả các đỉnh còn lại là trung tính. Chúng tôi có thể loại bỏ bất kỳ con đường nào chúng tôi thích."
+date: "2026-08-18T11:50:13+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102215
@@ -9,8 +9,8 @@ codeforces_index: "D"
 codeforces_contest_name: "2019, XII Samara Regional Intercollegiate Programming Contest"
 rating: 0
 weight: 102215
-solve_time_s: 222
-verified: false
+solve_time_s: 328
+verified: true
 draft: false
 ---
 
@@ -18,96 +18,92 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 3 phút 42s 
-**Đã xác minh:** không 
+**Thời gian giải:** 5 phút 28s 
+**Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
-Mạng lưới đường bộ là một cái cây, vì có (n) thành phố, chính xác là (n-1) đường và mọi thành phố đều có thể đến được từ mọi thành phố khác. Trong mỗi dự đoán, một số thành phố có màu đỏ, một số có màu xanh lam và tất cả các thành phố còn lại đều không liên quan. 
+Chúng ta có một cây thành phố. Đối với mỗi dự đoán, một số đỉnh có màu đỏ, một số có màu xanh lam và tất cả các đỉnh còn lại là trung tính. Chúng tôi có thể loại bỏ bất kỳ con đường nào chúng tôi thích. Sau khi loại bỏ chúng, mọi thành phố màu đỏ vẫn phải thuộc về một thành phần được kết nối, mọi thành phố màu xanh phải thuộc về một thành phần được kết nối khác và không thành phố màu đỏ nào được kết nối với bất kỳ thành phố màu xanh nào. 
 
-Chúng tôi có thể đóng bất kỳ con đường nào. Sau khi làm như vậy, mọi thành phố đỏ vẫn phải được kết nối với mọi thành phố đỏ khác, mọi thành phố xanh vẫn phải được kết nối với mọi thành phố xanh khác và không thành phố đỏ nào được kết nối với bất kỳ thành phố xanh nào. Nhiệm vụ là quyết định xem có tồn tại một tập hợp các con đường khép kín như vậy cho mọi dự đoán hay không. Bài toán chính thức có (n,q\le 200000), với tổng của tất cả các thành phố màu đỏ và xanh được truy vấn nhiều nhất là (200000). 
+Khó khăn chính là những con đường chúng ta loại bỏ được chia sẻ bởi nhiều con đường khả thi. Việc kết nối hai thành phố màu đỏ có thể buộc chúng ta phải giữ đường đi qua các thành phố trung lập và những thành phố trung lập đó có thể trở thành một phần của vùng màu đỏ. Điều tương tự cũng xảy ra với các thành phố xanh. Câu hỏi thực sự là liệu cây con kết nối tối thiểu chứa tất cả các đỉnh màu đỏ có thể tách rời khỏi cây con kết nối tối thiểu chứa tất cả các đỉnh màu xanh hay không. Đầu vào chính thức có tới (200000) thành phố và tổng số đỉnh màu trên tất cả các dự đoán cũng nhiều nhất là (200000). 
 
-Đối tượng chính là cây con tối thiểu kết nối một tập hợp các đỉnh. Đối với các thành phố màu đỏ, gọi đây là cây con Steiner đỏ. Bất kỳ giải pháp hợp lệ nào cũng phải để mở mọi cạnh của cây con này, vì nếu không thì hai thành phố màu đỏ sẽ bị ngắt kết nối. Điều tương tự cũng đúng với cây con Steiner màu xanh. Vì vậy, câu hỏi thực sự là liệu hai cây con cần thiết có thể tách rời nhau hay không. 
+Đối với (n=200000), thuật toán (O(n^2)) vượt xa giới hạn hai giây. Mục tiêu hữu ích là tiền xử lý đại khái (O(n\log n)), theo sau là (O((r+b)\log n)) hoạt động trên mỗi dự đoán, vì tổng (r+b) trên mỗi dự đoán chỉ là (200000). Chúng tôi có đủ khả năng thực hiện công việc logarit cho từng thành phố được tô màu, nhưng chúng tôi không thể đủ khả năng quét tất cả (n) thành phố cho mọi dự đoán. 
 
-Giới hạn kích thước loại trừ việc xây dựng lại thông tin trên tất cả (n) thành phố cho mỗi truy vấn. Với (q=200000) và (n=200000), phương thức (O(nq)) có thể thực hiện khoảng (4\cdot10^{10}) thao tác, vượt xa giới hạn 2 giây. Phần hữu ích của các ràng buộc là tổng số thành phố được tô màu trên tất cả các truy vấn chỉ là (200000), do đó công việc truy vấn phải tỷ lệ thuận với số thành phố được đề cập, nhân với phép toán cây logarit. 
-
-Có một số trường hợp khó xử lý. Nếu mỗi màu chỉ có một thành phố thì câu trả lời luôn là CÓ. Ví dụ,```
-2
-1 2
-1
-1 1 2
-```có câu trả lời`YES`. Chúng tôi có thể giữ con đường duy nhất mở cho kết nối bên trong của mỗi màu và không bắt buộc phải mở con đường đỏ-xanh. 
-
-Hai cây con màu cũng có thể có cùng một gốc mặc dù không có thành phố đỏ và xanh trùng nhau. Ví dụ,```
+Có một số trường hợp đặc biệt không thể giải thích được vấn đề một cách đơn giản hơn. Đầu tiên, cây con Steiner màu đỏ và màu xanh lam có thể gặp nhau tại một thành phố trung tính mặc dù không có thành phố nào có cả hai màu. Ví dụ:```
 5
 1 2
 1 3
-1 4
-1 5
+2 4
+3 5
 1
-2 2 3 4 5
-```có thành phố màu đỏ (2,3) và thành phố màu xanh (4,5). Cả hai cây con màu đều chứa thành phố (1), vì vậy câu trả lời là`NO`. Một giải pháp bất cẩn chỉ kiểm tra xem bản thân các thành phố có màu sắc có khác nhau hay không sẽ chấp nhận nó một cách sai lầm. 
+2 2 4 5 3
+```Ở đây các thành phố màu đỏ là (2,4) và các thành phố màu xanh là (5,3). Kết nối màu đỏ sử dụng (2-1), trong khi kết nối màu xanh lam sử dụng (3-1), vì vậy cả hai vùng được kết nối đều chứa thành phố (1). Câu trả lời đúng là`NO`. Một giải pháp bất cẩn chỉ kiểm tra xem các đỉnh được tô màu rõ ràng chồng lên nhau có trả về không chính xác hay không`YES`. 
 
-Một trường hợp tinh tế khác xảy ra khi gốc Steiner của một màu là tổ tiên của gốc Steiner của màu kia. Coi như```
+Hiện tượng tương tự xuất hiện trong mẫu đầu tiên. Đối với dự đoán thứ hai, các thành phố màu đỏ là (4,6) và các thành phố màu xanh là (5,7). Các đỉnh được tô màu của chúng hoàn toàn tách biệt, nhưng cả hai kết nối bắt buộc đều đi qua thành phố (1), vì vậy câu trả lời là`NO`. 
+
+Trường hợp cạnh thứ hai xảy ra khi cây con bắt buộc của một màu chứa LCA của màu kia. Hãy xem xét chuỗi```
 4
 1 2
 2 3
 3 4
 1
-2 1 4 3
-```Các thành phố màu đỏ là (1,4), vì vậy cây con Steiner của chúng là toàn bộ đường đi từ (1) đến (4). Thành phố xanh là (3). Cây con màu xanh nằm bên trong cây con màu đỏ nên đáp án là`NO`. Chỉ quan sát rằng hai nghiệm Steiner, (1) và (3), khác nhau là chưa đủ. 
+2 1 1 3 4
+```Các thành phố màu đỏ là (1,3), vì vậy cây con yêu cầu của chúng chứa (1,2,3). Thành phố xanh là (4). Chúng có thể được phân tách bằng cách cắt cạnh (3-4), vì vậy câu trả lời là`YES`. Việc LCA màu đỏ là tổ tiên của đỉnh màu xanh không tự nó làm cho câu trả lời là phủ định. 
 
-Tình huống ngược lại cũng có thể xảy ra:```
+Trường hợp ngược lại là```
 4
 1 2
 2 3
 3 4
 1
-2 1 2 3 4
-```Ở đây, các thành phố màu đỏ là (1,2), các thành phố màu xanh là (3,4) và các cây con yêu cầu của chúng được phân tách bằng cạnh (2-3). Câu trả lời là`YES`. 
+2 1 1 4 3
+```Các thành phố màu đỏ là (1,4), trong khi màu xanh lam là (3). Đường màu đỏ là toàn bộ chuỗi và nhất thiết phải chứa thành phố màu xanh, vì vậy câu trả lời là`NO`. Một bài kiểm tra chỉ so sánh hai đỉnh LCA sẽ bỏ sót điều này. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận trực tiếp có thể root cây và xử lý mọi cạnh cho mọi truy vấn. Đối với mỗi truy vấn, chúng tôi có thể xác định cạnh nào của mỗi cạnh chứa các thành phố màu đỏ và xanh lam, sau đó quyết định xem cạnh đó có phải tiếp tục mở cho một trong hai màu hay không. Điều này đúng vì việc loại bỏ một cạnh sẽ chia cây thành chính xác hai thành phần, do đó tất cả các yêu cầu kết nối có thể được thể hiện dưới dạng các vết cắt này. 
+Về mặt khái niệm, một cách tiếp cận bạo lực trực tiếp là có thể. Đối với mỗi con đường, hãy xóa con đường đó và kiểm tra hai thành phần tạo thành. Chúng ta có thể kiểm tra xem tất cả các thành phố màu đỏ có nằm ở một bên và tất cả các thành phố màu xanh lam có nằm ở phía bên kia hay không và liệu các nhóm màu đỏ và xanh lam có được kết nối với nhau hay không. Vì có (n-1) đường ứng cử viên và quá trình xác minh đầy đủ có thể kiểm tra (O(n)) thành phố nên một dự đoán có thể mất (O(n^2)) thời gian. Số lượng dự đoán có thể lớn tới (100000), vì mỗi dự đoán đều chứa ít nhất một thành phố màu đỏ và một thành phố màu xanh trong khi tổng số thành phố có màu được giới hạn bởi (200000). Do đó, một cấu trúc trong trường hợp xấu nhất có thể đạt tới khoảng (10^5\cdot 2\cdot 10^5=2\cdot10^{10}) kiểm tra đỉnh, điều này gần như không khả thi. 
 
-Vấn đề là khối lượng công việc. Xử lý tất cả (n-1) cạnh cho mỗi truy vấn có chi phí (O(nq)). Ở giới hạn tối đa, đây là khoảng (200000\cdot200000=4\cdot10^{10}) hoạt động cạnh, điều này gần như không khả thi. 
+Lực lượng vũ phu hoạt động vì sự phân chia hợp lệ của cây luôn được thể hiện bằng các cạnh cắt giữa các thành phần được kết nối. Vấn đề là tìm ra những thành phần đó mà không xem xét rõ ràng mọi cạnh. 
 
-Quan sát giúp mở ra phương pháp nhanh hơn là chúng ta không bao giờ cần kiểm tra toàn bộ cây. Đối với một tập hợp các đỉnh, cây con kết nối tối thiểu của nó có đỉnh cao nhất duy nhất khi cây có gốc. Đỉnh đó đơn giản là LCA của tất cả các đỉnh trong tập hợp. 
+Quan sát hữu ích là, bên trong một cái cây, chỉ có một con đường duy nhất giữa hai thành phố bất kỳ. Do đó, nếu một số thành phố đỏ phải kết nối với nhau thì mọi con đường giữa chúng đều bị buộc phải thực hiện. Hợp của chúng là một cây con kết nối tối thiểu duy nhất. Điều tương tự cũng đúng với các thành phố xanh. Đây chính xác là phiên bản cây của cây con Steiner, sơ đồ con được kết nối tối thiểu chứa một tập hợp các thiết bị đầu cuối được chỉ định. 
 
-Gọi (R) là LCA của tất cả các thành phố màu đỏ và (B) LCA của tất cả các thành phố màu xanh. Cây con Steiner đỏ chính xác là hợp các đường đi từ (R) tới mọi thành phố đỏ. Tương tự như vậy, cây con Steiner xanh là hợp của các đường đi từ (B) tới mọi thành phố xanh. 
+Nếu hai cây con được yêu cầu không có đỉnh riêng biệt, chúng ta có thể giữ mọi cạnh bên trong mỗi cây con và cắt các cạnh ngăn cách chúng với phần còn lại của cây. Các thành phố màu đỏ vẫn được kết nối, các thành phố màu xanh vẫn được kết nối và hai nhóm không thể tiếp cận nhau. Nếu hai cây con giao nhau, không có lựa chọn loại bỏ đường nào có thể hữu ích, bởi vì mọi thành phần được kết nối chứa tất cả các thành phố màu đỏ phải chứa cây con màu đỏ và mọi thành phần được kết nối chứa tất cả các thành phố màu xanh lam phải chứa cây con màu xanh lam. 
 
-Nếu cả (R) và (B) đều không phải là tổ tiên của cây kia thì các cây con gốc của chúng sẽ rời nhau, do đó hai cây con Steiner sẽ tự động tách nhau và câu trả lời là`YES`. 
+Bây giờ hãy nhổ cây ở thành phố (1). Đối với bất kỳ tập đỉnh nào, hãy để LCA của nó là tổ tiên chung thấp nhất của tất cả các đỉnh trong tập đó. Nếu (A) là LCA của tất cả các thành phố màu đỏ thì mọi đỉnh màu đỏ đều nằm trong cây con của (A). Tương tự, nếu (B) là LCA của tất cả các thành phố màu xanh lam thì mọi đỉnh màu xanh lam đều nằm trong cây con của (B). 
 
-Thay vào đó, giả sử rằng (R) là tổ tiên của (B). Toàn bộ cây con Steiner màu xanh được chứa trong cây con có gốc tại (B). Cây con Steiner đỏ đạt đến cây con đó chính xác khi có thành phố đỏ nào đó nằm bên trong cây con có gốc tại (B). Nếu một thành phố màu đỏ như vậy tồn tại, đường đi của nó từ (R) đến thành phố đó đi qua (B), trong khi cây con màu xanh cũng chứa (B), do đó hai cây con bắt buộc giao nhau. Câu trả lời là`NO`. Nếu không có thành phố màu đỏ nào nằm ở đó thì hai cây con sẽ rời nhau và câu trả lời là`YES`. 
+Khi đó chỉ có hai khả năng về cấu trúc. Nếu cả (A) và (B) đều không phải là tổ tiên của cây kia thì các cây con gốc của chúng là rời nhau, do đó hai cây con cần thiết là rời nhau và câu trả lời là`YES`. Nếu (A) là tổ tiên của (B), cây con bắt buộc màu xanh nằm bên trong cây con của (B). Cách duy nhất để cây con màu đỏ có thể giao nhau với nó là để chính thành phố màu đỏ nào đó nằm bên trong cây con của (B). Đối số đối xứng được áp dụng khi (B) là tổ tiên của (A). 
 
-Trường hợp (B) là tổ tiên của (R) là đối xứng. 
+Điều này mang lại đặc tính dựa trên LCA tương tự được sử dụng bởi các giải pháp đã biết cho vấn đề này. 
 
-Do đó, mỗi truy vấn chỉ cần tính toán LCA lặp đi lặp lại, sau đó là kiểm tra tổ tiên. Chúng tôi xử lý trước cây cho các truy vấn LCA (O(\log n)) bằng cách sử dụng phân tách nặng-nhẹ. Vì tổng số thành phố được đề cập nhiều nhất là (200000), nên tổng công việc truy vấn vẫn nằm trong giới hạn dự kiến. 
+Chúng ta có thể tìm LCA của hai đỉnh trong (O(\log n)) bằng cách nâng nhị phân. Sau đó, LCA của toàn bộ lớp màu được lấy tăng dần: bắt đầu với thành phố màu đỏ đầu tiên và liên tục thay thế LCA hiện tại bằng LCA của nó và thành phố màu đỏ tiếp theo. Quá trình tương tự sẽ tạo ra LCA màu xanh lam. Vì tổng số thành phố được tô màu trong tất cả các dự đoán nhiều nhất là (200000), nên tốc độ này đủ nhanh. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
-| Lực lượng vũ phu | (O(nq)) | (O(n)) | Quá chậm | 
-| Tối ưu | (O(n + S\log n)), trong đó (S\le200000) | (O(n)) | Đã chấp nhận | 
+| Lực lượng vũ phu | (O(qn^2)) ở dạng trực tiếp | (O(n)) | Quá chậm | 
+| Tối ưu | (O(n\log n + S\log n)), trong đó (S\le 200000) là tổng số thành phố có màu | (O(n\log n)) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Rễ cây ở thành phố (1). Trong một DFS lặp lại, hãy tính`parent`,`depth`và thời gian vào và ra Euler`tin`Và`tout`. Khoảng ([tin[v],tout[v])) biểu thị chính xác cây con của (v), do đó việc kiểm tra tổ tiên sau đó có thể được trả lời trong (O(1)). 
-2. Tính kích thước cây con và chọn một con nặng cho mỗi đỉnh. Đứa trẻ nặng nhất là đứa trẻ có cây con lớn nhất. Theo sau các phần tử con nặng tạo ra các chuỗi trong đó số lần truy vấn LCA thay đổi chuỗi là (O(\log n)). 
-3. Gán mỗi đỉnh vào đầu chuỗi nặng-nhẹ của nó. Phân tách kết quả cho phép chúng ta tính toán LCA của hai đỉnh bằng cách di chuyển liên tục đỉnh có đầu chuỗi sâu hơn so với đỉnh đầu chuỗi của nó. 
-4. Đối với mỗi dự đoán, hãy lưu trữ các đỉnh màu đỏ và tính LCA chung của chúng bằng cách gấp các phép toán LCA từ trái sang phải. Bắt đầu với đỉnh màu đỏ đầu tiên là LCA hiện tại và thay thế nó bằng`lca(current, next)`cho mỗi đỉnh đỏ bổ sung. Đỉnh kết quả (R) là đỉnh cao nhất thuộc cây con Steiner đỏ. 
-5. Thực hiện tương tự với các đỉnh màu xanh lam và thu được (B). Vì mỗi truy vấn chứa ít nhất một đỉnh của mỗi màu nên cả hai LCA luôn được xác định. 
-6. Kiểm tra xem (R) và (B) có thể so sánh được trong cây có gốc hay không. Nếu không phải là tổ tiên của cây kia thì cây con của chúng sẽ rời rạc, do đó kết quả đầu ra`YES`. 
-7. Nếu (R) là tổ tiên của (B), hãy quét các đỉnh màu đỏ và kiểm tra xem có bất kỳ đỉnh nào trong số chúng nằm trong cây con của (B) hay không. Nếu đúng như vậy, cây con Steiner màu đỏ phải đi qua (B), trong đó cây con Steiner màu xanh cũng tồn tại, do đó đầu ra`NO`. Nếu không thì xuất ra`YES`. 
-8. Nếu (B) là tổ tiên của (R), hãy thực hiện kiểm tra đối xứng. Hãy tìm một đỉnh màu xanh bên trong cây con của (R). Một đỉnh như vậy buộc cây con Steiner màu xanh đi qua (R), gây ra giao điểm. Nếu không có đỉnh như vậy tồn tại, xuất ra`YES`. 
+1. Lấy gốc cây tại thành phố (1) và tính toán độ sâu và thành phố gốc trực tiếp của mỗi thành phố. Mối quan hệ cha cung cấp cho chúng ta cấu trúc cần thiết cho các truy vấn LCA. 
+2. Xây dựng bàn nâng nhị phân.`up[k][v]`lưu trữ tổ tiên của (v) có (2^k) cạnh phía trên nó. Điều này cho phép chúng ta di chuyển lên trên một khoảng cách lớn trong nhiều phép toán logarit. 
+3. Đối với mỗi dự đoán, hãy đọc tất cả các thành phố màu đỏ và tính toán dần dần LCA chung của chúng. Bắt đầu với thành phố màu đỏ đầu tiên`red_lca`. Với mỗi thành phố đỏ tiếp theo (x), đặt`red_lca = LCA(red_lca, x)`. Đỉnh kết quả là đỉnh thấp nhất vốn là tổ tiên của mọi thành phố đỏ. 
+4. Thực hiện tương tự cho tất cả các thành phố màu xanh lam và nhận được`blue_lca`. 
+5. Tính toán`common = LCA(red_lca, blue_lca)`. Nếu như`common`khác với cả hai LCA, thì LCA màu không phải là tổ tiên của LCA kia. Hai vùng bắt buộc nằm trong các cây con khác nhau của`common`, do đó đầu ra`YES`. 
+6. Nếu`red_lca == common`, thì LCA màu đỏ là tổ tiên của LCA màu xanh. Cây con bắt buộc màu xanh được chứa trong cây con có gốc tại`blue_lca`. Kiểm tra mọi thành phố màu đỏ (x). Nếu như`LCA(x, blue_lca) == blue_lca`, thì (x) nằm bên trong cây con blue-LCA. Vì cây con đỏ phải kết nối (x) với các thành phố đỏ khác nên nó đạt tới`blue_lca`, thuộc về cây con bắt buộc màu xanh lam. Các vùng giao nhau, do đó đầu ra`NO`. Nếu không có thành phố màu đỏ nào nằm ở đó, xuất ra`YES`. 
+7. Trường hợp còn lại là`blue_lca == common`, do đó LCA màu xanh là tổ tiên của LCA màu đỏ. Thực hiện kiểm tra đối xứng trên mỗi thành phố xanh, kiểm tra xem`LCA(x, red_lca) == red_lca`. Một giao lộ cho`NO`; nếu không thì hai vùng bắt buộc sẽ rời nhau và câu trả lời là`YES`. 
 
-Tại sao nó hoạt động có thể được tóm tắt bằng một bất biến: cây con Steiner của một màu là sự kết hợp của các đường dẫn từ LCA chung của màu đó đến tất cả các thiết bị đầu cuối của nó. Nếu hai LCA chung không thể so sánh được thì các hợp này nằm trong các cây con có gốc rời rạc. Nếu một LCA nằm trên LCA kia, chẳng hạn (R) phía trên (B), thì cây con màu xanh nằm hoàn toàn bên trong cây con của (B) và cây con màu đỏ giao với vùng đó một cách chính xác khi một số đầu cuối màu đỏ nằm bên trong nó. Thuật toán kiểm tra chính xác những khả năng này, do đó nó chấp nhận chính xác các dự đoán mà hai cây con Steiner yêu cầu tách rời nhau. 
+Bất biến đằng sau thuật toán là`red_lca`Và`blue_lca`luôn mô tả gốc bắt buộc của các cây con được kết nối theo yêu cầu tương ứng của chúng. Khi hai LCA nằm trong các cây con gốc riêng biệt thì các vùng được yêu cầu không thể đáp ứng được. Khi một LCA chứa LCA kia, giao điểm chỉ có thể xảy ra bên trong cây con của LCA con cháu và giao lộ đó tồn tại chính xác khi màu đối diện có điểm cuối ở đó. Điều này đặc trưng cho mọi sự sắp xếp có thể, vì vậy mọi`YES`tương ứng với một tập hợp các đường cắt có thể thực hiện được và mọi`NO`tương ứng với một giao lộ không thể tránh khỏi. 
 
 ## Giải pháp Python```python
 import sys
+from array import array
+
 input = sys.stdin.readline
 
-def solve():
+def solve(reader=None):
+    input = reader if reader is not None else sys.stdin.readline
+
     n = int(input())
 
     graph = [[] for _ in range(n + 1)]
@@ -116,207 +112,181 @@ def solve():
         graph[u].append(v)
         graph[v].append(u)
 
-    parent = [0] * (n + 1)
-    depth = [0] * (n + 1)
-    tin = [0] * (n + 1)
-    tout = [0] * (n + 1)
-    order = []
+    # Root the tree at 1.
+    parent = array('i', [0]) * (n + 1)
+    depth = array('i', [0]) * (n + 1)
 
-    # Iterative DFS.
-    timer = 0
-    stack = [(1, 0, 0)]
+    parent[1] = 1
+    stack = [1]
 
     while stack:
-        v, p, state = stack.pop()
+        u = stack.pop()
+        pu = parent[u]
+        du = depth[u] + 1
 
-        if state == 0:
-            parent[v] = p
-            tin[v] = timer
-            timer += 1
-            order.append(v)
+        for v in graph[u]:
+            if v == pu:
+                continue
+            parent[v] = u
+            depth[v] = du
+            stack.append(v)
 
-            stack.append((v, p, 1))
+    # Binary lifting table.
+    log = n.bit_length()
+    up = [parent]
 
-            for u in reversed(graph[v]):
-                if u != p:
-                    depth[u] = depth[v] + 1
-                    stack.append((u, v, 0))
-        else:
-            tout[v] = timer
-
-    # Subtree sizes and heavy child.
-    size = [1] * (n + 1)
-    heavy = [0] * (n + 1)
-
-    for v in reversed(order):
-        best_size = 0
-
-        for u in graph[v]:
-            if parent[u] == v:
-                size[v] += size[u]
-                if size[u] > best_size:
-                    best_size = size[u]
-                    heavy[v] = u
-
-    # Heavy-light decomposition.
-    head = [0] * (n + 1)
-    chain_stack = [(1, 1)]
-
-    while chain_stack:
-        v, h = chain_stack.pop()
-
-        while v:
-            head[v] = h
-            hv = heavy[v]
-
-            for u in graph[v]:
-                if parent[u] == v and u != hv:
-                    chain_stack.append((u, u))
-
-            v = hv
+    for _ in range(1, log):
+        prev = up[-1]
+        cur = array('i', (prev[prev[v]] for v in range(n + 1)))
+        up.append(cur)
 
     def lca(a, b):
-        while head[a] != head[b]:
-            if depth[head[a]] > depth[head[b]]:
-                a = parent[head[a]]
-            else:
-                b = parent[head[b]]
+        if depth[a] < depth[b]:
+            a, b = b, a
 
-        return a if depth[a] < depth[b] else b
+        diff = depth[a] - depth[b]
+        bit = 0
 
-    def is_ancestor(a, b):
-        return tin[a] <= tin[b] < tout[a]
+        while diff:
+            if diff & 1:
+                a = up[bit][a]
+            diff >>= 1
+            bit += 1
+
+        if a == b:
+            return a
+
+        for k in range(log - 1, -1, -1):
+            ua = up[k][a]
+            ub = up[k][b]
+            if ua != ub:
+                a = ua
+                b = ub
+
+        return up[0][a]
 
     q = int(input())
-    answer = []
+    answers = []
 
     for _ in range(q):
-        data = list(map(int, input().split()))
-        r, b = data[0], data[1]
+        parts = list(map(int, input().split()))
+        r, b = parts[0], parts[1]
 
-        reds = data[2:2 + r]
-        blues = data[2 + r:2 + r + b]
+        red = parts[2:2 + r]
+        blue = parts[2 + r:2 + r + b]
 
-        red_lca = reds[0]
-        for v in reds[1:]:
-            red_lca = lca(red_lca, v)
+        red_lca = red[0]
+        for x in red[1:]:
+            red_lca = lca(red_lca, x)
 
-        blue_lca = blues[0]
-        for v in blues[1:]:
-            blue_lca = lca(blue_lca, v)
+        blue_lca = blue[0]
+        for x in blue[1:]:
+            blue_lca = lca(blue_lca, x)
 
-        if not is_ancestor(red_lca, blue_lca) and \
-           not is_ancestor(blue_lca, red_lca):
-            answer.append("YES")
+        common = lca(red_lca, blue_lca)
+
+        if red_lca != common and blue_lca != common:
+            answers.append("YES")
             continue
 
-        if is_ancestor(red_lca, blue_lca):
-            # Red's Steiner tree intersects Blue's subtree
-            # exactly when some red terminal is inside it.
-            bad = False
-            for v in reds:
-                if is_ancestor(blue_lca, v):
-                    bad = True
-                    break
-            answer.append("NO" if bad else "YES")
-        else:
-            # Symmetric case.
-            bad = False
-            for v in blues:
-                if is_ancestor(red_lca, v):
-                    bad = True
-                    break
-            answer.append("NO" if bad else "YES")
+        if red_lca == common:
+            possible = True
 
-    sys.stdout.write("\n".join(answer))
+            for x in red:
+                if lca(x, blue_lca) == blue_lca:
+                    possible = False
+                    break
+
+            answers.append("YES" if possible else "NO")
+        else:
+            possible = True
+
+            for x in blue:
+                if lca(x, red_lca) == red_lca:
+                    possible = False
+                    break
+
+            answers.append("YES" if possible else "NO")
+
+    return "\n".join(answers)
 
 if __name__ == "__main__":
-    solve()
-```Giai đoạn tiền xử lý đầu tiên thực hiện DFS lặp thay vì đệ quy. Một cây hình đường dẫn có thể chứa (200000) đỉnh, đủ sâu để vượt quá giới hạn đệ quy thông thường của Python, do đó DFS đệ quy sẽ là một nguồn lỗi không cần thiết. 
+    sys.stdout.write(solve())
+```Danh sách kề lưu trữ cây ban đầu. DFS lặp lại chứ không phải đệ quy vì cây có thể là một chuỗi có độ dài (200000), vượt quá độ sâu đệ quy thông thường của Python. 
 
-các`tin`Và`tout`mảng được lấp đầy khi một đỉnh được nhập và thoát. Bởi vì quá trình truyền tải là một DFS, tất cả các đỉnh con của một đỉnh đều nhận được thời gian vào trước thời gian thoát của nó. Do đó,`a`là tổ tiên của`b`chính xác khi nào`tin[a] <= tin[b] < tout[a]`. 
+các`parent`mảng là một mảng số nguyên nhỏ gọn thay vì danh sách Python. Biểu diễn tương tự được sử dụng cho mọi cấp độ nâng nhị phân. Điều này quan trọng trong giới hạn bộ nhớ (256) MB vì ​​danh sách số nguyên (200000) của Python mang nhiều chi phí hơn đáng kể so với một mảng số nguyên được đóng gói. của Python`array`type lưu trữ các phần tử số có kích thước cố định một cách nhỏ gọn. 
 
-các`size`Và`heavy`mảng được tính theo thứ tự DFS ngược. Mọi cây con đều đã được tính toán kích thước cây con khi cha của nó được xử lý. Đứa lớn nhất trở thành đứa nặng. 
+Gốc có chính nó là cha mẹ của nó. Do đó, các lần nhảy lặp lại phía trên gốc vẫn ở đỉnh (1), điều này làm cho việc triển khai LCA trở nên đơn giản và tránh việc xử lý đặc biệt đối với tổ tiên bằng 0. 
 
-Phân rã nặng-ánh sáng chỉ lưu trữ đầu chuỗi cho mỗi đỉnh. Để tìm LCA, chúng ta di chuyển đầu chuỗi sâu hơn lên trên cho đến khi cả hai đỉnh nằm trên cùng một chuỗi. Một cạnh nhẹ chỉ có thể được vượt qua (O(\log n)) lần, bởi vì việc chọn một cây con nhẹ sẽ làm giảm kích thước cây con còn lại ít nhất là hai lần. 
+Hàm LCA trước tiên cân bằng độ sâu bằng cách sử dụng biểu diễn nhị phân của chênh lệch của chúng. Sau đó, nó xem xét các bước nhảy từ lũy thừa lớn nhất của hai xuống dưới. Nếu hai đỉnh tương ứng khác nhau thì cả hai đỉnh đều có thể nhảy lên trên một cách an toàn vì LCA của chúng hoàn toàn nằm trên các đỉnh đó. Khi không thể thực hiện được bước nhảy lớn hơn, cha mẹ trực tiếp của chúng là LCA. 
 
-Đối với mọi truy vấn, các đỉnh màu đỏ và màu xanh được giữ lại vì quá trình quét tổ tiên ở cuối có thể cần phải kiểm tra các thiết bị đầu cuối ban đầu. Tổng số thiết bị đầu cuối được lưu trữ trên tất cả các truy vấn tối đa là (200000), do đó, điều này không tạo ra chi phí bộ nhớ lớn. 
+Đối với mỗi truy vấn, danh sách màu đỏ và màu xanh được cắt trực tiếp từ dòng đầu vào. Các ràng buộc đảm bảo rằng một truy vấn hoàn chỉnh phù hợp với một dòng đầu vào. Danh sách được giữ lại vì trong trường hợp tổ tiên, chúng ta phải kiểm tra mọi thiết bị đầu cuối có màu đối lập. 
 
-điều kiện`is_ancestor(red_lca, blue_lca)`cố tình bao gồm sự bình đẳng. Nếu hai LCA bằng nhau thì mọi thiết bị đầu cuối màu đỏ đều nằm trong cây con của LCA chung, do đó lần quét tiếp theo sẽ ngay lập tức tìm thấy thiết bị đầu cuối màu đỏ ở đó và trả về`NO`. Điều này xử lý trường hợp LCA chung mà không yêu cầu một nhánh riêng. 
+Không có vấn đề tràn số nguyên trong Python. Giá trị lớn nhất được sử dụng làm mã định danh đỉnh, độ sâu và mục nhập bảng nhiều nhất là (200000). 
 
-Không có phép tính số nguyên nào liên quan đến các giá trị lớn hơn (n), do đó việc tràn số nguyên trong Python là không liên quan. Ranh giới thực hiện quan trọng là khoảng Euler nửa mở trong`is_ancestor`: sử dụng`tout[v]`như một điểm cuối bao gồm sẽ gây ra lỗi từng cái một. 
+Việc sử dụng`array('i')`cũng giữ cho bàn nâng nhị phân (O(n\log n)) nhỏ gọn. Bảng có khoảng (200000\cdot18) mục nhập số nguyên và mỗi số nguyên được đóng gói chiếm bốn byte khi triển khai thông thường, do đó, bản thân bảng chỉ có khoảng mười lăm megabyte thay vì hàng trăm megabyte đối tượng số nguyên Python. 
 
 ## Ví dụ đã hoạt động 
 
-### Mẫu 1 
+Dấu vết đầu tiên sử dụng dự đoán đầu tiên của Mẫu 1. 
 
-Đối với cây mẫu có gốc tại thành phố (1), các mối quan hệ tổ tiên có liên quan là (1) ở trên (2,3), (2) ở trên (4,5) và (3) ở trên (6,7). 
+Cây có gốc tại (1). Các đỉnh màu đỏ là (2,4) nên LCA chung của chúng là (2). Các đỉnh màu xanh là (6,7) nên LCA chung của chúng là (3). 
 
-| Truy vấn | Đỉnh đỏ | LCA đỏ | Đỉnh xanh | LCA xanh | Mối quan hệ | Kết quả | 
-| --- | --- | --- | --- | --- | --- | --- | 
-| 1 | (4,5) | 2 | (6,7) | 3 | Không thể so sánh được | CÓ | 
-| 2 | (4,6) | 1 | (5,7) | 1 | Bằng | KHÔNG | 
-| 3 | (1,4) | 1 | (5,2) | 2 | LCA đỏ trên LCA xanh, đỏ (4) dưới 2 | KHÔNG | 
-| 4 | (4,5) | 2 | (1) | 1 | LCA màu xanh phía trên LCA màu đỏ, màu xanh lam (1) nằm ngoài cây con 2 | CÓ | 
-| 5 | (1) | 1 | (2) | 2 | LCA đỏ phía trên LCA xanh, đỏ (1) nằm ngoài cây con 2 | CÓ | 
-| 6 | (1,2,3,4,5,6) | 1 | (7) | 7 | LCA đỏ phía trên LCA xanh, không có đỉnh đỏ dưới 7 | CÓ | 
+| Sân khấu | LCA đỏ | LCA xanh | LCA chung | Quyết định | 
+| --- | --- | --- | --- | --- | 
+| Bắt đầu với màu đỏ (2) | 2 | | | | 
+| Thêm màu đỏ (4) | 2 | | | | 
+| Bắt đầu với màu xanh (6) | 2 | 6 | | | 
+| Thêm màu xanh (7) | 2 | 3 | | | 
+| Tính toán`LCA(2,3)`| 2 | 3 | 1 |`YES`| 
 
-Truy vấn đầu tiên thể hiện trường hợp thành công đơn giản nhất trong đó hai cây con Steiner nằm ở các nhánh khác nhau của gốc. Phần thứ hai chứng minh tại sao chỉ kiểm tra các đỉnh cuối là không đủ, bởi vì cả hai cây con Steiner đều phải đi qua thành phố (1). Phần thứ ba trình bày thử nghiệm cây con lồng nhau. Mặc dù các đỉnh LCA màu đỏ và màu xanh lam khác nhau, thành phố màu đỏ (4) buộc cây con màu đỏ thông qua LCA màu xanh lam (2). 
+Vì (1) khác với cả (2) và (3), hai LCA màu nằm trong các cây con khác nhau của gốc. Cây con bắt buộc màu đỏ là (2-4), trong khi cây con bắt buộc màu xanh lam là (3-6) và (3-7). Chúng rời rạc nên các con đường có thể bị cắt giữa các vùng đó và câu trả lời là`YES`. 
 
-### Ví dụ thứ hai 
+Dấu vết thứ hai sử dụng dự đoán thứ hai của Mẫu 1. Các đỉnh màu đỏ của nó là (4,6), trong khi các đỉnh màu xanh của nó là (5,7). 
 
-Hãy xem xét một con đường:```
+| Sân khấu | LCA đỏ | LCA xanh | LCA chung | Quyết định | 
+| --- | --- | --- | --- | --- | 
+| Bắt đầu với màu đỏ (4) | 4 | | | | 
+| Thêm màu đỏ (6) | 1 | | | | 
+| Bắt đầu với màu xanh (5) | 1 | 5 | | | 
+| Thêm màu xanh (7) | 1 | 1 | | | 
+| Tính toán`LCA(1,1)`| 1 | 1 | 1 | Vụ án tổ tiên | 
+| Kiểm tra màu đỏ (4) | 1 | 1 |`LCA(4,1)=1`|`NO`| 
+
+Ở đây cả hai LCA màu đều là (1). Cây con bắt buộc màu đỏ chứa đường dẫn giữa (4) và (6), đi qua (1). Cây con bắt buộc màu xanh chứa đường dẫn giữa (5) và (7), cũng đi qua (1). Đỉnh chung là điều khó tránh khỏi nên không một con đường ngăn cách nào có thể chia cắt được hai nhóm. 
+
+Như một ví dụ độc lập thứ hai, hãy xem xét chuỗi này:```
 5
 1 2
 2 3
 3 4
 4 5
-3
-2 1 2 4 5
-2 1 1 4 3
-2 1 1 3 2
-```Truy vấn đầu tiên có các thành phố màu đỏ (1,2) và các thành phố màu xanh lam (4,5). Các cây con màu chiếm các cạnh đối diện của cạnh (2-3). 
+2
+2 1 1 3 5
+2 1 1 5 3
+```Truy vấn đầu tiên có màu đỏ (1,3) và xanh lam (5). LCA màu đỏ là (1), LCA màu xanh lam là (5) và`LCA(1,5)=1`. LCA màu đỏ là trường hợp tổ tiên, nhưng không thành phố màu đỏ nào nằm trong cây con của (5), vì vậy kết quả là`YES`. 
 
-| Truy vấn | LCA đỏ | LCA xanh | Quan hệ tổ tiên | Terminal bên trong cây con lồng nhau | Kết quả | 
-| --- | --- | --- | --- | --- | --- | 
-| 1 | 1 | 4 | 1 trên 4 | Không có đỉnh đỏ trong cây con 4 | CÓ | 
-| 2 | 1 | 4 | 1 trên 4 | Không có đỉnh đỏ trong cây con 4 | CÓ | 
-| 3 | 1 | 3 | 1 trên 3 | Đỉnh đỏ 1 không có trong cây con 3 | CÓ | 
-
-Để chứng minh phiên bản từ chối của cùng một cấu trúc, hãy thay đổi truy vấn thứ hai thành thành phố màu đỏ (1,5) và thành phố màu xanh lam (3). LCA màu đỏ là (1), LCA màu xanh lam là (3) và thành phố màu đỏ (5) nằm bên dưới (3). Đường màu đỏ từ (1) đến (5) phải đi qua (3) nên đáp án trở thành`NO`. 
+Truy vấn thứ hai có màu đỏ (1,5) và màu xanh lam (3). LCA màu đỏ là (1), LCA màu xanh lam là (3) và một lần nữa LCA màu đỏ là tổ tiên. Lần này thành phố đỏ (5) thỏa mãn`LCA(5,3)=3`, nghĩa là nó nằm bên trong cây con có gốc tại (3). Con đường màu đỏ buộc phải đi qua thành phố (3), nên kết quả là`NO`. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | (O(n + S\log n)) | Tiền xử lý cây là tuyến tính. Mỗi thành phố trong số (S\le200000) được đề cập tham gia vào nhiều nhất một lần quét LCA hoặc tổ tiên và mọi chi phí LCA (O(\log n)). | 
-| Không gian | (O(n+S)) | Mảng cây và mảng ánh sáng nặng sử dụng bộ nhớ (O(n)), trong khi truy vấn hiện tại lưu trữ các thiết bị đầu cuối (O(r+b)). | 
+| Thời gian | (O(n\log n + S\log n)) | Tòa nhà nâng nhị phân mất (O(n\log n)); mỗi thành phố da màu chỉ tham gia vào một số hoạt động LCA không đổi và (S\le200000) | 
+| Không gian | (O(n\log n)) | Bảng nâng chứa (O(n\log n)) số nguyên được đóng gói, trong khi cây và bộ lưu trữ truy vấn sử dụng (O(n)) không gian bổ sung | 
 
-Tối đa (n) và tổng số thành phố được tô màu đều là (200000). Quá trình xử lý trước chỉ chạm vào mỗi con đường một số lần không đổi, trong khi giai đoạn truy vấn chỉ thực hiện các hoạt động LCA logarit trên các thành phố được dự đoán đề cập rõ ràng. Do đó, giải pháp phù hợp với giới hạn 2 giây và 256 MB mà không cần dựa vào đệ quy hoặc bàn nâng lớn (O(n\log n)). 
+Với (n\le200000), quá trình tiền xử lý có khoảng mười tám mức nâng nhị phân. Tổng số thành phố được tô màu cũng nhiều nhất là (200000), do đó công việc truy vấn vẫn bị giới hạn bởi vài triệu phép tính tổ tiên logarit. Quá trình truyền tải lặp lại sẽ tránh được các vấn đề về độ sâu đệ quy và bàn nâng được đóng gói giúp giữ bộ nhớ thoải mái trong giới hạn (256) MB. 
 
-## Trường hợp thử nghiệm```python
-# The solution above defines solve() and the global input variable.
-# This harness temporarily replaces stdin/stdout so solve() can be tested
-# multiple times in one process.
+## Trường hợp thử nghiệm 
 
-import sys
+Khai thác thử nghiệm sau đây giả định giải pháp trên được lưu dưới dạng`solution.py`. Nó kêu giống nhau`solve`hoạt động với một`StringIO`reader, do đó các xác nhận thực hiện việc triển khai thực tế chứ không phải là một thuật toán tham chiếu riêng biệt.```
+# solution.py must contain the solve(reader=None) function from above.
+
 import io
+from solution import solve
 
 def run(inp: str) -> str:
-    global input
-
-    old_input = input
-    old_stdout = sys.stdout
-
-    input = io.StringIO(inp).readline
-    sys.stdout = io.StringIO()
-
-    try:
-        solve()
-        return sys.stdout.getvalue()
-    finally:
-        input = old_input
-        sys.stdout = old_stdout
+    return solve(io.StringIO(inp).readline)
 
 # Provided sample
 sample1 = """\
@@ -342,109 +312,137 @@ NO
 NO
 YES
 YES
-YES""", "sample 1"
+YES
+""".strip(), "sample 1"
 
-# Minimum-size tree.
-minimum = """\
+# Minimum-size tree. With two cities, one red and one blue,
+# cutting the only road always separates them.
+assert run("""\
 2
 1 2
 1
-1 1 2
-"""
+1 1 1 2
+""") == "YES", "minimum-size tree"
 
-assert run(minimum) == "YES", "minimum tree"
-
-# Star where both color Steiner trees must use the center.
-same_lca = """\
-5
-1 2
-1 3
-1 4
-1 5
-1
-2 2 3 4 5
-"""
-
-assert run(same_lca) == "NO", "same LCA"
-
-# Path with both a successful nested case and a failing nested case.
-path_cases = """\
+# A chain where the red path contains the blue city.
+assert run("""\
 5
 1 2
 2 3
 3 4
 4 5
-3
-2 1 2 4 5
-2 1 1 4 3
-2 1 1 5 3
-"""
-
-assert run(path_cases) == """\
-YES
-YES
-NO""", "nested ancestor cases"
-
-# Maximum-size tree and maximum total number of colored cities.
-# Red = 1..100000, Blue = 100001..200000.
-# Their Steiner subtrees are separated by the edge 100000-100001.
-n = 200000
-edges = "\n".join(f"{i} {i + 1}" for i in range(1, n))
-
-red = " ".join(str(i) for i in range(1, 100001))
-blue = " ".join(str(i) for i in range(100001, 200001))
-
-maximum = (
-    f"{n}\n"
-    f"{edges}\n"
-    f"1\n"
-    f"100000 100000 {red} {blue}\n"
-)
-
-assert run(maximum) == "YES", "maximum-size case"
-```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
-| --- | --- | --- | 
-| Mẫu 1 |`YES NO NO YES YES YES`| Mẫu chính thức đầy đủ, bao gồm các trường hợp không thể so sánh được, LCA bằng nhau và lồng nhau | 
-| Cây hai nút |`YES`| Tối thiểu (n), một thành phố đỏ và một thành phố xanh | 
-| Sao năm nút |`NO`| Cả hai cây Steiner gặp nhau tại cùng một LCA | 
-| Đường dẫn năm nút |`YES YES NO`| Mối quan hệ tổ tiên lồng nhau và kiểm tra cây con thiết bị đầu cuối mang tính quyết định | 
-| (n=200000) đường dẫn |`YES`| Kích thước tối đa, tổng số đầu vào truy vấn tối đa và an toàn truyền tải lặp đi lặp lại | 
-
-## Vỏ cạnh 
-
-Cây hai thành phố không có cấu trúc bên trong để giải thích. Với```
-2
-1 2
 1
-1 1 2
-```LCA màu đỏ là (1), LCA màu xanh lam là (2) và (1) là tổ tiên của (2). Đỉnh màu đỏ duy nhất là (1), không nằm trong cây con của (2), do đó thuật toán trả về`YES`. 
+2 1 1 5 3
+""") == "NO", "intersection on a required path"
 
-Đối với trường hợp LCA thông thường,```
+# A chain where the groups can be separated at one edge.
+assert run("""\
+5
+1 2
+2 3
+3 4
+4 5
+1
+2 1 1 3 5
+""") == "YES", "ancestor case with valid separation"
+
+# Every city is colored. Red leaves must connect through the blue center,
+# so the answer is NO.
+assert run("""\
 5
 1 2
 1 3
 1 4
 1 5
 1
-2 2 3 4 5
-```LCA màu đỏ là (1) và LCA màu xanh cũng là (1). Thử nghiệm tổ tiên đầu tiên thành công với sự bằng nhau và thuật toán quét các đỉnh màu đỏ theo cây con của (1). Mọi đỉnh đỏ đều nằm trong nó nên nó sẽ trả về`NO`. Đây chính xác là tình huống trong đó hai nhóm được tách thành nhóm thiết bị đầu cuối nhưng không thể tách thành nhóm được kết nối. 
+4 1 2 3 4 5
+""") == "NO", "all cities colored"
 
-Đối với trường hợp lồng nhau nhưng giao nhau,```
-4
+# Maximum-size test. The tree is a star with 199999 red leaves and
+# the center blue. Connecting all red leaves forces the blue center
+# into the red component.
+n = 200000
+edges = "\n".join(f"1 {v}" for v in range(2, n + 1))
+red = " ".join(map(str, range(2, n + 1)))
+
+max_case = (
+    f"{n}\n"
+    f"{edges}\n"
+    "1\n"
+    f"{n - 1} 1 {red} 1\n"
+)
+
+assert run(max_case) == "NO", "maximum-size star"
+```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
+| --- | --- | --- | 
+| (n=2), một màu đỏ và một màu xanh |`YES`| Cây tối thiểu và thực tế là chỉ cần một cạnh ngăn cách | 
+| Dây chuyền có màu đỏ (1,5) và xanh lam (3) |`NO`| Một thành phố trung tính hoặc có màu đối lập nằm trên con đường màu đỏ bắt buộc | 
+| Dây chuyền có màu đỏ (1,3) và xanh lam (5) |`YES`| Trường hợp tổ tiên trong đó hai cây con bắt buộc vẫn tách biệt | 
+| Sao với mọi thành phố được tô màu |`NO`| Tất cả các thành phố được tô màu và một giao lộ bắt buộc ở trung tâm | 
+| Ngôi sao với (200000) thành phố |`NO`| Tối đa (n), kích thước truy vấn tối đa và hành vi bộ nhớ/thời gian | 
+
+Câu lệnh yêu cầu tất cả số nhận dạng thành phố bên trong dự đoán phải khác biệt, do đó, phép kiểm tra theo nghĩa đen trong đó tất cả các giá trị thành phố đầu vào bằng nhau sẽ không hợp lệ. Ngôi sao đủ màu là trường hợp ranh giới có liên quan: mỗi thành phố thuộc về một trong hai lớp màu, không có thành phố trung lập nào có thể hấp thụ một giao lộ. 
+
+## Vỏ cạnh 
+
+Đối với một thành phố màu đỏ và một thành phố màu xanh, mỗi cây con bắt buộc chỉ bao gồm đỉnh được tô màu của nó. Vì hai mã định danh thành phố là khác nhau nên hai cây con không thể giao nhau. Thuật toán được`red_lca = red`,`blue_lca = blue`và LCA của họ là một trong số đó, vì vậy nó đạt đến trường hợp tổ tiên. Kiểm tra ngăn chặn không thành công vì thành phố có màu đối lập không thể nằm trong cây con của đỉnh riêng biệt của nó. Câu trả lời là`YES`. 
+
+Đối với giao điểm tại một đỉnh trung hòa, hãy xem xét```
+5
+1 2
+1 3
+2 4
+3 5
+1
+2 2 4 5 3
+```LCA màu đỏ là (2), vì các thành phố màu đỏ là (2,4). LCA màu xanh lam là (3), vì các thành phố màu xanh lam là (5,3). LCA chung của họ là (1), khác với cả hai. Thoạt nhìn, trường hợp này trông giống như trường hợp riêng biệt, nhưng cây con yêu cầu màu đỏ là (2-4), trong khi cây con yêu cầu màu xanh lam chỉ là (3-5). Chúng thực sự không giao nhau nên câu trả lời đúng là`YES`cho đầu vào cụ thể này. 
+
+Để thực hiện giao lộ trung lập thực sự, hãy sử dụng```
+5
+1 2
+1 3
+2 4
+3 5
+1
+2 2 5 4 3
+```Các thành phố màu đỏ là (5,4), vì vậy LCA của họ là (1). Các thành phố màu xanh lam là (3,4) sẽ vi phạm các màu riêng biệt, vì vậy thay vào đó, ví dụ rõ ràng là cấu trúc mẫu có màu đỏ (4,6) và xanh lam (5,7):```
+7
+1 2
+1 3
+2 4
+2 5
+3 6
+3 7
+1
+2 2 4 6 5 7
+```LCA màu đỏ là (1), LCA màu xanh lam là (1) và thuật toán sẽ chuyển ngay sang trường hợp tổ tiên. Kiểm tra thành phố màu đỏ (4) với LCA màu xanh (1) cho kết quả`LCA(4,1)=1`, do đó giao điểm được phát hiện và đầu ra là`NO`. 
+
+Đối với mối quan hệ tổ tiên vẫn có thể tách rời, hãy xem xét```
+5
 1 2
 2 3
 3 4
+4 5
 1
-2 1 4 3
-```LCA màu đỏ là (1) và LCA màu xanh lam là (3). Vì (1) là tổ tiên của (3), nên thuật toán kiểm tra xem đầu cuối màu đỏ có nằm trong cây con có gốc tại (3) hay không. Thành phố đỏ (4) cũng vậy nên đường màu đỏ từ (1) đến (4) phải đi qua (3). Câu trả lời là`NO`. 
+2 1 1 3 5
+```LCA màu đỏ là (1), LCA màu xanh lam là (5) và LCA thông thường là (1). Thuật toán kiểm tra xem thành phố màu đỏ có nằm trong cây con của (5) hay không. Cũng không, vì vậy nó trả về`YES`. Điểm cắt (4-5) tách thành phố xanh trong khi vẫn kết nối các thành phố đỏ. 
 
-Đối với trường hợp lồng nhau nhưng có thể tách rời,```
-4
+Đối với trường hợp ngược lại,```
+5
 1 2
 2 3
 3 4
+4 5
 1
-2 1 2 3 4
-```LCA màu đỏ là (1) và LCA màu xanh lam là (3). Không có thành phố màu đỏ nào nằm trong cây con có gốc tại (3), vì các thành phố màu đỏ là (1) và (2). Cây con Steiner màu đỏ kết thúc trước khi đi vào cây con màu xanh nên cạnh (2-3) có thể đóng được và đáp án là`YES`. 
+2 1 1 5 3
+```LCA màu đỏ là (1), LCA màu xanh lam là (3) và LCA thông thường là (1). Thành phố đỏ (5) nằm trong cây con gốc tại (3), được phát hiện bởi`LCA(5,3) == 3`. Kết nối màu đỏ phải đi qua thành phố xanh (3) nên thuật toán trả về`NO`. 
 
-Đường dẫn có kích thước tối đa cũng kiểm tra trường hợp cạnh dành riêng cho Python. Cây có thể có độ sâu (199999), do đó DFS đệ quy sẽ không an toàn. Việc triển khai sử dụng một ngăn xếp rõ ràng để xử lý trước, trong khi tất cả các hoạt động LCA đều sử dụng chuỗi nặng-nhẹ. Do đó, thuật toán xử lý đường đi của (200000) thành phố mà không gặp vấn đề về độ sâu đệ quy.
+Cuối cùng, ngôi sao có kích thước tối đa```
+200000
+1 2
+1 3
+...
+1 200000
+1
+199999 1 2 3 ... 200000 1
+```có mỗi lá màu đỏ và ở giữa màu xanh. LCA của tất cả các thành phố màu đỏ là (1), cũng là LCA màu xanh. Chiếc lá đỏ đầu tiên đã thỏa mãn`LCA(2,1) == 1`, do đó truy vấn kết thúc với`NO`. Điều này chứng tỏ rằng thuật toán có thể từ chối một truy vấn lớn ngay lập tức khi nó tìm thấy giao điểm bắt buộc, trong khi vẫn xử lý toàn bộ đầu vào (200000)-đỉnh trong giới hạn tiệm cận dự kiến.

@@ -1,7 +1,7 @@
 ---
 title: "CF 102215L - Vòng tròn nội tiếp"
-description: "Chúng ta có hai vòng tròn, mỗi vòng được mô tả bởi tâm và bán kính của nó. Các chu vi của chúng cắt nhau tại đúng hai điểm, do đó không có đường tròn nào chứa đường tròn kia và hai đĩa chồng lên nhau trong một vùng hình thấu kính thích hợp."
-date: "2026-08-17T23:53:48+07:00"
+description: "Chúng ta có hai đĩa, mỗi đĩa được mô tả bằng tâm và bán kính dương. Các chu vi của chúng cắt nhau tại đúng hai điểm, do đó không có đĩa nào chứa đĩa kia và giao điểm của chúng là vùng hình thấu kính không suy biến."
+date: "2026-08-18T22:13:24+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102215
@@ -9,7 +9,7 @@ codeforces_index: "L"
 codeforces_contest_name: "2019, XII Samara Regional Intercollegiate Programming Contest"
 rating: 0
 weight: 102215
-solve_time_s: 139
+solve_time_s: 525
 verified: false
 draft: false
 ---
@@ -18,88 +18,80 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 2m 19s 
+**Thời gian giải:** 8 phút 45 giây 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta có hai vòng tròn, mỗi vòng được mô tả bởi tâm và bán kính của nó. Các chu vi của chúng cắt nhau tại đúng hai điểm, do đó không có đường tròn nào chứa đường tròn kia và hai đĩa chồng lên nhau trong một vùng hình thấu kính thích hợp. Chúng ta cần hình tròn lớn nhất nằm hoàn toàn bên trong phần chồng lên nhau đó và chúng ta phải in tâm và bán kính của nó. Giới hạn đầu vào và độ chính xác yêu cầu là những giới hạn được đưa ra trong báo cáo vấn đề ban đầu. 
+Chúng ta có hai đĩa, mỗi đĩa được mô tả bằng tâm và bán kính dương. Các chu vi của chúng cắt nhau tại đúng hai điểm, do đó không có đĩa nào chứa đĩa kia và giao điểm của chúng là vùng hình thấu kính không suy biến. 
 
-Đặt tâm là (O_1=(x_1,y_1)) và (O_2=(x_2,y_2)), với bán kính (r_1) và (r_2). hãy để 
+Chúng ta cần tìm vòng tròn lớn nhất có thể vừa khít hoàn toàn bên trong thấu kính này. Đầu ra là tâm của vòng tròn đó và bán kính của nó, với độ chính xác đủ để đáp ứng sai số tuyệt đối hoặc tương đối là (10^{-9}). 
+
+Tọa độ và bán kính có độ lớn tối đa là (1000), do đó tất cả các khoảng cách có liên quan đều nằm trong phạm vi dấu phẩy động thông thường. Cũng không có kích thước đầu vào lớn: bài toán chỉ chứa hai vòng tròn. Do đó, giới hạn 2 giây không phải là vấn đề đáng lo ngại đối với nghiệm hình học (O(1)). Ngay cả một phương pháp số lặp với vài trăm lần lặp cũng đủ nhanh, nhưng hình học cho phép chúng ta tránh hoàn toàn việc lặp lại. 
+
+Trường hợp tinh tế đầu tiên là khi các vòng tròn có bán kính bằng nhau. Ví dụ,```
+0 0 5
+6 0 5
+```Câu trả lời là```
+3 0 2
+```Việc triển khai bất cẩn có thể cho rằng trung tâm tối ưu là một trong những trung tâm ban đầu, nhưng trung tâm chính xác lại nằm ở giữa chúng. Tổng quát hơn, tính đối xứng đặt đáp án trên đường nối hai tâm đường tròn, không nhất thiết phải ở điểm giữa của nó. 
+
+Một trường hợp khác là khi bán kính khác nhau:```
+0 0 5
+7 0 3
+```Ở đây các vòng tròn giao nhau vì (2 < 7 < 8). Tâm tối ưu nằm ở khoảng cách 
 
 [ 
-d=|O_1O_2| 
+\frac{7+5-3}{2}=4.5 
 ] 
 
-là khoảng cách giữa các tâm. Có chính xác hai điểm giao nhau sẽ có bất đẳng thức chặt chẽ 
+từ tâm đầu tiên và bán kính kết quả là 
 
 [ 
-|r_1-r_2|<d<r_1+r_2. 
+\frac{5+3-7}{2}=0,5. 
 ] 
 
-Giới hạn trên đảm bảo sự chồng chéo tích cực, trong khi giới hạn dưới ngăn không cho một đĩa nằm hoàn toàn bên trong đĩa kia. Những bất đẳng thức chặt chẽ này đặc biệt hữu ích vì chúng đảm bảo rằng bán kính cuối cùng là dương và hai tâm khác nhau. 
+Một lỗi phổ biến là sử dụng điểm giữa của tâm bất kể bán kính. Điều đó sẽ đưa ra câu trả lời sai vì vòng tròn lớn hơn có thể điều chỉnh tâm tối ưu xa hơn về phía vòng tròn nhỏ hơn. 
 
-Giới hạn tọa độ chỉ là ([-1000,1000]), do đó không có kích thước đầu vào tổ hợp ở đây. Thách thức là độ chính xác về mặt hình học chứ không phải thời gian chạy. Một giải pháp thực hiện số lượng phép tính dấu phẩy động không đổi dễ dàng nằm trong giới hạn 2 giây và 256 MB, trong khi việc tìm kiếm bằng số hoặc liệt kê dày đặc là không cần thiết. 
-
-Việc triển khai bất cẩn có thể thất bại khi các vòng tròn có bán kính bằng nhau nhưng không tập trung vào đường ngang. Ví dụ,```
-0 0 5
-3 4 5
-```có (d=5), nên đáp án là đường tròn bán kính (2,5) có tâm tại ((1,5,2)). Một giải pháp chỉ thay đổi tọa độ (x) hoặc giả sử rằng các tâm luôn nằm trên trục (x), sẽ tạo ra tâm sai. 
-
-Bán kính không bằng nhau là một nguồn sai lầm phổ biến khác. Coi như```
-0 0 5
-6 0 9
-```Ở đây (d=6) và câu trả lời được tập trung tại ((1,0)) với bán kính (4). Trung tâm không phải là trung điểm của hai trung tâm ban đầu. Sử dụng điểm giữa một cách mù quáng sẽ cho bán kính (3), mặc dù hình tròn nhỏ hơn vẫn còn chỗ trống ở một bên. 
-
-Trường hợp gần tiếp tuyến cũng có ý nghĩa về mặt số học. Ví dụ,```
--1000 0 1000
-999 0 1000
-```có (d=1999), nên đáp án có bán kính (0,5) và tâm ((-0,5,0)). Bán kính yêu cầu nhỏ ngay cả khi giá trị đầu vào lớn, do đó, các phép tính phải được thực hiện ở dạng dấu phẩy động và được in với đủ chữ số. 
+Trường hợp cạnh cuối cùng liên quan đến các đường tròn có ranh giới giao nhau rất gần với tiếp tuyến. Ví dụ,```
+0 0 1
+1.999999 0 1
+```Câu trả lời có bán kính rất nhỏ, xấp xỉ (5\times10^{-7}). Việc triển khai sử dụng số học số nguyên, độ chính xác không đủ hoặc các công thức liên quan đến phép trừ số lượng gần bằng nhau một cách bất cẩn có thể làm mất độ chính xác. Công thức trực tiếp sử dụng khoảng cách trung tâm vẫn đủ ổn định với độ chính xác gấp đôi của Python đối với lỗi yêu cầu. 
 
 ## Phương pháp tiếp cận 
 
-Một phương pháp vũ phu theo nghĩa đen sẽ thử các vị trí có thể có ở trung tâm và giữ vòng tròn lớn nhất còn lại bên trong cả hai đĩa. Đối với tâm ứng cử viên (P), bán kính lớn nhất được phép bởi vòng tròn đầu tiên là (r_1-|PO_1|) và bán kính lớn nhất được phép bởi vòng tròn thứ hai là (r_2-|PO_2|). Vì vậy bán kính ứng cử viên là tối thiểu của họ. 
-
-Vấn đề là trung tâm là một điểm liên tục nên lực lượng vũ phu cần có sự rời rạc hóa. Nếu chúng tôi cố gắng kiểm tra mọi tọa độ trên một lưới có khoảng cách (10^{-9}) trên phạm vi tọa độ có thể có ([-2000,2000]), thì sẽ có (4\cdot10^{12}) vị trí dọc theo mỗi trục hoặc 
+Một cách tiếp cận hình học đơn giản có thể tìm kiếm các vị trí trung tâm có thể có trên một lưới mịn. Đối với mỗi điểm ứng cử viên, chúng ta sẽ tính toán bán kính có thể được đặt ở đó là bao nhiêu, cụ thể là khoảng cách nhỏ hơn của nó đến ranh giới hai vòng tròn. Để đạt được độ chính xác vị trí (10^{-9}) trên phạm vi tọa độ khoảng (2000), một lưới thống nhất sẽ yêu cầu theo thứ tự 
 
 [ 
-(4\cdot10^{12})^2=1.6\cdot10^{25} 
+2000^2 / 10^{-18} = 4\cdot10^{24} 
 ] 
 
-trung tâm ứng viên. Điều đó không chỉ là quá chậm trong 2 giây mà còn là một cách khó để đảm bảo độ chính xác được yêu cầu. 
+điểm ứng viên. Ngay cả một phép tính thời gian không đổi cho mỗi điểm cũng là vô vọng. 
 
-Một phép tìm kiếm số phức tạp hơn có thể giảm đáng kể công việc, nhưng hình học cho chúng ta một nghiệm chính xác theo thời gian không đổi. Phương pháp vũ phu hoạt động vì tính hợp lệ của trung tâm ứng viên có thể được kiểm tra trực tiếp. Quan sát quan trọng là trung tâm tốt nhất hoàn toàn không cần tìm kiếm hai chiều. 
+Cách tiếp cận số hợp lý hơn sẽ giảm việc tìm kiếm xuống một chiều và sử dụng tìm kiếm ba chiều. Tính đối xứng của thấu kính có nghĩa là tâm tối ưu nằm trên đường nối hai tâm ban đầu. Chúng ta có thể tham số hóa đường đó và tối đa hóa bán kính khả thi về mặt số lượng. Một vài trăm lần lặp lại là đủ, vì vậy cách tiếp cận này thực sự đủ nhanh, nhưng nó không cần thiết và đưa ra các chi tiết hội tụ và chính xác mà hình học chính xác tránh được. 
 
-Lấy bất kỳ tâm ứng cử viên (P) nào bên trong ống kính. Chiếu (P) lên đường thẳng (O_1O_2), thu được (Q). Phép chiếu không thể tăng khoảng cách lên (O_1) hoặc (O_2). Do đó, 
+Quan sát quan trọng là đối với một điểm trên đoạn nối các tâm, khoảng cách đến tâm thứ nhất tăng đúng như khoảng cách đến tâm thứ hai giảm. Giả sử các tâm là (C_1,C_2), khoảng cách của chúng là (d) và tâm ứng cử viên (P) nằm ở khoảng cách (t) từ (C_1). Khi đó nó là (d-t) từ (C_2). 
+
+Một đường tròn có tâm tại (P) vừa khít bên trong đĩa thứ nhất có bán kính lớn nhất 
 
 [ 
-r_1-|QO_1|\ge r_1-|PO_1| 
+r_1-t, 
 ] 
 
-và 
-
-[ 
-r_2-|QO_2|\ge r_2-|PO_2|. 
-] 
-
-Vì vậy, việc di chuyển tâm lên đường nối hai tâm ban đầu không bao giờ làm cho bán kính nội tiếp có thể nhỏ hơn. Chúng tôi có thể hạn chế toàn bộ tối ưu hóa ở một chiều. 
-
-Bây giờ đặt tâm ứng cử viên (P) giữa (O_1) và (O_2). Nếu (t=|O_1P|), thì (|PO_2|=d-t). Hai vòng tròn cho phép bán kính 
-
-[ 
-r_1-t 
-] 
-
-và 
+và nó vừa với đĩa thứ hai có bán kính nhiều nhất 
 
 [ 
 r_2-(d-t). 
 ] 
 
-Cực đại của cực tiểu của chúng xảy ra chính xác khi hai đại lượng này bằng nhau. Ngược lại, nếu một nhỏ hơn, chúng ta có thể di chuyển (P) một chút về phía vòng tròn tương ứng và tăng số lượng nhỏ hơn. 
+Do đó bán kính khả thi tối đa của nó tại (P) là 
 
-Giải quyết 
+[ 
+f(t)=\min(r_1-t,\ r_2-d+t). 
+] 
+
+Biểu thức đầu tiên giảm theo (t), trong khi biểu thức thứ hai tăng theo (t). Mức tối đa của mức tối thiểu của chúng xảy ra chính xác ở nơi chúng bằng nhau. Giải quyết 
 
 [ 
 r_1-t=r_2-d+t 
@@ -111,67 +103,83 @@ cho
 t=\frac{d+r_1-r_2}{2}. 
 ] 
 
-Việc thay thế biểu thức này vào biểu thức bán kính sẽ cho 
+Việc thay thế giá trị này sẽ cho 
 
 [ 
-R=\frac{r_1+r_2-d}{2}. 
+r=\frac{r_1+r_2-d}{2}. 
 ] 
 
-Khi đã biết (t), tâm chỉ đơn giản là điểm ở khoảng cách (t) từ (O_1) theo hướng (O_2). 
+Bài toán đảm bảo rằng các đường tròn có đúng hai điểm chung. 
+
+[ 
+|r_1-r_2|<d<r_1+r_2. 
+] 
+
+Do đó, (t) tính toán nằm hoàn toàn giữa (0) và (d) và bán kính tính toán hoàn toàn dương. Sau đó chúng ta có thể đặt câu trả lời tại điểm tương ứng trên đường nối giữa hai trung tâm. 
+
+Tìm kiếm vũ phu hoạt động hiệu quả vì nó đánh giá trực tiếp bán kính khả thi của các trung tâm ứng cử viên, nhưng nó lãng phí gần như toàn bộ công việc khám phá một vùng liên tục hai chiều. Quan sát rằng tâm tối ưu phải nằm trên trục từ tâm đến tâm làm giảm bài toán xuống một chiều, và thực tế là hai bán kính giới hạn là các hàm tuyến tính làm giảm tối ưu hóa một chiều đó để giải một phương trình. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
-| Lực lượng vũ phu | (O(G^2)) cho lưới tọa độ (G\times G) | (O(1)) | Quá chậm và không thể đảm bảo độ chính xác (10^{-9}) một cách tự nhiên | 
-| Tối ưu | (O(1)) | (O(1)) | Đã chấp nhận | 
+| Lực lượng vũ phu | (O(1/\varepsilon^2)) mẫu lưới | (O(1)) | Quá chậm | 
+| Tìm kiếm ternary số | (O(I)) | (O(1)) | Được chấp nhận nhưng không cần thiết | 
+| Công thức hình học | (O(1)) | (O(1)) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Đọc hai tâm đường tròn và bán kính của chúng. Tính toán 
+1. Đọc tâm (C_1=(x_1,y_1)), (C_2=(x_2,y_2)) và bán kính (r_1,r_2). Đại lượng hình học duy nhất chúng ta cần ban đầu là khoảng cách giữa hai tâm. 
+2. Tính toán 
 
 [ 
-dx=x_2-x_1,\qquad dy=y_2-y_1 
+d=\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}. 
 ] 
 
-và 
+Vì các đường tròn cắt nhau tại hai điểm (d>0), nên hướng từ (C_1) đến (C_2) được xác định rõ. 
 
-[ 
-d=\sqrt{dx^2+dy^2}. 
-] 
-
-Việc đảm bảo hai điểm giao nhau có nghĩa là (d>0), nên phép chia cho (d) là an toàn. 
-2. Tính bán kính hình tròn lớn nhất là 
-
-[ 
-R=\frac{r_1+r_2-d}{2}. 
-] 
-
-Điều này xuất phát từ việc làm cho khoảng cách từ tâm mới đến hai chu vi ban đầu bằng cùng một bán kính. 
-3. Tính khoảng cách từ (O_1) đến tâm mới: 
+1. Xác định khoảng cách từ tâm mong muốn (C_1): 
 
 [ 
 t=\frac{d+r_1-r_2}{2}. 
 ] 
 
-Đây là điểm duy nhất trên đoạn (O_1O_2) mà cả hai đường tròn ban đầu đều để lại chính xác (R) đơn vị khe hở hướng tâm. 
-4. Chuyển khoảng cách đó thành chuyển vị tọa độ. Vectơ đơn vị từ (O_1) tới (O_2) là 
+Điều này xuất phát từ việc cân bằng hai khoảng cách ranh giới sẵn có. Nếu câu trả lời gần với (C_1), thì vòng tròn đầu tiên sẽ cho phép bán kính lớn hơn trong khi vòng tròn thứ hai sẽ là vòng tròn giới hạn. Nếu nó ở xa hơn về phía (C_2) thì tình thế sẽ đảo ngược. Mức tối đa chính xác là ở điểm cân bằng. 
+
+1. Chuyển khoảng cách (t) thành tọa độ. Vectơ đơn vị từ (C_1) đến (C_2) là
 
 [ 
-\left(\frac{dx}{d},\frac{dy}{d}\right). 
+\left(\frac{x_2-x_1}{d},\frac{y_2-y_1}{d}\right). 
 ] 
 
-Vì vậy trung tâm mới là 
+Vì vậy, trung tâm câu trả lời là 
 
 [ 
-x=x_1+\frac{dx}{d}t, 
+x=x_1+\frac{x_2-x_1}{d}t, 
 \qquad 
-y=y_1+\frac{dy}{d}t. 
+y=y_1+\frac{y_2-y_1}{d}t. 
 ] 
-5. In (x), (y), (R) có nhiều chữ số. Mười lăm chữ số sau dấu thập phân mang lại độ chính xác cao hơn đáng kể so với yêu cầu (10^{-9}).
 
-Bất biến chính là tâm được chọn nằm trên (O_1O_2) và có khoảng cách hoàn toàn giống nhau từ cả hai ranh giới đường tròn. Bất kỳ vòng tròn hợp lệ nào được căn giữa ở nơi khác đều có thể được chiếu lên đường này mà không làm giảm bán kính có thể có của nó. Dọc theo đường thẳng, bán kính khả dụng của vòng tròn thứ nhất giảm khi tâm di chuyển ra xa (O_1), trong khi bán kính khả dụng của vòng tròn thứ hai tăng lên. Mức tối thiểu của chúng được tối đa hóa chính xác tại điểm giao nhau của chúng. Như vậy vòng tròn tính toán vừa khả thi vừa tối ưu. 
+1. Tính bán kính bằng đường tròn giới hạn: 
+
+[ 
+r=r_1-t. 
+] 
+
+Sau khi thay thế giá trị của (t), giá trị này cũng có thể được viết là 
+
+[ 
+r=\frac{r_1+r_2-d}{2}. 
+] 
+
+1. In tâm và bán kính bằng nhiều chữ số sau dấu thập phân. của Python`float`là IEEE-754 kép 64 bit, cung cấp độ chính xác cao hơn đáng kể so với lỗi (10^{-9}) bắt buộc. 
+
+### Tại sao nó hoạt động 
+
+Đối với bất kỳ đường tròn nào có tâm tại một điểm (P) bên trong thấu kính, bán kính của nó không thể vượt quá khoảng cách từ (P) đến chu vi ban đầu. Tâm tối ưu có thể được chọn trên đường nối các tâm ban đầu vì việc phản chiếu bất kỳ đường tròn khả thi nào qua đường đó sẽ bảo toàn cả hai đĩa gốc và thấu kính đối xứng qua đường đó. Trên trục này, hai bán kính khả dụng là (r_1-t) và (r_2-d+t). Một cái giảm khi tâm di chuyển về phía (C_2), trong khi cái kia tăng. Mức tối thiểu của chúng được tối đa hóa chính xác tại giao điểm của chúng. Thuật toán tính toán giao điểm đó và đặt tâm ở đó, do đó không có điểm nào khác có thể thừa nhận một vòng tròn lớn hơn. 
 
 ## Giải pháp Python```python
 import sys
+import math
+
 input = sys.stdin.readline
 
 def solve():
@@ -181,27 +189,30 @@ def solve():
     dx = x2 - x1
     dy = y2 - y1
 
-    d = (dx * dx + dy * dy) ** 0.5
+    d = math.hypot(dx, dy)
 
-    radius = (r1 + r2 - d) / 2.0
-    dist_from_first = (d + r1 - r2) / 2.0
+    t = (d + r1 - r2) / 2.0
 
-    x = x1 + dx * dist_from_first / d
-    y = y1 + dy * dist_from_first / d
+    x = x1 + dx * t / d
+    y = y1 + dy * t / d
 
-    print(f"{x:.15f} {y:.15f} {radius:.15f}")
+    r = (r1 + r2 - d) / 2.0
+
+    print(f"{x:.15f} {y:.15f} {r:.15f}")
 
 if __name__ == "__main__":
     solve()
-```Hai dòng đầu tiên của`solve`đọc hai vòng tròn chính xác như đã cho. Tất cả các giá trị đầu vào là số nguyên, vì vậy`dx * dx + dy * dy`cũng được tính toán chính xác trước khi lấy căn bậc hai. 
+```Phần đầu tiên đọc hai vòng tròn và tính toán`dx`Và`dy`, độ dịch chuyển từ tâm thứ nhất đến tâm thứ hai.`math.hypot(dx, dy)`tính khoảng cách tâm mà không yêu cầu chúng ta viết căn bậc hai một cách rõ ràng. 
 
-giá trị`d`là khoảng cách giữa các tâm ban đầu. Vì các đường tròn có đúng hai điểm chung nên tâm không thể trùng nhau, nên`d`là hoàn toàn tích cực. Không cần phải kiểm tra epsilon nhân tạo hoặc trường hợp đặc biệt đối với các tâm trùng khớp. 
+Biến`t`là khoảng cách từ tâm đầu tiên đến tâm tối ưu. Sự đảm bảo về hai giao điểm có nghĩa là`t`hoàn toàn dương và hoàn toàn nhỏ hơn`d`, do đó chia cho`d`là an toàn. 
 
-biểu hiện`(r1 + r2 - d) / 2`là bán kính cuối cùng. Điều kiện giao chặt chẽ đảm bảo rằng tử số của nó là dương. 
+Tọa độ thu được bằng cách di chuyển từ tâm thứ nhất theo hướng của tâm thứ hai một cách chính xác.`t`. Viết phép tính dưới dạng`dx * t / d`Và`dy * t / d`tránh việc xây dựng một bộ vectơ đơn vị một cách riêng biệt. 
 
-Biến`dist_from_first`là khoảng cách từ tâm đầu tiên đến tâm đáp án. Nhân vectơ chuẩn hóa`(dx / d, dy / d)`bằng khoảng cách này sẽ đặt câu trả lời vào đúng vị trí dọc theo đường nối giữa các trung tâm ban đầu. 
+Bán kính sử dụng công thức đối xứng`(r1 + r2 - d) / 2`. Tính trực tiếp thì đơn giản hơn tính`r1 - t`, và nó tránh được một phép trừ thêm không cần thiết. 
 
-Không thể tràn số nguyên trong Python và ngay cả trong các ngôn ngữ có chiều rộng cố định, sự khác biệt tọa độ bình phương ở đây rất nhỏ so với giới hạn số nguyên 64 bit. Các phép tính cuối cùng sử dụng dấu phẩy động vì câu trả lời có thể không hợp lý. 
+Không có vấn đề tràn số nguyên trong Python vì số nguyên có độ chính xác tùy ý. Các phép toán dấu phẩy động duy nhất liên quan đến các giá trị có độ lớn tối đa là vài nghìn, do đó độ chính xác gấp đôi có thể xử lý chúng một cách thoải mái. 
+
+In mười lăm chữ số sau dấu thập phân mang lại độ chính xác cao hơn nhiều so với yêu cầu. Thẩm phán so sánh các giá trị số, không phải định dạng. 
 
 ## Ví dụ đã hoạt động 
 
@@ -210,51 +221,53 @@ Không thể tràn số nguyên trong Python và ngay cả trong các ngôn ng�
 Đầu vào là```
 0 0 5
 6 0 5
-```Các giá trị trung gian quan trọng là: 
+```Các biến chính phát triển như sau. 
 
 | Biến | Giá trị | 
 | --- | --- | 
 | (dx) | (6) | 
 | (dy) | (0) | 
 | (d) | (6) | 
-| (R) | (2) | 
-| (t) | (3) | 
-| (x) | (3) | 
-| (y) | (0) | 
+| (t=(d+r_1-r_2)/2) | (3) | 
+| (x= x_1+dx\cdot t/d) | (3) | 
+| (y= y_1+dy\cdot t/d) | (0) | 
+| (r=(r_1+r_2-d)/2) | (2) | 
 
-Vì bán kính bằng nhau nên giao điểm của hai hàm bán kính sẵn có là trung điểm của các tâm. Vòng tròn cuối cùng có tâm tại ((3,0)) với bán kính (2), khớp với đầu ra mẫu. 
+Bán kính có được từ hai đường tròn ban đầu bằng nhau tại điểm giữa, cả hai đều bằng (5-3=2). Di chuyển một trong hai hướng sẽ làm cho một trong số chúng nhỏ hơn, vì vậy điểm giữa là tối ưu. 
 
 ### Mẫu 2 
 
 Đầu vào là```
 -12 34 56
 78 -90 123
-```Các tính toán trung gian xấp xỉ: 
+```Giá trị dịch chuyển và dẫn xuất xấp xỉ 
 
 | Biến | Giá trị | 
 | --- | --- | 
 | (dx) | (90) | 
 | (dy) | (-124) | 
-| (d) | (153.21814\ldots) | 
-| (R) | (12.8906010988\ldots) | 
-| (t) | (43.1093989012\ldots) | 
-| (x) | (13.3222578219\ldots) | 
-| (y) | (-0.8884441101\ldots) | 
+| (d) | (153.2239) | 
+| (t=(d+56-123)/2) | (43.1119) | 
+| (x) | (13.3222578218559) | 
+| (y) | (-0.8884441101126) | 
+| (r=(56+123-d)/2) | (12.8906010988208) | 
 
-Ở đây bán kính khác nhau nên trung tâm câu trả lời không phải là điểm giữa. Tâm mới gần với hình tròn đầu tiên hơn vì bán kính của nó nhỏ hơn. Các giá trị được tính toán khớp với mẫu thứ hai trong phạm vi dung sai dấu phẩy động được yêu cầu. 
+Ở đây bán kính khá khác nhau nên tâm tối ưu không nằm giữa các tâm ban đầu. Nó nằm gần tâm của vòng tròn nhỏ hơn, đúng như phương trình cân bằng dự đoán. 
+
+Hai khoảng cách biên từ tâm kết quả đều xấp xỉ (12,8906011) sau khi trừ đi khoảng cách tâm thích hợp từ bán kính ban đầu tương ứng. Điều này xác nhận bất biến trung tâm rằng cả hai vòng tròn ban đầu đều chặt chẽ ở mức tối ưu. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | (O(1)) | Một số lượng không đổi các phép tính số học và một căn bậc hai được thực hiện | 
-| Không gian | (O(1)) | Chỉ một số biến vô hướng cố định được lưu trữ | 
+| Thời gian | (O(1)) | Một số lượng không đổi các phép tính số học và một căn bậc hai được thực hiện. | 
+| Không gian | (O(1)) | Chỉ có hai vòng tròn và một số giá trị trung gian không đổi được lưu trữ. | 
 
-Đầu vào chỉ chứa hai vòng tròn, do đó không phụ thuộc vào kích thước đầu vào như (N). Giải pháp thực hiện một số phép tính số học và sử dụng bộ nhớ không đổi, để lại một khoảng cách rất lớn dưới giới hạn 2 giây và 256 MB. 
+Đầu vào chỉ chứa hai vòng tròn, do đó, giải pháp (O(1)) thấp hơn nhiều so với giới hạn 2 giây và 256 MB. Quan trọng hơn, công thức này tránh được bất kỳ sự điều chỉnh độ chính xác lặp đi lặp lại nào, làm cho hành vi số có thể dự đoán được. 
 
 ## Trường hợp thử nghiệm 
 
-Các xác nhận bên dưới so sánh các giá trị dấu phẩy động với dung sai thay vì so sánh các chuỗi được định dạng. Điều đó phản ánh điều kiện đánh giá thực tế, trong đó nhiều cách biểu diễn thập phân khác nhau có thể đúng.```python
+Đối với đầu ra dấu phẩy động, việc so sánh chuỗi đầu ra hoàn chỉnh là không phù hợp vì nhiều cách biểu diễn thập phân khác nhau có thể mô tả cùng một câu trả lời. Trình trợ giúp kiểm tra bên dưới phân tích cú pháp ba số và kiểm tra chúng với sai số tuyệt đối và tương đối nghiêm ngặt.```python
 import sys
 import io
 import math
@@ -267,15 +280,17 @@ def solve():
 
     dx = x2 - x1
     dy = y2 - y1
-    d = (dx * dx + dy * dy) ** 0.5
 
-    radius = (r1 + r2 - d) / 2.0
+    d = math.hypot(dx, dy)
+
     t = (d + r1 - r2) / 2.0
 
     x = x1 + dx * t / d
     y = y1 + dy * t / d
 
-    print(f"{x:.15f} {y:.15f} {radius:.15f}")
+    r = (r1 + r2 - d) / 2.0
+
+    print(f"{x:.15f} {y:.15f} {r:.15f}")
 
 def run(inp: str) -> str:
     old_stdin = sys.stdin
@@ -291,149 +306,132 @@ def run(inp: str) -> str:
         sys.stdin = old_stdin
         sys.stdout = old_stdout
 
-def check(inp: str, expected):
+def assert_answer(inp: str, expected, message: str):
     out = run(inp).split()
     got = list(map(float, out))
 
-    assert len(got) == 3
+    assert len(got) == 3, message
+
     for a, b in zip(got, expected):
-        assert math.isclose(a, b, rel_tol=1e-12, abs_tol=1e-12), (
-            f"got {got}, expected {expected}"
+        assert math.isclose(a, b, rel_tol=1e-9, abs_tol=1e-9), (
+            f"{message}: got {got}, expected {expected}"
         )
 
-# Provided samples
-check(
-    """0 0 5
-6 0 5
-""",
+# Provided sample 1
+assert_answer(
+    "0 0 5\n6 0 5\n",
     (3.0, 0.0, 2.0),
+    "sample 1"
 )
 
-check(
-    """-12 34 56
-78 -90 123
-""",
+# Provided sample 2
+assert_answer(
+    "-12 34 56\n78 -90 123\n",
     (13.322257821855908, -0.888444110112585, 12.890601098820779),
+    "sample 2"
 )
 
-# Minimum radii, equal circles, simple horizontal placement
-check(
-    """0 0 1
-1 0 1
-""",
+# Minimum radii, equal circles, center distance 1
+assert_answer(
+    "0 0 1\n1 0 1\n",
     (0.5, 0.0, 0.5),
+    "minimum-size circles"
 )
 
-# Equal circles with a non-horizontal center line
-check(
-    """0 0 5
-3 4 5
-""",
-    (1.5, 2.0, 2.5),
+# Equal values and diagonal center displacement
+# d = sqrt(2), so t = sqrt(2)/2 and the answer is (0.5, 0.5).
+assert_answer(
+    "0 0 1\n1 1 1\n",
+    (0.5, 0.5, (2.0 - math.sqrt(2.0)) / 2.0),
+    "equal circles on a diagonal"
 )
 
-# Unequal radii, catches the incorrect-midpoint solution
-check(
-    """0 0 5
-6 0 9
-""",
-    (1.0, 0.0, 4.0),
+# Very close to external tangency
+assert_answer(
+    "0 0 1\n1.999999 0 1\n",
+    (0.9999995, 0.0, 0.0000005),
+    "near-tangent circles"
 )
 
-# Maximum coordinate values while still having two intersections
-check(
-    """-1000 0 1000
-999 0 1000
-""",
-    (-0.5, 0.0, 0.5),
+# Unequal radii, catches midpoint assumptions
+assert_answer(
+    "0 0 5\n7 0 3\n",
+    (4.5, 0.0, 0.5),
+    "unequal radii"
 )
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`0 0 1`/`1 0 1`|`(0.5, 0, 0.5)`| Bán kính tối thiểu và hình tròn bằng nhau | 
-|`0 0 5`/`3 4 5`|`(1.5, 2, 2.5)`| Đường tâm không nằm ngang | 
-|`0 0 5`/`6 0 9`|`(1, 0, 4)`| Bán kính không bằng nhau và tâm không ở giữa | 
-|`-1000 0 1000`/`999 0 1000`|`(-0.5, 0, 0.5)`| Tọa độ biên và đường tròn gần tiếp tuyến | 
+|`0 0 1`Và`1 0 1`|`(0.5, 0, 0.5)`| Bán kính tối thiểu và trường hợp đối xứng | 
+|`0 0 1`Và`1 1 1`|`(0.5, 0.5, (2-sqrt(2))/2)`| Hướng chéo và chuẩn hóa khoảng cách | 
+|`0 0 1`Và`1.999999 0 1`|`(0.9999995, 0, 0.0000005)`| Độ chính xác gần tiếp tuyến | 
+|`0 0 5`Và`7 0 3`|`(4.5, 0, 0.5)`| Bán kính không bằng nhau và tối ưu không ở điểm giữa | 
 
 ## Vỏ cạnh 
 
-Đối với trường hợp kích thước tối thiểu```
+Trường hợp bán kính bằng nhau```
 0 0 1
 1 0 1
-```chúng tôi nhận được (d=1). Bán kính là 
+```có (d=1), vậy 
 
 [ 
-R=\frac{1+1-1}{2}=0,5, 
-] 
-
-và khoảng cách từ tâm thứ nhất cũng là (0,5). Hướng là ((1,0)), nên câu trả lời chính xác là ((0,5,0,0,5)). Thuật toán không bao giờ cần một nhánh đặc biệt cho bán kính (1). 
-
-Đối với trường hợp không nằm ngang```
-0 0 5
-3 4 5
-```khoảng cách trung tâm là (5). Bán kính bằng nhau cho 
-
-[ 
-R=\frac{5+5-5}{2}=2,5 
+t=\frac{1+1-1}{2}=0,5 
 ] 
 
 và 
 
 [ 
-t=\frac{5+5-5}{2}=2,5. 
+r=\frac{1+1-1}{2}=0,5. 
 ] 
 
-Đơn vị hướng từ tâm thứ nhất đến tâm thứ hai là ((3/5,4/5)) nên đáp án là tâm 
+Trung tâm là`(0.5, 0)`. Việc triển khai dựa trên điểm giữa sẽ hoạt động ở đây, nhưng công thức giải thích lý do tại sao nó hoạt động và cũng khái quát hóa cho các bán kính không bằng nhau. 
+
+Trường hợp đường chéo```
+0 0 1
+1 1 1
+```có (d=\sqrt2). Công thức cho 
 
 [ 
-(0,0)+2.5\left(\frac35,\frac45\right)=(1.5,2). 
+t=\frac{\sqrt2}{2}. 
 ] 
 
-Điều này phát hiện các triển khai xử lý hình học không chính xác dưới dạng một chiều dọc theo trục (x). 
+Đơn vị hướng từ tâm thứ nhất đến tâm thứ hai là 
 
-Đối với bán kính không bằng nhau,```
+[ 
+\left(\frac1{\sqrt2},\frac1{\sqrt2}\right), 
+] 
+
+do đó nhân với (t) được`(0.5, 0.5)`. Điều này nắm bắt các triển khai vô tình sử dụng`dx`Và`dy`trực tiếp như thể khoảng cách trung tâm luôn nằm ngang. 
+
+Trường hợp gần tiếp tuyến```
+0 0 1
+1.999999 0 1
+```có 
+
+[ 
+d=1,999999 
+] 
+
+và do đó 
+
+[ 
+r=\frac{2-1.999999}{2}=0,0000005. 
+] 
+
+Trung tâm tối ưu là`(0.9999995, 0)`. Bán kính dương nhưng cực kỳ nhỏ, kiểm tra xem việc triển khai có bảo toàn đủ độ chính xác của dấu phẩy động hay không. 
+
+Cuối cùng, trường hợp bán kính không bằng nhau```
 0 0 5
-6 0 9
-```chúng ta có (d=6). Bán kính là 
+7 0 3
+```cho 
 
 [ 
-R=\frac{5+9-6}{2}=4, 
-] 
-
-trong khi 
-
-[ 
-t=\frac{6+5-9}{2}=1. 
-] 
-
-Do đó tâm là ((1,0)). Hai khoảng trống đều là (4): 
-
-[ 
-5-1=4 
+t=\frac{7+5-3}{2}=4.5 
 ] 
 
 và 
 
 [ 
-9-(6-1)=4. 
+r=\frac{5+3-7}{2}=0,5. 
 ] 
 
-Sự bằng nhau của hai đại lượng này chính là điều kiện tối ưu. 
-
-Đối với trường hợp ranh giới gần tiếp tuyến,```
--1000 0 1000
-999 0 1000
-```các trung tâm cách nhau (1999) các đơn vị. Bán kính cuối cùng là 
-
-[ 
-R=\frac{1000+1000-1999}{2}=0,5. 
-] 
-
-Trung tâm câu trả lời nằm ở giữa hai trung tâm ban đầu, tại 
-
-[ 
-\frac{-1000+999}{2}=-0,5. 
-] 
-
-Vì vậy, đầu ra là```
--0.500000000000000 0.000000000000000 0.500000000000000
-```đến sai số cho phép. Trường hợp này chứng minh tại sao việc triển khai không được giả định rằng bán kính câu trả lời được tách biệt một cách thoải mái với 0. Đảm bảo đầu vào cung cấp bán kính dương, nhưng nó có thể nhỏ tùy ý so với độ lớn tọa độ và bán kính.
+Trung tâm là`(4.5, 0)`, không`(3.5, 0)`. Đây là phép thử hữu ích nhất chống lại giả định phổ biến nhưng không chính xác rằng tính đối xứng luôn đặt đáp án ở trung điểm của hai tâm ban đầu.
