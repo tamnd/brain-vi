@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 12m 26s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi có hai hàng (n) lính. Việc so khớp sẽ chọn chính xác một người lính từ hàng thứ hai cho mỗi người lính ở hàng đầu tiên, với mỗi người lính ở hàng thứ hai được sử dụng đúng một lần. Vì vậy, câu trả lời là số hoán vị hợp lệ (p) của (1,\ldots,n) sao cho người lính (i) ở hàng đầu tiên khớp với người lính (p_i) ở hàng thứ hai, (|i-p_i|\le e), và không có cặp nào bị cấm rõ ràng ((u_i,v_i)) được sử dụng. 
@@ -199,11 +199,11 @@ if __name__ == "__main__":
     solve()
 ```các`bad`mảng lưu trữ các vị trí hàng thứ hai bị cấm dưới dạng bit cục bộ. Đối với cặp bị cấm ((u,v)), vị trí bit là (v-(u-e)), vì bit (0) của cửa sổ hàng (u) đại diện cho (u-e). Điều này giúp việc kiểm tra cạnh cấm diễn ra liên tục. 
 
-các`allowed`mảng được tính toán trước để vòng lặp DP chính không lặp lại việc kiểm tra điều kiện khoảng cách hoặc tìm kiếm cấu trúc cặp cấm. Vì mỗi cửa sổ chứa tối đa chín vị trí nên việc xây dựng tất cả các mặt nạ này chỉ tốn (O(ne)). 
+các`allowed`mảng được tính toán trước để vòng lặp DP chính không lặp lại việc kiểm tra điều kiện khoảng cách hoặc tìm kiếm cấu trúc cặp bị cấm. Vì mỗi cửa sổ chứa tối đa chín vị trí nên việc xây dựng tất cả các mặt nạ này chỉ tốn (O(ne)). 
 
-Mặt nạ ban đầu yêu cầu xử lý đặc biệt vì cửa sổ đầu tiên mở rộng đến các vị trí nhỏ hơn (1). Những vị trí như vậy không thể được chọn, do đó các bit của chúng bắt đầu bằng (1). Ý tưởng tương tự được sử dụng khi vị trí mới được nhập từ bên phải: một lần (i+e+1>n), bit mới được chèn vào là (1). 
+Mặt nạ ban đầu yêu cầu xử lý đặc biệt vì cửa sổ đầu tiên mở rộng đến các vị trí nhỏ hơn (1). Những vị trí như vậy không thể được chọn nên các bit của chúng bắt đầu bằng (1). Ý tưởng tương tự được sử dụng khi vị trí mới được nhập từ bên phải: một lần (i+e+1>n), bit mới được chèn vào là (1). 
 
-biểu thức`choices = cur_allowed & ~mask`cô lập mọi vị trí pháp lý chưa được sử dụng. Vòng lặp`bit = choices & -choices`trích xuất một ứng cử viên tại một thời điểm mà không cần quét lại tất cả chín bit. 
+biểu hiện`choices = cur_allowed & ~mask`cô lập mọi vị trí pháp lý chưa được sử dụng. Vòng lặp`bit = choices & -choices`trích xuất một ứng cử viên tại một thời điểm mà không cần quét lại tất cả chín bit. 
 
 Việc kiểm tra bit gửi đi phải diễn ra sau khi thêm đối tác mới được chọn. Nếu bit gửi đi bằng 0, người lính hiện tại không khớp được với vị trí hàng thứ hai sắp trở thành không thể truy cập được. Trạng thái như vậy không thể dẫn đến sự phù hợp hoàn toàn. 
 
@@ -251,11 +251,11 @@ Dấu vết này chứng tỏ rằng các cặp bị cấm không yêu cầu kí
 | Thời gian | (O(n(2e+1)2^{2e+1}+k)) | Có (n) lớp, nhiều nhất (2^{2e+1}) mặt nạ trên mỗi lớp và nhiều nhất (2e+1) đối tác ứng cử viên trên mỗi mặt nạ. | 
 | Không gian | (O(2^{2e+1}+n+k)) | Hai mảng DP giữ các trạng thái, trong khi mặt nạ bị cấm và được phép yêu cầu lưu trữ tuyến tính. | 
 
-Với (e\le4), DP có nhiều nhất (2^9=512) trạng thái và nhiều nhất là chín lần chuyển đổi cho mỗi trạng thái. Đối với (n=2000), giới hạn chính là khoảng (2000\cdot512\cdot9), khoảng (9,2) triệu lần chuyển đổi trạng thái, phù hợp với các ràng buộc dự kiến. Việc sử dụng bộ nhớ nhỏ vì chỉ giữ lại hai lớp không gian trạng thái có kích thước không đổi. 
+Với (e\le4), DP có nhiều nhất (2^9=512) trạng thái và nhiều nhất là chín lần chuyển đổi cho mỗi trạng thái. Đối với (n=2000), giới hạn chính là khoảng (2000\cdot512\cdot9), khoảng (9,2) triệu lần chuyển đổi trạng thái, phù hợp với các ràng buộc dự định. Việc sử dụng bộ nhớ nhỏ vì chỉ giữ lại hai lớp không gian trạng thái có kích thước không đổi. 
 
 ## Trường hợp thử nghiệm 
 
-Bộ khai thác thử nghiệm sau đây sử dụng cùng một`solve`thực hiện đúng như chương trình đã đệ trình. Trường hợp kích thước tối đa có chủ ý sử dụng (e=0), trong đó câu trả lời được xác định ngay lập tức bằng kết quả khớp duy nhất có thể, do đó, nó cũng kiểm tra xem việc triển khai có xử lý được không (n=2000).```python
+Bộ dây thử nghiệm sau đây sử dụng cùng một`solve`thực hiện đúng như chương trình đã đệ trình. Trường hợp kích thước tối đa có chủ ý sử dụng (e=0), trong đó câu trả lời được xác định ngay lập tức bằng kết quả khớp duy nhất có thể, do đó, nó cũng kiểm tra xem việc triển khai có xử lý được không (n=2000).```python
 import sys
 import io
 

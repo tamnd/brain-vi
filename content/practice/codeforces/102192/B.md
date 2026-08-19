@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 12m 12s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta có một tam giác không suy biến và một tập giấy hình chữ nhật. Tấm đệm có chiều rộng cố định`w`, trong khi chiều cao của nó là đại lượng mà chúng ta muốn cực tiểu hóa. Hình tam giác có thể được xoay tự do và được phép chạm vào đường biên. Kích thước ngang của tam giác quay tối đa phải bằng`w`; kích thước dọc của nó trở thành chiều cao cần thiết. 
@@ -100,7 +100,7 @@ h=\sqrt{A^2-w^2}.
 3. Lặp lại sáu phép kiểm tra vectơ có thứ tự tương tự sau khi phản ánh tam giác qua trục hoành. Sự phản chiếu xử lý các vị trí trong đó các vectơ liên quan nằm ở phía đối diện của hệ tọa độ ban đầu. 
 4. Nếu tìm được ít nhất một ứng viên, hãy in ra ứng viên nhỏ nhất. Nếu không thì in`impossible`. 
 
-Tại sao nó hoạt động: bất biến chính là mọi ứng cử viên được thuật toán xem xét đều đại diện cho một vị trí hợp pháp trong đó một đỉnh tam giác nằm ở một góc hình chữ nhật và mọi vị trí tối ưu đều có một vị trí chặt chẽ tương đương có dạng này. Đối với một cặp góc cố định và có thứ tự, giới hạn chiều rộng cho phép vectơ đầu tiên nằm ngang hoặc buộc hình chiếu ngang của nó bằng`w`. Đó chính xác là hai trường hợp được thuật toán xử lý. Sau đó, góc sẽ kiểm tra đặc điểm xem vectơ thứ hai có còn nằm trong hình chữ nhật hay không. Vì tất cả ba đỉnh góc có thể có, cả thứ tự vectơ và cả hai hướng đều được kiểm tra nên không có vị trí tối ưu nào bị bỏ qua. 
+Tại sao nó hoạt động: bất biến chính là mọi ứng cử viên được thuật toán xem xét đều đại diện cho một vị trí hợp pháp trong đó một đỉnh tam giác nằm ở một góc hình chữ nhật và mọi vị trí tối ưu đều có một vị trí chặt chẽ tương đương có dạng này. Đối với một cặp góc cố định và có thứ tự, giới hạn chiều rộng cho phép vectơ đầu tiên nằm ngang hoặc buộc hình chiếu ngang của nó bằng`w`. Đó chính xác là hai trường hợp được thuật toán xử lý. Sau đó, góc sẽ kiểm tra đặc điểm xem vectơ thứ hai có còn nằm trong hình chữ nhật hay không. Vì cả ba đỉnh góc có thể có, cả thứ tự vectơ và cả hai hướng đều được kiểm tra nên không có vị trí tối ưu nào bị bỏ qua. 
 
 ## Giải pháp Python```python
 import sys
@@ -228,9 +228,9 @@ if __name__ == "__main__":
     main()
 ```các`calc`là việc thực hiện các bước từ 3 đến 8. Tích vector chấm xác định xem hai tia có thể vừa với một góc phần tư hay không, trong khi tích chéo cho biết cạnh nào của`a`chứa`b`. 
 
-các`aa <= w²`chi nhánh là trường hợp`a`có thể nằm dọc theo chiều rộng của hình chữ nhật. biểu thức`cross / A`là khoảng cách vuông góc từ đỉnh thứ ba đến đường thẳng đi qua hai đỉnh đầu tiên nên trực tiếp cho ta độ cao cần tìm. 
+các`aa <= w²`chi nhánh là trường hợp`a`có thể nằm dọc theo chiều rộng của hình chữ nhật. biểu hiện`cross / A`là khoảng cách vuông góc từ đỉnh thứ ba đến đường thẳng đi qua hai đỉnh đầu tiên nên trực tiếp cho ta độ cao cần tìm. 
 
-Nhánh thứ hai xử lý trường hợp`a`rộng hơn dải. biểu thức`sqrt(aa - w²)`theo trực tiếp từ tam giác vuông được tạo bởi vectơ`a`, hình chiếu ngang của nó`w`và hình chiếu thẳng đứng của nó.`atan2(h, w)`tốt hơn là`atan(h / w)`bởi vì nó hoạt động rõ ràng ở tất cả các giá trị hợp lệ, mặc dù`w`là tích cực ở đây. 
+Nhánh thứ hai xử lý trường hợp`a`rộng hơn dải. biểu hiện`sqrt(aa - w²)`theo trực tiếp từ tam giác vuông được tạo bởi vectơ`a`, hình chiếu ngang của nó`w`và hình chiếu thẳng đứng của nó.`atan2(h, w)`tốt hơn là`atan(h / w)`bởi vì nó hoạt động rõ ràng ở tất cả các giá trị hợp lệ, mặc dù`w`là tích cực ở đây. 
 
 Đối số được chuyển đến`acos`được kẹp vào`[-1, 1]`. Về mặt toán học, nó đã nằm trong khoảng đó, nhưng việc làm tròn dấu phẩy động có thể tạo ra thứ gì đó như`1.0000000000000002`, nếu không sẽ gây ra lỗi tên miền. 
 
@@ -449,7 +449,7 @@ assert solve_input(
 
 Đối với trường hợp không thể```
 0 0 2 0 1 2 1
-```tam giác đều có độ dài cạnh`2`. Chiều rộng tối thiểu có thể có của nó là độ cao của nó,`sqrt(3)`, lớn hơn chiều rộng có sẵn`1`. Mọi cặp vectơ có thứ tự cuối cùng đều không đạt được điều kiện góc phần tư hoặc điều kiện chiếu chiều rộng. Vì không có ứng viên nào đạt được`ans`, chương trình in`impossible`. 
+```tam giác đều có độ dài cạnh`2`. Chiều rộng tối thiểu có thể có của nó là độ cao,`sqrt(3)`, lớn hơn chiều rộng có sẵn`1`. Mọi cặp vectơ có thứ tự cuối cùng đều không đạt được điều kiện góc phần tư hoặc điều kiện chiếu chiều rộng. Vì không có ứng viên nào đạt được`ans`, chương trình in`impossible`. 
 
 Để liên hệ ranh giới chính xác,```
 0 0 1 0 0 1 1

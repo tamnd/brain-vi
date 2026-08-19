@@ -1,6 +1,6 @@
 ---
 title: "CF 102192A - Mã hóa ký tự"
-description: "Một từ có độ dài m có thể được biểu diễn bằng một mảng gồm m giá trị ký tự được mã hóa. Mỗi vị trí chọn độc lập một số nguyên từ 0 đến n - 1. Chúng ta cần đếm xem có bao nhiêu mảng như vậy có tổng tổng chính xác là k."
+description: "Một từ có độ dài m có thể được biểu diễn bằng một mảng m giá trị ký tự được mã hóa. Mỗi vị trí chọn độc lập một số nguyên từ 0 đến n - 1. Chúng ta cần đếm xem có bao nhiêu mảng như vậy có tổng tổng chính xác là k."
 date: "2026-08-18T20:30:11+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
@@ -21,10 +21,10 @@ draft: false
 **Thời gian giải:** 2m 42s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
-Một từ dài`m`có thể được biểu diễn bằng một mảng`m`giá trị ký tự được mã hóa. Mỗi vị trí chọn độc lập một số nguyên từ`0`bởi vì`n - 1`. Chúng ta cần đếm chính xác có bao nhiêu mảng như vậy có tổng tổng chính xác`k`. 
+Một từ dài`m`có thể được biểu diễn bằng một mảng`m`giá trị ký tự được mã hóa. Mỗi vị trí chọn độc lập một số nguyên từ`0`bởi vì`n - 1`. Chúng ta cần đếm chính xác có bao nhiêu mảng như vậy có tổng tổng`k`. 
 
 Ví dụ, với`n = 2`Và`m = 3`, mọi vị trí đều chứa một trong hai`0`hoặc`1`. từ`[0, 1, 1]`có tổng`2`, trong khi`[1, 1, 1]`có tổng`3`. Các mảng khác nhau biểu thị các từ khác nhau vì các lựa chọn ký tự được sắp xếp theo thứ tự. 
 
@@ -46,7 +46,7 @@ Một công thức lập trình động tiêu chuẩn sẽ tốt hơn nhiều. C
 
 Một cửa sổ trượt có thể giảm mỗi lần chuyển đổi thành`O(1)`, tạo nên toàn bộ DP`O(mk)`. Đó đã là một cải tiến đáng kể, nhưng trường hợp xấu nhất vẫn cần khoảng`10^10`hoạt động nên không phù hợp. 
 
-Quan sát quan trọng là các lựa chọn ở mọi vị trí đều chính xác là các số nguyên trong khoảng`[0,n-1]`. Không có giới hạn trên, số nghiệm không âm của`x1 + x2 + ... + xm = k`là giá trị sao và thanh`C(k + m - 1, m - 1)`. 
+Quan sát quan trọng là các lựa chọn ở mọi vị trí đều chính xác là các số nguyên trong khoảng`[0,n-1]`. Không có giới hạn trên, số nghiệm không âm của`x1 + x2 + ... + xm = k`là giá trị sao và vạch`C(k + m - 1, m - 1)`. 
 
 Giới hạn trên`xi <= n-1`có thể được xử lý bằng cách bao gồm-loại trừ. Đối với tập hợp đã chọn`j`vị trí vi phạm giới hạn trên, trừ`n`từ mỗi người trong số họ. Nếu giá trị ban đầu của chúng ít nhất là`n`, viết`xi = yi + n`, Ở đâu`yi >= 0`. Các biến còn lại là số nguyên không âm không hạn chế và tổng mới của chúng là`k - jn`. 
 
@@ -60,7 +60,7 @@ Lực lượng vũ phu hoạt động vì nó xem xét từng mảng hợp lệ 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu |`O(n^m)`hoặc`O(m n^m)`với phép tính tổng rõ ràng |`O(m)`| Quá chậm | 
 | DP có cửa sổ trượt |`O(mk)`|`O(k)`| Quá chậm trong trường hợp xấu nhất | 
-| Bao gồm-Loại trừ |`O(min(m, k/n))`mỗi trường hợp kiểm thử sau khi tiền xử lý |`O(max(m+k))`| Đã chấp nhận | 
+| Bao gồm-Loại trừ |`O(min(m, k/n))`mỗi ca kiểm thử sau khi tiền xử lý |`O(max(m+k))`| Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
@@ -77,13 +77,13 @@ Yếu tố đầu tiên chọn cái nào`j`vị trí vi phạm giới hạn trê
 
 Hệ số nhị thức được tính bằng cách sử dụng`C(a,b) = fact[a] * invfact[b] * invfact[a-b] mod MOD`. 
 
-Các giai thừa được tính một lần và các giai thừa nghịch đảo được lấy từ một nghịch đảo mô-đun theo sau là một phép truy hồi ngược. 
+Các giai thừa được tính toán một lần và các giai thừa nghịch đảo được lấy từ một nghịch đảo mô-đun theo sau là một phép truy hồi ngược. 
 
 ### Tại sao nó hoạt động 
 
 Xét tập hợp tất cả các mảng số nguyên không âm có độ dài`m`tổng của ai là`k`. Các ngôi sao và thanh đếm bộ này với`C(k+m-1,m-1)`. Chúng ta cần loại bỏ các mảng chứa một hoặc nhiều vị trí có giá trị ít nhất là`n`. 
 
-Đối với bất kỳ tập hợp được chọn nào`j`vi phạm vị trí, trừ`n`từ mỗi giá trị được chọn. Điều này tạo ra sự song ánh với các mảng không âm có tổng là`k-jn`. có`C(k-jn+m-1,m-1)`mảng như vậy, và có`C(m,j)`lựa chọn cho các vị trí đã chọn. 
+Đối với bất kỳ bộ được chọn nào`j`vi phạm vị trí, trừ`n`từ mỗi giá trị được chọn. Điều này tạo ra sự song ánh với các mảng không âm có tổng là`k-jn`. có`C(k-jn+m-1,m-1)`mảng như vậy, và có`C(m,j)`lựa chọn cho các vị trí đã chọn. 
 
 Loại trừ bao gồm thêm các tập hợp có số lượng vi phạm chẵn và trừ các tập hợp có số lẻ. Mỗi mảng không hợp lệ với`r`vị trí vi phạm góp phần`C(r,0) - C(r,1) + C(r,2) - ... + (-1)^r C(r,r) = 0`, 
 
@@ -203,7 +203,7 @@ Kết quả là`7`. Số lượng không hạn chế chứa chính xác ba mản
 | Thời gian |`O(M + Σ min(m, k/n))`|`M = max(m+k)`để xử lý trước giai thừa, theo sau là một vòng lặp loại trừ bao gồm cho mỗi trường hợp thử nghiệm | 
 | Không gian |`O(M)`| Mảng giai thừa và nghịch đảo | 
 
-Trên tất cả các trường hợp thử nghiệm,`Σk <= 5 * 10^6`Và`Σm <= 5 * 10^6`. Từ`min(m, k/n) <= k`đối với mỗi trường hợp thử nghiệm, tổng số lần lặp lại bao gồm-loại trừ nhiều nhất là`5 * 10^6`cho đến nhỏ`+1`đóng góp từ mỗi trường hợp thử nghiệm. Quá trình tiền xử lý giai thừa chỉ cần khoảng`max(m+k) <= 2 * 10^5`, do đó cả yêu cầu về thời gian và bộ nhớ đều vừa vặn trong giới hạn. 
+Trên tất cả các trường hợp thử nghiệm,`Σk <= 5 * 10^6`Và`Σm <= 5 * 10^6`. Từ`min(m, k/n) <= k`đối với mỗi trường hợp thử nghiệm, tổng số lần lặp lại bao gồm-loại trừ nhiều nhất là`5 * 10^6`cho đến nhỏ`+1`đóng góp từ mỗi trường hợp thử nghiệm. Quá trình tiền xử lý giai thừa chỉ cần khoảng`max(m+k) <= 2 * 10^5`, vì vậy cả yêu cầu về thời gian và bộ nhớ đều vừa vặn trong giới hạn. 
 
 ## Trường hợp thử nghiệm```python
 import sys
@@ -297,8 +297,8 @@ assert solve("1\n3 2 2\n") == "3\n", "small inclusion-exclusion case"
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
 |`1 1 0`|`1`| Đầu vào có kích thước tối thiểu và từ có tổng bằng 0 duy nhất | 
-|`1 5 1`|`0`| Điều đặc biệt`n = 1`trường hợp | 
-|`2 5 5`|`1`| Chính xác số tiền tối đa có thể | 
+|`1 5 1`|`0`| Điều đặc biệt`n = 1`case |
+ |`2 5 5`|`1`| Chính xác số tiền tối đa có thể | 
 |`2 5 6`|`0`| Mục tiêu vừa vượt quá phạm vi khả thi | 
 |`3 2 2`|`3`| Trường hợp nhỏ trong đó việc sửa lỗi bao gồm-loại trừ được thực hiện | 
 
@@ -306,7 +306,7 @@ assert solve("1\n3 2 2\n") == "3\n", "small inclusion-exclusion case"
 
 Khi nào`n = 1`, mọi ký tự đều buộc phải có giá trị`0`. Vì`1 5 0`, số tiền tối đa có thể là`5(1-1)=0`, vì vậy mục tiêu là khả thi và mảng duy nhất là`[0,0,0,0,0]`. Thuật toán trả về`1`. Vì`1 5 1`, mục tiêu vượt quá số tiền tối đa`0`, vì vậy nó trả về`0`ngay lập tức. Điều này ngăn vòng lặp loại trừ dựa vào giá trị ký tự dương không tồn tại. 
 
-Để có mục tiêu chính xác ở mức tối đa, hãy xem xét`2 3 3`. Mỗi vị trí nhiều nhất là`1`, vậy đạt được tổng`3`lực lượng`[1,1,1]`. Công thức cho`C(5,2) - C(3,1)C(2,2) = 10 - 9 = 1`. Ranh giới được tính chính xác vì`j = 1`việc hiệu chỉnh sẽ loại bỏ mọi nghiệm không hạn chế có chứa một giá trị ít nhất`2`. 
+Để có mục tiêu chính xác ở mức tối đa, hãy xem xét`2 3 3`. Mỗi vị trí tối đa là`1`, vậy đạt được tổng`3`lực lượng`[1,1,1]`. Công thức cho`C(5,2) - C(3,1)C(2,2) = 10 - 9 = 1`. Ranh giới được tính chính xác vì`j = 1`việc hiệu chỉnh sẽ loại bỏ mọi nghiệm không hạn chế có chứa một giá trị ít nhất`2`. 
 
 Đối với mục tiêu trên mức tối đa,`2 3 4`có số tiền tối đa có thể`3`. Thuật toán phát hiện`4 > 3`và trả về`0`mà không đánh giá bất kỳ hệ số nhị thức nào. Việc triển khai DP hoặc loại trừ bao gồm không tính đến ranh giới này một cách rõ ràng có thể lãng phí công sức đáng kể và một công thức có phần dư âm được xử lý không chính xác có thể tạo ra số đếm không hợp lệ. 
 

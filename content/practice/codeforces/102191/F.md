@@ -21,12 +21,12 @@ draft: false
 **Thời gian giải:** 13m 29s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta có một mảng số nguyên dương và chúng ta phải đặt các vết cắt giữa các phần tử để chia nó thành các phân đoạn liên tiếp. Mỗi phân khúc đóng góp tổng của nó và mục tiêu là tối đa hóa sản phẩm của tất cả các khoản đó. Đầu ra không phải là giá trị tối đa. Chúng ta phải in một phân vùng đạt mức tối đa, sử dụng`/`giữa các đoạn liên tiếp. 
 
-Khó khăn chính là việc cắt giảm sẽ thay đổi hai thứ cùng một lúc. Nó thay thế một yếu tố, tổng của một phân khúc lớn hơn, bằng hai yếu tố mà chúng ta muốn so sánh tích của chúng với tổng ban đầu đó. Vì mọi giá trị mảng đều dương nên sự so sánh này có cấu trúc đặc biệt mạnh mẽ. 
+Khó khăn trọng tâm là một vết cắt sẽ thay đổi hai thứ cùng một lúc. Nó thay thế một yếu tố, tổng của một phân khúc lớn hơn, bằng hai yếu tố mà chúng ta muốn so sánh tích của chúng với tổng ban đầu đó. Vì mọi giá trị mảng đều dương nên sự so sánh này có cấu trúc đặc biệt mạnh mẽ. 
 
 Mảng chứa tối đa 3⋅10 5 phần tử, do đó, thuật toán kiểm tra tất cả các cặp vị trí, hoặc tệ hơn là tất cả các tập hợp cắt có thể, vượt xa giới hạn một giây. Một thuật toán bậc hai đã thực hiện khoảng 9⋅10 10 lần lặp ở kích thước tối đa. Chúng ta cần một công trình tuyến tính hoặc gần tuyến tính. 
 
@@ -111,7 +111,7 @@ Biểu thức xuất phát từ việc làm cho x+l càng gần với một nử
 
 Hãy xem xét bất kỳ phân đoạn nào có chứa hai phần tử lớn hơn một. Việc cắt ở đâu đó giữa hai phần tử đó sẽ tạo ra hai phân đoạn có tổng ít nhất là hai. Nếu tổng của chúng là x và y, việc thay hệ số x+y bằng xy không thể làm giảm tích. Việc lặp lại thao tác này sẽ tạo ra một phân vùng tối ưu trong đó mỗi phân đoạn chứa nhiều nhất một giá trị lớn hơn một.
 
-Do đó, tất cả các lựa chọn đều bị giới hạn ở các lần chạy số một giữa hai giá trị liên tiếp lớn hơn một. Lần chạy như vậy không tương tác với bất kỳ lần chạy nào khác vì nó chỉ thay đổi tổng của hai phân đoạn lân cận. Đối với dãy k đơn vị giữa x và y, đóng góp của nó là (x+l)(y+k−l), có hai thừa số có tổng cố định. Tích của hai số dương có tổng cố định sẽ lớn nhất khi chúng bằng nhau nhất có thể, chính xác như số đã chọn. Những mảng dẫn đầu và theo sau chỉ có một hàng xóm hữu ích có thể có, trong khi một mảng toàn bộ tốt nhất nên được giữ dưới dạng một phân đoạn. Do đó mọi phần độc lập đều tối ưu và sự kết hợp của chúng là tối ưu toàn cục. 
+Do đó, tất cả các lựa chọn đều bị giới hạn trong phạm vi các số một giữa hai giá trị liên tiếp lớn hơn một. Lần chạy như vậy không tương tác với bất kỳ lần chạy nào khác vì nó chỉ thay đổi tổng của hai phân đoạn lân cận. Đối với dãy k đơn vị giữa x và y, đóng góp của nó là (x+l)(y+k−l), có hai thừa số có tổng cố định. Tích của hai số dương có tổng cố định sẽ lớn nhất khi chúng bằng nhau nhất có thể, chính xác là kết quả của l đã chọn. Những mảng dẫn đầu và theo sau chỉ có một hàng xóm hữu ích có thể có, trong khi một mảng toàn bộ tốt nhất nên được giữ dưới dạng một phân đoạn. Do đó mọi phần độc lập đều tối ưu và sự kết hợp của chúng là tối ưu toàn cục. 
 
 ## Giải pháp Python```python
 Pythonimport sysinput = sys.stdin.readline
@@ -135,7 +135,7 @@ if __name__ == "__main__":    solve()
 
 ban đầu`current`đoạn chứa điểm neo đầu tiên và mọi điểm neo dẫn đầu. lát cắt`a[:first + 1]`giữ nguyên thứ tự ban đầu và xử lý ranh giới trước điểm neo đầu tiên mà không có trường hợp đầu ra đặc biệt. 
 
-Đối với hai mỏ neo liên tiếp,`k`là số lượng những người nằm giữa các vị trí của họ. Biến`l`là số được gán cho đoạn bên trái. biểu thức`(y + k - x) // 2`là tầng nguyên của giá trị lý tưởng. Một trong hai số nguyên lân cận là tối ưu khi điểm lý tưởng nằm chính xác giữa hai số nguyên, do đó lấy mức sàn là đủ. 
+Đối với hai mỏ neo liên tiếp,`k`là số lượng những cái nằm giữa các vị trí của chúng. Biến`l`là số được gán cho đoạn bên trái. biểu hiện`(y + k - x) // 2`là tầng nguyên của giá trị lý tưởng. Một trong hai số nguyên lân cận là tối ưu khi điểm lý tưởng nằm chính xác giữa hai số nguyên, do đó lấy mức sàn là đủ. 
 
 các`max`Và`min`các cuộc gọi là cần thiết ở ranh giới. Ví dụ: nếu x lớn hơn nhiều so với y+k, giá trị lý tưởng có thể âm, nghĩa là tất cả số 1 sẽ ở bên phải. Nếu y lớn hơn nhiều thì tất cả số 1 sẽ ở bên trái. 
 
@@ -161,7 +161,7 @@ l=⌊ 2 3+2−8 ​ ⌋=−2,
 
 được kẹp ở mức 0. Do đó, cả hai đều ở bên phải, cho tổng phân số 8 và 5, với tích 40. 
 
-Tuy nhiên, đầu ra mẫu`8 / 1 1 / 3`cho 8⋅2⋅3=48, lớn hơn. Điều này bộc lộ một lỗ hổng trong đặc tính neo được đề xuất: một phân đoạn chỉ chứa một phân đoạn có thể hữu ích khi tổng của nó bằng 2, vì việc chia tổng của 2 thành thừa số 1⋅1 sẽ tệ hơn, trong khi giữ nguyên hai phân số sẽ tạo ra thừa số 2. 
+Tuy nhiên, đầu ra mẫu`8 / 1 1 / 3`cho 8⋅2⋅3=48, lớn hơn. Điều này bộc lộ một lỗ hổng trong đặc tính neo được đề xuất: một phân đoạn chỉ chứa một phân đoạn có thể hữu ích khi tổng của nó bằng 2, vì việc chia tổng của 2 thành thừa số 1⋅1 thì tệ hơn, trong khi giữ nguyên hai phân số sẽ tạo ra thừa số 2. 
 
 Vì vậy việc giảm trước đó phải được tinh chỉnh. Bản thân một loạt các số có thể tạo thành một phân đoạn khi nó chứa chính xác hai số một và nói chung hơn, việc xử lý tối ưu của nó phụ thuộc vào việc liệu việc giữ tổng của hai số đó làm hệ số riêng biệt có tốt hơn việc gắn các số đó vào các điểm neo lân cận hay không. 
 
@@ -181,7 +181,7 @@ Do đó, mọi phân đoạn có thể được tinh chỉnh cho đến khi mọ
 
 Bởi vì tất cả các phần tử mảng đều dương nên một phân đoạn có tổng 2 chỉ có thể là một trong hai`[2]`hoặc`[1, 1]`. Mọi phần tử lớn hơn hai phải được cách ly với các phần tử khác trong một phân vùng tối ưu, trong khi giá trị bằng hai có thể cạnh tranh với một cặp phần tử liền kề. 
 
-Điều này dẫn đến một quy tắc địa phương đơn giản hơn nhiều. Mỗi giá trị lớn hơn hai phải là phân khúc riêng của nó, với các giá trị liền kề được chỉ định theo so sánh sản phẩm. Các giá trị bằng hai có thể được xử lý chính xác giống như một phân đoạn gồm hai số một và các chuỗi một số phải được phân chia thành nhóm hai bất cứ khi nào chúng không thể được gắn vào các phân đoạn lớn hơn lân cận một cách có lợi. 
+Điều này dẫn đến một quy tắc địa phương đơn giản hơn nhiều. Mỗi giá trị lớn hơn hai phải là phân khúc riêng của nó, với các giá trị liền kề được chỉ định theo so sánh sản phẩm. Các giá trị bằng hai có thể được xử lý chính xác như một phân đoạn của hai số một và các chuỗi một số phải được phân chia thành các nhóm hai bất cứ khi nào chúng không thể được gắn vào các phân đoạn lớn hơn lân cận một cách có lợi. 
 
 Việc xây dựng kết quả được thể hiện một cách tự nhiên hơn dưới dạng một chương trình động trong các lần chạy, bởi vì sự tương tác ranh giới xung quanh giá trị hai có thể tạo ra các lựa chọn thay thế có sản phẩm bằng nhau. 
 

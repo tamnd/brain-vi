@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 3 phút 46s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi bắt đầu với`n`kẹo và muốn tặng kẹo cho càng nhiều bạn bè khác nhau càng tốt. Tặng một viên kẹo cho một người bạn thì đơn giản, nhưng sau mỗi giây kẹo được tặng cho bạn bè, chúng ta sẽ tự mình tiêu thụ một viên kẹo nếu còn một viên. Câu hỏi đặt ra là cuối cùng có bao nhiêu viên kẹo có thể đến tay bạn bè khi chúng ta chọn thứ tự tặng họ một cách tối ưu. 
@@ -78,9 +78,9 @@ if __name__ == "__main__":
     solve()
 ```các`solve`hàm đọc số nguyên duy nhất được chỉ định bởi định dạng đầu vào. Không cần vòng lặp vì bài toán chỉ chứa đúng một test case. 
 
-biểu thức`n // 3`đếm xem có thể xuất hiện bao nhiêu nhóm hoàn chỉnh gồm ba viên kẹo. Trừ cái này khỏi`n`trực tiếp đếm số kẹo không được tiêu thụ. Những viên kẹo còn lại tương ứng chính xác với những người bạn có thể nhận kẹo. 
+biểu hiện`n // 3`đếm xem có thể xuất hiện bao nhiêu nhóm hoàn chỉnh gồm ba viên kẹo. Trừ cái này từ`n`trực tiếp đếm số kẹo không được tiêu thụ. Những viên kẹo còn lại tương ứng chính xác với những người bạn có thể nhận kẹo. 
 
-Số nguyên Python xử lý các giá trị lớn hơn nhiều so với`10^9`, vì vậy việc tràn số nguyên không phải là vấn đề đáng lo ngại. Phép chia số nguyên cũng là phép chia sàn có chủ ý. Việc sử dụng phép chia thông thường sẽ tạo ra giá trị dấu phẩy động và sẽ không thể hiện chính xác số nhóm hoàn chỉnh. 
+Số nguyên Python xử lý các giá trị lớn hơn nhiều so với`10^9`, vì vậy việc tràn số nguyên không phải là vấn đề đáng lo ngại. Phép chia số nguyên cũng là phép chia sàn có chủ ý. Việc sử dụng phép chia thông thường sẽ tạo ra giá trị dấu phẩy động và sẽ không thể hiện chính xác số lượng nhóm hoàn chỉnh. 
 
 Không có sự điều chỉnh riêng lẻ. Ví dụ,`n = 2`cho`2 - 0 = 2`, trong khi`n = 3`cho`3 - 1 = 2`. Sự chuyển đổi giữa các trường hợp đó chính là nơi viên kẹo tự tiêu đầu tiên xuất hiện. 
 

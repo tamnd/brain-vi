@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 18 phút 49 giây 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Đồ thị là một chuỗi có trọng số của các chu trình đơn giản. Bắt đầu từ đỉnh 1 và di chuyển về phía đỉnh n, mỗi chu trình hoạt động giống như một sự lựa chọn giữa hai cung nối hai đỉnh khớp giống nhau. Ngoài những chu trình đó, đồ thị còn chứa các cạnh chuỗi thông thường. Vì không có hai chu trình nào có chung một đỉnh nên các lựa chọn này xảy ra độc lập theo trình tự. 
@@ -52,7 +52,7 @@ Thứ hai là cặp tốt nhất có thể nằm bên trong một chu kỳ và c
 3 4 4
 4 2 7
 4 5 1
-```Đường đi ngắn nhất thông thường sử dụng cạnh 2-4 có trọng số 7, tạo ra một chuyến đi khứ hồi 18. Cung còn lại từ 2 đến 4 có hai cạnh có trọng lượng 4. Chúng ta có thể bắt đầu ở 2, đi đến 3 trong 4 giây, tiếp tục từ 3 đến 4 rồi đến 5, quay lại 4 và 3, và cuối cùng sử dụng cổng từ 3 đến 2. Tổng cộng là 16. Giải pháp thay thế mọi chu kỳ chỉ bằng cung ngắn nhất sẽ bỏ lỡ khả năng này. 
+```Đường đi ngắn nhất thông thường sử dụng cạnh 2-4 có trọng số 7, tạo ra một chuyến đi khứ hồi 18. Cung còn lại từ 2 đến 4 có hai cạnh có trọng số 4. Chúng ta có thể bắt đầu từ 2, đi đến 3 trong 4 giây, tiếp tục từ 3 đến 4 rồi đến 5, quay lại 4 và 3, và cuối cùng sử dụng cổng từ 3 đến 2. Tổng cộng là 16. Một giải pháp thay thế mỗi chu kỳ chỉ bằng cung ngắn nhất sẽ bỏ lỡ khả năng này. 
 
 Thứ ba là ranh giới thời gian chờ. Với```
 2 1 4
@@ -83,9 +83,9 @@ trong đó b là khoảng cách còn lại từ v đến khớp bên phải củ
 
 Thuật ngữ trong ngoặc đầu tiên hoàn toàn thuộc về điểm cuối trước đó. Khi chúng ta di chuyển từ khối này sang khối tiếp theo, khoảng cách của mọi ứng cử viên cũ đến biên giới hiện tại sẽ tăng chính xác bằng độ dài ngắn nhất của khối mà chúng ta vừa vượt qua. Điều đó có nghĩa là mọi ứng cử viên có thể được biểu diễn bằng tọa độ biến đổi cố định, trong khi biên giới hiện tại đóng góp cùng một độ lệch cộng cho mọi ứng cử viên. 
 
-Điều này biến vấn đề thành các truy vấn tiền tố tối thiểu. Đối với mọi trạng thái điểm cuối đầu tiên có thể, chúng tôi lưu trữ tọa độ được gọi là`base`và một giá trị được gọi là`value`. Đối với điểm cuối thứ hai hiện tại, chúng tôi nhận được ngưỡng`base`và cần giá trị được lưu trữ tối thiểu có tọa độ tối đa là ngưỡng đó. Tối thiểu tiền tố lưu trữ cây Fenwick cung cấp chính xác hoạt động đó. 
+Điều này biến vấn đề thành các truy vấn tiền tố tối thiểu. Đối với mọi trạng thái điểm cuối đầu tiên có thể, chúng tôi lưu trữ tọa độ được gọi là`base`và một giá trị được gọi là`value`. Đối với điểm cuối thứ hai hiện tại, chúng tôi nhận được ngưỡng`base`và cần giá trị được lưu trữ tối thiểu có tọa độ tối đa là ngưỡng đó. Một cây Fenwick lưu trữ tiền tố tối thiểu cung cấp chính xác hoạt động đó. 
 
-Một chu trình cần thêm một chi tiết. Một đỉnh trong có thể thuộc một trong hai đường đi đơn có thể có trong chu trình đó, do đó nó có hai trạng thái, một trạng thái cho mỗi cung. Hai đỉnh khớp nối chỉ cần trạng thái đường đi ngắn nhất của chúng để chuyển tiếp giữa các khối. Các cặp có hai điểm cuối nằm trong cùng một khối được xử lý riêng biệt bằng cửa sổ trượt trên các cạnh của mỗi cung. 
+Một chu trình cần thêm một chi tiết. Một đỉnh bên trong có thể thuộc một trong hai đường đi đơn có thể có trong chu trình đó, do đó nó có hai trạng thái, một trạng thái cho mỗi cung. Hai đỉnh khớp nối chỉ cần trạng thái đường đi ngắn nhất của chúng để chuyển tiếp giữa các khối. Các cặp có hai điểm cuối nằm trong cùng một khối được xử lý riêng biệt bằng cửa sổ trượt trên các cạnh của mỗi cung. 
 
 Lực lượng vũ phu hoạt động vì mọi cặp đều có thể được đánh giá độc lập. Nó thất bại vì có nhiều cặp bậc hai. Quan sát rằng biểu đồ là một chuỗi các khối chu trình và cạnh độc lập cho phép chúng ta quét từ trái sang phải, giữ mọi điểm cuối trước đó trong một cấu trúc tiền tố tối thiểu. 
 
@@ -441,9 +441,9 @@ if __name__ == "__main__":
 
 Quá trình truyền tải đầu tiên xây dựng chuỗi khối trực tiếp từ mẫu độ. Ở đỉnh bậc 2 chỉ có một cạnh không quay trở lại đỉnh trước đó nên cạnh đó là khối chuỗi tiếp theo. Ở đỉnh bậc 3, cạnh của chuỗi tới đã được biết, để lại chính xác hai cạnh chu kỳ. Đi qua hai cạnh đó một cách độc lập sẽ thu được hai cung chu kỳ. 
 
-các`states`trình tạo là đại diện trung tâm của điểm cuối cổng thông tin có thể. Đỉnh chu trình trong xuất hiện một lần trên mỗi cung nên nó nhận được hai trạng thái. Các đỉnh khớp nối chỉ nhận được trạng thái khối ngắn nhất của chúng để chuyển tiếp giữa các khối. Các chuyển đổi cùng khối được xử lý riêng biệt, đó là lý do tại sao các trạng thái khớp nối dài hơn là không cần thiết ở đó. 
+các`states`trình tạo là đại diện trung tâm của điểm cuối cổng thông tin có thể. Đỉnh chu trình trong xuất hiện một lần trên mỗi cung nên nó nhận được hai trạng thái. Các đỉnh khớp nối chỉ nhận được trạng thái khối ngắn nhất của chúng để chuyển tiếp giữa các khối. Quá trình chuyển đổi cùng một khối được xử lý riêng biệt, đó là lý do tại sao các trạng thái khớp nối dài hơn là không cần thiết ở đó. 
 
-Tọa độ được chuyển đổi`base = b - after`là chìa khóa cho cuộc càn quét Fenwick. Tại khối sau có khoảng cách biên giới F, khoảng cách thực tế từ điểm cuối đó đến biên giới là`base + F`. Do đó, điều kiện hết thời gian trở thành điều kiện tiền tố đơn giản trên`base`. 
+Tọa độ được chuyển đổi`base = b - after`là chìa khóa cho cuộc càn quét Fenwick. Tại khối sau có khoảng cách biên giới F, khoảng cách thực tế từ điểm cuối đó đến biên giới là`base + F`. Do đó, điều kiện hết thời gian chờ trở thành điều kiện tiền tố đơn giản trên`base`. 
 
 Cây Fenwick lưu trữ mức tối thiểu. Hoạt động cập nhật của nó thực hiện cập nhật điểm tiêu chuẩn, trong khi truy vấn của nó trả về giá trị tối thiểu trên mỗi tọa độ được nén đến một ngưỡng được chỉ định. Việc sử dụng`bisect_right`là có chủ ý vì khoảng cách cổng chính xác bằng k là hợp pháp. 
 

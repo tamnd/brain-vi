@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 3 phút 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi có một cuộc thi với đúng mười vấn đề hiện có. Mỗi đội có trình độ kỹ năng từ 1 đến 10 và mọi vấn đề đều có độ khó từ 1 đến 10. Một đội có thể giải quyết vấn đề một cách chính xác khi độ khó của vấn đề không lớn hơn kỹ năng của đội. 
@@ -30,7 +30,7 @@ Chúng tôi có thể thêm một vấn đề mới. Độ khó của nó cũng 
 
 Dữ liệu đầu vào đưa ra số lượng đội, tiếp theo là trình độ kỹ năng của họ, tiếp theo là mười vấn đề khó khăn hiện có. Đầu ra là độ khó lớn nhất mà chúng ta có thể gán cho bài toán mới. 
 
-Các ràng buộc nhỏ một cách bất thường. Có nhiều nhất là 32 đội và chỉ có 10 vấn đề hiện tại, do đó, ngay cả việc tìm kiếm toàn diện trên tất cả mười khó khăn có thể xảy ra, kiểm tra từng đội đối với mọi vấn đề hiện có, cũng chỉ đạt hiệu quả tối đa. 
+Những hạn chế nhỏ một cách bất thường. Có nhiều nhất là 32 đội và chỉ có 10 vấn đề hiện tại, do đó, ngay cả việc tìm kiếm toàn diện trên tất cả mười khó khăn có thể xảy ra, kiểm tra từng đội đối với mọi vấn đề hiện có, cũng chỉ đạt hiệu quả tối đa. 
 
 [ 
 10 \times 32 \times 10 = 3200 
@@ -48,7 +48,7 @@ Tình huống ngược lại cũng dễ xử lý sai:```
 1
 5
 1 2 3 4 5 6 7 8 9 10
-```Đội đã có thể giải được bài toán khó 1 nên bài toán mới không cần giúp đỡ đội này chút nào. Chúng tôi có thể làm cho nó khó đến mức cho phép, đưa ra câu trả lời là 10. Việc triển khai luôn hạn chế vấn đề mới ở kỹ năng nhóm tối thiểu sẽ trả về sai 5. 
+```Đội đã giải được bài toán khó 1 rồi nên bài toán mới không cần giúp đỡ đội này chút nào. Chúng tôi có thể làm cho nó khó đến mức cho phép, đưa ra câu trả lời là 10. Việc triển khai luôn hạn chế vấn đề mới ở mức kỹ năng nhóm tối thiểu sẽ trả về sai 5. 
 
 Ngoài ra còn có một trường hợp ranh giới trong đó một vấn đề hiện tại có chính xác kỹ năng của nhóm:```
 1
@@ -58,17 +58,17 @@ Ngoài ra còn có một trường hợp ranh giới trong đó một vấn đ�
 
 ## Phương pháp tiếp cận 
 
-Một giải pháp bạo lực trực tiếp có thể thử mọi độ khó mới có thể có từ 1 đến 10. Đối với mỗi ứng cử viên, nó sẽ kiểm tra mọi đội. Nếu đội có thể giải quyết được vấn đề mới, đội đó sẽ được bảo vệ. Mặt khác, quá trình triển khai sẽ quét mười vấn đề hiện có và kiểm tra xem liệu có ít nhất một vấn đề có thể giải quyết được hay không. Một ứng cử viên chỉ có giá trị khi mọi đội đều có mặt và ứng cử viên hợp lệ lớn nhất là câu trả lời. 
+Một giải pháp bạo lực trực tiếp có thể thử mọi độ khó mới có thể có từ 1 đến 10. Đối với mỗi ứng cử viên, nó sẽ kiểm tra mọi đội. Nếu đội có thể giải quyết được vấn đề mới, đội đó sẽ được bảo vệ. Mặt khác, quá trình triển khai sẽ quét mười vấn đề hiện có và kiểm tra xem liệu có ít nhất một vấn đề có thể giải quyết được hay không. Một ứng cử viên chỉ hợp lệ khi mọi đội đều có mặt và ứng cử viên hợp lệ lớn nhất là câu trả lời. 
 
 Phương pháp này hoàn toàn chính xác vì chỉ có mười giá trị có thể có cho độ khó mới nên việc kiểm tra tất cả chúng không thể bỏ sót giá trị tối ưu. Với (n \leq 32), trường hợp xấu nhất của nó chỉ là phép so sánh (10 \times 32 \times 10 = 3200). Vì vậy, mặc dù là cách tiếp cận bạo lực, nhưng nó vẫn đủ nhanh để đáp ứng các ràng buộc thực tế. Không có kích thước đầu vào nào mà tại đó lực lượng vũ phu cụ thể này trở nên quá chậm trong giới hạn đã nêu. 
 
-Chúng ta vẫn có thể đơn giản hóa lý luận một cách đáng kể. Đối với một nhóm cố định, chỉ có vấn đề dễ nhất hiện có mới quan trọng. Đặt độ khó hiện tại tối thiểu đó là (m). Nếu (m \leq s), trong đó (s) là kỹ năng của đội, thì đội đã được bảo vệ và không đặt ra hạn chế nào đối với vấn đề mới. Nếu (m > s) thì không có bài toán hiện tại nào có thể giải được nên bài toán mới tối đa phải có độ khó (s). 
+Chúng ta vẫn có thể đơn giản hóa lý luận một cách đáng kể. Đối với một nhóm cố định, chỉ có vấn đề dễ nhất hiện có mới quan trọng. Đặt độ khó hiện tại tối thiểu đó là (m). Nếu (m \leq s), trong đó (s) là kỹ năng của đội, thì đội đã được bảo vệ và không đặt ra hạn chế nào đối với vấn đề mới. Nếu (m > s) thì không có bài toán hiện tại nào có thể giải được, do đó bài toán mới chỉ có nhiều nhất là có độ khó (s). 
 
 Điều này có nghĩa là chúng tôi không cần phải kiểm tra mười độ khó của ứng viên. Chúng tôi có thể kiểm tra từng đội một lần, xác định xem vấn đề hiện tại tối thiểu của họ có thể giải quyết được hay không và đối với mỗi đội chưa được khám phá, hãy ghi lại kỹ năng của họ. Vấn đề mới phải được giải quyết bởi mọi đội chưa được khám phá nên độ khó của nó không thể vượt quá kỹ năng nhỏ nhất trong số họ. 
 
 Nếu không có đội nào chưa được khám phá, bài toán mới có thể có độ khó tối đa cho phép là 10. Ngược lại, câu trả lời chính xác là kỹ năng tối thiểu trong số các đội chưa được khám phá. 
 
-Brute-force hoạt động vì phạm vi ứng viên rất nhỏ, nhưng việc quan sát thấy rằng mỗi đội chỉ bị ràng buộc bởi vấn đề dễ tồn tại nhất của nó cho phép chúng tôi thu gọn toàn bộ quá trình tìm kiếm thành một lần duyệt qua các đội. 
+Brute-force hoạt động vì phạm vi ứng cử viên rất nhỏ, nhưng việc quan sát thấy rằng mỗi đội chỉ bị ràng buộc bởi vấn đề dễ tồn tại nhất của nó cho phép chúng tôi thu gọn toàn bộ quá trình tìm kiếm thành một lần vượt qua các đội. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -91,7 +91,7 @@ Một đội như vậy không thể giải quyết được bất kỳ vấn đ
 
 ### Tại sao nó hoạt động 
 
-Bất biến quan trọng là`easiest`là độ khó tối thiểu trong số tất cả các vấn đề hiện có. Đối với mỗi đội có kỹ năng ít nhất`easiest`, vấn đề dễ nhất đó có thể giải được, vì vậy nhóm đã có sẵn một vấn đề hợp lệ và không áp đặt điều kiện nào cho vấn đề mới. Dành cho mọi đội có kỹ năng dưới đây`easiest`, ngay cả vấn đề hiện tại dễ nhất cũng quá khó, vì vậy vấn đề mới là vấn đề duy nhất có thể giải được của họ và độ khó của nó nhiều nhất phải nằm ở kỹ năng của họ. Do đó, độ khó mới không thể lớn hơn kỹ năng tối thiểu trong số tất cả các đội chưa được khám phá và việc chọn chính xác giá trị đó sẽ làm hài lòng mọi đội chưa được khám phá trong khi càng khó càng tốt. 
+Bất biến quan trọng là`easiest`là độ khó tối thiểu trong số tất cả các vấn đề hiện có. Đối với mỗi đội có kỹ năng ít nhất`easiest`, bài toán dễ nhất đó có thể giải được, vì vậy nhóm đã có sẵn một bài toán hợp lệ và không áp đặt điều kiện nào cho bài toán mới. Dành cho mọi đội có kỹ năng dưới đây`easiest`, ngay cả vấn đề hiện tại dễ nhất cũng quá khó, vì vậy vấn đề mới là vấn đề duy nhất có thể giải được của họ và độ khó của nó nhiều nhất phải nằm ở kỹ năng của họ. Do đó, độ khó mới không thể lớn hơn kỹ năng tối thiểu trong số tất cả các đội chưa được khám phá và việc chọn chính xác giá trị đó sẽ làm hài lòng mọi đội chưa được khám phá trong khi càng khó càng tốt. 
 
 ## Giải pháp Python```python
 import sys
@@ -133,7 +133,7 @@ Không thể tràn số nguyên vì mọi giá trị đều nằm trong khoảng
 4 6 5 7 4 4 9 10 7 9
 ```Bài toán dễ nhất hiện có lại có độ khó 4. 
 
-| Kỹ năng đồng đội | Vấn đề dễ nhất | Đã được bảo hiểm chưa? | Trả lời sau đội | 
+| Kỹ năng đồng đội | Vấn đề dễ nhất | Đã được bảo hiểm? | Trả lời sau đội | 
 | --- | --- | --- | --- | 
 | 3 | 4 | Không | 3 | 
 | 7 | 4 | Có | 3 | 
@@ -150,7 +150,7 @@ Không có mẫu chính thức thứ hai trong tuyên bố được cung cấp, 
 5 6 9 10 10 10 10 10 10 10
 ```Bài toán hiện có dễ nhất lại có độ khó 5. 
 
-| Kỹ năng đồng đội | Vấn đề dễ nhất | Đã được bảo hiểm chưa? | Trả lời sau đội | 
+| Kỹ năng đồng đội | Vấn đề dễ nhất | Đã được bảo hiểm? | Trả lời sau đội | 
 | --- | --- | --- | --- | 
 | 4 | 5 | Không | 4 | 
 | 6 | 5 | Có | 4 | 
@@ -269,7 +269,7 @@ Trường hợp cạnh đầu tiên là nhóm nhỏ nhất có thể không có 
 2 3 4 5 6 7 8 9 10 10
 ```Đây`easiest = 2`. Kỹ năng của đội là 1, vì vậy`1 < 2`và câu trả lời trở thành`min(10, 1) = 1`. Thuật toán in`1`. Điều này nắm bắt các triển khai gây nhầm lẫn giữa độ khó tối thiểu hiện có với độ khó mới bắt buộc. 
 
-Trường hợp cạnh thứ hai có một nhóm đã được bảo vệ:```
+Trường hợp bên thứ hai có một nhóm đã được bảo vệ:```
 1
 5
 1 2 3 4 5 6 7 8 9 10
@@ -279,7 +279,7 @@ Ranh giới bình đẳng hoạt động tương tự:```
 3
 5 6 10
 5 7 8 9 10 10 10 10 10 10
-```Bài toán dễ nhất có độ khó 5. Đội đầu tiên có kỹ năng đúng 5 nên có thể giải được bài toán đó. Các đội khác cũng có thể giải quyết được. Không có đội nào bị phát hiện và thuật toán giữ nguyên câu trả lời ban đầu là 10. Điều này xác nhận rằng điều kiện giải được phải sử dụng`<=`, được đại diện bởi thử nghiệm không được khám phá`skill < easiest`. 
+```Bài toán dễ nhất có độ khó 5. Đội đầu tiên có kỹ năng đúng 5 nên có thể giải được bài toán đó. Các đội khác cũng có thể giải quyết được. Không có đội nào bị phát hiện và thuật toán giữ nguyên câu trả lời ban đầu là 10. Điều này xác nhận rằng điều kiện giải được phải sử dụng`<=`, được biểu thị bằng phép thử chưa được khám phá`skill < easiest`. 
 
 Cuối cùng, hãy xem xét một số nhóm không thể giải quyết bất kỳ vấn đề hiện có nào:```
 5

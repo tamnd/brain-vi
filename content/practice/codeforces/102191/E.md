@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 10 phút 14s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chuỗi di chuyển mô tả một bước đi trên lưới số nguyên vô hạn, bắt đầu từ một số ô ban đầu. Mỗi ký tự thay đổi ô hiện tại một đơn vị theo một trong bốn hướng chính. Chúng ta cần phần liền kề dài nhất của chuỗi di chuyển mà bước đi tương ứng của nó không bao giờ chiếm cùng một ô hai lần. 
@@ -97,7 +97,7 @@ def solve(s):    n = len(s)
         previous = last.get(key)        if previous is not None and previous >= left:            left = previous + 1
 ```các`solve`chức năng xử lý các bước di chuyển chính xác như trong hướng dẫn.`x`Và`y`lưu trữ vị trí tiền tố hiện tại, trong khi`i`là chỉ số tiền tố của nó. 
 
-Tọa độ nằm giữa −n và n, vì chỉ có n nước đi. biểu thức```
+Tọa độ nằm giữa −n và n, vì chỉ có n nước đi. biểu hiện```
 Pythonkey = (x + offset) * base + (y + offset)
 ```ánh xạ mọi cặp tọa độ có thể thành một số nguyên duy nhất. Sử dụng một số nguyên làm khóa từ điển sẽ tiết kiệm bộ nhớ hơn đáng kể so với việc sử dụng bộ hai phần tử cho mỗi ô được truy cập, điều này quan trọng khi n lớn bằng 10 6. 
 

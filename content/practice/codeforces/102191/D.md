@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 5 phút 25s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta có số học sinh chẵn, chia thành các cặp bạn cố định. Mỗi cặp phải chiếm hai vị trí liên tiếp nhưng chúng ta có thể chọn bạn nào đến trước. Nhiệm vụ là sắp xếp thứ tự các cặp và định hướng từng cặp sao cho mảng chiều cao hoàn chỉnh trước tiên không bao giờ giảm và sau một số đỉnh, không bao giờ tăng. Đầu ra có thể là bất kỳ sự sắp xếp hợp lệ nào, hoặc`-1`nếu không có sự sắp xếp như vậy tồn tại. Điều này phù hợp với cấu trúc của tuyên bố vấn đề chính thức. 
@@ -69,7 +69,7 @@ Sắp xếp hai chiều cao trong mỗi cặp và xem cặp đó dưới dạng 
 
 Do đó, chúng tôi đã giảm vấn đề thành việc phân chia các khoảng thành hai chuỗi các khoảng không chồng chéo. Đây là quan sát quan trọng vì việc lập kế hoạch theo khoảng thời gian có cấu trúc tham lam đơn giản. 
 
-Sắp xếp tất cả các khoảng theo điểm cuối bên trái của chúng. Duy trì điểm cuối ngoài cùng bên phải hiện đang được sử dụng trong mỗi chuỗi trong số hai chuỗi. Đối với một khoảng thời gian mới`[l,r]`, nó có thể được thêm vào một chuỗi một cách chính xác khi`l >= end[chain]`. Nếu cả hai chuỗi đều không có sẵn thì khoảng hiện tại sẽ trùng lặp với các khoảng đã chiếm cả hai chuỗi, do đó ba khoảng trùng nhau tại một điểm chung và không có giải pháp nào tồn tại. 
+Sắp xếp tất cả các khoảng theo điểm cuối bên trái của chúng. Duy trì điểm cuối ngoài cùng bên phải hiện đang được sử dụng trong mỗi chuỗi trong số hai chuỗi. Đối với một khoảng thời gian mới`[l,r]`, nó có thể được thêm vào một chuỗi một cách chính xác khi`l >= end[chain]`. Nếu cả hai chuỗi đều không có sẵn, thì khoảng hiện tại sẽ trùng lặp với các khoảng đã chiếm cả hai chuỗi, do đó ba khoảng trùng nhau tại một điểm chung và không có giải pháp nào tồn tại. 
 
 Sau khi có được hai chuỗi, vẫn còn một vấn đề tế nhị. Chúng ta cần nối chuỗi tăng với chuỗi giảm ở đỉnh. Chúng tôi giải quyết vấn đề này bằng cách buộc khoảng thời gian có điểm cuối bên phải lớn nhất toàn cầu thuộc về chuỗi giảm dần. Khi đó, khoảng đầu tiên của phía giảm, khi được sắp xếp theo điểm cuối bên phải giảm dần, có điểm cuối ít nhất bằng khoảng cuối cùng của phía tăng. Điều này làm cho quá trình chuyển đổi qua đỉnh có giá trị. 
 
@@ -87,7 +87,7 @@ Kết quả so sánh là:
 1. Chuyển đổi từng cặp bạn bè`(a,b)`vào một khoảng`[l,r]`, Ở đâu`l = min(a,b)`Và`r = max(a,b)`. Giữ chỉ số cặp ban đầu để chúng ta có thể xây dựng lại hai chiều cao của nó sau này. Thông tin duy nhất liên quan đến khả năng tương thích bên trong mặt đơn điệu là điểm cuối nhỏ hơn và lớn hơn. 
 2. Tìm cặp có điểm cuối bên phải`r`là tối đa trên toàn cầu. Cặp này cuối cùng sẽ được đặt ở phía giảm dần. Việc chọn mức tối đa toàn cục rất hữu ích vì nó tự động chiếm ưu thế trong khoảng cuối cùng ở phía tăng ở đỉnh. 
 3. Sắp xếp tất cả các khoảng theo điểm cuối bên trái của chúng. Duy trì`end[0]`Và`end[1]`, điểm cuối ngoài cùng bên phải của các khoảng cuối cùng hiện được gán cho hai chuỗi. Ban đầu cả hai chuỗi đều trống. 
-4. Xử lý các khoảng được sắp xếp từ trái sang phải. Nếu điểm cuối bên trái hiện tại`l`thỏa mãn`l >= end[0]`, gán khoảng cho chuỗi`0`. Ngược lại, nếu`l >= end[1]`, gán nó vào chuỗi`1`. Nếu không có điều kiện nào xảy ra, hãy báo cáo`-1`. 
+4. Xử lý các khoảng được sắp xếp từ trái sang phải. Nếu điểm cuối bên trái hiện tại`l`thỏa mãn`l >= end[0]`, gán khoảng cho chuỗi`0`. Bằng không, nếu`l >= end[1]`, gán nó vào chuỗi`1`. Nếu không có điều kiện nào xảy ra, hãy báo cáo`-1`. 
 
 Phép gán tham lam là hợp lệ vì các khoảng thời gian được xử lý bằng cách tăng điểm cuối bên trái. Khi cả hai chuỗi đều bị chặn, khoảng hiện tại chồng lên một khoảng trong mỗi chuỗi, do đó ba khoảng trùng nhau ở điểm cuối hiện tại bên trái. Không thể tồn tại sự phân chia thành hai chuỗi không chồng chéo nhau. 
 5. Sau khi tất cả các khoảng được chỉ định, hãy kiểm tra màu của khoảng điểm cuối cực đại bên phải trên toàn cầu. Nếu nó thuộc chuỗi`0`, hoán đổi hai nhãn chuỗi cho mỗi khoảng thời gian. Điều này chỉ thay đổi phía nào của ngọn núi mà chuỗi đại diện, chứ không phải thực tế là các khoảng bên trong mỗi chuỗi là rời rạc. 
@@ -237,7 +237,7 @@ Với nhiều nhất`150000`theo cặp, việc sắp xếp chỉ cần vài tri�
 
 ## Trường hợp thử nghiệm 
 
-Đầu ra không phải là duy nhất, do đó, bộ khai thác kiểm tra sẽ xác thực cách sắp xếp được trả về thay vì so sánh nó với một chuỗi chính xác. Trình trợ giúp bên dưới kiểm tra xem mọi cặp đầu vào có còn liền kề hay không, đầu ra có chứa chính xác độ cao được cung cấp không và chuỗi đầu tiên là không giảm, sau đó là không tăng.```python
+Đầu ra không phải là duy nhất, do đó, bộ khai thác kiểm tra sẽ xác thực cách sắp xếp được trả về thay vì so sánh nó với một chuỗi chính xác. Trình trợ giúp bên dưới kiểm tra xem mọi cặp đầu vào có còn liền kề hay không, đầu ra có chứa chính xác độ cao được cung cấp hay không và chuỗi đầu tiên là không giảm, sau đó là không tăng.```python
 import sys
 import io
 
@@ -470,4 +470,4 @@ print("All tests passed.")
 3 3
 ```Cả hai khoảng đều`[3,3]`. Người đầu tiên có thể vào chuỗi`0`, trong khi thứ hai có thể vào chuỗi`1`bởi vì`3 >= 3`. Sau khi xây dựng, cả hai cặp sản xuất`3 3`, và trình tự cuối cùng là`3 3 3 3`. Điều này chứng tỏ rằng các điểm cuối bằng nhau và chiều cao cặp bằng nhau không yêu cầu trường hợp đặc biệt nào ngoài việc sử dụng các so sánh không nghiêm ngặt. 
 
-Đối với kích thước đầu vào tối đa, trường hợp ứng suất được tạo chứa`150000`các cặp có dạng`(i, i+1)`. Mỗi khoảng có thể theo sau khoảng trước vì điểm cuối bên trái của nó bằng điểm cuối bên phải trước đó. Quá trình quét tham lam sẽ gán chúng một cách hiệu quả mà không cần quay lại và hai thao tác sắp xếp vẫn được giữ nguyên.`O(n log n)`. Đây là thang đo được yêu cầu ban đầu`n <= 3 * 10^5`hạn chế.
+Đối với kích thước đầu vào tối đa, trường hợp ứng suất được tạo chứa`150000`cặp hình thức`(i, i+1)`. Mỗi khoảng có thể theo sau khoảng trước vì điểm cuối bên trái của nó bằng điểm cuối bên phải trước đó. Quá trình quét tham lam sẽ gán chúng một cách hiệu quả mà không cần quay lại và hai thao tác sắp xếp vẫn được giữ nguyên.`O(n log n)`. Đây là thang đo được yêu cầu ban đầu`n <= 3 * 10^5`hạn chế.

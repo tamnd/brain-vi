@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 18 phút 38 giây 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Đầu vào mô tả chỗ ngồi hình tròn từ tháng trước. Bản thân mảng cung cấp cho học sinh theo thứ tự theo chiều kim đồng hồ, do đó các vị trí mảng liên tiếp là liền kề và phần tử đầu tiên và cuối cùng cũng liền kề. 
@@ -32,7 +32,7 @@ Với`n`lớn như`3 * 10^5`và chỉ có một giây, giải pháp cần phải
 
 Có hai giá trị nhỏ cần xử lý đặc biệt. Vì`n = 3`, mọi cặp học sinh đều kề nhau trong vòng tròn cũ nên không có cặp nào cho cạnh mới. Vì`n = 4`, các cặp không liền kề duy nhất là hai cặp học sinh đối diện nhau, tạo thành hai cạnh rời nhau chứ không phải là một chu trình bốn đỉnh. Như vậy cả hai trường hợp đều không thể xảy ra. 
 
-Ví dụ, với`n = 3`và đầu vào`1 3 2`, vòng tròn cũ chứa cả ba cặp có thể có, vì vậy kết quả đúng là`-1`. Việc triển khai bất cẩn chỉ kiểm tra các vị trí liên tiếp trong mảng tuyến tính và quên mất vị trí kề đầu tiên và cuối cùng có thể chấp nhận một sự sắp xếp không chính xác. 
+Ví dụ, với`n = 3`và đầu vào`1 3 2`, vòng tròn cũ chứa cả ba cặp có thể có, do đó kết quả đúng là`-1`. Việc triển khai bất cẩn chỉ kiểm tra các vị trí liên tiếp trong mảng tuyến tính và quên mất vị trí kề đầu tiên và cuối cùng có thể chấp nhận một sự sắp xếp không chính xác. 
 
 Vì`n = 4`, coi như```
 41 2 3 4
@@ -95,7 +95,7 @@ if __name__ == "__main__":    solve()
 
 Thậm chí`n`, riêng hai nhóm rời khỏi vị trí ban đầu cuối cùng. Từ`a[n-1]`đã ở gần`a[0]`, chỉ cần đóng vòng tròn mới sẽ tạo ra chính xác cạnh cấm mà chúng ta đang cố tránh. Hoán đổi`ans[-1]`Và`ans[-2]`di chuyển`a[n-3]`đến vị trí cuối cùng và đặt`a[n-1]`ngay trước đó`a[n-3]`. Cả hai cạnh kết quả đều hợp lệ cho`n >= 6`. 
 
-Không có vấn đề tràn số nguyên vì thuật toán chỉ lưu trữ và lập chỉ mục các số nguyên từ đầu vào. Việc triển khai cũng tránh mọi tìm kiếm tốn kém, do đó thời gian chạy của nó bị chi phối bởi việc đọc và in`n`các giá trị. 
+Không có vấn đề tràn số nguyên vì thuật toán chỉ lưu trữ và lập chỉ mục các số nguyên từ đầu vào. Việc triển khai cũng tránh được mọi tìm kiếm tốn kém, do đó thời gian chạy của nó bị chi phối bởi việc đọc và in`n`các giá trị. 
 
 ## Ví dụ đã hoạt động 
 
@@ -124,7 +124,7 @@ Sự sắp xếp cuối cùng là`6 3 7 4 1 5 2 8`. Các vị trí cũ liên ti�
 | 1 |`n = 3`|`n < 5`| 
 | 2 | Không có nỗ lực xây dựng |`-1`| 
 
-Với ba học sinh, vòng tròn cũ đã chứa mọi cặp có thể là liền kề. Vòng tròn mới không có lợi thế pháp lý nên việc từ chối là không thể tránh khỏi. 
+Với ba học sinh, vòng tròn cũ đã chứa mọi cặp có thể là liền kề. Vòng tròn mới không có lợi thế pháp lý nên việc từ chối là điều không thể tránh khỏi. 
 
 ## Phân tích độ phức tạp 
 
