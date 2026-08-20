@@ -3,7 +3,7 @@
   "lang": "vi",
   "source_repo": "/tmp/brain",
   "target_repo": "/tmp/bs/vi/repo",
-  "last_run": "2026-08-20T20:55:51.169132Z",
+  "last_run": "2026-08-20T21:55:58.298205Z",
   "batch": 0,
   "translator": {
     "provider": "google",
@@ -81318,6 +81318,86 @@
       "source_hash": "sha256:182152271c28d496e530d2a01605295f652324018d944c1e51d58ec353bc5c28",
       "translated_at": "2026-08-20T20:55:51.169108Z",
       "dest_path": "content/practice/codeforces/102264/C.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/102267/C.md": {
+      "source_hash": "sha256:ca20163ffb42e750a4494097f9a5b95b0a1abbaff7967d1e9dba166acdb133fe",
+      "translated_at": "2026-08-20T21:36:49.073993Z",
+      "dest_path": "content/practice/codeforces/102267/C.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/102267/G.md": {
+      "source_hash": "sha256:4e9768b49526471c61720e93892ac87c8b4608a119cd890c7bc67a55bfebc29c",
+      "translated_at": "2026-08-20T21:40:10.795480Z",
+      "dest_path": "content/practice/codeforces/102267/G.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/102268/C.md": {
+      "source_hash": "sha256:fad31b3217fc843f527cec3793c9e178c3bc402741cd9f6123d91ef4626b3ff4",
+      "translated_at": "2026-08-20T21:44:49.192296Z",
+      "dest_path": "content/practice/codeforces/102268/C.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/102343/G.md": {
+      "source_hash": "sha256:386bea94b883cd9ef6549059d5db3af21818746bf1566201925e31d0b014286b",
+      "translated_at": "2026-08-20T21:46:11.844316Z",
+      "dest_path": "content/practice/codeforces/102343/G.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/102348/A.md": {
+      "source_hash": "sha256:6023e318670311bdce31c127ce0c0714cd0b472a19ef938ea6ea4f1f5882b83f",
+      "translated_at": "2026-08-20T21:47:03.400070Z",
+      "dest_path": "content/practice/codeforces/102348/A.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/102697/041.md": {
+      "source_hash": "sha256:e47309dfa4d9e8c20a3b7b015b87375a2e325518866a880e59665ff7a08180cd",
+      "translated_at": "2026-08-20T21:48:56.469656Z",
+      "dest_path": "content/practice/codeforces/102697/041.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/102697/147.md": {
+      "source_hash": "sha256:90bbb062dea554363864ea0ab1fd184b3e83147fd6bcd41ff0f219be7d4b2d84",
+      "translated_at": "2026-08-20T21:50:01.377031Z",
+      "dest_path": "content/practice/codeforces/102697/147.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/102697/150.md": {
+      "source_hash": "sha256:90687a3d118f36068908bb71b510bde895f7ffbb605ef47a3a54cc74a5ac7aa2",
+      "translated_at": "2026-08-20T21:51:52.315239Z",
+      "dest_path": "content/practice/codeforces/102697/150.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/102697/154.md": {
+      "source_hash": "sha256:6e63759d4ef208ea5771e1c044c0745f2baee68920fa2149b574bc2707d24927",
+      "translated_at": "2026-08-20T21:53:50.121879Z",
+      "dest_path": "content/practice/codeforces/102697/154.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/102697/155.md": {
+      "source_hash": "sha256:7d47df4eeb27a612f767213c8d489cb80d430ecdc8fb4a7ee9ec295de2cc1578",
+      "translated_at": "2026-08-20T21:55:58.298179Z",
+      "dest_path": "content/practice/codeforces/102697/155.md",
       "status": "done",
       "tokens_used": 0,
       "provider": "google"
