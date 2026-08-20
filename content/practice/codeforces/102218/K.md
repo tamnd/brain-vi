@@ -1,7 +1,7 @@
 ---
 title: "CF 102218K - Chữ số thiếu thứ K"
-description: "Chúng ta có hai số nguyên thập phân rất lớn, A và B, và một chuỗi thập phân P phải bằng tích của chúng. Chính xác một chữ số của P đã được thay thế bằng . Chữ số bị thiếu đảm bảo là từ 1 đến 9 nên nhiệm vụ là phải tìm lại chữ số đó."
-date: "2026-08-18T22:50:23+07:00"
+description: "Chúng ta có hai số nguyên dương (A) và (B), mỗi số có khả năng chứa tới một triệu chữ số thập phân. Sản phẩm của họ được viết dưới dạng chuỗi thập phân (P), ngoại trừ chính xác một chữ số đã được thay thế bằng . Nhiệm vụ là tìm lại chữ số bị thiếu đó."
+date: "2026-08-20T03:38:58+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102218
@@ -9,7 +9,7 @@ codeforces_index: "K"
 codeforces_contest_name: "2019, XI Annual Programming Contest by ESCOM-IPN"
 rating: 0
 weight: 102218
-solve_time_s: 251
+solve_time_s: 304
 verified: false
 draft: false
 ---
@@ -18,232 +18,213 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 4 phút 11s 
+**Thời gian giải:** 5 phút 4 giây 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta có hai số nguyên thập phân rất lớn,`A`Và`B`, và một chuỗi thập phân`P`điều đó sẽ tương đương với sản phẩm của họ. Đúng một chữ số của`P`đã được thay thế bởi`*`. Chữ số bị thiếu được đảm bảo là từ`1`bởi vì`9`, vì vậy nhiệm vụ là khôi phục chữ số đó. 
+Chúng ta có hai số nguyên dương (A) và (B), mỗi số có khả năng chứa tới một triệu chữ số thập phân. Tích của họ được viết dưới dạng một chuỗi thập phân (P), ngoại trừ việc chính xác một chữ số đã được thay thế bằng`*`. Nhiệm vụ là tìm lại chữ số bị thiếu đó. Chữ số bị thiếu được đảm bảo là khác 0. 
 
-Ba số đầu tiên,`a`,`b`, Và`p`, là số chữ số của`A`,`B`, Và`P`. Chúng không phải là giá trị số của những số nguyên đó. Hai số nguyên đầu vào, mỗi số có thể chứa gần một triệu chữ số, trong khi tích có thể chứa gần hai triệu chữ số. Sự cố ban đầu có giới hạn thời gian 0,5 giây và giới hạn bộ nhớ 32 MB. 
+Dòng đầu tiên cho biết độ dài của (A), (B) và (P). Hai dòng tiếp theo chứa (A) và (B), và dòng cuối cùng chứa biểu diễn thập phân đã biết một phần của (A \times B). Câu trả lời là một chữ số thập phân phải thay thế`*`. 
 
-Những giới hạn đó ngay lập tức loại trừ việc điều trị`A`Và`B`như số nguyên máy thông thường. Ngay cả việc lưu trữ hoặc nhân các giá trị hàng triệu chữ số cũng đòi hỏi nhiều công việc hơn đáng kể so với phép tính số học liên tục. Giải pháp dự định phải xử lý trực tiếp các chuỗi thập phân và chỉ thực hiện một lượng công việc không đổi trên mỗi chữ số đầu vào, tạo ra độ phức tạp tuyến tính trong tổng kích thước đầu vào. 
+Ràng buộc quan trọng là số chữ số, không phải giá trị số của số nguyên. (A) và (B) đều có thể có (10^6) chữ số, do đó việc xây dựng một trong hai số nguyên bằng số học máy thông thường là không thể. Ngay cả một phép nhân cấp lớp cũng sẽ yêu cầu các phép tính chữ số theo thứ tự (10^{12}). Việc thử tất cả chín chữ số có thể bị thiếu và kiểm tra sản phẩm thu được sẽ nhân chi phí đó lên chín. 
 
-Có một số trường hợp giải pháp bất cẩn có thể dẫn đến sai sót. Nếu ký tự bị thiếu là chữ số đầu tiên thì nó vẫn phải được đưa vào số học. Ví dụ,```
+Bản thân đầu vào có thể chứa tới khoảng hai triệu chữ số, do đó, một thuật toán quét các chuỗi với số lần không đổi là phù hợp. Một thuật toán yêu cầu phép nhân, chuyển đổi sang kiểu số nguyên có sẵn hoặc phép tính bậc hai trên chuỗi chữ số là không phù hợp. Các số nguyên có độ chính xác tùy ý của Python không thay đổi kết luận này, bởi vì các số nguyên đầu vào có thể lớn hơn nhiều so với các biểu diễn gốc thực tế và việc chuyển đổi các chuỗi thập phân hàng triệu chữ số bản thân nó là công việc không cần thiết. 
+
+Có hai trường hợp đặc biệt thường gây ra lỗi. Đầu tiên, chữ số còn thiếu có thể là (9). Ví dụ,```
 1 1 2
-3
-8
-2*
-```có sản phẩm`24`, vậy câu trả lời là`4`. Một giải pháp vô tình bỏ qua`*`vị trí khi tính tổng chữ số sẽ chỉ sử dụng chữ số hiển thị`2`và thu được dư lượng sai. 
-
-Ký tự bị thiếu cũng có thể là chữ số cuối cùng. Ví dụ,```
-1 1 2
-7
-8
-5*
-```có sản phẩm`56`, vậy câu trả lời là`6`. Việc coi ngôi sao như một dấu phân cách chứ không phải là một chữ số không xác định vẫn phải để lại phần đóng góp của nó vào tổng chữ số thập phân cần được phục hồi. 
-
-Một trường hợp biên đặc biệt dễ xảy ra khi phần dư yêu cầu modulo 9 bằng 0. Vì bản thân số 0 bị cấm nên chữ số bị thiếu chính xác là`9`, không`0`. Ví dụ,```
-1 1 1
 9
 1
-*
-```có sản phẩm`9`, vậy câu trả lời là`9`. 
+1*
+```cho (A \times B = 9), nên câu trả lời là`9`. Một phương pháp chỉ tính kết quả modulo (9) và trả về phần dư trực tiếp sẽ trả về`0`, điều này bị cấm nhưng tương đương về mặt toán học modulo (9). Việc đảm bảo rằng chữ số bị thiếu là khác 0 cho chúng ta hiểu phần dư (0) là chữ số (9). 
+
+Trường hợp cạnh thứ hai là một chữ số bị thiếu ở hai đầu của sản phẩm. Ví dụ,```
+2 2 3
+10
+10
+*00
+```có sản phẩm`100`, vậy chữ số còn thiếu là`1`. Phương pháp cố gắng suy ra chữ số chỉ sử dụng các ký tự lân cận hoặc coi ngôi sao là chữ số bên trong có thể thất bại ở đây. Đối số mô-đun không phụ thuộc vào vị trí của ngôi sao, do đó, phép tính tương tự áp dụng cho vị trí đầu tiên, cuối cùng hoặc bất kỳ vị trí ở giữa nào. 
 
 ## Phương pháp tiếp cận 
 
-Một cách tiếp cận trực tiếp là thử mọi chữ số còn thiếu có thể từ`1`bởi vì`9`, thay thế`*`với chữ số đó và kiểm tra xem số kết quả có chính xác không`A * B`. Phương pháp này đúng vì một trong chín số thay thế là sản phẩm thật và câu lệnh đảm bảo rằng chữ số bị thiếu là khác 0. 
+Cách tiếp cận trực tiếp là thử mọi chữ số khác 0 có thể có từ (1) đến (9), thay thế`*`với chữ số đó và kiểm tra xem chuỗi kết quả có bằng (A \times B) hay không. Điều này đúng vì chữ số bị thiếu đảm bảo là một trong chín giá trị đó nên việc kiểm tra mọi khả năng phải tìm ra câu trả lời. 
 
-Vấn đề là kích thước của các con số. Trong trường hợp lớn nhất,`A`Và`B`mỗi người có tới`999999`chữ số và`P`có gần hai triệu chữ số. Việc xây dựng và nhân hai số nguyên khổng lồ vượt xa số học có chiều rộng cố định thông thường. Ngay cả khi chúng tôi đã có sản phẩm, việc kiểm tra tất cả chín ứng viên bằng cách quét sản phẩm sẽ yêu cầu tới`9p`, gần 18 triệu ký tự được kiểm tra trong đầu vào lớn nhất. Bản thân phép nhân sẽ đắt hơn nhiều so với việc thực hiện một cách ngây thơ. 
+Vấn đề là phép nhân. Với tối đa (10^6) chữ số ở cả (A) và (B), phép nhân dài thông thường thực hiện các phép toán chữ số (O(10^{12})) cho một ứng cử viên. Việc kiểm tra chín ứng viên vẫn còn lại khoảng (9 \times 10^{12}) phép tính trong trường hợp xấu nhất. Phép nhân số nguyên lớn phức tạp hơn có thể giảm tiệm cận đó, nhưng bài toán có một tính chất đơn giản hơn nhiều là tránh được phép nhân hoàn toàn. 
 
-Quan sát quan trọng là các số thập phân bảo toàn giá trị modulo 9 thông qua tổng các chữ số của chúng. Với mọi số nguyên thập phân`X`, 
-
-[ 
-X \equiv \text{tổng các chữ số của }X \pmod 9. 
-] 
-
-Kể từ khi 
+Quan sát quan trọng là các số thập phân bảo toàn giá trị modulo (9) khi các chữ số của chúng được tính tổng. Đối với bất kỳ số thập phân (X), 
 
 [ 
-P=A\cdot B, 
+X \equiv \sum \text{chữ số}(X) \pmod 9. 
 ] 
 
-do đó chúng tôi có 
+Vì (P = A \times B), nên chúng ta có thể tính 
 
 [ 
-\operatorname{sumDigits}(P) 
-\equiv 
-\operatorname{sumDigits}(A)\operatorname{sumDigits}(B) 
-\pmod 9. 
+P \bmod 9 = (A \bmod 9)(B \bmod 9) \bmod 9. 
 ] 
 
-Mỗi chữ số nhìn thấy được của`P`đóng góp một lượng đã biết vào tổng chữ số của nó. Nếu chữ số bị thiếu là`x`, sau đó 
+Chúng ta có thể tính toán (A \bmod 9) và (B \bmod 9) bằng cách quét các chữ số của chúng mà không cần phải tạo ra các số nguyên khổng lồ. Chúng ta cũng có thể tính phần đóng góp của mọi chữ số đã biết của (P), chỉ để lại chữ số chưa biết (x). 
 
-(\text{tổng các chữ số của }A\bmod9) 
-(\text{tổng các chữ số của }B\bmod9)\bmod9. 
+Giả sử tổng các chữ số đã biết trong (P) là (S). Sau đó 
+
+[ 
+x + S \equiv A \times B \pmod 9. 
 ] 
 
-Vì vậy chúng ta chỉ cần tính ba số dư nhỏ trong khi đọc chuỗi. Không cần phép nhân số nguyên lớn nào cả. 
+Như vậy 
 
-Chữ số bị thiếu được giới hạn ở`1`bởi vì`9`. Chín chữ số này có chín phần dư khác nhau theo modulo 9, do đó phần dư cần tìm xác định duy nhất câu trả lời. Đặc biệt, dư lượng`0`tương ứng với chữ số`9`. 
+[ 
+x \equiv (A \times B - S) \pmod 9. 
+] 
 
-Ý tưởng Brute-Force hoạt động hiệu quả vì chỉ có chín chữ số, nhưng nó vẫn coi tích cực lớn là một số phải được xây dựng hoặc kiểm tra nhiều lần. Quan sát thấy rằng phép nhân và tổng chữ số thập phân tương tác rõ ràng theo modulo 9 loại bỏ hoàn toàn phép toán số lớn. 
+Điều này mang lại dư lượng từ (0) đến (8). Nếu từ (1) đến (8) thì đó chính xác là chữ số bị thiếu. Nếu là (0), chữ số bị thiếu phải là (9), vì bài toán loại trừ rõ ràng (0). 
+
+Phương pháp brute-force hoạt động vì mọi ứng cử viên đều có thể được kiểm tra dựa trên sản phẩm chính xác, nhưng không thành công khi toán hạng chứa hàng triệu chữ số. Quan sát cho thấy tổng các chữ số thập phân bảo toàn các giá trị modulo (9) cho phép chúng ta thay thế phép nhân cực lớn bằng ba lần quét tuyến tính. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
-| Lực lượng vũ phu | O(p) cộng với phép nhân số nguyên lớn | O(p) | Quá chậm | 
-| Tối ưu | O(a + b + p) | O(a + b + p) cho chuỗi đầu vào | Đã chấp nhận | 
+| Lực lượng vũ phu | (O(AB)) cho phép nhân cấp lớp, lặp lại tối đa 9 lần | (O(A+B+P)) | Quá chậm | 
+| Tối ưu | (O(A+B+P)) | (O(1)) bên cạnh chuỗi đầu vào | Đã chấp nhận | 
+
+Ở đây (A), (B) và (P) trong biểu thức độ phức tạp biểu thị số chữ số, không phải giá trị số của số nguyên. 
 
 ## Hướng dẫn thuật toán 
 
-1. Đọc số chữ số và ba chuỗi. Việc đếm không cần thiết cho việc tính toán vì bản thân các chuỗi cho chúng ta biết chính xác những chữ số nào phải được xử lý. 
-2. Tính tổng các chữ số của`A`modulo 9. Chúng ta chỉ cần phần dư vì phương trình cuối cùng cũng là modulo 9. 
-3. Tính tổng các chữ số của`B`modulo 9 vì lý do tương tự. 
-4. Quét`P`và thêm mọi ký tự khác ngoài`*`đến tổng chữ số đang chạy theo modulo 9. Ngôi sao đóng góp một giá trị không xác định, vì vậy hãy tạm thời bỏ qua nó. 
-5. Tính lượng cặn sản phẩm cần thiết 
-
-[ 
-r=(A\bmod9)(B\bmod9)\bmod9. 
-] 
-
-1. Giải quyết 
-
-[ 
-(\text{visibleSum}+x)\bmod9=r. 
-] 
-
-Ứng viên`x`là chữ số duy nhất từ`1`bởi vì`9`có phần dư theo modulo 9. Trong mã, điều này có thể được viết là 
-
-[ 
-x=(r-\text{visibleSum})\bmod9, 
-] 
-
-tiếp theo là thay đổi`0`ĐẾN`9`. 
-
-1. In`x`. Tính duy nhất của phần dư trong số các chữ số được phép có nghĩa là không cần phải xây dựng sản phẩm hoặc kiểm tra nhiều ứng viên. 
+1. Đọc ba độ dài và các chuỗi biểu thị (A), (B) và tích đã biết một phần (P). Độ dài không cần thiết cho toán học, nhưng việc đọc chúng tuân theo định dạng đầu vào. 
+2. Tính (A \bmod 9) bằng cách quét từng chữ số của (A) và áp dụng nhiều lần`remainder = (remainder + digit) % 9`. Tính toán tương tự được thực hiện cho (B). Điều này có tác dụng vì chữ số thập phân có giá trị (10^k) và (10 \equiv 1 \pmod 9), do đó mọi lũy thừa của (10) cũng bằng với (1). 
+3. Nhân hai số dư theo modulo (9). Kết quả là phần còn lại mà sản phẩm hoàn chỉnh (P) phải có. 
+4. Quét (P), thêm mọi chữ số đã biết modulo (9) trong khi bỏ qua`*`. Gọi giá trị kết quả`known`. 
+5. Tính số dư của chữ số còn thiếu là`(product_mod - known) % 9`. Hoạt động modulo xử lý trường hợp phép trừ âm. 
+6. Nếu dư lượng thu được bằng 0, hãy xuất`9`; nếu không thì xuất ra phần dư. Số dư bằng 0 tương ứng với cả hai chữ số`0`và chữ số`9`, và tuyên bố loại trừ`0`. 
 
 ### Tại sao nó hoạt động 
 
-Điều bất biến là mọi chuỗi thập phân đã xử lý chỉ được biểu thị bằng tổng chữ số theo modulo 9, chính xác là phần dư giống như số nguyên được biểu thị bằng chuỗi đó. Vì`A`Và`B`, dư lượng của chúng có thể được nhân lên để thu được dư lượng của sản phẩm. Vì`P`, tất cả các chữ số nhìn thấy được đều cho một số dư đã biết và chữ số bị thiếu đóng góp chính xác`x`. Giá trị tính toán của`x`làm cho hai số dư bằng nhau và vì các chữ số`1`bởi vì`9`biểu diễn mọi dư lượng modulo 9 đúng một lần, đó`x`là chữ số duy nhất còn thiếu. 
+Điều bất biến là mọi chuỗi thập phân được xử lý đều có cùng phần dư modulo (9) là tổng các chữ số được xử lý của nó. Sau khi quét (A) và (B), chúng ta biết chính xác dư lượng của chúng theo modulo (9), do đó, dư lượng sản phẩm của chúng được biết đến từ phép nhân mô đun. Sau khi quét các chữ số đã biết của (P), phần đóng góp duy nhất còn thiếu trong tổng chữ số của nó là chữ số chưa biết (x). Do đó (x + S) phải có chính xác phần dư của tích theo modulo (9). Phần dư được tính toán xác định (x) duy nhất trong số các chữ số được phép (1,\ldots,9), vì chỉ (0) và (9) chia sẻ phần dư bằng 0 và (0) bị cấm. 
 
 ## Giải pháp Python```python
 import sys
 input = sys.stdin.readline
 
-def digit_sum_mod9(s):
-    total = 0
-    for c in s:
-        if c != '\n':
-            total += ord(c) - ord('0')
-    return total % 9
+def digit_mod_9(s):
+    remainder = 0
+    for ch in s:
+        if ch != '\n':
+            remainder = (remainder + ord(ch) - ord('0')) % 9
+    return remainder
 
 def solve():
-    a, b, p = map(int, input().split())
+    a_len, b_len, p_len = map(int, input().split())
+
     A = input().strip()
     B = input().strip()
     P = input().strip()
 
-    ra = digit_sum_mod9(A)
-    rb = digit_sum_mod9(B)
+    a_mod = digit_mod_9(A)
+    b_mod = digit_mod_9(B)
 
-    visible = 0
-    for c in P:
-        if c != '*':
-            visible += ord(c) - ord('0')
-    visible %= 9
+    product_mod = (a_mod * b_mod) % 9
 
-    required = (ra * rb) % 9
-    answer = (required - visible) % 9
+    known_mod = 0
+    for ch in P:
+        if ch != '*':
+            known_mod = (known_mod + ord(ch) - ord('0')) % 9
 
-    if answer == 0:
-        answer = 9
+    missing = (product_mod - known_mod) % 9
 
-    print(answer)
+    if missing == 0:
+        missing = 9
+
+    print(missing)
 
 if __name__ == "__main__":
     solve()
-```Người trợ giúp`digit_sum_mod9`xử lý từng ký tự chuỗi thập phân thay vì chuyển đổi nó thành số nguyên. Điều đó là cần thiết vì các số nguyên đầu vào có thể chứa gần một triệu chữ số, vượt xa kích thước số nguyên bình thường của máy. 
+```các`digit_mod_9`hàm thực hiện phép tính tổng chữ số được mô tả trong phần đầu tiên của thuật toán. Giữ phần dư giảm modulo (9) có nghĩa là biến không bao giờ tăng quá một chữ số. 
 
-Vì`P`, mã chỉ bỏ qua`*`. Mỗi chữ số thực tế được bao gồm trong tổng chữ số hiển thị. Việc sử dụng`ord(c) - ord('0')`tránh tạo các đối tượng số nguyên tạm thời thông qua các chuyển đổi lặp đi lặp lại và giữ cho việc tính toán đơn giản. 
+Hai người gọi tiếp`A`Và`B`cung cấp phần dư của toán hạng. Nhân các phần dư đó sẽ có phần dư của sản phẩm thực tế mà không cần tạo ra sản phẩm đó. 
 
-biểu hiện`(required - visible) % 9`mang lại một giá trị từ`0`bởi vì`8`. Nếu nó mang lại`1`bởi vì`8`, giá trị đó đã là chữ số bị thiếu tương ứng. Nếu nó mang lại`0`, chữ số còn thiếu phải là`9`, bởi vì`0`được loại trừ một cách rõ ràng bởi vấn đề. 
+Lần quét cuối cùng bỏ qua`*`và tích lũy phần dư của tất cả các chữ số sản phẩm đã biết. Trừ phần này khỏi phần dư của sản phẩm sẽ tách ra modulo chữ số bị thiếu (9). 
 
-Không có vấn đề tràn số nguyên vì mỗi tổng đang chạy đều bị giảm modulo 9 sau mỗi chuỗi hoàn chỉnh và thậm chí cả số không bị giảm`visible`tổng số tiền tối đa khoảng 18 triệu đồng. Quan trọng hơn, mã không bao giờ xây dựng`A * B`. 
+các`% 9`thao tác sau phép trừ là cần thiết vì Python có thể tạo ra kết quả trung gian âm trước khi lấy modulo. Sự chuyển đổi cuối cùng từ`0`ĐẾN`9`cũng là điều cần thiết. Trả lại phần dư trực tiếp sẽ không thành công bất cứ khi nào chữ số bị thiếu thực tế là (9). 
+
+Không có chuyển đổi số nguyên và không có phép nhân số lớn. Số học có độ chính xác tùy ý của Python chỉ được sử dụng cho các giá trị nhỏ bên dưới (9^2), do đó việc tràn số nguyên không phải là vấn đề. 
 
 ## Ví dụ đã hoạt động 
 
-Đối với mẫu 1,```
+Đối với mẫu đầu tiên, đầu vào là:```
 1 1 2
 3
 8
 2*
-```những thay đổi trạng thái liên quan là: 
+```Việc tính toán tiến hành như sau. 
 
 | Biến | Tiểu bang | 
 | --- | --- | 
-|`ra = digitSum(A) mod 9`| 3 | 
-|`rb = digitSum(B) mod 9`| 8 | 
-|`required = ra * rb mod 9`| 6 | 
-|`visible = digitSum("2") mod 9`| 2 | 
-|`answer = (6 - 2) mod 9`| 4 | 
+| (A \bmod 9) | (3) | 
+| (B \bmod 9) | (8) | 
+| Sản phẩm modulo (9) | (3 \times 8 \bmod 9 = 6) | 
+| Đã biết tổng chữ số sản phẩm modulo (9) | (2) | 
+| Thiếu chữ số modulo (9) | (6 - 2 = 4) | 
+| Trả lời |`4`| 
 
-Sản phẩm phải có tổng chữ số bằng`3 * 8 = 24`, đó là`6`modulo 9. Chữ số nhìn thấy được đóng góp`2`, do đó chữ số còn thiếu góp phần`4`. Sản phẩm hoàn thành là`24`, xác nhận kết quả. 
+Sản phẩm thực tế là (3 \times 8 = 24). Phép tính mô-đun đạt đến cùng một chữ số bị thiếu mà không cần tính toán sản phẩm đó một cách rõ ràng. Bất biến hiển thị ở đây vì (2 + 4 = 6), khớp với modulo dư của tích (9). 
 
-Đối với mẫu 2,```
+Đối với mẫu thứ hai, đầu vào là:```
 2 2 3
 10
 10
 *00
-```tiểu bang là: 
+```Dấu vết là: 
 
 | Biến | Tiểu bang | 
 | --- | --- | 
-|`ra = digitSum(A) mod 9`| 1 | 
-|`rb = digitSum(B) mod 9`| 1 | 
-|`required = ra * rb mod 9`| 1 | 
-|`visible = digitSum("00") mod 9`| 0 | 
-|`answer = (1 - 0) mod 9`| 1 | 
+| (A \bmod 9) | (1) | 
+| (B \bmod 9) | (1) | 
+| Sản phẩm modulo (9) | (1) | 
+| Đã biết tổng chữ số sản phẩm modulo (9) | (0) | 
+| Thiếu chữ số modulo (9) | (1) | 
+| Trả lời |`1`| 
 
-Ngôi sao là ký tự đầu tiên, vì vậy ví dụ này cũng xác minh rằng bản thân vị trí bị thiếu không cần xử lý đặc biệt. Sản phẩm hoàn thành là`100`, và câu trả lời là`1`. 
+Ở đây ngôi sao là ký tự đầu tiên của sản phẩm. Vị trí của nó không ảnh hưởng đến phương pháp vì mỗi chữ số thập phân đóng góp giá trị modulo (9), bất kể giá trị vị trí của nó. Sản phẩm là`100`, và phần dư của nó là (1), nên chữ số đầu bị thiếu phải là`1`. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | O(a + b + p) | Mỗi chữ số đầu vào được xử lý một lần. | 
-| Không gian | O(a + b + p) | Các chuỗi đầu vào được lưu trữ, trong khi bản thân việc tính toán sử dụng không gian bổ sung O(1). | 
+| Thời gian | (O(A+B+P)) | Mỗi số đầu vào và chuỗi sản phẩm được quét một lần. | 
+| Không gian | (O(A+B+P)) | Các chuỗi đầu vào được lưu trữ, trong khi bản thân thuật toán sử dụng không gian bổ sung (O(1)). | 
 
-Với`a`Và`b`dưới một triệu và`p`dưới hai triệu, thuật toán chỉ thực hiện vài triệu thao tác ký tự đơn giản. Nó không bao giờ thực hiện phép nhân trên các số nguyên triệu chữ số, do đó thời gian chạy tỷ lệ tuyến tính với kích thước đầu vào và bộ nhớ làm việc bổ sung không đổi ngoài chuỗi đầu vào. 
-
-Cuộc thi ban đầu sử dụng giới hạn 0,5 giây và giới hạn bộ nhớ 32 MB. Thuật toán cơ bản được thiết kế đặc biệt để tránh số học số lượng lớn, đây là yêu cầu thiết yếu cho các giới hạn đó. 
+Tổng kích thước đầu vào tối đa là vài triệu ký tự, do đó số lần quét tuyến tính không đổi là phù hợp ngay cả trong giới hạn thời gian rất chặt chẽ. Thuật toán không bao giờ phân bổ đại diện của sản phẩm đầy đủ và chỉ sử dụng một số biến số nguyên nhỏ ngoài chuỗi đầu vào, điều này cũng giúp duy trì mức sử dụng bộ nhớ thoải mái trong giới hạn đã nêu. 
 
 ## Trường hợp thử nghiệm```python
+# helper: run solution on input string, return output string
 import sys
 import io
 
-def solve():
+def solve_io():
     input = sys.stdin.readline
 
-    a, b, p = map(int, input().split())
+    a_len, b_len, p_len = map(int, input().split())
     A = input().strip()
     B = input().strip()
     P = input().strip()
 
-    ra = 0
-    for c in A:
-        ra = (ra + ord(c) - 48) % 9
+    a_mod = 0
+    for ch in A:
+        a_mod = (a_mod + ord(ch) - ord('0')) % 9
 
-    rb = 0
-    for c in B:
-        rb = (rb + ord(c) - 48) % 9
+    b_mod = 0
+    for ch in B:
+        b_mod = (b_mod + ord(ch) - ord('0')) % 9
 
-    visible = 0
-    for c in P:
-        if c != '*':
-            visible = (visible + ord(c) - 48) % 9
+    product_mod = (a_mod * b_mod) % 9
 
-    answer = (ra * rb - visible) % 9
+    known_mod = 0
+    for ch in P:
+        if ch != '*':
+            known_mod = (known_mod + ord(ch) - ord('0')) % 9
+
+    answer = (product_mod - known_mod) % 9
     if answer == 0:
         answer = 9
 
@@ -253,15 +234,17 @@ def run(inp: str) -> str:
     old_stdin = sys.stdin
     old_stdout = sys.stdout
 
+    sys.stdin = io.StringIO(inp)
+    sys.stdout = io.StringIO()
+
     try:
-        sys.stdin = io.StringIO(inp)
-        sys.stdout = io.StringIO()
-        solve()
+        solve_io()
         return sys.stdout.getvalue().strip()
     finally:
         sys.stdin = old_stdin
         sys.stdout = old_stdout
 
+# Provided samples
 assert run("""1 1 2
 3
 8
@@ -274,79 +257,72 @@ assert run("""2 2 3
 *00
 """) == "1", "sample 2"
 
+# Minimum-size operands, 1 * 9 = 9
 assert run("""1 1 1
 1
-1
-*
-""") == "1", "minimum-size input"
-
-assert run("""1 1 1
 9
-1
 *
+""") == "9", "minimum size and missing digit 9"
+
+# Missing digit is 9 and appears in the middle
+# 99 * 1 = 99
+assert run("""2 1 2
+99
+1
+9*
 """) == "9", "residue zero must map to digit 9"
 
-assert run("""1 1 2
-7
+# Missing digit is the first product digit
+# 12 * 8 = 96
+assert run("""2 1 2
+12
 8
-5*
-""") == "6", "missing digit at the end"
+*6
+""") == "9", "leading missing digit"
 
-assert run("""2 2 3
-11
-11
-1*1
-""") == "2", "equal operands"
+# All digits equal, product 111 * 3 = 333
+assert run("""3 1 3
+111
+3
+3*3
+""") == "3", "all-equal digits"
 
-# Maximum-size valid construction:
-# A = 1 followed by 999998 zeros
-# B = 1 followed by 999998 zeros
-# A * B = 1 followed by 1999996 zeros.
-# The star replaces the leading 1.
-n = 999999
-A = "1" + "0" * (n - 1)
-B = "1" + "0" * (n - 1)
-P = "*" + "0" * (2 * n - 2)
-
-max_case = f"{n} {n} {2 * n - 1}\n{A}\n{B}\n{P}\n"
-assert run(max_case) == "1", "maximum-size input"
-
-print("All tests passed.")
+# Larger boundary-style values:
+# 999999 * 9 = 8999991
+assert run("""6 1 7
+999999
+9
+8*99991
+""") == "9", "large values and missing digit 9"
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`1 1 1 / 1 / 1 / *`|`1`| Tính toán dư lượng trực tiếp và đầu vào nhỏ nhất có thể | 
-|`1 1 1 / 9 / 1 / *`|`9`| Phần dư modulo 9`0`phải sản xuất chữ số`9`| 
-|`1 1 2 / 7 / 8 / 5*`|`6`| Thiếu chữ số ở vị trí cuối cùng | 
-|`2 2 3 / 11 / 11 / 1*1`|`2`| Toán hạng bằng nhau và chữ số bên trong bị thiếu | 
-| Quyền hạn kích thước tối đa của mười |`1`| Độ dài chuỗi gần giới hạn và chữ số bị thiếu ở đầu | 
+|`1`,`9`,`*`|`9`| Kích thước tối thiểu và trường hợp không có cặn đặc biệt | 
+|`99`,`1`,`9*`|`9`| Thiếu chữ số cuối cùng bằng`9`| 
+|`12`,`8`,`*6`|`9`| Thiếu chữ số đầu tiên | 
+|`111`,`3`,`3*3`|`3`| Lặp lại các chữ số bằng nhau | 
+|`999999`,`9`,`8*99991`|`9`| Toán hạng lớn hơn và số học tỷ lệ biên | 
 
 ## Vỏ cạnh 
 
-Trường hợp cạnh đầu tiên là thiếu chữ số hàng đầu. Vì```
-2 2 3
-10
-10
-*00
-```chúng tôi nhận được`A mod 9 = 1`Và`B mod 9 = 1`, do đó sản phẩm phải`1`modulo 9. Phần nhìn thấy được`00`đóng góp bằng không, mang lại`x = 1`. Thuật toán không bao giờ giả định rằng ngôi sao ở đâu đó sau ký tự đầu tiên, vì vậy nó xử lý việc này một cách tự nhiên. 
-
-Trường hợp cạnh thứ hai là thiếu chữ số cuối cùng. Vì```
-1 1 2
-7
-8
-5*
-```sản phẩm là`56`. Dư lượng toán hạng là`7`Và`8`, cho`56 mod 9 = 2`. Chữ số nhìn thấy được`5`có dư lượng`5`, vậy 
-
-[ 
-x\equiv2-5\equiv6\pmod9. 
-] 
-
-Câu trả lời là`6`, và chuỗi hoàn thành là`56`. 
-
-Trường hợp cạnh thứ ba là phần dư bắt buộc bằng 0. Vì```
+Chữ số bị thiếu bằng (9) là trường hợp khó phát hiện nhất. Coi như:```
 1 1 1
-9
 1
+9
 *
-```dư lượng sản phẩm là`9 * 1 mod 9 = 0`, trong khi tổng nhìn thấy được bằng không. Phép tính mang lại cho thí sinh`0`, nhưng số 0 không phải là chữ số được phép thiếu. Chữ số duy nhất được phép đồng dư với 0 modulo 9 là`9`, do đó thuật toán chuyển số 0 trung gian thành`9`. 
+```Sản phẩm là`9`, có phần dư modulo (9) bằng 0. Phần đóng góp chữ số đã biết cũng bằng 0 vì không có chữ số sản phẩm nào đã biết. Thuật toán tính toán`missing = 0`, sau đó chuyển phần dư đó thành`9`. Điều này đúng vì`0`bị cấm bởi đảm bảo đầu vào. 
 
-Trường hợp cạnh thứ tư là kích thước đầu vào tối đa. Đặt cả hai toán hạng là`1`theo sau là`999998`số không. Sản phẩm của họ là`1`theo sau là`1999996`số không. Thay thế cái đó trước`1`qua`*`cung cấp một chuỗi sản phẩm có độ dài`1999997`. Cả hai tổng chữ số toán hạng đều là`1`và mọi chữ số tích hiển thị đều bằng 0, do đó kết quả tính toán là ngay lập tức`1`. Thuật toán xử lý các chuỗi lớn một lần và không bao giờ cố gắng xây dựng tích của chúng dưới dạng số nguyên.
+Ngôi sao ở đầu sản phẩm không yêu cầu xử lý vị trí đặc biệt. Vì:```
+2 1 2
+12
+8
+*6
+```sản phẩm là`96`. Chúng ta có (12 \equiv 3 \pmod 9) và (8 \equiv 8 \pmod 9), cho ra sản phẩm còn lại (3 \times 8 \equiv 6). Chữ số đã biết là`6`, do đó chữ số bị thiếu có phần dư (6-6\equiv0). Chữ số duy nhất được phép có phần dư đó là`9`, giao đúng sản phẩm`96`. 
+
+Một ngôi sao ở cuối hành xử giống hệt nhau. Vì:```
+1 1 2
+3
+8
+2*
+```dư lượng sản phẩm là (6), trong khi chữ số đã biết`2`đóng góp (2). Chữ số còn thiếu là (4) nên thuật toán in ra`4`. 
+
+Các toán hạng lớn được xử lý mà không cần nhân chúng. Nếu (A) chứa một triệu chữ số và (B) chứa một triệu chữ số, thuật toán chỉ duy trì hai số dư trong khoảng (0) đến (8) trong khi quét đầu vào. Lý do tương tự cũng áp dụng cho chuỗi sản phẩm chứa gần hai triệu chữ số. Đây chính xác là quy mô mà cách tiếp cận mô-đun thành công và phép nhân rõ ràng không thành công.

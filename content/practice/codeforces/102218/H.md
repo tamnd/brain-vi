@@ -1,7 +1,7 @@
 ---
 title: "CF 102218H - Đài phát thanh Heartbreaker"
-description: "Chúng ta có (n) sóng hình sin. Mỗi sóng dao động với cùng tần số góc (omega), nhưng mỗi sóng có biên độ (Ai) và pha (phii) riêng."
-date: "2026-08-18T12:52:35+07:00"
+description: "Chúng ta có một số sóng hình sin, tất cả đều dao động với cùng tần số góc. Điều duy nhất khác nhau giữa các sóng là biên độ và pha của chúng. Chúng ta cần thay tổng của chúng bằng một hình sin có cùng tần số đó và báo cáo biên độ và pha của nó."
+date: "2026-08-20T03:26:26+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102218
@@ -9,7 +9,7 @@ codeforces_index: "H"
 codeforces_contest_name: "2019, XI Annual Programming Contest by ESCOM-IPN"
 rating: 0
 weight: 102218
-solve_time_s: 147
+solve_time_s: 111
 verified: false
 draft: false
 ---
@@ -18,76 +18,96 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 2m 27s 
+**Thời gian giải:** 1 phút 51 giây 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta có (n) sóng hình sin. Mỗi sóng dao động với cùng tần số góc (\omega), nhưng mỗi sóng có biên độ (A_i) và pha (\phi_i) riêng. Tổng của chúng được đảm bảo có thể biểu diễn dưới dạng một hình sin nữa có cùng tần số đó và chúng ta cần khôi phục biên độ (A) và pha (\phi) của nó. 
+Chúng ta có một số sóng hình sin, tất cả đều dao động với cùng tần số góc. Điều duy nhất khác nhau giữa các sóng là biên độ và pha của chúng. Chúng ta cần thay tổng của chúng bằng một hình sin có cùng tần số đó và báo cáo biên độ và pha của nó. 
 
-Đầu vào đưa ra (n), tần số chung và sau đó là (n) cặp ((A_i,\phi_i)). Đầu ra là một cặp ((A,\phi)) sao cho 
+Đối với sóng (i), 
 
-A\sin(\omega t+\phi) 
+[ 
+f_i(t)=A_i\sin(\omega t+\phi_i). 
 ] 
 
-với mọi (t), với (A\ge 0) và (0\le\phi<2\pi). 
+Tín hiệu hoàn chỉnh là 
 
-Bản thân tần số không ảnh hưởng đến việc tính toán. Vì mọi số hạng đều có số hạng hoàn toàn giống nhau (\omega), nên chúng ta chỉ cần kết hợp biên độ và pha của chúng. 
+[ 
+f(t)=\sum_{i=1}^{n} A_i\sin(\omega t+\phi_i), 
+] 
 
-Giá trị (n) có thể đạt tới (10^5). Một giải pháp so sánh mọi sóng với mọi sóng khác sẽ thực hiện khoảng (10^{10}) phép tính theo cặp trong trường hợp xấu nhất, vượt xa giới hạn thời gian hai giây. Chúng ta cần một thuật toán tuyến tính hoặc gần tuyến tính. Biên độ tối đa là (100), do đó hệ số tích lũy tối đa là khoảng (10^7), nằm thoải mái trong phạm vi dấu phẩy động thông thường. Các giá trị pha đã được tính bằng radian và nằm trong một vòng quay đầy đủ. 
+và chúng tôi muốn các giá trị (A\ge 0) và (0\le\phi<2\pi) sao cho 
 
-Có một số trường hợp cạnh số có thể khiến việc triển khai có vẻ hợp lý trở nên sai lầm. Hãy xem xét một sóng duy nhất:```
-1 1
-5 0
-```Kết quả đúng (5) với pha (0). Một giải pháp sửa đổi pha một cách không cần thiết hoặc sử dụng công thức liên quan đến phép chia cho một thành phần lượng giác có thể thất bại khi thành phần đó bằng 0. 
+[ 
+f(t)=A\sin(\omega t+\phi) 
+] 
 
-Trường hợp thứ hai là sóng hướng ngược lại:```
-1 1
-5 3.141592653589793
-```Kết quả có biên độ (5) và pha (\pi). Tính toán pha với`atan(y / x)`không an toàn vì (x) có thể bằng 0 và quan trọng hơn là dấu của (x) và (y) xác định góc phần tư.`atan2`được thiết kế cho chính xác tình huống này. 
+với mọi (t). 
 
-Cuối cùng, có thể hủy hoàn toàn:```
+Tần số (\omega) thực sự không liên quan đến việc tính toán một khi chúng ta nhận ra rằng mọi sóng đều có cùng tần số. Thách thức là kết hợp biên độ và pha một cách hiệu quả. 
+
+Với (n\le 10^5), thuật toán (O(n)) nằm trong phạm vi dự định trong giới hạn 2 giây. Một phương thức (O(n^2)) sẽ yêu cầu khoảng (10^{10}) thao tác cơ bản ở kích thước đầu vào lớn nhất, vượt xa những gì có thể phù hợp trong giới hạn thời gian. Biên độ và pha đầu vào là số thực, do đó việc triển khai cũng phải sử dụng số học dấu phẩy động và tôn trọng độ chính xác cần thiết (10^{-6}). 
+
+Có ba trường hợp đặc biệt thường khiến việc triển khai hợp lý không thành công. Đầu tiên là hủy bỏ. Coi như```
 2 1
 1 0
 1 3.141592653589793
-```Hai sóng âm của nhau nên kết quả là hàm số 0. Biên độ của nó là (0) và pha của nó không liên quan về mặt toán học vì (0\sin(\omega t+\phi)=0) với mọi (\phi). Việc triển khai dấu phẩy động có thể để lại một phần dư nhỏ thay vì số 0 chính xác, điều này vô hại trong phạm vi dung sai lỗi yêu cầu. 
+```Hai sóng đối nhau nên tổng của chúng chính xác bằng 0. Kết quả đúng là```
+0 0
+```vì khi (A=0), pha không có tác dụng và (0) là lựa chọn hợp lệ. Việc thực hiện bất cẩn có thể dẫn đến`atan2(0, 0)`và có được cách diễn giải phụ thuộc vào việc thực hiện hoặc có thể tạo ra biên độ số nhỏ và pha tùy ý. 
 
-Ngoài ra còn có trường hợp biên xung quanh (2\pi). Ví dụ,```
+Vấn đề thứ hai là góc phần tư của pha. Vì```
+1 1
+1 4.71238898038469
+```câu trả lời là cùng biên độ và pha, xấp xỉ```
+1 4.71238898038469
+```Từ`atan2`trả về các giá trị trong ([-\pi,\pi]), nó có thể trả về (-\pi/2) thay vì (3\pi/2). Pha toán học là tương đương, nhưng phạm vi đầu ra được yêu cầu cụ thể là ([0,2\pi)), do đó các góc âm phải được chuẩn hóa. 
+
+Vấn đề thứ ba là sự hủy bỏ ở hai thành phần tích lũy. Ví dụ,```
 2 1
-1 0
-1 6.283185307079586
-```có pha tổng cực gần (2\pi), không phải là góc âm. Từ`atan2`trả về các góc trong ([-\pi,\pi]), kết quả âm phải được dịch chuyển theo (2\pi). 
+100 0
+100 3.141592653589793
+```một lần nữa sẽ tạo ra số không. Các thành phần sin và cosin trung gian có thể rất nhỏ vì các đóng góp dương và âm lớn triệt tiêu nhau. Giải pháp không nên đưa ra quyết định dựa trên sự bằng nhau chính xác của các giá trị dấu phẩy động trừ khi biên độ cuối cùng thực tế bằng 0. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận trực tiếp sẽ cố gắng đánh giá tổng dưới dạng hàm của (t), có lẽ tại một số điểm, sau đó khôi phục biên độ và pha từ các giá trị đó. Điều đó là không cần thiết và việc đánh giá nhiều điểm cho mỗi đợt sẽ chỉ tốn thêm công sức. Một cách tiếp cận đại số mạnh mẽ hơn có thể kết hợp nhiều lần hai hình sin bằng cách sử dụng đồng nhất thức lượng giác. Mặc dù mỗi sự kết hợp riêng lẻ đều đúng, nhưng việc thao tác lặp đi lặp lại các biểu thức vẫn có thể gây ra công việc không cần thiết và độ phức tạp về số. Nếu mọi cặp sóng đều được xem xét thì trường hợp xấu nhất là theo thứ tự các phép toán (n^2=10^{10}). 
+Một cách trực tiếp nhưng tốn kém không cần thiết để suy nghĩ về vấn đề này là đánh giá tín hiệu hoàn chỉnh ở nhiều thời điểm khác nhau. Với mỗi thời điểm đã chọn (t), chúng tôi sẽ tính toán tất cả (n) sóng và cộng chúng lại. Nếu chúng ta sử dụng (n) thời gian mẫu, thì việc này cần (n) đánh giá (n) sóng, cho kết quả (O(n^2)). Tại (n=10^5), đó là khoảng (10^{10}) đánh giá sóng, quá chậm. 
 
-Quan sát hữu ích là độ lệch pha có thể được mở rộng trước khi thực hiện bất kỳ phép tính tổng nào. Đối với một làn sóng, 
+Cách tiếp cận bạo lực là đúng vì mỗi sóng riêng lẻ được đánh giá chính xác theo định nghĩa của nó, do đó các mẫu được tính toán thực sự là các mẫu có tổng mong muốn. Vấn đề là tần số chung mang lại cho chúng ta nhiều cấu trúc hơn các mẫu tùy ý yêu cầu. 
 
-A_i\sin(\omega t)\cos\phi_i 
-+ 
-A_i\cos(\omega t)\sin\phi_i. 
+Quan sát quan trọng là sự đồng nhất góc cộng 
+
+[ 
+\sin(x+\phi)=\sin x\cos\phi+\cos x\sin\phi. 
 ] 
 
-Do đó, mọi sóng chỉ là sự kết hợp tuyến tính của hai hàm giống nhau, (\sin(\omega t)) và (\cos(\omega t)). Chúng ta có thể cộng các hệ số của chúng một cách độc lập. 
+Áp dụng nó cho mọi làn sóng sẽ mang lại 
+
+A_i\cos\phi_i\sin(\omega t) 
++ 
+A_i\sin\phi_i\cos(\omega t). 
+] 
+
+Bây giờ tất cả các sóng được biểu diễn bằng hai hàm cơ bản giống nhau, (\sin(\omega t)) và (\cos(\omega t)). Chúng ta chỉ cần cộng các hệ số của chúng. 
 
 Xác định 
 
 [ 
-X=\sum_{i=1}^{n} A_i\cos\phi_i 
+C=\sum_{i=1}^{n} A_i\cos\phi_i 
 ] 
 
 và 
 
 [ 
-Y=\sum_{i=1}^{n} A_i\sin\phi_i. 
+S=\sum_{i=1}^{n} A_i\sin\phi_i. 
 ] 
 
-Khi đó tổng đầy đủ sẽ trở thành 
+Khi đó tín hiệu hoàn chỉnh sẽ trở thành 
 
 [ 
-f(t)=X\sin(\omega t)+Y\cos(\omega t). 
+f(t)=C\sin(\omega t)+S\cos(\omega t). 
 ] 
 
 Bây giờ hãy mở rộng sóng đơn mong muốn: 
@@ -97,27 +117,29 @@ A\cos\phi\sin(\omega t)
 A\sin\phi\cos(\omega t). 
 ] 
 
-Hệ số phù hợp cho 
+Việc so sánh hai hệ số sẽ cho 
 
 [ 
-A\cos\phi=X, 
+A\cos\phi=C, 
 \qquad 
-A\sin\phi=Y. 
+A\sin\phi=S. 
 ] 
 
-Cặp ((X,Y)) có thể được xem dưới dạng vectơ hai chiều. Chiều dài của nó là biên độ thu được, 
+Hai phương trình này mô tả một vectơ có tọa độ ((C,S)). Chiều dài của nó là biên độ thu được, 
 
 [ 
-A=\sqrt{X^2+Y^2}, 
+A=\sqrt{C^2+S^2}, 
 ] 
 
 và hướng của nó là pha kết quả, 
 
 [ 
-\phi=\operatorname{atan2}(Y,X). 
+\phi=\operatorname{atan2}(S,C). 
 ] 
 
-Điều này làm giảm toàn bộ vấn đề xuống còn một lần thông qua đầu vào. Lực lượng vũ phu hoạt động vì sóng hình sin có thể được kết hợp theo đại số, nhưng nó không khai thác được thực tế là mọi sóng đều sử dụng hai hàm cơ bản giống nhau. Nhận xét rằng tất cả các số hạng đều quy về hệ số (\sin(\omega t)) và (\cos(\omega t)) cho phép chúng ta thay thế toàn bộ tập hợp sóng bằng một vectơ hai chiều tích lũy. 
+Vì vậy, toàn bộ vấn đề giảm xuống còn một lần chuyển qua đầu vào, tích lũy hai số thực. 
+
+Cái nhìn sâu sắc tương tự cũng có thể được xem như là phép cộng vectơ. Mỗi hình sin (A_i\sin(\omega t+\phi_i)) tương ứng với một vectơ có chiều dài (A_i) và góc (\phi_i). Thêm sóng có nghĩa là thêm các vectơ này. Chiều dài của vectơ thu được là (A), trong khi hướng của nó là (\phi). 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -126,35 +148,68 @@ và hướng của nó là pha kết quả,
 
 ## Hướng dẫn thuật toán 
 
-1. Đọc (n) và (\omega). Giá trị của (\omega) sau đó không cần thiết vì nó giống hệt nhau đối với mọi sóng, vì vậy tất cả công việc có thể được thực hiện bằng cách sử dụng biên độ và pha. 
-2. Khởi tạo hai bộ tích lũy, (X=0) và (Y=0). Họ sẽ lưu trữ các hệ số của (\sin(\omega t)) và (\cos(\omega t)) trong tổng đầy đủ. 
-3. Với mỗi sóng ((A_i,\phi_i)), cộng (A_i\cos\phi_i) với (X) và (A_i\sin\phi_i) với (Y). Điều này diễn ra trực tiếp từ việc mở rộng (\sin(\omega t+\phi_i)). 
-4. Tính biên độ thu được với 
+1. Khởi tạo hai bộ tích lũy, (C=0) và (S=0). Chúng sẽ lưu trữ các hệ số tương ứng của (\sin(\omega t)) và (\cos(\omega t)). 
+2. Với mỗi sóng đầu vào, hãy tính (A_i\cos\phi_i) và cộng nó vào (C). Tính (A_i\sin\phi_i) và cộng nó vào (S). 
+
+Đây là sự chuyển đổi trung tâm. Chúng ta không bao giờ cần đánh giá các sóng tại bất kỳ thời điểm thực tế nào (t), vì tần số chung của chúng có nghĩa là mọi sóng đều sử dụng hai hàm cơ bản giống nhau. 
+3. Sau khi xử lý xong tất cả các sóng, hãy tính 
 
 [ 
-A=\tên toán tử{hypot}(X,Y). 
+A=\sqrt{C^2+S^2}. 
 ] 
 
-Đây là độ dài Euclide của vectơ hệ số và tốt hơn về mặt số học so với cách viết thủ công (\sqrt{X^2+Y^2}). 
-5. Tính pha với 
+Các giá trị (C) và (S) chính xác là (A\cos\phi) và (A\sin\phi), do đó độ dài Euclide của chúng phải là biên độ. 
+
+1. Nếu (A) thực sự bằng 0, thì đầu ra (0) và pha (0). 
+
+Một hình sin có biên độ bằng 0 bằng 0 bất kể pha của nó là gì, vì vậy pha (0) là một lựa chọn chính tắc hợp lệ. Điều này cũng tránh việc yêu cầu hướng của vectơ 0. 
+2. Ngược lại tính 
 
 [ 
-\phi=\operatorname{atan2}(Y,X). 
-]`atan2`sử dụng cả hai tọa độ, do đó nó chọn góc phần tư chính xác. của Python`math.atan2`trả về một góc trong phạm vi từ (-\pi) đến (\pi). 
-6. Nếu pha âm thì cộng (2\pi). Khoảng đầu ra được yêu cầu là ([0,2\pi)), do đó, điều này sẽ chuyển đổi`atan2`quy ước theo quy ước mà bài toán yêu cầu. 
-7. In (A) và (\phi) có đủ chữ số thập phân. In mười hai chữ số sau dấu thập phân mang lại độ chính xác cao hơn nhiều so với yêu cầu (10^{-6}). 
+\phi=\operatorname{atan2}(S,C). 
+]`atan2`là bắt buộc thay vì thông thường`atan(S/C)`bởi vì nó biết dấu của cả hai thành phần và do đó xác định được góc phần tư chính xác. 
+
+1. Nếu pha âm, hãy thêm (2\pi) vào nó. Sau đó in (A) và (\phi) với đủ chữ số thập phân để đáp ứng yêu cầu về lỗi (10^{-6}). 
 
 ### Tại sao nó hoạt động 
 
-Sau khi xử lý bất kỳ tiền tố sóng nào, (X) chính xác là hệ số do tiền tố đó đóng góp cho (\sin(\omega t)), trong khi (Y) chính xác là hệ số của nó cho (\cos(\omega t)). Việc thêm một sóng khác sẽ cập nhật các hệ số này một cách chính xác (A_i\cos\phi_i) và (A_i\sin\phi_i), do đó, bất biến vẫn đúng cho mọi dòng đầu vào. 
-
-Sau khi tất cả các sóng đã được xử lý, hàm hoàn chỉnh là 
+Sau khi xử lý từng sóng, bộ tích lũy thỏa mãn 
 
 [ 
-X\sin(\omega t)+Y\cos(\omega t). 
+C=\sum_i A_i\cos\phi_i 
 ] 
 
-Việc chọn (A=\sqrt{X^2+Y^2}) và (\phi=\operatorname{atan2}(Y,X)) sẽ có (A\cos\phi=X) và (A\sin\phi=Y). Việc thay thế các danh tính đó vào (A\sin(\omega t+\phi)) sẽ tái tạo chính xác hàm tích lũy, ngoài việc làm tròn dấu phẩy động. Việc chuẩn hóa pha chỉ thêm một vòng quay đầy đủ, không làm thay đổi hình sin. 
+và 
+
+[ 
+S=\sum_i A_i\sin\phi_i. 
+] 
+
+Theo đẳng thức cộng góc, tổng ban đầu là 
+
+[ 
+f(t)=C\sin(\omega t)+S\cos(\omega t). 
+] 
+
+Biên độ và pha tính toán thỏa mãn 
+
+[ 
+A\cos\phi=C 
+] 
+
+và 
+
+[ 
+A\sin\phi=S. 
+] 
+
+Thay hai đẳng thức đó thành 
+
+[ 
+A\sin(\omega t+\phi) 
+] 
+
+tạo ra chính xác (C\sin(\omega t)+S\cos(\omega t)), là tổng ban đầu. Do đó, kết quả là hình sin tương đương với mọi giá trị có thể có của (t), không chỉ ở các điểm mẫu đã chọn. 
 
 ## Giải pháp Python```python
 import sys
@@ -162,152 +217,151 @@ import math
 
 input = sys.stdin.readline
 
-def solve():
-    n, omega = input().split()
-    n = int(n)
+n, omega = input().split()
+n = int(n)
+omega = float(omega)
 
-    x = 0.0
-    y = 0.0
+c = 0.0
+s = 0.0
 
-    for _ in range(n):
-        a, phi = map(float, input().split())
-        x += a * math.cos(phi)
-        y += a * math.sin(phi)
+for _ in range(n):
+    a, phi = map(float, input().split())
+    c += a * math.cos(phi)
+    s += a * math.sin(phi)
 
-    amplitude = math.hypot(x, y)
-    phase = math.atan2(y, x)
+amplitude = math.hypot(c, s)
 
+if amplitude < 1e-12:
+    phase = 0.0
+else:
+    phase = math.atan2(s, c)
     if phase < 0.0:
         phase += 2.0 * math.pi
 
-    print(f"{amplitude:.12f} {phase:.12f}")
+print(f"{amplitude:.12f} {phase:.12f}")
+```Dòng đầu tiên ghi`n`Và`omega`. Giá trị của`omega`được phân tích cú pháp vì nó là một phần của định dạng đầu vào, nhưng nó không xuất hiện sau này trong quá trình tính toán. Khi mọi sóng có cùng tần số, chỉ có biên độ và pha của nó xác định vectơ hệ số phải được thêm vào. 
 
-if __name__ == "__main__":
-    solve()
-```Dòng đầu tiên ghi`omega`, nhưng việc thực hiện có chủ ý không sử dụng nó. Tần số chung đã có sẵn trong mọi thuật ngữ và không bao giờ thay đổi trong quá trình khớp hệ số. 
+Các biến`c`Và`s`tương ứng trực tiếp với hai hệ số dẫn xuất trong thuật toán. Đối với mỗi sóng, mã tính toán thành phần ngang (A_i\cos\phi_i) và thành phần dọc (A_i\sin\phi_i), sau đó thêm chúng vào bộ tích lũy tương ứng.`math.hypot(c, s)`tính toán (\sqrt{c^2+s^2}). Tốt nhất là viết biểu thức bằng tay vì`hypot`được thiết kế để tính toán độ dài vectơ một cách mạnh mẽ. 
 
-Các biến`x`Và`y`tương ứng trực tiếp với hai hệ số dẫn xuất trong thuật toán. Mỗi sóng đầu vào đóng góp một vectơ có chiều dài (A_i) ở góc (\phi_i), do đó việc tích lũy hai thành phần này tương đương với việc cộng vectơ.`math.hypot(x, y)`tính độ dài của vectơ tích lũy đó. Tài liệu Python`hypot`như chuẩn Euclide cho các đối số của nó, đây chính xác là phép tính biên độ được yêu cầu ở đây.`math.atan2(y, x)`được sử dụng thay vì`math.atan(y / x)`. Ngoài việc tránh chia cho 0, nó còn giữ nguyên dấu của cả hai tọa độ và do đó chọn đúng góc phần tư. 
+Kiểm tra bằng 0 sử dụng dung sai rất nhỏ thay vì kiểm tra`amplitude == 0`. Việc hủy dấu phẩy động có thể để lại kết quả bằng 0 về mặt toán học được biểu thị bằng một giá trị dư nhỏ. Bất kỳ pha nào cũng hợp lệ khi biên độ bằng 0, do đó việc chọn pha (0) sẽ cho đầu ra ổn định và hợp lệ. 
 
-Việc điều chỉnh pha âm được thực hiện có chủ ý sau`atan2`. Chỉ thêm (2\pi) khi kết quả là âm sẽ ánh xạ góc trả về vào khoảng cần thiết mà không thay đổi sin hoặc cos của nó. 
+Để có kết quả khác 0,`atan2(s, c)`trả về góc của vectơ ((c,s)). Kết quả của nó nằm ở ([-\pi,\pi]), trong khi bài toán yêu cầu ([0,2\pi)). Việc thêm (2\pi) vào kết quả âm sẽ chuyển nó thành phạm vi được yêu cầu. Một kết quả chính xác (2\pi) không xuất hiện từ`atan2`và việc thêm (2\pi) chỉ được thực hiện đối với các giá trị âm, do đó ranh giới trên vẫn hợp lệ. 
 
-Không có số học số nguyên nào được tham gia vào các phép tính lượng giác, do đó việc tràn số nguyên không phải là vấn đề. Tọa độ tích lũy lớn nhất có thể là khoảng (10^7), được biểu thị dễ dàng bằng số dấu phẩy động có độ chính xác kép. 
+Tần số không bao giờ cần phải được nhân vào bất kỳ biểu thức nào. Làm như vậy thực sự sẽ là một sai lầm về mặt khái niệm vì pha đầu ra được yêu cầu là hằng số (\phi) trong (A\sin(\omega t+\phi)), chứ không phải góc phụ thuộc thời gian (\omega t+\phi). 
 
 ## Ví dụ đã hoạt động 
 
-### Mẫu 1 
+Không có mẫu chính thức thứ hai trong tuyên bố được cung cấp, vì vậy dấu vết thứ hai bên dưới sử dụng đầu vào được xây dựng nhỏ. 
 
-Đối với mẫu đầu tiên, mỗi sóng đóng góp một vectơ 
+Đối với Mẫu 1, trạng thái quan trọng là cặp ((C,S)). Bảng sau đây hiển thị các giá trị tích lũy sau mỗi sóng, được làm tròn để dễ đọc. 
 
-[ 
-(A_i\cos\phi_i,\A_i\sin\phi_i). 
-] 
-
-Bảng sau đây hiển thị vectơ tích lũy sau mỗi dòng đầu vào. Các giá trị được làm tròn ở đây để dễ đọc; chương trình giữ độ chính xác đầy đủ của dấu phẩy động. 
-
-| Sóng | (A_i) | (\phi_i) | (X) sau sóng | (Y) sau sóng | 
+| Sóng | (A_i) | (\phi_i) | (C) sau sóng | (S) sau sóng | 
 | --- | --- | --- | --- | --- | 
-| 1 | 93,22 | 5,53 | 67,96 | -63,80 | 
-| 2 | 48,58 | 0,86 | 99,65 | -26,99 | 
-| 3 | 15.31 | 5,39 | 109,24 | -38,93 | 
-| 4 | 5,66 | 4.12 | 106.08 | -43,63 | 
-| 5 | 48,53 | 6.09 | 153,71 | -52,95 | 
-| 6 | 6h60 | 1,42 | 154,70 | -46,43 | 
-| 7 | 21.15 | 0,06 | 175,81 | -45,16 | 
-| 8 | 4.27 | 5,47 | 178,74 | -48,26 | 
+| 1 | 93,22 | 5,53 | 65,75 | -66.07 | 
+| 2 | 48,58 | 0,86 | 97,49 | -28,99 | 
+| 3 | 15.31 | 5,39 | 107,13 | -40,89 | 
+| 4 | 5,66 | 4.12 | 104.07 | -44,76 | 
+| 5 | 48,53 | 6.09 | 152,43 | -54.13 | 
+| 6 | 6h60 | 1,42 | 153,42 | -47,61 | 
+| 7 | 21.15 | 0,06 | 174,50 | -46,34 | 
+| 8 | 4.27 | 5,47 | 177,49 | -49,20 | 
 
-Vectơ cuối cùng hướng xuống phía dưới trục dương (X) một chút, do đó`atan2`trả về một góc âm nhỏ. Việc thêm (2\pi) sẽ di chuyển nó vào phạm vi được yêu cầu. Việc sử dụng các giá trị nội bộ không làm tròn sẽ cho kết quả xấp xỉ 
+Bảng tròn che giấu một số độ chính xác, nhưng bộ tích lũy có độ chính xác đầy đủ cho kết quả xấp xỉ 
 
 [ 
-A=185,184472750, 
-\qquad 
-\phi=6.019915094, 
+A=185.184472750 
 ] 
 
-phù hợp với đầu ra mẫu. 
+và 
 
-Dấu vết thể hiện tính bất biến chính: bất kể có bao nhiêu sóng đã được xử lý, hai giá trị tích lũy đều mô tả đầy đủ tổng của chúng ở tần số chung. 
+[ 
+\phi=6.019915094. 
+] 
 
-### Ví dụ được xây dựng 
+Vectơ kết quả nằm trong góc phần tư thứ tư vì (C>0) và (S<0).`atan2`Trước tiên, tạo ra một góc tương đương âm một cách chính xác, sau đó bước chuẩn hóa sẽ thêm (2\pi), đưa ra pha yêu cầu gần (6.02). 
 
-Hãy xem xét```
+Đối với ví dụ hủy bỏ được xây dựng```
 2 1
-1 0
-1 1.5707963267948966
-```Sóng đầu tiên là (\sin(t)). Thứ hai là (\sin(t+\pi/2)=\cos(t)). 
+3 0
+3 3.141592653589793
+```hai sóng có biên độ bằng nhau và các pha cách nhau bởi (\pi). 
 
-| Sóng | (A_i) | (\phi_i) | (X) sau sóng | (Y) sau sóng | 
+| Sóng | (A_i) | (\phi_i) | (C) sau sóng | (S) sau sóng | 
 | --- | --- | --- | --- | --- | 
-| 1 | 1 | 0 | 1.000000 | 0,000000 | 
-| 2 | 1 | (\pi/2) | 1.000000 | 1.000000 | 
+| 1 | 3 | 0 | 3 | 0 | 
+| 2 | 3 | (\pi) | 0 | xấp xỉ 0 | 
 
-Biên độ cuối cùng là 
-
-[ 
-A=\sqrt{1^2+1^2}=\sqrt2, 
-] 
-
-và pha là 
-
-[ 
-\phi=\operatorname{atan2}(1,1)=\frac{\pi}{4}. 
-] 
-
-Như vậy kết quả là```
-1.414213562373 0.785398163397
-```Ví dụ này làm cho việc khớp hệ số trở nên đặc biệt rõ ràng vì hai sóng ban đầu đóng góp trực tiếp vào các hàm cơ sở khác nhau. 
+Vectơ cuối cùng là vectơ 0 nên biên độ của nó bằng 0. Thuật toán chọn pha (0), tạo ra```
+0.000000000000 0.000000000000
+```Bất kỳ pha nào khác sẽ biểu thị cùng một tín hiệu bằng 0. Dấu vết này chứng tỏ tại sao thuật toán phải xử lý rõ ràng trường hợp vectơ 0 thay vì cố gắng diễn giải hướng của nó. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | (O(n)) | Mỗi sóng (n) yêu cầu một sin, một cosin và số học theo thời gian không đổi. | 
-| Không gian | (O(1)) | Chỉ có hai hệ số tích lũy và một vài giá trị vô hướng được lưu trữ. | 
+| Thời gian | (O(n)) | Mỗi sóng yêu cầu một sin, một cosin và số học bổ sung không đổi. | 
+| Không gian | (O(1)) | Chỉ có hai thành phần tích lũy và một số biến vô hướng được lưu trữ. | 
 
-Với (n\le 10^5), thuật toán chỉ thực hiện một lần chuyển qua đầu vào và không bao giờ lưu trữ danh sách sóng. Việc sử dụng bộ nhớ của nó là không đổi và thời gian của nó tăng tuyến tính theo số lượng sóng, phù hợp một cách thoải mái với các giới hạn đã nêu. 
+Đối với (n=10^5), thuật toán thực hiện một lần chuyển qua đầu vào và không lưu trữ mảng sóng nào. Thời gian chạy (O(n)) của nó phù hợp với giới hạn 2 giây, trong khi mức sử dụng bộ nhớ liên tục của nó thấp hơn nhiều so với giới hạn 256 MB. Các lệnh gọi hàm lượng giác của Python chiếm ưu thế trong hệ số không đổi, nhưng chỉ có (10^5) mỗi hệ số, điều này rất thực tế. 
 
 ## Trường hợp thử nghiệm 
 
-Khai thác kiểm tra bên dưới kiểm tra các câu trả lời bằng số thay vì so sánh các chuỗi được định dạng. Điều này là cần thiết vì nhiều cách biểu diễn số thập phân khác nhau có thể thỏa mãn khả năng chịu lỗi của bài toán.```python
-import math
-import io
+Vì không thể so sánh đầu ra dấu phẩy động dưới dạng một chuỗi chính xác một cách an toàn nên bộ khai thác kiểm tra bên dưới sẽ phân tích hai giá trị đầu ra và kiểm tra chúng với các giá trị dự kiến với dung sai.```python
 import sys
+import io
+import math
 
-def solve_text(inp: str) -> str:
-    data = inp.strip().split()
-    it = iter(data)
+def solve():
+    input = sys.stdin.readline
 
-    n = int(next(it))
-    omega = float(next(it))
+    n, omega = input().split()
+    n = int(n)
+    omega = float(omega)
 
-    x = 0.0
-    y = 0.0
+    c = 0.0
+    s = 0.0
 
     for _ in range(n):
-        a = float(next(it))
-        phi = float(next(it))
-        x += a * math.cos(phi)
-        y += a * math.sin(phi)
+        a, phi = map(float, input().split())
+        c += a * math.cos(phi)
+        s += a * math.sin(phi)
 
-    amplitude = math.hypot(x, y)
-    phase = math.atan2(y, x)
+    amplitude = math.hypot(c, s)
 
-    if phase < 0.0:
-        phase += 2.0 * math.pi
+    if amplitude < 1e-12:
+        phase = 0.0
+    else:
+        phase = math.atan2(s, c)
+        if phase < 0.0:
+            phase += 2.0 * math.pi
 
-    return f"{amplitude:.12f} {phase:.12f}"
+    print(f"{amplitude:.12f} {phase:.12f}")
 
-def run(inp: str):
-    out = solve_text(inp)
-    a, p = map(float, out.split())
-    return a, p
+def run(inp: str) -> str:
+    old_stdin = sys.stdin
+    old_stdout = sys.stdout
 
-def phase_distance(a, b):
-    d = abs(a - b) % (2.0 * math.pi)
-    return min(d, 2.0 * math.pi - d)
+    sys.stdin = io.StringIO(inp)
+    sys.stdout = io.StringIO()
 
-# Provided sample
-a, p = run(
-    """8 66.82
+    try:
+        solve()
+        return sys.stdout.getvalue().strip()
+    finally:
+        sys.stdin = old_stdin
+        sys.stdout = old_stdout
+
+def check(inp: str, expected_a: float, expected_phi: float, message: str):
+    out = run(inp).split()
+    actual_a = float(out[0])
+    actual_phi = float(out[1])
+
+    assert math.isclose(actual_a, expected_a, rel_tol=1e-6, abs_tol=1e-6), message
+    assert math.isclose(actual_phi, expected_phi, rel_tol=1e-6, abs_tol=1e-6), message
+
+# Provided sample.
+sample1 = """\
+8 66.82
 93.22 5.53
 48.58 0.86
 15.31 5.39
@@ -317,85 +371,97 @@ a, p = run(
 21.15 0.06
 4.27 5.47
 """
+check(
+    sample1,
+    185.184472750,
+    6.019915094,
+    "sample 1"
 )
-assert abs(a - 185.184472750) <= 1e-6
-assert phase_distance(p, 6.019915094) <= 1e-6
 
-# Minimum-size input
-a, p = run(
-    """1 0.1
+# Minimum-size input, a single wave must remain unchanged.
+check(
+    """\
+1 1
+7 1.2
+""",
+    7.0,
+    1.2,
+    "single wave"
+)
+
+# Exact cancellation.
+check(
+    """\
+2 10
 5 0
-"""
+5 3.141592653589793
+""",
+    0.0,
+    0.0,
+    "complete cancellation"
 )
-assert abs(a - 5.0) <= 1e-9
-assert phase_distance(p, 0.0) <= 1e-9
 
-# All waves identical
-a, p = run(
-    """3 2
-2 2.0943951023931953
-2 2.0943951023931953
-2 2.0943951023931953
-"""
+# Phase in the fourth quadrant. This catches atan2 without normalization.
+check(
+    """\
+1 2
+4 4.71238898038469
+""",
+    4.0,
+    1.5 * math.pi,
+    "negative atan2 result must be normalized"
 )
-assert abs(a - 6.0) <= 1e-9
-assert phase_distance(p, 2.0943951023931953) <= 1e-9
 
-# Exact cancellation
-a, p = run(
-    """2 1
-1 0
-1 3.141592653589793
-"""
+# Equal phases. The amplitudes simply add.
+check(
+    """\
+4 50
+1.5 0.75
+2.5 0.75
+3.0 0.75
+4.0 0.75
+""",
+    11.0,
+    0.75,
+    "equal amplitudes direction"
 )
-assert abs(a) <= 1e-9
 
-# Phase near the 2*pi boundary
-a, p = run(
-    """2 1
-1 0
-1 6.283185207179586
-"""
-)
-assert abs(a - 2.0) <= 1e-7
-assert phase_distance(p, 2.0 * math.pi - 5e-8) <= 1e-7
-
-# Maximum-size input
-n = 100000
-maximum_input = str(n) + " 100\n" + ("100 0\n" * n)
-a, p = run(maximum_input)
-assert abs(a - 10000000.0) <= 1e-5
-assert phase_distance(p, 0.0) <= 1e-9
+# Large input, exercising linear processing and accumulation.
+large_n = 100000
+large_input = f"{large_n} 1\n" + ("1 0\n" * large_n)
+large_out = run(large_input).split()
+assert math.isclose(float(large_out[0]), 100000.0, rel_tol=1e-6, abs_tol=1e-6)
+assert math.isclose(float(large_out[1]), 0.0, rel_tol=1e-6, abs_tol=1e-6)
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`1 0.1 / 5 0`| (5,0) | Đầu vào tối thiểu và pha chính xác bằng 0 | 
-| Ba sóng giống nhau có pha (2\pi/3) | (6,2\pi/3) | Tích lũy tuyến tính của các vectơ bằng nhau | 
-|`1 0 / 1 π`| (0), pha tùy ý | Hủy bỏ hoàn toàn và phần dư dấu phẩy động | 
-| Hai pha gần (0) và (2\pi) | Biên độ gần (2), pha gần (2\pi) | Xử lý pha tròn đúng cách | 
-| (100000) sóng giống nhau | (10^7,0) | Tối đa (n), độ phức tạp tuyến tính và cường độ tích lũy | 
+| Mẫu 1 | (185.184472750,\ 6.019915094) | Ví dụ chính thức đầy đủ và tích lũy chung | 
+|`1 1 / 7 1.2`| (7,\ 1.2) | Đầu vào tối thiểu và hành vi sóng đơn | 
+|`2 10 / 5 0 / 5 π`| (0,\ 0) | Hủy hoàn toàn và biên độ bằng 0 | 
+|`1 2 / 4 3π/2`| (4,\ 3π/2) |`atan2`xử lý góc phần tư và chuẩn hóa pha | 
+| Bốn sóng có pha (0,75) | (11,\ 0,75) | Pha bằng nhau, trong đó biên độ cộng trực tiếp | 
+| (10^5) sóng có biên độ (1), pha (0) | (100000,\ 0) | Kích thước đầu vào tối đa và độ phức tạp tuyến tính | 
 
 ## Vỏ cạnh 
 
-Một sóng đơn có pha 0,```
-1 0.1
-5 0
-```tạo ra (X=5) và (Y=0). Biên độ là (5) và`atan2(0,5)`cho pha không. Không có sự phân chia cho (X) hoặc (Y), nên trường hợp trục được xử lý một cách tự nhiên. 
-
-Một pha của (\pi),```
-1 1
-5 3.141592653589793
-```tạo ra (X=-5) và (Y) rất gần bằng 0.`atan2`nhìn thấy tọa độ âm (X) và trả về một góc gần (\pi), trong khi một đơn vị`atan(Y/X)`Cách tiếp cận này có thể làm mất thông tin góc phần tư. 
-
-Để hủy bỏ hoàn toàn,```
+Việc hủy hoàn toàn được xử lý bởi nhánh biên độ bằng 0. Vì```
 2 1
 1 0
 1 3.141592653589793
-```tổng vectơ toán học là ((0,0)). Đánh giá dấu phẩy động của Python về (\sin(\pi)) có thể để lại một giá trị nhỏ thay vì chính xác bằng 0, nhưng`hypot`vẫn tạo ra biên độ theo thứ tự độ chính xác của máy. Tỷ lệ này thấp hơn nhiều so với sai số tuyệt đối bắt buộc (10^{-6}), vì vậy kết quả tính toán thể hiện chính xác hàm số 0. 
+```sóng đầu tiên đóng góp ((C,S)=(1,0)). Phần thứ hai đóng góp ((-1,0)), vì vậy vectơ cuối cùng là ((0,0)). Biên độ của nó bằng 0 và thuật toán tạo ra pha 0. Tần số không làm thay đổi kết luận này vì cả hai sóng đều có cùng tần số. 
 
-Đối với pha gần (2\pi),```
+Một giai đoạn trong góc phần tư thứ tư bộc lộ một sai lầm phổ biến với`atan2`. Vì```
+1 1
+1 4.71238898038469
+```các thành phần tích lũy là khoảng 
+
+[ 
+C=0,\qquad S=-1. 
+]`atan2(-1,0)`trả về (-\pi/2). Vì pha cần thiết phải không âm nên thuật toán cộng (2\pi), thu được (3\pi/2), chính xác là pha ban đầu. 
+
+Việc hủy dấu phẩy động cũng được xử lý an toàn. Coi như```
 2 1
-1 0
-1 6.283185207179586
-```vectơ thứ hai gần giống với vectơ thứ nhất, nhưng có điểm vô cùng nhỏ bên dưới trục dương (X).`atan2`do đó trả về một pha âm nhỏ. Việc bổ sung rõ ràng (2\pi) sẽ chuyển đổi nó thành một giá trị ngay bên dưới (2\pi), thỏa mãn phạm vi đầu ra được yêu cầu. 
+100 0
+100 3.141592653589793
+```Về mặt toán học, đóng góp của vectơ là ((100,0)) và ((-100,0)). Trong số học dấu phẩy động, sin thứ hai không nhất thiết phải được biểu diễn chính xác bằng 0, do đó vectơ cuối cùng có thể chứa phần dư nhỏ. các`1e-12`ngưỡng coi phần dư đó là vectơ 0. Vì dung sai số được yêu cầu là (10^{-6}), điều này không loại bỏ bất kỳ kết quả khác 0 có ý nghĩa nào. 
 
-Trường hợp kích thước tối đa bao gồm (100000) sóng giống hệt nhau có biên độ (100) và pha bằng 0. Mỗi vectơ đóng góp ((100,0)), do đó vectơ cuối cùng là ((10^7,0)), cho biên độ (10^7) và pha bằng 0. Thuật toán vẫn thực hiện chính xác một lượng công việc không đổi trên mỗi sóng, do đó kích thước đầu vào thay đổi thời gian chạy theo tuyến tính thay vì bậc hai.
+Cuối cùng, bản thân ranh giới pha không yêu cầu xử lý đặc biệt ngoài bước chuẩn hóa. Một pha tiến đến (2\pi) có một vectơ chỉ ngay dưới trục dương (C), trong khi một pha ngay trên 0 có các điểm ngay phía trên nó.`atan2`phân biệt chính xác các dấu hiệu này. Việc chuẩn hóa chỉ thay đổi các biểu diễn âm thành các giá trị tương đương của chúng trong ([0,2\pi)) mà không thay đổi hình sin được biểu thị.

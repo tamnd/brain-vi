@@ -1,7 +1,7 @@
 ---
 title: "CF 102219B - SpongeBob SquarePants"
-description: "Mỗi trường hợp thử nghiệm mô tả một hình có bốn cạnh với các góc vuông sử dụng chiều rộng w và chiều cao h. Vì mỗi hình như vậy đều là hình chữ nhật nên câu hỏi duy nhất là liệu nó có phải là loại hình chữ nhật đặc biệt có hai cạnh dài bằng nhau hay không."
-date: "2026-08-17T22:46:21+07:00"
+description: "Mỗi trường hợp thử nghiệm mô tả một hình có bốn cạnh với các góc vuông sử dụng chiều rộng w và chiều cao h. Vì mọi hình dạng như vậy đều là hình chữ nhật nên câu hỏi duy nhất là liệu hai kích thước của nó có bằng nhau hay không."
+date: "2026-08-20T03:44:06+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102219
@@ -9,7 +9,7 @@ codeforces_index: "B"
 codeforces_contest_name: "2019 ICPC Malaysia National"
 rating: 0
 weight: 102219
-solve_time_s: 156
+solve_time_s: 274
 verified: false
 draft: false
 ---
@@ -18,33 +18,27 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 2 phút 36 giây 
+**Thời gian giải:** 4 phút 34 giây 
 **Đã xác minh:** không 
 
 ## Giải pháp 
 ## Hiểu vấn đề 
 
-Mỗi trường hợp thử nghiệm mô tả một hình có bốn cạnh với các góc vuông sử dụng chiều rộng của nó`w`và chiều cao`h`. Vì mỗi hình như vậy đều là hình chữ nhật nên câu hỏi duy nhất là liệu nó có phải là loại hình chữ nhật đặc biệt có hai cạnh dài bằng nhau hay không. 
+Mỗi trường hợp thử nghiệm mô tả một hình có bốn cạnh với các góc vuông sử dụng chiều rộng của nó`w`và chiều cao`h`. Vì mọi hình dạng như vậy đều là hình chữ nhật nên câu hỏi duy nhất là liệu hai kích thước của nó có bằng nhau hay không. Hình vuông có cùng chiều rộng và chiều cao, trong khi hình chữ nhật không phải hình vuông có kích thước khác nhau. 
 
-Nếu như`w == h`, hình là hình vuông nên đáp án cần tìm là`YES`. Nếu hai kích thước khác nhau thì hình đó là hình chữ nhật thông thường, vì vậy câu trả lời là`NO`. 
+Đối với mỗi trường hợp thử nghiệm, chúng tôi in`YES`khi`w == h`, bởi vì hình dạng có thể là hình vuông và`NO`nếu không thì. 
 
-Kích thước là số nguyên dương giữa`1`Và`1,000,000`. Bản thân các giá trị đủ nhỏ để vừa vặn thoải mái với số nguyên Python, do đó không có vấn đề tràn. Quan trọng hơn, độ lớn thực tế của các kích thước hoàn toàn không cần ảnh hưởng đến thuật toán. Quyết định chỉ phụ thuộc vào một so sánh bình đẳng, đưa ra công việc không đổi cho mỗi trường hợp thử nghiệm. Ngay cả khi số lượng ca kiểm thử lớn, việc quét tuyến tính qua các ca kiểm thử là giới hạn tự nhiên vì mọi cặp kích thước đều phải được đọc và phân loại. 
+Kích thước là số nguyên dương giữa`1`Và`1,000,000`. Ngay cả ở những giá trị lớn nhất có thể, việc so sánh hai số nguyên là một phép toán liên tục, do đó kích thước số của`w`Và`h`không tạo ra bất kỳ khó khăn số học nào. Yếu tố duy nhất có thể ảnh hưởng đến thời gian chạy là số lượng ca kiểm thử và giải pháp sẽ xử lý từng ca kiểm thử một lần. Một giải pháp thực hiện công việc tỷ lệ thuận với diện tích, chẳng hạn như lặp lại trên tất cả`w * h`vị trí đơn vị, có thể yêu cầu lên đến`10^12`lặp đi lặp lại cho một trường hợp thử nghiệm và hoàn toàn không phù hợp với giới hạn 1 giây. 
 
-Các trường hợp đặc biệt rất đơn giản nhưng vẫn đáng được xử lý một cách rõ ràng. Hình vuông nhỏ nhất có thể là`1 1`, phải tạo ra`YES`. Việc triển khai bất cẩn để kiểm tra xem kích thước có lớn hơn một kích thước hay không có thể từ chối nó một cách không chính xác. 
-
-Một hình có thể có kích thước rất lớn trong khi vẫn là hình vuông. Ví dụ,`1000000 1000000`sản xuất`YES`. Việc triển khai vô tình sử dụng một giới hạn cố định nhỏ hoặc xử lý đặc biệt giá trị tối đa sẽ không thành công ngay cả khi sự bình đẳng là tất cả những gì quan trọng. 
-
-Thứ tự của kích thước không quan trọng. Ví dụ,`3 7`Và`7 3`đều là hình chữ nhật và đều tạo ra`NO`. Một sự so sánh như`w < h`hoặc`w > h`riêng nó không xác định được hình dạng đó có phải là hình vuông hay không, bởi vì có thể sắp xếp theo một trong hai cách. 
-
-Cuối cùng, các kích thước chỉ khác nhau một vẫn phải bị từ chối. Vì`5 6`, đầu ra đúng là`NO`. Việc triển khai sử dụng điều kiện riêng lẻ như`abs(w - h) <= 1`sẽ phân loại không chính xác nó thành hình vuông. 
+Có một vài trường hợp nhỏ có thể bộc lộ việc thực hiện bất cẩn. Kích thước tối thiểu là`1 1`, phải tạo ra`YES`; việc triển khai xử lý các kích thước nhỏ một cách đặc biệt có thể vô tình từ chối nó. Một cặp gần bằng nhau như`5 6`phải sản xuất`NO`, bởi vì sự bình đẳng là cần thiết một cách chính xác, không phải xấp xỉ. Thứ tự của các kích thước không quan trọng về mặt hình học, vì vậy`6 5`cũng sản xuất`NO`, trong khi`1000000 1000000`sản xuất`YES`. Cuối cùng, các kích thước bằng nhau ở ranh giới tối đa vẫn hoàn toàn hợp lệ, do đó không cần xử lý tràn hoặc xử lý ranh giới đặc biệt. 
 
 ## Phương pháp tiếp cận 
 
-Một giải pháp brute-force có thể tưởng tượng hình chữ nhật như một tập hợp các ô đơn vị và kiểm tra toàn bộ hình dạng trước khi quyết định xem nó có phải là hình vuông hay không. Đối với một`w × h`hình chữ nhật, có nghĩa là kiểm tra`w * h`tế bào. Cách tiếp cận này đúng vì kích thước hoàn toàn xác định lưới hình chữ nhật, vì vậy sau khi xử lý từng ô, chúng ta có thể so sánh chiều rộng và chiều cao thu được. Tuy nhiên, với cả hai chiều bằng`1,000,000`, điều này đòi hỏi chính xác`1,000,000,000,000`kiểm tra tế bào cho một trường hợp thử nghiệm. Điều đó vượt xa những gì một chương trình cuộc thi một giây có thể thực hiện được. 
+Một cách tiếp cận bạo lực theo nghĩa đen có thể tưởng tượng việc xây dựng hình chữ nhật từ các ô đơn vị của nó và kiểm tra xem hình dạng của nó có tạo thành hình vuông hay không. Đối với một`w × h`hình chữ nhật, đòi hỏi phải kiểm tra tối đa`w * h`các vị trí. Ở kích thước tối đa, điều này trở thành`1,000,000 × 1,000,000 = 10^12`hoạt động tế bào cho một trường hợp thử nghiệm duy nhất. Cách tiếp cận này đúng về mặt khái niệm vì hình dạng hoàn chỉnh chứa chính xác`w * h`các ô đơn vị, nhưng nó giải quyết một câu hỏi hình học bằng cách xây dựng lại thông tin đã được mã hóa trực tiếp theo hai chiều. 
 
-Brute-force hoạt động vì cuối cùng nó xử lý tất cả thông tin mô tả hình dạng, nhưng nó thất bại vì hầu như tất cả công việc đó đều không liên quan. Điều kiện bình phương không phụ thuộc vào bất kỳ ô riêng lẻ nào. Nó phụ thuộc trực tiếp vào độ dài hai bên. Việc quan sát thấy một hình chữ nhật là hình vuông chính xác khi chiều rộng của nó bằng chiều cao sẽ làm giảm toàn bộ bài toán thành một phép so sánh số nguyên. 
+Quan sát quan trọng là định nghĩa về hình vuông cho chúng ta chính xác điều kiện chúng ta cần: chiều rộng và chiều cao của nó phải bằng nhau. Không cần phải kiểm tra bên trong, tính diện tích, đo đường chéo hoặc liệt kê các cạnh có thể có. Hai số nguyên đầu vào chứa tất cả thông tin liên quan, do đó, một phép so sánh đẳng thức sẽ xác định hoàn toàn câu trả lời. 
 
-Đối với mỗi trường hợp thử nghiệm, hãy đọc`w`Và`h`, so sánh chúng và in`YES`khi chúng bằng nhau và`NO`nếu không thì. Không có sự lặp lại về kích thước và không có cấu trúc hình học. 
+Lực lượng vũ phu hoạt động vì việc kiểm tra toàn bộ hình dạng cuối cùng sẽ tiết lộ liệu hai chiều của nó có khớp với nhau hay không, nhưng nó không thành công vì nó thực hiện tối đa`10^12`những thao tác không cần thiết. Quan sát cho thấy bình phương tương đương với`w == h`giảm toàn bộ trường hợp thử nghiệm thành một so sánh theo thời gian không đổi. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -53,41 +47,36 @@ Brute-force hoạt động vì cuối cùng nó xử lý tất cả thông tin m
 
 ## Hướng dẫn thuật toán 
 
-1. Đọc số lượng test case`T`, bởi vì quyết định tương tự phải được đưa ra một cách độc lập cho mọi hình dạng. 
-2. Đối với mỗi trường hợp thử nghiệm, hãy đọc chiều rộng`w`và chiều cao`h`. 
-3. So sánh`w`Và`h`. Bình đẳng chính xác là điều kiện toán học để hình chữ nhật là hình vuông, do đó không cần tính toán hình học nào khác. 
-4. In`YES`nếu như`w == h`; nếu không thì in`NO`. Mỗi trường hợp kiểm thử tạo ra chính xác một dòng đầu ra, duy trì sự tương ứng cần thiết giữa hình dạng đầu vào và câu trả lời. 
+1. Đọc số lượng test case`T`, bởi vì quyết định độc lập giống nhau phải được đưa ra cho mọi hình dạng. 
+2. Đối với mỗi test case, hãy đọc chiều rộng của nó`w`và chiều cao`h`. Hai giá trị này mô tả đầy đủ sự khác biệt mà chúng tôi quan tâm. 
+3. So sánh`w`Và`h`. Nếu chúng bằng nhau thì xuất ra`YES`, bởi vì chiều rộng và chiều cao bằng nhau chính xác là điều kiện xác định cho hình vuông. 
+4. Nếu chúng khác nhau, xuất ra`NO`, vì hình chữ nhật có chiều rộng và chiều cao không bằng nhau không thể là hình vuông. 
+5. Tiếp tục cho đến hết`T`các trường hợp kiểm thử đã được xử lý, tạo ra chính xác một câu trả lời cho mỗi dạng đầu vào. 
 
 ### Tại sao nó hoạt động 
 
-Thuật toán dựa trên thuộc tính xác định của hình vuông: chiều rộng và chiều cao của nó bằng nhau. Đối với mọi trường hợp thử nghiệm, nếu thuật toán in`YES`, sau đó`w == h`, do đó hình có độ dài các cạnh bằng nhau và là hình vuông. Nếu nó in`NO`, sau đó`w != h`, do đó độ dài các cạnh khác nhau và hình dạng không thể là hình vuông. Hai trường hợp này bao gồm mọi cặp kích thước dương có thể có, do đó thuật toán không thể phân loại sai đầu vào hợp lệ. 
+Bất biến cho mỗi trường hợp thử nghiệm được xử lý rất đơn giản: đầu ra là`YES`chính xác khi hai chiều bằng nhau. Một hình vuông phải có chiều rộng và chiều cao bằng nhau nên sự bình đẳng là đủ cho việc phân loại theo yêu cầu. Ngược lại, nếu kích thước khác nhau thì hình đó không thể có bốn cạnh bằng nhau và không phải là hình vuông. Vì mọi trường hợp thử nghiệm đều được đánh giá bằng điều kiện chính xác này nên thuật toán không thể phân loại sai đầu vào hợp lệ. 
 
 ## Giải pháp Python```python
 import sys
 input = sys.stdin.readline
 
-def solve():
-    t = int(input())
+t = int(input())
 
-    for _ in range(t):
-        w, h = map(int, input().split())
-        print("YES" if w == h else "NO")
+for _ in range(t):
+    w, h = map(int, input().split())
+    print("YES" if w == h else "NO")
+```Dòng đầu tiên ghi`T`, xác định có bao nhiêu trường hợp thử nghiệm độc lập theo sau. Vòng lặp chạy chính xác`T`lần, vì vậy mỗi hình sẽ nhận được một câu trả lời và không có dữ liệu đầu vào bổ sung nào được xử lý. 
 
-if __name__ == "__main__":
-    solve()
-```Dòng đầu tiên được đọc là`t`, điều khiển chính xác số lượng cặp thứ nguyên được xử lý. Điều này tránh việc dựa vào hành vi ở cuối tệp và khớp với định dạng đầu vào. 
+Bên trong vòng lặp,`w`Và`h`được phân tích cú pháp dưới dạng số nguyên. Biểu thức điều kiện trực tiếp thực hiện thuật toán: đẳng thức tạo ra`YES`, và sự bất bình đẳng tạo ra`NO`. 
 
-Bên trong vòng lặp,`map(int, input().split())`chuyển đổi hai chiều trực tiếp thành số nguyên. Số nguyên Python xử lý một cách an toàn giá trị tối đa đã cho của`1,000,000`, do đó không cần kiểu số đặc biệt hoặc xử lý tràn. 
-
-Biểu thức điều kiện thực hiện phép so sánh tương tự được mô tả trong thuật toán. Không có trường hợp ranh giới nào liên quan đến các vòng lặp trên các kích thước, do đó không có điều kiện riêng lẻ nào cần quản lý. Sự so sánh bình đẳng cũng xử lý`1 1`Và`1000000 1000000`đúng, không có trường hợp đặc biệt nào. 
-
-sử dụng`sys.stdin.readline`tuân theo mẫu nhập nhanh được yêu cầu. Đối với vấn đề cụ thể này, việc phân tích cú pháp đầu vào vốn đã rất nhỏ so với hầu hết các tác vụ lập trình cạnh tranh, nhưng cách tiếp cận này phù hợp khi có thể có nhiều trường hợp thử nghiệm. 
+Không có tính toán ranh giới, vòng lặp trên các kích thước hoặc chỉ số mảng, do đó không có vấn đề riêng lẻ. Số nguyên Python cũng có độ chính xác tùy ý, mặc dù điều đó không cần thiết ở đây vì kích thước tối đa là`1,000,000`. sử dụng`sys.stdin.readline`cung cấp khả năng xử lý đầu vào hiệu quả ngay cả khi có nhiều trường hợp thử nghiệm. 
 
 ## Ví dụ đã hoạt động 
 
 ### Mẫu 1 
 
-Bốn trường hợp thử nghiệm được xử lý độc lập. 
+Mẫu chứa bốn hình chữ nhật độc lập. 
 
 | Trường hợp thử nghiệm |`w`|`h`|`w == h`| Đầu ra | 
 | --- | --- | --- | --- | --- | 
@@ -96,33 +85,33 @@ Bốn trường hợp thử nghiệm được xử lý độc lập.
 | 3 | 200 | 33 | Sai |`NO`| 
 | 4 | 547 | 547 | Đúng |`YES`| 
 
-Hình thứ nhất và thứ tư có kích thước bằng nhau nên chúng là hình vuông. Hai cái ở giữa có kích thước khác nhau nên chúng là những hình chữ nhật không đủ tiêu chuẩn. Dấu vết thể hiện tính bất biến trung tâm: đầu ra được xác định hoàn toàn bởi sự bằng nhau của cặp hiện tại. 
+Đối với hình dạng thứ nhất và thứ tư, kích thước khớp chính xác nên chúng được chấp nhận là hình vuông. Hai cái còn lại có kích thước khác nhau và bị từ chối. Điều này chứng tỏ rằng thuật toán không cần cấu trúc hình học vì mọi quyết định đều được đưa ra trực tiếp từ cặp đầu vào. 
 
-### Đã thi công mẫu 2 
+### Ví dụ được xây dựng 
 
 Hãy xem xét đầu vào:```
-4
+3
 1 1
-1 2
-999999 1000000
+5 6
 1000000 1000000
-```| Trường hợp thử nghiệm |`w`|`h`|`w == h`| Đầu ra | 
+```Việc thực hiện là: 
+
+| Trường hợp thử nghiệm |`w`|`h`|`w == h`| Đầu ra | 
 | --- | --- | --- | --- | --- | 
 | 1 | 1 | 1 | Đúng |`YES`| 
-| 2 | 1 | 2 | Sai |`NO`| 
-| 3 | 999999 | 1000000 | Sai |`NO`| 
-| 4 | 1000000 | 1000000 | Đúng |`YES`| 
+| 2 | 5 | 6 | Sai |`NO`| 
+| 3 | 1000000 | 1000000 | Đúng |`YES`| 
 
-Dấu vết này thực hiện cả hai đầu của phạm vi cho phép và cũng kiểm tra trường hợp các kích thước khác nhau chính xác một. Không cần xử lý đặc biệt đối với bất kỳ trường hợp nào trong số đó vì cùng một bài kiểm tra tính bằng nhau được áp dụng thống nhất. 
+Dấu vết này bao gồm cả ranh giới của các kích thước được phép và một cặp khác nhau chính xác một. Nó xác nhận rằng thuật toán tự kiểm tra sự bằng nhau thay vì dựa vào ngưỡng kích thước hoặc chênh lệch lớn hơn một số giá trị. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | O(T) | Mỗi trường hợp thử nghiệm yêu cầu một phép so sánh sau khi đọc hai số nguyên. | 
-| Không gian | O(1) | Chỉ có kích thước hiện tại và trạng thái vòng lặp được lưu trữ. | 
+| Thời gian | O(T) | Mỗi trong số`T`trường hợp thử nghiệm yêu cầu một so sánh. | 
+| Không gian | O(1) | Chỉ có chiều rộng và chiều cao hiện tại được lưu trữ. | 
 
-Kích thước có thể lớn như`1,000,000`, nhưng giá trị của chúng không làm tăng số lượng tính toán. Ngay cả đối với một số lượng lớn các trường hợp thử nghiệm, thuật toán chỉ thực hiện công việc không đổi cho mỗi trường hợp, do đó tổng thời gian chạy của nó tăng tuyến tính với kích thước đầu vào. Mức sử dụng bộ nhớ không đổi và thấp hơn nhiều so với giới hạn 256 MB. 
+Kích thước tối đa của`1,000,000`không ảnh hưởng đến khối lượng công việc được thực hiện bởi giải pháp tối ưu. Kể cả nếu`T`lớn, thuật toán chỉ thực hiện một lượng công việc không đổi cho mỗi trường hợp thử nghiệm, dễ dàng phù hợp với giới hạn thời gian 1 giây và sử dụng bộ nhớ không đáng kể. 
 
 ## Trường hợp thử nghiệm```python
 import sys
@@ -140,97 +129,91 @@ def run(inp: str) -> str:
     old_stdin = sys.stdin
     old_stdout = sys.stdout
 
-    try:
-        sys.stdin = io.StringIO(inp)
-        sys.stdout = io.StringIO()
+    sys.stdin = io.StringIO(inp)
+    sys.stdout = io.StringIO()
 
-        solve()
-        return sys.stdout.getvalue()
-    finally:
-        sys.stdin = old_stdin
-        sys.stdout = old_stdout
+    solve()
 
-assert run(
-    """4
+    output = sys.stdout.getvalue()
+
+    sys.stdin = old_stdin
+    sys.stdout = old_stdout
+
+    return output
+
+# Provided sample
+assert run("""4
 9 9
 16 30
 200 33
 547 547
-"""
-) == """YES
+""") == """YES
 NO
 NO
 YES
 """, "sample 1"
 
-assert run(
-    """4
+# Minimum-size dimensions
+assert run("""1
 1 1
-1 2
-999999 1000000
-1000000 1000000
-"""
-) == """YES
-NO
-NO
-YES
-""", "minimum and maximum boundaries"
+""") == """YES
+""", "minimum dimensions"
 
-assert run(
-    """5
-1 1
-2 2
-5 5
-100 100
+# Maximum-size equal dimensions
+assert run("""1
 1000000 1000000
-"""
-) == """YES
-YES
-YES
-YES
-YES
-""", "all equal values"
+""") == """YES
+""", "maximum equal dimensions"
 
-assert run(
-    """5
-1 2
-2 1
-999999 1000000
+# Maximum-size unequal dimensions
+assert run("""2
 1000000 999999
-5 6
-"""
-) == """NO
+999999 1000000
+""") == """NO
 NO
-NO
-NO
-NO
-""", "off-by-one and reversed dimensions"
+""", "maximum boundary with unequal dimensions"
 
-assert run(
-    """3
-1000000 1
-1 1000000
-999998 1000000
-"""
-) == """NO
+# Difference of exactly one and several equal cases
+assert run("""5
+2 3
+3 2
+7 7
+42 42
+100 99
+""") == """NO
 NO
+YES
+YES
 NO
-""", "large unequal dimensions"
+""", "boundary equality cases")
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`1 1`,`1000000 1000000`|`YES`,`YES`| Kích thước hình vuông hợp lệ tối thiểu và tối đa | 
-| Một số cặp bằng nhau | Tất cả`YES`| Bình đẳng là đủ bất kể tầm quan trọng | 
-|`1 2`,`2 1`,`5 6`| Tất cả`NO`| Kích thước đảo ngược và sự khác biệt từng cái một | 
-|`1000000 1`,`1 1000000`| Cả hai`NO`| Kích thước lớn không bằng nhau ở các hướng ngược nhau | 
+|`1 1`|`YES`| Kích thước tối thiểu được phép và sự bằng nhau ở ranh giới dưới | 
+|`1000000 1000000`|`YES`| Kích thước tối đa được phép với các cạnh bằng nhau | 
+|`1000000 999999`,`999999 1000000`|`NO`,`NO`| Giá trị biên tối đa và tính độc lập với thứ tự chiều | 
+|`2 3`,`3 2`,`7 7`,`42 42`,`100 99`|`NO`,`NO`,`YES`,`YES`,`NO`| Bình đẳng chính xác và sai lầm về phong cách từng người một | 
 
 ## Vỏ cạnh 
 
-Đối với hình dạng có kích thước tối thiểu, đầu vào`1 1`so sánh thuật toán`1 == 1`, điều này đúng nên nó in ra`YES`. Không có lý do hình học nào để loại trừ một hình vuông có cạnh dài bằng 1 và thuật toán chấp nhận nó một cách chính xác mà không cần điều kiện đặc biệt. 
+Hình dạng nhỏ nhất có thể là`1 × 1`. đầu vào```
+1
+1 1
+```cho`w = 1`Và`h = 1`, do đó so sánh`w == h`là đúng và đầu ra là`YES`. Việc triển khai bất cẩn giả định một hình vuông phải có kích thước lớn hơn một sẽ thất bại ở đây. 
 
-Đối với hình vuông có kích thước tối đa, đầu vào`1000000 1000000`cũng sản xuất`YES`. Việc so sánh vẫn là một phép toán số nguyên trong thời gian không đổi bất kể kích thước số của các giá trị, do đó giới hạn trên không tạo ra vấn đề về hiệu suất hoặc độ chính xác. 
+Một hình chữ nhật có kích thước chỉ khác nhau một vẫn không phải là hình vuông. Vì```
+1
+5 6
+```thuật toán so sánh`5`Và`6`, nhận thấy chúng không bằng nhau và in`NO`. Không có dung sai nào liên quan nên việc các kích thước gần nhau không làm thay đổi cách phân loại. 
 
-Đối với các kích thước khác nhau một, đầu vào`5 6`cho`5 == 6`, đó là sai, vì vậy đầu ra là`NO`. Thuật toán không nhầm lẫn các thứ nguyên "gần như bằng nhau" với các thứ nguyên bằng nhau, tránh được lỗi thường gặp. 
+Hai chiều có thể xuất hiện theo một trong hai thứ tự. Vì```
+1
+6 5
+```sự so sánh lại sai, tạo ra`NO`. Thuật toán không cần chuẩn hóa kích thước bằng`min`Và`max`, bởi vì sự bình đẳng không bị ảnh hưởng bởi thứ tự của chúng. 
 
-Đối với kích thước đảo ngược,`7 3`sản xuất`NO`bởi vì`7 != 3`, Và`3 7`cũng sản xuất`NO`bởi vì`3 != 7`. Hình vuông có kích thước bằng nhau theo cả hai hướng, do đó không có lý do gì để chuẩn hóa cặp bằng cách sử dụng`min`Và`max`trước khi so sánh nó. 
-
-Thuật toán xử lý mọi trường hợp cạnh thông qua cùng một bất biến, cụ thể là`YES`được in chính xác khi độ dài hai cạnh bằng nhau. Không cần tính toán hình học bổ sung hoặc các nhánh trường hợp đặc biệt.
+Cuối cùng, kích thước hợp lệ lớn nhất không yêu cầu xử lý đặc biệt. Với```
+1
+1000000 1000000
+```cả hai giá trị đều bằng nhau nên thuật toán sẽ in ngay`YES`. Với```
+1
+1000000 999999
+```các giá trị khác nhau, vì vậy nó in`NO`. Vì giải pháp không bao giờ nhân các kích thước hoặc thực hiện bất kỳ thao tác nào tỷ lệ thuận với độ lớn của chúng, nên các trường hợp biên này tốn chính xác cùng một lượng công việc như`1 × 1`.
