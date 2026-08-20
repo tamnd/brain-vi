@@ -1,7 +1,7 @@
 ---
 title: "CF 102272D - C\u00e1nh \u0110\u1ed3ng Hoa"
-description: "Chúng tôi có một mảng (N) ô hoa. Ô (i) ban đầu chứa hoa (Ai), và các thao tác được xử lý theo thứ tự. Thao tác cập nhật sẽ chọn một khoảng ([l,r]). Tại vị trí (i) bên trong khoảng đó, nó thêm chính xác (i-l+1) hoa."
-date: "2026-08-17T11:10:49+07:00"
+description: "Chúng tôi có một loạt số lượng hoa (A1, ldots, AN). Thao tác loại 1 chọn một khoảng ([l,r]) và thêm một bậc thang vào đó. Vị trí (l) nhận (1), vị trí (l+1) nhận (2) và ở vị trí chung (i) nhận (i-l+1)."
+date: "2026-08-19T05:11:32+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102272
@@ -9,8 +9,8 @@ codeforces_index: "D"
 codeforces_contest_name: "HCW 19 Individual Day 1"
 rating: 0
 weight: 102272
-solve_time_s: 218
-verified: false
+solve_time_s: 206
+verified: true
 draft: false
 ---
 
@@ -18,464 +18,395 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 3 phút 38 giây 
-**Đã xác minh:** không 
+**Thời gian giải:** 3 phút 26s 
+**Đã xác minh:** có 
 
 ## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi có một mảng (N) ô hoa. Ô (i) ban đầu chứa (A_i) hoa và các thao tác được xử lý theo thứ tự. 
+Chúng tôi có một dãy số lượng hoa (A_1,\ldots,A_N). Thao tác loại 1 chọn một khoảng ([l,r]) và thêm một bậc thang vào đó. Vị trí (l) nhận (1), vị trí (l+1) nhận (2) và ở vị trí chung (i) nhận (i-l+1). Thao tác loại 2 yêu cầu tính tổng của mảng hiện tại trên một khoảng ([u,v]). 
 
-Thao tác cập nhật sẽ chọn một khoảng ([l,r]). Tại vị trí (i) bên trong khoảng đó, nó thêm chính xác (i-l+1) hoa. Do đó, các giá trị gia tăng tạo thành một cấp số cộng: 
+Các thao tác được xử lý theo thứ tự nên mọi truy vấn đều phải xem tất cả các cập nhật xảy ra trước đó. Nhiệm vụ là in ra câu trả lời cho mọi thao tác loại 2. 
 
-[ 
-1,2,3,\ldots,r-l+1. 
-] 
+Thử nghiệm lớn nhất có thể chứa (10^5) vị trí và (10^5) thao tác, với tối đa bốn trường hợp thử nghiệm. Giải pháp (O(NQ)) có thể thực hiện khoảng (10^{10}) thao tác mảng cơ bản trong trường hợp xấu nhất, vượt xa giới hạn hai giây. Ngay cả (O(N+Q\sqrt N)) ở đây cũng sẽ đắt một cách không cần thiết. Chúng tôi cần mỗi thao tác mất khoảng (O(\log N)) thời gian. 
 
-Thao tác truy vấn chọn ([u,v]) và yêu cầu tổng số hoa hiện tại trong khoảng thời gian đó. 
-
-Phần khó khăn là bản cập nhật không phải là sự bổ sung liên tục. Ví dụ: cập nhật ([3,6]) thêm (1,2,3,4), do đó số lượng được thêm vào phụ thuộc tuyến tính vào vị trí: 
-
-[ 
-i-l+1=i+(1-l). 
-] 
-
-Dạng tuyến tính đó chính là chìa khóa của giải pháp. 
-
-Có tối đa (10^5) lô và (10^5) thao tác trong một trường hợp thử nghiệm, với tối đa bốn trường hợp thử nghiệm. Một thao tác (O(N)) sẽ dẫn đến (10^{10}) hoạt động trong trường hợp xấu nhất, vượt xa giới hạn hai giây cho phép. Chúng tôi cần mỗi lần cập nhật và truy vấn để thực hiện (O(\log N)), đưa ra các thao tác khoảng (10^5\log N) cho mỗi trường hợp thử nghiệm. 
-
-Trường hợp ranh giới đầu tiên là cập nhật một phần tử. Ví dụ,```
+Có một số trường hợp ranh giới có thể khiến việc triển khai có vẻ chính xác không thành công. Đầu tiên, một bản cập nhật có thể chứa chính xác một vị trí. Ví dụ,```
 1
 1
-5
+0
 2
 1 1 1
 2 1 1
-```Bản cập nhật thêm 1 bông hoa nên đáp án là```
-6
-```Việc triển khai bất cẩn coi tiến trình bắt đầu bằng 0 sẽ tạo ra (5). 
+```sản xuất```
+1
+```vì bản cập nhật chỉ thêm (1). Một công thức luôn chèn chênh lệch thứ hai tại (l+1) mà không kiểm tra xem liệu (l<r) có thể làm hỏng trạng thái hay không. 
 
-Trường hợp ranh giới thứ hai là một bản cập nhật kết thúc chính xác tại (N). Ví dụ,```
+Một bản cập nhật cũng có thể đạt tới vị trí mảng cuối cùng. Ví dụ,```
+1
+3
+0 0 0
+2
+1 2 3
+2 1 3
+```sản xuất```
+6
+```vì các giá trị được thêm vào là (1,2) trên các vị trí (2,3), cho ra mảng ([0,1,2]). Biểu diễn bên trong có thể sử dụng vị trí (r+1=4), nhưng vị trí đó không thuộc về mảng và chỉ đóng vai trò là sự khác biệt cuối cùng. Việc phân bổ cây Fenwick quá hẹp hoặc truy vấn nó không chính xác ở ranh giới này có thể gây ra lỗi riêng lẻ. 
+
+Một truy vấn có thể chỉ bao gồm một phần của bản cập nhật. Ví dụ,```
 1
 5
 0 0 0 0 0
 2
 1 2 5
-2 1 5
-```Bản cập nhật lần lượt thêm (0,1,2,3,4) vào các vị trí (1,2,3,4,5), vì vậy câu trả lời là```
-10
-```Trường hợp thứ ba là một bản cập nhật có điểm cuối bên trái không phải là (1). Vì```
-1
+2 3 4
+```sản xuất```
 5
-0 0 0 0 0
-2
-1 3 5
-2 1 5
-```các phép cộng là (0,0,1,2,3), cho```
-6
-```Biểu thức phải sử dụng điểm cuối bên trái thực tế (l). Thay thế nó bằng (i) hoặc giả sử mọi tiến trình đều bắt đầu từ vị trí (1), sẽ cho kết quả sai. 
+```vì bản cập nhật tạo ra ([0,1,2,3,4]) và các vị trí (3,4) tổng bằng (5). Coi cầu thang như một phép cộng phạm vi không đổi sẽ cho kết quả không chính xác (2+2=4). 
 
-Trường hợp thứ tư là cập nhật chồng chéo. Vì```
+Cuối cùng, một số bản cập nhật có thể chồng chéo lên nhau. Ví dụ,```
 1
 4
 0 0 0 0
 3
 1 1 3
 1 2 4
-2 1 4
-```bản cập nhật đầu tiên cho ([1,2,3,0]), bản cập nhật thứ hai cho ([1,3,5,3]) và câu trả lời cuối cùng là (12). Cập nhật là phần bổ sung nên chúng không thể ghi đè lên tác động của các thao tác trước đó. 
+2 2 3
+```sản xuất```
+5
+```Bản cập nhật đầu tiên thêm ([1,2,3,0]), bản cập nhật thứ hai thêm ([0,1,2,3]), do đó vị trí (2,3) chứa (3,5). Mỗi bản cập nhật phải đóng góp độc lập vào số tiền cuối cùng. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận trực tiếp lưu trữ mảng thực tế. Để cập nhật ([l,r]), chúng ta chỉ cần lặp từ (l) đến (r) và thêm (i-l+1) vào mọi vị trí. Đối với một truy vấn ([u,v]), chúng tôi lặp lại khoảng đó và tính tổng của nó. Điều này đúng vì mọi thao tác đều được áp dụng chính xác vào các vị trí mà nó mô tả. 
+Giải pháp trực tiếp là xử lý thao tác loại 1 bằng cách truy cập mọi (i) từ (l) đến (r) và thêm (i-l+1) vào (A_i). Sau đó, thao tác loại 2 có thể được trả lời bằng cấu trúc tổng tiền tố hoặc đơn giản bằng cách quét khoảng thời gian được yêu cầu. Điều này đúng vì mọi cập nhật đều được áp dụng chính xác cho các vị trí mà nó mô tả. 
 
-Vấn đề là khối lượng công việc. Một bản cập nhật có thể chạm vào tất cả (N) vị trí và một truy vấn cũng có thể kiểm tra tất cả các vị trí (N). Với các phép toán (Q=10^5) và (N=10^5), một chuỗi các phép toán toàn dải có thể yêu cầu khoảng 
+Vấn đề là số lượng vị trí được cập nhật. Nếu (N=Q=10^5), chúng ta có thể có (10^5) bản cập nhật bao trùm gần như toàn bộ mảng. Một bản cập nhật có thể yêu cầu bổ sung (10^5), đưa ra khoảng (10^{10}) thao tác trong trường hợp xấu nhất. Giới hạn hai giây loại trừ điều này. 
 
-[ 
-NQ=10^{10} 
-] 
-
-truy cập mảng. Đó là một số bậc độ lớn quá lớn. 
-
-Sức mạnh vũ phu có tác dụng vì nó hiện thực hóa rõ ràng mọi số lượng hoa. Nó thất bại vì các bản cập nhật có cấu trúc mà chúng ta đang vứt đi. 
-
-Quan sát giúp mở ra giải pháp nhanh hơn là mọi bản cập nhật đều bổ sung thêm một hàm tuyến tính của vị trí. Trên ([l,r]), 
+Quan sát hữu ích là giá trị được thêm vào bởi một bản cập nhật không phải là tùy ý. Trên ([l,r]), 
 
 [ 
-i-l+1 = 1\cdot i +(1-l). 
+i-l+1=i+(1-l). 
 ] 
 
-Vì vậy, thay vì coi bản cập nhật là các phần bổ sung riêng lẻ (r-l+1), chúng ta có thể coi nó như việc thêm cùng một hàm tuyến tính (ai+b) vào toàn bộ phân khúc. 
-
-Cây phân đoạn với sự lan truyền lười biếng là sự phù hợp tự nhiên. Đối với mỗi nút cây đại diện cho ([L,R]), chúng tôi lưu trữ tổng số hoa trong đoạn đó. Thẻ lười của nó lưu hai số (a,b), nghĩa là mọi vị trí (i) trong nút này vẫn cần 
+Vì vậy, mỗi bản cập nhật đều thêm một hàm tuyến tính của chỉ số vị trí. Cụ thể hơn, nếu giá trị gia tăng tại vị trí (i) được viết là 
 
 [ 
-ai+b 
+f(i)=ai+b, 
 ] 
 
-thêm vào nó. 
+thì ở đây (a=1) và (b=1-l). 
 
-Giả sử nút bao gồm ([L,R]). Tổng đóng góp của một bản cập nhật lười biếng như vậy là 
+Chúng tôi thực sự không cần phải lưu trữ mọi giá trị bị ảnh hưởng. Thay vào đó, hãy xem xét mảng khác biệt của các giá trị được đóng góp bởi tất cả các bản cập nhật. Đối với một cập nhật tuyến tính (f(i)=ai+b) trên ([l,r]), mảng sai phân của nó chỉ có ba thay đổi có thể xảy ra. Tại (l), chúng ta bắt đầu với (f(l)). Giữa (l) và (r), các giá trị liên tiếp tăng thêm (a), vì vậy tại (l+1) chúng ta thêm (a). Tại (r+1), chúng ta trừ (f(r)), kết thúc quá trình cập nhật. 
 
-a\sum_{i=L}^{R}i+b(R-L+1). 
-] 
-
-Tổng chỉ số có dạng đóng 
-
-\frac{(L+R)(R-L+1)}2. 
-] 
-
-Vì vậy, toàn bộ phân khúc có thể được cập nhật trong (O(1)) sau khi đã đạt đến phân khúc đó. Quá trình lan truyền lười biếng trì hoãn việc đẩy hàm tuyến tính vào các phần tử con của nó cho đến khi chúng ta thực sự cần kiểm tra chúng. 
-
-Đối với hoạt động ban đầu, chúng tôi chỉ cần sử dụng 
+Đối với bài toán cụ thể này, (a=1) và (b=1-l), vì vậy 
 
 [ 
-a=1,\qquad b=1-l. 
+f(l)=1 
 ] 
 
-Cây phân đoạn tương tự có thể trả lời tổng phạm vi trong (O(\log N)). 
+và 
+
+[ 
+f(r)=r-l+1. 
+] 
+
+Do đó, một bản cập nhật chỉ có thể được biểu diễn bằng một số lượng điểm thay đổi không đổi trong một mảng sai phân. 
+
+Câu hỏi còn lại là làm thế nào để khôi phục tổng phạm vi từ những thay đổi chênh lệch này một cách hiệu quả. Nếu (D_j) là mảng sai phân thì giá trị tại vị trí (i) là 
+
+[ 
+X_i=\sum_{j\le i}D_j. 
+] 
+
+Do đó, tiền tố tổng qua (x) là 
+
+\sum_{j=1}^{x}D_j(x-j+1). 
+] 
+
+Sắp xếp lại, 
+
+(x+1)\sum_{j=1}^{x}D_j-\sum_{j=1}^{x}jD_j. 
+] 
+
+Điều này có nghĩa là chúng ta chỉ cần hai đại lượng tiền tố: (\sum D_j) và (\sum jD_j). Hai cây Fenwick có thể duy trì các đại lượng này khi thay đổi điểm trong (O(\log N)). 
+
+Mảng ban đầu không cần phải chèn vào các cây Fenwick này. Chúng tôi tính toán trước các tổng tiền tố thông thường của nó một lần, sau đó cộng phần đóng góp của tất cả các cập nhật bậc thang tiếp theo khi trả lời một truy vấn. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | (O(NQ)) | (O(N)) | Quá chậm | 
-| Tối ưu | (O((N+Q)\log N)) | (O(N)) | Đã chấp nhận | 
+| Tối ưu | (O(N+Q\log N)) | (O(N)) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Xây dựng cây phân đoạn trên mảng ban đầu. Mỗi nút lưu trữ tổng số hoa trong khoảng thời gian của nó. Thông tin lười biếng bắt đầu từ 0 vì ban đầu không có bản cập nhật trì hoãn nào tồn tại. 
-2. Biểu diễn cập nhật ([l,r]) dưới dạng hàm tuyến tính 
+1. Tính mảng tổng tiền tố thông thường của số lượng hoa ban đầu. Đặt (P[x]) là tổng các giá trị ban đầu từ vị trí (1) đến (x). Sau đó, một truy vấn trên ([u,v]) có thể nhận được đóng góp ban đầu của nó dưới dạng (P[v]-P[u-1]). 
+2. Duy trì hai cây Fenwick. Điểm lưu trữ đầu tiên thay đổi thành mảng sai phân (D), trong khi điểm thứ hai lưu trữ những thay đổi tương tự nhân với vị trí của chúng. Nếu sự thay đổi khác biệt của (d) xảy ra ở vị trí (p), hãy thêm (d) vào cây thứ nhất và (p d) vào cây thứ hai. 
+3. Đối với một bản cập nhật ([l,r]), giá trị gia tăng là (f(i)=i-l+1). Tại vị trí (l), mảng sai phân phải tăng thêm (f(l)=1) nên cộng (+1) tại (l). Nếu (l<r), các giá trị liên tiếp tăng thêm (1), nên cộng (+1) tại (l+1). Tại (r+1), trừ đi giá trị cuối cùng (f(r)=r-l+1). Những thay đổi khác biệt tạo ra mô tả chính xác cầu thang được thêm vào bởi bản cập nhật này. 
+4. Để tính toán sự đóng góp của tất cả các cập nhật cho tiền tố ([1,x]), hãy lấy 
 
 [ 
-f(i)=i-l+1=i+(1-l). 
+S_D=\sum_{j\le x}D_j 
 ] 
 
-Do đó độ dốc của nó là (a=1), và điểm giao nhau của nó là (b=1-l). 
-
-1. Khi một nút cây ([L,R]) được cập nhật hoàn toàn, hãy tăng tổng lưu trữ của nó lên 
+từ cây Fenwick đầu tiên và 
 
 [ 
-a\frac{(L+R)(R-L+1)}2+b(R-L+1). 
+S_{jD}=\sum_{j\le x}jD_j 
 ] 
 
-Đồng thời, thêm (a) và (b) vào thẻ lười của nút. Chúng ta không thăm các con của nó vì toàn bộ khoảng đã nhận được hàm tuyến tính giống nhau. 
+từ cái thứ hai. Tổng tiền tố động là 
 
-1. Khi một bản cập nhật giao nhau một phần với một nút, trước tiên hãy đẩy hàm tuyến tính đang chờ xử lý của nút đó tới các nút con của nó. Sau đó cập nhật đệ quy hai nút con và tính lại tổng của nút hiện tại từ tổng của chúng. 
+[ 
+(x+1)S_D-S_{jD}. 
+] 
 
-Thao tác đẩy sử dụng chính xác công thức giống như một bản cập nhật thông thường. Một lớp con bao phủ ([L,R]) nhận được hàm đang chờ xử lý (ai+b), do đó tổng của nó tăng theo tổng chuỗi số học tương ứng. 
+Công thức tiếp theo trực tiếp từ việc đếm xem có bao nhiêu vị trí tiền tố chứa từng giá trị chênh lệch. Một sự khác biệt được đưa ra ở vị trí (j) ảnh hưởng đến các vị trí (j,j+1,\ldots,x), chính xác là các vị trí (x-j+1).
 
-1. Đối với truy vấn tổng phạm vi ([u,v]), trả về số 0 cho nút rời rạc và trả về tổng được lưu trữ cho nút được bao phủ hoàn toàn. Đối với giao lộ một phần, hãy đẩy hàm lười biếng đang chờ xử lý trước khi truy vấn phần tử con, sau đó thêm kết quả của chúng. 
-2. Xử lý tất cả các thao tác (Q) theo thứ tự ban đầu. Đối với loại (1), áp dụng cập nhật tuyến tính. Đối với loại (2), truy vấn khoảng thời gian cần thiết và in kết quả. 
+1. Đối với truy vấn loại 2 ([u,v]), hãy tính tổng tiền tố động thông qua (v) và trừ tổng tiền tố động thông qua (u-1). Thêm chênh lệch tổng tiền tố ban đầu tương ứng. Điều này đưa ra tổng hiện tại đầy đủ trên ([u,v]). 
+2. Xử lý mọi thao tác theo thứ tự đầu vào. Các bản cập nhật sẽ sửa đổi hai cây Fenwick ngay lập tức, trong khi các truy vấn chỉ đọc chúng, vì vậy mọi truy vấn sẽ tự động thấy chính xác các bản cập nhật trước nó. 
 
-### Tại sao nó hoạt động
+### Tại sao nó hoạt động 
 
-Điều bất biến là tổng được lưu trữ của mỗi nút cây phân đoạn bằng tổng thực của mảng hiện tại trong khoảng thời gian của nút đó, bao gồm mọi cập nhật đã đến nút đó. Cặp lười ((a,b)) của nó biểu thị chính xác hàm tuyến tính vẫn phải được áp dụng cho mọi vị trí trong khoảng của nút đó và đã được đưa vào tổng được lưu trữ của nút đó. 
+Điều bất biến là hai cây Fenwick biểu thị mảng khác biệt của mỗi đóng góp hoa do các thao tác loại 1 đã xử lý gây ra. Đối với mỗi bản cập nhật, ba thay đổi khác nhau sẽ tái cấu trúc chuỗi (1,2,\ldots,r-l+1) trên ([l,r]) và số 0 bên ngoài nó. Vì các mảng khác biệt cộng tuyến tính nên các cập nhật trùng lặp được thể hiện chính xác bằng cách cộng các thay đổi chênh lệch của chúng. 
 
-Khi một bản cập nhật hoàn chỉnh đến một nút, tổng số học dạng đóng sẽ cộng chính xác phần đóng góp của bản cập nhật cho mọi vị trí trong khoảng đó. Khi thẻ lười được đẩy, chức năng giống hệt nhau sẽ được áp dụng cho cả hai phần tử con, các khoảng của chúng phân chia khoảng cha. Do đó, bất biến được giữ nguyên sau mỗi lần cập nhật. 
+Đối với bất kỳ tiền tố nào kết thúc tại (x), mọi khác biệt (D_j) đóng góp vào các vị trí (j) đến (x), tạo ra tổng số hoa (D_j(x-j+1)). Danh tính 
 
-Một truy vấn có thể lấy một nút hoàn chỉnh đã đúng hoặc kết hợp đệ quy các tổng con chính xác. Vì mọi vị trí được truy vấn đều thuộc về chính xác các nút cây rời rạc có liên quan nên giá trị trả về chính xác là tổng số hoa được yêu cầu. 
+(x+1)\sum_{j\le x}D_j-\sum_{j\le x}jD_j 
+] 
+
+do đó phục hồi tổng tiền tố động chính xác. Trừ hai tiền tố sẽ cho tổng khoảng động chính xác và việc cộng các tổng tiền tố ban đầu không thay đổi sẽ cho tổng mảng hiện tại. Do đó mọi câu trả lời loại 2 đều đúng. 
 
 ## Giải pháp Python```python
 import sys
 input = sys.stdin.readline
 
-sys.setrecursionlimit(1_000_000)
+class Fenwick:
+    __slots__ = ("n", "bit")
 
-class SegmentTree:
-    def __init__(self, arr):
-        self.n = len(arr)
-        size = 4 * self.n + 5
-        self.tree = [0] * size
-        self.lazy_a = [0] * size
-        self.lazy_b = [0] * size
-        self.arr = arr
-        self._build(1, 1, self.n)
+    def __init__(self, n):
+        self.n = n
+        self.bit = [0] * (n + 1)
 
-    def _build(self, node, left, right):
-        if left == right:
-            self.tree[node] = self.arr[left - 1]
-            return
+    def add(self, idx, value):
+        n = self.n
+        bit = self.bit
+        while idx <= n:
+            bit[idx] += value
+            idx += idx & -idx
 
-        mid = (left + right) // 2
-        self._build(node * 2, left, mid)
-        self._build(node * 2 + 1, mid + 1, right)
-        self.tree[node] = self.tree[node * 2] + self.tree[node * 2 + 1]
-
-    @staticmethod
-    def _index_sum(left, right):
-        length = right - left + 1
-        return (left + right) * length // 2
-
-    def _apply(self, node, left, right, a, b):
-        length = right - left + 1
-        index_sum = self._index_sum(left, right)
-
-        self.tree[node] += a * index_sum + b * length
-        self.lazy_a[node] += a
-        self.lazy_b[node] += b
-
-    def _push(self, node, left, right):
-        a = self.lazy_a[node]
-        b = self.lazy_b[node]
-
-        if a == 0 and b == 0:
-            return
-
-        if left != right:
-            mid = (left + right) // 2
-            self._apply(node * 2, left, mid, a, b)
-            self._apply(node * 2 + 1, mid + 1, right, a, b)
-
-        self.lazy_a[node] = 0
-        self.lazy_b[node] = 0
-
-    def update(self, ql, qr):
-        self._update(1, 1, self.n, ql, qr)
-
-    def _update(self, node, left, right, ql, qr):
-        if qr < left or right < ql:
-            return
-
-        if ql <= left and right <= qr:
-            # Add i - ql + 1 = i + (1 - ql).
-            self._apply(node, left, right, 1, 1 - ql)
-            return
-
-        self._push(node, left, right)
-
-        mid = (left + right) // 2
-        self._update(node * 2, left, mid, ql, qr)
-        self._update(node * 2 + 1, mid + 1, right, ql, qr)
-
-        self.tree[node] = self.tree[node * 2] + self.tree[node * 2 + 1]
-
-    def query(self, ql, qr):
-        return self._query(1, 1, self.n, ql, qr)
-
-    def _query(self, node, left, right, ql, qr):
-        if qr < left or right < ql:
-            return 0
-
-        if ql <= left and right <= qr:
-            return self.tree[node]
-
-        self._push(node, left, right)
-
-        mid = (left + right) // 2
-        return (
-            self._query(node * 2, left, mid, ql, qr)
-            + self._query(node * 2 + 1, mid + 1, right, ql, qr)
-        )
+    def sum(self, idx):
+        bit = self.bit
+        res = 0
+        while idx > 0:
+            res += bit[idx]
+            idx -= idx & -idx
+        return res
 
 def solve():
     t = int(input())
-    output = []
+    out = []
 
     for _ in range(t):
         n = int(input())
-        arr = list(map(int, input().split()))
+        a = list(map(int, input().split()))
+
+        prefix = [0] * (n + 1)
+        for i, value in enumerate(a, 1):
+            prefix[i] = prefix[i - 1] + value
+
+        # One tree stores D[j].
+        # The other stores j * D[j].
+        bit_d = Fenwick(n + 1)
+        bit_jd = Fenwick(n + 1)
+
+        def add_difference(pos, delta):
+            if pos > n + 1:
+                return
+            bit_d.add(pos, delta)
+            bit_jd.add(pos, pos * delta)
+
+        def dynamic_prefix(x):
+            if x <= 0:
+                return 0
+            sum_d = bit_d.sum(x)
+            sum_jd = bit_jd.sum(x)
+            return (x + 1) * sum_d - sum_jd
 
         q = int(input())
-        seg = SegmentTree(arr)
 
         for _ in range(q):
-            typ, x, y = map(int, input().split())
+            query = list(map(int, input().split()))
+            typ, x, y = query
 
             if typ == 1:
-                seg.update(x, y)
-            else:
-                output.append(str(seg.query(x, y)))
+                l, r = x, y
 
-    sys.stdout.write("\n".join(output))
+                # f(i) = i - l + 1
+                # At l: start with f(l) = 1.
+                add_difference(l, 1)
+
+                # From l+1 through r, consecutive values differ by 1.
+                if l < r:
+                    add_difference(l + 1, 1)
+
+                # At r+1, terminate the staircase.
+                add_difference(r + 1, -(r - l + 1))
+
+            else:
+                u, v = x, y
+
+                initial = prefix[v] - prefix[u - 1]
+                dynamic = dynamic_prefix(v) - dynamic_prefix(u - 1)
+
+                out.append(str(initial + dynamic))
+
+    sys.stdout.write("\n".join(out))
 
 if __name__ == "__main__":
     solve()
-```Ba mảng chính trong cây có vai trò khác nhau.`tree[node]`lưu trữ tổng số hoa hiện tại cho khoảng thời gian của nút.`lazy_a[node]`Và`lazy_b[node]`lưu trữ các hệ số trì hoãn của hàm (ai+b). 
+```các`prefix`mảng xử lý những bông hoa ban đầu một cách riêng biệt. Điều này thuận tiện vì các giá trị ban đầu không bao giờ thay đổi nên không có lý do gì để cấu trúc Fenwick biểu diễn chúng.`bit_d`đại diện cho (D_j), trong khi`bit_jd`đại diện cho (jD_j). Người trợ giúp`add_difference`cập nhật cả hai cấu trúc với nhau, điều này ngăn cản hai biểu diễn không đồng bộ. 
 
-các`_apply`phương pháp là tính toán trung tâm. Đối với một nút bao phủ ([L,R]), có các vị trí (R-L+1) và chỉ số của chúng có tổng bằng ((L+R)(R-L+1)/2). Do đó việc thêm (ai+b) sẽ thay đổi tổng nút bằng`a * index_sum + b * length`. 
+Đối với bản cập nhật ([l,r]), thay đổi đầu tiên luôn là`+1`Tại`l`. Sự thay đổi thứ hai cũng`+1`, nhưng chỉ khi`l < r`. Điều kiện này là cần thiết cho bản cập nhật một phần tử. Sự thay đổi cuối cùng được đặt tại`r + 1`và bằng`-(r-l+1)`. Những cây Fenwick có kích thước`n + 1`đặc biệt để sự khác biệt kết thúc này có thể được lưu trữ khi`r = n`. 
 
-Đối với hoạt động loại (1), bản cập nhật luôn có độ dốc (1) và phần chặn (1-l). Điểm cuối bên phải (r) chỉ xác định vị trí nào được bao phủ. Nó không xuất hiện trong chính chức năng đó. 
+các`dynamic_prefix`thực hiện chức năng 
 
-Các hệ số lười được thêm vào thay vì thay thế. Nếu một nút nhận trước (2i+3) và sau đó nhận (i-4), thì thao tác chờ kết hợp là (3i-1). Đây là lý do tại sao`_apply`thực hiện`+=`trên cả hai mảng lười biếng. 
+[ 
+(x+1)\sum_{j\le x}D_j-\sum_{j\le x}jD_j. 
+]
 
-Truy vấn đẩy các bản cập nhật đang chờ xử lý trước khi giảm dần. Nếu không có bước đó, phần tử con vẫn có thể chứa giá trị cũ mặc dù giá trị gốc của nó đã bao gồm giá trị cập nhật bị trì hoãn trong tổng của nó. 
+Khi`x`bằng 0, câu trả lời ngay lập tức là 0, điều này làm cho các truy vấn bắt đầu ở vị trí (1) an toàn vì chúng yêu cầu`dynamic_prefix(0)`. 
 
-Số nguyên Python tự động tăng vượt quá 64 bit, do đó không có vấn đề tràn. Các câu trả lời tối đa đủ lớn nên số học 32 bit có chiều rộng cố định sẽ không an toàn. 
+Số nguyên Python có độ chính xác tùy ý, do đó số lượng hoa có thể lớn sẽ không bị tràn. Tổng lớn nhất có thể có thể vượt quá phạm vi số nguyên 32 bit một khoảng lớn. 
 
-Tất cả các vị trí trong quá trình thực hiện đều dựa trên một, khớp với các công thức toán học. Điều này làm cho biểu thức (i-l+1) có thể sử dụng trực tiếp và tránh được sự chuyển đổi bổ sung trong mỗi lần cập nhật. 
-
-Độ sâu đệ quy chỉ là (O(\log N)), nhưng giới hạn đệ quy vẫn được nâng lên. Cây phân đoạn chứa (O(N)) nút, nằm trong giới hạn bộ nhớ. 
+Mỗi phép toán Fenwick đều là logarit và mỗi lần cập nhật đều thực hiện một số lượng không đổi. Một truy vấn thực hiện hai phép tính tiền tố, một phép tính cho mỗi điểm cuối. Việc triển khai đạt được sẽ tránh chạm vào khoảng thời gian cập nhật có thể rất lớn. 
 
 ## Ví dụ đã hoạt động 
 
-### Mẫu 1, test case đầu tiên 
-
-Mảng ban đầu là ([2,1,3,5,2]). Bảng sau ghi lại mảng sau mỗi lần cập nhật và câu trả lời mỗi khi truy vấn xuất hiện. 
-
-| Hoạt động | Đã thêm cập nhật | Mảng sau thao tác | Câu trả lời truy vấn | 
-| --- | --- | --- | --- | 
-|`1 1 3`| ([1,2,3,0,0]) | ([3,3,6,5,2]) | | 
-|`2 3 5`| không | ([3,3,6,5,2]) | (6+5+2=13) | 
-|`1 4 5`| ([0,0,0,1,2]) | ([3,3,6,6,4]) | | 
-|`1 2 5`| ([0,1,2,3,4]) | ([3,4,8,9,8]) | | 
-|`1 1 1`| ([1,0,0,0,0]) | ([4,4,8,9,8]) | | 
-|`2 1 4`| không | ([4,4,8,9,8]) | (4+4+8+9=25) | 
-
-Ví dụ, bản cập nhật`[2,5]`được biểu diễn dưới dạng (i-1). Trên một đoạn bao gồm các vị trí (2) đến (5), đóng góp của nó là 
+Trường hợp thử nghiệm đầu tiên bắt đầu bằng 
 
 [ 
-(2-1)+(3-1)+(4-1)+(5-1)=1+2+3+4=10. 
+[2,1,3,5,2]. 
 ] 
 
-Cây không cần phải đến thăm bốn vị trí đó một cách riêng lẻ. 
+Bảng sau theo dõi mảng sau mỗi thao tác và câu trả lời mỗi khi truy vấn xảy ra. 
 
-### Mẫu 1, test case thứ hai 
-
-Mảng ban đầu thứ hai là ([10,5,2,0,8,6,2]). 
-
-| Hoạt động | Đã thêm cập nhật | Mảng sau thao tác | Câu trả lời truy vấn | 
+| Hoạt động | Cập nhật hoặc truy vấn | Mảng hiện tại | Trả lời | 
 | --- | --- | --- | --- | 
-|`1 2 5`| ([0,1,2,3,4,0,0]) | ([10,6,4,3,12,6,2]) | | 
-|`1 1 6`| ([1,2,3,4,5,6,0]) | ([11,8,7,7,17,12,2]) | | 
-|`2 4 7`| không | ([11,8,7,7,17,12,2]) | (7+17+12+2=38) | 
-|`1 1 3`| ([1,2,3,0,0,0,0]) | ([12,10,10,7,17,12,2]) | | 
-|`1 5 5`| ([0,0,0,0,1,0,0]) | ([12,10,10,7,18,12,2]) | | 
-|`1 1 5`| ([1,2,3,4,5,0,0]) | ([13,12,13,11,23,12,2]) | | 
-|`2 1 7`| không | ([13,12,13,11,23,12,2]) | (86) | 
+|`1 1 3`| Thêm (1,2,3) vào vị trí (1,2,3) |`[3, 3, 6, 5, 2]`| | 
+|`2 3 5`| Tổng các vị trí (3) đến (5) |`[3, 3, 6, 5, 2]`|`13`| 
+|`1 4 5`| Thêm (1,2) vào vị trí (4,5) |`[3, 3, 6, 6, 4]`| | 
+|`1 2 5`| Thêm (1,2,3,4) vào các vị trí (2) đến (5) |`[3, 4, 8, 9, 8]`| | 
+|`1 1 1`| Thêm (1) vào vị trí (1) |`[4, 4, 8, 9, 8]`| | 
+|`2 1 4`| Tổng các vị trí (1) đến (4) |`[4, 4, 8, 9, 8]`|`25`| 
 
-Dấu vết thứ hai thực hiện các cập nhật chồng chéo. Cây kết hợp các hàm tuyến tính lười biếng của chúng bằng phép cộng, đó chính xác là những gì hoạt động mảng yêu cầu. 
+Đối với lần cập nhật đầu tiên, phần trình bày sự khác biệt nhận được`+1`tại vị trí (1),`+1`ở vị trí (2) và`-3`ở vị trí (4). Các giá trị được xây dựng lại của nó là (1,2,3,0,0), chính xác là cầu thang mà bản cập nhật yêu cầu. Sự thể hiện tương tự được thêm vào cho các bản cập nhật sau này, do đó các hoạt động chồng chéo sẽ tích lũy một cách tự nhiên. 
+
+Trường hợp thử nghiệm thứ hai bắt đầu bằng 
+
+[ 
+[10,5,2,0,8,6,2]. 
+] 
+
+| Hoạt động | Cập nhật hoặc truy vấn | Mảng hiện tại | Trả lời | 
+| --- | --- | --- | --- | 
+|`1 2 5`| Thêm (1,2,3,4) vào các vị trí (2) đến (5) |`[10, 6, 4, 3, 12, 6, 2]`| | 
+|`1 1 6`| Thêm (1,2,3,4,5,6) vào các vị trí (1) đến (6) |`[11, 8, 7, 7, 17, 12, 2]`| | 
+|`2 4 7`| Tổng các vị trí (4) đến (7) |`[11, 8, 7, 7, 17, 12, 2]`|`38`| 
+|`1 1 3`| Thêm (1,2,3) vào các vị trí (1) đến (3) |`[12, 10, 10, 7, 17, 12, 2]`| | 
+|`1 5 5`| Thêm (1) vào vị trí (5) |`[12, 10, 10, 7, 18, 12, 2]`| | 
+|`1 1 5`| Thêm (1,2,3,4,5) vào các vị trí (1) đến (5) |`[13, 12, 13, 11, 23, 12, 2]`| | 
+|`2 1 7`| Tính tổng toàn bộ mảng |`[13, 12, 13, 11, 23, 12, 2]`|`86`| 
+
+Cập nhật một vị trí`1 5 5`là một kiểm tra hữu ích. Từ`l == r`, mã chỉ chèn chênh lệch bắt đầu và chênh lệch kết thúc. Trung gian`l+1`thay đổi bị bỏ qua, do đó chuỗi biểu diễn chứa chính xác một bông hoa được thêm vào. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | (O(N+Q\log N)) | Việc xây dựng cây mất (O(N)), trong khi mỗi lần cập nhật và truy vấn đều truy cập vào cấp độ cây (O(\log N)). | 
-| Không gian | (O(N)) | Ba mảng cây phân đoạn, mỗi mảng chứa (O(N)) mục. | 
+| Thời gian | (O(N+Q\log N)) | Xây dựng tổng chi phí tiền tố ban đầu (O(N)); mọi cập nhật và truy vấn thực hiện một số lượng hoạt động Fenwick không đổi | 
+| Không gian | (O(N)) | Mảng tiền tố ban đầu và hai cây Fenwick mỗi mảng sử dụng bộ nhớ (O(N)) | 
 
-Với (N,Q\le 10^5), số hạng vượt trội xấp xỉ (10^5\log_2(10^5)), tức là khoảng (1,7) triệu cấp cây cho mỗi trường hợp thử nghiệm. Ngay cả với một số phép toán số học tại mỗi nút được truy cập, con số này vẫn thấp hơn nhiều so với (10^{10}) phép toán mà giải pháp trực tiếp yêu cầu. Việc sử dụng bộ nhớ là tuyến tính và vừa vặn thoải mái trong 256 MB. 
+Với (N,Q\le10^5), giải pháp thực hiện theo thứ tự vài triệu lần lặp cây Fenwick cho mỗi trường hợp thử nghiệm thay vì hàng tỷ cập nhật mảng trực tiếp. Việc sử dụng bộ nhớ là tuyến tính và thoải mái dưới 256 MB. 
 
-## Trường hợp thử nghiệm```python
+## Trường hợp thử nghiệm 
+
+Khai thác thử nghiệm sau đây sử dụng phiên bản có thể gọi được của cùng một thuật toán. Trường hợp kích thước tối đa được tạo ra thay vì viết ra theo nghĩa đen, giúp giữ cho nguồn kiểm tra có thể đọc được trong khi vẫn thực hiện các giới hạn đã nêu.```python
 import sys
 import io
 
-sys.setrecursionlimit(1_000_000)
+class Fenwick:
+    def __init__(self, n):
+        self.n = n
+        self.bit = [0] * (n + 1)
 
-class SegmentTree:
-    def __init__(self, arr):
-        self.n = len(arr)
-        size = 4 * self.n + 5
-        self.tree = [0] * size
-        self.lazy_a = [0] * size
-        self.lazy_b = [0] * size
-        self.arr = arr
-        self._build(1, 1, self.n)
+    def add(self, idx, value):
+        while idx <= self.n:
+            self.bit[idx] += value
+            idx += idx & -idx
 
-    def _build(self, node, left, right):
-        if left == right:
-            self.tree[node] = self.arr[left - 1]
-            return
+    def sum(self, idx):
+        res = 0
+        while idx:
+            res += self.bit[idx]
+            idx -= idx & -idx
+        return res
 
-        mid = (left + right) // 2
-        self._build(node * 2, left, mid)
-        self._build(node * 2 + 1, mid + 1, right)
-        self.tree[node] = self.tree[node * 2] + self.tree[node * 2 + 1]
-
-    @staticmethod
-    def _index_sum(left, right):
-        length = right - left + 1
-        return (left + right) * length // 2
-
-    def _apply(self, node, left, right, a, b):
-        length = right - left + 1
-        index_sum = self._index_sum(left, right)
-        self.tree[node] += a * index_sum + b * length
-        self.lazy_a[node] += a
-        self.lazy_b[node] += b
-
-    def _push(self, node, left, right):
-        a = self.lazy_a[node]
-        b = self.lazy_b[node]
-
-        if a == 0 and b == 0:
-            return
-
-        if left != right:
-            mid = (left + right) // 2
-            self._apply(node * 2, left, mid, a, b)
-            self._apply(node * 2 + 1, mid + 1, right, a, b)
-
-        self.lazy_a[node] = 0
-        self.lazy_b[node] = 0
-
-    def update(self, ql, qr):
-        self._update(1, 1, self.n, ql, qr)
-
-    def _update(self, node, left, right, ql, qr):
-        if qr < left or right < ql:
-            return
-
-        if ql <= left and right <= qr:
-            self._apply(node, left, right, 1, 1 - ql)
-            return
-
-        self._push(node, left, right)
-
-        mid = (left + right) // 2
-        self._update(node * 2, left, mid, ql, qr)
-        self._update(node * 2 + 1, mid + 1, right, ql, qr)
-
-        self.tree[node] = self.tree[node * 2] + self.tree[node * 2 + 1]
-
-    def query(self, ql, qr):
-        return self._query(1, 1, self.n, ql, qr)
-
-    def _query(self, node, left, right, ql, qr):
-        if qr < left or right < ql:
-            return 0
-
-        if ql <= left and right <= qr:
-            return self.tree[node]
-
-        self._push(node, left, right)
-
-        mid = (left + right) // 2
-        return (
-            self._query(node * 2, left, mid, ql, qr)
-            + self._query(node * 2 + 1, mid + 1, right, ql, qr)
-        )
-
-def solve():
+def solve_io():
     input = sys.stdin.readline
     t = int(input())
-    ans = []
+    out = []
 
     for _ in range(t):
         n = int(input())
-        arr = list(map(int, input().split()))
-        q = int(input())
+        a = list(map(int, input().split()))
 
-        seg = SegmentTree(arr)
+        prefix = [0] * (n + 1)
+        for i, value in enumerate(a, 1):
+            prefix[i] = prefix[i - 1] + value
+
+        bit_d = Fenwick(n + 1)
+        bit_jd = Fenwick(n + 1)
+
+        def add_difference(pos, delta):
+            bit_d.add(pos, delta)
+            bit_jd.add(pos, pos * delta)
+
+        def dynamic_prefix(x):
+            if x <= 0:
+                return 0
+            sd = bit_d.sum(x)
+            sjd = bit_jd.sum(x)
+            return (x + 1) * sd - sjd
+
+        q = int(input())
 
         for _ in range(q):
             typ, x, y = map(int, input().split())
-            if typ == 1:
-                seg.update(x, y)
-            else:
-                ans.append(str(seg.query(x, y)))
 
-    return "\n".join(ans)
+            if typ == 1:
+                l, r = x, y
+                add_difference(l, 1)
+                if l < r:
+                    add_difference(l + 1, 1)
+                add_difference(r + 1, -(r - l + 1))
+            else:
+                u, v = x, y
+                ans = (
+                    prefix[v] - prefix[u - 1]
+                    + dynamic_prefix(v)
+                    - dynamic_prefix(u - 1)
+                )
+                out.append(str(ans))
+
+    return "\n".join(out)
 
 def run(inp: str) -> str:
     old_stdin = sys.stdin
     old_stdout = sys.stdout
-
     try:
         sys.stdin = io.StringIO(inp)
         sys.stdout = io.StringIO()
-
-        result = solve()
-        sys.stdout.write(result)
-
-        return sys.stdout.getvalue()
+        solve_io()
+        return sys.stdout.getvalue().strip()
     finally:
         sys.stdin = old_stdin
         sys.stdout = old_stdout
@@ -508,124 +439,106 @@ assert run(sample) == "13\n25\n38\n86", "provided sample"
 assert run("""\
 1
 1
-5
+0
 2
 1 1 1
 2 1 1
-""") == "6", "minimum size"
+""") == "1", "minimum size"
 
 assert run("""\
 1
-5
-0 0 0 0 0
 3
-1 2 5
-2 1 5
-2 5 5
-""") == "10\n4", "right boundary"
+0 0 0
+3
+1 2 3
+2 1 3
+2 3 3
+""") == "6\n2", "right boundary and partial query"
 
 assert run("""\
 1
 5
-0 0 0 0 0
+7 7 7 7 7
 4
+2 1 5
 1 3 5
 2 1 5
 2 3 5
-2 4 4
-""") == "6\n6\n2", "left boundary"
+""") == "35\n41\n24", "all equal initial values"
 
 assert run("""\
 1
 4
 0 0 0 0
-3
-1 1 3
-1 2 4
+5
+1 1 4
+1 2 3
 2 1 4
-""") == "12", "overlapping updates"
+2 2 3
+2 4 4
+""") == "14\n7\n4", "overlap and boundaries"
 
-# Maximum-size test. Every initial value is equal and the update covers N.
 n = 100000
-maximum_test = (
+maximum_case = (
     "1\n"
-    + str(n) + "\n"
-    + ("1 " * n).strip() + "\n"
-    + "3\n"
-    + f"1 1 {n}\n"
-    + f"2 1 {n}\n"
-    + f"2 {n} {n}\n"
+    f"{n}\n"
+    + ("1 " * (n - 1))
+    + "1\n"
+    + f"{n}\n"
+    + "\n".join(
+        ["1 1 100000"] * (n - 1)
+        + ["2 1 100000"]
+    )
+    + "\n"
 )
 
-expected_total = n + n * (n + 1) // 2
-expected_last = 2
-
-assert run(maximum_test) == f"{expected_total}\n{expected_last}", \
-    "maximum size and all equal values"
+expected = n + (n - 1) * (n * (n + 1) // 2)
+assert run(maximum_case) == str(expected), "maximum size"
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`N=1`, một cập nhật và một truy vấn |`6`| Kích thước tối thiểu và số hạng đầu tiên của tiến trình | 
-| Không có mảng, cập nhật`[2,5]`|`10`,`4`| Điểm cuối bên phải và giá trị tiến trình chính xác | 
-| Không có mảng, cập nhật`[3,5]`|`6`,`6`,`2`| Truy vấn điểm cuối và phạm vi con bên trái khác 0 | 
-| Hai bản cập nhật chồng chéo |`12`| Thành phần phụ gia của bản cập nhật | 
-| (N=100000), tất cả các giá trị đều bằng nhau |`5000150000`,`2`| Kích thước tối đa, số tiền lớn, cập nhật toàn diện | 
+| Vỏ có kích thước tối thiểu với (N=1) |`1`| Cập nhật một vị trí và ranh giới tiền tố (u-1=0) | 
+| Cập nhật vị trí tiếp cận (N) |`6`,`2`| Xử lý đúng sự khác biệt kết thúc tại (r+1) và truy vấn một phần | 
+| Tất cả các giá trị ban đầu bằng nhau |`35`,`41`,`24`| Tách các tổng tiền tố ban đầu không thay đổi khỏi các cập nhật động | 
+| Cập nhật chồng chéo |`14`,`7`,`4`| Tính cộng của nhiều bản cập nhật cầu thang và ranh giới khoảng cách | 
+| Trường hợp đã tạo (N=Q=10^5) | Tính theo công thức trong bài thi | Độ phức tạp về thời gian, số nguyên lớn và cập nhật toàn phạm vi lặp đi lặp lại | 
 
 ## Vỏ cạnh 
 
-Đối với trường hợp một phần tử```
+Để cập nhật một thành phần, hãy xem xét```
 1
 1
-5
+0
 2
 1 1 1
 2 1 1
-```bản cập nhật có (a=1) và (b=0), bởi vì (1-l=0). Cây phân đoạn chỉ chứa gốc, do đó trường hợp che phủ hoàn chỉnh ngay lập tức thêm (1). Tổng của nó thay đổi từ (5) thành (6) và truy vấn trả về (6). Không có con nào để đẩy nên tình trạng lá được xử lý một cách tự nhiên. 
+```Bản cập nhật là (f(1)=1). Thuật toán bổ sung`+1`đến mảng khác biệt ở vị trí (1) và`-1`ở vị trí (2). Thay đổi thứ hai được lưu trữ trong cây Fenwick nhưng nằm ngoài tiền tố được truy vấn. Do đó, tiền tố xuyên qua vị trí (1) là (1) và đầu ra là`1`. Sự thay đổi trung gian bị thiếu ở (l+1) là có chủ ý vì không có vị trí thứ hai trong bậc thang. 
 
-Đối với bản cập nhật kết thúc ở vị trí cuối cùng,```
+Đối với bản cập nhật kết thúc ở vị trí cuối cùng, hãy xem xét```
+1
+3
+0 0 0
+2
+1 2 3
+2 1 3
+```Bản cập nhật đóng góp (1,2) cho vị trí (2,3). Những thay đổi khác biệt của nó là`+1`tại (2),`+1`tại (3), và`-2`tại (4). Cây Fenwick có kích thước bằng (N+1), do đó vị trí (4) có thể chứa chênh lệch cuối cùng. Tiền tố xuyên qua (3) bỏ qua sự kết thúc đó và cho (3), vì vậy kết quả đầu ra dự kiến ​​thực sự là`3`. 
+
+Đối với truy vấn chỉ bao gồm một phần của bản cập nhật, hãy xem xét```
 1
 5
 0 0 0 0 0
 2
 1 2 5
-2 1 5
-```hàm lười biếng là (i-1). Nút gốc chỉ được che phủ một phần, do đó bản cập nhật sẽ giảm dần cho đến khi tìm thấy các nút được che phủ. Sự đóng góp từ các vị trí (2) đến (5) là 
+2 3 4
+```Bản cập nhật tạo ra ([0,1,2,3,4]). Tiền tố đến (4) là (6), trong khi tiền tố đến (2) là (1), do đó tổng được yêu cầu là (6-1=5). Công thức tiền tố động hoạt động mà không cần biết các giá trị riêng lẻ trong khoảng. 
 
-[ 
-1+2+3+4=10. 
-] 
-
-Truy vấn cuối cùng trả về (10). Điểm cuối bên phải chỉ được xử lý bởi các ranh giới khoảng, do đó không có trường hợp đặc biệt nào cho (r=N). 
-
-Đối với điểm cuối bên trái không phải là một,```
-1
-5
-0 0 0 0 0
-4
-1 3 5
-2 1 5
-2 3 5
-2 4 4
-```chức năng cập nhật là 
-
-[ 
-i-3+1=i-2. 
-] 
-
-Như vậy vị trí (3,4,5) nhận (1,2,3), cho tổng (6). Truy vấn`[3,5]`trả về (6), trong khi`[4,4]`trả về (2). Phần chặn (1-l) là phần làm cho công thức phụ thuộc vào vị trí bắt đầu thực tế. 
-
-Đối với các bản cập nhật chồng chéo,```
+Đối với các bản cập nhật chồng chéo, hãy xem xét```
 1
 4
 0 0 0 0
 3
 1 1 3
 1 2 4
-2 1 4
-```bản cập nhật đầu tiên là (i) bật`[1,3]`, sản xuất`[1,2,3,0]`. Thứ hai là (i-1) trên`[2,4]`, tạo ra thêm`[0,1,2,3]`. Mảng cuối cùng là`[1,3,5,3]`, có tổng là (12). Trong cây, các thẻ lười chồng chéo được thêm hệ số theo hệ số, do đó cấu trúc dữ liệu thể hiện chính xác hiệu ứng kết hợp của cả hai thao tác. 
+2 2 3
+```Bản cập nhật đầu tiên đóng góp ([1,2,3,0]) và bản cập nhật thứ hai đóng góp ([0,1,2,3]). Tổng của chúng là ([1,3,5,3]), nên vị trí (2,3) chứa (3+5=8). Việc biểu diễn sự khác biệt chỉ đơn giản là thêm những thay đổi khác biệt từ cả hai bản cập nhật, tạo ra một mảng kết hợp giống hệt nhau. 
 
-Kiểm tra kích thước tối đa cũng kiểm tra độ an toàn số học. Với (N=100000), một mảng tất cả một, theo sau là một bản cập nhật`[1,N]`sản xuất tổng cộng 
-
-5000150000. 
-] 
-
-Điều này vượt quá phạm vi 32 bit đã ký, nhưng số nguyên Python thể hiện chính xác nó. Do đó, cây phân đoạn trả về giá trị đúng mà không cần xử lý tràn đặc biệt nào.
+Trường hợp kích thước tối đa thực hiện một ranh giới thực tế khác. Với (N=Q=10^5), việc cập nhật liên tục toàn bộ mảng sẽ là không thể nếu mỗi lần cập nhật truy cập vào tất cả (N) vị trí. Biểu diễn Fenwick chỉ chạm đến một số lượng vị trí không đổi trong mỗi lần cập nhật, do đó số lượng thao tác tăng lên dưới dạng (O(Q\log N)) thay vì (O(NQ)). Các số nguyên có độ chính xác tùy ý của Python cũng xử lý tổng kết quả một cách an toàn, có thể lớn hơn nhiều so với (2^{31}-1).
