@@ -1,7 +1,7 @@
 ---
 title: "CF 102163A - Hasan thẩm phán lười biếng"
-description: "Chúng ta có các đoạn đường ngang và các đoạn đường thẳng đứng trên mặt phẳng tọa độ nguyên. Dấu cộng hợp lệ được hình thành bằng cách chọn một đoạn ngang và một đoạn thẳng cắt nhau tại điểm C."
-date: "2026-08-20T14:18:42+07:00"
+description: "Chúng tôi có một tập hợp các đoạn đường ngang và đoạn đường thẳng đứng trên mặt phẳng tọa độ nguyên. Một đoạn ngang được mô tả bởi hai điểm cuối x và tọa độ y cố định của nó. Một đoạn thẳng đứng được mô tả bởi hai điểm cuối y và tọa độ x cố định của nó."
+date: "2026-08-21T18:48:20+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102163
@@ -9,7 +9,7 @@ codeforces_index: "A"
 codeforces_contest_name: "NCD 2019"
 rating: 0
 weight: 102163
-solve_time_s: 1454
+solve_time_s: 2814
 verified: false
 draft: false
 ---
@@ -18,190 +18,164 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 24m 14s 
+**Thời gian giải:** 46 phút 54 giây 
 **Đã xác minh:** không 
 
 ## Giải pháp 
-## Hiểu vấn đề 
+#Hiểu vấn đề 
 
-Chúng ta có các đoạn đường ngang và các đoạn đường thẳng đứng trên mặt phẳng tọa độ nguyên. Dấu cộng hợp lệ được hình thành bằng cách chọn một đoạn ngang và một đoạn thẳng cắt nhau tại điểm C. Bốn nhánh của dấu cộng là khoảng cách từ C đến hai điểm cuối của đoạn ngang và hai điểm cuối của đoạn thẳng đứng. 
+Chúng tôi có một tập hợp các đoạn đường ngang và đoạn đường thẳng đứng trên mặt phẳng tọa độ nguyên. Một đoạn ngang được mô tả bởi hai điểm cuối x và tọa độ y cố định của nó. Một đoạn thẳng đứng được mô tả bởi hai điểm cuối y và tọa độ x cố định của nó. 
 
-Đối với đoạn ngang [x 1 ​ ,x 2 ​ ] và đoạn thẳng đứng [y 1 ​ ,y 2 ​ ], cắt nhau tại (x,y), giá trị của nó là 
+Việc chọn một đoạn ngang và một đoạn dọc chỉ cho dấu cộng khi chúng giao nhau. Tại điểm giao nhau của chúng, đoạn ngang đóng góp một cánh tay trái và một cánh tay phải, trong khi đoạn dọc đóng góp một cánh tay hướng xuống và một cánh tay hướng lên. Giá trị của dấu cộng này là chiều dài ngắn nhất trong bốn chiều dài cánh tay này. 
 
-phút(x−x 1 ​ , x 2 ​ −x, y−y 1 ​ , y 2 ​ −y). 
+Đối với đoạn ngang`[x1, x2]`ở độ cao`y`, giao nhau tại x, đóng góp theo chiều ngang là`min(x - x1, x2 - x)`. 
 
-Chúng ta cần giá trị tối đa trên mọi cặp giao nhau có thể. Đầu vào chứa T trường hợp thử nghiệm độc lập, theo sau là các phân đoạn ngang và sau đó là các phân đoạn dọc. Tọa độ tối đa là 10 5. 
+Đối với đoạn dọc`[y1, y2]`tại tọa độ x, giao nhau ở độ cao y, đóng góp theo chiều dọc là`min(y - y1, y2 - y)`. 
 
-Giải pháp hấp dẫn là kiểm tra mọi phân đoạn ngang và dọc. Với N,M<10 5, điều đó có nghĩa là có tới 10 10 cặp trong một trường hợp thử nghiệm. Giới hạn một giây làm cho cách tiếp cận bậc hai như vậy là không thể. Chúng ta cần một cái gì đó gần với O((N+M)logC), trong đó C<10 5 là phạm vi tọa độ hoặc ít nhất là một hệ số logarit nhỏ hơn. 
+Câu trả lời là giá trị lớn nhất có thể có của giá trị nhỏ nhất của cả bốn đại lượng trên mỗi giao điểm hợp lệ. 
 
-Có một số trường hợp ranh giới quan trọng. Một đoạn có thể quá ngắn để chứa dấu cộng có kích thước dương. Ví dụ,```
+Với tối đa`10^5`ngang và`10^5`phân đoạn dọc, việc kiểm tra từng cặp yêu cầu tối đa`10^10`giao lộ. Cách tiếp cận bậc hai vượt xa những gì giới hạn một giây có thể xử lý được. Tọa độ cũng được giới hạn bởi`10^5`, điều này làm cho cấu trúc dữ liệu logarit trên phạm vi tọa độ trở nên thực tế. 
 
-```Hai đoạn duy nhất cắt nhau, nhưng mọi cánh tay đều có độ dài bằng 0, vì vậy câu trả lời là`0`. Một giải pháp giả định câu trả lời luôn là tích cực sẽ sai. 
+Có một số trường hợp ranh giới có thể dễ dàng phá vỡ việc triển khai bất cẩn. Đầu tiên, giao lộ có thể xảy ra chính xác tại điểm cuối. Ví dụ,```
 
-Giao lộ cũng có thể xảy ra chính xác tại một điểm cuối. Ví dụ,```
+```Hai đoạn cắt nhau tại`(1, 2)`, vậy cánh tay ngắn nhất có chiều dài`0`, và câu trả lời là`0`. Việc triển khai sử dụng các bất đẳng thức nghiêm ngặt thay vì các điều kiện giao nhau bao hàm có thể báo cáo không chính xác rằng không có giao lộ. 
 
-```Các đoạn gặp nhau tại (1,2) nhưng đoạn ngang không có nhánh bên trái nút giao. Câu trả lời là`0`. Khi kiểm tra độ dài dự kiến ​​d, giao điểm phải được phép ở ranh giới của các đoạn được cắt bớt, do đó điều kiện nằm ngang được bao gồm. 
+Vấn đề thứ hai là một phân đoạn có thể quá ngắn để hỗ trợ câu trả lời được yêu cầu. Ví dụ,```
 
-Tọa độ trùng lặp là một nguồn sai lầm dễ xảy ra khác. Ví dụ,```
+```Các đoạn cắt nhau tại`(2, 2)`, nhưng đoạn ngang chỉ có chiều dài`1`, nên không có dấu cộng của độ dài`1`là có thể. Câu trả lời là`0`. Trong quá trình kiểm tra tính khả thi về độ dài`1`, đoạn ngang phải bị loại bỏ vì nó cần tổng chiều dài ít nhất`2`. 
 
-```Câu trả lời là`2`. Hai phân đoạn ngang có thể có tọa độ y giống hệt nhau và cấu trúc dữ liệu phải tính cả hai một cách độc lập. Việc sử dụng boolean thay vì tần số có thể gây ra thao tác xóa không chính xác khi một trong các phân đoạn trùng lặp ngừng hoạt động. 
+Trường hợp ranh giới thứ ba là điểm cuối đảo ngược. Mặc dù câu lệnh mô tả tọa độ bắt đầu và kết thúc, việc triển khai mạnh mẽ không nên phụ thuộc vào thứ tự của chúng. Ví dụ,```
 
-Cuối cùng, điểm cuối của phân đoạn ngang và dọc không nhất thiết phải được đưa ra theo thứ tự tăng dần theo cách diễn đạt của câu lệnh. Việc triển khai mạnh mẽ sẽ chuẩn hóa mọi phân đoạn sao cho tọa độ đầu tiên của nó không lớn hơn tọa độ thứ hai. 
+```Sau khi chuẩn hóa cả hai đoạn, chúng giao nhau tại`(3, 3)`và câu trả lời là`2`. 
 
-## Phương pháp tiếp cận 
+# Phương pháp tiếp cận 
 
-Giải pháp brute-force được rút ra trực tiếp từ hình học. Đối với mỗi phân đoạn ngang và mỗi phân đoạn dọc, chúng tôi kiểm tra xem phạm vi tọa độ của chúng có trùng nhau theo cách yêu cầu hay không. Nếu chúng cắt nhau tại (x,y), chúng ta tính độ dài bốn cánh tay và cập nhật câu trả lời. 
+Cách tiếp cận trực tiếp xem xét mọi phân đoạn ngang và mọi phân đoạn dọc. Đối với mỗi cặp, chúng tôi kiểm tra xem tọa độ x và y của chúng có nằm trong các khoảng tương ứng hay không. Nếu chúng giao nhau, chúng ta tính chiều dài bốn cánh tay và cập nhật câu trả lời. Điều này đúng vì mọi dấu cộng có thể được xác định bởi chính xác một đoạn ngang và một đoạn dọc, vì vậy việc kiểm tra từng cặp không thể bỏ lỡ một điểm tối ưu. 
 
-Điều này đúng vì mọi dấu cộng có thể được xác định bởi chính xác một đoạn ngang và một đoạn dọc, vì vậy việc kiểm tra từng cặp không thể bỏ sót một ứng cử viên nào. Vấn đề là số lượng cặp NM. Với N=M=10 5, có thể có 10 10 cặp trong một trường hợp thử nghiệm, vượt xa giới hạn thời gian cho phép. 
+Vấn đề là số lượng cặp. Với`N = M = 10^5`, có thể có`N * M = 10^10`cặp. Ngay cả việc kiểm tra liên tục cho từng cặp cũng quá chậm, vì vậy chúng ta cần tránh liệt kê các điểm giao nhau. 
 
-Quan sát hữu ích là chúng ta có thể biến vấn đề tối ưu hóa thành vấn đề quyết định. Giả sử chúng ta hỏi liệu dấu cộng có kích thước ít nhất là d có tồn tại hay không. 
+Quan sát quan trọng là câu trả lời có thể được kiểm tra thay vì được xây dựng trực tiếp. Giả sử chúng ta hỏi liệu dấu cộng có độ dài ít nhất`d`tồn tại. Đối với đoạn ngang`[x1, x2]`, giao điểm tọa độ x khi đó phải thỏa mãn`x1 + d <= x <= x2 - d`. 
 
-Đối với đoạn nằm ngang [x 1​ ,x 2​ ], giao điểm phải cách cả hai điểm cuối nằm ngang ít nhất là d đơn vị. Do đó tọa độ x của nó phải thỏa mãn 
+Do đó, đoạn ngang chỉ có thể tham gia thông qua khoảng thời gian rút ngắn của nó.`[x1 + d, x2 - d]`, và nó chỉ có thể sử dụng được khi`x2 - x1 >= 2d`. 
 
-x 1 ​ +d<x<x 2 ​ −d. 
+Tương tự, một đoạn dọc`[y1, y2]`chỉ có thể tham gia khi`y1 + d <= y <= y2 - d`. 
 
-Khoảng này khác rỗng chính xác khi 
+Vì vậy, vấn đề cần khắc phục`d`trở thành việc tìm một đoạn ngang có khoảng x rút gọn chứa tọa độ x của một số đoạn dọc có thể sử dụng được, trong khi tọa độ y của đoạn ngang nằm bên trong khoảng y rút gọn của đoạn dọc đó. 
 
-x 2 ​ −x 1 ​ ≥2d. 
+Điều này có thể được xử lý bằng cách quét từ trái sang phải. Sắp xếp các đoạn dọc theo x. Khi chúng ta đạt đến một đoạn thẳng đứng tại x, mọi đoạn ngang có điểm cuối bên trái giảm tối đa là x sẽ hoạt động. Một đoạn ngang vẫn hoạt động cho đến khi điểm cuối bên phải rút gọn của nó trở nên nhỏ hơn x. 
 
-Tương tự, đối với đoạn thẳng đứng [y 1​ ,y 2​ ], một giao lộ phù hợp phải thỏa mãn 
+Câu hỏi duy nhất còn lại là làm thế nào để biết liệu một đoạn ngang đang hoạt động có tọa độ y bên trong khoảng y giảm của đoạn dọc hay không. Vì mỗi chiều ngang hoạt động đóng góp một điểm tại tọa độ y của nó, cây Fenwick có thể duy trì số lượng chiều ngang hoạt động tồn tại ở mỗi y. Sau đó, tổng phạm vi sẽ cho chúng ta biết liệu có ít nhất một chiều ngang hoạt động nằm trong khoảng y yêu cầu hay không. 
 
-y 1 ​ +d<y<y 2​ −d, 
+Vị ngữ là đơn điệu. Nếu dấu cộng của độ dài`d`tồn tại thì dấu cộng có độ dài nhỏ hơn cũng tồn tại. Do đó, chúng ta có thể tìm kiếm nhị phân để có được giá trị khả thi tối đa`d`. 
 
-đòi hỏi y 2 ​ −y 1 ​ ≥2d. 
-
-Vì vậy, sau khi cố định d, mọi đoạn ngang đủ dài sẽ trở thành một khoảng hoạt động theo hướng x, mang tọa độ y của nó. Một đoạn dọc trở thành một truy vấn tại tọa độ x của nó, hỏi xem liệu tọa độ y ngang đang hoạt động nào đó có nằm bên trong hay không 
-
-[y 1 ​ +d, y 2​ −d]. 
-
-Đây chính xác là một vấn đề về đường quét ngoại tuyến. Sắp xếp các đoạn dọc theo x. Khi chúng ta di chuyển từ trái sang phải, hãy chèn một đoạn ngang khi x đạt x 1 ​ +d và xóa nó sau x 2 ​ −d. Tại x của phân đoạn dọc, các phân đoạn ngang đang hoạt động chính xác là những phân đoạn có khoảng ngang được cắt bớt chứa x đó. 
-
-Cây Fenwick trên tọa độ y lưu trữ số lượng đoạn ngang hoạt động tồn tại ở mỗi y. Tổng phạm vi cho chúng ta biết liệu có ít nhất một phân đoạn ngang đang hoạt động có tọa độ y trong phạm vi được cắt bớt của phân đoạn dọc hay không. 
-
-Điều kiện khả thi là đơn điệu. Nếu tồn tại dấu cộng có kích thước d thì giao điểm tương tự cũng cho dấu cộng ở mọi kích thước nhỏ hơn. Điều đó làm cho việc tìm kiếm nhị phân trên d có thể thực hiện được. 
-
-Việc triển khai có thể làm cho việc quét rẻ hơn so với việc sắp xếp các sự kiện mới trong mỗi lần lặp tìm kiếm nhị phân. Thứ tự của các đoạn ngang x 1 ​ không bao giờ thay đổi khi chúng ta thêm cùng một d vào mọi x 1 ​ và thứ tự theo x 2 ​ không bao giờ thay đổi khi chúng ta trừ đi cùng một d. Chúng tôi sắp xếp các đơn đặt hàng này một lần và sử dụng lại chúng cho mỗi lần kiểm tra tính khả thi. 
+Lực lượng vũ phu hoạt động vì mọi ứng cử viên đều được kiểm tra rõ ràng, nhưng không thành công vì có quá nhiều cặp. Nhận xét rằng một câu trả lời cố định làm giảm mọi phân đoạn một cách độc lập cho phép chúng ta biến bài toán giao nhau hai chiều thành phép quét một chiều với cây Fenwick. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
-| Lực lượng vũ phu | O(NM) | O(N+M) | Quá chậm | 
-| Tối ưu | O((N+M)logClogC) | O(N+M+C) | Đã chấp nhận | 
+| Lực lượng vũ phu |`O(NM)`|`O(N + M)`| Quá chậm | 
+| Tối ưu |`O((N + M) log C log C)`|`O(N + M + C)`| Đã chấp nhận | 
 
-Ở đây C<10 5 là tọa độ cực đại. Logarit đầu tiên đến từ các phép toán Fenwick và logarit thứ hai đến từ tìm kiếm nhị phân. 
+Đây`C <= 10^5`là giới hạn tọa độ. Một logarit xuất phát từ việc tìm kiếm nhị phân qua câu trả lời và logarit kia đến từ các phép toán trên cây Fenwick. 
 
-## Hướng dẫn thuật toán
+#Hướng dẫn thuật toán 
 
-1. Chuẩn hóa mọi đoạn ngang sao cho x 1 ​ ≤x 2 ​ và mọi đoạn dọc sao cho y 1 ​ ≤y 2 ​. Tính câu trả lời lớn nhất có thể từ nửa độ dài của mỗi đoạn. Điểm cộng có kích thước d cần tổng độ dài ít nhất là 2d trên cả hai đoạn đã chọn, do đó không có câu trả lời nào có thể vượt quá nửa độ dài tối đa. 
-2. Sắp xếp các đoạn dọc theo tọa độ x của chúng. Trong quá trình kiểm tra tính khả thi, chúng sẽ được xử lý từ trái sang phải, khớp với hướng quét. 
-3. Sắp xếp các đoạn ngang một lần theo x 1 ​ và một lần theo x 2 ​. Đối với một ứng cử viên cố định d, một đoạn ngang bắt đầu sử dụng được ở x 1 ​ +d và ngừng sử dụng được sau x 2 ​ −d. Việc cộng hoặc trừ cùng một d không làm thay đổi thứ tự sắp xếp, vì vậy những thứ tự này có thể được sử dụng lại trong tất cả các lần kiểm tra. 
-4. Để kiểm tra ứng cử viên d, bỏ qua mọi đoạn ngang có x 2 ​ −x 1 ​ <2d. Đoạn như vậy không thể cung cấp cả hai nhánh ngang có chiều dài d. Tương tự, bỏ qua mọi đoạn thẳng đứng có y 2 ​ −y 1 ​ <2d. 
-5. Quét qua các đoạn thẳng đứng theo chiều tăng x. Duy trì cây Fenwick được lập chỉ mục bởi y. Đối với mọi đoạn ngang đủ điều kiện có x 1 ​ +d<x, hãy thêm một đoạn tại tọa độ y của nó. Đây chính xác là những đoạn ngang mà cánh tay trái của nó có thể chứa giao lộ hiện tại. 
-6. Loại bỏ mọi đoạn ngang đủ điều kiện thỏa mãn x 2 ​ −d<x. Sự bất bình đẳng nghiêm ngặt là có chủ ý. Khi x=x 2 ​ −d, cánh tay phải có độ dài chính xác là d nên đoạn ngang vẫn phải hoạt động tại tọa độ đó. 
-7. Đối với một đoạn thẳng đứng đủ điều kiện, hãy truy vấn cây Fenwick 
-
-[y 1 ​ +d, y 2​ −d]. 
-
-Nếu phạm vi chứa ít nhất một đoạn ngang đang hoạt động thì d hiện tại là khả thi. Các đoạn thẳng ngang và dọc tương ứng cắt nhau tại một điểm có độ dài cả bốn cánh tay ít nhất là d. 
-
-1. Tìm kiếm nhị phân khả thi lớn nhất d. Nếu kiểm tra thành công, hãy di chuyển giới hạn dưới lên trên. Nếu không thì di chuyển giới hạn trên xuống dưới. 
+1. Chuẩn hóa mọi phân đoạn sao cho điểm cuối đầu tiên của nó không lớn hơn điểm cuối thứ hai. Lưu trữ các đoạn ngang dưới dạng`(x1, x2, y)`và các đoạn thẳng đứng như`(y1, y2, x)`. 
+2. Sắp xếp các đoạn ngang theo thứ tự`x1`, sắp xếp chúng một lần theo`x2`và sắp xếp các đoạn thẳng đứng một lần theo`x`. Các lệnh này vẫn hợp lệ cho mọi giá trị tìm kiếm nhị phân vì việc cộng hoặc trừ giống nhau`d`không thay đổi thứ tự. 
+3. Tìm kiếm câu trả lời nhị phân`d`. Đối với một ứng cử viên`d`, một đoạn ngang chỉ có thể sử dụng được nếu`x2 - x1 >= 2d`. Có thể có dạng tọa độ x giao nhau của nó`[x1 + d, x2 - d]`. Một đoạn dọc chỉ có thể sử dụng được nếu`y2 - y1 >= 2d`, với tọa độ y có thể giao nhau`[y1 + d, y2 - d]`. 
+4. Quét qua các đoạn dọc có thể sử dụng theo thứ tự x tăng dần. Duy trì cây Fenwick được lập chỉ mục bởi y. Khi đoạn thẳng đứng hiện tại có tọa độ x, hãy thêm mọi đoạn ngang có`x1 + d <= x`. Đoạn ngang như vậy có đủ chỗ ở phía bên trái của nó để tạo ra một cánh tay dài ít nhất`d`. 
+5. Loại bỏ mọi đoạn ngang có`x2 - d < x`. Đoạn như vậy không còn có thể cung cấp chiều dài cánh tay phải nữa`d`ở thời điểm hiện tại x. Sự nghiêm khắc`<`là cần thiết vì sự bình đẳng có nghĩa là cánh tay phải có chiều dài chính xác`d`, hợp lệ. 
+6. Truy vấn cây Fenwick`[y1 + d, y2 - d]`. Tổng phạm vi dương có nghĩa là một số phân đoạn ngang đang hoạt động có tọa độ y trong phạm vi dọc hợp lệ. Đoạn ngang và đoạn dọc hiện tại tạo thành một dấu cộng có ít nhất bốn cánh tay`d`, vậy là kiểm tra thành công. 
+7. Nếu kiểm tra thành công, di chuyển giới hạn dưới của tìm kiếm nhị phân lên trên. Ngược lại, di chuyển giới hạn trên xuống dưới. Giá trị thành công lớn nhất là câu trả lời. 
 
 ### Tại sao nó hoạt động 
 
-Đối với một d cố định, một đoạn ngang hoạt động ở chính xác các tọa độ x thỏa mãn x 1 ​ +d<x<x 2 ​ −d. Quá trình quét sẽ chèn nó vào tọa độ đầu tiên như vậy và loại bỏ nó ngay sau tọa độ cuối cùng như vậy. Do đó, tại mỗi x dọc được xử lý, cây Fenwick chứa chính xác tọa độ y của các đoạn ngang có thể hỗ trợ cộng kích thước d tại x đó. 
+Đối với một cố định`d`, một đoạn ngang được biểu diễn chính xác trong quá trình quét trong khi tọa độ x của nó có thể được chọn sao cho cả hai nhánh ngang có chiều dài ít nhất`d`. Do đó, một đoạn ngang hoạt động tương đương với điều kiện`x1 + d <= x <= x2 - d`. 
 
-Truy vấn Fenwick thành công chính xác khi một trong các đoạn ngang đó có y bên trong [y 1 ​ +d,y 2 ​ −d]. Điều kiện đó cho ít nhất d đơn vị diện tích thẳng đứng ở cả hai phía của giao lộ. Cùng với điều kiện kích hoạt theo chiều ngang, cả bốn cánh tay đều có ít nhất d. Vì vậy việc kiểm tra tính khả thi là chính xác. 
+Tại một đoạn thẳng đứng có tọa độ x, cây Fenwick chứa chính xác tọa độ y của tất cả các đoạn ngang thỏa mãn điều kiện nằm ngang đó. Truy vấn`[y1 + d, y2 - d]`thực thi thêm cả hai điều kiện cánh tay dọc. Do đó, truy vấn thành công chính xác khi tồn tại một giao điểm có ít nhất bốn nhánh`d`. 
 
-Vì tính khả thi của d ngụ ý tính khả thi đối với mọi giá trị nhỏ hơn nên tìm kiếm nhị phân trả về kích thước cộng lớn nhất có thể. 
+Vị từ khả thi là đơn điệu, bởi vì giảm`d`chỉ thư giãn khoảng cách cần thiết. Do đó, tìm kiếm nhị phân tìm thấy độ dài khả thi lớn nhất. 
 
-## Giải pháp Python```
+#Giải pháp Python```
 Python
-```Giai đoạn đầu vào lưu trữ từng phân đoạn sau khi chuẩn hóa điểm cuối của nó. Câu trả lời tối đa có thể được tính toán cùng lúc, điều này mang lại cho tìm kiếm nhị phân một giới hạn trên chặt chẽ. 
+```Giai đoạn đầu vào bình thường hóa các điểm cuối trước tiên. Điều này tránh việc mọi thao tác sau này phải xử lý cả hai hướng có thể. 
 
-Hai bản sao được sắp xếp của các phân đoạn ngang là tối ưu hóa tiền xử lý chính.`by_left`kiểm soát việc chèn vào, trong khi`by_right`kiểm soát việc loại bỏ. Lệnh của họ có giá trị cho mọi ứng cử viên`d`, bởi vì việc cộng cùng một giá trị cho tất cả các điểm cuối bên trái và trừ đi cùng một giá trị từ tất cả các điểm cuối bên phải sẽ duy trì thứ tự tương đối của chúng. 
+Ba mảng được sắp xếp là cốt lõi của quá trình quét. Sắp xếp theo`x1`cho phép thuật toán thêm các chiều ngang theo thứ tự chính xác mà chúng đủ điều kiện. Sắp xếp theo`x2`cho phép nó loại bỏ chúng khi điểm cuối bên phải của chúng trở nên quá gần với tọa độ x hiện tại. Mảng dọc được sắp xếp theo x vì quá trình quét tự di chuyển từ trái sang phải. 
 
-Mỗi cuộc gọi đến`check`tạo ra một cây Fenwick tươi mới. Điều này tránh được vấn đề dọn dẹp tinh vi có thể xảy ra nếu quá trình kiểm tra thành công thoát ra sớm trong khi vẫn để lại các tần số cũ trong cây. Một cây mới cũng giữ cho lập luận về tính đúng đắn trở nên đơn giản. 
+Đối với một ứng cử viên`d`, điều kiện`x1 + d <= x`xác định việc chèn. điều kiện`x2 - d < x`quyết định việc loại bỏ. Sự so sánh thứ hai là nghiêm ngặt bởi vì`x2 - d == x`cung cấp một cánh tay phải chính xác`d`, phải duy trì hiệu lực. 
 
-Điều kiện chèn sử dụng`x1 + d <= x`. Điều kiện loại bỏ sử dụng`x2 - d < x`. Những bất đẳng thức này làm cho khoảng hoạt động bao hàm chính xác ở cả hai đầu. Đảo ngược một trong hai ranh giới sẽ từ chối không chính xác một dấu cộng có nhánh có chiều dài chính xác`d`. 
+Cây Fenwick lưu trữ số lượng chứ không phải booleans. Nhiều đoạn ngang có thể có cùng tọa độ y, do đó, việc xóa một đoạn không được vô tình xóa đoạn khác. Một số đếm xử lý các giá trị y trùng khớp một cách tự nhiên. 
 
-Cây Fenwick sử dụng tọa độ y thực tế làm chỉ số của nó. Vì tọa độ tối đa là 10 5 nên không cần nén tọa độ. Số nguyên Python cũng không gặp vấn đề tràn đối với số lượng Fenwick. 
+Truy vấn phạm vi sử dụng`prefix(high_y) - prefix(low_y - 1)`, 
 
-## Ví dụ đã hoạt động 
+đó là tổng phạm vi Fenwick tiêu chuẩn. Điều này cũng xử lý trường hợp khoảng y hợp lệ chứa chính xác một tọa độ. 
 
-### Mẫu 1 
+Số nguyên Python không bị tràn, vì vậy tất cả số học tọa độ đều an toàn. Tọa độ liên quan lớn nhất chỉ là`10^5`, trong khi phép nhân tìm kiếm nhị phân`2 * d`cũng bé nhỏ. 
 
-Đầu vào là```
+# Ví dụ đã hoạt động 
 
-```Xét d=2. Ba đoạn ngang có độ dài 4,2,6, vì vậy đoạn thứ nhất và thứ ba có thể hỗ trợ giá trị này. Hai đoạn thẳng đứng có độ dài 4,3 nên cả hai đều là ứng cử viên. 
+## Mẫu 1 
 
-Quá trình quét hoạt động như sau. 
+Đầu vào chứa các đoạn ngang```
 
-| Đoạn dọc | x | Đã chèn giá trị y ngang | Đã xóa giá trị y ngang | Phạm vi truy vấn | Kết quả | 
-| --- | --- | --- | --- | --- | --- | 
-| [1,5] | 3 | y=3 từ [1,5] | không | [3,3] | tìm thấy | 
-| [6,9] | 2 | chưa đạt theo thứ tự x | không | [8,7] | không cần thiết | 
+```và các đoạn dọc```
 
-Đoạn thẳng đứng đầu tiên tại x=3 cắt đoạn thẳng từ x=1 đến x=5, cũng tại y=3. Chiều dài bốn cánh của nó là 2,2,2,2 nên d=2 là khả thi. 
+```Dấu vết sau đây cho thấy các bước kiểm tra tính khả thi mang tính quyết định. 
 
-Việc thử d=3 không thành công vì đoạn ngang đầu tiên chỉ có độ dài 4, trong khi đoạn ngang thứ ba ở y=6 và không giao với đoạn dọc liên quan có đủ chỗ. Như vậy câu trả lời là`2`. 
+|`d`| Phạm vi ngang có thể sử dụng | Phạm vi dọc có thể sử dụng | Kết quả | 
+| --- | --- | --- | --- | 
+|`3`|`[1,5]`trở thành`[4,2]`,`[2,4]`trở thành`[]`,`[6,12]`trở thành`[9,9]`| Chiều dọc đầu tiên trở thành`[]`, thứ hai trở thành`[]`| Sai | 
+|`1`|`[1,5]`->`[2,4]`,`[2,4]`->`[3,3]`,`[6,12]`->`[7,11]`|`[1,5]`->`[2,4]`,`[6,9]`->`[7,8]`| Đúng | 
+|`2`|`[1,5]`->`[3,3]`,`[2,4]`->`[4,2]`,`[6,12]`->`[8,10]`|`[1,5]`->`[3,3]`,`[6,9]`->`[8,7]`| Đúng | 
 
-### Xây dựng ví dụ 2 
+Vì`d = 2`, đoạn ngang`[1,5]`chỉ có thể được sử dụng ở tọa độ x`3`. Phân đoạn dọc`[1,5]`tại tọa độ x`3`chỉ có thể được sử dụng ở tọa độ y`3`. Giao điểm của họ là`(3,3)`, và cả bốn cánh tay đều có chiều dài ít nhất`2`. Giá trị lớn hơn là không thể, vì vậy câu trả lời là`2`. 
+
+## Xây dựng ví dụ 2 
 
 Hãy xem xét```
 
-```Đoạn ngang là [1,9] tại y=5 và đoạn dọc là [3,7] tại x=5. Giao điểm của họ là (5,5). 
+```Vì`d = 2`, khoảng cách ngang giảm là`[3,5]`tại y=4 và`[5,3]`đối với chiều ngang thứ hai, do đó chỉ chiều ngang đầu tiên vẫn có thể sử dụng được. Khoảng thời gian dọc giảm là`[4,6]`tại x=5 và`[3,4]`tại x=3. 
 
-| Candidate d | Khoảng cắt ngang | Khoảng thời gian cắt dọc | Intersection | Khả thi | 
+| Dọc | x | Giá trị y ngang đang hoạt động | Phạm vi y bắt buộc | Kết quả | 
 | --- | --- | --- | --- | --- | 
-| 1 | [2,8] | [4,6] | (5,5) | vâng | 
-| 2 | [3,7] | [5,5] | (5,5) | vâng | 
-| 3 | [4,6] | [6,4] | trống | không | 
+|`[1,6]`tại x=3 | 3 | không |`[3,4]`| không | 
+|`[2,8]`tại x=5 | 5 |`{4}`|`[4,6]`| vâng | 
 
-The maximum value is`2`. Dấu vết này giải thích tại sao khoảng dọc phải được cắt bớt ở cả hai đầu và tại sao một đoạn có tổng chiều dài chính xác là 2d vẫn hợp lệ. 
+Đường thẳng đứng thứ hai cắt đường ngang thứ nhất tại`(5,4)`. Chiều dài bốn cánh tay của nó là`4`,`2`,`2`, Và`4`, vậy dấu cộng có độ dài`2`. 
 
-## Phân tích độ phức tạp 
+Ví dụ này chứng tỏ tại sao cây Fenwick cần duy trì các chiều ngang đang hoạt động thay vì chỉ kiểm tra xem các đoạn có giao nhau ở đâu đó hay không. Giao lộ bắt buộc phải rời khỏi ít nhất`d`đơn vị ở mọi phía. 
+
+# Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | O((N+M)logClogC) | Mỗi kiểm tra tìm kiếm nhị phân thực hiện các phép toán Fenwick O(N+M), mỗi phép lấy O(logC) và có các giá trị ứng cử viên O(logC). | 
-| Không gian | O(N+M+C) | Các phân đoạn, hai thứ tự ngang được sắp xếp, các phân đoạn dọc được sắp xếp và một cây Fenwick được lưu trữ. | 
+| Thời gian |`O((N + M) log C log C)`| Tìm kiếm nhị phân thực hiện`O(log C)`kiểm tra và mọi kiểm tra đều thực hiện`O(N + M)`Hoạt động của Fenwick, mỗi lần tham gia`O(log C)`| 
+| Không gian |`O(N + M + C)`| Ba bộ sưu tập phân đoạn được sắp xếp và một cây Fenwick trên phạm vi tọa độ | 
 
-Với C<10 5, tìm kiếm nhị phân cần tối đa khoảng 17 lần lặp. Giải pháp tránh việc liệt kê 10 10 cặp lực lượng vũ phu và chỉ sử dụng bộ lưu trữ có kích thước tuyến tính, phù hợp với giới hạn bộ nhớ đã nêu. 
+Với`C <= 10^5`, tìm kiếm nhị phân cần tối đa khoảng 17 lần lặp. Mỗi phân đoạn vào và ra khỏi cấu trúc Fenwick nhiều nhất một lần trong quá trình kiểm tra, trong khi mỗi phân đoạn dọc gây ra một số lượng truy vấn tiền tố Fenwick không đổi. Độ phức tạp thu được là logarit trong phạm vi tọa độ trên đầu quét tuyến tính của các phân đoạn, phù hợp với các giới hạn đã cho. 
 
-## Trường hợp thử nghiệm```python
-Pythonimport sysimport io
-
-def solution(data: str) -> str:    it = iter(data.split())    t = int(next(it))    answers = []
-    for _ in range(t):        n = int(next(it))        m = int(next(it))
-        horizontal = []        vertical = []        hi = 0        max_coord = 0
-        for _ in range(n):            x1 = int(next(it))            x2 = int(next(it))            y = int(next(it))            if x1 > x2:                x1, x2 = x2, x1            horizontal.append((x1, x2, y))            hi = max(hi, (x2 - x1) // 2)            max_coord = max(max_coord, x2, y)
-        for _ in range(m):            y1 = int(next(it))            y2 = int(next(it))            x = int(next(it))            if y1 > y2:                y1, y2 = y2, y1            vertical.append((y1, y2, x))            hi = max(hi, (y2 - y1) // 2)
+# Trường hợp thử nghiệm```
+Python
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-| Mẫu 1 |`2`| Ví dụ chính thức và cách xử lý giao lộ thông thường | 
-| Phân đoạn ngang và dọc một điểm |`0`| Phân đoạn có kích thước tối thiểu và câu trả lời bằng 0 | 
-|`[1,9]`với`[3,7]`|`2`| Tìm kiếm nhị phân và tối ưu tập trung chính xác | 
-|`[1,3]`có đoạn thẳng đứng tại x=1 |`0`| Nút giao tại điểm cuối | 
-| Hai đoạn ngang giống hệt nhau |`2`| Tọa độ y trùng lặp và tần số Fenwick | 
-| 10 5 đoạn dài giống hệt nhau |`49999`| Kích thước và hiệu suất đầu vào tối đa | 
+| Mẫu 1 |`2`| Giao điểm thông thường và tìm kiếm nhị phân | 
+| Một lần chạm ngang và một lần chạm dọc tại điểm cuối |`0`| Ranh giới bao gồm và cánh tay có chiều dài bằng không | 
+|`[1,5]`đi qua`[1,5]`tập trung |`2`| Tối đa chính xác khi mỗi cánh tay có chiều dài`2`| 
+| Điểm cuối đảo ngược |`2`| Chuẩn hóa điểm cuối | 
+| Đoạn có giao điểm hình học nhưng không có dấu cộng dương |`0`| Từ chối chiều dài cánh tay không đủ | 
+|`100000`chiều ngang và chiều dài đầy đủ |`49999`| Kích thước và hiệu suất đầu vào tối đa | 
 
-## Vỏ cạnh 
+# Vỏ cạnh 
 
-Đối với một đoạn có độ dài bằng 0, hãy xem xét```
-11 11 1 11 1 1
-```Giới hạn trên ban đầu bằng 0 vì cả hai đoạn đều có nửa độ dài bằng 0. Tìm kiếm nhị phân ngay lập tức trả về số 0. Thuật toán không bao giờ cố gắng tạo ra nhánh dương từ một đoạn không thể chứa nhánh dương. 
+Trường hợp giao điểm cuối```
 
-Đối với giao lộ điểm cuối, hãy xem xét```
-11 11 3 22 4 1
-```Đoạn ngang chỉ có thể hỗ trợ d=1 tại x=2, nhưng đường thẳng đứng tại x=1. Đối với d=1, khoảng cắt ngang là [2,2], do đó quá trình quét không bao giờ kích hoạt đoạn ngang đó khi xử lý x=1. Việc kiểm tra không thành công và câu trả lời vẫn là 0. 
+```được xử lý bởi`d = 0`. Chiều ngang bắt đầu hoạt động khi`x1 + 0 <= x`, vậy nó hoạt động tại x=`1`. Ranh giới bên phải của nó không bị xóa cho đến khi`x2 < x`. Tại tọa độ x của phương thẳng đứng`1`, truy vấn Fenwick bao gồm y=`2`, do đó giao điểm được tìm thấy và tìm kiếm nhị phân tiếp tục`0`như câu trả lời. Điều kiện loại bỏ nghiêm ngặt là điều kiện duy trì giao điểm điểm cuối. 
 
-Đối với tọa độ trùng lặp, hãy xem xét```
-12 11 5 31 5 31 5 3
-```Đối với d=2, các phân đoạn ngang hoạt động từ x=3 đến x=3 và phân đoạn dọc tại x=3 truy vấn y=3. Cây Fenwick chứa số lượng hai tại tọa độ đó. Nếu một phân đoạn ngang bị xóa, số đếm sẽ trở thành một chứ không phải 0, đó là lý do tại sao quá trình triển khai lưu trữ số đếm thay vì boolean. 
+Trường hợp không đủ độ dài```
 
-Đối với các đoạn có độ dài chính xác là 2d, khoảng được cắt bớt bao gồm một tọa độ duy nhất. Coi như```
-11 11 5 31 5 3
-```Với d=2, khoảng cắt ngang là [3,3] và khoảng cắt dọc là [3,3]. Cả hai phân đoạn đều hoạt động ở tọa độ 3, vì vậy câu trả lời là`2`. Điều kiện chèn bao gồm và điều kiện loại bỏ nghiêm ngặt là những gì bảo toàn trường hợp biên hợp lệ này. 
+```minh họa`x2 - x1 >= 2d`tình trạng. Vì`d = 1`, chiều ngang có chiều dài`1`, nhỏ hơn`2`, vì vậy nó không bao giờ được đưa vào cây Fenwick. Mặc dù hai đoạn thẳng cắt nhau nhưng không có bốn cạnh nào dài`1`có thể tồn tại. Việc kiểm tra không thành công và câu trả lời vẫn còn`0`. 
 
-Đối với các điểm cuối đảo ngược, hãy xem xét```
-11 19 1 57 3 5
-```Quá trình chuẩn hóa thay đổi các phân đoạn thành [1,9] và [3,7], đưa ra dấu cộng ở giữa giống như ví dụ trước và câu trả lời về`2`. Nếu không chuẩn hóa, việc trừ trực tiếp các điểm cuối có thể tạo ra độ dài âm và giới hạn tìm kiếm nhị phân không hợp lệ.
+Trường hợp điểm cuối đảo ngược```
+
+```được chuẩn hóa theo chiều ngang`[1,5]`và dọc`[1,5]`. Tại`d = 2`, cả hai khoảng giảm đều sụp đổ để phối hợp`3`, tạo ra giao điểm`(3,3)`. Câu trả lời là`2`. Nếu không chuẩn hóa, các so sánh như`x1 + d <= x`sẽ vô nghĩa đối với biểu diễn đảo ngược. 
+
+Cuối cùng, nhiều đoạn ngang có thể có cùng tọa độ y. Cây Fenwick lưu trữ số đếm ở mỗi tọa độ thay vì trạng thái boolean. Nếu hai phân đoạn hoạt động đều nằm ở y=`7`, chèn chúng sẽ tạo ra số lượng`2`và loại bỏ một cái sẽ tạo ra số lượng`1`. Đoạn còn lại vẫn được thể hiện chính xác, do đó tọa độ chồng chéo không làm hỏng quá trình quét.
