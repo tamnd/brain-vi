@@ -1,7 +1,7 @@
 ---
 title: "CF 102191A - Kẻ ăn uống hào phóng"
-description: "Chúng ta bắt đầu với n viên kẹo và muốn tặng kẹo cho càng nhiều người bạn khác biệt càng tốt. Tặng một viên kẹo cho một người bạn thì đơn giản, nhưng sau mỗi giây kẹo được tặng cho bạn bè, chúng ta sẽ tự mình tiêu thụ một viên kẹo nếu còn một viên."
-date: "2026-08-18T02:25:45+07:00"
+description: "Chúng ta bắt đầu với n chiếc kẹo và muốn tặng kẹo cho càng nhiều người bạn khác nhau càng tốt, mỗi người một chiếc kẹo. Sau khi mỗi người bạn thứ hai nhận được một viên kẹo, chúng ta sẽ tự ăn một viên kẹo nếu còn sót lại viên kẹo nào."
+date: "2026-08-23T09:12:46+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102191
@@ -9,8 +9,8 @@ codeforces_index: "A"
 codeforces_contest_name: "PSUT Coding Marathon 2019"
 rating: 0
 weight: 102191
-solve_time_s: 226
-verified: false
+solve_time_s: 1443
+verified: true
 draft: false
 ---
 
@@ -18,168 +18,154 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 3 phút 46s 
-**Đã xác minh:** không 
+**Thời gian giải:** 24m 3s 
+**Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi bắt đầu với`n`kẹo và muốn tặng kẹo cho càng nhiều bạn bè khác nhau càng tốt. Tặng một viên kẹo cho một người bạn thì đơn giản, nhưng sau mỗi giây kẹo được tặng cho bạn bè, chúng ta sẽ tự mình tiêu thụ một viên kẹo nếu còn một viên. Câu hỏi đặt ra là cuối cùng có bao nhiêu viên kẹo có thể đến tay bạn bè khi chúng ta chọn thứ tự tặng họ một cách tối ưu. 
+Chúng tôi bắt đầu với`n`kẹo và muốn tặng kẹo cho càng nhiều bạn bè khác nhau càng tốt, mỗi người bạn một viên kẹo. Sau khi mỗi người bạn thứ hai nhận được một viên kẹo, chúng ta sẽ tự ăn một viên kẹo nếu còn sót lại viên kẹo nào. Quá trình tiếp tục cho đến khi chúng ta không thể tặng thêm một viên kẹo nào cho bạn bè nữa. 
 
-Đầu vào chứa một số nguyên duy nhất`n`, đại diện cho số kẹo ban đầu. Kết quả là số lượng bạn bè tối đa mà mỗi người có thể nhận được một viên kẹo. 
+Nhiệm vụ là tính số lượng bạn bè tối đa có thể nhận được kẹo. 
 
-Giới hạn trên`n <= 10^9`loại trừ mọi cách tiếp cận thực hiện một hoặc nhiều thao tác cho mỗi viên kẹo. Một mô phỏng tuyến tính sẽ yêu cầu tới một tỷ lần lặp, vượt xa giới hạn thời gian lập trình cạnh tranh có thể chịu đựng được, đặc biệt là với giới hạn 0 giây hiệu quả đã nêu. Chúng ta cần nhận biết cấu trúc lặp và tính đáp án trực tiếp trong thời gian không đổi. Yêu cầu về bộ nhớ là không đáng kể vì chỉ cần một giá trị đầu vào duy nhất và câu trả lời. 
+Giá trị của`n`có thể lớn như`10^9`. Điều đó ngay lập tức loại trừ bất kỳ mô phỏng nào thực hiện một thao tác trên mỗi viên kẹo, vì trong trường hợp xấu nhất, nó sẽ thực hiện khoảng một tỷ lần lặp. Ngay cả với lượng công việc không đổi nhỏ trên mỗi lần lặp, điều đó vẫn vượt xa những gì mà một giải pháp lập trình cạnh tranh dưới giây có thể thực hiện được. Chúng ta cần rút ra câu trả lời trực tiếp từ cấu trúc của quy trình. 
 
-Đầu vào nhỏ nhất thể hiện hành vi ranh giới. Vì`n = 1`, câu trả lời đúng là`1`, bởi vì viên kẹo duy nhất có thể được cho đi và không có viên kẹo thứ hai nào có thể kích hoạt việc ăn. Công thức luôn trừ một viên kẹo cho mỗi nhóm ba người vẫn phải xử lý trường hợp này một cách chính xác. 
+Những trường hợp tế nhị nhất xảy ra vào thời điểm không còn kẹo để ăn. Ví dụ, với đầu vào`2`, câu trả lời là`2`, không`1`. Chúng tôi đưa cho mỗi người một chiếc kẹo, sau đó không còn gì để ăn nên cả hai người bạn đều được phục vụ. Một công thức bất cẩn luôn trừ đi một viên kẹo sau mỗi cặp sẽ từ chối người bạn thứ hai một cách không chính xác. 
 
-Vì`n = 2`, câu trả lời là`2`. Chúng ta có thể đưa cả hai chiếc kẹo cho hai người bạn và chỉ khi đó chúng ta mới cần ăn một chiếc kẹo nhưng không còn lại một chiếc nào. Việc thực hiện bất cẩn cho rằng mỗi cặp quà luôn tốn thêm một viên kẹo sẽ trả lại không chính xác`1`. 
+Một trường hợp ranh giới khác là`4`. Câu trả lời đúng là`3`. Chúng ta tặng kẹo cho hai người bạn đầu tiên, ăn một viên kẹo và còn lại một viên kẹo cho người bạn thứ ba. Sau đó, quá trình dừng lại. Một phép tính ngây thơ về việc cứ hai người bạn ăn một chiếc kẹo có thể mong đợi một cách sai lầm là sẽ có nhiều hơn bốn chiếc kẹo để phục vụ ba người bạn. 
 
-Bội số của ba là một ranh giới hữu ích khác. Với`n = 6`, chúng ta có thể cho hai viên kẹo, ăn một viên, sau đó cho thêm hai viên kẹo nữa và ăn viên cuối cùng. Câu trả lời là`4`, không`3`. Việc ăn uống diễn ra sau mỗi cặp quà, vì vậy viên kẹo được tiêu thụ cuối cùng không tương ứng với việc có thêm một người bạn bị mất. 
+đầu vào`6`là một trường hợp ranh giới hữu ích khác. Câu trả lời là`4`, không`5`. Sau khi phục vụ hai người bạn, một chiếc kẹo được ăn, còn lại ba chiếc. Sau đó chúng tôi phục vụ thêm hai người bạn nữa, để lại một người và chiếc kẹo cuối cùng được ăn. Chẳng còn lại gì cho người bạn thứ năm. Điều này nắm bắt các công thức coi mọi viên kẹo còn lại đều tự động có sẵn cho bạn bè. 
 
 ## Phương pháp tiếp cận 
 
-Một mô phỏng trực tiếp có thể mô hình hóa quá trình xử lý từng viên kẹo một lần. Chúng tôi giữ số kẹo còn lại và số lượng bạn bè đã nhận được một viên. Bất cứ khi nào chúng ta có đủ kẹo để tặng một viên kẹo khác, chúng ta sẽ tặng nó cho một người bạn. Sau mỗi món quà thứ hai, chúng ta sẽ tiêu thụ một viên kẹo nếu có thể. Mô phỏng này đúng vì nó tuân theo chính xác quy trình được mô tả bởi bài toán và việc chọn tặng kẹo bất cứ khi nào có thể là tối ưu vì mục tiêu chỉ đơn giản là tối đa hóa số lượng quà tặng. 
+Một giải pháp bạo lực trực tiếp có thể mô phỏng quy trình thực tế. Giữ số lượng kẹo, liên tục tặng một viên kẹo cho một người bạn mới và sau mỗi người bạn thứ hai ăn một viên kẹo bất cứ khi nào có thể. Mô phỏng là đúng vì nó tuân theo chính xác các quy tắc của quy trình. Tuy nhiên, nó có thể thực hiện Θ(`n`) lần lặp. Với`n = 10^9`, điều đó có nghĩa là lên tới một tỷ lần lặp, quá chậm so với giới hạn thời gian. 
 
-Vấn đề là số lần lặp lại. Trong trường hợp xấu nhất, mô phỏng thực hiện công Θ(n), có nghĩa là gần như`10^9`lần lặp lại. Như vậy là quá chậm. 
+Quan sát hữu ích là quá trình này có một mẫu lặp lại đơn giản. Hãy xem xét ba viên kẹo. Họ có thể tạo ra hai người bạn: hai chiếc kẹo được chia cho hai người bạn và chiếc kẹo thứ ba được ăn. Như vậy, mỗi nhóm ba viên kẹo hoàn chỉnh sẽ đóng góp hiệu quả cho hai người bạn. Những viên kẹo còn lại sau những nhóm hoàn chỉnh đó đều có thể được tặng cho những người bạn khác vì có ít hơn ba người trong số họ và họ không thể ép thêm một chu kỳ ăn đầy đủ nữa. 
 
-Quan sát quan trọng là mỗi nhóm hoàn chỉnh gồm ba viên kẹo ban đầu sẽ tạo ra chính xác hai món quà. Hai chiếc kẹo được tặng cho bạn bè và sau món quà thứ hai, một chiếc kẹo sẽ được ăn. Mô hình tương tự có thể lặp lại một cách độc lập khi vẫn còn ít nhất ba viên kẹo. Điều này có nghĩa là chúng ta không cần phải mô phỏng từng viên kẹo riêng lẻ. Chúng ta có thể đếm có bao nhiêu nhóm hoàn chỉnh gồm ba viên và xử lý một hoặc hai viên kẹo cuối cùng một cách riêng biệt. 
+Cho phép`n = 3q + r`, Ở đâu`r`là`0`,`1`, hoặc`2`. 
 
-Nếu như`n = 3q + r`, thì`q`các nhóm hoàn thành đóng góp`2q`bạn. Nếu như`r = 0`, không còn gì cả. Nếu như`r = 1`, số kẹo còn lại có thể tặng thêm một người bạn. Nếu như`r = 2`, cả 2 viên kẹo còn lại đều có thể được cho đi, vì luật ăn chỉ áp dụng sau phần quà thứ 2 và sau đó không còn viên kẹo nào. 
+các`q`hoàn thành nhóm ba viên kẹo có nguyên nhân chính xác`q`kẹo để ăn, trong khi phần còn lại`r`kẹo đi cho bạn bè. Vậy số bạn bè là`n - q = n - floor(n / 3)`. 
 
-Điều này đưa ra công thức nhỏ gọn`answer = n - floor(n / 3)`. 
+Kết quả tương tự có thể được hiểu theo hướng ngược lại. Để phục vụ`k`các bạn ơi, quá trình này cần`k`kẹo được tặng cho bạn bè cộng với một viên kẹo đã ăn sau mỗi cặp được một người bạn khác theo sau. Điều này tạo ra cùng một tỷ lệ giữa hai viên kẹo hữu ích cho mỗi ba viên kẹo được tiêu thụ, trong đó nhóm chưa hoàn thành cuối cùng được xử lý trực tiếp bởi những viên còn lại. 
 
-Kết quả tương tự có thể được hiểu từ cách giải thích của nhóm. Cứ ba viên kẹo sẽ dẫn đến hai viên kẹo tiếp cận được bạn bè, do đó, chính xác một viên kẹo cho mỗi nhóm hoàn chỉnh sẽ bị mất khi ăn. 
+Vì vậy, toàn bộ mô phỏng thu gọn thành một phép chia số nguyên và một phép trừ. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
-| --- | --- | --- | --- | 
+|---|---|---|---| 
 | Lực lượng vũ phu | O(n) | O(1) | Quá chậm | 
 | Tối ưu | O(1) | O(1) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Đọc số kẹo`n`. Chỉ cần giá trị này vì quá trình này chỉ phụ thuộc vào số lượng kẹo còn lại. 
-2. Tính toán`n // 3`, số nhóm hoàn chỉnh của ba viên kẹo. Mỗi nhóm như vậy sẽ tốn một viên kẹo để ăn và cho phép tặng hai viên kẹo cho bạn bè. 
-3. Trừ số kẹo đã ăn vào số kẹo ban đầu. Giá trị kết quả,`n - n // 3`, là số lượng kẹo tối đa mà bạn bè có thể nhận được. 
-4. In kết quả. Không cần mô phỏng hoặc trạng thái bổ sung. 
+1. Đọc số kẹo`n`. Thông tin duy nhất cần thiết là tổng số lượng, vì quá trình này không phân biệt giữa kẹo hay bạn bè. 
+
+2. Tính toán`n // 3`. Đây là số nhóm hoàn chỉnh gồm ba viên kẹo. Mỗi nhóm như vậy có một viên kẹo phải được ăn thay vì đưa cho bạn bè. 
+
+3. Trừ số đó khỏi`n`. Kết quả,`n - n // 3`, là số kẹo cuối cùng có thể tặng cho bạn bè. 
+
+4. In kết quả. 
+
+Tại sao việc nhóm theo ba viên kẹo lại có tác dụng ngay cả khi nhóm cuối cùng có một hoặc hai viên kẹo? Một nhóm hoàn chỉnh có một viên kẹo đã ăn và hai viên kẹo được tặng cho bạn bè. Phần còn lại của một hoặc hai viên kẹo sẽ xuất hiện sau tất cả các chu kỳ ăn hoàn chỉnh và có thể được tặng trực tiếp cho bạn bè, do đó không cần trừ thêm. 
 
 ### Tại sao nó hoạt động 
 
-Hãy xem xét từng khối hoàn chỉnh gồm ba viên kẹo. Chúng ta có thể tặng hai món cho hai người bạn, và sau món thứ hai, chúng ta ăn món thứ ba. Như vậy, ba viên kẹo tạo ra đúng hai món quà thành công. Sau khi xử lý tất cả các khối hoàn chỉnh, chỉ còn lại tối đa hai viên kẹo. Rõ ràng một viên kẹo còn lại có thể được cho đi, và hai viên kẹo còn lại đều có thể được cho đi vì hành động ăn chỉ xảy ra sau món quà thứ hai, khi không còn kẹo để tiêu thụ. Do đó, những viên kẹo duy nhất không đến được với bạn bè chính xác là`floor(n / 3)`kẹo, một chiếc từ mỗi nhóm ba chiếc. Câu trả lời là do đó`n - floor(n / 3)`. 
+Bất biến chính là mỗi khối hoàn chỉnh gồm ba viên kẹo được tiêu thụ sẽ làm giảm số lượng kẹo có sẵn cho bạn bè đi đúng một. Hai viên kẹo trong một khối như vậy được tặng cho bạn bè, còn một viên sẽ được ăn. Nếu như`n = 3q + r`, có chính xác`q`khối hoàn chỉnh và`r < 3`kẹo còn sót lại. Các khối hoàn chỉnh chiếm chính xác`q`ăn kẹo, trong khi tất cả`r`thức ăn thừa có thể được tặng cho bạn bè. Như vậy chính xác`q = floor(n / 3)`ăn hết kẹo và số lượng bạn bè tối đa là`n - floor(n / 3)`. 
 
 ## Giải pháp Python```python
 import sys
 input = sys.stdin.readline
 
-def solve():
-    n = int(input())
-    print(n - n // 3)
+n = int(input())
+print(n - n // 3)
+```Đầu vào là một số nguyên nên chương trình sẽ đọc trực tiếp dưới dạng`n`. Số nguyên Python dễ dàng xử lý`10^9`, mặc dù ở đây ngay cả số nguyên có dấu 32 bit cũng đủ. 
 
-if __name__ == "__main__":
-    solve()
-```các`solve`hàm đọc số nguyên duy nhất được chỉ định bởi định dạng đầu vào. Không cần vòng lặp vì bài toán chỉ chứa đúng một test case. 
+biểu hiện`n // 3`thực hiện phép chia số nguyên và đưa ra số nhóm hoàn chỉnh gồm ba. Trừ nó từ`n`đưa ra số lượng kẹo đến tay bạn bè. 
 
-biểu hiện`n // 3`đếm xem có thể xuất hiện bao nhiêu nhóm hoàn chỉnh gồm ba viên kẹo. Trừ cái này từ`n`trực tiếp đếm số kẹo không được tiêu thụ. Những viên kẹo còn lại tương ứng chính xác với những người bạn có thể nhận kẹo. 
-
-Số nguyên Python xử lý các giá trị lớn hơn nhiều so với`10^9`, vì vậy việc tràn số nguyên không phải là vấn đề đáng lo ngại. Phép chia số nguyên cũng là phép chia sàn có chủ ý. Việc sử dụng phép chia thông thường sẽ tạo ra giá trị dấu phẩy động và sẽ không thể hiện chính xác số lượng nhóm hoàn chỉnh. 
-
-Không có sự điều chỉnh riêng lẻ. Ví dụ,`n = 2`cho`2 - 0 = 2`, trong khi`n = 3`cho`3 - 1 = 2`. Sự chuyển đổi giữa các trường hợp đó chính là nơi viên kẹo tự tiêu đầu tiên xuất hiện. 
+Không có vòng lặp nên không có ranh giới mô phỏng hoặc chuyển tiếp từng cái một để quản lý. Đặc biệt, sử dụng phép chia số nguyên là cách xử lý chính xác các giá trị như`2`,`4`, Và`5`: thương của chúng với 3 là`0`,`1`, Và`1`, tương ứng. 
 
 ## Ví dụ đã hoạt động 
 
-Đối với mẫu 1,`n = 4`. 
+### Mẫu 1 
 
-|`n`|`n // 3`| Trả lời | 
-| --- | --- | --- | 
+cho`n = 4`, phép chia số nguyên cho`4 // 3 = 1`. Ăn hết một viên kẹo, để lại ba viên kẹo có thể tặng bạn bè. 
+
+|`n`|`n // 3`| Bạn`n - n // 3`| 
+|---:|---:|---:| 
 | 4 | 1 | 3 | 
 
-Có một nhóm hoàn chỉnh gồm ba viên kẹo, tạo ra hai món quà và một viên kẹo đã ăn. Một viên kẹo còn lại và có thể được tặng cho một người bạn khác, tổng cộng là tặng ba người bạn. 
+Quá trình tương ứng là tặng kẹo cho hai người bạn, ăn một viên kẹo, sau đó đưa viên kẹo còn lại cho người bạn thứ ba. Đầu ra là`3`. 
 
-Đối với mẫu 2,`n = 5`. 
+### Mẫu 2 
 
-|`n`|`n // 3`| Trả lời | 
-| --- | --- | --- | 
+cho`n = 5`, vẫn chỉ có một nhóm đầy đủ ba người, vậy nên ăn mất đúng một viên kẹo. Bốn viên kẹo còn lại đến tay bạn bè. 
+
+|`n`|`n // 3`| Bạn`n - n // 3`| 
+|---:|---:|---:| 
 | 5 | 1 | 4 | 
 
-Ba viên kẹo đầu tiên tạo ra hai món quà và một viên kẹo đã ăn. Còn lại hai viên kẹo và cả hai đều có thể được cho đi. Kết quả là có bốn người bạn. Ví dụ này giải thích tại sao phần dư cuối cùng của 2 không được kích hoạt phép trừ bổ sung. 
+Quá trình này có thể phục vụ bốn người bạn: hai người nhận kẹo, một viên kẹo được ăn và hai viên kẹo còn lại dành cho hai người bạn nữa. Đầu ra là`4`. 
+
+Những ví dụ này cũng cho thấy tại sao phần còn lại lại quan trọng. Sau khi loại bỏ một nhóm ba viên hoàn chỉnh trong số năm viên kẹo, vẫn còn lại hai viên kẹo và cả hai đều có thể được cho đi mà không cần tạo ra một chu kỳ ăn khác. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
-| --- | --- | --- | 
-| Thời gian | O(1) | Chỉ có một phép chia số nguyên và một số phép tính số học không đổi được thực hiện. | 
-| Không gian | O(1) | Chỉ số nguyên đầu vào và một vài giá trị tạm thời được lưu trữ. | 
+|---|---|---| 
+| Thời gian | O(1) | Giải pháp thực hiện một phép chia số nguyên và một phép trừ. | 
+| Không gian | O(1) | Chỉ sử dụng số nguyên đầu vào và lượng lưu trữ tạm thời không đổi. | 
 
-Giá trị tối đa`n = 10^9`không ảnh hưởng đến số lượng hoạt động. Giải pháp thực hiện cùng một lượng công việc không đổi cho`n = 1`Và`n = 10^9`, do đó, nó dễ dàng nằm gọn trong giới hạn bộ nhớ 256 MB và tránh được chi phí mô phỏng hàng tỷ lần lặp lại. 
+Đầu vào lớn nhất có thể là`10^9`, nhưng thuật toán không bao giờ lặp lại các viên kẹo. Nó thực hiện một số phép tính số học cố định, do đó nó phù hợp thoải mái với giới hạn thời gian và bộ nhớ. 
 
 ## Trường hợp thử nghiệm```python
+# helper: run solution on input string, return output string
 import sys
 import io
 
 def solve():
+    input = sys.stdin.readline
     n = int(input())
     print(n - n // 3)
 
 def run(inp: str) -> str:
-    global input
-
-    old_stdin = sys.stdin
-    old_input = input
-
-    sys.stdin = io.StringIO(inp)
-    input = sys.stdin.readline
-
-    try:
-        solve()
-        return sys.stdout.getvalue()
-    finally:
-        sys.stdin = old_stdin
-        input = old_input
-
-# The helper above needs to capture stdout, so use a dedicated wrapper.
-def run(inp: str) -> str:
     old_stdin = sys.stdin
     old_stdout = sys.stdout
-    old_input = input
 
     sys.stdin = io.StringIO(inp)
     sys.stdout = io.StringIO()
-    input = sys.stdin.readline
 
-    try:
-        solve()
-        return sys.stdout.getvalue()
-    finally:
-        sys.stdin = old_stdin
-        sys.stdout = old_stdout
-        input = old_input
+    solve()
+    output = sys.stdout.getvalue()
 
-# Provided samples
+    sys.stdin = old_stdin
+    sys.stdout = old_stdout
+
+    return output
+
+# provided samples
 assert run("4\n") == "3\n", "sample 1"
 assert run("5\n") == "4\n", "sample 2"
 assert run("6\n") == "4\n", "sample 3"
 
-# Custom cases
+# custom cases
 assert run("1\n") == "1\n", "minimum input"
-assert run("2\n") == "2\n", "two candies can both be given away"
-assert run("3\n") == "2\n", "first eating event"
+assert run("2\n") == "2\n", "no candy remains to eat after the second friend"
+assert run("7\n") == "5\n", "two complete groups plus one remainder"
 assert run("1000000000\n") == "666666667\n", "maximum input"
-assert run("8\n") == "6\n", "remainder of two"
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
-| --- | --- | --- | 
-|`1`|`1`| Đầu vào tối thiểu và sự vắng mặt của một sự kiện ăn uống | 
-|`2`|`2`| Món quà thứ hai không mất kẹo khi không còn gì | 
-|`3`|`2`| Bội số chính xác đầu tiên của ba và sự kiện ăn uống đầu tiên | 
-|`8`|`6`| Các nhóm hoàn chỉnh kết hợp với phần còn lại của hai | 
-|`1000000000`|`666666667`| Ràng buộc tối đa và số học theo thời gian không đổi | 
+|---|---:|---| 
+|`1`|`1`| Đầu vào có kích thước tối thiểu và không có cặp bạn bè | 
+|`2`|`2`| Ranh giới nơi người bạn thứ hai có thể được phục vụ mà không cần ăn thêm kẹo | 
+|`7`|`5`| Phần còn lại sau hai nhóm ba hoàn chỉnh | 
+|`1000000000`|`666666667`| Đầu vào tối đa và số học theo thời gian không đổi | 
 
 ## Vỏ cạnh 
 
-cho`n = 1`, thuật toán tính toán`1 // 3 = 0`, vậy câu trả lời là`1 - 0 = 1`. Chiếc kẹo duy nhất thuộc về một người bạn, và không có món quà thứ hai nào có thể khiến chúng ta phải ăn bất cứ thứ gì. 
+cho`n = 1`, thuật toán tính toán`1 // 3 = 0`, vậy câu trả lời là`1`. Chỉ có một viên kẹo và nó sẽ được chuyển trực tiếp đến một người bạn. Không có chu kỳ ăn uống được kích hoạt. 
 
-Vì`n = 2`, tính toán là`2 // 3 = 0`, sản xuất`2 - 0 = 2`. Cả hai loại kẹo đều có thể được phân phát. Điều này mắc phải sai lầm phổ biến là trừ đi một viên kẹo mỗi khi hai người bạn nhận được kẹo mà không kiểm tra xem viên kẹo còn ăn được hay không. 
+Vì`n = 2`, thuật toán tính toán`2 // 3 = 0`, đưa ra câu trả lời`2`. Chúng ta có thể phục vụ cả hai người bạn, và sau chiếc kẹo thứ hai thì không còn viên kẹo nào để ăn. Đây là ranh giới phá vỡ việc triển khai loại bỏ một cách mù quáng một viên kẹo sau mỗi cặp. 
 
-Vì`n = 3`, việc tính toán trở thành`3 // 3 = 1`, cho`3 - 1 = 2`. Hai chiếc kẹo được tặng cho bạn bè, và chiếc thứ ba được ăn sau món quà thứ hai. Đây là đầu vào nhỏ nhất mà việc tự tiêu thụ thực sự xảy ra. 
+Vì`n = 4`, thuật toán tính toán`4 // 3 = 1`, cho`4 - 1 = 3`. Trình tự thực tế là hai viên kẹo được tặng, một viên được ăn và viên kẹo cuối cùng được trao cho người bạn thứ ba. Nhóm ba người hoàn chỉnh duy nhất chiếm một viên kẹo được ăn. 
 
-Vì`n = 6`, có hai nhóm đầy đủ gồm ba. Công thức cho`6 - 2 = 4`. Về mặt hoạt động, hai món quà đầu tiên sẽ tiêu tốn thêm một viên kẹo và hai món quà tiếp theo sẽ tiêu tốn viên kẹo cuối cùng, vì vậy bốn người bạn sẽ nhận được kẹo. 
+Vì`n = 6`, thuật toán tính toán`6 // 3 = 2`, cho`6 - 2 = 4`. Hai người bạn đầu tiên ăn hai viên kẹo và kích hoạt một viên kẹo đã ăn. Hai người bạn tiếp theo ăn thêm hai viên kẹo nữa và kích hoạt viên kẹo ăn thứ hai. Số kẹo còn lại không thể hỗ trợ người bạn thứ năm, vì vậy bốn viên là tối đa. 
 
-Vì`n = 8`, có`8 // 3 = 2`hoàn thành các nhóm, để lại hai viên kẹo. Hai nhóm hoàn chỉnh cung cấp bốn món quà và hai chiếc kẹo cuối cùng cung cấp thêm hai chiếc nữa, tổng cộng là sáu chiếc. Công thức cho`8 - 2 = 6`, xác nhận rằng phần còn lại của hai được xử lý mà không bị phạt thêm.
+Vì`n = 10^9`, thuật toán thực hiện chính xác lượng công việc không đổi như đối với bất kỳ đầu vào nhỏ hơn nào. Từ`10^9 // 3 = 333333333`, câu trả lời là`1000000000 - 333333333 = 666666667`. Điều này khẳng định rằng nghiệm không phụ thuộc vào độ lớn của`n`thông qua số lần lặp.

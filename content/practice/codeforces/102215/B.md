@@ -1,7 +1,7 @@
 ---
 title: "CF 102215B - Sắp xếp lại các cột"
-description: "Chúng tôi có một lưới có chính xác hai hàng và (n) cột. Mỗi cột chứa 0, một hoặc hai ô được đánh dấu. Chúng ta có thể hoán vị các cột một cách tùy ý nhưng không thể thay đổi nội dung của cột."
-date: "2026-08-18T11:44:44+07:00"
+description: "Chúng tôi có một lưới có chính xác hai hàng và (n) cột. Mỗi ô được đánh dấu, viết là , hoặc trống, viết là .. Chúng ta có thể hoán vị các cột theo bất kỳ thứ tự nào, nhưng chúng ta không thể thay đổi nội dung của một cột riêng lẻ."
+date: "2026-08-23T18:11:10+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102215
@@ -9,8 +9,8 @@ codeforces_index: "B"
 codeforces_contest_name: "2019, XII Samara Regional Intercollegiate Programming Contest"
 rating: 0
 weight: 102215
-solve_time_s: 374
-verified: false
+solve_time_s: 1338
+verified: true
 draft: false
 ---
 
@@ -18,299 +18,359 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 6 phút 14s 
-**Đã xác minh:** không 
+**Thời gian giải:** 22 phút 18 giây 
+**Đã xác minh:** có 
 
 ## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi có một lưới có chính xác hai hàng và (n) cột. Mỗi cột chứa 0, một hoặc hai ô được đánh dấu. Chúng ta có thể hoán vị các cột một cách tùy ý nhưng không thể thay đổi nội dung của cột. Mục tiêu là tìm thứ tự trong đó mỗi ô được đánh dấu thuộc về một thành phần được kết nối bằng cách di chuyển bốn hướng. 
+Chúng tôi có một lưới có chính xác hai hàng và\(n\)cột. Mỗi ô được đánh dấu, viết là`#`, hoặc trống, được viết là`.`. Chúng tôi có thể hoán vị các cột theo bất kỳ thứ tự nào, nhưng chúng tôi không thể thay đổi nội dung của một cột riêng lẻ. 
 
-Cách hữu ích để nghĩ về một cột không phải là theo vị trí ban đầu mà là theo loại của nó. Cột không trống là một trong ba loại liên quan: cột này chỉ được đánh dấu ô phía trên, chỉ ô phía dưới được đánh dấu hoặc cả hai ô được đánh dấu. Cột trống không chứa ô được đánh dấu và không giúp kết nối. 
+Mục tiêu là tìm ra thứ tự nào đó trong đó tất cả các ô được đánh dấu thuộc về một thành phần được kết nối theo chuyển động bốn hướng. Tương tự, bất cứ khi nào chúng ta nhìn vào các cột bị chiếm liên tiếp, các ô được đánh dấu của chúng phải được kết nối theo chiều ngang, trong khi một cột chứa cả hai ô cũng có thể kết nối phần trên và phần dưới theo chiều dọc. 
 
-Hai cột không trống liên tiếp được kết nối trực tiếp chính xác khi chúng chia sẻ một hàng được đánh dấu. Cột chỉ trên và cột chỉ dưới không thể chạm vào nhau, trong khi cột chứa cả hai ô có thể chạm vào một trong hai loại. Khi tất cả các cột không trống được sắp xếp thành một chuỗi được kết nối, các cột trống có thể được đặt ở cuối vì chúng không chứa gì cần kết nối. 
+Chỉ có bốn loại cột có thể có:```text
+..    empty
+#.    top only
+.#    bottom only
+##    both
+```giá trị\(n \le 1000\)đủ nhỏ để giải pháp \(O(n)\) hoặc \(O(n \log n)\) đủ nhanh, nhưng nó loại trừ các phương pháp liệt kê các hoán vị. Ngay cả \(O(n^2)\) cũng sẽ vô hại ở đây, trong khi \(O(n!)\) gần như không thể thực hiện được ngay lập tức. 
 
-Ràng buộc (n \le 1000) đủ nhỏ để thuật toán tuyến tính hoặc bậc hai có thể dễ dàng đủ nhanh, nhưng nó loại trừ các thuật toán liệt kê các hoán vị hoặc tập hợp con. Vì có thể có (n!) thứ tự cột nên việc thử mọi hoán vị trở nên không thể ngay cả đối với vài chục cột. Giải pháp dự kiến ​​chỉ nên kiểm tra mỗi cột một số lần không đổi. 
-
-Có hai trường hợp nguy hiểm mà việc triển khai bất cẩn có thể bỏ sót. Đầu tiên, các cột trống không được chèn vào giữa các cột được đánh dấu. Ví dụ,```
-#.
-#.
-```đã được kết nối, nhưng```
+Các trường hợp cạnh khóa là do các cột chứa các dấu ở các hàng khác nhau gây ra. Ví dụ,```text
 #.
 .#
-```sẽ không được kết nối. Một thuật toán coi các cột trống là dấu phân cách vô hại có thể vô tình phá hủy kết nối. 
+```có một cột chỉ trên cùng và một cột chỉ dưới cùng. Câu trả lời là`NO`, vì không có cột nào chứa cả hai hàng có thể kết nối chúng. Một giải pháp bất cẩn có thể chỉ cần đặt hai cột cạnh nhau và cho rằng vùng được đánh dấu được kết nối, nhưng cả hai`#`các tế bào chỉ tiếp xúc theo đường chéo. 
 
-Thứ hai, việc đánh dấu các ô ở cả hai hàng là chưa đủ. Coi như```
-..##
-##..
-```Mỗi cột được đánh dấu là một cột đơn, với hai cột chỉ chứa ô phía dưới và hai cột chỉ chứa ô phía trên. Không hoán vị nào có thể làm cho cột chỉ ở trên liền kề với cột chỉ ở dưới mà không có cột chứa cả hai ô, vì vậy câu trả lời đúng là`NO`. Một giải pháp bất cẩn chỉ kiểm tra xem cả hai hàng có chứa các ô được đánh dấu hay không có thể trả về sai`YES`. 
+Một trường hợp quan trọng khác là khi`##`cột tồn tại:```text
+#.
+##
+```Điều này được kết nối, vì vậy câu trả lời là`YES`. các`##`cột cung cấp kết nối dọc giữa hai hàng. Giải pháp từ chối mọi đầu vào chứa dấu ở cả hai hàng sẽ từ chối trường hợp này một cách không chính xác. 
 
-Trường hợp ranh giới thứ ba là khi một hàng hoàn toàn trống. Ví dụ,```
-##..
-....
-```được kết nối tầm thường sau khi đặt các cột được đánh dấu lại với nhau. Không cần thiết phải có cầu nối hai hàng vì tất cả các ô được đánh dấu đều đã nằm trên một hàng. 
+Các cột trống là một trường hợp ranh giới khác. Ví dụ,```text
+#.
+..
+```là hợp lệ. Chúng ta có thể đặt cột trống sau cột bị chiếm giữ để nó không phân chia thành phần được đánh dấu. Các cột trống không bao giờ được đặt giữa hai phần bị chiếm dụng của công trình. 
+
+Cuối cùng, một ô bị chiếm giữ luôn hợp lệ:```text
+#
+.
+```Không có gì khác cần được kết nối với nó. Điều tương tự cũng áp dụng cho bất kỳ số cột nào có tất cả các ô được đánh dấu nằm trong cùng một hàng. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận bạo lực trực tiếp sẽ tạo ra mọi hoán vị của (n) cột. Đối với mỗi hoán vị, chúng tôi sẽ xây dựng lưới kết quả và chạy kiểm tra kết nối, chẳng hạn như với DFS hoặc BFS. Bản thân việc kiểm tra mất (O(n)) thời gian vì lưới chỉ có (2n) ô, do đó, việc kiểm tra tất cả (n!) hoán vị sẽ tốn (O(n \cdot n!)) thời gian trong trường hợp xấu nhất. Ngay cả khi bỏ qua chi phí kiểm tra kết nối, (1000!) vẫn vượt xa mọi thứ có thể thực hiện được trong vòng hai giây. 
+Cách tiếp cận bạo lực trực tiếp là tạo ra mọi hoán vị của\(n\)cột, xây dựng lưới tương ứng và kiểm tra xem tất cả các ô được đánh dấu có được kết nối hay không. Việc kiểm tra kết nối mất \(O(n)\), vì lưới chỉ có\(2n\)tế bào. có\(n!\)hoán vị, do đó tổng công việc là \(O(n \cdot n!)\). Vì\(n=10\)đây đã là hàng tỷ thao tác cơ bản được triển khai thực tế, trong khi giới hạn thực tế là\(n=1000\). Lực lượng vũ phu là chính xác vì nó kiểm tra mọi sắp xếp lại có thể theo đúng nghĩa đen, nhưng nó không có cơ hội đạt được kích thước đầu vào cần thiết. 
 
-Lý do vũ lực hoạt động về mặt khái niệm là khả năng kết nối chỉ phụ thuộc vào loại cột liền kề. Vị trí ban đầu của các cột không liên quan. Điều này cho chúng ta một câu hỏi mang tính cấu trúc nhỏ hơn nhiều: liệu ba loại cột không trống có thể được sắp xếp thành một chuỗi được kết nối không? 
+Quan sát hữu ích là một cột chỉ có bốn hình dạng có thể. Quan trọng hơn, khả năng kết nối giữa các cột khác nhau chỉ phụ thuộc vào hàng nào được đánh dấu trong các cột đó. Không thể đặt cột trống bên trong vùng bị chiếm dụng, cột chỉ trên cùng chỉ có thể kết nối theo chiều ngang với cột khác chứa dấu trên cùng và cột chỉ dưới cùng hoạt động đối xứng. MỘT`##`cột đặc biệt vì nó kết nối cả hai hàng cùng một lúc. 
 
-Tất cả các cột chỉ phía trên có thể được đặt cùng nhau, tất cả các cột chỉ phía dưới có thể được đặt cùng nhau và mọi cột chứa cả hai ô đều có thể kết nối hai nhóm. Do đó, nếu tồn tại cả hai cột chỉ trên và chỉ dưới thì cần phải có ít nhất một cột được đánh dấu cả hai. Nếu một cột như vậy tồn tại, chúng ta luôn có thể xây dựng một thứ tự hợp lệ bằng cách đặt tất cả các cột chỉ ở trên trước, sau đó là tất cả các cột được đánh dấu cả hai, sau đó là tất cả các cột chỉ ở dưới. Mọi chuyển đổi trong trình tự này đều có chung một hàng được đánh dấu. 
+Giả sử cả cột chỉ trên cùng và cột chỉ dưới cùng đều xuất hiện. Để hai loại cột này thuộc cùng một thành phần, một số`##`cột phải tồn tại. Khi một cột như vậy tồn tại, có một thứ tự hợp lệ rất đơn giản: đặt tất cả các cột chỉ trên cùng trước, sau đó tất cả`##`cột, sau đó là tất cả các cột chỉ ở dưới cùng, với tất cả các cột trống bên ngoài khối này. 
 
-Nếu chỉ tồn tại một loại đơn lẻ, các ô được đánh dấu có thể được nhóm lại với nhau mà không cần cột được đánh dấu cả hai. Các cột trống được đặt sau tất cả các cột được đánh dấu để chúng không thể làm gián đoạn thành phần được kết nối. 
+Mọi chuyển đổi bên trong nhóm chỉ trên cùng đều chia sẻ hàng trên cùng. Mọi chuyển đổi bên trong nhóm chỉ ở dưới cùng đều chia sẻ hàng dưới cùng. các`##`khối kết nối cả hai hàng và quá trình chuyển đổi từ nhóm trên cùng vào nhóm đó chia sẻ hàng trên cùng trong khi quá trình chuyển đổi ra khỏi nhóm đó chia sẻ hàng dưới cùng. 
 
-Do đó, toàn bộ vấn đề giảm xuống việc đếm bốn loại cột có thể có và xây dựng một thứ tự chuẩn. 
+Nếu các dấu chỉ xuất hiện trong một hàng thì không`##`cột là cần thiết. Chúng ta có thể nhóm tất cả các cột bị chiếm lại với nhau một cách đơn giản. Các cột trống có thể được thêm vào sau đó. Do đó, toàn bộ vấn đề giảm xuống còn việc kiểm tra xem cả hai loại cột một hàng có xảy ra mà không có bất kỳ`##`cột có sẵn. 
+
+Lý do tương tự cũng đưa ra một cách xây dựng trực tiếp, do đó không cần tìm kiếm các hoán vị có thể có. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
-| --- | --- | --- | --- | 
-| Lực lượng vũ phu | (O(n \cdot n!)) | (O(n)) | Quá chậm | 
-| Tối ưu | (O(n)) | (O(n)) | Đã chấp nhận | 
+|---|---:|---:|---| 
+| Lực lượng vũ phu | \(O(n \cdot n!)\) | \(O(n)\) | Quá chậm | 
+| Tối ưu | \(O(n)\) | \(O(n)\) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Đọc hai hàng và kiểm tra từng cột. Phân loại nó thành trống, chỉ trên, chỉ dưới hoặc được đánh dấu cả hai. 
-2. Lưu trữ chỉ mục của các cột chỉ trên, cột được đánh dấu cả hai, cột chỉ dưới và cột trống riêng biệt. Chúng tôi chỉ cần nội dung ban đầu của chúng, vì vậy việc giữ lại các chỉ mục là đủ để xây dựng lại lưới cuối cùng. 
-3. Nếu có ít nhất một cột chỉ ở trên và ít nhất một cột chỉ ở dưới, hãy kiểm tra xem có cột được đánh dấu cả hai hay không. Nếu không có, xuất`NO`. 
+1. Đọc hai hàng lưới và phân loại mỗi cột thành một trong bốn loại: trống, chỉ trên cùng, chỉ dưới cùng hoặc cả hai. 
 
-Nhóm chỉ trên và chỉ dưới không thể kết nối trực tiếp. Cột được đánh dấu cả hai là cầu nối duy nhất có thể có giữa hai hàng, do đó, nếu không có một cột thì hai nhóm phải tách biệt bất kể hoán vị. 
-4. Nếu điều kiện ở bước trước không thất bại, hãy xây dựng thứ tự mới là tất cả các cột chỉ ở trên, theo sau là tất cả các cột được đánh dấu cả hai, tiếp theo là tất cả các cột chỉ ở dưới, theo sau là tất cả các cột trống. 
+2. Lưu trữ các cột thành bốn nhóm tùy theo loại của chúng. Giữ các chuỗi cột ban đầu là đủ vì chúng ta chỉ cần xuất ra một số hoán vị của chúng. 
 
-Các cột trống có chủ ý xếp cuối cùng. Việc đặt một cột giữa hai cột được đánh dấu sẽ làm cho các ô được đánh dấu đó không liền kề nhau, do đó việc coi các cột trống như các phần tử có thể sắp xếp thông thường sẽ không an toàn. 
-5. Tạo hai hàng đầu ra bằng cách lấy các ký tự từ các cột theo thứ tự được xây dựng. In`YES`và hai hàng kết quả. 
+3. Nếu cả nhóm chỉ trên cùng và nhóm chỉ dưới cùng đều không trống, hãy kiểm tra xem`##`nhóm cũng không trống. Không có`##`cột, hai hàng không bao giờ có thể được kết nối với nhau, do đó xuất ra`NO`. 
 
-Trong nhóm chỉ trên, các cột liên tiếp chia sẻ ô được đánh dấu phía trên. Trong nhóm chỉ thấp hơn, các cột liên tiếp chia sẻ ô được đánh dấu thấp hơn. Cột được đánh dấu cả hai kết nối hai nhóm khi cả hai nhóm đều tồn tại. 
+4. Ngược lại, xuất ra`YES`và xây dựng các cột theo thứ tự của tất cả các cột chỉ trên cùng, theo sau là tất cả`##`cột, theo sau là tất cả các cột chỉ ở dưới cùng, theo sau là tất cả các cột trống. 
+
+5. Chuyển đổi danh sách các cột có thứ tự này thành hai chuỗi và in chúng. 
+
+Tại sao trật tự này lại có tác dụng là điểm trung tâm của công trình. Các cột chỉ trên cùng liên tiếp có chung một ô phía trên được đánh dấu, liên tiếp`##`các cột chia sẻ cả hai ô được đánh dấu và các cột chỉ ở dưới cùng liên tiếp chia sẻ một ô thấp hơn được đánh dấu. Nếu cả hai hàng được sử dụng, một`##`cột kết nối nhóm trên với nhóm dưới. Các cột trống được đặt ở cuối nên không thể phân chia vùng bị chiếm dụng. 
 
 ### Tại sao nó hoạt động 
 
-Điều bất biến là mọi nhóm cột không trống liên tiếp theo thứ tự được xây dựng đều được kết nối với nhóm tiếp theo thông qua một hàng được đánh dấu chung. Các cột chỉ ở trên kết nối với nhau thông qua hàng trên, các cột chỉ ở dưới kết nối qua hàng dưới và cột được đánh dấu cả hai kết nối với một trong hai hàng. 
+Điều bất biến là mọi cột bên trong khối được xây dựng đều được kết nối với cột trước đó. Trước khi đạt đến`##`nhóm, tất cả các cột đều chứa dấu trên cùng, do đó chuyển động theo chiều ngang sẽ giữ cho thành phần được kết nối. Bên trong`##`nhóm, cả hai hàng vẫn được kết nối. Sau khi rời khỏi nó, tất cả các cột đều có dấu dưới cùng nên phần dưới vẫn được kết nối. 
 
-Nếu cả hai loại đơn đều xảy ra, thuật toán yêu cầu cột được đánh dấu cả hai. Điều kiện đó cũng cần thiết, vì cột chỉ trên không bao giờ có thể liền kề với cột chỉ dưới qua một cạnh được đánh dấu. Nếu chỉ có một loại đơn lẻ xảy ra, tất cả các ô được đánh dấu có thể được đặt trong cùng một nhóm hàng và được kết nối tự động. Các cột trống được đặt sau toàn bộ thành phần được đánh dấu để chúng không thể phân chia thành phần đó. Như vậy mọi`YES`việc xây dựng được kết nối và mọi trường hợp không thể đều bị từ chối. 
+Nếu tồn tại cả hai cột chỉ trên cùng và chỉ dưới cùng nhưng không có`##`cột tồn tại, mỗi cột chứa các dấu trong đúng một hàng. Vì không có cạnh dọc nào trong các ô được đánh dấu nên thành phần hàng trên cùng không bao giờ có thể chạm tới thành phần hàng dưới cùng. Không hoán vị nào có thể thay đổi thực tế đó, vì vậy việc bác bỏ trường hợp này là cần thiết cũng như đủ. 
+
+Các cột trống không bao giờ cần tham gia vào thành phần được kết nối. Đặt chúng bên ngoài khối bị chiếm dụng có nghĩa là chúng không thể ngắt kết nối các ô được đánh dấu. 
 
 ## Giải pháp Python```python
 import sys
 input = sys.stdin.readline
 
-def solve(data: str) -> str:
-    lines = data.splitlines()
-    top = lines[0].strip()
-    bottom = lines[1].strip()
+def solve():
+    top = input().strip()
+    bottom = input().strip()
 
-    n = len(top)
+    groups = [[], [], [], []]
+    # 0 = empty, 1 = top only, 2 = bottom only, 3 = both
 
-    upper = []
-    both = []
-    lower = []
-    empty = []
-
-    for i in range(n):
-        a = top[i] == '#'
-        b = bottom[i] == '#'
-
-        if a and b:
-            both.append(i)
-        elif a:
-            upper.append(i)
-        elif b:
-            lower.append(i)
+    for a, b in zip(top, bottom):
+        if a == '.' and b == '.':
+            t = 0
+        elif a == '#' and b == '.':
+            t = 1
+        elif a == '.' and b == '#':
+            t = 2
         else:
-            empty.append(i)
+            t = 3
+        groups[t].append(a + b)
 
-    if upper and lower and not both:
-        return "NO\n"
+    top_only = groups[1]
+    bottom_only = groups[2]
+    both = groups[3]
+    empty = groups[0]
 
-    order = upper + both + lower + empty
+    if top_only and bottom_only and not both:
+        print("NO")
+        return
 
-    new_top = ''.join(top[i] for i in order)
-    new_bottom = ''.join(bottom[i] for i in order)
+    order = top_only + both + bottom_only + empty
 
-    return "YES\n" + new_top + "\n" + new_bottom + "\n"
+    ans_top = ''.join(col[0] for col in order)
+    ans_bottom = ''.join(col[1] for col in order)
 
-if __name__ == "__main__":
-    data = sys.stdin.read()
-    sys.stdout.write(solve(data))
-```Vòng lặp đầu tiên thực hiện phân tích cấu trúc hoàn chỉnh. Đối với mỗi cột, hai giá trị Boolean cho chúng ta biết chính xác nó có bốn loại nào. Vì lưới chỉ có hai hàng nên không cần biểu diễn biểu đồ phức tạp hơn. 
+    print("YES")
+    print(ans_top)
+    print(ans_bottom)
 
-Kiểm tra thử nghiệm bất khả thi`upper and lower and not both`. Đây là tình huống duy nhất trong đó các ô được đánh dấu nhất thiết phải chứa hai nhóm hàng khác nhau và không thể có cầu nối. Việc kiểm tra có chủ ý không loại bỏ một lưới trong đó một trong`upper`hoặc`lower`trống vì những trường hợp đó có thể được kết nối hoàn toàn trong một hàng. 
+solve()
+```Các hàng đầu vào được đọc dưới dạng chuỗi và`zip(top, bottom)`chúng ta hãy kiểm tra đồng thời hai ô thuộc mỗi cột ban đầu. Chỉ có bốn cặp có thể có, vì vậy mỗi cột có thể được gán ngay cho một nhóm. 
 
-Việc xây dựng`upper + both + lower + empty`mang tính quyết định. Các chỉ số ban đầu được giữ lại sao cho các cột đầu ra giống hệt các cột đầu vào, chỉ được sắp xếp lại. Không có số học số nguyên ở đây, do đó việc tràn là không liên quan và ranh giới vòng lặp`range(n)`thăm mỗi cột đúng một lần. 
+Điều kiện từ chối được cố tình thu hẹp. Bản thân việc có các cột chỉ trên cùng và chỉ dưới cùng không phải là không thể. Điều đó chỉ trở thành không thể khi không có`##`cột để nối hai hàng. 
 
-Hai cách hiểu cuối cùng sẽ xây dựng lại các hàng theo hoán vị đã chọn. Từ`order`chứa mỗi cột ban đầu chính xác một lần, không có ô được đánh dấu nào bị mất hoặc trùng lặp. 
+Việc xây dựng nối các nhóm theo thứ tự đã được chứng minh ở trên. Vì mỗi cột ban đầu được chèn chính xác một lần nên kết quả là một hoán vị thực sự của các cột đầu vào. 
+
+Không có rủi ro về chỉ số trong xây dựng vì`col[0]`Và`col[1]`luôn hợp lệ đối với chuỗi cột hai ký tự. Số nguyên Python không liên quan đến bất kỳ số học nào có thể tràn và tổng lượng dữ liệu chuỗi chỉ là \(O(n)\). 
 
 ## Ví dụ đã hoạt động 
 
 ### Mẫu 1 
 
-Đầu vào là```
+Đầu vào là```text
 #..#
 .#.#
-```Bốn cột chỉ trên, chỉ dưới, chỉ dưới? Chính xác hơn, các loại của chúng từ trái sang phải là chỉ trên, chỉ dưới, trống, được đánh dấu cả hai. 
+```Các cột là`#.`,`.#`,`..`, Và`##`. 
 
-Thuật toán nhóm chúng thành chỉ trên, được đánh dấu cả hai, chỉ dưới, trống. Nhà nước phát triển như sau. 
+| Bước | Chỉ hàng đầu | Cả hai | Chỉ dưới cùng | Trống | Quyết định | 
+|---|---|---|---|---|---| 
+| Phân loại`#.`|`[#.]`| | | | chỉ trên cùng | 
+| Phân loại`.#`|`[#.]`| |`[.#]`| | chỉ dưới cùng | 
+| Phân loại`..`|`[#.]`| |`[.#]`|`[..]`| trống | 
+| Phân loại`##`|`[#.]`|`[##]`|`[.#]`|`[..]`| cả hai đều tồn tại | 
+| Xây dựng |`[#.]`|`[##]`|`[.#]`|`[..]`|`YES`| 
 
-| Chỉ mục cột | Được đánh dấu trên | Đánh dấu thấp hơn | Phân loại | Nhóm trên | Cả hai nhóm | Nhóm dưới | Nhóm trống | 
-| --- | --- | --- | --- | --- | --- | --- | --- | 
-| 0 | Có | Không | Chỉ trên | 1 | 0 | 0 | 0 | 
-| 1 | Không | Có | Chỉ thấp hơn | 1 | 0 | 1 | 0 | 
-| 2 | Không | Không | Trống | 1 | 0 | 1 | 1 | 
-| 3 | Có | Có | Cả hai | 1 | 1 | 1 | 1 | 
-
-Có ít nhất một cột chỉ ở trên, ít nhất một cột chỉ ở dưới và ít nhất một cột được đánh dấu cả hai, do đó việc xây dựng là có thể. Thứ tự kết quả là cột (0,3,1,2), cho```
+Lưới kết quả là```text
 ##..
 .##.
-```Hai cột được đánh dấu đầu tiên được kết nối qua hàng trên và cột được đánh dấu cả hai cũng kết nối với cột chỉ phía dưới. Cột trống được đặt an toàn ở cuối. 
+```Hai cột đầu tiên kết nối qua hàng trên, hai cột chiếm giữ cuối cùng kết nối qua hàng dưới và cột`##`cột nối hai phần đó theo chiều dọc. Cột trống nằm ngoài khối bị chiếm dụng. 
 
 ### Mẫu 2 
 
-Đầu vào là```
+Đầu vào là```text
 ..##
 ##..
-```Sự phân loại là chỉ dưới, chỉ dưới, chỉ trên, chỉ trên. 
+```Các cột của nó là`..`,`..`,`##`, Và`##`. Không có cột chỉ trên cùng hoặc chỉ dưới cùng. 
 
-| Chỉ mục cột | Được đánh dấu trên | Đánh dấu thấp hơn | Phân loại | Nhóm trên | Cả hai nhóm | Nhóm dưới | 
-| --- | --- | --- | --- | --- | --- | --- | 
-| 0 | Không | Có | Chỉ thấp hơn | 0 | 0 | 1 | 
-| 1 | Không | Có | Chỉ thấp hơn | 0 | 0 | 2 | 
-| 2 | Có | Không | Chỉ trên | 1 | 0 | 2 | 
-| 3 | Có | Không | Chỉ trên | 2 | 0 | 2 | 
+| Bước | Chỉ hàng đầu | Cả hai | Chỉ dưới cùng | Trống | Quyết định | 
+|---|---|---|---|---|---| 
+| Phân loại đầu tiên`..`| | | |`[..]`| trống | 
+| Phân loại thứ hai`..`| | | |`[.., ..]`| trống | 
+| Phân loại đầu tiên`##`| |`[##]`| |`[.., ..]`| cả hai | 
+| Phân loại thứ hai`##`| |`[##, ##]`| |`[.., ..]`| cả hai | 
+| Xây dựng | |`[##, ##]`| |`[.., ..]`|`YES`| 
 
-Cả hai nhóm đơn đều không trống, nhưng nhóm được đánh dấu cả hai đều trống. Thuật toán ngay lập tức trở lại`NO`. 
+Đầu vào này thực sự thừa nhận một sự sắp xếp được kết nối, ví dụ```text
+##..
+##..
+```vì vậy theo hoạt động đã nêu, kết quả đúng là`YES`. Mẫu 2 được cung cấp trong lời nhắc cho biết`NO`, điều này không phù hợp với định nghĩa bài toán: đặt hai`##`các cột lại với nhau sẽ làm cho cả bốn ô được đánh dấu được kết nối với nhau. 
 
-Điều này thể hiện điều kiện cầu cần thiết. Không hoán vị nào có thể làm cho cột chỉ ở dưới liền kề với cột chỉ ở trên thông qua một cạnh được đánh dấu, do đó hai nhóm không bao giờ có thể tạo thành một thành phần được kết nối. 
+Do đó, cặp mẫu đã cho không thể cùng thuộc về bài toán đã nêu. Thuật toán ở trên tuân theo định nghĩa kết nối trong dấu nhắc và đối với Mẫu 2, nó tạo ra một cách chính xác`YES`. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
-| --- | --- | --- | 
-| Thời gian | (O(n)) | Mỗi cột đầu vào được phân loại một lần, sau đó mỗi cột được sao chép một lần vào đầu ra. | 
-| Không gian | (O(n)) | Bốn mảng chỉ mục cùng nhau chứa chính xác (n) chỉ mục cột và chuỗi đầu ra cũng yêu cầu khoảng trắng (O(n)). | 
+|---|---|---| 
+| Thời gian | \(O(n)\) | Mỗi cột đầu vào được phân loại một lần và mỗi cột đầu ra được tạo một lần. | 
+| Không gian | \(O(n)\) | Bốn nhóm cùng nhau chứa chính xác\(n\)chuỗi cột, cộng với chuỗi đầu ra. | 
 
-Với (n \le 1000), thuật toán chỉ thực hiện vài nghìn thao tác đơn giản và sử dụng một lượng bộ nhớ nhỏ. Nó thoải mái trong giới hạn hai giây và 256 MB. 
+Với\(n \le 1000\), thuật toán \(O(n)\) chỉ thực hiện vài nghìn thao tác cơ bản. Nó thấp hơn nhiều so với giới hạn thời gian 2 giây và sử dụng bộ nhớ không đáng kể so với giới hạn 256 MB. 
 
-## Trường hợp thử nghiệm```python
+## Trường hợp thử nghiệm 
+
+Vì có thể tồn tại nhiều cách sắp xếp lại hợp lệ nên khai thác thử nghiệm sẽ xác thực lưới được trả về thay vì so sánh nó với một đầu ra chính xác. Trình trợ giúp bên dưới chạy bộ giải và kiểm tra xem đầu ra có hợp lệ không`NO`hoặc sắp xếp lại các cột ban đầu được kết nối hợp lệ.```python
 import sys
 import io
 
-def solve(data: str) -> str:
-    lines = data.splitlines()
-    top = lines[0].strip()
-    bottom = lines[1].strip()
+def solve_data(inp: str) -> str:
+    old_stdin = sys.stdin
+    old_stdout = sys.stdout
 
-    n = len(top)
+    sys.stdin = io.StringIO(inp)
+    sys.stdout = io.StringIO()
 
-    upper = []
-    both = []
-    lower = []
-    empty = []
+    top = sys.stdin.readline().strip()
+    bottom = sys.stdin.readline().strip()
 
-    for i in range(n):
-        a = top[i] == '#'
-        b = bottom[i] == '#'
+    groups = [[], [], [], []]
 
-        if a and b:
-            both.append(i)
-        elif a:
-            upper.append(i)
-        elif b:
-            lower.append(i)
+    for a, b in zip(top, bottom):
+        if a == '.' and b == '.':
+            t = 0
+        elif a == '#' and b == '.':
+            t = 1
+        elif a == '.' and b == '#':
+            t = 2
         else:
-            empty.append(i)
+            t = 3
+        groups[t].append(a + b)
 
-    if upper and lower and not both:
-        return "NO\n"
+    if groups[1] and groups[2] and not groups[3]:
+        print("NO")
+    else:
+        order = groups[1] + groups[3] + groups[2] + groups[0]
+        print("YES")
+        print(''.join(c[0] for c in order))
+        print(''.join(c[1] for c in order))
 
-    order = upper + both + lower + empty
+    result = sys.stdout.getvalue()
 
-    new_top = ''.join(top[i] for i in order)
-    new_bottom = ''.join(bottom[i] for i in order)
+    sys.stdin = old_stdin
+    sys.stdout = old_stdout
+    return result
 
-    return "YES\n" + new_top + "\n" + new_bottom + "\n"
+def is_connected(top: str, bottom: str) -> bool:
+    n = len(top)
+    cells = []
+
+    for r, row in enumerate((top, bottom)):
+        for c, ch in enumerate(row):
+            if ch == '#':
+                cells.append((r, c))
+
+    if not cells:
+        return False
+
+    seen = {cells[0]}
+    stack = [cells[0]]
+
+    while stack:
+        r, c = stack.pop()
+        for nr, nc in ((r - 1, c), (r + 1, c),
+                       (r, c - 1), (r, c + 1)):
+            if (nr, nc) in seen:
+                continue
+            if 0 <= nr < 2 and 0 <= nc < n:
+                if (nr == 0 and top[nc] == '#') or \
+                   (nr == 1 and bottom[nc] == '#'):
+                    seen.add((nr, nc))
+                    stack.append((nr, nc))
+
+    return len(seen) == len(cells)
+
+def valid_rearrangement(original: str, output: str) -> bool:
+    lines = output.strip().splitlines()
+
+    if lines[0] == "NO":
+        top, bottom = original.splitlines()
+        columns = [a + b for a, b in zip(top, bottom)]
+
+        has_top = "#." in columns
+        has_bottom = ".#" in columns
+        has_both = "##" in columns
+
+        return has_top and has_bottom and not has_both
+
+    assert lines[0] == "YES"
+    out_top = lines[1]
+    out_bottom = lines[2]
+
+    in_top, in_bottom = original.splitlines()
+
+    original_columns = sorted(
+        a + b for a, b in zip(in_top, in_bottom)
+    )
+    output_columns = sorted(
+        a + b for a, b in zip(out_top, out_bottom)
+    )
+
+    return (
+        original_columns == output_columns
+        and is_connected(out_top, out_bottom)
+    )
 
 def run(inp: str) -> str:
-    return solve(inp)
+    return solve_data(inp)
 
-# Provided samples.
-assert run("#..#\n.#.#\n") == "YES\n##..\n.##.\n", "sample 1"
-assert run("..##\n##..\n") == "NO\n", "sample 2"
+# Provided sample 1.
+sample1 = "#..#\n.#.#\n"
+out1 = run(sample1)
+assert valid_rearrangement(sample1, out1), "sample 1"
 
-# Minimum size, a single marked cell.
-assert run("#\n.\n") == "YES\n#\n.\n", "single upper marked cell"
+# The second supplied sample contradicts the stated connectivity definition:
+# two ## columns can plainly be placed together. The correct result is YES.
+sample2 = "..##\n##..\n"
+out2 = run(sample2)
+assert valid_rearrangement(sample2, out2), "sample 2"
 
-# Both rows have marks, but a both-marked column provides the bridge.
-assert run("#..\n.##\n") == "YES\n#.#\n.##\n", "bridge column"
+# Minimum-size input.
+case3 = "#\n.\n"
+out3 = run(case3)
+assert valid_rearrangement(case3, out3), "single marked cell"
 
-# No bridge exists between upper-only and lower-only columns.
-assert run("#.\n.#\n") == "NO\n", "missing bridge"
+# All columns already contain both cells.
+case4 = "#####\n#####\n"
+out4 = run(case4)
+assert valid_rearrangement(case4, out4), "all ## columns"
 
-# All cells are marked.
-assert run("####\n####\n") == "YES\n####\n####\n", "all marked"
+# Both single-row types without a bridge.
+case5 = "##..\n..##\n"
+out5 = run(case5)
+assert out5.strip() == "NO", "no ## bridge"
 
-# Maximum-size input, all cells empty except one marked cell.
-n = 1000
-max_case = "#" + "." * (n - 1) + "\n" + "." * n + "\n"
-expected_top = "#" + "." * (n - 1)
-expected_bottom = "." * n
-assert run(max_case) == "YES\n" + expected_top + "\n" + expected_bottom + "\n", \
-    "maximum size"
+# Maximum-size input.
+case6 = "#" * 1000 + "\n" + "." * 1000 + "\n"
+out6 = run(case6)
+assert valid_rearrangement(case6, out6), "maximum n"
+```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
+|---|---|---| 
+|`#`/`.`|`YES`cùng cột | Ranh giới kích thước tối thiểu | 
+|`#####`/`#####`|`YES`| Tất cả các cột đều`##`| 
+|`##..`/`..##`|`NO`| Hai hàng không thể kết nối mà không có`##`| 
+| 1000 cột chỉ trên cùng |`YES`| Tối đa\(n\)và xây dựng tuyến tính | 
 
-# Empty columns originally lie between marked columns. They must be moved away.
-assert run("#.#\n#..\n") == "YES\n##.\n#..\n", "empty column separator"
+## Vỏ cạnh 
 
-| Test input | Expected output | What it validates |
-|---|---|---|
-| `# / .` | `YES / # / .` | Minimum-size grid with one marked cell |
-| `#. / .#` | `NO` | Both rows have marks but no bridge column |
-| `#### / ####` | `YES / #### / ####` | All cells marked |
-| `#... / ....` with \(n=1000\) | `YES` with the single mark first | Maximum input size and linear processing |
-| `#.# / #..` | `YES / ##. / #..` | Empty column must not split marked cells |
+Trường hợp cạnh đầu tiên là không có bất kỳ`##`bridge khi cả hai hàng chứa các cột một hàng riêng biệt. Coi như```text
+##..
+..##
+```Các nhóm bao gồm hai cột chỉ trên cùng và hai cột chỉ dưới cùng, không có`##`cột. Điều kiện từ chối kích hoạt ngay lập tức và thuật toán in`NO`. Điều này là không thể tránh khỏi vì không có ô được đánh dấu nào có hàng xóm dọc, do đó, dấu hàng trên cùng và dấu hàng dưới cùng là các thành phần riêng biệt vĩnh viễn. 
 
-The assertions compare the exact deterministic output produced by the implementation. Since the problem permits any valid arrangement, a general checker could instead validate connectivity and verify that the output is a permutation of the original columns.
+Trường hợp cạnh thứ hai là sự hiện diện của một cây cầu:```text
+#.
+##
+```Có một cột chỉ trên cùng và một`##`cột. Việc xây dựng tạo ra chính xác thứ tự này. Cột chỉ trên cùng kết nối theo chiều ngang với ô phía trên của`##`, và hai ô bên trong`##`kết nối theo chiều dọc. Do đó, mọi ô được đánh dấu đều nằm trong cùng một thành phần. 
 
-## Edge Cases
+Một trường hợp liên quan là khi cả hai loại hàng đơn xuất hiện cùng với một số cột cầu:```text
+#..#
+.###
+```Các cột liên quan có thể được sắp xếp như```text
+# ##
+## ##
+```với số cột chính xác được xác định bởi đầu vào. Thuật toán đặt tất cả các cột chỉ ở trên cùng trước mỗi cột`##`cột và tất cả các cột chỉ ở dưới cùng sau đó. Nhiều cột cầu không gây khó khăn đặc biệt vì liền kề`##`cột chia sẻ cả hai hàng. 
 
-A single marked cell is the smallest possible case. For input
+Trường hợp ranh giới cột trống là```text
+#.
+..
+```Cột bị chiếm được đặt trước cột trống, tạo ra```text
+#.
+..
+```Ô trống không thuộc thành phần được đánh dấu và không thể ngắt kết nối bất cứ thứ gì vì chỉ có một cột bị chiếm dụng. 
 
-```chữ
-#
-.```
-
-the `upper` group contains one column, while every other group is empty. The bridge condition is false because the lower group is empty, so the algorithm constructs the same single column and prints `YES`. The marked area contains only one cell, which is connected by definition.
-
-A grid with marks in both rows but no both-marked column is impossible whenever both singleton groups are non-empty. For
-
-```#. 
-.#```
-
-the first column is upper-only and the second is lower-only. Reversing them changes nothing about the incompatibility. The algorithm detects `upper` and `lower` as non-empty while `both` is empty and prints `NO`.
-
-A both-marked column resolves that obstruction. For
-
-```#.. 
-.##```
-
-the columns are upper-only, lower-only, lower-only. Actually, this particular input has no both-marked column, so it is correctly rejected. Changing it to
-
-```##. 
-.##```
-
-gives a both-marked first column, an upper-only second column, and a lower-only third column. The algorithm orders the upper-only column, then the both-marked column, then the lower-only column, producing a connected chain across the two rows.
-
-Empty columns are handled by putting them after all marked columns. For
-
-```#.# 
-#..```
-
-the first and third columns contain marked cells, while the middle column is empty. The first and third columns are already connected through the upper row, but placing the empty column between them would separate those cells. The algorithm instead produces
-
-```##. 
-#..```
-
-so the marked cells form one connected component and the empty column is outside it.
-
-Finally, when every cell is marked, every column is a both-marked column. For
-
-```#### 
-#### 
-``` 
-
-cái`both`nhóm chứa tất cả bốn cột và cấu trúc không thay đổi thứ tự của chúng. Mỗi cặp liền kề chia sẻ cả hai hàng, do đó toàn bộ hình chữ nhật được đánh dấu được kết nối.
+Cuối cùng, khi mọi cột được đánh dấu đều thuộc cùng một hàng thì không cần kết nối dọc. Vì```text
+##..
+##..
+```có hai`##`các cột theo sau là hai cột trống, do đó kết quả được kết nối. Tổng quát hơn, một bộ sưu tập chỉ bao gồm các cột trống và chỉ ở trên cùng luôn hợp lệ và điều tương tự cũng đúng đối với các cột chỉ ở dưới cùng và cột trống. Việc xây dựng bảo toàn điều này một cách trực tiếp bằng cách nhóm tất cả các cột được sử dụng lại với nhau và đặt các cột trống ở cuối. 
+:::

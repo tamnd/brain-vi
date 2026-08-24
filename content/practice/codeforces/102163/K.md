@@ -1,7 +1,7 @@
 ---
 title: "CF 102163K - Masaoud YÊU PIZZA"
-description: "Chúng ta có một dãy số lượng bánh pizza, trong đó A[i] là số lát trên đĩa của học sinh thứ i. Masaoud phải chọn một phân đoạn liền kề không trống của mảng này, nghĩa là một nhóm sinh viên liên tiếp và tổng các giá trị được chọn phải nhỏ hơn X."
-date: "2026-08-19T14:57:26+07:00"
+description: "Chúng ta có một mảng A biểu thị những lát bánh pizza trên đĩa của học sinh đứng thành một hàng cố định. Masaoud phải chọn một phân đoạn liền kề của mảng này, nghĩa là anh ta chọn một số điểm cuối bên trái l và điểm cuối bên phải r, và đánh cắp mọi lát cắt trong A[l..r]."
+date: "2026-08-23T14:22:58+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102163
@@ -9,8 +9,8 @@ codeforces_index: "K"
 codeforces_contest_name: "NCD 2019"
 rating: 0
 weight: 102163
-solve_time_s: 568
-verified: false
+solve_time_s: 1644
+verified: true
 draft: false
 ---
 
@@ -18,60 +18,55 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 9 phút 28s 
-**Đã xác minh:** không 
+**Thời gian giải:** 27p 24s 
+**Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi có một loạt số lượng bánh pizza, trong đó`A[i]`là số lát cắt trên`i`-đĩa của học sinh thứ Masaoud phải chọn một phân đoạn liền kề không trống của mảng này, nghĩa là một nhóm sinh viên liên tiếp và tổng các giá trị được chọn phải nhỏ hơn rất nhiều so với`X`. 
+Chúng tôi có một mảng`A`thể hiện những lát bánh pizza trên đĩa của học sinh đứng thành một hàng cố định. Masaoud phải chọn một đoạn liền kề của mảng này, nghĩa là anh ta chọn một số điểm cuối bên trái`l`và điểm cuối bên phải`r`, và đánh cắp mọi lát trong`A[l..r]`. Chúng ta cần đếm xem có bao nhiêu phân đoạn liền kề khác nhau có tổng tổng nhỏ hơn`X`. 
 
-Nhiệm vụ là đếm mọi mảng con liền kề có tổng nhỏ hơn`X`. Các vị trí khác nhau xác định các nhóm khác nhau, do đó, ngay cả các giá trị bằng nhau ở các vị trí khác nhau cũng thể hiện các lựa chọn khác nhau. 
+Từ "nghiêm túc" quan trọng. Một phân đoạn có tổng chính xác`X`không hợp lệ. Vì mọi`A[i]`là dương, việc mở rộng một đoạn chỉ có thể làm tăng tổng của nó. Tính đơn điệu đó là đặc tính làm cho lời giải thời gian tuyến tính có thể thực hiện được. 
 
-Các ràng buộc đủ lớn để loại trừ việc kiểm tra trực tiếp mọi mảng con. Với`N = 10^5`, có`N(N+1)/2`, hoặc về`5 * 10^9`, các nhóm liền kề có thể xảy ra trong trường hợp xấu nhất. Ngay cả thuật toán O(N²) cũng vượt xa giới hạn thời gian 1 giây có thể xử lý. Các giá trị dương trong mảng là thuộc tính cấu trúc quan trọng cho phép giải quyết vấn đề theo thời gian tuyến tính. 
+Với`N`lớn như`10^5`, việc kiểm tra từng cặp điểm cuối đã quá tốn kém rồi. có`N(N+1)/2`các phân đoạn liền kề, đó là về`5 * 10^9`khi`N = 10^5`. Một giải pháp kiểm tra từng phân đoạn riêng lẻ không thể phù hợp với giới hạn thời gian 1 giây. Chúng ta cần một thuật toán gần`O(N)`mỗi trường hợp thử nghiệm. Các giá trị của`A[i]`Và`X`có thể đạt được`10^9`, và câu trả lời có thể xoay quanh`5 * 10^9`, do đó việc triển khai cũng cần một loại số nguyên có khả năng lưu trữ các giá trị lớn hơn số nguyên 32 bit. Số nguyên Python xử lý việc này một cách tự nhiên. 
 
-Có một số trường hợp ranh giới có thể bộc lộ việc triển khai bất cẩn. Đầu tiên, điều kiện là nghiêm ngặt`< X`, không`<= X`. Ví dụ, với`N = 1`,`X = 4`, Và`A = [4]`, đầu ra đúng là`0`, bởi vì mảng con duy nhất có tổng chính xác`4`. Một triển khai sử dụng`sum <= X`sẽ đếm sai. 
+Một sai lầm phổ biến về ranh giới là xử lý một số tiền bằng`X`hợp lệ. Ví dụ, với`N = 1`,`X = 4`, Và`A = [4]`, đoạn duy nhất có tổng`4`, vậy câu trả lời là`0`, không`1`. Điều kiện là`sum < X`, không`sum <= X`. 
 
-Trường hợp thứ hai là khi mọi phần tử đều đã quá lớn. Vì`N = 3`,`X = 5`, Và`A = [5, 6, 7]`, câu trả lời là`0`. Việc triển khai cửa sổ trượt phải loại bỏ các phần tử cho đến khi tổng hiện tại ở dưới`X`trước khi đếm bất cứ điều gì. 
+Một sai lầm khác là quên rằng một phần tử đơn lẻ cũng có thể khiến cửa sổ không hợp lệ. Vì`N = 2`,`X = 3`, Và`A = [5, 1]`, không`[5]`cũng không`[5, 1]`là hợp lệ, trong khi`[1]`là hợp lệ, vì vậy câu trả lời là`1`. Việc triển khai cửa sổ trượt phải liên tục di chuyển điểm cuối bên trái của nó cho đến khi tổng hiện tại hợp lệ trở lại. 
 
-Trường hợp thứ ba là khi toàn bộ mảng hợp lệ. Vì`N = 3`,`X = 10`, Và`A = [1, 2, 3]`, mọi mảng con không trống đều có tổng bên dưới`10`, vậy câu trả lời là`6`. Số đếm phải bao gồm các mảng con có độ dài bất kỳ có thể, không chỉ các phần tử đơn lẻ. 
-
-Cuối cùng, bản thân câu trả lời có thể lớn hơn nhiều so với`N`. Với`N = 10^5`và đủ lớn`X`, mọi mảng con đều hợp lệ, cho`10^5 * 100001 / 2 = 5,000,050,000`các nhóm hợp lệ. Số nguyên Python xử lý việc này một cách tự nhiên, trong khi ngôn ngữ sử dụng số nguyên 32 bit sẽ tràn. 
+Vấn đề thứ ba là giả định rằng câu trả lời phù hợp với số nguyên 32 bit. Với`N = 100000`,`X = 100001`, và mọi`A[i] = 1`, mọi phân đoạn liền kề không trống đều hợp lệ. Câu trả lời là`100000 * 100001 / 2 = 5,000,050,000`, lớn hơn`2^32`chỉ ở dưới nó một chút nhưng đã vượt xa phạm vi 32-bit đã ký. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận trực tiếp là liệt kê mọi vị trí bắt đầu có thể và mọi vị trí kết thúc có thể có, tính tổng của mảng con đó và tăng câu trả lời bất cứ khi nào tổng nhỏ hơn`X`. có`N(N+1)/2`mảng con. Nếu mỗi tổng được tính bằng cách mở rộng điểm cuối bên phải và thêm một phần tử thì tổng công là O(N2), khoảng`5 * 10^9`lặp đi lặp lại khi`N = 10^5`. Tổng tiền tố có thể tạo ra tổng mỗi mảng con riêng lẻ là O(1), nhưng vẫn có các cặp điểm cuối O(N²), do đó độ phức tạp tổng thể vẫn là bậc hai. 
+Giải pháp trực tiếp là liệt kê mọi cặp điểm cuối có thể. Đối với mỗi vị trí xuất phát`l`, chúng ta có thể mở rộng`r`từ`l`bởi vì`N - 1`, duy trì tổng hiện tại và tăng câu trả lời bất cứ khi nào tổng đó nhỏ hơn`X`. Điều này đúng vì mọi phân đoạn liền kề không trống có chính xác một cặp điểm cuối, vì vậy mỗi phân đoạn hợp lệ sẽ được tính một lần. 
 
-Phương pháp brute-force hoạt động vì mỗi nhóm liền kề được xem xét chính xác một lần. Vấn đề là nó tốn thời gian xem xét các nhóm mà giá trị của chúng có thể được suy ra từ các nhóm đã được kiểm tra. 
+Ngay cả khi chúng ta duy trì tổng hiện hành thay vì tính toán lại từ đầu, vẫn có`N(N+1)/2`cặp điểm cuối. Vì`N = 10^5`, đó là`5,000,050,000`kiểm tra phân đoạn trong trường hợp xấu nhất. Điều này vượt xa giới hạn 1 giây cho phép. 
 
-Quan sát quan trọng xuất phát từ thực tế là mọi`A[i]`là tích cực. Giả sử chúng ta sửa một điểm cuối phù hợp`r`và xem xét các mảng con kết thúc tại`r`. Khi chúng ta di chuyển điểm cuối bên trái của chúng xa hơn về bên trái, tổng của chúng chỉ có thể tăng lên. Khi một điểm cuối bên trái cụ thể tạo ra một tổng ít nhất là`X`, mọi điểm cuối bên trái trước đó cũng sẽ tạo ra một tổng ít nhất`X`. 
+Phương pháp brute-force hoạt động hiệu quả vì nó kiểm tra rõ ràng mọi phân khúc ứng viên. Thất bại vì có quá nhiều ứng viên Quan sát chính là tất cả các giá trị mảng đều dương. Giả sử cửa sổ hiện tại có tổng nhỏ hơn`X`. Nếu chúng ta mở rộng điểm cuối bên phải của nó thì tổng chỉ có thể tăng lên. Ngược lại, nếu cửa sổ trở nên quá lớn, việc di chuyển điểm cuối bên trái của nó sang bên phải chỉ có thể làm giảm tổng. 
 
-Hành vi đơn điệu này cho phép một cửa sổ trượt hai con trỏ. Duy trì một cửa sổ`[left, right]`tổng của nó hoàn toàn nhỏ hơn`X`. Khi`right`tiến lên, phần tử mới làm tăng tổng. Nếu tổng đạt hoặc vượt quá`X`, di chuyển`left`chuyển tiếp và trừ các giá trị đã xóa cho đến khi cửa sổ trở lại hợp lệ. 
+Điều đó có nghĩa là chúng ta có thể duy trì một cửa sổ trượt hợp lệ cho mọi điểm cuối bên phải. Đối với điểm cuối bên phải cố định`r`, cho phép`l`là điểm cuối bên trái nhỏ nhất sao cho`A[l..r]`có tổng nhỏ hơn`X`. Vì tất cả các giá trị đều dương nên mọi đoạn đều kết thúc tại`r`và bắt đầu từ bất cứ đâu`l`bởi vì`r`cũng hợp lệ. Có chính xác`r - l + 1`những phân khúc như vậy. 
 
-Một lần`[left, right]`là hợp lệ, mọi mảng con kết thúc tại`right`và bắt đầu từ bất cứ đâu`left`bởi vì`right`cũng hợp lệ. Có chính xác`right - left + 1`mảng con như vậy. Việc thêm số đó sẽ đếm tất cả các nhóm hợp lệ kết thúc ở vị trí hiện tại mà không liệt kê chúng một cách rõ ràng. 
-
-Tính tích cực của mảng là điều làm cho sự chuyển động`left`an toàn. Việc loại bỏ các phần tử chỉ có thể làm giảm tổng và việc mở rộng điểm cuối bên phải chỉ có thể làm tăng tổng. Nếu các giá trị âm được cho phép, mối quan hệ đơn điệu này sẽ biến mất và đối số cửa sổ trượt tương tự sẽ không còn hợp lệ. 
+Chúng ta có thể tìm thấy giá trị nhỏ nhất này`l`bằng cách di chuyển con trỏ trái về phía trước bất cứ khi nào tổng hiện tại ít nhất`X`. Mỗi phần tử vào cửa sổ một lần và rời khỏi cửa sổ nhiều nhất một lần, do đó tổng số chuyển động của con trỏ là tuyến tính. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(N2) | O(1) | Quá chậm | 
-| Cửa sổ trượt tối ưu | O(N) | O(1) không gian phụ trợ | Đã chấp nhận | 
+| Cửa Sổ Trượt | O(N) | O(N) cho mảng đầu vào | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Đặt`left = 0`,`current_sum = 0`, Và`answer = 0`. Con trỏ`left`sẽ đại diện cho vị trí bắt đầu nhỏ nhất mà vẫn có thể tạo ra một mảng con hợp lệ kết thúc ở điểm cuối bên phải hiện tại. 
-2. Di chuyển`right`từ`0`bởi vì`N - 1`. Thêm vào`A[right]`ĐẾN`current_sum`, vì cửa sổ hiện tại vừa được mở rộng để bao gồm học sinh mới. 
-3. Trong khi`current_sum >= X`, di dời`A[left]`từ`current_sum`và tăng dần`left`. Cửa sổ phải nhỏ hơn`X`, do đó bình đẳng với`X`cũng không hợp lệ. Vì mọi giá trị mảng đều dương nên di chuyển`left`chuyển tiếp chỉ có thể giảm tổng, do đó cuối cùng cửa sổ trở nên hợp lệ trừ khi ngay cả phần tử đơn lẻ`A[right]`ít nhất là`X`. 
-4. Sau vòng lặp,`[left, right]`có tổng nhỏ hơn`X`. Mỗi vị trí xuất phát từ`left`bởi vì`right`đưa ra một mảng con hợp lệ khác kết thúc tại`right`. Như vậy thêm`right - left + 1`ĐẾN`answer`. 
-5. Lặp lại cho đến khi mọi điểm cuối bên phải có thể được xử lý. In`answer`cho trường hợp thử nghiệm. 
+1. Bắt đầu bằng cả hai con trỏ ở đầu mảng, vì vậy`left = 0`, và giữ`current_sum = 0`Và`answer = 0`. 
+2. Di chuyển`right`từ`0`ĐẾN`N - 1`. Thêm vào`A[right]`ĐẾN`current_sum`, vì điểm cuối bên phải mới có nghĩa là phần tử này hiện thuộc về cửa sổ hiện tại. 
+3. Trong khi`current_sum >= X`, di chuyển`left`chuyển tiếp và trừ`A[left]`từ`current_sum`trước khi tăng`left`. Vòng lặp là cần thiết vì một lần loại bỏ có thể không đủ để làm cho tổng nhỏ hơn`X`. 
+4. Sau khi vòng lặp kết thúc, cửa sổ hiện tại`A[left..right]`có tổng nhỏ hơn`X`. Vì tất cả các phần tử đều dương nên mọi đoạn đều kết thúc tại`right`có điểm cuối bên trái nằm giữa`left`Và`right`cũng có tổng nhỏ hơn`X`. 
+5. Thêm`right - left + 1`ĐẾN`answer`. Điều này đếm chính xác những phân đoạn hợp lệ kết thúc ở vị trí hiện tại. 
+6. Lặp lại cho đến khi mọi điểm cuối bên phải có thể được xử lý, sau đó xuất ra`answer`. 
 
 ### Tại sao nó hoạt động 
 
-Điều bất biến là sau giai đoạn thu nhỏ,`current_sum`là tổng của`[left, right]`và hoàn toàn nhỏ hơn`X`, trong khi mọi mảng con kết thúc tại`right`vị trí bắt đầu của nó là trước`left`có tổng ít nhất`X`. 
+Sau mỗi lần lặp,`left`là chỉ số nhỏ nhất mà cửa sổ hiện tại`A[left..right]`có tổng nhỏ hơn`X`. Bất kỳ đoạn nào kết thúc tại`right`và bắt đầu trước`left`chứa cửa sổ hợp lệ hiện tại cộng với ít nhất một phần tử dương bổ sung, do đó tổng của nó ít nhất là`X`và nó không thể hợp lệ. Mỗi đoạn bắt đầu từ`left`hoặc muộn hơn là phân đoạn con của cửa sổ hợp lệ và do đó có tổng dương thậm chí còn nhỏ hơn hoặc bằng nhau, vì vậy nó hợp lệ. Như vậy chính xác`right - left + 1`phân đoạn hợp lệ kết thúc tại`right`. 
 
-Khi`right`được sửa, việc loại bỏ các phần tử ở bên trái sẽ làm cho tổng nhỏ hơn vì tất cả các giá trị đều dương. Do đó, giá trị đầu tiên hợp lệ`left`chia tất cả các vị trí bắt đầu có thể thành hai nhóm: các vị trí từ`0`bởi vì`left - 1`không hợp lệ, trong khi các vị trí từ`left`bởi vì`right`là hợp lệ. Có chính xác`right - left + 1`lựa chọn hợp lệ, vì vậy số tiền được thêm vào câu trả lời là chính xác. 
-
-Mỗi con trỏ chỉ di chuyển về phía trước. Con trỏ bên phải di chuyển`N`lần, và mặc dù vòng lặp bên trong có thể trông giống như thực hiện nhiều thao tác,`left`cũng di chuyển nhiều nhất`N`lần trong toàn bộ trường hợp thử nghiệm. Điều đó mang lại tổng công tuyến tính. 
+Bởi vì`right`chỉ di chuyển về phía trước và`left`cũng chỉ di chuyển về phía trước, không có phần tử nào được thêm vào hoặc xóa khỏi cửa sổ trượt nhiều lần. Do đó, thuật toán xử lý toàn bộ mảng theo thời gian tuyến tính. 
 
 ## Giải pháp Python```python
 import sys
@@ -91,7 +86,7 @@ def solve():
         for right in range(n):
             current_sum += a[right]
 
-            while current_sum >= x and left <= right:
+            while current_sum >= x:
                 current_sum -= a[left]
                 left += 1
 
@@ -101,61 +96,43 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Phần đầu vào đọc số lượng ca kiểm thử và sau đó là mảng cho từng trường hợp. Việc lưu trữ mảng rất thuận tiện vì con trỏ bên trái có thể cần trừ các giá trị đã được thêm vào trước đó. 
+```Đầu vào được đọc một lần cho mỗi trường hợp kiểm thử và mảng được lưu trữ sao cho con trỏ bên trái có thể trừ các phần tử khi cửa sổ trở nên quá lớn. Vòng lặp chính tương ứng trực tiếp với bước con trỏ bên phải của thuật toán. 
 
-Vòng lặp chính mở rộng cửa sổ bằng cách thêm`a[right]`. các`while`điều kiện sử dụng`>= x`, còn hơn là`> x`, vì điều kiện yêu cầu nhỏ hơn`X`. 
+các`while current_sum >= x`điều kiện sử dụng`>=`, còn hơn là`>`, bởi vì một tổng chính xác bằng`X`không hợp lệ. Sau vòng lặp, bất biến là`current_sum < x`. 
 
-Nếu bản thân phần tử mới được thêm vào ít nhất là`X`, vòng lặp thu hẹp cuối cùng cũng loại bỏ phần tử đó. Sau đó`left`trở thành`right + 1`,`current_sum`trở thành số không, và`right - left + 1`là số không. Điều này tính chính xác không có mảng con hợp lệ nào kết thúc ở vị trí đó. 
+biểu hiện`right - left + 1`đếm các vị trí bắt đầu có thể có của một phân đoạn hợp lệ kết thúc tại`right`. Cả hai điểm cuối đều được bao gồm, vì vậy`+1`là cần thiết. Ví dụ, nếu`left == right`, có chính xác một đoạn, phần tử duy nhất tại`right`. 
 
-Câu trả lời chỉ được cập nhật sau khi cửa sổ hợp lệ. biểu hiện`right - left + 1`đếm tất cả các vị trí bắt đầu có thể có trong phạm vi hợp lệ`[left, right]`. 
-
-Số nguyên Python có độ chính xác tùy ý, vì vậy câu trả lời có thể vượt quá phạm vi số nguyên 32 bit một cách an toàn. Trên thực tế, với`N = 10^5`, đáp án tối đa là`5,000,050,000`. 
-
-Thứ tự thực hiện cũng quan trọng. Trước tiên, chúng tôi thêm điểm cuối bên phải mới, sau đó thu nhỏ cho đến khi thỏa mãn bất đẳng thức nghiêm ngặt và chỉ sau đó mới tính số lần bắt đầu hợp lệ. Việc đếm trước khi thu nhỏ sẽ bao gồm các mảng con không hợp lệ. 
+Kiểu số nguyên của Python tránh tràn khi câu trả lời đạt tới hàng tỷ. Trong các ngôn ngữ có loại số nguyên có chiều rộng cố định, câu trả lời phải được lưu trữ ở dạng số nguyên 64 bit. 
 
 ## Ví dụ đã hoạt động 
 
-### Mẫu 1, test case 1 
+Đối với trường hợp kiểm thử mẫu đầu tiên, có một học sinh và một phân đoạn có thể. 
 
-Đầu vào là`N = 1`,`X = 4`, Và`A = [3]`. Nhóm duy nhất có thể chứa một học sinh duy nhất và tổng của nó là`3`, hợp lệ. 
-
-| đúng | giá trị gia tăng | current_sum trước khi thu nhỏ | còn lại sau khi thu nhỏ | nhóm hợp lệ được thêm vào | trả lời | 
+| đúng | giá trị gia tăng | tổng hiện tại trước khi thu hẹp | còn lại sau khi thu nhỏ | phân đoạn hợp lệ kết thúc ở bên phải | trả lời | 
 | --- | --- | --- | --- | --- | --- | 
 | 0 | 3 | 3 | 0 | 1 | 1 | 
 
-Cửa sổ`[0, 0]`là hợp lệ, do đó có chính xác một vị trí bắt đầu hợp lệ. Câu trả lời là`1`. 
+tổng`3`đúng là nhỏ hơn`X = 4`, do đó đoạn đơn`[3]`là hợp lệ. Câu trả lời là`1`. 
 
-### Mẫu 1, test case 2 
+Đối với trường hợp thử nghiệm mẫu thứ hai,`A = [1, 5]`Và`X = 4`. 
 
-đây`N = 2`,`X = 4`, Và`A = [1, 5]`. Các nhóm có thể là`[1]`,`[5]`, Và`[1, 5]`. Chỉ một`[1]`có tổng dưới đây`4`. 
-
-| đúng | giá trị gia tăng | current_sum trước khi thu nhỏ | còn lại sau khi thu nhỏ | nhóm hợp lệ được thêm vào | trả lời | 
+| đúng | giá trị gia tăng | tổng sau khi thêm | còn lại sau khi thu nhỏ | phân đoạn hợp lệ kết thúc ở bên phải | trả lời | 
 | --- | --- | --- | --- | --- | --- | 
 | 0 | 1 | 1 | 0 | 1 | 1 | 
 | 1 | 5 | 6 | 2 | 0 | 1 | 
 
-Khi`5`được thêm vào, tổng sẽ trở thành`6`. Đang xóa`1`lá`5`, vẫn còn quá lớn, vì vậy`5`chính nó được loại bỏ. Cửa sổ trở nên trống rỗng, được biểu thị bằng`left = 2`. Không có mảng con hợp lệ nào kết thúc ở chỉ mục`1`, vậy đáp án cuối cùng vẫn là`1`. 
+Khi`5`được thêm vào, tổng sẽ trở thành`6`, do đó thuật toán loại bỏ`A[0]`, để lại số tiền`5`. Tổng số tiền ít nhất vẫn là`4`, vì vậy nó loại bỏ`A[1]`cũng vậy. Hiện nay`left = 2`, đó là một vị trí vượt quá`right`. Không có phân đoạn nào trống hợp lệ kết thúc ở vị trí`1`. Câu trả lời cuối cùng vẫn còn`1`. 
 
-### Dấu vết bổ sung, tất cả các mảng con đều hợp lệ 
-
-Hãy xem xét`N = 3`,`X = 10`, Và`A = [1, 2, 3]`. 
-
-| đúng | giá trị gia tăng | current_sum trước khi thu nhỏ | còn lại sau khi thu nhỏ | nhóm hợp lệ được thêm vào | trả lời | 
-| --- | --- | --- | --- | --- | --- | 
-| 0 | 1 | 1 | 0 | 1 | 1 | 
-| 1 | 2 | 3 | 0 | 2 | 3 | 
-| 2 | 3 | 6 | 0 | 3 | 6 | 
-
-Tại mỗi vị trí toàn bộ tiền tố kết thúc tại`right`vẫn còn hiệu lực. Thuật toán bổ sung`1 + 2 + 3 = 6`, bằng tổng số mảng con không trống. 
+Dấu vết thứ hai chứng minh tại sao bước rút gọn phải là một bước`while`vòng lặp. Việc loại bỏ một lần không phải lúc nào cũng đủ khi ít nhất một phần tử riêng lẻ đã có`X`. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | O(N) cho mỗi trường hợp thử nghiệm |`right`di chuyển từ trái sang phải một lần và`left`cũng tiến về phía trước nhiều nhất`N`lần | 
-| Không gian | O(N) | Mảng được lưu trữ; bản thân trạng thái cửa sổ trượt sử dụng không gian phụ O(1) | 
+| Thời gian | O(N) cho mỗi trường hợp thử nghiệm |`right`tiến lên N lần và`left`cũng tiến bộ nhiều nhất là N lần | 
+| Không gian | O(N) | Mảng được lưu trữ để có thể xóa các phần tử khỏi phía bên trái của cửa sổ | 
 
-Trên tất cả các trường hợp thử nghiệm, thời gian là O(tổng của`N`) và không gian mảng được lưu trữ là O(N) cho trường hợp thử nghiệm hiện tại. Với`N`lên đến`10^5`, thuật toán chỉ thực hiện một số thao tác không đổi cho mỗi phần tử và vừa vặn trong giới hạn. Cách tiếp cận bậc hai ban đầu sẽ yêu cầu hàng tỷ phép tính trong trường hợp xấu nhất. 
+Thời gian chạy tuyến tính phù hợp cho`N = 10^5`và giới hạn 1 giây, giả sử tổng kích thước đầu vào nằm trong giới hạn dự định của vấn đề. Thuật toán không thực hiện phép lặp lồng nhau trên tất cả các cặp điểm cuối, đây là điểm khác biệt quan trọng so với giải pháp brute-force. Các số nguyên có độ chính xác tùy ý của Python cũng xử lý câu trả lời lớn nhất có thể một cách an toàn. 
 
 ## Trường hợp thử nghiệm```python
 import sys
@@ -164,7 +141,6 @@ import io
 def solve():
     input = sys.stdin.readline
     t = int(input())
-    out = []
 
     for _ in range(t):
         n, x = map(int, input().split())
@@ -177,15 +153,13 @@ def solve():
         for right in range(n):
             current_sum += a[right]
 
-            while current_sum >= x and left <= right:
+            while current_sum >= x:
                 current_sum -= a[left]
                 left += 1
 
             answer += right - left + 1
 
-        out.append(str(answer))
-
-    sys.stdout.write("\n".join(out))
+        print(answer)
 
 def run(inp: str) -> str:
     old_stdin = sys.stdin
@@ -200,94 +174,61 @@ def run(inp: str) -> str:
         sys.stdin = old_stdin
         sys.stdout = old_stdout
 
-assert run("""\
-2
+# Provided sample
+assert run("""2
 1 4
 3
 2 4
 1 5
-""") == """\
-1
+""") == """1
 1
 """, "provided sample"
 
-assert run("""\
+# Minimum-size input
+assert run("""1
+1 1
 1
-1 4
-4
-""") == """\
-0
-""", "exactly X must not be counted"
+""") == """0
+""", "single element equal to X is invalid"
 
-assert run("""\
-1
-3 10
-1 2 3
-""") == """\
-6
-""", "every subarray is valid"
-
-assert run("""\
-1
-3 5
-5 6 7
-""") == """\
-0
-""", "every individual element is invalid"
-
-assert run("""\
-1
-4 6
-1 1 1 1
-""") == """\
-10
-""", "all equal values, every subarray is valid"
-
-assert run("""\
-1
+# Strict boundary: sums equal to X must not be counted
+assert run("""1
 3 3
-1 2 1
-""") == """\
-3
-""", "strict boundary and shrinking"
+1 1 1
+""") == """5
+""", "only segments of length 1 and 2 are valid"
 
-assert run("""\
-1
-100000 1000000000000
-""" + "1 " * 99999 + "1\n") == """\
-5000050000
-""", "maximum N and maximum answer")
+# All values are equal and every nonempty segment is valid
+assert run("""1
+4 10
+2 2 2 2
+""") == """10
+""", "all 10 subarrays are valid"
+
+# Maximum-size case, all elements equal to 1, every segment is valid
+assert run("1\n100000 100001\n" + " ".join(["1"] * 100000) + "\n") == """5000050000
+""", "large answer and 64-bit boundary"
+
+# A value larger than X forces the window to become empty
+assert run("""1
+3 4
+1 5 1
+""") == """2
+""", "single element larger than X"
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`1 / 1 4 / 4`|`0`| Nghiêm ngặt`< X`ranh giới | 
-|`3 / 10 / 1 2 3`|`6`| Mọi mảng con có thể đều hợp lệ | 
-|`3 / 5 / 5 6 7`|`0`| Các phần tử riêng lẻ bằng hoặc cao hơn`X`| 
-|`4 / 6 / 1 1 1 1`|`10`| Giá trị bằng nhau và đếm tất cả độ dài | 
-|`3 / 3 / 1 2 1`|`3`| Chỉnh sửa thu hẹp khi tổng đạt`X`| 
-|`100000 / 10^12 / 1 ... 1`|`5,000,050,000`| Tối đa`N`và trả lời phạm vi lớn hơn 32 bit | 
-
-Cấu trúc thử nghiệm kích thước tối đa`100000`những cái đó và chọn một`X`lớn hơn tổng số tiền của họ. Do đó mỗi một trong số`5,000,050,000`mảng con không trống là hợp lệ. Điều này kiểm tra cả việc truyền tải tuyến tính và khả năng biểu diễn một câu trả lời lớn. 
+|`1 / 1 1 / [1]`|`0`| Kích thước tối thiểu và bình đẳng với`X`| 
+|`1 / 3 3 / [1,1,1]`|`5`| Bất bình đẳng nghiêm ngặt và xử lý từng người một | 
+|`1 / 4 10 / [2,2,2,2]`|`10`| Tất cả các mảng con đều hợp lệ | 
+|`1 / 100000 100001 / [1,...,1]`|`5000050000`| Kích thước tối đa và câu trả lời lớn | 
+|`1 / 3 4 / [1,5,1]`|`2`| Một phần tử riêng lẻ có thể vượt quá`X`| 
 
 ## Vỏ cạnh 
 
-Đối với trường hợp bất đẳng thức nghiêm ngặt, hãy xem xét:```
-1
-1 4
-4
-```Thuật toán bổ sung`4`, thấy thế`current_sum >= X`và loại bỏ phần tử duy nhất. Cửa sổ kết quả trống, vì vậy`right - left + 1 = 0`. Đầu ra là`0`, đúng như yêu cầu. Một triển khai sử dụng`while current_sum > X`sẽ đếm sai mảng con này. 
+Khi tổng phân đoạn chính xác`X`, nó phải được loại trừ. Coi như`N = 1`,`X = 4`, Và`A = [4]`. Thuật toán bổ sung`4`, thấy thế`current_sum >= X`, loại bỏ`A[0]`, và những tiến bộ`left`ĐẾN`1`. Cửa sổ hiện tại trống, vì vậy`right - left + 1 = 0`. Đầu ra là`0`, xử lý chính xác bất đẳng thức nghiêm ngặt. 
 
-Đối với trường hợp mọi phần tử đều không hợp lệ, hãy xem xét:```
-1
-3 5
-5 6 7
-```Tại`right = 0`, tổng là`5`, do đó phần tử bị loại bỏ và phần đóng góp bằng không. Tại`right = 1`, điều tương tự cũng xảy ra với`6`, và tại`right = 2`nó xảy ra với`7`. Câu trả lời cuối cùng là`0`. Cửa sổ trống là trạng thái nội bộ hợp lệ vì sự cố yêu cầu các nhóm không trống và đóng góp bằng 0 sẽ loại trừ nó một cách chính xác. 
+Khi một phần tử lớn hơn`X`, thuật toán có thể di chuyển`left`vượt quá hiện tại`right`. Vì`N = 3`,`X = 4`, Và`A = [1, 5, 1]`, sau khi xử lý`1`câu trả lời là`1`. Sau khi thêm`5`, tổng là`6`, do đó thuật toán loại bỏ`1`, rời đi`5`, sau đó loại bỏ`5`, để lại một cửa sổ trống với`left = 2`. Không có phân đoạn nào kết thúc ở chỉ mục`1`là hợp lệ. Sau khi thêm phần cuối cùng`1`, cửa sổ chỉ chứa phần tử đó nên một đoạn nữa sẽ được tính. Câu trả lời cuối cùng là`2`, tương ứng với`[1]`ở mỗi đầu. 
 
-Đối với trường hợp mọi mảng con đều hợp lệ, hãy xem xét:```
-1
-3 10
-1 2 3
-```Cửa sổ không bao giờ cần phải thu nhỏ lại. Tại ba điểm cuối bên phải, thuật toán đóng góp`1`,`2`, Và`3`, sản xuất`6`. Những đóng góp đó tương ứng với tất cả các mảng con kết thúc ở mỗi vị trí tương ứng. 
+Câu trả lời lớn là một trường hợp khác có thể âm thầm phá vỡ việc triển khai bằng cách sử dụng số nguyên 32 bit. Với`100000`các phần tử đều bằng nhau`1`Và`X = 100001`, tổng phân đoạn tối đa có thể là`100000`, vì vậy mọi phân đoạn không trống đều hợp lệ. Thuật toán bổ sung`1 + 2 + ... + 100000`, thu được`5,000,050,000`. Python lưu trữ giá trị này mà không bị tràn và quá trình kiểm tra xác nhận rằng biểu thức đếm là chính xác ngay cả ở tỷ lệ lớn nhất. 
 
-Đối với trường hợp câu trả lời lớn, hãy xem xét một mảng`100000`những cái có`X = 10^12`. Vì thậm chí toàn bộ mảng chỉ có tổng`100000`, không xảy ra hiện tượng co rút. Tại chỉ mục`r`, chính xác`r + 1`mảng con kết thúc ở đó là hợp lệ, vì vậy tổng số là`1 + 2 + ... + 100000 = 5,000,050,000`. 
-
-Python lưu trữ giá trị này mà không bị tràn và thuật toán vẫn chỉ thực hiện công việc O(N).
+Cuối cùng, khi tất cả các phần tử đều dương thì tính đơn điệu của cửa sổ trượt được đảm bảo. Ví dụ, với`A = [2,2,2,2]`Và`X = 10`, mọi phân đoạn đều có tổng dưới đây`10`, Vì thế`left`không bao giờ di chuyển. Tại mỗi điểm cuối bên phải, thuật toán sẽ thêm`1`, sau đó`2`, sau đó`3`, sau đó`4`, cho`10`tổng số phân đoạn hợp lệ. Điều này thể hiện tính bất biến cốt lõi: khi một cửa sổ hợp lệ, mọi hậu tố của cửa sổ đó cũng hợp lệ vì việc loại bỏ các phần tử dương không thể làm tăng tổng của nó.
