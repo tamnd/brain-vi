@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 22 phút 18 giây 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi có một lưới có chính xác hai hàng và\(n\)cột. Mỗi ô được đánh dấu, viết là`#`, hoặc trống, được viết là`.`. Chúng tôi có thể hoán vị các cột theo bất kỳ thứ tự nào, nhưng chúng tôi không thể thay đổi nội dung của một cột riêng lẻ. 
@@ -35,7 +35,7 @@ Chỉ có bốn loại cột có thể có:```text
 ##    both
 ```giá trị\(n \le 1000\)đủ nhỏ để giải pháp \(O(n)\) hoặc \(O(n \log n)\) đủ nhanh, nhưng nó loại trừ các phương pháp liệt kê các hoán vị. Ngay cả \(O(n^2)\) cũng sẽ vô hại ở đây, trong khi \(O(n!)\) gần như không thể thực hiện được ngay lập tức. 
 
-Các trường hợp cạnh khóa là do các cột chứa các dấu ở các hàng khác nhau gây ra. Ví dụ,```text
+Các trường hợp cạnh khóa xảy ra do các cột chứa các dấu ở các hàng khác nhau. Ví dụ,```text
 #.
 .#
 ```có một cột chỉ trên cùng và một cột chỉ dưới cùng. Câu trả lời là`NO`, vì không có cột nào chứa cả hai hàng có thể kết nối chúng. Một giải pháp bất cẩn có thể chỉ cần đặt hai cột cạnh nhau và cho rằng vùng được đánh dấu được kết nối, nhưng cả hai`#`các tế bào chỉ tiếp xúc theo đường chéo. 
@@ -65,7 +65,7 @@ Giả sử cả cột chỉ trên cùng và cột chỉ dưới cùng đều xu�
 
 Mọi chuyển đổi bên trong nhóm chỉ trên cùng đều chia sẻ hàng trên cùng. Mọi chuyển đổi bên trong nhóm chỉ ở dưới cùng đều chia sẻ hàng dưới cùng. các`##`khối kết nối cả hai hàng và quá trình chuyển đổi từ nhóm trên cùng vào nhóm đó chia sẻ hàng trên cùng trong khi quá trình chuyển đổi ra khỏi nhóm đó chia sẻ hàng dưới cùng. 
 
-Nếu các dấu chỉ xuất hiện trong một hàng thì không`##`cột là cần thiết. Chúng ta có thể nhóm tất cả các cột bị chiếm lại với nhau một cách đơn giản. Các cột trống có thể được thêm vào sau đó. Do đó, toàn bộ vấn đề giảm xuống còn việc kiểm tra xem cả hai loại cột một hàng có xảy ra mà không có bất kỳ`##`cột có sẵn. 
+Nếu các dấu chỉ xuất hiện trong một hàng thì không`##`cột là cần thiết. Chúng ta có thể chỉ cần nhóm tất cả các cột bị chiếm giữ lại với nhau. Các cột trống có thể được thêm vào sau đó. Do đó, toàn bộ vấn đề giảm xuống còn việc kiểm tra xem cả hai loại cột một hàng có xảy ra mà không có bất kỳ`##`cột có sẵn. 
 
 Lý do tương tự cũng đưa ra một cách xây dựng trực tiếp, do đó không cần tìm kiếm các hoán vị có thể có. 
 
@@ -86,13 +86,13 @@ Lý do tương tự cũng đưa ra một cách xây dựng trực tiếp, do đ�
 
 5. Chuyển đổi danh sách các cột có thứ tự này thành hai chuỗi và in chúng. 
 
-Tại sao trật tự này lại có tác dụng là điểm trung tâm của công trình. Các cột chỉ trên cùng liên tiếp có chung một ô phía trên được đánh dấu, liên tiếp`##`các cột chia sẻ cả hai ô được đánh dấu và các cột chỉ ở dưới cùng liên tiếp chia sẻ một ô thấp hơn được đánh dấu. Nếu cả hai hàng được sử dụng, một`##`cột kết nối nhóm trên với nhóm dưới. Các cột trống được đặt ở cuối nên không thể phân chia vùng bị chiếm dụng. 
+Tại sao trật tự này có tác dụng là điểm trung tâm của công trình. Các cột chỉ trên cùng liên tiếp có chung một ô phía trên được đánh dấu, liên tiếp`##`các cột chia sẻ cả hai ô được đánh dấu và các cột chỉ ở dưới cùng liên tiếp chia sẻ một ô thấp hơn được đánh dấu. Nếu cả hai hàng được sử dụng, một`##`cột kết nối nhóm trên với nhóm dưới. Các cột trống được đặt ở cuối nên không thể phân chia vùng bị chiếm dụng. 
 
 ### Tại sao nó hoạt động 
 
 Điều bất biến là mọi cột bên trong khối được xây dựng đều được kết nối với cột trước đó. Trước khi đạt đến`##`nhóm, tất cả các cột đều chứa dấu trên cùng, do đó chuyển động theo chiều ngang sẽ giữ cho thành phần được kết nối. Bên trong`##`nhóm, cả hai hàng vẫn được kết nối. Sau khi rời khỏi nó, tất cả các cột đều có dấu dưới cùng nên phần dưới vẫn được kết nối. 
 
-Nếu tồn tại cả hai cột chỉ trên cùng và chỉ dưới cùng nhưng không có`##`cột tồn tại, mỗi cột chứa các dấu trong đúng một hàng. Vì không có cạnh dọc nào trong các ô được đánh dấu nên thành phần hàng trên cùng không bao giờ có thể chạm tới thành phần hàng dưới cùng. Không hoán vị nào có thể thay đổi thực tế đó, vì vậy việc bác bỏ trường hợp này là cần thiết cũng như đủ. 
+Nếu tồn tại cả hai cột chỉ trên cùng và chỉ dưới cùng nhưng không có`##`cột tồn tại, mỗi cột chứa các dấu trong đúng một hàng. Vì không có cạnh dọc nào ở bất kỳ vị trí nào trong các ô được đánh dấu nên thành phần hàng trên cùng không bao giờ có thể chạm tới thành phần hàng dưới cùng. Không hoán vị nào có thể thay đổi thực tế đó, vì vậy việc bác bỏ trường hợp này là cần thiết cũng như đủ. 
 
 Các cột trống không bao giờ cần tham gia vào thành phần được kết nối. Đặt chúng bên ngoài khối bị chiếm dụng có nghĩa là chúng không thể ngắt kết nối các ô được đánh dấu. 
 

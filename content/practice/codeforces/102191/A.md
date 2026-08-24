@@ -1,5 +1,5 @@
 ---
-title: "CF 102191A - Kẻ ăn uống hào phóng"
+title: "CF 102191A - Người ăn uống hào phóng"
 description: "Chúng ta bắt đầu với n chiếc kẹo và muốn tặng kẹo cho càng nhiều người bạn khác nhau càng tốt, mỗi người một chiếc kẹo. Sau khi mỗi người bạn thứ hai nhận được một viên kẹo, chúng ta sẽ tự ăn một viên kẹo nếu còn sót lại viên kẹo nào."
 date: "2026-08-23T09:12:46+07:00"
 tags: ["codeforces", "competitive-programming"]
@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 24m 3s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi bắt đầu với`n`kẹo và muốn tặng kẹo cho càng nhiều bạn bè khác nhau càng tốt, mỗi người bạn một viên kẹo. Sau khi mỗi người bạn thứ hai nhận được một viên kẹo, chúng ta sẽ tự ăn một viên kẹo nếu còn sót lại viên kẹo nào. Quá trình tiếp tục cho đến khi chúng ta không thể tặng thêm một viên kẹo nào cho bạn bè nữa. 
@@ -34,7 +34,7 @@ Những trường hợp tế nhị nhất xảy ra vào thời điểm không c�
 
 Một trường hợp ranh giới khác là`4`. Câu trả lời đúng là`3`. Chúng ta tặng kẹo cho hai người bạn đầu tiên, ăn một viên kẹo và còn lại một viên kẹo cho người bạn thứ ba. Sau đó, quá trình dừng lại. Một phép tính ngây thơ về việc cứ hai người bạn ăn một chiếc kẹo có thể mong đợi một cách sai lầm là sẽ có nhiều hơn bốn chiếc kẹo để phục vụ ba người bạn. 
 
-đầu vào`6`là một trường hợp ranh giới hữu ích khác. Câu trả lời là`4`, không`5`. Sau khi phục vụ hai người bạn, một chiếc kẹo được ăn, còn lại ba chiếc. Sau đó chúng tôi phục vụ thêm hai người bạn nữa, để lại một người và chiếc kẹo cuối cùng được ăn. Chẳng còn lại gì cho người bạn thứ năm. Điều này nắm bắt các công thức coi mọi viên kẹo còn lại đều tự động có sẵn cho bạn bè. 
+đầu vào`6`là một trường hợp ranh giới hữu ích khác. Câu trả lời là`4`, không`5`. Sau khi phục vụ hai người bạn, một chiếc kẹo được ăn, còn lại ba chiếc. Sau đó chúng tôi phục vụ thêm hai người bạn nữa, để lại một người và chiếc kẹo cuối cùng được ăn. Chẳng còn gì cho người bạn thứ năm. Điều này nắm bắt các công thức coi mọi viên kẹo còn lại đều tự động có sẵn cho bạn bè. 
 
 ## Phương pháp tiếp cận 
 
@@ -46,7 +46,7 @@ Cho phép`n = 3q + r`, Ở đâu`r`là`0`,`1`, hoặc`2`.
 
 các`q`hoàn thành nhóm ba viên kẹo có nguyên nhân chính xác`q`kẹo để ăn, trong khi phần còn lại`r`kẹo đi cho bạn bè. Vậy số bạn bè là`n - q = n - floor(n / 3)`. 
 
-Kết quả tương tự có thể được hiểu theo hướng ngược lại. Để phục vụ`k`các bạn ơi, quá trình này cần`k`kẹo được tặng cho bạn bè cộng với một viên kẹo đã ăn sau mỗi cặp được một người bạn khác theo sau. Điều này tạo ra cùng một tỷ lệ giữa hai viên kẹo hữu ích cho mỗi ba viên kẹo được tiêu thụ, trong đó nhóm chưa hoàn thành cuối cùng được xử lý trực tiếp bởi những viên còn lại. 
+Kết quả tương tự có thể được hiểu theo hướng ngược lại. Để phục vụ`k`các bạn, quá trình này cần`k`kẹo được tặng cho bạn bè cộng với một viên kẹo đã ăn sau mỗi cặp được một người bạn khác theo sau. Điều này tạo ra cùng một tỷ lệ giữa hai viên kẹo hữu ích cho mỗi ba viên kẹo được tiêu thụ, trong đó nhóm chưa hoàn thành cuối cùng được xử lý trực tiếp bởi những viên còn lại. 
 
 Vì vậy, toàn bộ mô phỏng thu gọn thành một phép chia số nguyên và một phép trừ. 
 
@@ -79,7 +79,7 @@ n = int(input())
 print(n - n // 3)
 ```Đầu vào là một số nguyên nên chương trình sẽ đọc trực tiếp dưới dạng`n`. Số nguyên Python dễ dàng xử lý`10^9`, mặc dù ở đây ngay cả số nguyên có dấu 32 bit cũng đủ. 
 
-biểu hiện`n // 3`thực hiện phép chia số nguyên và đưa ra số nhóm hoàn chỉnh gồm ba. Trừ nó từ`n`đưa ra số lượng kẹo đến tay bạn bè. 
+biểu thức`n // 3`thực hiện phép chia số nguyên và đưa ra số nhóm hoàn chỉnh gồm ba. Trừ nó từ`n`đưa ra số lượng kẹo đến tay bạn bè. 
 
 Không có vòng lặp nên không có ranh giới mô phỏng hoặc chuyển tiếp từng cái một để quản lý. Đặc biệt, sử dụng phép chia số nguyên là cách xử lý chính xác các giá trị như`2`,`4`, Và`5`: thương của chúng với 3 là`0`,`1`, Và`1`, tương ứng. 
 
@@ -105,7 +105,7 @@ cho`n = 5`, vẫn chỉ có một nhóm đầy đủ ba người, vậy nên ăn
 
 Quá trình này có thể phục vụ bốn người bạn: hai người nhận kẹo, một viên kẹo được ăn và hai viên kẹo còn lại dành cho hai người bạn nữa. Đầu ra là`4`. 
 
-Những ví dụ này cũng cho thấy tại sao phần còn lại lại quan trọng. Sau khi loại bỏ một nhóm ba viên hoàn chỉnh trong số năm viên kẹo, vẫn còn lại hai viên kẹo và cả hai đều có thể được cho đi mà không cần tạo ra một chu kỳ ăn khác. 
+Những ví dụ này cũng cho thấy tại sao phần còn lại lại quan trọng. Sau khi loại bỏ một nhóm ba viên hoàn chỉnh trong số năm viên kẹo, vẫn còn hai viên kẹo và cả hai đều có thể được cho đi mà không cần tạo ra một chu kỳ ăn khác. 
 
 ## Phân tích độ phức tạp 
 

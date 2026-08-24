@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 38 phút 57 giây 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta có hai loại đoạn thẳng hữu hạn. Một đoạn ngang được mô tả bởi tọa độ x trái và phải và tọa độ y cố định của nó. Một đoạn thẳng đứng được mô tả bởi tọa độ y dưới và trên cùng và tọa độ x cố định của nó. 
@@ -30,7 +30,7 @@ Chọn một đoạn ngang và một đoạn thẳng cắt nhau tại điểm C.
 
 Giá trị của dấu cộng này là giá trị nhỏ nhất trong bốn số đó. Chúng tôi cần giá trị tối đa có thể có trên mọi cặp ngang và dọc hợp lệ. 
 
-Với tối đa`10^5`đoạn ngang và`10^5`các đoạn thẳng đứng, việc thử từng cặp sẽ cần tới`10^10`kiểm tra trong một trường hợp thử nghiệm. Giới hạn một giây loại bỏ hoàn toàn điều đó. Thậm chí một`O((N+M) log(N+M))`giải pháp phù hợp hơn nhiều ở đây, trong khi thuật toán có hệ số logarit bổ sung vẫn có thể thực tế vì phạm vi tọa độ chỉ`10^5`. 
+Với tối đa`10^5`đoạn ngang và`10^5`các đoạn thẳng đứng, việc thử từng cặp sẽ cần tới`10^10`kiểm tra trong một trường hợp thử nghiệm. Giới hạn một giây loại bỏ hoàn toàn điều đó. Thậm chí một`O((N+M) log(N+M))`Giải pháp ở đây phù hợp hơn nhiều, trong khi thuật toán có hệ số logarit bổ sung vẫn có thể thực tế vì phạm vi tọa độ chỉ là`10^5`. 
 
 Có một số trường hợp ranh giới mà việc triển khai đúng phải xử lý cẩn thận. Đầu tiên, chạm vào điểm cuối là giao điểm hợp lệ, nhưng nó cho độ dài bằng 0 ở phía đó. Ví dụ,```
 1
@@ -67,7 +67,7 @@ Vì vậy, đoạn ngang có thể được thay thế, đối với kiểm tra 
 
 Tương tự như vậy, một đoạn dọc`[y1, y2]`tại x có thể hỗ trợ kích thước cộng thêm`d`chính xác khi chiều cao giao lộ thỏa mãn`y1 + d <= y <= y2-d`. 
 
-Bây giờ hình học đã trở thành một bài toán đường quét. Sắp xếp các đoạn dọc theo x. Đối với một cố định`d`, mỗi đoạn ngang hữu ích sẽ hoạt động khi quá trình quét đạt tới`x1+d`và ngừng hoạt động sau`x2-d`. Trong khi xử lý một đoạn dọc tại tọa độ x, các chiều ngang hoạt động chính xác là những đoạn có khoảng x được phép chứa x. 
+Bây giờ hình học đã trở thành một bài toán về đường quét. Sắp xếp các đoạn dọc theo x. Đối với một cố định`d`, mỗi đoạn ngang hữu ích sẽ hoạt động khi quá trình quét đạt tới`x1+d`và ngừng hoạt động sau`x2-d`. Trong khi xử lý một đoạn thẳng đứng tại tọa độ x, các chiều ngang hoạt động chính xác là những đoạn có khoảng x được phép chứa x. 
 
 Trong số các chiều ngang đang hoạt động, chúng ta chỉ cần biết liệu có ít nhất một chiều ngang có tọa độ y bên trong khoảng hợp lệ của đoạn thẳng đứng hay không`[y1+d, y2-d]`. Cây Fenwick trên tọa độ y là cách triển khai tiêu chuẩn. Giải pháp C++ được chấp nhận ban đầu sử dụng chính xác quá trình quét này, kích hoạt các chiều ngang theo ranh giới bên trái của chúng, loại bỏ chúng sau ranh giới bên phải của chúng và truy vấn khoảng y bằng cây Fenwick. 
 
@@ -92,11 +92,11 @@ Quan sát cuối cùng là sự đơn điệu. Nếu cộng thêm kích thước
 5. Trong quá trình quét x, hãy chèn một đoạn ngang khi`left <= x`cho đoạn thẳng đứng hiện tại. Loại bỏ nó khi`right < x`. Việc so sánh nghiêm ngặt để loại bỏ là có chủ ý. Nếu như`right == x`, đường thẳng đứng đi qua điểm cuối của khoảng ngang bị thu hẹp và điều đó vẫn cho kết quả chính xác`d`đơn vị ở phía tương ứng. 
 6. Duy trì tọa độ y của tất cả các đoạn ngang hiện đang hoạt động. Nếu một số chiều ngang đang hoạt động có cùng tọa độ y, hãy duy trì một số đếm thay vì một boolean đơn giản, vì việc xóa một trong số chúng không được vô tình xóa tọa độ trong khi một chiều ngang khác vẫn hoạt động. 
 7. Đối với mỗi đoạn thẳng đứng, trước tiên yêu cầu`y2-y1 >= 2d`. Chiều cao vượt qua có thể có của nó chính xác là`[y1+d, y2-d]`. Nếu tập y hoạt động chứa bất kỳ tọa độ nào trong khoảng này, thì ít nhất một cộng kích thước`d`tồn tại. 
-8. Tìm kiếm nhị phân lớn nhất khả thi`d`. Giới hạn dưới là bằng không. Giới hạn trên có thể là nửa độ dài lớn nhất của bất kỳ phân đoạn đầu vào nào. Nếu như`check(mid)`thành công, lưu trữ`mid`và tiếp tục sang phải; nếu không thì tiếp tục sang trái. 
+8. Tìm kiếm nhị phân lớn nhất khả thi`d`. Giới hạn dưới là bằng không. Giới hạn trên có thể là nửa chiều dài lớn nhất của bất kỳ phân đoạn đầu vào nào. Nếu như`check(mid)`thành công, lưu trữ`mid`và tiếp tục sang phải; nếu không thì tiếp tục sang trái. 
 
 ### Tại sao nó hoạt động 
 
-Đối với một cố định`d`, đoạn ngang hoạt động chính xác là đoạn ngang có tọa độ x có thể được chọn sao cho cả hai nhánh ngang có chiều dài ít nhất`d`. Khi quét ở tọa độ dọc x, tập hoạt động chứa chính xác tất cả các chiều ngang có khoảng x được phép chứa x đó. 
+Đối với một cố định`d`, một đoạn ngang hoạt động chính xác là một đoạn ngang có tọa độ x có thể được chọn sao cho cả hai nhánh ngang có chiều dài ít nhất`d`. Khi quét ở tọa độ dọc x, tập hoạt động chứa chính xác tất cả các chiều ngang có khoảng x được phép chứa x đó. 
 
 Một đoạn dọc đóng góp ít nhất một điểm cộng hợp lệ về kích thước`d`chính xác khi nào tọa độ y của nó có thể được chọn bên trong`[y1+d, y2-d]`. Do đó, truy vấn phạm vi trên tọa độ y ngang đang hoạt động là đúng chính xác khi một số chiều ngang và chiều dọc này có thể tạo thành một dấu cộng như vậy. Do đó, việc quét sẽ trả lời`check(d)`một cách chính xác. 
 
@@ -263,9 +263,9 @@ Hai thứ tự ngang được chuẩn bị một lần. Sắp xếp theo`x1`đư
 
 các`ActiveY`cấu trúc lưu trữ số đếm cho mỗi tọa độ y. Bitset đầu tiên của nó ghi lại các vị trí bị chiếm dụng bên trong mỗi khối tọa độ 256. Bitset thứ hai ghi lại khối nào chứa ít nhất một tọa độ hoạt động. Điều này làm cho việc chèn và xóa không đổi theo thời gian đối với vũ trụ tọa độ cố định của bài toán. 
 
-Truy vấn khoảng trước tiên kiểm tra trực tiếp hai khối ranh giới. Nếu có các khối hoàn chỉnh giữa chúng, nó sẽ kiểm tra mức độ chiếm dụng của chúng bằng cách sử dụng tập bit cấp khối nhỏ gọn. Chỉ số khối lớn nhất chỉ khoảng`10^5 / 256`, do đó các phép toán số nguyên này vẫn rất nhỏ mặc dù phạm vi tọa độ ban đầu lớn. 
+Truy vấn khoảng trước tiên kiểm tra trực tiếp hai khối ranh giới. Nếu có các khối hoàn chỉnh giữa chúng, nó sẽ kiểm tra mức độ chiếm chỗ của chúng bằng cách sử dụng tập bit cấp khối nhỏ gọn. Chỉ số khối lớn nhất chỉ khoảng`10^5 / 256`, do đó các phép toán số nguyên này vẫn rất nhỏ mặc dù phạm vi tọa độ ban đầu lớn. 
 
-Việc quét sử dụng`left <= x`khi chèn và`right < x`khi gỡ bỏ. Những bất bình đẳng đó là chi tiết ranh giới quan trọng. Đoạn ngang có khoảng thời gian sử dụng được kết thúc chính xác ở tọa độ x dọc hiện tại vẫn là ứng cử viên hợp lệ. 
+Việc quét sử dụng`left <= x`khi chèn và`right < x`khi gỡ bỏ. Những bất bình đẳng đó là chi tiết ranh giới quan trọng. Đoạn ngang có khoảng thời gian sử dụng được kết thúc chính xác ở tọa độ dọc x hiện tại vẫn là ứng cử viên hợp lệ. 
 
 Số nguyên Python có độ chính xác tùy ý, do đó không có vấn đề tràn khi xây dựng mặt nạ bit. Giới hạn tọa độ cũng giữ cho mọi bitset nhỏ một cách thoải mái. Việc triển khai C++ ban đầu sử dụng cây Fenwick thay vì cấu trúc vũ trụ giới hạn này, với cùng phạm vi hình học và các ranh giới khoảng bao gồm giống nhau. 
 
@@ -429,7 +429,7 @@ assert run("""\
 1 1
 1 5 3
 3 3 3
-```ứng cử viên`d=0`là khả thi, trong khi`d=1`là không thể vì đoạn thẳng đứng không thể cung cấp một đơn vị cho cả hai bên. Tổng quát hơn, đối với```
+```ứng cử viên`d=0`là khả thi, trong khi`d=1`là không thể vì đoạn dọc không thể cung cấp một đơn vị cho cả hai bên. Tổng quát hơn, đối với```
 1
 1 1
 1 5 3

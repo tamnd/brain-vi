@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 27p 24s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi có một mảng`A`thể hiện những lát bánh pizza trên đĩa của học sinh đứng thành một hàng cố định. Masaoud phải chọn một đoạn liền kề của mảng này, nghĩa là anh ta chọn một số điểm cuối bên trái`l`và điểm cuối bên phải`r`, và đánh cắp mọi lát trong`A[l..r]`. Chúng ta cần đếm xem có bao nhiêu phân đoạn liền kề khác nhau có tổng tổng nhỏ hơn`X`. 
@@ -58,13 +58,13 @@ Chúng ta có thể tìm thấy giá trị nhỏ nhất này`l`bằng cách di c
 1. Bắt đầu bằng cả hai con trỏ ở đầu mảng, vì vậy`left = 0`, và giữ`current_sum = 0`Và`answer = 0`. 
 2. Di chuyển`right`từ`0`ĐẾN`N - 1`. Thêm vào`A[right]`ĐẾN`current_sum`, vì điểm cuối bên phải mới có nghĩa là phần tử này hiện thuộc về cửa sổ hiện tại. 
 3. Trong khi`current_sum >= X`, di chuyển`left`chuyển tiếp và trừ`A[left]`từ`current_sum`trước khi tăng`left`. Vòng lặp là cần thiết vì một lần loại bỏ có thể không đủ để làm cho tổng nhỏ hơn`X`. 
-4. Sau khi vòng lặp kết thúc, cửa sổ hiện tại`A[left..right]`có tổng nhỏ hơn`X`. Vì tất cả các phần tử đều dương nên mọi đoạn đều kết thúc tại`right`có điểm cuối bên trái nằm giữa`left`Và`right`cũng có tổng nhỏ hơn`X`. 
+4. Khi vòng lặp kết thúc, cửa sổ hiện tại`A[left..right]`có tổng nhỏ hơn`X`. Vì tất cả các phần tử đều dương nên mọi đoạn đều kết thúc tại`right`có điểm cuối bên trái nằm giữa`left`Và`right`cũng có tổng nhỏ hơn`X`. 
 5. Thêm`right - left + 1`ĐẾN`answer`. Điều này đếm chính xác những phân đoạn hợp lệ kết thúc ở vị trí hiện tại. 
 6. Lặp lại cho đến khi mọi điểm cuối bên phải có thể được xử lý, sau đó xuất ra`answer`. 
 
 ### Tại sao nó hoạt động 
 
-Sau mỗi lần lặp,`left`là chỉ số nhỏ nhất mà cửa sổ hiện tại`A[left..right]`có tổng nhỏ hơn`X`. Bất kỳ đoạn nào kết thúc tại`right`và bắt đầu trước`left`chứa cửa sổ hợp lệ hiện tại cộng với ít nhất một phần tử dương bổ sung, do đó tổng của nó ít nhất là`X`và nó không thể hợp lệ. Mỗi đoạn bắt đầu từ`left`hoặc muộn hơn là phân đoạn con của cửa sổ hợp lệ và do đó có tổng dương thậm chí còn nhỏ hơn hoặc bằng nhau, vì vậy nó hợp lệ. Như vậy chính xác`right - left + 1`phân đoạn hợp lệ kết thúc tại`right`. 
+Sau mỗi lần lặp,`left`là chỉ mục nhỏ nhất mà cửa sổ hiện tại`A[left..right]`có tổng nhỏ hơn`X`. Bất kỳ đoạn nào kết thúc tại`right`và bắt đầu trước`left`chứa cửa sổ hợp lệ hiện tại cộng với ít nhất một phần tử dương bổ sung, do đó tổng của nó ít nhất là`X`và nó không thể hợp lệ. Mỗi đoạn bắt đầu từ`left`hoặc muộn hơn là phân đoạn con của cửa sổ hợp lệ và do đó có tổng dương thậm chí còn nhỏ hơn hoặc bằng nhau, vì vậy nó hợp lệ. Như vậy chính xác`right - left + 1`phân đoạn hợp lệ kết thúc tại`right`. 
 
 Bởi vì`right`chỉ di chuyển về phía trước và`left`cũng chỉ di chuyển về phía trước, không có phần tử nào được thêm vào hoặc xóa khỏi cửa sổ trượt nhiều lần. Do đó, thuật toán xử lý toàn bộ mảng theo thời gian tuyến tính. 
 
@@ -100,19 +100,19 @@ if __name__ == "__main__":
 
 các`while current_sum >= x`điều kiện sử dụng`>=`, còn hơn là`>`, bởi vì một tổng chính xác bằng`X`không hợp lệ. Sau vòng lặp, bất biến là`current_sum < x`. 
 
-biểu hiện`right - left + 1`đếm các vị trí bắt đầu có thể có của một phân đoạn hợp lệ kết thúc tại`right`. Cả hai điểm cuối đều được bao gồm, vì vậy`+1`là cần thiết. Ví dụ, nếu`left == right`, có chính xác một đoạn, phần tử duy nhất tại`right`. 
+biểu thức`right - left + 1`đếm các vị trí bắt đầu có thể có của một phân đoạn hợp lệ kết thúc tại`right`. Cả hai điểm cuối đều được bao gồm, vì vậy`+1`là cần thiết. Ví dụ, nếu`left == right`, có chính xác một đoạn, phần tử duy nhất tại`right`. 
 
 Kiểu số nguyên của Python tránh tràn khi câu trả lời đạt tới hàng tỷ. Trong các ngôn ngữ có loại số nguyên có chiều rộng cố định, câu trả lời phải được lưu trữ ở dạng số nguyên 64 bit. 
 
 ## Ví dụ đã hoạt động 
 
-Đối với trường hợp kiểm thử mẫu đầu tiên, có một học sinh và một phân đoạn có thể. 
+Đối với trường hợp kiểm thử mẫu đầu tiên, có thể có một học sinh và một phân đoạn. 
 
 | đúng | giá trị gia tăng | tổng hiện tại trước khi thu hẹp | còn lại sau khi thu nhỏ | phân đoạn hợp lệ kết thúc ở bên phải | trả lời | 
 | --- | --- | --- | --- | --- | --- | 
 | 0 | 3 | 3 | 0 | 1 | 1 | 
 
-tổng`3`đúng là nhỏ hơn`X = 4`, do đó đoạn đơn`[3]`là hợp lệ. Câu trả lời là`1`. 
+tổng`3`đúng là ít hơn`X = 4`, do đó đoạn đơn`[3]`là hợp lệ. Câu trả lời là`1`. 
 
 Đối với trường hợp thử nghiệm mẫu thứ hai,`A = [1, 5]`Và`X = 4`. 
 

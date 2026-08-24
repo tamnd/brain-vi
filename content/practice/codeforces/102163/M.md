@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 13 phút 45 giây 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Đối với mỗi trường hợp thử nghiệm, chúng tôi đang so sánh hai mức lương có dạng (B_1^{P_1}) và (B_2^{P_2}). Cặp đầu tiên mô tả mức lương ban đầu, trong khi cặp thứ hai mô tả mức lương mới. Chúng ta cần in`Congrats`khi mức lương mới lớn hơn,`HaHa`khi nó nhỏ hơn và`Lazy`khi mức lương của cả hai bằng nhau. 
@@ -87,7 +87,7 @@ Số học dấu phẩy động cũng đưa ra một vấn đề phức tạp kh
 1. Đọc (B_1,P_1,B_2,P_2). Mỗi cặp đại diện cho một mức lương, vì vậy cặp đầu tiên là mức lương cũ và cặp thứ hai là mức lương mới. 
 2. Kiểm tra xem một trong hai cơ số có bằng không hay không. Biểu thức cơ số 0 hợp lệ phải có số mũ dương vì (0^0) bị loại trừ bởi đảm bảo đầu vào. Mức lương như vậy chính xác là bằng không. 
 
-Nếu cả hai cơ sở đều bằng 0 thì lương cả hai đều bằng 0 và câu trả lời là`Lazy`. Nếu chỉ có cơ sở thứ nhất bằng 0 thì lương cũ bằng 0 trong khi lương mới dương nên đáp án là`Congrats`. Nếu chỉ cơ sở thứ 2 bằng 0 thì lương mới bằng 0 trong khi lương cũ dương nên đáp án là`HaHa`. 
+Nếu cả hai cơ sở đều bằng 0 thì lương cả hai đều bằng 0 và câu trả lời là`Lazy`. Nếu chỉ có cơ sở thứ nhất bằng 0 thì lương cũ bằng 0 trong khi lương mới dương nên đáp án là`Congrats`. Nếu chỉ có cơ sở thứ 2 bằng 0 thì lương mới bằng 0 trong khi lương cũ dương nên đáp án là`HaHa`. 
 3. Khi cả hai cơ số đều dương, hãy tính 
 
 [ 
@@ -95,7 +95,7 @@ x_1=P_1\ln B_1,\qquad x_2=P_2\ln B_2.
 ] 
 
 Đây là logarit của hai mức lương. Số mũ bằng 0 đương nhiên cho (x=0), tương ứng với mức lương bằng một. 
-4. So sánh (x_1) và (x_2). Nếu sự khác biệt của chúng nằm trong dung sai nhỏ, hãy in`Lazy`, vì sự khác biệt đủ nhỏ để có thể giải thích bằng cách làm tròn dấu phẩy động. 
+4. So sánh (x_1) và (x_2). Nếu sự khác biệt của chúng nằm trong một dung sai nhỏ, hãy in`Lazy`, vì sự khác biệt đủ nhỏ để có thể giải thích bằng cách làm tròn dấu phẩy động. 
 5. Ngược lại nếu (x_1<x_2) thì mức lương mới lớn hơn nên in`Congrats`. Nếu (x_1>x_2) thì mức lương mới nhỏ hơn nên in`HaHa`. 
 
 Bất biến đằng sau thuật toán là, sau khi loại bỏ các trường hợp 0, mọi mức lương đều dương và logarit tăng nghiêm ngặt. Như vậy dấu hiệu của 
@@ -183,7 +183,7 @@ Trường hợp đầu tiên không bao giờ gọi`log(0)`. Nó nhận ra ngay 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
 | Thời gian | (O(1)) cho mỗi trường hợp thử nghiệm | Mỗi trường hợp thử nghiệm thực hiện một số phép tính số học và logarit không đổi. | 
-| Không gian | (O(1)) không gian phụ trợ | Chỉ cần bốn giá trị đầu vào, hai giá trị logarit và kết quả. | 
+| Không gian | (O(1)) không gian phụ | Chỉ cần bốn giá trị đầu vào, hai giá trị logarit và kết quả. | 
 
 Đối với (T) trường hợp kiểm thử, tổng thời gian chạy là (O(T)), với công việc không đổi cho mỗi trường hợp. Giới hạn của (10^6) trên các cơ số và số mũ không làm tăng kích thước của biểu diễn logarit, vì vậy giải pháp này tránh được một cách thoải mái phép tính số nguyên khổng lồ mà phép lũy thừa trực tiếp sẽ yêu cầu. Việc triển khai cũng chỉ lưu trữ các chuỗi đầu ra, yêu cầu tổng dung lượng đầu ra là (O(T)). 
 

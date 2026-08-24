@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 13m 52s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Hãy coi các hạt là các đỉnh của đồ thị vô hướng. Mọi quan hệ vướng víu đã biết đều cho một cạnh giữa hai đỉnh. Tính chất bắc cầu trong phát biểu có nghĩa là nếu có một đường đi từ hạt (x) đến hạt (y), thì hai hạt được coi là vướng víu, ngay cả khi không có mối quan hệ trực tiếp nào được đưa ra giữa chúng. 
@@ -46,7 +46,7 @@ Một truy vấn cũng có thể chứa cùng một phần tử hai lần. Ví d
 1 1
 1 1
 1 1
-```có đầu ra`11`. Một hạt luôn được kết nối với chính nó vì một đỉnh thuộc cùng một thành phần được kết nối với chính nó. Việc triển khai chỉ kiểm tra xem có cạnh rõ ràng nào giữa hai đỉnh được truy vấn hay không sẽ không thành công đối với truy vấn như vậy. 
+```có đầu ra`11`. Một hạt luôn được kết nối với chính nó vì một đỉnh thuộc cùng một thành phần được kết nối với chính nó. Việc triển khai chỉ kiểm tra xem có cạnh rõ ràng giữa hai đỉnh được truy vấn hay không sẽ không thành công đối với truy vấn như vậy. 
 
 Cuối cùng, kết nối có thể là gián tiếp hơn là trực tiếp. Coi như```
 1
@@ -67,7 +67,7 @@ Quan sát hữu ích là bản thân biểu đồ không thay đổi giữa các
 
 Cấu trúc Disjoint Set Union, còn được gọi là Union-Find, thể hiện chính xác phân vùng này. Trong khi đọc mọi cạnh ((u,v)), chúng ta hợp nhất các thành phần chứa (u) và (v). Sau khi tất cả các cạnh đã được xử lý, hai hạt được kết nối chính xác khi đại diện DSU của chúng bằng nhau. Mỗi truy vấn sau đó có thể được trả lời bằng hai`find`hoạt động. 
 
-Giải pháp brute-force hoạt động vì truyền tải đồ thị phát hiện chính xác khả năng tiếp cận nhưng không thành công vì liên tục phát hiện ra các thành phần giống nhau. Quan sát cho thấy tất cả các truy vấn đều tham chiếu đến một biểu đồ cố định cho phép chúng tôi tính toán các thành phần được kết nối của nó một lần và giảm từng truy vấn thành một so sánh thành phần. 
+Giải pháp brute-force hoạt động vì truyền tải đồ thị phát hiện chính xác khả năng tiếp cận, nhưng không thành công vì liên tục phát hiện ra các thành phần giống nhau. Quan sát cho thấy tất cả các truy vấn đều tham chiếu đến một biểu đồ cố định cho phép chúng tôi tính toán các thành phần được kết nối của nó một lần và giảm từng truy vấn thành một so sánh thành phần. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -138,11 +138,11 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```các`parent`mảng lưu trữ phần tử gốc của mọi nút DSU. Một gốc được xác định bởi`parent[x] == x`, vì vậy đang khởi tạo`parent`với`range(n + 1)`tạo ra (N) thành phần riêng biệt. Vị trí bổ sung ở chỉ số 0 cho phép chúng ta sử dụng trực tiếp số hạt vì các đỉnh đầu vào được đánh số từ 1 đến (N). 
+```các`parent`mảng lưu trữ phần tử cha của mỗi nút DSU. Một gốc được xác định bởi`parent[x] == x`, vì vậy đang khởi tạo`parent`với`range(n + 1)`tạo ra (N) thành phần riêng biệt. Vị trí bổ sung ở chỉ số 0 cho phép chúng ta sử dụng trực tiếp số hạt vì các đỉnh đầu vào được đánh số từ 1 đến (N). 
 
 các`size`mảng hỗ trợ liên kết theo kích thước. Khi hai rễ khác nhau được hợp nhất, cây nhỏ hơn sẽ được gắn bên dưới cây lớn hơn. Điều này giữ cho cây DSU cạn. các`find`Hàm cũng thực hiện nén đường dẫn bằng cách thay đổi từng nút được truy cập thành điểm gần nút gốc hơn. Sự kết hợp của hai cách tối ưu hóa này mang lại độ phức tạp khấu hao gần như không đổi được biểu thị bằng (\alpha(N)). 
 
-Các cạnh trùng lặp được xử lý một cách tự nhiên bởi`union`. Nếu cả hai điểm cuối đều có cùng một đại diện thì hàm sẽ trả về ngay lập tức. Các cạnh tự hoạt động theo cách tương tự và chúng không cần bất kỳ trường hợp đặc biệt nào. 
+Các cạnh trùng lặp được xử lý tự nhiên bởi`union`. Nếu cả hai điểm cuối đều có cùng một đại diện thì hàm sẽ trả về ngay lập tức. Các cạnh tự hoạt động theo cách tương tự và chúng không cần bất kỳ trường hợp đặc biệt nào. 
 
 Mã xử lý tất cả các cạnh trước khi trả lời các truy vấn, điều này phù hợp với thực tế là toàn bộ biểu đồ được cố định trước khi đặt ra bất kỳ câu hỏi nào. Không cần danh sách kề, do đó việc triển khai chỉ sử dụng bộ nhớ phụ (O(N)). 
 

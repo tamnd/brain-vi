@@ -21,16 +21,16 @@ draft: false
 **Thời gian giải:** 24m 35s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi hiện có mười vấn đề, mỗi vấn đề có độ khó từ 1 đến 10. Mỗi đội đều có một cấp độ kỹ năng, cũng từ 1 đến 10 và một đội có thể giải chính xác những vấn đề có độ khó không vượt quá kỹ năng của đội đó. 
 
 Chúng ta có thể thêm một bài toán mới có độ khó từ 1 đến 10. Bài toán mới phải đủ dễ để mỗi đội có thể giải được ít nhất một bài toán sau khi được thêm vào. Mục tiêu là làm cho vấn đề mới này trở nên khó khăn nhất có thể trong khi vẫn làm hài lòng mọi đội. 
 
-Giá trị đầu vào đầu tiên,`n`, là số đội. Dòng tiếp theo chứa cấp độ kỹ năng của họ. Dòng cuối cùng chứa những khó khăn của mười vấn đề hiện có. 
+Giá trị đầu vào đầu tiên,`n`, là số đội. Dòng tiếp theo chứa cấp độ kỹ năng của họ. Dòng cuối cùng chứa đựng những khó khăn của mười vấn đề hiện có. 
 
-Ràng buộc`n <= 32`là cực kỳ nhỏ. Ngay cả một cách tiếp cận kiểm tra tất cả mười khó khăn mới có thể xảy ra đối với mỗi đội cũng chỉ đạt hiệu quả tối đa.`10 * 32 = 320`kiểm tra đội. Giới hạn bộ nhớ 256 MB cũng vượt xa mức cần thiết. Trên thực tế, bài toán có đủ cấu trúc để giảm công việc xuống còn một lần quét qua các nhóm. 
+Ràng buộc`n <= 32`là cực kỳ nhỏ. Ngay cả một cách tiếp cận kiểm tra tất cả mười khó khăn mới có thể xảy ra đối với mỗi đội cũng chỉ đạt hiệu quả tối đa`10 * 32 = 320`kiểm tra đội. Giới hạn bộ nhớ 256 MB cũng vượt xa mức cần thiết. Trên thực tế, bài toán có đủ cấu trúc để giảm công việc xuống còn một lần quét qua các nhóm. 
 
 Trường hợp chính là khi mọi đội đều có thể giải quyết được một vấn đề hiện có. Trong tình huống đó, bài toán mới không cần giúp đỡ ai nên độ khó của nó có thể đạt giá trị lớn nhất cho phép là 10. Ví dụ:```
 1
@@ -48,11 +48,11 @@ Trường hợp thứ ba liên quan đến một số đội có cùng kỹ năn
 3
 4 4 7
 5 6 8 9 10 10 10 10 10 10
-```Cả hai đội có kỹ năng 4 đều cần đề mới có độ khó tối đa là 4 nên đáp án là`4`. Các đội trùng lặp không thay đổi độ khó yêu cầu. 
+```Cả 2 đội có kỹ năng 4 đều cần đề mới có độ khó tối đa là 4 nên đáp án là`4`. Các đội trùng lặp không thay đổi độ khó yêu cầu. 
 
 ## Phương pháp tiếp cận 
 
-Một giải pháp brute-force trực tiếp có thể thử mọi độ khó có thể từ 1 đến 10 cho vấn đề mới. Đối với từng khó khăn của ứng viên, hãy quét từng đội và kiểm tra xem đội đó có thể giải quyết được ít nhất một trong mười vấn đề hiện có hay vấn đề mới hay không. Điều này đúng vì mọi câu trả lời hợp pháp đều được kiểm tra rõ ràng. Với`n <= 32`, trường hợp xấu nhất chỉ là 10 khó khăn của ứng viên nhân 32 nhóm nhân 10 vấn đề hiện có hoặc 3200 so sánh cơ bản nếu chúng ta kiểm tra tất cả các vấn đề hiện có một cách riêng biệt. Điều này thoải mái trong giới hạn. 
+Một giải pháp brute-force trực tiếp có thể thử mọi độ khó có thể từ 1 đến 10 cho vấn đề mới. Đối với từng khó khăn của ứng viên, hãy quét từng đội và kiểm tra xem đội đó có thể giải quyết được ít nhất một trong mười vấn đề hiện có hay vấn đề mới hay không. Điều này đúng vì mọi câu trả lời hợp pháp đều được kiểm tra rõ ràng. Với`n <= 32`, trường hợp xấu nhất chỉ là 10 khó khăn của ứng viên nhân 32 đội nhân 10 vấn đề hiện có hoặc 3200 so sánh cơ bản nếu chúng ta kiểm tra tất cả các vấn đề hiện có một cách riêng biệt. Điều này thoải mái trong giới hạn. 
 
 Cách tiếp cận vũ phu có hiệu quả vì phạm vi độ khó rất nhỏ nhưng nó thực hiện những công việc không cần thiết. Chúng tôi thực sự không cần phải xem xét từng vấn đề hiện có một cách riêng biệt cho từng nhóm. Đối với một nhóm cụ thể, chỉ có vấn đề dễ nhất hiện có mới quan trọng. Nếu vấn đề dễ nhất gặp khó khăn`m`, thì mỗi đội có kỹ năng ít nhất`m`đã được bảo hiểm, trong khi mọi đội có kỹ năng dưới đây`m`không thể giải quyết bất kỳ vấn đề hiện có. 
 
@@ -100,7 +100,7 @@ def solve():
     print(answer)
 
 solve()
-```Ba lần đọc đầu tiên tương ứng trực tiếp với ba phần đầu vào: số lượng đội, kỹ năng của họ và mười khó khăn hiện có của vấn đề.`easiest = min(difficulties)`nén tất cả mười vấn đề hiện có vào giá trị duy nhất liên quan đến phạm vi bảo hiểm. Nếu một nhóm không thể giải được vấn đề dễ nhất này thì đội đó cũng không thể giải quyết được bất kỳ vấn đề nào khác vì ít nhất tất cả chúng đều khó như nhau. 
+```Ba lần đọc đầu tiên tương ứng trực tiếp với ba phần đầu vào: số lượng đội, kỹ năng của họ và mười khó khăn hiện có của vấn đề.`easiest = min(difficulties)`nén tất cả mười vấn đề hiện có vào giá trị duy nhất liên quan đến phạm vi bảo hiểm. Nếu một đội không thể giải được vấn đề dễ nhất này thì đội đó cũng không thể giải quyết được bất kỳ vấn đề nào khác vì ít nhất tất cả chúng đều khó như nhau. 
 
 Câu trả lời bắt đầu từ số 10 vì 10 là độ khó lớn nhất được phép. Một đội có kỹ năng dưới đây`easiest`không thể giải được bất cứ điều gì từ bộ ban đầu, vì vậy kỹ năng của nó trở thành giới hạn trên của bài toán mới. Việc áp dụng mức tối thiểu cho tất cả các kỹ năng như vậy sẽ xử lý đồng thời tất cả các ràng buộc. 
 
@@ -125,7 +125,7 @@ Không cần xử lý đặc biệt đối với nhóm trống gồm các đội
 | 5 | 4 | Có | 3 | 
 | 5 | 4 | Có | 3 | 
 
-Đội có kỹ năng 3 không thể giải được bất kỳ vấn đề nào hiện có nên vấn đề mới phải có độ khó tối đa là 3. Tất cả các đội còn lại đều có thể giải được vấn đề có độ khó-4. Vì vậy, câu trả lời hợp lệ tối đa là`3`. 
+Đội có kỹ năng 3 không thể giải được bất kỳ vấn đề nào hiện có nên vấn đề mới phải có độ khó tối đa là 3. Tất cả các đội khác đều có thể giải được vấn đề có độ khó-4. Vì vậy, câu trả lời hợp lệ tối đa là`3`. 
 
 ### Xây dựng ví dụ 2 
 
@@ -238,7 +238,7 @@ Khi mọi đội đều đã được bảo vệ, thuật toán sẽ tiếp tụ
 1
 5
 1 2 3 4 5 6 7 8 9 10
-```Đây`easiest = 1`, và kỹ năng duy nhất là 5. Vì`5 < 1`là sai, câu trả lời không bao giờ thay đổi so với 10. Điều này đúng vì đội đã giải được bài toán độ khó 1 nên bài toán được thêm vào có thể khó đến mức tối đa cho phép. 
+```Đây`easiest = 1`, và kỹ năng duy nhất là 5. Vì`5 < 1`là sai, câu trả lời không bao giờ thay đổi so với 10. Điều này đúng vì đội đã giải được bài toán độ khó-1 nên bài toán được thêm vào có thể khó đến mức tối đa cho phép. 
 
 Khi đội yếu nhất không thể giải quyết bất kỳ vấn đề nào hiện có, kỹ năng của đội đó sẽ trực tiếp quyết định câu trả lời. Vì:```
 2
@@ -256,4 +256,4 @@ Kỹ năng nhóm trùng lặp không yêu cầu logic bổ sung. Vì:```
 5
 4 4 4 4 4
 5 6 7 8 9 10 10 10 10 10
-```vấn đề dễ nhất hiện có có độ khó 5. Mọi đội đều đáp ứng được`4 < 5`, vì vậy mỗi đội cần bài toán mới gặp độ khó tối đa là 4. Lấy mức tối thiểu của các ràng buộc giống hệt nhau này sẽ cho 4, được in dưới dạng câu trả lời.
+```vấn đề dễ nhất hiện có có độ khó 5. Mọi đội đều đáp ứng được`4 < 5`, vì vậy mỗi đội cần bài toán mới có độ khó tối đa là 4. Lấy mức tối thiểu của các ràng buộc giống hệt nhau này sẽ cho 4, được in dưới dạng câu trả lời.

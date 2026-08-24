@@ -21,20 +21,20 @@ draft: false
 **Thời gian giải:** 28 phút 59 giây 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
-Chuỗi di chuyển mô tả một bước đi trên lưới số nguyên vô hạn. Chúng ta bắt đầu từ một ô và mỗi ký tự di chuyển vị trí hiện tại một ô theo một trong bốn hướng chính. Đối với một chuỗi con đã chọn, con rắn bắt đầu từ một ô bắt đầu mới và chỉ đi theo những bước di chuyển đó. Chuỗi con hợp lệ chính xác khi mọi ô được truy cập trong quá trình đi bộ đó khác với mọi ô trước đó. Chúng ta cần độ dài tối đa có thể có của chuỗi con như vậy. Bài toán chính thức sử dụng công thức tương tự và cho (n) tối đa (10^6). 
+Chuỗi di chuyển mô tả một bước đi trên lưới số nguyên vô hạn. Chúng ta bắt đầu từ một ô và mỗi ký tự di chuyển vị trí hiện tại một ô theo một trong bốn hướng chính. Đối với một chuỗi con đã chọn, con rắn bắt đầu từ một ô bắt đầu mới và chỉ đi theo những bước di chuyển đó. Chuỗi con hợp lệ chính xác khi mọi ô được truy cập trong lần đi bộ đó khác với mọi ô trước đó. Chúng ta cần độ dài tối đa có thể có của chuỗi con như vậy. Bài toán chính thức sử dụng công thức tương tự và cho (n) tối đa (10^6). 
 
 Một cách hữu ích để thể hiện bước đi là sử dụng các vị trí tiền tố. Đặt (P_i) là ô lưới đạt được sau lần di chuyển (i) đầu tiên của toàn bộ chuỗi, với (P_0) là ô bắt đầu. Một chuỗi con từ nước đi (l+1) đến nước đi (r) tương ứng với chuỗi các vị trí (P_l,P_{l+1},\ldots,P_r). Nó hợp lệ chính xác khi các vị trí tiền tố này đều khác biệt. Do đó, câu trả lời là giá trị lớn nhất của (r-l) mà khoảng vị trí tiền tố đó không chứa tọa độ trùng lặp. 
 
-Với (n) lớn bằng (10^6), thuật toán có hành vi bậc hai hoặc bậc ba không thể phù hợp với giới hạn thời gian khoảng hai giây. Chẵn (O(n^2)) có nghĩa là khoảng (5\cdot10^{11}) lần lặp trong trường hợp xấu nhất, vượt xa những gì có thể được xử lý kịp thời. Về cơ bản, chúng ta cần kiểm tra chuỗi một số lần không đổi, hướng tới giải pháp (O(n)). 
+Với (n) lớn bằng (10^6), thuật toán có hành vi bậc hai hoặc bậc ba không thể phù hợp với giới hạn thời gian khoảng hai giây. Chẵn (O(n^2)) có nghĩa là khoảng (5\cdot10^{11}) lần lặp trong trường hợp xấu nhất, vượt xa những gì có thể được xử lý kịp thời. Về cơ bản, chúng ta cần kiểm tra chuỗi một số lần không đổi, điều này hướng tới nghiệm (O(n)). 
 
 Có một số trường hợp đặc biệt có thể khiến việc triển khai bất cẩn trở nên sai lầm. Đầu tiên, một lần di chuyển luôn hợp lệ vì nó truy cập vào hai ô khác nhau. Đối với đầu vào`1`theo sau là`R`, câu trả lời là`1`. Việc triển khai chỉ kiểm tra xem vị trí hiện tại đã xuất hiện sau khi thực hiện một bước di chuyển có thể vô tình trả về 0 hay không. 
 
 Trường hợp thứ hai là quay trở lại ô bắt đầu ngay lập tức. Vì`RL`, bước đi sẽ đi từ ô bắt đầu sang bên phải rồi quay lại ô bắt đầu, vì vậy câu trả lời là`1`, không`2`. Vị trí bắt đầu phải được coi là một ô đã được truy cập. 
 
-Trường hợp thứ ba xảy ra khi một vị trí lặp lại thuộc về phần cũ hơn của bước đi không còn nằm trong chuỗi con ứng cử viên hiện tại. Vì`RRLL`, các vị trí tiền tố là (0,1,2,1,0). Sau khi thấy vị trí lặp lại (1), cửa sổ hợp lệ sẽ bắt đầu sau lần xuất hiện trước đó. Sau đó, vị trí (0) được lặp lại, nhưng lần xuất hiện trước đó của nó thậm chí còn xa hơn về bên trái và nằm ngoài cửa sổ hiện tại. Việc triển khai cửa sổ trượt di chuyển ranh giới bên trái của nó về phía sau một cách mù quáng có thể tạo ra câu trả lời sai. Câu trả lời đúng là`2`, đến từ trận chung kết`LL`. 
+Trường hợp thứ ba xảy ra khi vị trí lặp lại thuộc về phần cũ hơn của bước đi không còn nằm trong chuỗi con ứng viên hiện tại. Vì`RRLL`, các vị trí tiền tố là (0,1,2,1,0). Sau khi thấy vị trí lặp lại (1), cửa sổ hợp lệ sẽ bắt đầu sau lần xuất hiện trước đó. Sau đó, vị trí (0) được lặp lại, nhưng lần xuất hiện trước đó của nó thậm chí còn xa hơn về bên trái và nằm ngoài cửa sổ hiện tại. Việc triển khai cửa sổ trượt di chuyển ranh giới bên trái của nó về phía sau một cách mù quáng có thể tạo ra câu trả lời sai. Câu trả lời đúng là`2`, đến từ trận chung kết`LL`. 
 
 Cuối cùng, các hướng lặp lại không hàm ý các ô lặp lại. Vì`RRRRR`, mỗi lần di chuyển đều đến một ô mới, vì vậy câu trả lời là`5`. Giải pháp theo dõi chỉ đường thay vì tọa độ thực tế sẽ từ chối trường hợp này một cách không chính xác. 
 
@@ -130,7 +130,7 @@ if __name__ == "__main__":
 
 Việc cập nhật tọa độ xảy ra trước khi tra cứu từ điển vì`last`lưu trữ các vị trí tiền tố và vị trí tiền tố (P_i) là ô đạt được sau khi thực hiện di chuyển (i). Việc liệt kê bắt đầu từ một, vì vậy chỉ mục của nó tự nhiên khớp với chỉ mục tiền tố. 
 
-biểu hiện`previous >= left`là điều kiện biên tới hạn. Lần xuất hiện trước đó`left`thuộc về một phần của chuỗi tiền tố đã bị loại khỏi chuỗi con hiện tại. Di chuyển`left`vì sự xuất hiện như vậy sẽ loại bỏ các nước đi hợp lệ một cách không chính xác. 
+biểu thức`previous >= left`là điều kiện biên tới hạn. Lần xuất hiện trước đó`left`thuộc về một phần của chuỗi tiền tố đã bị loại khỏi chuỗi con hiện tại. Di chuyển`left`vì sự xuất hiện như vậy sẽ loại bỏ các nước đi hợp lệ một cách không chính xác. 
 
 Câu trả lời là`i - left`, còn hơn là`i - left + 1`, vì cửa sổ chứa các vị trí tiền tố, trong khi câu trả lời được yêu cầu sẽ tính các bước di chuyển. Ví dụ: vị trí tiền tố (P_2,P_3,P_4) chứa ba ô nhưng chỉ biểu thị hai bước di chuyển giữa chúng. 
 
@@ -182,7 +182,7 @@ Mức tối đa xảy ra ở tiền tố chỉ số mười hai. Cửa sổ từ
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
 | Thời gian | (O(n)) | Mỗi bước di chuyển thực hiện một số lượng cập nhật tọa độ và thao tác từ điển không đổi. | 
-| Không gian | (O(n)) | Tối đa một mục nhập từ điển được lưu trữ cho mỗi ô lưới được truy cập riêng biệt. | 
+| Không gian | (O(n)) | Nhiều nhất một mục từ điển được lưu trữ cho mỗi ô lưới được truy cập riêng biệt. | 
 
 Đầu vào có thể chứa một triệu bước di chuyển, do đó việc xử lý tuyến tính là phù hợp. Thuật toán thực hiện một lần chuyển qua chuỗi và lưu trữ tối đa một triệu vị trí tiền tố. Mã hóa tọa độ số nguyên giữ cho biểu diễn từ điển nhỏ hơn đáng kể so với từ điển được khóa bằng hai bộ phần tử, làm cho phương pháp này phù hợp với giới hạn bộ nhớ 256 MB. 
 
@@ -257,4 +257,4 @@ Vì`4 / RRLL`, các vị trí tiền tố là`(0,0)`,`(1,0)`,`(2,0)`,`(1,0)`,`(0
 
 Đối với đầu vào hoàn toàn phù hợp`5 / RRRRR`, các vị trí là`(0,0)`,`(1,0)`,`(2,0)`,`(3,0)`,`(4,0)`,`(5,0)`. Mỗi tọa độ đều mới, vì vậy`left`không bao giờ thay đổi. Ở vị trí cuối cùng, độ dài cửa sổ là`5 - 0 = 5`, cho đầu ra`5`. Ví dụ này giải thích tại sao thuật toán theo dõi các ô thay vì di chuyển các ký tự. 
 
-Đối với đầu vào tối đa chứa một triệu`R`di chuyển, mỗi tọa độ tiền tố là khác biệt, do đó từ điển nhận được một triệu mục nhập và câu trả lời đạt tới một triệu. Không có vòng lặp lồng nhau và mỗi lần di chuyển sẽ thực hiện công việc từ điển theo thời gian không đổi, do đó thời gian chạy vẫn giữ nguyên (O(n)) ngay cả trong trường hợp xấu nhất này.
+Đối với đầu vào tối đa chứa một triệu`R`di chuyển, mỗi tọa độ tiền tố là khác nhau, do đó từ điển nhận được một triệu mục nhập và câu trả lời đạt tới một triệu. Không có vòng lặp lồng nhau và mỗi lần di chuyển sẽ thực hiện công việc từ điển theo thời gian không đổi, do đó thời gian chạy vẫn giữ nguyên (O(n)) ngay cả trong trường hợp xấu nhất này.

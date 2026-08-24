@@ -18,10 +18,10 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 39 phút 40 giây 
+**Thời gian giải:** 39 phút 40s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta có (n) Jedi và Jedi (i) có ba tham số nguyên không âm ((a_i,b_i,c_i)). Trong một trận chiến thông thường, một Jedi thắng nếu ít nhất hai trong số ba tọa độ của anh ta lớn hơn tọa độ tương ứng của đối thủ. 
@@ -53,11 +53,11 @@ Mối quan hệ giữa các Jedi khác nhau không được loại bỏ. Nếu m
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận trực tiếp là lấy từng cặp Jedi riêng biệt theo thứ tự. Đối với Jedi đang tấn công, hãy cố gắng tìm cách phân phối lại hợp pháp tổng sức mạnh của anh ta sao cho ít nhất hai tọa độ lớn hơn tọa độ tương ứng của đối thủ. Điều này đúng vì mọi đối thủ có thể có đều được xem xét độc lập và sự phân bổ lại mặt tối có thể thay đổi tùy theo từng cuộc chiến. 
+Cách tiếp cận trực tiếp là lấy từng cặp Jedi riêng biệt theo thứ tự. Đối với Jedi đang tấn công, hãy cố gắng tìm cách phân phối lại hợp pháp tổng sức mạnh của anh ta sao cho ít nhất hai tọa độ lớn hơn tọa độ tương ứng của đối thủ. Điều này đúng vì mọi đối thủ có thể có đều được xem xét độc lập và sự phân bổ lại mặt tối có thể thay đổi tùy theo từng trận đấu. 
 
 Tuy nhiên, ngay cả khi việc kiểm tra một cặp được giảm xuống thời gian không đổi thì vẫn có (n(n-1)) cặp có thứ tự. Tại (n=500000), gần như là (2,5\time10^{11}) lượt kiểm tra cặp, vượt xa thời gian có sẵn. 
 
-Quan sát hữu ích đến từ việc sắp xếp ba thông số của đối thủ. Giả sử đối thủ có giá trị 
+Quan sát hữu ích đến từ việc sắp xếp ba tham số của đối thủ. Giả sử đối thủ có giá trị 
 
 [ 
 x\le y\le z. 
@@ -111,7 +111,7 @@ Do đó, toàn bộ vấn đề đã trở thành một vấn đề đếm ngo�
 T_i=x_i+y_i+2. 
 ] 
 
-Đây là tổng sức mạnh tối thiểu mà một Jedi khác cần để đánh bại Jedi (i). các`+2`là bắt buộc vì cả hai tọa độ phải lớn hơn rất nhiều, do đó, việc đánh bại (x_i) tốn ít nhất (x_i+1) và việc đánh bại (y_i) tốn ít nhất (y_i+1). 
+Đây là tổng sức mạnh tối thiểu mà một Jedi khác cần để đánh bại Jedi (i). các`+2`là bắt buộc vì cả hai tọa độ phải lớn hơn rất nhiều, do đó việc đánh bại (x_i) tốn ít nhất (x_i+1) và việc đánh bại (y_i) tốn ít nhất (y_i+1). 
 3. Đặt mọi (T_i) vào một mảng và sắp xếp mảng đó. Sau khi sắp xếp, tất cả các đối thủ có thể có được thể hiện bằng sức mạnh yêu cầu tối thiểu của họ. 
 4. Với mỗi Jedi (i), hãy sử dụng`bisect_right`để tìm có bao nhiêu ngưỡng thỏa mãn 
 
@@ -329,13 +329,13 @@ Ranh giới bất đẳng thức chặt chẽ được xử lý bằng cách th�
 2
 1 1 2
 1 1 1
-```Jedi thứ hai có ngưỡng (1+1+2=4), trong khi Jedi thứ nhất có tổng (4). Vì (4\ge4), Jedi thứ nhất có thể chọn hai tọa độ bằng (2) và đánh bại Jedi thứ hai. Tìm kiếm nhị phân bao gồm ngưỡng vì nó sử dụng`bisect_right`. Nó cũng bao gồm ngưỡng riêng của Jedi đầu tiên, được loại bỏ bằng cách tự kiểm tra, đưa ra`1 0`. 
+```Jedi thứ hai có ngưỡng (1+1+2=4), trong khi Jedi thứ nhất có tổng (4). Vì (4\ge4), Jedi đầu tiên có thể chọn hai tọa độ bằng (2) và đánh bại Jedi thứ hai. Tìm kiếm nhị phân bao gồm ngưỡng vì nó sử dụng`bisect_right`. Nó cũng bao gồm ngưỡng riêng của Jedi đầu tiên, được loại bỏ bằng cách tự kiểm tra, đưa ra`1 0`. 
 
-Đối thủ có số 0 thực hiện ranh giới phía dưới. Vì```
+Đối thủ có số 0 thực hiện ranh giới dưới. Vì```
 2
 0 0 0
 1 1 1
-```ngưỡng đầu tiên là (2), trong khi Jedi thứ hai có tổng số (3). Do đó, Jedi thứ hai có thể đánh bại Jedi thứ nhất bằng cách phân bổ ít nhất (1) cho hai tọa độ. Jedi đầu tiên có tổng (0) nên anh ta không thể đạt ngưỡng (4) cho Jedi thứ hai. Đầu ra là`0 1`. 
+```ngưỡng đầu tiên là (2), trong khi Jedi thứ hai có tổng (3). Do đó, Jedi thứ hai có thể đánh bại Jedi thứ nhất bằng cách phân bổ ít nhất (1) cho hai tọa độ. Jedi đầu tiên có tổng (0) nên anh ta không thể đạt ngưỡng (4) cho Jedi thứ hai. Đầu ra là`0 1`. 
 
 Đối thủ trùng lặp phải giữ hồ sơ riêng biệt. Vì```
 3

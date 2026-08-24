@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 25 phút 46 giây 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Bài thi của mỗi học sinh được mã hóa dưới dạng một số nguyên dương. Biểu diễn nhị phân của số nguyên đó mô tả các câu trả lời Đúng và Sai của học sinh: một bit được đặt đại diện cho một câu trả lời Đúng, trong khi một bit không được đặt đại diện cho một câu trả lời Sai. Vì mọi câu trả lời trong bài kiểm tra đều đúng nên điểm của học sinh chính xác là số bit được đặt trong biểu diễn nhị phân của số của họ. 
@@ -62,7 +62,7 @@ Cách tiếp cận trực tiếp là chuyển đổi mọi số nguyên thành n
 
 Vì mọi`A_i`nhiều nhất là`10^9`, nó có nhiều nhất là 30 bit. Như vậy cách tiếp cận này mất`O(30N)`, điều này đơn giản hóa thành`O(N)`vì 30 là một hằng số. Trong Python, cách triển khai rõ ràng nhất là sử dụng phép toán số nguyên tích hợp`bit_count()`, thực hiện chính xác thao tác đếm số này mà không yêu cầu chúng ta thao tác thủ công các bit. 
 
-Vòng đếm bit thủ công cũng có thể được bắt nguồn từ các nguyên tắc đầu tiên. biểu hiện`x & 1`cho chúng tôi biết liệu bit thấp nhất có được đặt hay không và`x >> 1`loại bỏ bit đó. Lặp lại điều này cho đến khi`x`trở thành số 0 mỗi bit được đặt. Có một quan sát thao tác bit thậm chí còn tốt hơn:`x & (x - 1)`loại bỏ bit được đặt thấp nhất khỏi`x`. Do đó, việc áp dụng lặp đi lặp lại thao tác đó sẽ thực hiện chính xác một lần lặp trên mỗi bit đã đặt thay vì một lần lặp trên mỗi chữ số nhị phân. 
+Vòng đếm bit thủ công cũng có thể được bắt nguồn từ các nguyên tắc đầu tiên. biểu thức`x & 1`cho chúng tôi biết liệu bit thấp nhất có được đặt hay không và`x >> 1`loại bỏ bit đó. Lặp lại điều này cho đến khi`x`trở thành số 0 mỗi bit được đặt. Có một quan sát thao tác bit thậm chí còn tốt hơn:`x & (x - 1)`loại bỏ bit được đặt thấp nhất khỏi`x`. Do đó, việc áp dụng lặp đi lặp lại thao tác đó sẽ thực hiện chính xác một lần lặp trên mỗi bit đã đặt thay vì một lần lặp trên mỗi chữ số nhị phân. 
 
 Việc giải thích bạo lực rất hữu ích để hiểu lý do tại sao câu trả lời lại là số lượng phổ biến, nhưng không cần thiết phải có`O(N^2)`thuật toán nào cả. Cấu trúc của mỗi bản ghi học sinh độc lập với mọi bản ghi khác. Chúng tôi có thể xử lý từng số nguyên riêng biệt và biểu diễn giới hạn 30 bit có nghĩa là ngay cả việc quét thủ công cũng đủ nhanh. của Python`int.bit_count()`trực tiếp đưa ra kết quả tương tự và là cách thực hiện tối ưu đơn giản nhất. 
 
@@ -100,7 +100,7 @@ if __name__ == "__main__":
 
 Việc sử dụng`bit_count()`là cố ý. Bài toán yêu cầu số lượng`1`bit, không phải độ dài nhị phân hoặc vị trí của bit được đặt cao nhất. Số nguyên Python không có hành vi tràn chiều rộng cố định của các ngôn ngữ như C++, vì vậy các giá trị lên tới`10^9`được xử lý trực tiếp mà không cần bất kỳ loại đặc biệt nào. 
 
-Cũng không có vấn đề gì riêng biệt bởi vì`bit_count()`xử lý chính xác vị trí bit 0. Ví dụ,`1`được biểu thị bằng bit thiết lập đơn ở vị trí 0, do đó số đếm của nó là`1`. 
+Cũng không có vấn đề gì riêng biệt bởi vì`bit_count()`xử lý chính xác vị trí bit 0. Ví dụ,`1`được biểu thị bằng bit thiết lập đơn ở vị trí 0, do đó số lượng của nó là`1`. 
 
 Đầu ra được sản xuất với`print(*ans)`, chèn khoảng trắng giữa tất cả các điểm và tránh việc tạo chuỗi có định dạng lớn theo cách thủ công. Đầu vào sử dụng`sys.stdin.readline`, đáp ứng mẫu I/O nhanh được yêu cầu. 
 
