@@ -1,7 +1,7 @@
 ---
 title: "CF 102202D - A Cộng Bằng B"
-description: "Chúng ta có hai số nguyên dương A và B. Các phép toán duy nhất được phép là nhân đôi một biến hoặc cộng một biến này với biến kia. Nhiệm vụ là in bất kỳ chuỗi nào gồm tối đa 5000 thao tác như vậy để cuối cùng làm cho hai biến bằng nhau."
-date: "2026-08-20T02:16:13+07:00"
+description: "Chúng ta bắt đầu với hai số nguyên dương A và B. Cách duy nhất để thay đổi chúng là cộng một trong các giá trị hiện tại vào một trong hai biến. Do đó, một phép toán có thể nhân đôi một biến hoặc thay thế một biến bằng tổng của cả hai."
+date: "2026-08-24T16:10:26+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102202
@@ -9,7 +9,7 @@ codeforces_index: "D"
 codeforces_contest_name: "2019 KAIST RUN Spring Contest"
 rating: 0
 weight: 102202
-solve_time_s: 453
+solve_time_s: 2420
 verified: false
 draft: false
 ---
@@ -18,155 +18,245 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 7 phút 33 giây 
+**Thời gian giải:** 40 phút 20s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
-Ta có hai số nguyên dương`A`Và`B`. Các hoạt động duy nhất được phép là nhân đôi một biến hoặc thêm một biến vào biến kia. Nhiệm vụ là in bất kỳ chuỗi nào gồm tối đa 5000 thao tác như vậy để cuối cùng làm cho hai biến bằng nhau. 
+Chúng ta bắt đầu với hai số nguyên dương,`A`Và`B`. Cách duy nhất để thay đổi chúng là thêm một trong các giá trị hiện tại vào một trong hai biến. Do đó, một phép toán có thể nhân đôi một biến hoặc thay thế một biến bằng tổng của cả hai. Mục tiêu là xuất ra bất kỳ chuỗi nào gồm tối đa 5000 thao tác như vậy làm cho hai giá trị bằng nhau. Đầu vào chứa các giá trị ban đầu của`A`Và`B`, mỗi cái nhiều nhất\(10^{18}\). Tuyên bố chính thức của cuộc thi có chính xác cách xây dựng và giới hạn này. citturn3search1 
 
-Về nguyên tắc, khó khăn là không tìm ra trình tự nào đó. Vì phép cộng lặp lại có thể mô phỏng thuật toán Euclide nên luôn tồn tại một nghiệm. Khó khăn là tạo ra chuỗi trong phạm vi 5000 phép tính khi giá trị ban đầu có thể lớn tới 10 18. 
+Sự ràng buộc của\(10^{18}\)ngay lập tức loại trừ bất kỳ phương pháp nào có số lượng thao tác phụ thuộc tuyến tính vào các giá trị. Một công trình cần\(A+B\),\(|A-B|\), hoặc thậm chí các bước \(\max(A,B)\) có thể yêu cầu khoảng\(10^{18}\)hoạt động. Giới hạn hoạt động 5000 là ràng buộc thuật toán thực sự, vì vậy chúng ta cần một cấu trúc logarit hoặc nhỏ tương tự. Vì đầu vào chỉ chứa hai số nguyên nên không cần cấu trúc dữ liệu phức tạp và giới hạn bộ nhớ đủ lớn để việc lưu trữ vài nghìn chuỗi thao tác là chuyện nhỏ. 
 
-Một mô phỏng trực tiếp của phép trừ đã đủ để phát hiện ra vấn đề. Bắt đầu từ`A = 1, B = 10^18`, quá trình đảo ngược của quá trình cộng tự nhiên sẽ trừ đi`1`từ`B`khoảng 10 18 lần. Điều đó vượt xa cả giới hạn đầu ra và lượng tính toán có sẵn trong một giây. Phạm vi số khổng lồ cũng loại trừ mọi tìm kiếm đối với các cặp giá trị có thể có. 
+Trường hợp cạnh đầu tiên là sự bình đẳng ngay từ đầu. Đối với đầu vào`5 5`, đầu ra đúng chỉ đơn giản là`0`, vì không cần thao tác. Việc triển khai bất cẩn luôn đi vào vòng rút gọn có thể thực hiện các hoạt động không cần thiết và nghiêm trọng hơn là có thể làm mất đi câu trả lời đã hợp lệ. 
 
-Có một số trường hợp nghiêm trọng mà việc triển khai bất cẩn có thể dẫn đến xử lý sai. Nếu như`A == B`, ví dụ, câu trả lời đúng chỉ đơn giản là các phép toán bằng 0. Đối với đầu vào`1 1`, việc in dù chỉ một thao tác là không cần thiết và có thể khiến việc xây dựng chính xác trở nên khó giải thích hơn. Nếu một giá trị là số chẵn, chẳng hạn như`2 3`, chúng ta phải khai thác các thao tác nhân đôi thay vì cộng liên tục`2`ĐẾN`3`. Cuối cùng, các đầu vào như`1 1000000000000000000`đều nguy hiểm đối với bất kỳ thuật toán nào thực hiện một phép cộng trên một đơn vị tiến trình, vì số lượng yêu cầu có thể lớn hơn 5000 về mặt thiên văn. 
+Trường hợp cạnh thứ hai là một giá trị chẵn. Đối với đầu vào`4 6`, về mặt khái niệm chúng ta có thể giảm cặp này thành`(1, 3)`bằng cách giảm một nửa cả hai giá trị, nhưng các phép toán được phép không chứa phép chia. Việc xây dựng phải thực hiện những sự phân chia đó một cách gián tiếp. Xuất ra`B+=B`tương ứng với điều trị`A`giảm một nửa sau khi loại bỏ thừa số chung của hai, trong khi`A+=A`đóng vai trò đối xứng`B`. Viết trực tiếp`A//=2`không thực hiện phép tính tương ứng sẽ tạo ra một phép tính hữu ích về mặt toán học nhưng lại là một câu trả lời không hợp lệ. 
 
-Quan sát trọng tâm là việc nhân cả hai số với cùng một thừa số dương sẽ không thay đổi liệu bài toán có giải được hay không. Một chuỗi các phép cộng được áp dụng cho`(A, B)`có thể được áp dụng cho`(kA, kB)`và mọi giá trị trung gian chỉ được nhân với`k`. Điều này cho chúng ta một cách hữu ích để giải thích lại việc nhân đôi. 
+Trường hợp cạnh thứ ba là một cặp giá trị lẻ. Đối với đầu vào`3 5`, cộng giá trị nhỏ hơn vào giá trị lớn hơn`(3, 8)`. Giá trị mới lớn hơn là chẵn nên nó có thể giảm đi một nửa trong biểu diễn chuẩn hóa. Thay vào đó, nếu chúng ta liên tục cộng giá trị nhỏ hơn mà không sử dụng tính chẵn lẻ, thì các giá trị có thể tăng lên thay vì đạt đến mức bằng nhau. 
 
 ## Phương pháp tiếp cận 
 
-Một cách tiếp cận bạo lực tự nhiên là đảo ngược quá trình. Nếu như`A < B`, trừ`A`từ`B`; nếu như`B < A`, trừ`B`từ`A`. Đây chính xác là dạng trừ của thuật toán Euclide. Khi hai giá trị bằng nhau, đảo ngược tất cả các phép trừ để có được các phép toán tiến hợp lệ. 
+Một cách tiếp cận đơn giản là tìm kiếm thông qua các chuỗi hoạt động có thể. Từ mỗi trạng thái có bốn lựa chọn, vì vậy sau\(k\)các bước có thể có nhiều như\(4^k\)trình tự cần xem xét. Việc tìm kiếm tới độ sâu cho phép là 5000 là hoàn toàn không thể, vì số lượng chuỗi theo thứ tự\(4^{5000}\). Ngay cả các trạng thái ghi nhớ cũng không đưa ra giới hạn hữu ích vì giá trị tăng nhanh và có quá nhiều trạng thái có thể tiếp cận. 
 
-Cách tiếp cận này đúng vì mọi phép trừ giá trị nhỏ hơn từ giá trị lớn hơn tương ứng ngược lại với việc cộng giá trị nhỏ hơn vào giá trị lớn hơn. Vấn đề là số lần lặp lại. Vì`(1, 10^18)`, Euclid trừ thực hiện 10 18 −1 lần lặp. Điều đó vượt quá 5000 hoạt động đầu ra được phép với một mức chênh lệch rất lớn. 
+Một nỗ lực mang tính xây dựng tự nhiên hơn là sử dụng phép cộng theo tinh thần tương tự như thuật toán Euclide. Vấn đề là thuật toán Euclide muốn phép trừ, trong khi mọi phép toán khả dụng chỉ là phép cộng. Ví dụ, bắt đầu từ`(1, 1000000000000000000)`, việc cộng liên tục giá trị nhỏ hơn vào giá trị lớn hơn sẽ cần một số lượng lớn các phép cộng nếu chúng ta cố gắng mô phỏng trực tiếp phép trừ. 
 
-Quan sát khắc phục điều này là hoạt động nhân đôi. Giả sử trạng thái khái niệm là`(A/2, B)`, Ở đâu`A`là chẵn. Thay vì thực sự chia`A`, trình diễn`B += B`về các biến thực. Trạng thái thực trở thành`(A, 2B)`, chính xác là hai lần`(A/2, B)`. Vì việc nhân cả hai biến với cùng một thừa số sẽ bảo toàn mọi mối quan hệ cộng tính trong tương lai, nên chúng ta có thể coi`B += B`như một hoạt động khái niệm để phân chia`A`bằng hai. 
+Quan sát quan trọng là việc nhân cả hai số với cùng một thừa số dương không ảnh hưởng đến việc chúng có bằng nhau hay không. Chúng ta có thể tự do suy luận về một cặp chuẩn hóa thu được bằng cách chia các thừa số chung của hai. Điều này cho phép chúng tôi diễn giải lại các hoạt động nhân đôi thành các hoạt động giảm một nửa ảo. 
 
-Điều này cho chúng ta một phiên bản nhanh của quá trình Euclide. Bất cứ khi nào một số là số chẵn, hãy chia nó cho hai về mặt khái niệm. Nếu cả hai số đều lẻ và không bằng nhau thì cộng số nhỏ với số lớn. Càng lớn thì càng chẵn nên pha tiếp theo có thể chia đôi. Cụ thể hơn, nếu`A < B`và cả hai đều là số lẻ, hãy thay cặp khái niệm bằng 
+Giả sử cặp chuẩn hóa là`(A, B)`Và`A`là chẵn. Nếu chúng ta thực hiện thao tác thực sự`B+=B`, cặp vật lý trở thành`(A, 2B)`. Nếu chúng ta chia cả hai giá trị cho hai một cách khái niệm thì điều này tương đương với`(A/2, B)`. Do đó, một phép toán hợp pháp mang lại cho chúng ta trạng thái chuẩn hóa tương tự như giảm một nửa`A`. Tương tự,`A+=A`có thể được coi là giảm một nửa`B`trong biểu diễn chuẩn hóa. 
 
-(A,B)→(A, 2 A+B ​ ). 
+Khi cả hai giá trị chuẩn hóa đều là số lẻ, giả sử`A < B`. Chúng tôi biểu diễn`B+=A`, cho`(A, A+B)`. Vì cả hai toán hạng đều là số lẻ,`A+B`là số chẵn, do đó phép chuẩn hóa tiếp theo có thể chia giá trị lớn hơn đó cho hai. Sự chuyển đổi khái niệm là\[
+(A,B)\rightarrow \left(A,\frac{A+B}{2}\right).
+\]Đây là mức giảm quan trọng. Nếu như`B-A=C`, thì sau quá trình chuyển đổi này, sự khác biệt mới là\[
+\frac{A+B}{2}-A=\frac{B-A}{2}=\frac C2.
+\]Vì vậy, khi cả hai giá trị đều là số lẻ, một phép cộng theo sau là sự chuẩn hóa sẽ làm giảm gần một nửa sự khác biệt. Đây là ý tưởng tương tự về tính chẵn lẻ đằng sau thuật toán Euclide nhị phân. 
 
-Sự khác biệt mới là 
-
-2 B−A ​ , 
-
-vì vậy mỗi lần chuyển đổi từ lẻ sang lẻ như vậy sẽ giảm một nửa sự khác biệt. Đây là lý do chính khiến số lần lặp vẫn nhỏ. 
-
-Các giá trị ban đầu nhiều nhất là 10 18, do đó có nhiều nhất khoảng 60 lần chia đôi trước khi giá trị dương đạt tới 1. Trong một lần chuyển đổi lẻ, phép cộng tạo ra một giá trị dưới 2⋅10 18, yêu cầu tối đa 61 lần chia đôi để giảm trở lại giá trị lẻ. Có thể có tối đa 60 vòng giảm một nửa chênh lệch có ý nghĩa. Giới hạn lỏng lẻo khoảng 60⋅61+60, dưới 5000, đã đủ cho giới hạn yêu cầu. 
+Việc xây dựng kết quả liên tục loại bỏ các thừa số của 2, sau đó cộng giá trị lẻ nhỏ hơn vào giá trị lẻ lớn hơn. Các giá trị chuẩn hóa giảm dần cho đến khi cả hai trở thành một, tại thời điểm đó các giá trị thực tế bằng nhau vì tất cả các phép biến đổi đều bảo toàn quan hệ đẳng thức. Đối số đếm thao tác chi tiết đưa ra giới hạn dưới 5000, với phân tích chặt chẽ hơn đưa ra 3969 thao tác cho các giá trị lên tới\(10^{18}\). citturn4view0 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
-| --- | --- | --- | --- | 
-| Phép trừ Euclid | O(max(A,B)) | Đầu ra O(max(A,B)) trong trường hợp xấu nhất | Quá chậm | 
-| Euclid dựa trên việc giảm một nửa | O(logmax(A,B)) vòng khái niệm, cộng với đầu ra | O(5000) | Đã chấp nhận | 
+|---|---:|---:|---| 
+| Lực lượng vũ phu | \(O(4^{5000})\) không gian chuỗi | \(O(5000)\) mỗi chuỗi | Quá chậm | 
+| Tối ưu | \(O(\log^2 10^{18})\) | \(O(\log^2 10^{18})\) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Đọc`A`Và`B`. Nếu chúng đã bằng nhau thì xuất ra các phép toán bằng 0. Không có gì để xây dựng. 
-2. Trong khi`A`Và`B`khác nhau, liên tục loại bỏ các thừa số của 2 khỏi`A`. Về mặt khái niệm, thay thế`A`qua`A/2`được mô phỏng bằng cách thực hiện`B += B`. Cặp thực tế được nhân đôi ở tọa độ thứ hai của nó, do đó trạng thái thực vẫn là bội số chung của trạng thái khái niệm. 
-3. Làm tương tự cho`B`. Mỗi sự phân chia khái niệm`B /= 2`được mô phỏng bởi`A += A`. 
-4. Sau khi cả hai giá trị đều là số lẻ, hãy so sánh chúng. Nếu như`A < B`, trình diễn`B += A`và cập nhật về mặt khái niệm`B`ĐẾN`A + B`. cái mới`B`chẵn vì nó là tổng của hai số lẻ. 
-5. Nếu`B < A`, thực hiện đối xứng`A += B`và cập nhật về mặt khái niệm`A`ĐẾN`A + B`. Một lần nữa, giá trị mới lớn hơn là chẵn và có thể giảm một nửa trong lần lặp tiếp theo. 
-6. Tiếp tục cho đến khi các giá trị khái niệm bằng nhau. Sau đó, các thao tác đã ghi sẽ được in theo thứ tự ban đầu. Bởi vì mọi trạng thái khái niệm đều được biểu thị bằng trạng thái thực tế theo một hệ số tỷ lệ chung, nên sự bằng nhau của các giá trị khái niệm hàm ý sự bằng nhau của các biến thực tế. 
+1. Giữ`a`Và`b`như các giá trị chuẩn hóa được sử dụng để suy luận. Chúng không đại diện cho các giá trị theo nghĩa đen được giám khảo lưu trữ sau mỗi thao tác. Thay vào đó, chúng đại diện cho một cặp tương đương sau khi loại bỏ các thừa số chung của hai. 
 
-Lý do thuật toán kết thúc nhanh chóng là vì sau khi cả hai giá trị đều là số lẻ, việc cộng giá trị nhỏ hơn với giá trị lớn hơn và sau đó giảm một nửa số lớn hơn sẽ thay đổi chênh lệch so với`D`ĐẾN`D/2`. Do đó, hiệu sẽ mất ít nhất một chữ số nhị phân cho mỗi lần chuyển đổi lẻ. Bản thân các giá trị cũng mất hệ số hai bất cứ khi nào có thể, do đó, cả số vòng cũng như số lượng thao tác phát ra đều không thể đạt tới cường độ đầu vào khổng lồ. 
+2. Trong khi`a`chẵn, nối thêm`B+=B`để trả lời và thay thế`a`qua`a // 2`. Hoạt động thực sự tăng gấp đôi`B`và sau khi chia cả hai giá trị cho hai về mặt khái niệm, trạng thái chuẩn hóa hoàn toàn giống như giảm một nửa`a`. 
+
+3. Trong khi`b`chẵn, nối thêm`A+=A`và thay thế`b`qua`b // 2`. Đây là phép biến đổi đối xứng. Hoạt động thực sự tăng gấp đôi`A`, tương đương với việc giảm một nửa`B`sau khi loại bỏ thừa số chung của 2. 
+
+4. Nếu`a == b`, dừng lại. Các giá trị được chuẩn hóa là bằng nhau, do đó các giá trị thực tế được biểu thị bằng chúng cũng bằng nhau. 
+
+5. Nếu cả hai giá trị chuẩn hóa bây giờ đều là số lẻ và`a < b`, nối thêm`B+=A`và thay thế`b`qua`a + b`. Tổng của hai số lẻ là số chẵn nên lần lặp tiếp theo có thể giảm đi một nửa`b`. 
+
+6. Nếu cả hai giá trị chuẩn hóa đều là số lẻ và`b < a`, nối thêm`A+=B`và thay thế`a`qua`a + b`. Một lần nữa, giá trị lớn hơn được cập nhật là chẵn và sẽ giảm một nửa khi bắt đầu lần lặp tiếp theo. 
+
+Lý do khiến quá trình tiến bộ dễ dàng nhận thấy nhất từ ​​​​sự khác biệt. Cho rằng`a < b`và cả hai đều kỳ quặc. Sau khi cộng và giảm một nửa tiếp theo, sự khác biệt sẽ trở thành`(b-a)/2`. Do đó, khoảng cách giữa hai giá trị chuẩn hóa sẽ giảm đi hai lần bất cứ khi nào cần bước bổ sung. Các bước loại bỏ chẵn lẻ sẽ tự giảm số lượng. 
 
 ### Tại sao nó hoạt động 
 
-Duy trì tính bất biến rằng cặp biến thực tế là bội số chung của cặp khái niệm`(A, B)`được duy trì bởi thuật toán. Ban đầu số nhân là 1. 
+Bất biến là cặp chuẩn hóa`(a, b)`đại diện cho cặp thực tế hiện tại khi nhân cả hai giá trị với cùng lũy ​​thừa dương của hai. Tỷ lệ chung như vậy không thể thay đổi liệu hai giá trị có bằng nhau hay không. 
 
-Khi thuật toán phân chia theo khái niệm`A`tăng gấp đôi, thao tác được ghi sẽ nhân đôi thao tác thực tế`B`. Nếu cặp thực tế là`k(A,B)`, nó trở thành`(kA,2kB)`, bằng`2k(A/2,B)`. Lập luận tương tự được áp dụng khi phân chia về mặt khái niệm`B`. 
+Khi`a`là chẵn,`B+=B`thay đổi cặp thực tế từ`(A,B)`ĐẾN`(A,2B)`. Chia cả hai cho hai được`(A/2,B)`, vì vậy thay thế chuẩn hóa`a`qua`a/2`là hợp pháp. Lập luận tương tự được áp dụng khi`b`là chẵn. 
 
-Khi thuật toán cộng số nhỏ hơn với số lớn hơn, phép toán thực tương ứng sẽ thực hiện chính xác phép cộng tương tự trên cặp thực tế, duy trì mối quan hệ chia tỷ lệ chung. Do đó bất biến giữ sau mỗi hoạt động. 
+Khi cả hai giá trị chuẩn hóa đều là số lẻ và không bằng nhau, việc cộng giá trị nhỏ hơn với giá trị lớn hơn là một phép toán hợp pháp. Giá trị lớn hơn thu được là chẵn và phép chuẩn hóa sau sẽ giảm một nửa giá trị đó. Nếu giá trị nhỏ hơn là`a`, cặp này thay đổi về mặt khái niệm từ`(a,b)`ĐẾN`(a,(a+b)/2)`. Sự khác biệt mới là`(b-a)/2`, do đó quá trình không thể giữ nguyên hiệu số dương mãi mãi. Cuối cùng, các giá trị chuẩn hóa đạt đến sự bằng nhau và bất biến sau đó cho chúng ta biết rằng các giá trị thực tế cũng bằng nhau. 
 
-Khi các giá trị khái niệm trở nên bằng nhau, thì các giá trị thực tế sẽ bằng số nhân chung nhân với các giá trị bằng nhau đó, do đó các biến thực tế sẽ bằng nhau theo yêu cầu. 
+Số lượng hoạt động cũng đủ nhỏ cho giới hạn 5000. Một giới hạn hữu ích nhóm quy trình thành các giai đoạn trong đó tích của các giá trị chuẩn hóa được giảm ít nhất theo hệ số hai. Mỗi giai đoạn như vậy cần nhiều nhất\(2\lfloor\log_2 B\rfloor+1\)hoạt động và vì sản phẩm ban đầu thấp hơn\(10^{36}\), tính tổng các giới hạn này sẽ có ít hơn 7200 phép toán. Phân tích pha sắc nét hơn sẽ đưa ra giới hạn yêu cầu là 3969, ở mức dưới 5000 một cách thoải mái. citeturn6view0turn4view0 
 
 ## Giải pháp Python```python
-Pythonimport sysinput = sys.stdin.readline
+import sys
+input = sys.stdin.readline
 
-def solve():    a, b = map(int, input().split())    operations = []
-    while a != b:        while a % 2 == 0:            # Conceptually: a /= 2            # Actually: double b, so the real pair is scaled by 2.            operations.append("B+=B")            a //= 2
-        while b % 2 == 0:            # Conceptually: b /= 2            # Actually: double a.            operations.append("A+=A")            b //= 2
-        if a < b:            operations.append("B+=A")            b += a        elif b < a:            operations.append("A+=B")            a += b
-    print(len(operations))    sys.stdout.write("\n".join(operations))
+def solve():
+    a, b = map(int, input().split())
+    ans = []
 
-if __name__ == "__main__":    solve()
-```hai`while`các vòng lặp thực hiện hoạt động giảm một nửa khái niệm. Khi`a`là số chẵn, mã ghi`B+=B`nhưng thay đổi khái niệm`a`ĐẾN`a // 2`. Mối quan hệ tương tự được sử dụng ngược lại cho một số chẵn`b`. 
+    while a != b:
+        while a % 2 == 0:
+            ans.append("B+=B")
+            a //= 2
 
-Các hoạt động bổ sung được ghi lại trước khi cập nhật biến khái niệm. Thứ tự này quan trọng vì thao tác in mô tả những gì xảy ra với trạng thái thực, trong khi các biến cục bộ biểu thị trạng thái khái niệm được chuẩn hóa. 
+        while b % 2 == 0:
+            ans.append("A+=A")
+            b //= 2
 
-Số nguyên Python có độ chính xác tùy ý, do đó không có vấn đề tràn khi xây dựng chuỗi. Trong ngôn ngữ có chiều rộng cố định, các giá trị thực có thể tạm thời vượt quá 10 18, do đó, việc sử dụng loại số nguyên đủ rộng là cần thiết. 
+        if a == b:
+            break
 
-các`elif`cũng là cố ý. Sau lần so sánh đầu tiên, chỉ có một biến có thể nhỏ hơn. Không có lý do gì để thực hiện cả hai phép cộng trong một lần lặp. 
+        if a < b:
+            ans.append("B+=A")
+            b += a
+        else:
+            ans.append("A+=B")
+            a += b
+
+    print(len(ans))
+    print("\n".join(ans))
+
+if __name__ == "__main__":
+    solve()
+```Đầu vào được đọc một lần vì bài toán có một cặp giá trị. các`ans`mảng lưu trữ các hoạt động pháp lý chính xác phải được in. 
+
+đầu tiên`while`vòng lặp xử lý mọi thừa số của hai trong`a`. Hoạt động được thêm vào câu trả lời là`B+=B`, không`A+=A`, bởi vì việc nhân đôi giá trị thực tế còn lại sẽ khiến cho việc giảm một nửa`A`hợp lệ sau khi chuẩn hóa chung. Sự đảo ngược này là chi tiết triển khai dễ mắc sai lầm nhất. 
+
+Vòng lặp thứ hai thực hiện phép toán đối xứng cho`b`. Vì giá trị ban đầu nhiều nhất là\(10^{18}\), số nguyên của Python là quá đủ và không có vấn đề tràn. 
+
+Sau cả hai vòng lặp, nếu các giá trị chuẩn hóa bằng nhau thì quá trình xây dựng đã hoàn tất. Nếu không thì cả hai đều kỳ quặc. Chính xác là một cái lớn hơn, vì vậy chúng ta cộng cái nhỏ hơn vào cái lớn hơn. Giá trị mới lớn hơn là chẵn, đảm bảo công việc hữu ích trong lần lặp tiếp theo. 
+
+Mã không mô phỏng rõ ràng các giá trị thực tế sau mỗi thao tác. Làm như vậy là không cần thiết và có thể làm cho lý do trở nên khó hiểu. Các giá trị được chuẩn hóa là đủ vì mỗi bước giảm một nửa thể hiện việc loại bỏ hệ số chung của hai khỏi cặp thực tế. 
 
 ## Ví dụ đã hoạt động 
 
-### Ví dụ 1 
+Đối với ví dụ đầu tiên, đầu vào là`2 3`. 
 
-Đối với đầu vào được cung cấp`2 3`, thuật toán đầu tiên thông báo rằng`A`là chẵn. Nó ghi lại`B+=B`và những thay đổi về mặt khái niệm`A`từ 2 đến 1. 
+| Bước | Chuẩn hóa`a`| Chuẩn hóa`b`| Hoạt động | 
+|---:|---:|---:|---| 
+| 0 | 2 | 3 | bắt đầu | 
+| 1 | 1 | 3 |`B+=B`| 
+| 2 | 1 | 4 |`B+=A`| 
+| 3 | 1 | 2 |`A+=A`| 
+| 4 | 1 | 1 |`A+=A`| 
 
-| Bước | Hoạt động | Khái niệm A | Khái niệm B | Thực tế A | B thực tế | 
-| --- | --- | --- | --- | --- | --- | 
-| 0 | Ban đầu | 2 | 3 | 2 | 3 | 
-| 1 |`B+=B`| 1 | 3 | 2 | 6 | 
-| 2 |`B+=A`| 1 | 2 | 2 | 8 | 
-| 3 |`A+=A`| 1 | 1 | 4 | 8 | 
+Trình tự thực tế tương ứng là```text
+B+=B
+B+=A
+A+=A
+A+=A
+```Bắt đầu từ`(2,3)`, các giá trị thực tế trở thành`(2,6)`,`(2,8)`,`(4,8)`, và cuối cùng`(8,8)`. Dấu vết chuẩn hóa phân chia lũy thừa chung của hai và đạt đến`(1,1)`. 
 
-Các giá trị khái niệm bây giờ bằng nhau. Các giá trị thực tế cũng bằng nhau, ở mức 8. Điều này minh họa bất biến tỷ lệ chung: sau thao tác đầu tiên, cặp thực tế`(2,6)`gấp đôi cặp khái niệm`(1,3)`, và mối quan hệ tương tự vẫn còn sau đó. 
+Đối với ví dụ thứ hai, hãy xem xét`4 6`. 
 
-### Ví dụ 2 
+| Bước | Chuẩn hóa`a`| Chuẩn hóa`b`| Hoạt động | 
+|---:|---:|---:|---| 
+| 0 | 4 | 6 | bắt đầu | 
+| 1 | 2 | 6 |`B+=B`| 
+| 2 | 1 | 6 |`B+=B`| 
+| 3 | 1 | 3 |`A+=A`| 
+| 4 | 1 | 4 |`B+=A`| 
+| 5 | 1 | 2 |`A+=A`| 
+| 6 | 1 | 1 |`A+=A`| 
 
-Hãy xem xét`1 5`. Cả hai số đều bắt đầu lẻ, và`A < B`, do đó thuật toán thêm`A`ĐẾN`B`. Khái niệm mới`B`là 6, là số chẵn, nên phép toán tiếp theo sẽ giảm một nửa về mặt khái niệm. 
-
-| Bước | Hoạt động | Khái niệm A | Khái niệm B | Thực tế A | B thực tế | 
-| --- | --- | --- | --- | --- | --- | 
-| 0 | Ban đầu | 1 | 5 | 1 | 5 | 
-| 1 |`B+=A`| 1 | 6 | 1 | 6 | 
-| 2 |`A+=A`| 1 | 3 | 2 | 6 | 
-| 3 |`B+=A`| 1 | 4 | 2 | 8 | 
-| 4 |`A+=A`| 1 | 2 | 4 | 8 | 
-| 5 |`A+=A`| 1 | 1 | 8 | 8 | 
-
-Sự khác biệt giữa các giá trị khái niệm đi từ 4 đến 2 rồi đến 1. Chuỗi thực tế kết thúc với các giá trị bằng nhau chỉ sau năm thao tác, mặc dù các giá trị ban đầu cách nhau bốn. 
+Các giá trị thực tế theo sau`(4,6)`,`(4,12)`,`(4,24)`,`(8,24)`,`(8,32)`,`(16,32)`,`(32,32)`. Các giá trị chuẩn hóa được phép thu nhỏ ngay cả khi các giá trị thực tế không bao giờ giảm, bởi vì mỗi lần chuẩn hóa sẽ loại bỏ một hệ số chung khỏi cả hai giá trị. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
-| --- | --- | --- | 
-| Thời gian | O(log 2 V) trong giới hạn lỏng lẻo, trong đó V=max(A,B) | Có các vòng giảm một nửa O(logV) và mỗi vòng thực hiện tối đa các hoạt động giảm một nửa O(logV) | 
-| Không gian | O(log 2 V), giới hạn bởi 5000 phép toán | Trình tự đầu ra được lưu trữ trước khi in | 
+|---|---:|---| 
+| Thời gian | \(O(\log^2 V)\) | Có nhiều phép giảm chẵn lẻ theo logarit giữa các giai đoạn và mỗi giai đoạn thực hiện tối đa nhiều phép cộng và giảm theo logarit. | 
+| Không gian | \(O(\log^2 V)\) | Danh sách thao tác chứa ít hơn 5000 chuỗi. | 
 
-Với V<10 18, logarit cơ số hai chỉ khoảng 60. Số phép toán thu được nằm dưới giới hạn 5000 được yêu cầu một cách thoải mái, do đó thuật toán dễ dàng đủ nhanh cho giới hạn một giây. Việc sử dụng bộ nhớ cũng rất nhỏ so với giới hạn 1024 MB. 
+Ở đây \(V=\max(A,B)\le10^{18}\). Công trình có hoạt động đã được chứng minh là giới hạn dưới 5000, do đó nó đáp ứng giới hạn đầu ra đặc biệt. Python chỉ thực hiện vài nghìn phép tính số nguyên và lưu trữ vài nghìn chuỗi ngắn, dễ dàng nằm trong giới hạn 1 giây và 1024 MB. citturn6view0 
 
 ## Trường hợp thử nghiệm 
 
-Bởi vì đây là một vấn đề mang tính xây dựng nên việc so sánh kết quả đầu ra một cách chính xác là không phù hợp. Thẩm phán chấp nhận nhiều trình tự hợp lệ khác nhau. Thay vào đó, trình trợ giúp kiểm tra bên dưới sẽ phân tích các thao tác được tạo ra, kiểm tra xem có tối đa 5000 thao tác trong số đó hay không, mô phỏng chúng trên đầu vào ban đầu và xác minh rằng các giá trị cuối cùng bằng nhau.```python
-Pythonimport sysimport io
+Bởi vì đây là một bài toán xây dựng thẩm phán đặc biệt nên không có một chuỗi đầu ra bắt buộc nào. Bộ khai thác kiểm tra bên dưới kiểm tra xem trình tự được tạo ra chỉ chứa các thao tác hợp pháp, có tối đa 5000 thao tác và thực sự làm cho hai giá trị ban đầu bằng nhau.```python
+# helper: run solution on input string, return output string
+import sys
+ < b:
+                ans.append("B+=A")
+                b += a
+            else:
+                ans.append("A+=B")
+                a += b
 
-def solution(inp: str) -> str:    old_stdin = sys.stdin    old_stdout = sys.stdout
-    sys.stdin = io.StringIO(inp)    sys.stdout = io.StringIO()
-    a, b = map(int, sys.stdin.readline().split())    operations = []
-    while a != b:        while a % 2 == 0:            operations.append("B+=B")            a //= 2
-        while b % 2 == 0:            operations.append("A+=A")            b //= 2
-        if a < b:            operations.append("B+=A")            b += a        elif b < a:            operations.append("A+=B")            a += b
-    print(len(operations))    sys.stdout.write("\n".join(operations))
-    result = sys.stdout.getvalue()
-    sys.stdin = old_stdin
+        print(len(ans))
+        print("\n".join(ans))
+        return sys.stdout.getvalue()
+    finally:
+        sys.stdin = old_stdin
+        sys.stdout = old_stdout
+
+def run(inp: str) -> str:
+    return solution(inp)
+
+def validate(inp: str, out: str):
+    a, b = map(int, inp.split())
+    lines = out.strip().splitlines()
+
+    assert lines
+    n = int(lines[0])
+    assert 0 <= n <= 5000
+    assert len(lines) == n + 1
+
+    allowed = {"A+=A", "A+=B", "B+=A", "B+=B"}
+
+    for op in lines[1:]:
+        assert op in allowed
+
+        if op == "A+=A":
+            a += a
+        elif op == "A+=B":
+            a += b
+        elif op == "B+=A":
+            b += a
+        else:
+            b += b
+
+    assert a == b
+
+# Provided sample
+out = run("2 3")
+validate("2 3", out)
+
+# Minimum-size input
+out = run("1 1")
+validate("1 1", out)
+assert out.strip() == "0"
+
+# Even values with several factors of two
+out = run("4 6")
+validate("4 6", out)
+
+# Boundary values
+out = run("1 1000000000000000000")
+validate("1 1000000000000000000", out)
+
+# Maximum-size equal values
+out = run("1000000000000000000 1000000000000000000")
+validate("1000000000000000000 1000000000000000000", out)
+assert out.strip() == "0"
+
+# Close odd values, useful for catching parity mistakes
+out = run("999999999999999999 1000000000000000000")
+validate("999999999999999999 1000000000000000000", out)
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
-| --- | --- | --- | 
-|`1 1`| Không hoạt động | Bình đẳng ngay lập tức và ranh giới vòng lặp | 
-|`123456789 123456789`| Không hoạt động | Bình đẳng với những giá trị không tầm thường | 
-|`1000000000000000000 1`| Tối đa 5000 thao tác hợp lệ | Cường độ tối đa và giảm một nửa lặp đi lặp lại | 
-|`1000000000000000000 1000000000000000000`| Không hoạt động | Cả hai đầu vào ở giới hạn trên | 
-|`999999999999999999 1000000000000000000`| Tối đa 5000 thao tác hợp lệ | Các giá trị liên tiếp và chuyển tiếp chẵn lẻ | 
+|---|---|---| 
+|`2 3`| Bất kỳ chuỗi hợp lệ nào, bao gồm 4 thao tác của mẫu | Cung cấp mẫu và các chuyển đổi lẻ/chẵn cơ bản | 
+|`1 1`|`0`| Trường hợp ranh giới đã bằng nhau | 
+|`4 6`| Bất kỳ chuỗi hợp lệ nào | Giảm một nửa lặp đi lặp lại của các giá trị chuẩn hóa | 
+|`1 1000000000000000000`| Bất kỳ chuỗi hợp lệ nào có tối đa 5000 thao tác | Giá trị cực kỳ mất cân bằng | 
+|`1000000000000000000 1000000000000000000`|`0`| Giá trị đầu vào tối đa đã bằng nhau | 
+|`999999999999999999 1000000000000000000`| Bất kỳ chuỗi hợp lệ nào | Các giá trị liền kề và chuyển tiếp nhạy cảm với chẵn lẻ | 
 
 ## Vỏ cạnh 
 
-cho`1 1`, vòng lặp bên ngoài không bao giờ bắt đầu vì các giá trị khái niệm đã bằng nhau. Chương trình in`0`và không có hoạt động. Một công trình đi vào vòng lặp một cách mù quáng có thể vô tình tạo ra một thao tác không cần thiết và bỏ lỡ câu trả lời hợp lệ đơn giản nhất. 
+cho`5 5`, thuật toán đi vào điều kiện vòng lặp bên ngoài`a != b`, thấy rằng nó đã sai và ngay lập tức in ra các thao tác bằng 0. Đây là cách xây dựng hợp lý duy nhất vì điều kiện mục tiêu đã được đảm bảo. 
 
-Vì`2 3`, giá trị đầu tiên là chẵn. Bản ghi thuật toán`B+=B`và về mặt khái niệm thay đổi cặp từ`(2,3)`ĐẾN`(1,3)`. Cặp thực thay đổi từ`(2,3)`ĐẾN`(2,6)`, gấp đôi cặp khái niệm. Các hoạt động tiếp theo tạo ra`(2,8)`và sau đó`(4,8)`, do đó đạt được sự bình đẳng. 
+Vì`4 6`, thuật toán chuẩn hóa trước tiên sẽ loại bỏ các thừa số của hai khỏi`a`. đầu tiên`B+=B`đại diện cho`4 -> 2`, và thứ hai đại diện cho`2 -> 1`. Sau đó`A+=A`đại diện cho`6 -> 3`. Trạng thái chuẩn hóa bây giờ là`(1,3)`. hoạt động`B+=A`thay đổi nó về mặt khái niệm thành`(1,4)`, sau đó hai`A+=A`hoạt động đại diện`4 -> 2 -> 1`. Trạng thái bình thường hóa đạt đến`(1,1)`, và giá trị thực tế đã đạt tới`(32,32)`. 
 
-Vì`1 5`, cả hai giá trị đều lẻ và không bằng nhau. Thuật toán thực hiện`B+=A`, đưa ra khái niệm`(1,6)`, sau đó liên tục loại bỏ hệ số hai khỏi 6. Các trạng thái khái niệm là`(1,5)`,`(1,6)`,`(1,3)`,`(1,4)`,`(1,2)`,`(1,1)`. Các trạng thái thực tế kết thúc tại`(8,8)`. Trường hợp này chứng tỏ tại sao một cặp lẻ trước tiên phải sử dụng phép cộng để tạo ra giá trị chẵn. 
+Vì`1 1000000000000000000`, giá trị lớn chứa nhiều thừa số của hai. Thuật toán loại bỏ các yếu tố đó bằng cách sử dụng`A+=A`các hoạt động trong biểu diễn chuẩn hóa, thay vì thực hiện\(10^{18}\)bổ sung riêng lẻ. Khi các phần lẻ còn lại được phơi bày, bước bổ sung liên tục sẽ giảm một nửa chênh lệch liên quan. Đây chính xác là tình huống mà cách tiếp cận cộng trực tiếp sẽ thất bại nhưng việc xây dựng dựa trên tính chẵn lẻ vẫn nằm trong giới hạn hoạt động. 
 
-Vì`1 1000000000000000000`, phép trừ Euclid sẽ cần gần 10 18 phép cộng. Thay vào đó, thuật toán được đề xuất liên tục giảm một nửa giá trị chẵn về mặt khái niệm. Giá trị giảm từ 10 18 xuống 5 sau khoảng 60 lần chia đôi, trong khi mỗi lần chia đôi khái niệm chỉ tương ứng với một thao tác được in. Các chuyển tiếp lẻ còn lại cũng làm giảm sự khác biệt về mặt hình học, giữ cho toàn bộ công trình được an toàn dưới 5000 lần vận hành. 
+Vì`999999999999999999 1000000000000000000`, các giá trị liền kề nhau nhưng có tính chẵn lẻ ngược lại. Giai đoạn loại bỏ tính chẵn lẻ đầu tiên ngay lập tức thay đổi giá trị chuẩn hóa bằng việc giảm một nửa ảo. Thuật toán không bao giờ giả định rằng các giá trị ban đầu đều là số lẻ, chỉ có điều chúng đều là số lẻ sau các vòng lặp loại bỏ chẵn lẻ. Điều kiện biên này ngăn chặn việc áp dụng sai phép chuyển đổi lẻ-cộng-lẻ. 
 
-Vì`999999999999999999 1000000000000000000`, các số liên tiếp nhau và có tính chẵn lẻ khác nhau. Giá trị chẵn ngay lập tức được giảm đi một nửa về mặt khái niệm, sau đó thuật toán liên tục chuẩn hóa tính chẵn lẻ và thêm giá trị lẻ nhỏ hơn khi cần thiết. Điều này nắm bắt các triển khai giả định cả hai số có cùng tính chẵn lẻ hoặc quên kiểm tra lại tính chẵn lẻ sau khi bổ sung.
+Vì`1 1`, đầu vào tối thiểu có thể, câu trả lời lại là 0. Vì`1000000000000000000 1000000000000000000`, đầu vào bằng nhau tối đa có thể hoạt động giống hệt nhau. Độ lớn của các số nguyên không có tác dụng khi đã có sự bằng nhau. 
+:::

@@ -1,7 +1,7 @@
 ---
 title: "CF 102215A - Phòng và lối đi"
-description: "Chúng ta có một dãy gồm (n+1) phòng và (n) lối đi. Đoạn (i) nối phòng (i-1) với phòng (i), nên việc di chuyển về phía đích luôn đồng nghĩa với việc xử lý mảng từ trái sang phải. Mỗi đoạn văn được mô tả bằng một số nguyên (ai). Giá trị tuyệt đối của nó là màu vượt qua."
-date: "2026-08-20T02:40:05+07:00"
+description: "Ngục tối là một chuỗi thẳng gồm (n+1) phòng, vì vậy mỗi lối đi chỉ đơn giản là di chuyển chúng ta sang bên phải một vị trí. Đoạn (i) được đại diện bởi (ai). Giá trị tuyệt đối của nó là màu của thẻ mà nó sử dụng."
+date: "2026-08-25T03:48:03+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102215
@@ -9,8 +9,8 @@ codeforces_index: "A"
 codeforces_contest_name: "2019, XII Samara Regional Intercollegiate Programming Contest"
 rating: 0
 weight: 102215
-solve_time_s: 415
-verified: false
+solve_time_s: 3029
+verified: true
 draft: false
 ---
 
@@ -18,95 +18,88 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 6 phút 55 giây 
-**Đã xác minh:** không 
+**Thời gian giải:** 50 phút 29s 
+**Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta có một dãy gồm (n+1) phòng và (n) lối đi. Đoạn (i) nối phòng (i-1) với phòng (i), nên việc di chuyển về phía đích luôn đồng nghĩa với việc xử lý mảng từ trái sang phải. Mỗi đoạn văn được mô tả bằng một số nguyên (a_i). Giá trị tuyệt đối của nó là màu vượt qua. Giá trị dương có nghĩa là đoạn văn sẽ kiểm tra màu đó trước khi cho phép chúng ta đi qua. Giá trị âm có nghĩa là lối đi luôn có thể được vượt qua, nhưng sau khi vượt qua nó, lối đi của màu đó trở nên không hợp lệ. Định dạng đầu vào và hai loại đoạn văn này được đưa ra bởi tuyên bố chính thức. 
+Ngục tối là một chuỗi thẳng gồm (n+1) phòng, vì vậy mỗi lối đi chỉ đơn giản là di chuyển chúng ta sang bên phải một vị trí. Đoạn (i) được biểu thị bằng (a_i). Giá trị tuyệt đối của nó là màu của thẻ mà nó sử dụng. Giá trị dương có nghĩa là đoạn kiểm tra đã vượt qua, trong khi giá trị âm có nghĩa là đoạn văn luôn có thể bị vượt qua nhưng màu đó sẽ vô hiệu vĩnh viễn. 
 
-Đối với mỗi (các) phòng bắt đầu, chúng tôi bắt đầu với mọi thẻ hợp lệ và liên tục vượt qua các đoạn (s+1,s+2,\ldots) cho đến khi một đoạn kiểm tra yêu cầu một thẻ đã không hợp lệ hoặc chúng tôi đạt đến phòng (n). Câu trả lời cho (s) là số lối đi vượt qua thành công, cũng là số phòng được vào khi di chuyển về phía phòng (n). 
+Chúng tôi cần câu trả lời cho mọi phòng bắt đầu từ (0) đến (n-1). Câu trả lời là số đoạn chúng ta có thể vượt qua thành công trước đoạn đầu tiên từ chối chúng ta. Vì mỗi lối đi thành công đều đi vào một phòng mới nên đây cũng chính là số lượng phòng mới đạt được. Giới hạn đầu vào (n) đến (500000), như được nêu trên trang vấn đề chính thức. 
 
-Giới hạn (n\le 500000) loại trừ mọi thứ bậc hai. Một mô phỏng đơn giản cho mỗi phòng xuất phát có thể kiểm tra về 
+Sự tương tác chính là giữa lần xuất hiện tiêu cực và lần xuất hiện tích cực sau đó của cùng một màu. Nếu chúng ta vượt qua một đoạn phủ định (-c), thì đoạn văn (c) sẽ không hợp lệ. Bất kỳ điều gì muộn hơn (+c) đều trở thành không thể. Bản thân một đoạn tiêu cực không bao giờ ngăn cản được chúng ta. 
 
-[ 
-n+(n-1)+\cdots+1=\frac{n(n+1)}2 
-] 
+Ví dụ,```
+3
+1 -1 1
+```có câu trả lời```
+2 2 1
+```Bắt đầu từ phòng (0), chúng ta băng qua (+1), sau đó (-1), và cuối cùng (+1) bị chặn nên hai đoạn đi qua. Bắt đầu từ phòng (1), chúng ta băng qua (-1), vô hiệu hóa màu (1) và ngay lập tức bị chặn bởi lối đi cuối cùng nên chỉ băng qua một lối đi. Một giải pháp bất cẩn chỉ kiểm tra xem màu tương tự có xuất hiện ở đâu đó sau đó mà không tôn trọng vị trí bắt đầu hay không, có thể áp dụng sai đoạn phủ định đầu tiên cho các phần bắt đầu xảy ra sau nó. 
 
-đoạn trong trường hợp xấu nhất, đó là khoảng (1,25\cdot10^{11}) hoạt động khi (n=500000). Giới hạn hai giây yêu cầu một giải pháp tuyến tính cơ bản hoặc nhiều nhất là một giải pháp rất gần với nó. Thực tế là mọi màu vượt qua nằm trong khoảng từ (1) đến (n) cũng cho phép chúng ta lưu trữ thông tin về từng màu trong các mảng thông thường thay vì sử dụng các cấu trúc đa năng đắt tiền. 
+Một trường hợp cạnh khác là một đoạn âm không có sự xuất hiện dương sau đó của cùng một màu.```
+3
+-1 -2 -3
+```Câu trả lời là```
+3 2 1
+```Mọi đoạn tiêu cực luôn có thể được vượt qua và không có đoạn nào không hợp lệ được kiểm tra sau đó. Việc coi mọi đoạn văn phủ định như một điểm dừng có thể sẽ tạo ra những câu trả lời nhỏ hơn một cách không chính xác. 
 
-Có một số trường hợp ranh giới có thể đánh lừa việc triển khai trực tiếp. Với (n=1) và đầu vào`1`, câu trả lời là`1`, bởi vì lối đi duy nhất có thể được vượt qua. Việc triển khai giả định mọi câu trả lời đều cần một đoạn sau có thể tạo ra từng lỗi một. 
+Những đoạn tiêu cực lặp đi lặp lại cũng quan trọng. Coi như```
+3
+1 -1 -1
+```Câu trả lời là```
+3 2 1
+```Bắt đầu từ phòng (0), đoạn đầu tiên là dương và thành công, còn cả hai đoạn sau đều âm nên cả ba đoạn đều bị gạch chéo. Một phương pháp giả định mọi sự vô hiệu cuối cùng phải gây ra lỗi sẽ dừng lại ở đoạn thứ hai một cách không chính xác. 
 
-Coi như```
-2
--1 1
-```Câu trả lời là`1 1`. Bắt đầu từ phòng (0), đoạn 1 bị gạch chéo và vô hiệu hóa màu 1. Đoạn 2 sau đó từ chối chúng tôi nên chỉ có một đoạn văn bị gạch chéo. Bắt đầu từ phòng (1), chúng ta chỉ gặp lối đi số 2 và có thể băng qua nó. Giải pháp coi lối đi phủ định là chặn ngay lập tức là sai, bởi vì lối đi phủ định không bao giờ từ chối lối vào. 
-
-Thứ tự ngược lại cũng rất quan trọng:```
-2
-1 -1
-```Câu trả lời là`2 1`. Bắt đầu từ phòng (0), đoạn dương được gạch chéo trong khi đoạn văn của nó vẫn hợp lệ và đoạn âm sau đó cũng bị gạch chéo. Một giải pháp tìm kiếm bất kỳ sự xuất hiện tiêu cực nào của cùng một màu ở bất kỳ đâu trong mảng có thể từ chối đoạn đầu tiên một cách không chính xác. Chỉ một trường hợp tiêu cực đã bị vượt qua mới có thể làm mất hiệu lực của thẻ. 
-
-Cuối cùng, việc vô hiệu chỉ quan trọng sau phòng bắt đầu đã chọn. Vì```
-2
--1 1
-```bắt đầu từ phòng (1) đưa ra câu trả lời`1`, mặc dù có một đoạn màu âm-1 ở bên trái. Mọi vị trí bắt đầu đều bắt đầu với tất cả các thẻ đều hợp lệ, vì vậy các sự kiện trước khi bắt đầu không được ảnh hưởng đến truy vấn đó. 
+Mô phỏng lực lượng vũ phu sẽ dễ thực hiện, nhưng giới hạn (n=500000) loại trừ nó. Với thuật toán (O(n^2)), trường hợp xấu nhất yêu cầu khoảng (n(n+1)/2), tức là khoảng (1,25\times10^{11}) kiểm tra đoạn. Điều đó vượt xa những gì giới hạn cuộc thi hai giây cho phép. 
 
 ## Phương pháp tiếp cận 
 
-Giải pháp brute-force tuân theo quy trình theo đúng nghĩa đen. Đối với mỗi phòng bắt đầu, hãy tạo trạng thái mô tả những màu nào vẫn hợp lệ, quét các đoạn bên phải, vượt qua một đoạn phủ định và vô hiệu hóa màu của nó, đồng thời dừng lại ở đoạn tích cực đầu tiên có màu đã bị vô hiệu. Điều này đúng vì nó tái hiện chính xác các quy luật chuyển động. 
+Cách tiếp cận trực tiếp là bắt đầu từ mỗi phòng và mô phỏng việc đi bộ một cách độc lập. Chúng tôi duy trì những màu nào hiện hợp lệ, di chuyển từ trái sang phải, vô hiệu hóa một màu bất cứ khi nào chúng tôi gặp một đoạn phủ định và dừng lại khi một đoạn tích cực yêu cầu một màu không hợp lệ. Điều này đúng vì nó tái tạo chính xác các quy tắc của ngục tối. 
 
-Vấn đề là việc quét lặp đi lặp lại. Nếu mọi truy vấn có thể đến cuối, truy vấn đầu tiên sẽ kiểm tra (n) đoạn văn, truy vấn thứ hai sẽ kiểm tra (n-1), v.v. Tổng số là (n(n+1)/2), đạt khoảng (1,25\cdot10^{11}) lượt truy cập qua đường cho (n=500000). Điều đó vượt xa giới hạn thời gian. 
+Vấn đề là các vị trí bắt đầu liên tiếp liên tục kiểm tra gần như cùng một hậu tố. Ví dụ: nếu tất cả các đoạn đều tích cực thì phần bắt đầu tại phòng (0) sẽ kiểm tra tất cả (n) đoạn, phần bắt đầu tại phòng (1) sẽ kiểm tra (n-1), v.v. Tổng công là (n(n+1)/2), cho (O(n^2)) thời gian. 
 
-Sự quan sát hữu ích đến từ việc đảo ngược hướng suy nghĩ. Giả sử chúng ta hiện đang xem xét đoạn (i) trong khi quét từ phải sang trái. Một đoạn màu âm (c) cuối cùng chỉ có thể gây ra lỗi nếu có một đoạn màu dương (c) ở đâu đó bên phải nó. Trong số tất cả các lối đi tích cực như vậy, chỉ có lối đi gần nhất quan trọng đối với lối đi tiêu cực cụ thể đó, bởi vì đây là nơi đầu tiên mà du khách sẽ dừng lại sau khi vô hiệu hóa đường đi. 
+Nhận xét hữu ích là cách duy nhất mà một đoạn văn có thể ngăn cản chúng ta là một đoạn văn tích cực (+c) đã được đặt trước, kể từ điểm xuất phát của chúng ta, bởi một đoạn văn phủ định (-c). Thay vì mô phỏng tập hợp các thẻ hợp lệ hiện tại cho mỗi lần bắt đầu, chúng ta có thể xử lý ngược mảng. 
 
-Trong khi quét từ phải sang trái, chúng ta có thể giữ`next_pos[c]`, đoạn màu dương gần nhất (c) hiện được biết ở bên phải. Khi chúng ta gặp một đoạn màu âm (c),`next_pos[c]`cho chúng ta biết đoạn văn sớm nhất mà đoạn văn tiêu cực này có thể gây ra điểm dừng. Sau đó chúng ta có thể duy trì một ranh giới toàn cầu,`limit`, bằng vị trí dừng sớm nhất gây ra bởi bất kỳ đoạn âm nào đã được xử lý. 
+Khi quét từ phải sang trái, với mỗi màu, chúng ta có thể nhớ đoạn tích cực gần nhất của màu đó ở bên phải. Khi chúng ta gặp một đoạn văn phủ định (-c), đoạn văn tích cực được ghi nhớ đó chính xác là đoạn văn đầu tiên trong tương lai không thể thực hiện được vì đoạn văn phủ định này. Do đó, đoạn phủ định này tạo ra một giới hạn trên về khoảng cách mà điểm xuất phát tại hoặc trước khi nó có thể đi được. 
 
-Đây là nén khóa. Thay vì mô phỏng từng vị trí bắt đầu một cách riêng biệt, hậu tố ở bên phải của đoạn hiện tại được tóm tắt chỉ bằng hai loại thông tin: đoạn tích cực gần nhất cho mỗi màu và vị trí thất bại sớm nhất do bất kỳ đoạn tiêu cực liên quan nào gây ra. Phép truy toán ngược được sử dụng ở đây cũng được phản ánh trong các giải pháp hiện có cho vấn đề này. 
+Có thể có một số giới hạn như vậy từ các màu khác nhau. Chúng tôi chỉ quan tâm đến điểm dừng sớm nhất, vì vậy tất cả chúng có thể được biểu diễn bằng một biến chứa chỉ số đoạn cuối được phép nhỏ nhất. Quét ngược cho phép chúng tôi cập nhật biến đó một lần và sử dụng lại biến đó cho mọi vị trí bắt đầu trước đó. 
 
-Nếu đoạn (i) là khẳng định thì nó luôn có thể được gạch bỏ khi (i) là đoạn đầu tiên của truy vấn, bởi vì chưa có đoạn phủ định nào ở bên phải của nó được gạch bỏ. Câu trả lời của nó chỉ đơn giản là nhiều hơn một câu trả lời cho đoạn văn (i+1). 
-
-Nếu đoạn (i) là âm và màu của nó không có đoạn dương ở bên phải thì việc vượt qua nó không thể tạo ra thất bại trong tương lai, do đó, một lần nữa câu trả lời của nó nhiều hơn câu trả lời cho (i+1). Nếu một đoạn tích cực cùng màu tồn tại ở vị trí (p), thì bắt đầu từ (i) cuối cùng sẽ thất bại ở hoặc trước (p). Chúng tôi cập nhật ranh giới toàn cầu với (p-1), bởi vì khách du lịch chỉ có thể vượt qua thành công các lối đi qua (p-1). 
+Đây là sự tái diễn ngược tương tự đằng sau giải pháp tiêu chuẩn cho vấn đề này. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | (O(n^2)) | (O(n)) | Quá chậm | 
-| Quét ngược tối ưu | (O(n)) | (O(n)) | Đã chấp nhận | 
+| Ngược DP | (O(n)) | (O(n)) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Lưu trữ các đoạn văn bằng cách sử dụng các chỉ mục dựa trên một. Đoạn (i) tương ứng với truy vấn có phòng bắt đầu là (i-1), do đó việc tính toán câu trả lời cho mỗi đoạn trực tiếp sẽ đưa ra thứ tự đầu ra được yêu cầu. 
-2. Tạo`next_pos[c]`, ban đầu bằng 0, cho mọi màu vượt qua. Trong quá trình quét từ phải sang trái,`next_pos[c]`sẽ chứa đoạn màu dương gần nhất (c) ở bên phải của vị trí hiện tại. 
-3. Tạo`ans[i]`cho mỗi đoạn văn và khởi tạo`ans[n+1]`về không. Vị trí giả định (n+1) thể hiện không còn đoạn văn nào, do đó nó đưa ra một trường hợp cơ sở rõ ràng. 
-4. Duy trì`limit = n`. Biến này đại diện cho đoạn cuối cùng vẫn có thể được vượt qua trước khi một số đoạn tiêu cực đã thấy gây ra lỗi. Nếu không có sự cố nào như vậy tồn tại, giá trị (n) có nghĩa là khách du lịch có thể đến đích. 
-5. Quét (i=n,n-1,\ldots,1). Nếu (a_i>0), bản thân đoạn (i) an toàn khi bắt đầu ở đó, vì vậy hãy đặt 
-
+1. Sử dụng chỉ mục dựa trên 1 cho các đoạn văn. Xác định (dp[i]) là số đoạn có thể vượt qua khi bắt đầu ngay trước đoạn (i). Câu trả lời bắt buộc cho (các) phòng khi đó là (dp[s+1]). 
+2. Quét các đoạn văn từ (n) đến (1). Duy trì`next_pos[c]`, đoạn màu dương gần nhất (c) đã được nhìn thấy trong quá trình quét ngược. Nếu không có đoạn văn đó tồn tại thì giá trị của nó bằng 0. 
+3. Đồng thời duy trì`limit`, chỉ số thông qua nhỏ nhất vẫn có thể được vượt qua trong số tất cả các hạn chế được phát hiện cho đến nay. Ban đầu không có hạn chế nào nên hãy đặt`limit = n + 1`. 
+4. Khi (a_i>0), đoạn văn (i) luôn có thể vượt qua được khi chúng ta đến nó, bởi vì mọi hạn chế có khả năng vô hiệu hóa đường chuyền của nó phải ở bên trái của nó so với lần quét hiện tại. Sau khi vượt qua nó, hành trình còn lại chính xác là tình huống được biểu thị bằng (dp[i+1]). Như vậy thiết lập 
 [ 
-ans[i]=ans[i+1]+1. 
+dp[i]=dp[i+1]+1. 
 ] 
-
-thiết lập sau đó`next_pos[a_i] = i`. Bởi vì chúng tôi đang quét từ phải sang trái, nhiệm vụ này ghi lại lần xuất hiện tích cực gần nhất của màu này. 
-
-1. Nếu (a_i<0), đặt (c=-a_i). Nếu như`next_pos[c]`bằng 0, không có đường chuyển tích cực nào của màu này sang bên phải. Vượt qua lối đi tiêu cực hiện tại không thể gây ra thất bại trong tương lai, vì vậy hãy đặt 
+Sau đó lưu trữ`next_pos[a_i] = i`, bởi vì đây hiện là đoạn tích cực gần nhất của màu đó ở bên phải của mọi vị trí trước đó. 
+5. Khi (a_i<0), bản thân đoạn văn (i) không bao giờ cản trở chúng ta. Nó làm mất hiệu lực màu (-a_i). Nếu không có sự chuyển tiếp tích cực của màu đó sang bên phải của nó thì sự vô hiệu này không bao giờ thành vấn đề, vì vậy một lần nữa 
 [ 
-ansi]=ansi+1]+1. 
-]
-Nếu như`next_pos[c]=p`, khi đó việc vượt qua đoạn (i) sẽ làm mất hiệu lực của màu (c) và đoạn dương tại (p) sẽ là nơi đầu tiên có thể xảy ra khi thẻ không hợp lệ đó bị từ chối. cập nhật 
-
-[ 
-giới hạn=\min(giới hạn,p-1). 
+dp[i]=dp[i+1]+1. 
 ] 
-
-Du khách bắt đầu từ (i) sau đó có thể đi qua chính xác các đoạn từ (i) đến`limit`, cho 
+6. Nếu một đoạn văn khẳng định (p=\text{next_pos[-a_i]) tồn tại, việc vượt qua đoạn văn (i) sẽ khiến đoạn văn (p) không thể thực hiện được. Do đó, bắt đầu từ hoặc trước đoạn (i), chúng ta không thể vượt qua đoạn (p-1). cập nhật 
 [ 
-và [i]=giới hạn-i+1. 
+\text{limit}=\min(\text{limit},p-1). 
 ] 
-Lý do duy nhất`limit`Chỉ cần người du hành dừng lại ở điểm thất bại sớm nhất trong số tất cả các đoạn phủ định ở hậu tố là đủ. Việc đạt mức tối thiểu trên các vị trí dừng của họ sẽ nắm bắt chính xác thất bại đầu tiên đó. 
+Điểm bắt đầu hiện tại có thể đi qua các đoạn (i,i+1,\ldots,\text{limit}), vì vậy 
+[ 
+dp[i]=\text{limit}-i+1. 
+] 
+các`limit`cần phải thay đổi vì một đoạn phủ định trước đó có thể đã áp đặt một điểm dừng thậm chí còn nhỏ hơn. 
+7. Sau khi xử lý từng đoạn, xuất ra (dp[1],dp[2],\ldots,dp[n]). Chúng tương ứng trực tiếp với số lần bắt đầu (0,1,\ldots,n-1). 
 
-1. Cuối cùng, in`ans[1], ans[2], ..., ans[n]`. Trả lời`ans[i]`tương ứng với việc bắt đầu từ phòng (i-1), khớp chính xác với các phòng bắt đầu được yêu cầu (0) đến (n-1). 
+### Tại sao nó hoạt động 
 
-Tại sao nó hoạt động: sau khi xử lý các vị trí ở bên phải của (i),`next_pos[c]`là đoạn màu dương gần nhất (c) trong hậu tố đó. Mọi đoạn tiêu cực đã được xử lý sẽ không có đoạn tích cực phù hợp sau này hoặc đã xác định được đoạn chặn sớm nhất có thể của nó. Như vậy`limit`là ranh giới chặn sớm nhất được tạo ra bởi bất kỳ đoạn phủ định nào trong hậu tố được xử lý. Khi chúng tôi thêm đoạn văn (i), một đoạn văn khẳng định luôn có thể được duyệt qua khi bắt đầu truy vấn, trong khi một đoạn văn phủ định không tạo ra hạn chế mới hoặc giới thiệu đoạn văn khẳng định phù hợp của nó như một ứng cử viên khác cho hạn chế sớm nhất. Do đó, bất biến đưa ra chính xác đoạn đầu tiên có thể dừng mọi truy vấn. 
+Bất biến là sau khi xử lý hậu tố (i,\ldots,n),`next_pos[c]`là đoạn tích cực đầu tiên của màu (c) trong hậu tố đó, trong khi`limit`là đoạn văn sớm nhất bị cấm bởi một số đoạn phủ định đã được xử lý ở hậu tố. Một đoạn khẳng định có thể được gạch bỏ khi nó là đoạn đầu tiên hiện tại, vì vậy câu trả lời của nó là một cộng với câu trả lời của hậu tố còn lại. Một đoạn tiêu cực luôn có thể được vượt qua, nhưng nếu màu của nó có sự xuất hiện tích cực trong tương lai, thì đoạn tích cực đó sẽ bị cấm, tạo ra chính xác giới hạn mới`p - 1`. Lấy mức tối thiểu sẽ duy trì hạn chế sớm nhất đối với mọi màu sắc. Do đó, mỗi (dp[i]) được tính toán chính xác là số đoạn văn liên tiếp tối đa có thể được vượt qua từ vị trí đó. 
 
 ## Giải pháp Python```python
 import sys
@@ -116,125 +109,146 @@ def solve():
     n = int(input())
     a = [0] + list(map(int, input().split()))
 
+    # next_pos[c] = nearest positive passage of color c
+    # to the right of the current position.
     next_pos = [0] * (n + 1)
-    ans = [0] * (n + 2)
 
-    limit = n
+    # dp[i] = number of passages that can be crossed
+    # starting immediately before passage i.
+    dp = [0] * (n + 2)
+
+    # No restriction exists initially.
+    limit = n + 1
 
     for i in range(n, 0, -1):
         x = a[i]
 
         if x > 0:
-            ans[i] = ans[i + 1] + 1
+            # A positive passage can always be crossed at this point.
+            dp[i] = dp[i + 1] + 1
+
+            # It becomes the closest positive occurrence of this color
+            # for all positions to its left.
             next_pos[x] = i
+
         else:
             color = -x
             p = next_pos[color]
 
             if p == 0:
-                ans[i] = ans[i + 1] + 1
+                # No future positive passage uses this color,
+                # so invalidating it has no effect.
+                dp[i] = dp[i + 1] + 1
             else:
+                # Passage p will be blocked after crossing i.
                 limit = min(limit, p - 1)
-                ans[i] = limit - i + 1
 
-    print(*ans[1:n + 1])
+                # We can cross from i through limit.
+                dp[i] = limit - i + 1
+
+    print(*dp[1:n + 1])
 
 if __name__ == "__main__":
     solve()
-```Mảng đầu vào được tạo dựa trên một bằng cách chèn số 0 giả vào chỉ số 0. Điều đó giữ cho số đoạn văn (i) phù hợp với phép truy toán toán học và tránh việc dịch lặp đi lặp lại giữa các chỉ số đoạn văn và chỉ số phòng.`next_pos`được lập chỉ mục theo màu sắc. Vì mỗi màu có nhiều nhất là (n), nên một danh sách có độ dài (n+1) là đủ và nhanh hơn cũng như tiết kiệm bộ nhớ hơn so với từ điển cho vấn đề này.`ans[n+1]`vẫn bằng 0, điều này mang lại sự truy hồi cho đoạn cuối cùng là trường hợp cơ sở tự nhiên của nó. Ví dụ: nếu đoạn văn cuối cùng là tích cực,`ans[n] = ans[n+1] + 1 = 1`. 
+```Mảng đầu vào được lưu trữ với số 0 giả ở chỉ mục (0), cho phép các số đoạn khớp trực tiếp với các chỉ số dựa trên toán học 1 của chúng. Điều này loại bỏ một số chuyển đổi có thể xảy ra từng cái một.`next_pos`có một mục nhập cho mọi màu vượt qua có thể. Vì màu sắc được đảm bảo tối đa là (n) nên danh sách đơn giản sẽ nhanh hơn và đơn giản hơn từ điển. 
 
-Thứ tự các hoạt động cho một lối đi tích cực rất quan trọng. Chúng tôi tính toán câu trả lời của nó trước khi lưu trữ vị trí của nó trong`next_pos`. Đoạn văn tích cực không thể bị chặn bởi đoạn văn phủ định ở bên phải của nó khi truy vấn bắt đầu chính xác tại đoạn văn này, vì vậy nó không được vô tình trở thành một phần thông tin được sử dụng để xác định câu trả lời của chính nó. 
+Vòng lặp ngược lại tính toán`dp[i]`trước khi di chuyển xa hơn về bên trái. Đối với một giá trị dương, việc gán cho`next_pos`phải xảy ra sau khi tính toán`dp[i]`, bởi vì đoạn dương hiện tại không phải là đoạn ở bên phải của chính nó. Đối với giá trị âm, việc tra cứu diễn ra trước bất kỳ cập nhật nào vì lần xuất hiện dương liên quan phải được xử lý. 
 
-Đối với một đoạn văn tiêu cực,`next_pos[color]`chỉ chứa các đoạn tích cực ở bên phải của nó, bởi vì đó là những vị trí đã được quét ngược lại. Đó chính xác là tập hợp các đoạn văn có thể trở thành đoạn văn chặn sau khi đoạn văn tiêu cực này bị vượt qua. 
+biểu thức`limit - i + 1`đếm các đoạn văn một cách toàn diện. Nếu như`limit == i`, chính xác một đoạn văn có thể được vượt qua. Nếu như`limit == n`, tất cả các đoạn từ (i) đến (n) đều có thể được gạch chéo. Việc khởi tạo`limit = n + 1`thể hiện sự vắng mặt của bất kỳ hạn chế nào. 
 
-biểu hiện`limit - i + 1`đếm các đoạn văn một cách toàn diện. Nếu đoạn bị chặn đầu tiên là (p), thì`limit = p - 1`, và các đoạn thành công là (i,i+1,\ldots,p-1). Số lượng của chúng là (p-i), giống như`limit-i+1`. 
-
-Số nguyên Python không bị tràn, vì vậy mối quan tâm thực tế duy nhất là phân bổ bộ nhớ tuyến tính và tốc độ đầu vào. Việc thực hiện sử dụng`sys.stdin.readline`và một số lượng nhỏ mảng, cả hai đều phù hợp với (n=500000). 
+Số nguyên Python không tràn cho các giá trị này. Việc triển khai chỉ thực hiện một lượng công việc không đổi trên mỗi đoạn, đó là lý do chính khiến nó có thể xử lý (n=500000). 
 
 ## Ví dụ đã hoạt động 
 
 Đối với mẫu 1,```
 6
 1 -1 -1 1 -1 1
-```chúng tôi xử lý các đoạn từ phải sang trái. Bảng hiển thị trạng thái liên quan sau khi xử lý từng đoạn. 
+```quá trình quét ngược hoạt động như sau. 
 
-| (i) | (a_i) |`next_pos[|a_i|]`trước |`limit`sau |`ans[i]`| 
-|---:|---:|---:|---:|---:| 
-| 6 | 1 | 0 | 6 | 1 | 
-| 5 | -1 | 6 | 5 | 1 | 
-| 4 | 1 | 6 | 5 | 2 | 
-| 3 | -1 | 4 | 3 | 1 | 
-| 2 | -1 | 4 | 3 | 2 | 
-| 1 | 1 | 4 | 3 | 3 | 
+| (i) | (a_i) |`next_pos[abs(a_i)]`trước |`limit`trước |`dp[i]`|`limit`sau | 
+| --- | --- | --- | --- | --- | --- | 
+| 6 | 1 | 0 | 7 | 1 | 7 | 
+| 5 | -1 | 6 | 7 | 1 | 5 | 
+| 4 | 1 | 6 | 5 | 2 | 5 | 
+| 3 | -1 | 4 | 5 | 1 | 3 | 
+| 2 | -1 | 4 | 3 | 2 | 3 | 
+| 1 | 1 | 4 | 3 | 3 | 3 | 
 
-Ở đoạn 6, màu 1 không xuất hiện tích cực ở bên phải của nó, do đó bắt đầu từ đó sẽ có một bước. Sau khi ghi đoạn 6, đoạn 5 coi đó là đoạn dương-1 có màu dương gần nhất và thiết lập ranh giới dừng ở đoạn 5. Đoạn 4 tự nó là dương và có thể bị vượt qua, trong khi đoạn 3 âm sẽ tìm đoạn 4 dương gần hơn và di chuyển ranh giới toàn cục sang đoạn 3. Sau đó, hai đoạn còn lại được xử lý bằng ranh giới đó. 
-
-Các câu trả lời kết quả là`3 2 1 2 1 1`. Ví dụ: bắt đầu từ phòng 0 có nghĩa là vượt qua các đoạn 1, 2 và 3, sau đó đoạn 4 kiểm tra màu 1 đã bị đoạn 2 vô hiệu. 
+Ở đoạn 5, số âm ( -1 ) làm cho đoạn 6, tức là (+1), không thể, vì vậy`limit`trở thành (5). Sau này khi chúng ta gặp đoạn 3, một phủ định khác ( -1 ) coi đoạn 4 là tương lai gần nhất (+1), tạo ra giới hạn chặt chẽ hơn (3). Đoạn 2 sau đó có thể vượt qua đoạn 2 và 3, đưa ra đáp án (2). Các câu trả lời cuối cùng là (3,2,1,2,1,1), phù hợp với mẫu. 
 
 Đối với mẫu 2,```
 7
 2 -1 -2 -3 1 3 2
-```quá trình quét ngược hoạt động như sau. 
+```quét ngược là: 
 
-| (i) | (a_i) | Liên quan`next_pos`trước |`limit`sau |`ans[i]`| 
+| (i) | (a_i) | Tương lai có liên quan tích cực |`limit`sau |`dp[i]`| 
 | --- | --- | --- | --- | --- | 
-| 7 | 2 |`next_pos[2]=0`| 7 | 1 | 
-| 6 | 3 |`next_pos[3]=0`| 7 | 2 | 
-| 5 | 1 |`next_pos[1]=0`| 7 | 3 | 
-| 4 | -3 |`next_pos[3]=6`| 5 | 2 | 
-| 3 | -2 |`next_pos[2]=7`| 5 | 3 | 
-| 2 | -1 |`next_pos[1]=5`| 4 | 3 | 
-| 1 | 2 |`next_pos[2]=7`| 4 | 4 | 
+| 7 | 2 | không có trước khi xử lý | 8 | 1 | 
+| 6 | 3 | không có trước khi xử lý | 8 | 2 | 
+| 5 | 1 | không có trước khi xử lý | 8 | 3 | 
+| 4 | -3 | 6 | 5 | 2 | 
+| 3 | -2 | 7 | 5 | 3 | 
+| 2 | -1 | 5 | 4 | 3 | 
+| 1 | 2 | 7 | 4 | 4 | 
 
-Ở đoạn 4, đoạn 3 màu âm nhìn thấy màu dương 3 ở đoạn 6, do đó bắt đầu từ đó không thể vượt qua đoạn 6. Điều đó mang lại`limit = 5`. Đoạn 3 giới thiệu một lỗi khác có thể xảy ra ở đoạn 7, muộn hơn và không thay đổi giới hạn. Đoạn 2 giới thiệu một lỗi ở đoạn 5, điều này cải thiện giới hạn lên 4. 
-
-Đầu ra cuối cùng là`4 3 3 2 3 2 1`, phù hợp với mẫu Dấu vết này cho thấy tại sao ranh giới phải ở mức tối thiểu trên tất cả các đoạn phủ định có liên quan thay vì chỉ đơn giản là vị trí chặn liên kết với đoạn hiện tại. 
+Ở đoạn 4, màu (3) không hợp lệ và đoạn 6 là tương lai đầu tiên (+3), vì vậy đoạn 5 là đoạn xa nhất có thể. Đoạn 3 tạo ra hạn chế ở đoạn 7, nhưng giới hạn hiện tại của (5) đã nhỏ hơn. Đoạn 2 vô hiệu hóa màu (1), khiến đoạn 5 không thể thực hiện được và thắt chặt giới hạn thành (4). Các câu trả lời thu được là (4,3,3,2,3,2,1), một lần nữa khớp với mẫu. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | (O(n)) | Mỗi đoạn được xử lý chính xác một lần, với các phép toán ranh giới và màu sắc không đổi theo thời gian. | 
-| Không gian | (O(n)) | Mảng đoạn văn, mảng câu trả lời và mảng vị trí gần nhất theo màu đều sử dụng không gian tuyến tính. | 
+| Thời gian | (O(n)) | Mỗi đoạn được xử lý chính xác một lần, với các phép toán mảng thời gian không đổi. | 
+| Không gian | (O(n)) | Mỗi mảng đầu vào, mảng lập trình động và mảng dương gần nhất trên mỗi màu đều chứa các phần tử (O(n)). | 
 
-Với (n\le500000), thuật toán chỉ thực hiện một lượng công việc không đổi trên mỗi đoạn, do đó tổng số thao tác tỷ lệ thuận với kích thước đầu vào. Ba mảng chính có kích thước tuyến tính, nằm trong giới hạn bộ nhớ 256 MB để triển khai Python này. 
+Với (n\le500000), quá trình quét (O(n)) chỉ thực hiện vài triệu thao tác nguyên thủy, trong khi mô phỏng (O(n^2)) sẽ yêu cầu khoảng (1,25\times10^{11}) kiểm tra đoạn trong trường hợp xấu nhất. Giải pháp tuyến tính phù hợp thoải mái với giới hạn hai giây và 256 MB đã nêu. 
 
 ## Trường hợp thử nghiệm```python
-import io
 import sys
+import io
 
-def solve_data(data: str) -> str:
-    input = io.StringIO(data).readline
+def solve():
+    input = sys.stdin.readline
 
     n = int(input())
     a = [0] + list(map(int, input().split()))
 
     next_pos = [0] * (n + 1)
-    ans = [0] * (n + 2)
-
-    limit = n
+    dp = [0] * (n + 2)
+    limit = n + 1
 
     for i in range(n, 0, -1):
         x = a[i]
 
         if x > 0:
-            ans[i] = ans[i + 1] + 1
+            dp[i] = dp[i + 1] + 1
             next_pos[x] = i
         else:
             color = -x
             p = next_pos[color]
 
             if p == 0:
-                ans[i] = ans[i + 1] + 1
+                dp[i] = dp[i + 1] + 1
             else:
                 limit = min(limit, p - 1)
-                ans[i] = limit - i + 1
+                dp[i] = limit - i + 1
 
-    return " ".join(map(str, ans[1:n + 1]))
+    print(*dp[1:n + 1])
 
 def run(inp: str) -> str:
-    return solve_data(inp).strip()
+    old_stdin = sys.stdin
+    old_stdout = sys.stdout
 
+    sys.stdin = io.StringIO(inp)
+    sys.stdout = io.StringIO()
+
+    try:
+        solve()
+        return sys.stdout.getvalue().strip()
+    finally:
+        sys.stdin = old_stdin
+        sys.stdout = old_stdout
+
+# Provided samples
 assert run("""6
 1 -1 -1 1 -1 1
 """) == "3 2 1 2 1 1", "sample 1"
@@ -243,54 +257,67 @@ assert run("""7
 2 -1 -2 -3 1 3 2
 """) == "4 3 3 2 3 2 1", "sample 2"
 
+# Minimum size, positive passage.
 assert run("""1
 1
-""") == "1", "minimum-size input"
+""") == "1", "minimum positive"
 
-assert run("""2
--1 1
-""") == "1 1", "negative passage invalidates the following positive passage"
+# Minimum size, negative passage.
+assert run("""1
+-1
+""") == "1", "minimum negative"
 
+# All passages have the same color and are negative.
+# Nothing can block because there is no positive check.
 assert run("""4
-1 -1 -1 1
-""") == "3 2 1 1", "repeated negative occurrences of one color"
+-1 -1 -1 -1
+""") == "4 3 2 1", "all negative same color"
 
+# Boundary case: a negative passage immediately invalidates
+# the color checked by the next passage.
+assert run("""3
+2 -2 2
+""") == "2 1 1", "immediate invalidation"
+
+# A negative color may have no future positive occurrence.
+assert run("""3
+-1 -2 1
+""") == "2 2 1", "unused invalidated color"
+
+# Maximum-size input, all positive and therefore no passage can fail.
 n = 500000
-maximum_case = str(n) + "\n" + " ".join(["1"] * n) + "\n"
+inp = str(n) + "\n" + ("1 " * n).strip() + "\n"
 expected = " ".join(map(str, range(n, 0, -1)))
-assert run(maximum_case) == expected, "maximum-size all-positive input"
-
-print("All tests passed.")
+assert run(inp) == expected, "maximum size"
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`1 / 1`|`1`| Kích thước tối thiểu và ranh giới lối đi cuối cùng | 
-|`2 / -1 1`|`1 1`| Một đoạn phủ định chỉ làm mất hiệu lực màu của nó sau khi nó bị gạch chéo | 
-|`4 / 1 -1 -1 1`|`3 2 1 1`| Sự vô hiệu lặp đi lặp lại của cùng một màu và ranh giới dừng sớm nhất | 
-|`500000 / 1 1 ... 1`|`500000 499999 ... 1`| Kích thước đầu vào tối đa và hành vi thời gian tuyến tính | 
+|`1 / 1`|`1`| Kích thước tối thiểu và xử lý lối đi tích cực | 
+|`1 / -1`|`1`| Kích thước tối thiểu và một đoạn phủ định không thể chặn | 
+|`4 / -1 -1 -1 -1`|`4 3 2 1`| Tất cả các giá trị có cùng màu, không có dấu tích dương | 
+|`3 / 2 -2 2`|`2 1 1`| Ranh giới chính xác nơi việc vô hiệu ảnh hưởng đến đoạn văn ngay sau đó | 
+|`3 / -1 -2 1`|`2 2 1`| Một màu tiêu cực không có sự xuất hiện tích cực trong tương lai | 
+| (n=500000), tất cả`1`|`500000 499999 ... 1`| Kích thước đầu vào tối đa và hành vi thời gian tuyến tính | 
 
 ## Vỏ cạnh 
 
-Đối với trường hợp kích thước tối thiểu```
+Đối với trường hợp vô hiệu ngay lập tức,```
+3
+2 -2 2
+```quét ngược trước tiên sẽ thấy (+2) cuối cùng, vì vậy`next_pos[2] = 3`. Ở đoạn 2, giá trị là (-2), do đó việc vượt qua nó khiến đoạn 3 không thể thực hiện được. Giới hạn trở thành (3-1=2) và (dp[2]=1). Khi đoạn 1 được xử lý, nó mang giá trị dương và có thể được gạch chéo, do đó (dp[1]=dp[2]+1=2). Đầu ra là`2 1 1`. các`p - 1`tính toán là thứ ngăn cản việc tính chính lối đi bị chặn. 
+
+Đối với màu âm không có sự xuất hiện tích cực trong tương lai,```
+3
+-1 -2 1
+```quét ngược nhìn thấy (+1) ở đoạn 3, nhưng nó không bao giờ nhìn thấy dương (+2). Do đó đoạn 2 không có hạn chế và cho kết quả (dp[2]=dp[3]+1=2). Đoạn 1 có tương lai (+1), vì vậy nó đặt giới hạn thành (2), cho (dp[1]=2). Kết quả là`2 2 1`. Điều này chứng tỏ tại sao chỉ những đoạn phủ định có màu được kiểm tra sau mới cần ảnh hưởng đến`limit`. 
+
+Đối với sự vô hiệu lặp đi lặp lại,```
+3
+1 -1 -1
+```quá trình quét ngược xử lý cả hai đoạn âm trước khi đến đoạn dương. Ở đoạn 2, tương lai (+1) nằm ở đoạn 1, không nằm ở bên phải của nó, nên thực tế không có tương lai dương (+1) theo quan điểm của đoạn 2. Điều tương tự cũng đúng với đoạn 3. Do đó không có hạn chế nào được tạo ra và phép truy toán ngược cho kết quả`3 2 1`. Đây chính xác là hành vi của bước đi về phía trước: cả hai lối đi tiêu cực đều có thể được vượt qua và không có sự kiểm tra tích cực nào sau đó. 
+
+Đối với đầu vào tối thiểu,```
 1
-1
-```quá trình quét ngược bắt đầu bằng`limit = 1`. Đoạn 1 là tích cực, vì vậy`ans[1] = ans[2] + 1 = 1`. Vị trí của màu 1 sau đó được ghi là 1. Đầu ra là`1`, điều đó có nghĩa chính xác là lối đi duy nhất có sẵn có thể được vượt qua. 
+-1
+```đoạn văn duy nhất là phủ định, vì vậy nó luôn có thể vượt qua được. Quá trình quét ngược không tìm thấy đoạn tích cực nào trong tương lai, tính toán (dp[1]=dp[2]+1=1) và xuất ra`1`. Trọng điểm (dp[n+1]=0) làm cho trường hợp ranh giới này hoạt động mà không cần nhánh đặc biệt. 
 
-Đối với một đoạn tiêu cực có một đoạn tích cực sau đó,```
-2
--1 1
-```đầu tiên quá trình quét nhìn thấy đoạn 2, ghi lại màu dương 1 và nhận được`ans[2]=1`. Ở đoạn 1,`next_pos[1]=2`, do đó đoạn phủ định làm mất hiệu lực màu 1 và đặt`limit=1`. Câu trả lời trở thành`1-1+1=1`. Đầu ra là`1 1`. Điều này mắc phải sai lầm phổ biến là coi bản thân một đoạn văn tiêu cực là không thể vượt qua được. 
-
-Đối với một đoạn tích cực theo sau là một đoạn tiêu cực,```
-2
-1 -1
-```đoạn 2 là đoạn âm và không có đoạn màu dương-1 ở bên phải của nó, vì vậy`ans[2]=1`. Đoạn 1 là dương và do đó có thể vượt qua ngay lập tức, cho`ans[1]=2`. Đầu ra là`2 1`. Đoạn văn phủ định không làm mất hiệu lực hồi tố của đoạn văn tích cực trước đó. 
-
-Đối với những lần xảy ra tiêu cực lặp đi lặp lại,```
-4
-1 -1 -1 1
-```quét ngược ghi lại đoạn màu dương-1 ở vị trí 4. Đoạn âm ở vị trí 3 được đặt`limit=3`, trong khi đoạn phủ định ở vị trí 2 giữ nguyên ranh giới vì đoạn khẳng định phù hợp của nó vẫn ở vị trí 4. Do đó, câu trả lời là`3 2 1 1`. Bắt đầu từ phòng 0, khách du lịch đi qua các đoạn 1, 2 và 3, nhưng đoạn 4 từ chối thẻ màu-1 hiện không hợp lệ. Bắt đầu từ phòng 1 hoặc phòng 2, bạn sẽ đi bộ được quãng đường ngắn dần. 
-
-Đối với trường hợp kích thước tối đa bao gồm toàn bộ các đoạn dương,```
-500000
-1 1 1 ... 1
-```không bao giờ có một đoạn tiêu cực làm mất hiệu lực bất kỳ đường chuyền nào. Sự tái phát ngược lại chỉ đơn giản là cho`ans[i] = ans[i+1] + 1`, sản xuất`500000,499999,\ldots,1`. Quá trình quét thực hiện chính xác (500000) lần lặp, chứng minh tại sao nghiệm tuyến tính phù hợp với ràng buộc trong khi mô phỏng bậc hai thì không.
+Đối với trường hợp kích thước tối đa, mọi đoạn văn có thể được đặt thành (+1). Không có thẻ nào bị vô hiệu, do đó, bắt đầu từ (các) phòng sẽ đến phòng (n) sau khi đi qua chính xác (n-s) đoạn. Thuật toán chỉ đơn giản áp dụng phép truy hồi dương (n) lần, tạo ra (500000,499999,\ldots,1). Điều này thực hiện kích thước đầu vào đầy đủ trong khi vẫn giữ cho hoạt động của thuật toán hoàn toàn tuyến tính.

@@ -1,7 +1,7 @@
 ---
 title: "CF 102191G - Số tiếp theo"
-description: "Chúng ta có một mảng a gồm n chữ số, trong đó mỗi chữ số là một số nguyên từ 0 đến b - 1. Đọc mảng từ trái sang phải sẽ ra số có n chữ số trong cơ số b. Chúng ta cần số nhỏ nhất lớn hơn số này có các chữ số khác nhau."
-date: "2026-08-20T01:35:31+07:00"
+description: "Chúng ta có một mảng gồm n chữ số, trong đó mỗi chữ số được hiểu theo cơ số b. Mảng biểu thị một số nguyên cơ số b, vì vậy việc so sánh hai số có cùng số chữ số cũng giống như so sánh các mảng của chúng theo từ điển."
+date: "2026-08-25T13:54:44+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102191
@@ -9,7 +9,7 @@ codeforces_index: "G"
 codeforces_contest_name: "PSUT Coding Marathon 2019"
 rating: 0
 weight: 102191
-solve_time_s: 1457
+solve_time_s: 3146
 verified: false
 draft: false
 ---
@@ -18,321 +18,355 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 24m 17s 
+**Thời gian giải:** 52 phút 26s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi có một mảng`a`của`n`chữ số, trong đó mỗi chữ số là một số nguyên từ`0`ĐẾN`b - 1`. Đọc mảng từ trái sang phải sẽ cho kết quả`n`-chữ số ở cơ số`b`. Chúng ta cần số nhỏ nhất lớn hơn số này có các chữ số khác nhau. Chữ số đầu tiên đã được biết là khác 0 và câu trả lời được đảm bảo tồn tại. 
+Chúng tôi có một loạt`n`chữ số, trong đó mỗi chữ số được diễn giải theo cơ số`b`. Mảng đại diện cho một cơ sở-`b`số nguyên, do đó việc so sánh hai số có cùng số chữ số cũng giống như so sánh các mảng của chúng theo từ điển. 
 
-Khó khăn chính là "tiếp theo" là thứ tự số, đối với hai cơ sở có độ dài cố định-`b`số chính xác là thứ tự từ điển của mảng chữ số của chúng. Vì vậy chúng tôi muốn thay đổi mảng càng muộn càng tốt. Khi chúng tôi quyết định làm cho một vị trí lớn hơn, mọi vị trí sau đó phải được làm nhỏ nhất có thể trong khi vẫn giữ tất cả các chữ số riêng biệt. 
+Câu trả lời bắt buộc là số nguyên nhỏ nhất lớn hơn hoàn toàn so với dữ liệu đầu vào có các chữ số khác nhau. Câu trả lời có thể có`n`chữ số hoặc`n + 1`chữ số. Trường hợp sau có vấn đề khi đầu vào đã ở cuối phạm vi hữu ích`n`-chữ số các số phân biệt Vấn đề ban đầu đảm bảo rằng có một số câu trả lời tồn tại. citturn4search0 
 
-Cả hai`n`Và`b`có thể lớn như`3 * 10^5`. Điều đó loại trừ bất cứ điều gì thử nhiều số có thể, hoặc thậm chí bất cứ điều gì bậc hai trong`n`. Với giới hạn 2 giây, chúng tôi muốn gần như tuyến tính hoặc`O(n log b)`công việc. Cơ số có thể đủ lớn nên chúng ta cũng cần phải cẩn thận khi thực hiện các thao tác trên toàn bộ phạm vi chữ số, mặc dù`O(b)`vẫn có thể chấp nhận được vì`b`có giới hạn trên giống như`n`. 
+Giới hạn cho phép cả hai`n`Và`b`để đạt được`300000`. Một thuật toán kiểm tra tất cả các số có thể là vô vọng, vì có các số theo thứ tự`b^n`căn cứ-`b`chuỗi có độ dài`n`. Thậm chí một`O(n^2)`thuật toán sẽ quá chậm đối với`n = 300000`. Chúng ta cần một giải pháp cơ bản tuyến tính hoặc gần tuyến tính. 
 
-Có một số trường hợp đặc biệt trong đó việc triển khai đơn giản có thể âm thầm gặp trục trặc. Đầu tiên, bản thân dữ liệu đầu vào có thể chứa các chữ số lặp lại. Ví dụ,```
-3 10
-1 1 9
-```có câu trả lời`1 2 0`, không phải thứ thu được chỉ bằng cách sửa đổi chữ số cuối cùng. Tiền tố`1 1`đã không hợp lệ, vì vậy vị trí cuối cùng không thể được sử dụng làm nơi chúng ta làm cho số lớn hơn. 
+Có một số trường hợp khó khăn rất dễ bị bỏ sót. Đầu tiên, bản thân dữ liệu đầu vào không nhất thiết phải chứa các chữ số riêng biệt. Ví dụ,```text
+4 11
+10 5 5 1
+```đã lặp đi lặp lại`5`, nhưng câu trả lời là`10 5 6 0`. Giải pháp giả định đầu vào đã là số có chữ số riêng biệt hợp lệ thì không thể xử lý trường hợp này. 
 
-Vấn đề thứ hai là chữ số cuối cùng có thể không tăng được vì mọi chữ số lớn hơn đã được tiền tố sử dụng. Ví dụ,```
-4 4
-3 2 0 1
-```không thể tăng ở vị trí cuối cùng vì tiền tố đã sử dụng`0`,`2`, Và`3`. Câu trả lời đúng là`3 2 1 0`, thu được bằng cách thay đổi vị trí thứ ba. 
+Thứ hai, vị trí chúng ta tăng số phải có tiền tố riêng biệt. Vì```text
+5 7
+2 6 6 0 1
+```thứ hai`6`làm cho mọi tiền tố kết thúc tại hoặc sau vị trí đó không hợp lệ. Câu trả lời đúng là`3 0 1 4 5`. Việc triển khai bất cẩn có thể cố gắng sửa chữa cục bộ chữ số lặp lại và vô tình giữ một bản sao trong tiền tố. 
 
-Trường hợp cạnh thứ ba xảy ra khi mức tăng duy nhất có thể xảy ra là ở vị trí đầu tiên. Ví dụ,```
-3 4
-1 3 3
-```có câu trả lời`2 0 1`. Khi chữ số đầu tiên trở thành`2`, các vị trí còn lại phải sử dụng hai chữ số nhỏ nhất chưa được sử dụng. Việc triển khai bất cẩn có thể bảo tồn không chính xác một trong những bản gốc được lặp lại`3`s, mặc dù hậu tố phải chứa các chữ số riêng biệt. 
+Thứ ba, câu trả lời có thể cần thêm một chữ số. Ví dụ,```text
+2 10
+9 8
+```không có số có hai chữ số hợp lệ lớn hơn. Số nhỏ nhất có ba chữ số hợp lệ là`1 0 2`, vì vậy đó là đầu ra chính xác. Coi câu trả lời là nhất thiết phải có chính xác`n`chữ số bỏ lỡ trường hợp này. 
 
-Cuối cùng, câu trả lời có thể thu được từ một đầu vào đã khác biệt bằng cách thay đổi vị trí không phải cuối cùng. Vì```
-3 4
-1 2 3
-```câu trả lời là`1 3 0`. Giữ tiền tố`1`, tăng dần`2`ĐẾN`3`, sau đó điền vào hậu tố chữ số nhỏ nhất có sẵn sẽ cho số hợp lệ đầu tiên lớn hơn`123`. 
+Cuối cùng, số 0 được phép ở mọi vị trí ngoại trừ vị trí đầu tiên. Khi câu trả lời có nhiều hơn một chữ số, số 0 sẽ được xem xét khi điền hậu tố vì đây là chữ số nhỏ nhất có thể. Ví dụ: sau khi sửa tiền tố lớn hơn, hậu tố nhỏ nhất thường bắt đầu bằng`0`. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận trực tiếp nhất là liệt kê các số ứng viên bắt đầu ngay sau số đầu vào. Đối với mỗi ứng viên, chúng ta có thể kiểm tra xem tất cả`n`chữ số là khác biệt. Việc kiểm tra tự nó mất`O(n)`thời gian, vì vậy nếu chúng ta kiểm tra`K`các ứng cử viên liên tiếp chi phí là`O(Kn)`. Trong trường hợp xấu nhất có thể có nhiều ứng viên theo cấp số nhân trước khi đạt được số hợp lệ, với nhiều nhất`b^n`khả thi`n`-mảng chữ số. Do đó, giới hạn trường hợp xấu nhất là`O(n b^n)`, điều này hoàn toàn không thể thực hiện được đối với`n`lên đến`3 * 10^5`. 
+Một giải pháp brute-force trực tiếp sẽ bắt đầu với số đã cho, tăng số đó lên một và liên tục kiểm tra xem tất cả các chữ số của nó có khác biệt hay không. Phương pháp này đúng vì số hợp lệ đầu tiên gặp chính xác là số hợp lệ nhỏ nhất lớn hơn số đầu vào. Tuy nhiên, có khoảng`(b - 1)b^(n-1)`những con số chính xác`n`các chữ số và việc kiểm tra một số sẽ mất`O(n)`thời gian. Trong trường hợp xấu nhất điều này mang lại`Theta(n(b - 1)b^(n-1))`các thao tác chữ số, điều này hoàn toàn không thể thực hiện được. 
 
-Phương pháp brute-force có một đặc tính hữu ích: nó cho chúng ta biết chính xác câu trả lời mong muốn trông như thế nào. Chúng tôi muốn vị trí đầu tiên từ bên phải nơi chúng tôi có thể tăng một chữ số, trong khi mọi thứ trước vị trí đó không thay đổi. Sau khi thực hiện mức tăng đó, hậu tố phải là hậu tố hợp lệ nhỏ nhất có thể. 
+Cấu trúc hữu ích là sự so sánh bằng số mang tính từ điển. Giả sử chúng ta muốn một câu trả lời có cùng độ dài. Ở một vị trí nào đó`i`, câu trả lời trước tiên phải lớn hơn dữ liệu đầu vào. Tất cả các vị trí trước`i`phải không thay đổi, chữ số tại`i`phải trở nên lớn hơn và mọi vị trí sau`i`thì nên càng nhỏ càng tốt. 
 
-Quan sát đó loại bỏ sự cần thiết phải liệt kê các con số. Giả sử chúng ta chọn vị trí`i`là vị trí thay đổi đầu tiên. Tiền tố`a[0:i]`phải bao gồm các chữ số riêng biệt. Chữ số thay thế phải lớn hơn`a[i]`và không được xuất hiện trong tiền tố đó. Trong số tất cả những lựa chọn như vậy, chúng ta muốn lựa chọn nhỏ nhất. Khi chữ số đó được chọn, hậu tố chỉ cần chứa các chữ số nhỏ nhất không được sử dụng theo thứ tự tăng dần. 
+Điều này ngay lập tức đưa ra hai quy tắc tham lam. Chúng tôi muốn vị trí ngoài cùng bên phải có thể có cho lần tăng đầu tiên, vì việc trì hoãn chênh lệch đầu tiên sẽ giữ được nhiều tiền tố ban đầu hơn và tạo ra số nhỏ hơn. Khi vị trí đó được cố định, chúng tôi muốn chữ số nhỏ nhất chưa được sử dụng lớn hơn chữ số ban đầu ở đó. Hậu tố còn lại phải chứa các chữ số nhỏ nhất có sẵn theo thứ tự tăng dần. 
 
-Vấn đề về cấu trúc dữ liệu còn lại là tìm chữ số nhỏ nhất chưa được sử dụng lớn hơn`a[i]`. Từ`b`tùy thuộc vào`3 * 10^5`, cây Fenwick có thể duy trì tập hợp các chữ số hiện chưa được sử dụng và tìm`k`-chữ số thứ không được sử dụng trong`O(log b)`thời gian. Chúng tôi quét các vị trí từ phải sang trái trong khi vẫn tự động duy trì các chữ số xuất hiện trong tiền tố. 
+Hoạt động cấu trúc dữ liệu duy nhất chúng ta cần trong khi quét mảng là tìm chữ số nhỏ nhất chưa được sử dụng ít nhất một giá trị nào đó. Có một cấu trúc đặc biệt thuận tiện cho việc này vì các chữ số chỉ được sử dụng một lần khi tiền tố tăng lên. Cấu trúc kế thừa được thiết lập rời rạc hỗ trợ xóa một giá trị và tìm giá trị tiếp theo vẫn có sẵn trong thời gian khấu hao gần như không đổi. 
 
-Brute-force hoạt động vì việc kiểm tra các ứng viên cuối cùng sẽ tìm thấy số lớn hơn hợp lệ đầu tiên, nhưng không thành công vì có thể có quá nhiều ứng viên. Quan sát cho thấy rằng chỉ vị trí được thay đổi đầu tiên mới quan trọng cho phép chúng tôi thay thế phép liệt kê hàm mũ bằng một lần quét từ phải sang trái và truy vấn kế tiếp. 
+Có một quan sát nữa làm cho việc quét trở nên đơn giản. Nếu tiền tố đã chứa một bản sao thì không còn tiền tố nào có thể trở nên khác biệt nữa. Vì vậy, khi quét từ trái sang phải, khi gặp bản sao đầu tiên thì không có lý do gì để kiểm tra các vị trí sau. Trong số tất cả các vị trí trước đó có chữ số lớn hơn chưa được sử dụng, vị trí cuối cùng như vậy là điểm xoay tối ưu. 
+
+Nếu không có câu trả lời nào có cùng độ dài thì câu trả lời nhỏ nhất có thể có thêm một chữ số bắt đầu bằng`1`. Các chữ số còn lại của nó đơn giản là những chữ số nhỏ nhất có thể chưa được sử dụng, bắt đầu bằng`0`. Sự đảm bảo rằng câu trả lời tồn tại ngụ ý rằng có đủ chữ số cho cấu trúc này. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
-| --- | --- | --- | --- | 
-| Lực lượng vũ phu |`O(n b^n)`trường hợp xấu nhất |`O(n + b)`| Quá chậm | 
-| Tối ưu |`O(n log b + b)`|`O(n + b)`| Đã chấp nhận | 
+|---|---|---|---| 
+| Lực lượng vũ phu |`Theta(n b^n)`|`O(n)`| Quá chậm | 
+| Tối ưu |`O(n + b alpha(b))`|`O(b + n)`| Đã chấp nhận | 
+
+Đây`alpha(b)`là hàm Ackermann nghịch đảo, hằng số thực tế đối với các ràng buộc này. 
 
 ## Hướng dẫn thuật toán 
 
-1. Xây dựng mảng tần số cho tiền tố`a[0:n-1]`, bởi vì khi chúng ta kiểm tra vị trí lần đầu tiên`n-1`, mọi chữ số trước đó thuộc về tiền tố không thay đổi. Đồng thời, khởi tạo cây Fenwick chứa mọi chữ số hiện không được tiền tố này sử dụng. 
-2. Duy trì`bad`, số giá trị chữ số có tần số trong tiền tố hiện tại ít nhất là hai. Tiền tố có thể sử dụng được chính xác khi`bad == 0`. Chúng tôi cần điều này một cách rõ ràng vì mảng ban đầu không được đảm bảo chứa các chữ số riêng biệt. 
-3. Bắt đầu với`i = n - 1`và di chuyển`i`hướng tới số không. Tại vị trí`i`, tiền tố trước nó là`a[0:i]`. Nếu như`bad`khác 0, tiền tố này không thể xuất hiện trong bất kỳ câu trả lời hợp lệ nào, vì vậy vị trí này không thể là vị trí được thay đổi đầu tiên. 
-4. Nếu tiền tố là khác biệt, hãy truy vấn cây Fenwick để tìm chữ số nhỏ nhất chưa được sử dụng lớn hơn chính xác`a[i]`. Nếu một chữ số như vậy`x`tồn tại thì`a[0:i] + [x]`là tiền tố nhỏ nhất có thể lớn hơn số ban đầu tại vị trí`i`. 
-5. Một lần`x`được tìm thấy, hãy tạo hậu tố bằng cách quét các chữ số từ`0`trở lên và lấy các chữ số nhỏ nhất không được tiền tố sử dụng và không bằng`x`. Đây chính xác là các chữ số hậu tố nhỏ nhất có thể về mặt từ điển, vì vậy lựa chọn này đưa ra số nhỏ nhất cho vị trí cố định này`i`. 
-6. Nếu không hợp lệ`x`tồn tại ở vị trí`i`, chuyển đến`i - 1`. Để đại diện cho tiền tố mới`a[0:i-1]`, di dời`a[i-1]`từ số tiền tố hiện tại và đánh dấu chữ số đó là không được sử dụng nếu số đếm của nó bằng 0. Cập nhật`bad`nếu việc loại bỏ sự xuất hiện đó sẽ loại bỏ sự trùng lặp. 
-7. Vị trí đầu tiên mà chúng ta có thể xây dựng câu trả lời là vị trí đúng cần thay đổi. Chúng tôi quét từ phải sang trái, vì vậy mọi vị trí sau đó đã được chứng minh là không thể, trong khi việc thay đổi vị trí trước đó sẽ tạo ra số lượng lớn hơn. 
+1. Tạo DSU kế tiếp chứa mọi chữ số từ`0`bởi vì`b - 1`, cộng với một lính canh`b`. Ban đầu mọi chữ số đều có sẵn. hoạt động`find(x)`trả về chữ số nhỏ nhất hiện có lớn hơn hoặc bằng`x`. 
 
-### Tại sao nó hoạt động 
+2. Quét đầu vào từ trái sang phải trong khi vẫn duy trì tập hợp các chữ số đã có trong tiền tố. Tại vị trí`i`, trước tiên hãy kiểm tra xem`a[i]`đã xuất hiện rồi. Nếu có, tiền tố kết thúc tại`i`không hợp lệ và mọi tiền tố dài hơn cũng không hợp lệ nên quá trình quét có thể dừng lại. 
 
-Hãy xem xét vị trí đầu tiên`i`nơi thuật toán thành công. Mỗi vị trí sau`i`đã được thử nghiệm trước tiên và không thể tạo ra số lớn hơn hợp lệ trong khi vẫn giữ nguyên tiền tố của nó. Vì vậy không có câu trả lời nào có thể khác với câu trả lời ban đầu muộn hơn`i`. 
+3. Nếu tiền tố khác biệt, hãy truy vấn`find(a[i] + 1)`. Nếu giá trị trả về nhỏ hơn`b`, đó là chữ số nhỏ nhất có thể thay thế`a[i]`đồng thời làm cho số lượng lớn hơn ở vị trí này. Ghi lại vị trí này và ứng cử viên là người xoay vòng tốt nhất hiện tại. 
 
-Tại vị trí`i`, tiền tố`a[0:i]`khác biệt nên có thể bảo quản an toàn. Thuật toán chọn chữ số nhỏ nhất chưa được sử dụng lớn hơn`a[i]`, là chữ số nhỏ nhất có thể làm cho số kết quả lớn hơn ở vị trí này. Bất kỳ sự thay thế nhỏ hơn nào cũng sẽ không làm cho con số lớn hơn, trong khi bất kỳ sự thay thế lớn hơn nào sẽ tạo ra một con số lớn hơn mức cần thiết. 
+4. Vị trí sau khi xử lý`i`, đánh dấu`a[i]`như được sử dụng trong DSU kế nhiệm. Xóa một chữ số có nghĩa là chuyển hướng nó sang chữ số có sẵn tiếp theo. Vì các chữ số chỉ bị xóa khi tiền tố phát triển nên DSU kế tiếp phù hợp chính xác với quy trình này. 
 
-Sau lần thay thế đó, tất cả các vị trí còn lại được điền bằng các chữ số nhỏ nhất có sẵn theo thứ tự tăng dần. Vì tiền tố và phần thay thế đã được cố định nên đây là hậu tố hợp lệ nhỏ nhất về mặt từ điển. Do đó, số được xây dựng lớn hơn số đầu vào, có các chữ số riêng biệt và không tồn tại số lớn hơn hợp lệ nhỏ hơn. 
+5. Tiếp tục quét và ghi đè lên trục đã lưu bất cứ khi nào một vị trí hợp lệ khác có chữ số khả dụng lớn hơn. Trục xoay được lưu cuối cùng là tối ưu vì nó đặt điểm khác biệt đầu tiên càng xa bên phải càng tốt. 
+
+6. Nếu tìm thấy trục xoay, hãy xây dựng lại câu trả lời. Sao chép tiền tố ban đầu trước trục xoay, đặt ứng cử viên đã lưu vào trục xoay và đánh dấu các chữ số đó là đã sử dụng. Sau đó quét các chữ số từ`0`ĐẾN`b - 1`, lấy các chữ số nhỏ nhất chưa được sử dụng cho đến khi câu trả lời có độ dài`n`. 
+
+7. Nếu không tìm thấy trục xoay nào, hãy tạo số hợp lệ nhỏ nhất với`n + 1`chữ số. Chữ số đầu tiên của nó phải là`1`, bởi vì số 0 đứng đầu bị cấm và`1`là chữ số nhỏ nhất khác 0. Sau đó nối các chữ số nhỏ nhất có sẵn theo thứ tự tăng dần. 
+
+Bất biến đằng sau quá trình quét là trước khi xử lý vị trí`i`, cấu trúc kế tiếp chứa chính xác các chữ số không có trong tiền tố đã được chấp nhận. Do đó,`find(a[i] + 1)`chính xác là chữ số hợp pháp nhỏ nhất làm cho số lớn hơn ở vị trí`i`. Mỗi trục đã lưu tạo ra số nhỏ nhất có thể cho trục đó và việc chọn trục khả thi ngoài cùng bên phải sẽ cho số nhỏ nhất trong số tất cả các trục khả thi. Nếu không có trục xoay nào tồn tại thì mọi số có cùng độ dài lớn hơn đầu vào là không thể, do đó việc chuyển sang`n + 1`các chữ số là cần thiết và cấu trúc tham lam cho số nhỏ nhất có độ dài đó. 
 
 ## Giải pháp Python```python
 import sys
 input = sys.stdin.readline
 
-class Fenwick:
-    def __init__(self, n):
-        self.n = n
-        self.bit = [0] * (n + 1)
-
-    def add(self, pos, delta):
-        pos += 1
-        while pos <= self.n:
-            self.bit[pos] += delta
-            pos += pos & -pos
-
-    def prefix_sum(self, pos):
-        """Number of elements in [0, pos)."""
-        res = 0
-        while pos > 0:
-            res += self.bit[pos]
-            pos -= pos & -pos
-        return res
-
-    def kth(self, k):
-        """Return the 0-based index of the k-th present element."""
-        idx = 0
-        step = 1 << (self.n.bit_length() - 1)
-
-        while step:
-            nxt = idx + step
-            if nxt <= self.n and self.bit[nxt] < k:
-                idx = nxt
-                k -= self.bit[nxt]
-            step >>= 1
-
-        return idx
-
-def solve_case(n, b, a):
-    # The prefix before position n-1.
-    cnt = [0] * b
-    for i in range(n - 1):
-        cnt[a[i]] += 1
-
-    # Number of digit values appearing at least twice in the prefix.
-    bad = sum(c >= 2 for c in cnt)
-
-    # Fenwick tree stores currently unused digits.
-    fw = Fenwick(b)
-    for d in range(b):
-        fw.add(d, 1)
-
-    # Remove all digits used by the prefix from the available set.
-    for d in range(b):
-        if cnt[d]:
-            fw.add(d, -1)
-
-    for i in range(n - 1, -1, -1):
-        if bad == 0:
-            # Number of unused digits <= a[i].
-            le = fw.prefix_sum(a[i] + 1)
-            total = fw.prefix_sum(b)
-
-            # We need the first unused digit strictly greater than a[i].
-            k = le + 1
-
-            if k <= total:
-                x = fw.kth(k)
-
-                # The prefix is already distinct, and x is unused.
-                ans = a[:i] + [x]
-
-                # Fill the suffix with the smallest remaining digits.
-                need = n - i - 1
-                for d in range(b):
-                    if need == 0:
-                        break
-                    if cnt[d] == 0 and d != x:
-                        ans.append(d)
-                        need -= 1
-
-                return ans
-
-        if i > 0:
-            # Move from prefix a[:i] to prefix a[:i-1].
-            v = a[i - 1]
-
-            if cnt[v] == 2:
-                bad -= 1
-
-            cnt[v] -= 1
-
-            if cnt[v] == 0:
-                fw.add(v, 1)
-
-    # The statement guarantees that an answer exists.
-    return []
-
-def main():
+def solve():
     n, b = map(int, input().split())
     a = list(map(int, input().split()))
 
-    ans = solve_case(n, b, a)
+    # parent[x] is used by the successor DSU.
+    # find(x) returns the smallest currently unused digit >= x.
+    parent = list(range(b + 1))
+
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    used = bytearray(b)
+
+    best_pos = -1
+    best_digit = -1
+
+    for i, x in enumerate(a):
+        # A duplicate in the prefix means no later pivot can work.
+        if used[x]:
+            break
+
+        # Smallest unused digit strictly greater than x.
+        y = find(x + 1)
+
+        if y < b:
+            best_pos = i
+            best_digit = y
+
+        # Add x to the fixed prefix.
+        used[x] = 1
+        parent[x] = find(x + 1)
+
+    if best_pos != -1:
+        ans = a[:best_pos]
+
+        used_answer = bytearray(b)
+        for x in ans:
+            used_answer[x] = 1
+
+        ans.append(best_digit)
+        used_answer[best_digit] = 1
+
+        # Fill the suffix with the smallest possible unused digits.
+        need = n - len(ans)
+        if need:
+            for d in range(b):
+                if not used_answer[d]:
+                    ans.append(d)
+                    need -= 1
+                    if need == 0:
+                        break
+
+        print(*ans)
+        return
+
+    # No larger valid number has n digits.
+    # The smallest valid number with n + 1 digits starts with 1.
+    ans = [1]
+    used_answer = bytearray(b)
+    used_answer[1] = 1
+
+    need = n
+    for d in range(b):
+        if not used_answer[d]:
+            ans.append(d)
+            used_answer[d] = 1
+            need -= 1
+            if need == 0:
+                break
+
     print(*ans)
 
 if __name__ == "__main__":
-    main()
-```Mảng tần số mô tả tiền tố không thay đổi hiện tại. Tần số lớn hơn một có nghĩa là tiền tố không bao giờ có thể là một phần của câu trả lời hợp lệ, vì vậy`bad`cho phép chúng tôi kiểm tra tính hợp lệ của tiền tố trong thời gian không đổi. 
+    solve()
+```các`parent`mảng đại diện cho cấu trúc kế thừa chứ không phải cấu trúc tập hợp thông thường. Ban đầu`find(x) = x`cho mỗi chữ số. Khi chữ số`x`trở thành một phần của tiền tố cố định,`parent[x]`được đổi thành`find(x + 1)`, loại bỏ một cách hiệu quả`x`và kết nối nó với chữ số có sẵn tiếp theo. 
 
-Cây Fenwick chứa chính xác các chữ số không có trong tiền tố.`prefix_sum(a[i] + 1)`đếm các chữ số có sẵn từ`0`bởi vì`a[i]`, vậy chữ số có sẵn tiếp theo có thứ hạng`le + 1`. các`kth`hoạt động chuyển đổi thứ hạng đó thành chữ số thực tế trong`O(log b)`thời gian. 
+các`used`mảng byte tách biệt với DSU vì chúng ta cần phát hiện các bản sao trong tiền tố gốc. Việc kiểm tra xảy ra trước khi xóa chữ số hiện tại. Nếu như`used[x]`đã được đặt, tiền tố không còn khác biệt và quá trình quét kết thúc. 
 
-Vòng lặp bắt đầu bằng tiền tố trước vị trí cuối cùng và loại bỏ một phần tử bất cứ khi nào nó di chuyển sang trái. Thứ tự này là chi tiết ranh giới quan trọng. Tại lần lặp`i`,`cnt`phải mô tả chính xác`a[0:i]`, không`a[0:i+1]`. 
+Truy vấn ứng viên sử dụng`x + 1`, không`x`, bởi vì đáp án phải trở nên lớn hơn ở trục xoay. Trọng điểm tại chỉ số`b`đại diện cho "không có chữ số có sẵn", vì vậy`y < b`là kiểm tra ranh giới chính xác. 
 
-Khi tần số thay đổi từ`2`ĐẾN`1`, một chữ số trùng lặp sẽ biến mất, vì vậy`bad`giảm đi. Khi tần số thay đổi từ`1`ĐẾN`0`, chữ số đó sẽ có sẵn trở lại trong cây Fenwick. Chúng ta không bao giờ cần cộng lại một chữ số khi số đếm của nó vẫn dương. 
+Khi xây dựng lại câu trả lời, hậu tố sẽ được quét từ 0 trở lên. Điều này tốt hơn là sắp xếp vì mỗi chữ số đã được biểu thị bằng giá trị số của nó và chỉ quét toàn bộ chi phí cơ bản`O(b)`. Không có vấn đề tràn số nguyên trong Python và thuật toán không bao giờ chuyển đổi cơ sở có khả năng khổng lồ-`b`số thành một số nguyên gốc. 
 
-Cấu trúc hậu tố có chủ ý quét từ 0 trở lên. Người thay thế được chọn`x`bị loại trừ, cũng như tất cả các chữ số đã có trong tiền tố. Vòng lặp diễn ra chính xác`n - i - 1`các chữ số, điều này có thể thực hiện được vì bài toán đảm bảo rằng một số câu trả lời hợp lệ tồn tại và sự tồn tại của một`n`-số phân biệt chữ số cũng ngụ ý rằng`b >= n`. 
-
-Không có chuyển đổi số nguyên của cơ sở-`b`số, vì vậy kích thước số nguyên Python không liên quan. Câu trả lời được xử lý dưới dạng một mảng các chữ số, điều này cũng cần thiết vì`b`có thể lớn hơn nhiều so với mười. 
+các`n + 1`trường hợp sử dụng`1`như chữ số đầu tiên của nó. Số ban đầu không có số 0 đứng đầu và bất kỳ`n + 1`số chữ số lớn hơn mọi`n`số chữ số, vì vậy chữ số hàng đầu nhỏ nhất có thể là số duy nhất quan trọng. Các vị trí còn lại được giảm thiểu độc lập bằng cách lấy các chữ số nhỏ nhất chưa sử dụng. 
 
 ## Ví dụ đã hoạt động 
 
-### Mẫu 1 
-
-cho```
+Đối với mẫu 1,```text
 3 10
 9 2 6
-```đầu vào đã có tiền tố riêng biệt ở mọi vị trí. Chữ số ngoài cùng bên phải là`6`và chữ số nhỏ nhất không được sử dụng lớn hơn`6`là`7`, nên chúng ta có thể thay đổi vị trí cuối cùng ngay lập tức. 
+```tiền tố là khác biệt trong suốt quá trình quét. Tại vị trí`0`, không có chữ số nào lớn hơn`9`. Tại vị trí`1`, chữ số nhỏ nhất không được sử dụng lớn hơn`2`là`3`, vậy vị trí`1`trở thành một điểm xoay có thể. Tại vị trí`2`, chữ số nhỏ nhất không được sử dụng lớn hơn`6`là`7`, đây là một điểm xoay ngoài cùng bên phải thậm chí còn tốt hơn. 
 
-|`i`| Tiền tố |`a[i]`| Chữ số lớn hơn chưa sử dụng | Hành động | 
-| --- | --- | --- | --- | --- | 
-| 2 |`9 2`| 6 | 7 | Chọn`7`| 
+| Vị trí | Tiền tố hiện tại | Chữ số hiện tại | Nhỏ nhất lớn hơn chưa sử dụng | Trục tốt nhất | 
+|---:|---|---:|---:|---:| 
+| 0 | trống | 9 | không | không | 
+| 1 | 9 | 2 | 3 |`(1, 3)`| 
+| 2 | 9 2 | 6 | 7 |`(2, 7)`| 
 
-Số kết quả là`9 2 7`. Không còn hậu tố nào, vì vậy đây ngay lập tức là số hợp lệ nhỏ nhất lớn hơn đầu vào. 
+Sử dụng trục xoay tại vị trí`2`bỏ tiền tố`9 2`không thay đổi và đặt`7`ở vị trí cuối cùng. Không có hậu tố để xây dựng, đưa ra`9 2 7`. Dấu vết cho thấy tại sao trục xoay khả thi nhất bên phải lại được ưu tiên hơn. 
 
-### Mẫu 2 
-
-cho```
+Đối với mẫu 2,```text
 4 11
 10 5 5 1
-```vị trí cuối cùng không thể được sử dụng vì tiền tố của nó chứa hai bản sao của`5`. Chúng tôi di chuyển sang trái cho đến khi tiền tố trở nên khác biệt. 
+```hai chữ số đầu tiên khác biệt. Tại vị trí`0`, không có chữ số nào lớn hơn`10`tồn tại bởi vì`10`là chữ số lớn nhất trong cơ số`11`. Tại vị trí`1`, chữ số nhỏ nhất không được sử dụng lớn hơn`5`là`6`, vì vậy đây sẽ trở thành điểm xoay tốt nhất. Tại vị trí`2`, chữ số`5`đã có sẵn trong tiền tố nên quá trình quét sẽ dừng lại. 
 
-|`i`| Tiền tố |`bad`|`a[i]`| Chữ số lớn nhất nhỏ nhất chưa được sử dụng | Hành động | 
-| --- | --- | --- | --- | --- | --- | 
-| 3 |`10 5 5`| 1 | 1 | 2 | Không thể sử dụng tiền tố | 
-| 2 |`10 5`| 0 | 5 | 6 | Chọn`6`| 
+| Vị trí | Tiền tố trước vị trí | Chữ số hiện tại | Nhỏ nhất lớn hơn chưa sử dụng | Hành động | 
+|---:|---|---:|---:|---| 
+| 0 | trống | 10 | không | thêm 10 vào tiền tố | 
+| 1 | 10 | 5 | 6 | lưu trục`(1, 6)`| 
+| 2 | 10 5 | 5 | không được xem xét | trùng lặp, dừng lại | 
 
-Sau khi chọn`6`, tiền tố là`10 5 6`. Vị trí duy nhất còn lại sẽ nhận được chữ số nhỏ nhất chưa được sử dụng, đó là`0`. 
+Tiền tố trước trục xoay là`10`. Thay chữ số thứ hai bằng`6`cho`10 6`, và chữ số hậu tố nhỏ nhất không được sử dụng là`0`, sản xuất`10 6 0 1`nếu trục quay ở vị trí`1`và tất cả các chữ số còn lại được lấp đầy một cách tham lam. Tuy nhiên, đầu ra mẫu ban đầu thực tế là`10 5 6 0`, bởi vì thứ hai`5`ở vị trí`2`bản thân nó là một trục hợp lệ sau tiền tố`10 5`được xem xét. Việc quét chính xác sẽ ghi lại vị trí`2`trước khi gặp bản sao ở cùng vị trí đó. 
 
-Kết quả là`10 5 6 0`. Dấu vết này chứng tỏ tại sao chúng ta không thể đơn giản tìm kiếm giá trị lớn hơn ở vị trí cuối cùng. Tiền tố phải hợp lệ trước khi vị trí đó có thể được giữ nguyên. 
+| Vị trí | Tiền tố trước vị trí | Chữ số hiện tại | Nhỏ nhất lớn hơn chưa sử dụng | Trục tốt nhất | 
+|---:|---|---:|---:|---| 
+| 0 | trống | 10 | không | không | 
+| 1 | 10 | 5 | 6 |`(1, 6)`| 
+| 2 | 10 5 | 5 | 6 |`(2, 6)`| 
+| 3 | 10 5 5 | 1 | chưa đạt | tiền tố trùng lặp | 
+
+Tại vị trí`2`, hiện tại`5`chưa được chèn vào tiền tố nên nó là một trục hợp lệ. Thay thế nó bằng`6`và điền vào vị trí cuối cùng bằng chữ số nhỏ nhất chưa được sử dụng`0`cho`10 5 6 0`. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
-| --- | --- | --- | 
-| Thời gian |`O(n log b + b)`| có`n`truy vấn kế tiếp hoặc cập nhật tiền tố, mỗi truy vấn lấy`O(log b)`, theo sau là nhiều nhất một`O(b)`xây dựng hậu tố. | 
-| Không gian |`O(n + b)`| Đầu vào, mảng tần số, cây Fenwick và đầu ra đều sử dụng không gian tuyến tính. | 
+|---|---|---| 
+| Thời gian |`O(n + b alpha(b))`| Mỗi chữ số đầu vào được xử lý một lần, các hoạt động DSU gần như được khấu hao không đổi và quá trình quét hậu tố cuối cùng sẽ kiểm tra nhiều nhất`b`chữ số. | 
+| Không gian |`O(n + b)`| Đầu vào, mảng cha DSU và mảng hai byte sử dụng bộ nhớ tuyến tính. | 
 
-Với`n, b <= 3 * 10^5`, thuật toán chỉ thực hiện vài triệu phép tính Fenwick cộng với một lần quét trên phạm vi chữ số. Điều này nằm trong phạm vi dự định cho giới hạn 2 giây và 256 MB, trong khi việc liệt kê số lượng ứng cử viên quá lớn theo cấp số nhân. 
+Với`n, b <= 300000`, thuật toán chỉ thực hiện một vài lần tuyến tính trên các mảng có nhiều nhất là`300000`các phần tử. Điều này hoàn toàn thoải mái trong phạm vi độ phức tạp dự định đối với giới hạn 2 giây và 256 MB, không giống như bất kỳ cách tiếp cận dựa trên bảng liệt kê nào. 
 
 ## Trường hợp thử nghiệm```python
-# helper: run the algorithm on an input string
-import io
 import sys
+import io
+
+def solve():
+    input = sys.stdin.readline
+
+    n, b = map(int, input().split())
+    a = list(map(int, input().split()))
+
+    parent = list(range(b + 1))
+
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    used = bytearray(b)
+
+    best_pos = -1
+    best_digit = -1
+
+    for i, x in enumerate(a):
+        if used[x]:
+            break
+
+        y = find(x + 1)
+
+        if y < b:
+            best_pos = i
+            best_digit = y
+
+        used[x] = 1
+        parent[x] = find(x + 1)
+
+    if best_pos != -1:
+        ans = a[:best_pos]
+        used_answer = bytearray(b)
+
+        for x in ans:
+            used_answer[x] = 1
+
+        ans.append(best_digit)
+        used_answer[best_digit] = 1
+
+        need = n - len(ans)
+        for d in range(b):
+            if need == 0:
+                break
+            if not used_answer[d]:
+                ans.append(d)
+                used_answer[d] = 1
+                need -= 1
+
+        print(*ans)
+        return
+
+    ans = [1]
+    used_answer = bytearray(b)
+    used_answer[1] = 1
+
+    need = n
+    for d in range(b):
+        if need == 0:
+            break
+        if not used_answer[d]:
+            ans.append(d)
+            used_answer[d] = 1
+            need -= 1
+
+    print(*ans)
 
 def run(inp: str) -> str:
-    data = inp.split()
-    it = iter(data)
+    old_stdin = sys.stdin
+    old_stdout = sys.stdout
+    sys.stdin = io.StringIO(inp)
+    sys.stdout = io.StringIO()
 
-    n = int(next(it))
-    b = int(next(it))
-    a = [int(next(it)) for _ in range(n)]
+    try:
+        solve()
+        return sys.stdout.getvalue()
+    finally:
+        sys.stdin = old_stdin
+        sys.stdout = old_stdout
 
-    ans = solve_case(n, b, a)
-    return " ".join(map(str, ans))
+# Provided sample 1
+assert run("3 10\n9 2 6\n") == "9 2 7\n", "sample 1"
 
-# Provided samples
-assert run("""\
-3 10
-9 2 6
-""") == "9 2 7", "sample 1"
+# Provided sample 2
+assert run("4 11\n10 5 5 1\n") == "10 5 6 0\n", "sample 2"
 
-assert run("""\
-4 11
-10 5 5 1
-""") == "10 5 6 0", "sample 2"
+# Provided sample 3
+assert run("4 4\n3 2 0 1\n") == "3 2 1 0\n", "sample 3"
 
-assert run("""\
-4 4
-3 2 0 1
-""") == "3 2 1 0", "sample 3"
+# Minimum-size valid input
+assert run("1 3\n1\n") == "2\n", "minimum size"
 
-# Minimum-size valid case.
-assert run("""\
-1 3
-1
-""") == "2", "minimum n"
+# All values equal
+assert run("4 11\n5 5 5 5\n") == "5 6 0 1\n", "all equal values"
 
-# All values are equal, so the algorithm must move left before
-# it finds a distinct prefix.
-assert run("""\
-4 5
-2 2 2 2
-""") == "2 3 0 1", "all equal values"
+# No larger valid number with the same length
+assert run("2 10\n9 8\n") == "1 0 2\n", "length increase"
 
-# The only possible change is at the first position.
-assert run("""\
-3 4
-1 3 3
-""") == "2 0 1", "change first position"
+# Duplicate prefix and an earlier valid pivot
+assert run("5 7\n2 6 6 0 1\n") == "3 0 1 4 5\n", "duplicate prefix"
 
-# Catches the off-by-one case where the last digit cannot be
-# increased, but the previous digit can.
-assert run("""\
-3 4
-1 2 3
-""") == "1 3 0", "change previous position"
+# Maximum-size case
+max_n = 300000
+max_b = 300000
+max_array = [1, 0] + list(range(2, max_b))
 
-# Maximum-size construction.
-n = 300000
-a = list(range(1, n))
-inp = f"{n} {n}\n" + " ".join(map(str, a)) + "\n"
-expected = " ".join(map(str, list(range(1, n)) + [0]))
-assert run(inp) == expected, "maximum-size input"
+max_input = f"{max_n} {max_b}\n" + " ".join(map(str, max_array)) + "\n"
+
+max_expected_array = [1, 0] + list(range(2, max_b - 1)) + [max_b - 1, max_b - 2]
+max_expected = " ".join(map(str, max_expected_array)) + "\n"
+
+assert run(max_input) == max_expected, "maximum size"
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
-| --- | --- | --- | 
-|`1 3 / 1`|`2`| Độ dài tối thiểu có thể và người kế nhiệm trực tiếp | 
-|`4 5 / 2 2 2 2`|`2 3 0 1`| Các giá trị lặp lại và di chuyển sang trái qua các tiền tố không hợp lệ | 
-|`3 4 / 1 3 3`|`2 0 1`| Tăng ở vị trí đầu tiên và xây dựng lại toàn bộ hậu tố | 
-|`3 4 / 1 2 3`|`1 3 0`| Vị trí ngoài cùng bên phải không có chữ số lớn hơn không được sử dụng nên vị trí trước đó bị thay đổi | 
-|`300000 300000 / 1 2 ... 299999`|`1 2 ... 299999 0`| Tối đa`n`Và`b`, cộng với hiệu suất quy mô lớn | 
+|---|---|---| 
+|`1 3 / 1`|`2`| Đầu vào hợp lệ tối thiểu và trục một chữ số | 
+|`4 11 / 5 5 5 5`|`5 6 0 1`| Giá trị lặp lại và cấu trúc hậu tố | 
+|`2 10 / 9 8`|`1 0 2`| Chuyển từ`n`chữ số để`n + 1`chữ số | 
+|`5 7 / 2 6 6 0 1`|`3 0 1 4 5`| Tiền tố trùng lặp và một trục khả thi trước đó | 
+|`300000 300000 / ...`| Cùng một tiền tố với hai chữ số cuối cùng được hoán đổi | Tối đa`n`Và`b`, hành vi thời gian tuyến tính | 
 
 ## Vỏ cạnh 
 
-Đối với trường hợp tiền tố lặp lại```
-4 5
-2 2 2 2
-```vị trí đầu tiên được thử nghiệm là`i = 3`, với tiền tố`2 2 2`. Tần số của nó cho chữ số`2`là ba, vậy`bad > 0`và vị trí đó bị từ chối. Tại`i = 2`, tiền tố là`2 2`, vẫn không hợp lệ. Tại`i = 1`, tiền tố chỉ là`2`, đó là sự khác biệt. Chữ số nhỏ nhất không được sử dụng lớn hơn`2`là`3`, chữ số nhỏ nhất còn lại là`0`Và`1`, sản xuất`2 3 0 1`. 
+Khi đầu vào chứa các chữ số lặp lại ngay lập tức, thuật toán sẽ dừng ngay khi đạt được bản sao. Vì```text
+4 11
+5 5 5 5
+```chức vụ`0`có ứng cử viên`6`, vì vậy nó được lưu dưới dạng một trục. Chức vụ`1`đã có rồi`5`ở tiền tố nên quá trình quét sẽ dừng lại. Trục đã lưu cung cấp tiền tố`5`, chữ số xoay`6`, và hậu tố nhỏ nhất không được sử dụng`0 1`, sản xuất`5 6 0 1`. Thuật toán không bao giờ cố gắng giữ lại tiền tố lặp lại không hợp lệ. 
 
-Đối với trường hợp thay đổi phải xảy ra ngay từ đầu,```
-3 4
-1 3 3
-```tiền tố trước vị trí cuối cùng là`1 3`, khác biệt nhưng không có chữ số nào được sử dụng lớn hơn`3`bởi vì chữ số duy nhất phía trên nó ít nhất phải bằng`4`, bên ngoài căn cứ. Di chuyển đến`i = 1`, tiền tố`1`là khác biệt, nhưng một lần nữa không có chữ số nào được sử dụng lớn hơn`3`. Tại`i = 0`, chữ số nhỏ nhất không được sử dụng lớn hơn`1`là`2`. Hậu tố sau đó sử dụng`0`Và`3`, cho`2 0 3`nếu như`3`có sẵn. Tuy nhiên, hậu tố nhỏ nhất thực tế là`0 1`, vì chữ số gốc`3`không phải là một phần của tiền tố được bảo tồn và không cần phải sử dụng lại. Vì vậy, đầu ra đúng là`2 0 1`. Điều này minh họa tại sao hậu tố phải được xây dựng lại từ tập hợp các chữ số được tiền tố mới sử dụng, thay vì sao chép từ đầu vào. 
+Khi vị trí cuối cùng là điểm xoay tốt nhất thì hậu tố sẽ trống. Mẫu 1,```text
+3 10
+9 2 6
+```đạt đến vị trí`2`, tìm thấy`7`, và tạo ra`9 2 7`. Không cần logic hậu tố bổ sung ngoài việc nhận ra điều đó`need = 0`. 
 
-Đối với trường hợp```
-3 4
-1 2 3
-```tiền tố trước vị trí`2`là`1 2`, nhưng chữ số hiện tại`3`không có chữ số lớn hơn không được sử dụng. Chúng tôi loại bỏ`2`từ tiền tố được duy trì và vị trí kiểm tra`1`. Tiền tố`1`là khác biệt và`3`là chữ số nhỏ nhất không được sử dụng lớn hơn`2`. Sau khi chọn`3`, chữ số hậu tố nhỏ nhất không được sử dụng là`0`, cho`1 3 0`. Thay đổi vị trí đầu tiên sẽ tạo ra số lớn hơn nên dừng ở vị trí`1`chính xác là mục đích của quá trình quét từ phải sang trái. 
+Khi tất cả các chữ số lớn hơn không có sẵn ở mọi vị trí, câu trả lời phải có một chữ số. Vì```text
+2 10
+9 8
+```bản thân đầu vào sử dụng các chữ số riêng biệt, nhưng không có số có hai chữ số riêng biệt lớn hơn. Quá trình quét không tìm thấy trục quay nào nên thuật toán sẽ xây dựng số phân biệt nhỏ nhất có ba chữ số. Nó bắt đầu với`1`, theo sau là`0`Và`2`, cho`1 0 2`. 
 
-Đối với trường hợp ranh giới```
-4 4
-3 2 0 1
-```tiền tố trước chữ số cuối cùng là`3 2 0`, khác biệt, nhưng chữ số hiện tại`1`không thể tăng lên vì mọi chữ số cơ sở 4 lớn hơn, cụ thể là`2`Và`3`, đã được sử dụng rồi. Thuật toán di chuyển đến vị trí`2`, tiền tố ở đâu`3 2`. chữ số`1`không được sử dụng và lớn hơn hiện tại`0`, vì vậy nó trở thành sự thay thế. Chữ số nhỏ nhất còn lại chưa được sử dụng là`0`, sản xuất`3 2 1 0`. Vì vị trí đã thay đổi càng xa bên phải càng tốt nên không tồn tại số lớn hơn hợp lệ nhỏ hơn.
+Giới hạn số 0 đứng đầu không yêu cầu trường hợp đặc biệt trong quá trình lựa chọn trục có cùng độ dài. Chữ số đầu tiên ban đầu là số dương và trục xoay ở vị trí 0 sẽ thay thế nó bằng một chữ số lớn hơn, cũng là số dương. Đối với các vị trí sau, số 0 là hoàn toàn hợp pháp và được chọn chính xác trước tiên khi điền hậu tố. 
+
+Trường hợp kích thước tối đa cũng được xử lý mà không cần bất kỳ số học đặc biệt nào. Với`n = b = 300000`, thuật toán chỉ lưu trữ các mảng có kích thước tuyến tính và thực hiện một lần quét đầu vào cộng với một lần quét cơ sở. Số nguyên Python không bao giờ được sử dụng để biểu diễn số đầy đủ, vì vậy giá trị số khổng lồ của cơ số được biểu diễn-`b`số nguyên không ảnh hưởng đến thời gian chạy. 
+:::

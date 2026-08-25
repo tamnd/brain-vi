@@ -1,7 +1,7 @@
 ---
 title: "CF 102191C - Sắp xếp chỗ ngồi"
-description: "Có n học sinh ngồi quanh một vòng tròn. Hoán vị đầu vào đưa ra thứ tự vòng tròn hiện tại của chúng, do đó, ngoài mỗi cặp liên tiếp trong mảng, học sinh cuối cùng và đầu tiên cũng là hàng xóm của nhau."
-date: "2026-08-20T01:03:42+07:00"
+description: "Chúng ta có một chỗ ngồi hình tròn được biểu thị bằng hoán vị a là 1..n. Các sinh viên a[i] và a[(i+1) mod n] là hàng xóm trong cách sắp xếp cũ."
+date: "2026-08-25T05:19:11+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102191
@@ -9,7 +9,7 @@ codeforces_index: "C"
 codeforces_contest_name: "PSUT Coding Marathon 2019"
 rating: 0
 weight: 102191
-solve_time_s: 538
+solve_time_s: 1651
 verified: false
 draft: false
 ---
@@ -18,258 +18,235 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 8 phút 58 giây 
+**Thời gian giải:** 27 phút 31 giây 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi có`n`học sinh ngồi quanh vòng tròn. Hoán vị đầu vào đưa ra thứ tự vòng tròn hiện tại của chúng, do đó, ngoài mỗi cặp liên tiếp trong mảng, học sinh cuối cùng và đầu tiên cũng là hàng xóm của nhau. 
+Chúng ta có một chỗ ngồi hình tròn được biểu thị bằng một hoán vị`a`của`1..n`. các sinh viên`a[i]`Và`a[(i+1) mod n]`là hàng xóm trong sự sắp xếp cũ. Chúng ta cần in một hoán vị khác của cùng những học sinh đó sao cho mọi cặp hàng xóm trong vòng tròn mới không liền kề trong vòng tròn cũ. Các phần tử đầu tiên và cuối cùng của hoán vị được in ra cũng là các phần tử lân cận, vì vậy cặp bao quanh phải thỏa mãn cùng một điều kiện. Vấn đề ban đầu có`3 <= n <= 3 * 10^5`và yêu cầu bất kỳ sự sắp xếp hợp lệ nào, hoặc`-1`khi không tồn tại. citturn0search0 
 
-Chúng ta cần tạo ra một thứ tự vòng tròn khác gồm chính xác những học sinh đó sao cho mọi cặp lân cận mới đều không lân cận theo cách sắp xếp cũ. Vì học sinh được biểu diễn bằng một hoán vị của`1..n`, chúng ta chỉ cần thay đổi thứ tự của các phần tử mảng hiện có. 
+Bản thân ID sinh viên không còn quan trọng nữa khi đã biết hoán vị cũ. Điều quan trọng là vị trí của mỗi học sinh trong vòng tròn cũ. Nếu hai vị trí cũ chứ đừng nói đến giai thừa. Một giải pháp nên thực hiện một lượng công việc không đổi cho mỗi học sinh, điều đó có nghĩa là`O(n)`xây dựng là mục tiêu tự nhiên. Python có thể thoải mái xử lý vài trăm nghìn số nguyên trong thời gian tuyến tính, trong khi việc thử hoán vị sẽ hoàn toàn không khả thi. 
 
-Khó khăn chính là ranh giới hình tròn. Nếu lệnh mới được`b[0], b[1], ..., b[n-1]`, chúng ta phải kiểm tra từng cặp`b[i], b[i+1]`và cả`b[n-1], b[0]`. Cấu trúc hoạt động cho phần tuyến tính nhưng vô tình đặt hàng xóm đầu tiên và hàng xóm cuối cùng cũ lại với nhau là không hợp lệ. 
+Có hai trường hợp nhỏ không thể xảy ra. Vì`n = 3`, mọi cặp học sinh đều đã kề nhau ở hình tròn cũ nên không có cặp nào có thể kề nhau ở hình tròn mới. Ví dụ,`3 / 1 2 3`có các cặp hình tròn duy nhất có thể`{1,2}`,`{2,3}`, Và`{3,1}`, tất cả đều bị cấm, nên câu trả lời là`-1`. Vì`n = 4`, chu kỳ cũ là`1-2-3-4-1`. Phần bù của nó chỉ chứa các cạnh`1-3`Và`2-4`, tạo thành hai cặp không liên kết với nhau nên không thể sắp xếp theo vòng tròn. Như vậy`4 / 1 2 3 4`cũng yêu cầu`-1`. 
 
-Sự ràng buộc`n <= 3 * 10^5`loại trừ bất cứ điều gì thử nhiều hoán vị hoặc thực hiện các tìm kiếm đắt tiền lặp đi lặp lại. MỘT`O(n^2)`phương pháp đã yêu cầu về`9 * 10^10`kiểm tra cặp cơ bản ở kích thước tối đa, vượt xa giới hạn một giây. Chúng ta cần một cấu trúc chỉ xử lý mỗi học sinh một số lần không đổi, đưa ra`O(n)`thời gian. 
+Sai lầm dễ mắc thứ hai là quên cặp được tạo bởi phần tử đầu ra đầu tiên và cuối cùng. Vì`n = 5`, sự sắp xếp`1 3 5 2 4`hoạt động: mỗi cặp liên tiếp khác nhau hai vị trí modulo năm, bao gồm`4`Và`1`. Cấu trúc chỉ kiểm tra các phần tử liên tiếp bên trong có thể vô tình chấp nhận một cặp cuối cùng không hợp lệ. 
 
-Có ba trường hợp đặc biệt nhỏ mà một mô hình ngây thơ có thể xử lý sai. Vì`n = 3`, ví dụ, đầu vào`1 2 3`có mọi cặp liền kề trong vòng tròn ban đầu, do đó không thể có vòng tròn mới và kết quả đúng là`-1`. Vì`n = 4`, nhập`1 2 3 4`cũng không thể: mỗi học sinh chỉ có một khả năng không phải là lân cận, đó là học sinh đối diện với các em, nên đồ thị cho phép gồm hai cạnh rời nhau và không thể tạo thành một đường tròn. Đầu ra đúng lại là`-1`. 
-
-Một lỗi dễ mắc phải khác là quên cặp đóng vòng tròn. Vì`n = 5`với đầu vào`1 2 3 4 5`, sự sắp xếp`1 3 5 2 4`là hợp lệ. Các sai phân liên tiếp của nó ở các vị trí ban đầu đều là hai modulo năm, kể cả cặp cuối cùng`4,1`. Cấu trúc chỉ kiểm tra các phần tử liền kề trong mảng được in có thể bỏ sót điều kiện cuối cùng này. 
+Các giá trị chẵn của`n`cần điều chỉnh riêng. Vì`n = 6`, chỉ cần lấy vị trí lẻ theo sau là vị trí chẵn sẽ cho`1 3 5 2 4 6`, nhưng cặp cuối cùng`6,1`bao gồm những người hàng xóm cũ. Trình tự đã sửa`1 3 5 2 6 4`cũng tránh cặp đó. Đây là lý do trường hợp chẵn không thể sử dụng một cách mù quáng cách xây dựng giống như trường hợp lẻ. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận trực tiếp nhất là thử các hoán vị của học sinh cho đến khi thỏa mãn điều kiện. Mọi hoán vị đều có thể được kiểm tra`O(n)`thời gian vì có chính xác`n`cặp hàng xóm tròn để kiểm tra. có`n!`hoán vị, vì vậy việc tìm kiếm toàn diện cần`O(n * n!)`hoạt động trong trường hợp xấu nhất. Ở mức hạn chế tối đa, điều này có nghĩa là đại khái`300000 * 300000!`kiểm tra cặp, điều này không khả thi từ xa. 
+Cách tiếp cận brute-force trực tiếp là tạo ra mọi hoán vị của học sinh và kiểm tra xem nó có`n`các cặp hàng xóm hình tròn đều khác với các cặp hàng xóm cũ. Điều này đúng vì mọi chỗ ngồi mới đều được xem xét và chỗ ngồi hợp lệ đầu tiên có thể được trả lại. Vấn đề là số lượng ứng viên. có`n!`hoán vị và kiểm tra một ứng cử viên`Theta(n)`thời gian, cho`Theta(n * n!)`hoạt động trong trường hợp xấu nhất. Tại`n = 3 * 10^5`, thậm chí viết ra biểu thức`300000 * 300000!`đã mô tả một con số vượt xa mọi thứ mà một chương trình có thể liệt kê. 
 
-Quan sát hữu ích là ID sinh viên thực tế không quan trọng. Điều quan trọng là vị trí của mỗi học sinh trong vòng tròn cũ. Hai học sinh bị cấm chính xác khi vị trí cũ của họ khác nhau một khoảng`1`modulo`n`. Vì vậy, trước tiên chúng ta có thể xây dựng một hoán vị của các vị trí cũ rồi sử dụng các vị trí đó để lấy ID sinh viên. 
+Quan sát hữu ích là chúng ta không cần phải suy luận gì về ID sinh viên. Hãy coi các vị trí cũ là`0, 1, ..., n-1`. Hai vị trí bị cấm liên tiếp trong đáp án khi khoảng cách vòng tròn của chúng là`1`. Do đó chúng ta chỉ cần một hoán vị các vị trí trong đó mỗi cặp liên tiếp có khoảng cách khác nhau`1`. 
 
-Một cách rất tự nhiên để tách những người hàng xóm bị cấm là chiếm tất cả các vị trí chẵn trước và tất cả các vị trí lẻ sau đó. Trong mỗi nhóm, các vị trí liên tiếp cách nhau hai nên chúng tự động được an toàn. Đối với số lẻ`n`, quá trình chuyển đổi giữa hai nhóm và quá trình chuyển đổi cuối cùng trở lại vị trí 0 cũng có sự khác biệt hai modulo`n`, nên công trình được thi công ngay. 
+Đối với số lẻ`n`, lấy tất cả các vị trí được lập chỉ mục chẵn theo sau là tất cả các vị trí được lập chỉ mục lẻ, sử dụng chỉ mục dựa trên 0. Ở các vị trí dựa trên một, đây là`1, 3, 5, ..., 2, 4, 6, ...`. Trong mỗi nhóm, các vị trí liên tiếp cách nhau hai. Tại ranh giới giữa các nhóm, sự khác biệt cũng ít nhất là hai modulo`n`bởi vì`n`thật kỳ quặc. Cặp cuối cùng có cùng tính chất. 
 
-Thậm chí`n`, cấu trúc tương tự có một cạnh tròn có vấn đề. Hoán đổi hai vị trí lẻ cuối cùng sẽ khắc phục chính xác vấn đề đó trong khi vẫn duy trì sự khác biệt an toàn ở mọi nơi khác. Điều này đưa ra quyết định theo thời gian không đổi và xây dựng tuyến tính. 
+Thậm chí`n >= 6`, trình tự tương tự có chính xác một quá trình chuyển đổi có vấn đề, đó là sự chuyển đổi từ vị trí chẵn cuối cùng trở lại vị trí đầu tiên. Hoán đổi hai phần tử cuối cùng sẽ sửa nó. Tương đương, đối với`n = 6`chúng tôi có được`1 3 5 2 6 4`, và cho`n = 8`chúng tôi có được`1 3 5 7 2 8 6 4`. Bây giờ mỗi cặp lân cận có khoảng cách vị trí cũ ít nhất là hai. 
 
-Việc xây dựng cũng giải thích ngay tại sao`n < 5`là không thể. Vì`n = 3`Và`n = 4`, phần bù của chu trình ban đầu không chứa chu trình Hamilton. Bắt đầu từ`n = 5`, việc xây dựng tính chẵn lẻ cho một cách rõ ràng. 
+Cấu trúc này độc lập với các giá trị được lưu trữ trong hoán vị. Chúng tôi xây dựng thứ tự yêu cầu của các vị trí cũ, sau đó xuất ra các sinh viên chiếm giữ các vị trí đó. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
-| --- | --- | --- | --- | 
+|---|---|---|---| 
 | Lực lượng vũ phu |`O(n * n!)`|`O(n)`| Quá chậm | 
-| Xây dựng tối ưu |`O(n)`|`O(n)`| Đã chấp nhận | 
+| Tối ưu |`O(n)`|`O(n)`| Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Đọc cách sắp xếp hình tròn cũ thành`a`. Chúng tôi làm việc với các vị trí dựa trên số 0 vì việc xây dựng dựa trên tính chẵn lẻ của vị trí. 
-2. Nếu`n < 5`, in`-1`. Đối với ba học sinh, mỗi cặp đã liền kề nhau và đối với bốn học sinh, các cạnh duy nhất được phép kết nối các học sinh đối diện nhau, không thể tạo thành một chu trình chứa tất cả mọi người. 
-3. Xây dựng một chuỗi mới bằng cách đảm nhận các vị trí`0, 2, 4, ...`đầu tiên, tiếp theo là vị trí`1, 3, 5, ...`. Chúng ta đang cố tình tách các vị trí có cùng tính chẵn lẻ vì khoảng cách vòng tròn ban đầu của chúng là hai chứ không phải một. 
-4. Nếu`n`là số lẻ thì giữ nguyên dãy đó. Phần vị trí chẵn có hiệu là hai, phần vị trí lẻ cũng có hiệu là hai, phần chuyển từ vị trí chẵn cuối cùng sang vị trí lẻ đầu tiên có khoảng cách tròn là hai, và vị trí lẻ cuối cùng trở về vị trí 0 cũng có khoảng cách tròn là hai. 
-5. Nếu`n`chẵn, hoán đổi hai phần tử cuối cùng của chuỗi được xây dựng. Trước khi hoán đổi, cạnh nguy hiểm duy nhất là kết nối vòng tròn từ vị trí lẻ cuối cùng`n - 1`trở lại vị trí số 0. Sau khi hoán đổi, hai vị trí cuối cùng trở thành`n - 1, n - 3`, và ranh giới mới là từ`n - 3`về 0, khoảng cách của nó là ba. Cạnh bị ảnh hưởng khác có khoảng cách hai, vì vậy cả hai đều hợp lệ. 
-6. Chuyển đổi các vị trí đã xây dựng trở lại ID sinh viên bằng cách sử dụng các mục nhập tương ứng của`a`, và in chúng theo thứ tự vòng tròn kết quả. 
+1. Đọc hoán vị vòng cũ`a`. Chúng tôi sẽ xây dựng thứ tự các chỉ số của nó thay vì cố gắng thao túng trực tiếp ID sinh viên. 
 
-### Tại sao nó hoạt động 
+2. Nếu`n < 5`, in`-1`. Vì`n = 3`mọi cặp đều bị cấm, trong khi đối với`n = 4`các cặp duy nhất được phép tạo thành hai cạnh rời nhau, do đó không trường hợp nào có thể tạo thành chu trình Hamilton. 
 
-Điều bất biến là mọi cặp vị trí liên tiếp theo thứ tự được xây dựng đều có khoảng cách hình tròn ban đầu khác với một. Đối với số lẻ`n`, tất cả các khoảng cách như vậy là hai. Thậm chí`n`, các chuyển đổi chẵn lẻ giống nhau thông thường có khoảng cách hai, quá trình chuyển đổi giữa hai nhóm chẵn lẻ có khoảng cách ba, cặp hoán đổi có khoảng cách hai và quá trình chuyển đổi cuối cùng trở về 0 có khoảng cách ba. Vì một cặp lân cận cũ được đặc trưng chính xác bằng khoảng cách tròn 1, nên không có cặp mới nào trước đây là hàng xóm của nhau. Mỗi vị trí ban đầu xuất hiện đúng một lần nên kết quả cũng là một hoán vị của tất cả học sinh. 
+3. Nếu`n`là lẻ, thu thập vị trí`0, 2, 4, ...`đầu tiên, tiếp theo là vị trí`1, 3, 5, ...`. Trong ký hiệu dựa trên một đây là`1, 3, 5, ..., 2, 4, 6, ...`. 
+
+4. Nếu`n`chẵn, xây dựng dãy giống nhau và hoán đổi hai vị trí cuối cùng của nó. Việc hoán đổi sẽ loại bỏ quá trình chuyển đổi bao quanh có vấn đề duy nhất được tạo bởi thứ tự chẵn-lẻ chưa được sửa đổi. 
+
+5. Chuyển thứ tự vị trí đã xây dựng thành mã sinh viên bằng cách lấy`a[position]`cho mỗi vị trí được lựa chọn. In các ID này theo thứ tự. Từ`a`là một hoán vị, mỗi học sinh xuất hiện đúng một lần. 
+
+Tại sao nó hoạt động: bên trong nhóm vị trí lẻ và bên trong nhóm vị trí chẵn, các vị trí cũ liên tiếp cách nhau đúng hai, vì vậy những học sinh đó trước đây không phải là hàng xóm của nhau. Đối với số lẻ`n`, hai điểm chuyển tiếp biên cũng có khoảng cách đường tròn ít nhất là hai. Thậm chí`n`, việc hoán đổi hai vị trí cuối cùng sẽ thay đổi hai chuyển tiếp bị ảnh hưởng sao cho khoảng cách vòng tròn của chúng cũng ít nhất là hai. Việc xây dựng là hoán vị của tất cả các vị trí cũ nên không có học sinh nào bị mất hoặc trùng lặp. Do đó, mọi cặp hàng xóm hình tròn mới đều không liền kề nhau ở chỗ ngồi cũ. 
 
 ## Giải pháp Python```python
 import sys
 input = sys.stdin.readline
 
-def solve():
-    n = int(input())
-    a = list(map(int, input().split()))
+def solve(data=None):
+    if data is None:
+        n = int(input())
+        a = list(map(int, input().split()))
+    else:
+        it = iter(data.split())
+        n = int(next(it))
+        a = [int(next(it)) for _ in range(n)]
 
     if n < 5:
-        print(-1)
-        return
+        return "-1\n"
 
-    ans = []
-
-    for i in range(0, n, 2):
-        ans.append(a[i])
-
-    for i in range(1, n, 2):
-        ans.append(a[i])
+    order = list(range(0, n, 2)) + list(range(1, n, 2))
 
     if n % 2 == 0:
-        ans[-1], ans[-2] = ans[-2], ans[-1]
+        order[-1], order[-2] = order[-2], order[-1]
 
-    print(*ans)
+    ans = [a[i] for i in order]
+    return " ".join(map(str, ans)) + "\n"
 
 if __name__ == "__main__":
-    solve()
-```Vòng lặp đầu tiên thu thập mọi vị trí dựa trên số 0. Vòng lặp thứ hai thu thập mọi vị trí lẻ. Chúng cùng nhau chứa mỗi học sinh chính xác một lần, do đó không cần mảng truy cập riêng biệt. 
+    sys.stdout.write(solve())
+```Nhánh đầu tiên xử lý hai kích thước không thể ngay lập tức. Không cần phải kiểm tra hoán vị thực tế vì tính khả thi của`n = 3`Và`n = 4`chỉ phụ thuộc vào cấu trúc vòng tròn. 
 
-Đối với số lẻ`n`, trình tự đã đúng rồi. Thậm chí`n`,`ans[-1]`Và`ans[-2]`là hai học sinh ở vị trí lẻ cuối cùng nên việc hoán đổi chúng chính là sự điều chỉnh được mô tả trong công thức. 
+các`order`biểu thức tạo ra tất cả các vị trí chẵn dựa trên 0, theo sau là tất cả các vị trí lẻ dựa trên 0. Sử dụng chỉ số thay vì giá trị là chi tiết triển khai chính. Hoán vị đầu vào có thể chứa các sinh viên theo bất kỳ thứ tự nào, nhưng vị trí của nó luôn có cùng cấu trúc kề. 
 
-Không có phép tính nào liên quan đến các giá trị lớn hơn`n`và số nguyên Python không có vấn đề tràn. Ranh giới quan trọng được thể hiện ngầm bằng cách xây dựng, vì vậy chúng tôi không cần một bước xác thực riêng. Đặc biệt, việc hoán đổi phải xảy ra sau khi cả hai nhóm chẵn lẻ đã được thêm vào, vì nó làm thay đổi phần cuối của chuỗi vòng tròn. 
+Thậm chí`n`,`order[-1]`Và`order[-2]`là hai phần tử cuối cùng của dãy được xây dựng. Hoán đổi hai cái này chính xác là sự điều chỉnh cần thiết cho trường hợp chẵn. Việc lập chỉ mục phủ định của Python làm cho điều này trở nên độc lập với giá trị thực của`n`, và sớm hơn`n < 5`kiểm tra đảm bảo rằng các vị trí này tồn tại. 
 
-Giải pháp không cần phân biệt mã sinh viên với chức vụ. Từ`a`là một hoán vị, mọi thứ tự vị trí hợp lệ sẽ ngay lập tức trở thành thứ tự hợp lệ của sinh viên. 
+Cuối cùng,`a[i]`ánh xạ từng vị trí cũ trở lại ID sinh viên của nó. Từ`a`được đảm bảo là một hoán vị, điều này tạo ra một hoán vị khác mà không yêu cầu một mảng hoặc một tập hợp đã truy cập. 
+
+Không cần số học số nguyên liên quan đến các tích lớn, do đó việc tràn số nguyên không phải là vấn đề. Việc xây dựng và kết quả cuối cùng đều chạm vào mỗi học sinh một số lần không đổi. 
 
 ## Ví dụ đã hoạt động 
 
-Đối với Mẫu 1, đầu vào là:```
-8
-6 1 3 5 7 8 4 2
-```Việc xây dựng sử dụng các vị trí dựa trên số không. Từ`n`là chẵn, trước tiên chúng ta lấy tất cả các vị trí chẵn, sau đó là tất cả các vị trí lẻ và cuối cùng hoán đổi hai phần tử cuối cùng. 
+### Mẫu 1 
 
-| Bước | Vị trí chẵn | Vị trí lẻ | Trình tự hiện tại | 
-| --- | --- | --- | --- | 
-| Bắt đầu |`[]`|`[]`|`[]`| 
-| Thêm sự kiện |`6 3 7 4`|`[]`|`6 3 7 4`| 
-| Thêm tỷ lệ cược |`6 3 7 4`|`1 5 8 2`|`6 3 7 4 1 5 8 2`| 
-| Trao đổi cuối cùng hai |`6 3 7 4`|`1 5 2 8`|`6 3 7 4 1 5 2 8`| 
+Đối với hoán vị đầu vào`6 1 3 5 7 8 4 2`, chúng tôi có`n = 8`, vì vậy việc xây dựng kích thước chẵn được sử dụng. 
 
-Sự sắp xếp cuối cùng là`6 3 7 4 1 5 2 8`. Vị trí cũ của nó là`0, 2, 4, 6, 1, 3, 7, 5`và mọi hiệu tròn giữa các vị trí liên tiếp đều không`1`cũng không`7`. Do đó không có cặp lân cận mới nào là cặp lân cận cũ. Mẫu chính thức có cách sắp xếp hợp lệ khác, điều này được cho phép vì bài toán chấp nhận bất kỳ giải pháp nào. 
+| Bước | Thứ tự vị trí | Đầu ra của sinh viên | 
+|---|---|---| 
+| Bắt đầu |`0 1 2 3 4 5 6 7`|`6 1 3 5 7 8 4 2`| 
+| Vị trí lẻ trước |`0 2 4 6 1 3 5 7`|`6 3 7 4 1 5 8 2`| 
+| Hoán đổi hai vị trí cuối cùng |`0 2 4 6 1 3 7 5`|`6 3 7 4 1 5 2 8`| 
 
-Đối với Mẫu 2, đầu vào là:```
-3
-1 3 2
-```Thuật toán dừng trước khi xây dựng bất cứ thứ gì vì có ít hơn năm học sinh. 
+Kết quả đầu ra là`6 3 7 4 1 5 2 8`. Nó khác với đầu ra mẫu, điều này được cho phép vì bài toán chấp nhận bất kỳ sự sắp xếp hợp lệ nào. Trình tự vị trí cũ là`0,2,4,6,1,3,7,5`. Khoảng cách lân cận hình tròn của nó là`2,2,2,3,2,4,2,3`, vì vậy không có gì là kề cận cũ. 
 
-| Bước |`n`| Quyết định | Đầu ra | 
-| --- | --- | --- | --- | 
-| Đọc đầu vào |`3`|`n < 5`|`-1`| 
-| Kết thúc |`3`| Không thể xây dựng |`-1`| 
+### Mẫu 2 
 
-Với ba học sinh, vòng tròn ban đầu đã làm cho mọi cặp đều liền kề nhau. Không có sẵn cặp nào cho bất kỳ cạnh tròn mới nào, vì vậy việc từ chối trường hợp này là đúng. 
+cho`n = 3`, thuật toán dừng trước khi xây dựng đơn hàng. 
+
+| Bước |`n`| Kết quả | 
+|---|---:|---| 
+| Đọc đầu vào |`3`|`n < 5`| 
+| Kiểm tra tính khả thi |`3 < 5`| in`-1`| 
+
+Mỗi cặp trong vòng tròn ba người đều là cặp hàng xóm cũ, vì vậy không thể có sự sắp xếp vòng tròn mới. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
-| --- | --- | --- | 
-| Thời gian |`O(n)`| Mỗi vị trí đầu vào được thêm một lần và trường hợp chẵn thực hiện một lần hoán đổi. | 
-| Không gian |`O(n)`| Mảng đầu vào và mảng đầu ra đều chứa`n`ID sinh viên. | 
+|---|---|---| 
+| Thời gian |`O(n)`| Việc xây dựng thứ tự vị trí và ánh xạ nó tới ID đều mất thời gian tuyến tính. | 
+| Không gian |`O(n)`| Thứ tự vị trí và câu trả lời chứa`n`các phần tử. | 
 
-Tại`n = 3 * 10^5`, thuật toán chỉ thực hiện một lượng công việc không đổi cho mỗi học sinh và lưu trữ một vài mảng số nguyên có kích thước tuyến tính. Điều này thoải mái phù hợp với giới hạn 1 giây và 256 MB, trong khi các phương pháp tiếp cận giai thừa hoặc bậc hai không thể xử lý đầu vào tối đa. 
+Với`n <= 3 * 10^5`, thuật toán chỉ thực hiện một số lần duyệt không đổi trên vài trăm nghìn số nguyên. Điều này thoải mái trong giới hạn 1 giây và 256 MB dự định, trong khi mọi cấu trúc giai thừa hoặc bậc hai đều bị loại trừ bởi kích thước đầu vào. 
 
 ## Trường hợp thử nghiệm 
 
-Đầu ra không phải là duy nhất, vì vậy các thử nghiệm phải xác minh rằng sự sắp xếp được tạo ra là một hoán vị và mọi cặp lân cận hình tròn mới không phải là cặp lân cận hình tròn cũ. So sánh đầu ra với một chuỗi hợp lệ cố định sẽ từ chối các giải pháp đúng khác một cách không chính xác. 
-
-Vấn đề đảm bảo rằng đầu vào là một hoán vị. Do đó, một thử nghiệm "tất cả các giá trị bằng nhau" chẳng hạn như`5 / 1 1 1 1 1`không phải là trường hợp thử nghiệm Codeforces hợp lệ và không nên được sử dụng để kiểm tra chính giải pháp đã gửi. Nó chỉ có thể kiểm tra hành vi trên đầu vào không đúng định dạng, nằm ngoài hợp đồng có vấn đề.```python
+Trình kiểm tra bên dưới xác thực thuộc tính thay vì dựa vào một đầu ra hợp lệ cụ thể. Đây là cách phù hợp để kiểm tra một vấn đề mang tính xây dựng vì nhiều kết quả đầu ra có thể đúng. Xác nhận mẫu 1 cũng kiểm tra kết quả xác định chính xác được tạo ra bởi quá trình triển khai ở trên.```python
 import io
-import sys
 
-def solve_case(inp: str) -> str:
-    data = list(map(int, inp.split()))
-    n = data[0]
-    a = data[1:]
+def solve(data=None):
+    if data is None:
+        import sys
+        input = sys.stdin.readline
+        n = int(input())
+        a = list(map(int, input().split()))
+    else:
+        it = iter(data.split())
+        n = int(next(it))
+        a = [int(next(it)) for _ in range(n)]
 
     if n < 5:
-        return "-1"
+        return "-1\n"
 
-    ans = []
-
-    for i in range(0, n, 2):
-        ans.append(a[i])
-
-    for i in range(1, n, 2):
-        ans.append(a[i])
+    order = list(range(0, n, 2)) + list(range(1, n, 2))
 
     if n % 2 == 0:
-        ans[-1], ans[-2] = ans[-2], ans[-1]
+        order[-1], order[-2] = order[-2], order[-1]
 
-    return " ".join(map(str, ans))
+    ans = [a[i] for i in order]
+    return " ".join(map(str, ans)) + "\n"
+
+def run(inp: str) -> str:
+    return solve(inp)
 
 def valid(inp: str, out: str) -> bool:
-    data = list(map(int, inp.split()))
-    n = data[0]
-    a = data[1:]
+    tokens = inp.split()
+    n = int(tokens[0])
+    a = list(map(int, tokens[1:]))
 
-    result = out.split()
+    if out.strip() == "-1":
+        return n < 5
 
-    if n < 5:
-        return result == ["-1"]
+    b = list(map(int, out.split()))
 
-    if len(result) != n:
+    if len(b) != n or sorted(b) != sorted(a):
         return False
 
-    result = list(map(int, result))
-
-    if sorted(result) != sorted(a):
-        return False
-
-    old_pos = {x: i for i, x in enumerate(a)}
+    pos = {x: i for i, x in enumerate(a)}
 
     for i in range(n):
-        x = old_pos[result[i]]
-        y = old_pos[result[(i + 1) % n]]
-        diff = (x - y) % n
-
-        if diff == 1 or diff == n - 1:
+        x = pos[b[i]]
+        y = pos[b[(i + 1) % n]]
+        d = (x - y) % n
+        if d == 1 or d == n - 1:
             return False
 
     return True
 
-# Provided sample 1
+# Provided sample 1.
 sample1 = """8
 6 1 3 5 7 8 4 2
 """
-out = solve_case(sample1)
-assert valid(sample1, out), "sample 1"
+assert run(sample1) == "6 3 7 4 1 5 2 8\n"
+assert valid(sample1, run(sample1))
 
-# Provided sample 2
+# Provided sample 2.
 sample2 = """3
 1 3 2
 """
-assert solve_case(sample2) == "-1", "sample 2"
+assert run(sample2) == "-1\n"
+assert valid(sample2, run(sample2))
 
-# Minimum possible n, impossible.
-case3 = """4
-1 2 3 4
-"""
-assert solve_case(case3) == "-1", "n=4 must be impossible"
-
-# Smallest possible solvable case.
-case4 = """5
+# Minimum possible n.
+case3 = """5
 1 2 3 4 5
 """
-out = solve_case(case4)
-assert valid(case4, out), "n=5 construction"
+assert run(case3) == "1 3 5 2 4\n"
+assert valid(case3, run(case3))
 
-# Even n, catches the special final swap.
-case5 = """6
+# Smallest even n for which a solution exists.
+case4 = """6
 1 2 3 4 5 6
 """
-out = solve_case(case5)
-assert valid(case5, out), "even n boundary"
+assert run(case4) == "1 3 5 2 6 4\n"
+assert valid(case4, run(case4))
 
-# Large valid input, exercising the O(n) construction.
+# Largest allowed n.
 n = 300000
 a = list(range(1, n + 1))
-case6 = str(n) + "\n" + " ".join(map(str, a)) + "\n"
-out = solve_case(case6)
-assert valid(case6, out), "maximum n"
+case5 = str(n) + "\n" + " ".join(map(str, a)) + "\n"
+out5 = run(case5)
+assert valid(case5, out5)
+
+# Repeated values are not a valid input for this problem.
+# The statement guarantees that the second line is a permutation,
+# so an all-equal test is deliberately excluded rather than pretending
+# that it is a legal test case.
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
-| --- | --- | --- | 
-|`3 / 1 3 2`|`-1`| Kích thước tối thiểu và hoàn toàn không thể | 
-|`4 / 1 2 3 4`|`-1`| Trường hợp chẵn không thể rõ ràng hơn | 
-|`5 / 1 2 3 4 5`| Bất kỳ hoán vị hợp lệ nào | Trường hợp nhỏ nhất có thể giải được và ranh giới hình tròn | 
-|`6 / 1 2 3 4 5 6`| Bất kỳ hoán vị hợp lệ nào | Xây dựng kích thước đồng đều và hoán đổi cuối cùng | 
-|`300000 / 1 2 ... 300000`| Bất kỳ hoán vị hợp lệ nào | Hạn chế tối đa và hiệu suất tuyến tính | 
+|---|---|---| 
+|`3 / 1 3 2`|`-1`| Trường hợp không thể tối thiểu | 
+|`4 / 1 2 3 4`|`-1`| Trường hợp bất khả thi khác | 
+|`5 / 1 2 3 4 5`|`1 3 5 2 4`| Công trình lẻ và ranh giới hình tròn | 
+|`6 / 1 2 3 4 5 6`|`1 3 5 2 6 4`| Ngay cả việc xây dựng và trao đổi cuối cùng | 
+|`300000 / 1 2 ... 300000`| Bất kỳ hoán vị hợp lệ nào | Hiệu suất kích thước tối đa và xử lý ranh giới | 
+
+Một đầu vào hoàn toàn bằng nhau như`5 / 7 7 7 7 7`không thể là trường hợp kiểm thử cho bài toán đã nêu vì đầu vào được đảm bảo là một hoán vị của`1..n`. Việc coi nó như một trường hợp bình thường sẽ kiểm tra hành vi bên ngoài hợp đồng của vấn đề chứ không phải là một trường hợp đặc biệt của thuật toán. 
 
 ## Vỏ cạnh 
 
-cho`n = 3`, coi như:```
-3
-1 3 2
-```Mỗi cặp học sinh đứng cạnh nhau trong vòng tròn ban đầu. Học sinh`1`ở bên cạnh`3`Và`2`, học sinh`3`ở bên cạnh`1`Và`2`, và sinh viên`2`ở bên cạnh`3`Và`1`. Một vòng tròn mới sẽ cần ba cạnh được phép, nhưng không có cạnh nào cả. Thuật toán phát hiện`n < 5`ngay lập tức và in`-1`. 
+cho`n = 3`, coi như`3 / 1 2 3`. Các cạnh tròn cũ là`{1,2}`,`{2,3}`, Và`{3,1}`, bao gồm mọi cặp học sinh có thể có. Thuật toán in ngay lập tức`-1`, tránh mọi nỗ lực xây dựng một chu trình bất khả thi. 
 
-Vì`n = 4`, coi như:```
-4
-1 2 3 4
-```Người không phải là hàng xóm duy nhất của`1`là`3`, người không phải là hàng xóm duy nhất của`2`là`4`, và ngược lại. Do đó đồ thị được phép chỉ bao gồm`1-3`Và`2-4`. Nó không thể chứa một chu trình bốn đỉnh. Sớm như vậy`n < 5`kiểm tra bản in chính xác`-1`. 
+Vì`n = 4`, coi như`4 / 1 2 3 4`. Cặp đôi không phải hàng xóm cũ duy nhất là`1-3`Và`2-4`. Một chỗ ngồi hình tròn mới sẽ cần bốn cạnh được phép trong khi hai cạnh được phép này bị ngắt kết nối, do đó không có giải pháp nào tồn tại. các`n < 5`điều kiện in chính xác`-1`. 
 
-Đối với trường hợp nhỏ nhất có thể giải được, hãy xem xét:```
-5
-1 2 3 4 5
-```Phần vị trí chẵn là`1 3 5`, và phần vị trí lẻ là`2 4`, cho:```
-1 3 5 2 4
-```Các vị trí ban đầu là`0, 2, 4, 1, 3`. Sự khác biệt vòng tròn là`2, 2, 2, 2, 2`, do đó mỗi cặp mới cách nhau hai vị trí trong vòng tròn cũ. Đặc biệt, cặp cuối cùng`4,1`là an toàn, thực hiện ranh giới hình tròn. 
+Đối với số lẻ`n = 5`, coi như`5 / 1 2 3 4 5`. Thứ tự vị trí là`0,2,4,1,3`, tương ứng với`1 3 5 2 4`. Sự khác biệt bên trong là hai vị trí, trong khi cặp bao quanh`4,1`cũng có khoảng cách tròn hai. Do đó, công trình xử lý ranh giới mà không có bất kỳ sự điều chỉnh đặc biệt nào. 
 
-Thậm chí`n`, việc điều chỉnh đặc biệt là cần thiết. Với:```
-6
-1 2 3 4 5 6
-```nhóm chẵn lẻ ban đầu cho:```
-1 3 5 2 4 6
-```trận chung kết`6,1`cặp đôi bị cấm vì ban đầu những sinh viên đó là hàng xóm. Sau khi hoán đổi hai phần tử cuối cùng, chúng ta nhận được:```
-1 3 5 2 6 4
-```Các vị trí cũ là`0,2,4,1,5,3`. Sự khác biệt vòng tròn là`2,2,3,4,2,3`, không cái nào trong số đó là`1`hoặc`5`. Việc hoán đổi sẽ thay đổi chính xác phần công trình mà lẽ ra sẽ thất bại. 
+Thậm chí`n = 6`, thứ tự chẵn lẻ ban đầu sẽ là`1 3 5 2 4 6`. Cặp cuối cùng của nó`6,1`bị cấm vì những học sinh đó là hàng xóm trong vòng tròn cũ. Hoán đổi hai vị trí cuối cùng mang lại`1 3 5 2 6 4`. Các quá trình chuyển đổi bị ảnh hưởng trở thành`2-6`Và`4-1`, có khoảng cách vòng tròn lần lượt là bốn và ba, do đó vi phạm bao quanh sẽ biến mất. 
 
-Đối với kích thước đầu vào tối đa, cấu trúc tương tự không phụ thuộc vào giá trị của ID sinh viên mà chỉ phụ thuộc vào vị trí của chúng. Với`n = 300000`, cả hai vòng lặp chẵn lẻ cùng nhau xử lý chính xác`300000`vị trí, theo sau là một lần hoán đổi. Không có vòng lặp lồng nhau và không có xác nhận lặp lại, do đó thời gian chạy vẫn tuyến tính ngay cả ở đầu vào lớn nhất được phép.
+Các nhãn sinh viên thực tế có thể hoàn toàn tùy ý. Ví dụ: hoán vị mẫu bắt đầu bằng`6`còn hơn là`1`, nhưng công trình vẫn chỉ hoạt động trên vị trí của nó. Đây là lý do tại sao không cần sắp xếp, ánh xạ theo giá trị sinh viên hoặc tìm kiếm theo ID. 
+:::

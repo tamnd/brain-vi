@@ -1,7 +1,7 @@
 ---
 title: "CF 102202A - Hạt cầu vồng"
-description: "Chúng ta có một chuỗi có độ dài (N), trong đó mỗi viên ngọc có màu R, B hoặc V. Chúng ta có thể chọn một chuỗi con liền kề và cho đi. Chuỗi con được chọn phải trông đầy màu sắc đối với ba người quan sát khác nhau."
-date: "2026-08-18T20:54:06+07:00"
+description: "Chúng ta có một chuỗi có độ dài (N), trong đó mỗi viên ngọc là một trong các R, B hoặc V. Chúng ta có thể chọn một chuỗi con liền kề và muốn nó có độ dài tối đa có thể. Chuỗi con được chọn phải trông đa dạng đối với ba người quan sát khác nhau."
+date: "2026-08-24T05:07:02+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102202
@@ -9,8 +9,8 @@ codeforces_index: "A"
 codeforces_contest_name: "2019 KAIST RUN Spring Contest"
 rating: 0
 weight: 102202
-solve_time_s: 577
-verified: false
+solve_time_s: 3406
+verified: true
 draft: false
 ---
 
@@ -18,81 +18,63 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 9 phút 37 giây 
-**Đã xác minh:** không 
+**Thời gian giải:** 56 phút 46 giây 
+**Đã xác minh:** có 
 
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta có một chuỗi có độ dài (N), trong đó mọi viên ngọc đều được tô màu`R`,`B`, hoặc`V`. Chúng ta có thể chọn một chuỗi con liền kề và cho đi. Chuỗi con được chọn phải trông đầy màu sắc đối với ba người quan sát khác nhau. 
+Chúng ta có một chuỗi có độ dài (N), trong đó mỗi viên ngọc là một trong`R`,`B`, hoặc`V`. Chúng tôi có thể chọn một chuỗi con liền kề và muốn độ dài tối đa có thể của nó. 
 
-Người quan sát bình thường có thể phân biệt được cả ba màu nên các viên ngọc liền kề phải có ký tự gốc khác nhau. Người quan sát mù màu đỏ nhìn thấy`R`Và`V`cùng màu, trong khi người quan sát mù màu xanh nhìn thấy`B`Và`V`như cùng một màu sắc. Chuỗi con được chọn không được có màu liền kề bằng nhau đối với bất kỳ người quan sát nào trong số này. 
+Chuỗi con được chọn phải trông đa dạng đối với ba người quan sát khác nhau. Người quan sát bình thường phân biệt được cả ba màu, người quan sát mù màu đỏ xử lý`V`BẰNG`R`, và một người quan sát mù màu xanh xử lý`V`BẰNG`B`. Đối với mỗi người quan sát, những viên ngọc lân cận phải có màu sắc cảm nhận khác nhau. 
 
-Hệ quả chính còn mạnh hơn điều kiện ban đầu gợi ý lúc đầu. Xét bất kỳ cặp liền kề nào có chứa`V`. Nếu viên ngọc kia là`R`, một người mù màu đỏ nhìn thấy hai viên ngọc đỏ liên tiếp. Nếu viên ngọc kia là`B`, một người quan sát mù màu xanh nhìn thấy hai viên ngọc xanh liên tiếp. Nếu cặp đó là`VV`, mọi người đều nhìn thấy những màu sắc như nhau. Như vậy`V`không thể liền kề với bất kỳ thứ gì bên trong chuỗi con hợp lệ. 
+Cách hữu ích để kết hợp ba yêu cầu này là kiểm tra từng cặp màu gốc lân cận có thể có. Hai màu giống nhau bị cấm đối với người quan sát bình thường. Cặp đôi`R,V`bị cấm đối với người quan sát mù màu đỏ, bởi vì nó trở thành`R,R`. Cặp đôi`B,V`bị cấm đối với người quan sát mù màu xanh, bởi vì nó trở thành`B,B`. Do đó, trong số tất cả các cặp khác biệt có thể có, cặp duy nhất còn tồn tại là`R,B`. 
 
-Cặp liền kề duy nhất sống sót sau cả ba người quan sát là`RB`hoặc`BR`. Do đó, mọi chuỗi con hợp lệ có độ dài ít nhất là hai chỉ được chứa`R`Và`B`, và những ký tự đó phải luân phiên nhau. 
+Điều đó giúp phát biểu lại vấn đề đơn giản hơn nhiều: một chuỗi con hợp lệ có độ dài ít nhất là hai chỉ có thể chứa`R`Và`B`và mọi cặp lân cận phải luân phiên nhau. MỘT`V`chỉ có thể xuất hiện trong chuỗi con hợp lệ có độ dài bằng một. 
 
-Ví dụ,`RBRB`là hợp lệ, trong khi`RVB`thì không. Một viên ngọc duy nhất như`V`luôn hợp lệ vì nó không có cặp liền kề nào cả. 
+Giới hạn (N \le 250.000) loại trừ các thuật toán bậc hai hoặc kém hơn trong giải pháp dự định. Một lần quét tuyến tính duy nhất chỉ thực hiện một lượng công việc không đổi trên mỗi viên ngọc, khá thoải mái trong giới hạn 1 giây trong Python. Một thuật toán kiểm tra mọi cặp vị trí sẽ thực hiện khoảng (31) tỷ kiểm tra cặp ở kích thước đầu vào tối đa, do đó cấu trúc của chuỗi con hợp lệ cần được khai thác trực tiếp. 
 
-Đầu vào có thể chứa tới (250.000) trang sức. Thuật toán (O(N^2)) sẽ kiểm tra khoảng (N(N+1)/2) chuỗi con, tức là khoảng (31,25) tỷ khi (N=250.000). Điều đó vượt xa giới hạn thời gian một giây. Chúng ta chỉ cần kiểm tra chuỗi một số lần không đổi, đưa ra nghiệm (O(N)). 
+Có một số trường hợp nhỏ trong đó việc triển khai chỉ dựa trên định nghĩa ban đầu có thể sai. Đối với đầu vào`1`theo sau là`V`, câu trả lời là`1`, bởi vì chuỗi con một viên ngọc không có cặp liền kề nào vi phạm bất kỳ điều kiện nào. Việc thực hiện bất cẩn chỉ nhằm mục đích thay thế`R`Và`B`có thể trả về 0 không chính xác. 
 
-Có một số trường hợp đặc biệt có thể dễ dàng gây ra việc triển khai không chính xác. 
+Đối với đầu vào`3`với`RVB`, câu trả lời là`1`. Mặc dù cả ba màu gốc đều khác nhau,`RV`trở thành`RR`cho một người quan sát mù màu đỏ và`VB`trở thành`BB`đối với người quan sát mù màu xanh. Việc chỉ kiểm tra xem các ký tự gốc lân cận có khác nhau hay không sẽ chấp nhận toàn bộ chuỗi một cách không chính xác. 
 
-Coi như```
-1
-V
-```Câu trả lời là`1`. Một giải pháp chỉ tìm kiếm xen kẽ`R`Và`B`các phân đoạn có thể trả về 0 không chính xác, quên rằng một viên ngọc luôn hợp lệ. 
-
-Coi như```
-4
-RVBR
-```Câu trả lời là`1`. Mặc dù`V`không bằng một trong hai ký tự lân cận, nó không thể liền kề với`R`cho người quan sát mù màu đỏ hoặc để`B`cho người quan sát mù màu xanh. Giải pháp chỉ kiểm tra các ký tự liền kề trong chuỗi gốc sẽ chấp nhận không chính xác các phần chứa`V`. 
-
-Coi như```
-5
-RBRBB
-```Câu trả lời là`4`, từ`RBRB`. trận chung kết`BB`phá vỡ mô hình xen kẽ, do đó việc triển khai bất cẩn giữ nguyên độ dài hiện tại sau khi thấy một cặp không hợp lệ có thể bị tính quá mức. 
-
-Cuối cùng,```
-5
-RRRRR
-```có câu trả lời`1`. liền kề bằng nhau`R`đồ trang sức ngay lập tức không hợp lệ, nhưng mỗi viên ngọc riêng lẻ vẫn là một chuỗi con hợp lệ. 
+Đối với đầu vào`4`với`RBRB`, câu trả lời là`4`. Mọi cặp liền kề đều là`RB`hoặc`BR`, do đó cả ba người quan sát đều nhìn thấy các màu khác nhau ở mọi ranh giới. Việc triển khai xử lý sự hiện diện của nhiều màu quá lỏng lẻo có thể bỏ lỡ sự thay thế hoàn toàn đó`R/B`chuỗi là hợp lệ. 
 
 ## Phương pháp tiếp cận 
 
-Một cách tiếp cận trực tiếp là liệt kê mọi chuỗi con liền kề và kiểm tra xem nó có đầy màu sắc đối với cả ba người quan sát hay không. Có (N(N+1)/2) chuỗi con. Nếu mỗi chuỗi con được kiểm tra bằng cách quét tất cả các cặp liền kề của nó thì kết quả trong trường hợp xấu nhất là (O(N^3)), điều này rõ ràng là không thể. 
+Một giải pháp brute-force trực tiếp có thể liệt kê mọi chuỗi con liền kề và kiểm tra xem nó có thỏa mãn cả ba người quan sát hay không. Đối với một chuỗi con, việc kiểm tra mọi cặp liền kề sẽ mất thời gian tỷ lệ thuận với độ dài của nó, do đó cách tiếp cận này đúng vì nó xác minh rõ ràng định nghĩa trước khi cập nhật câu trả lời tốt nhất. 
 
-Chúng ta có thể làm cho ý tưởng ngây thơ đó tốt hơn một chút bằng cách cố định vị trí bắt đầu và mở rộng chuỗi con từng viên ngọc một. Khi một cặp liền kề không hợp lệ xuất hiện, mọi chuỗi con dài hơn bắt đầu ở cùng một vị trí cũng không hợp lệ, do đó chúng ta không cần quét lại toàn bộ chuỗi con. Điều này làm giảm công việc xuống (O(N^2)), vì trong trường hợp xấu nhất, chúng tôi vẫn kiểm tra mọi vị trí kết thúc có thể có cho mọi vị trí bắt đầu. Với (N=250.000), tức là khoảng (31,25) tỷ tiện ích mở rộng, vẫn còn quá nhiều. 
+Vấn đề là số lượng chuỗi con. Có (N(N+1)/2) trong số chúng và nếu mỗi cái được kiểm tra từ đầu thì tổng số lần kiểm tra ký tự là 
 
-Cách tiếp cận bạo lực có hiệu quả vì tính hợp lệ được xác định hoàn toàn bởi các cặp liền kề. Nhận xét hữu ích là sau khi kết hợp các yêu cầu của cả ba người quan sát, hầu hết mọi cặp đều bị cấm.`R`ở cạnh`B`là cặp hợp lệ duy nhất. MỘT`V`không bao giờ có thể tham gia vào một chuỗi con hợp lệ có độ dài lớn hơn một. 
+\frac{N(N+1)(N+2)}{6}. 
+] 
 
-Điều đó có nghĩa là chúng ta không cần phải xét đến các chuỗi con tùy ý. Chúng ta chỉ cần tìm phần liền kề dài nhất nơi mỗi ký tự được`R`hoặc`B`và mỗi cặp liền kề là khác nhau. Một phần như vậy chỉ đơn giản là một chuỗi xen kẽ như`RBRBR`hoặc`BRBRB`. 
+Đối với (N=250.000), đây là khoảng (2,6\time10^{15}) hoạt động, vượt xa giới hạn thời gian. Ngay cả việc triển khai vũ lực được cải tiến nhằm mở rộng từng vị trí bắt đầu cho đến khi gặp ranh giới không hợp lệ vẫn mất (O(N^2)) trong trường hợp xấu nhất, bởi vì một chuỗi xen kẽ cho phép mọi tiện ích mở rộng tiếp tục. 
 
-Chúng ta có thể quét chuỗi một lần. Trong khi ký tự hiện tại tiếp tục xen kẽ`R`/`B`trình tự, tăng độ dài của nó. Ngược lại, bắt đầu một chuỗi mới có độ dài bằng một nếu ký tự hiện tại là`R`hoặc`B`. Vì`V`, chuỗi không thể đi qua nó nữa nên độ dài hiện tại trở thành một. 
+Quan sát quan trọng là ba điều kiện mù màu loại bỏ mọi cặp liền kề ngoại trừ`R,B`Và`B,R`. Khi điều này được nhận ra, chúng ta không cần phải kiểm tra các chuỗi con tùy ý nữa. Chúng ta chỉ cần lần chạy liền kề dài nhất trong đó mỗi cặp liền kề bao gồm các`R`Và`B`nhân vật. 
 
-Vì một viên ngọc luôn có giá trị nên câu trả lời là ít nhất một viên. 
+Thuộc tính này có thể được duy trì trong khi quét từ trái sang phải. Nếu ký tự hiện tại là`R`hoặc`B`và khác với ký tự trước đó, lần chạy xen kẽ hiện tại sẽ kéo dài thêm một. Nếu không, lần chạy hiện tại phải khởi động lại ở ký tự hiện tại. MỘT`V`luôn bắt đầu một chuỗi mới có độ dài một, vì không có chuỗi con hợp lệ nào có độ dài ít nhất hai có thể chứa nó. 
+
+Brute-force hoạt động vì nó kiểm tra rõ ràng mọi khoảng thời gian có thể, nhưng không thành công vì có quá nhiều khoảng thời gian. Quan sát cho thấy các chuyển đổi cục bộ hợp lệ là chính xác`R -> B`Và`B -> R`biến vấn đề thành việc tìm một lần chạy xen kẽ dài nhất, có thể được thực hiện trong một lần. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
-| Lực lượng vũ phu | (O(N^3)) | (O(1)) | Quá chậm | 
-| Lực lượng vũ phu gia tăng | (O(N^2)) | (O(1)) | Quá chậm | 
+| Lực lượng vũ phu | (O(N^3)) khi kiểm tra mọi chuỗi con từ đầu | (O(1)) | Quá chậm | 
+| Brute Force dừng sớm | (O(N^2)) | (O(1)) | Quá chậm | 
 | Quét tối ưu | (O(N)) | (O(1)) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Đọc chuỗi và khởi tạo độ dài hợp lệ tốt nhất để`1`. Chuỗi con một viên ngọc không có cặp liền kề nên luôn có nhiều màu sắc. 
-2. Duy trì`cur`, độ dài của chuỗi con hợp lệ dài nhất kết thúc ở vị trí hiện tại. Ban đầu`cur = 1`. 
-3. Đối với mọi vị trí sau vị trí đầu tiên, hãy kiểm tra các ký tự trước đó và hiện tại. Nếu cả hai đều`R`hoặc`B`và chúng khác nhau, cặp này hợp lệ cho cả ba người quan sát, vì vậy hãy mở rộng chuỗi con hiện tại bằng cách đặt`cur += 1`. 
-4. Nếu không, chuỗi con trước đó không thể được mở rộng qua vị trí này. Bộ`cur = 1`, bởi vì viên ngọc hiện tại luôn là một chuỗi con hợp lệ. 
-5. Cập nhật câu trả lời chung với`max(ans, cur)`sau khi xử lý từng ký tự. 
-
-Lý do chúng ta có thể loại bỏ chuỗi con trước đó ngay sau một cặp không hợp lệ là vì mọi chuỗi con dài hơn kết thúc ở vị trí hiện tại và bắt đầu trước cặp không hợp lệ sẽ vẫn chứa cùng một cặp liền kề bị cấm đó. Không có lợi ích gì trong việc giữ bất kỳ thứ gì trong số đó. 
+1. Đọc chuỗi và khởi tạo độ dài lần chạy hợp lệ hiện tại bằng 0 và câu trả lời tối đa bằng 0. Một lần chạy biểu thị một hậu tố kết thúc ở vị trí hiện tại mà mọi cặp liền kề đều hợp lệ. 
+2. Xử lý chuỗi từ trái sang phải. Đối với ký tự đầu tiên, hãy bắt đầu một chuỗi có độ dài một. Không có ký tự trước đó nên không có ranh giới để kiểm tra. 
+3. Đối với mỗi ký tự sau, hãy kiểm tra xem cả ký tự hiện tại và ký tự trước đó có thuộc về không`{R, B}`và liệu chúng có khác nhau không. Đây chính xác là điều kiện mà cặp liền kề mới hoặc`RB`hoặc`BR`. 
+4. Nếu điều kiện đó được giữ nguyên, hãy tăng thời lượng chạy hiện tại lên một. Ranh giới mới được thêm vào là hợp lệ và tất cả các ranh giới trước đó trong quá trình chạy đều hợp lệ. 
+5. Nếu không, hãy bắt đầu một chuỗi độ dài mới ở ký tự hiện tại. Điều này bao gồm cả một`V`và một màu lặp đi lặp lại như`RR`hoặc`BB`. Không thể mở rộng chuỗi con hợp lệ trước đó. 
+6. Sau khi xác định được thời lượng chạy hiện tại, hãy cập nhật câu trả lời tối đa. Lần chạy dài nhất gặp phải trong quá trình quét là chuỗi con hợp lệ dài nhất. 
 
 ### Tại sao nó hoạt động 
 
-Để một chuỗi con có độ dài ít nhất hai có màu sắc đầy màu sắc đối với cả ba người quan sát, mọi cặp liền kề phải hợp lệ cho cả ba cách diễn giải màu.`R-B`Và`B-R`là những cặp duy nhất như vậy. Mỗi cặp chứa`V`không hợp lệ đối với ít nhất một người quan sát và bằng nhau`R`hoặc bằng`B`các cặp không hợp lệ đối với người quan sát bình thường. 
-
-Do đó, một chuỗi con hợp lệ có độ dài ít nhất là hai chính xác là một chuỗi xen kẽ của`R`Và`B`. Trong quá trình quét,`cur`chính xác là chuỗi dài nhất kết thúc ở vị trí hiện tại. hợp lệ`R/B`cặp mở rộng nó, trong khi bất kỳ cặp nào khác không thể mở rộng và buộc hậu tố hợp lệ tốt nhất trở thành viên ngọc duy nhất hiện tại. Lấy giá trị lớn nhất của`cur`trên tất cả các vị trí do đó mang lại chuỗi con liền kề hợp lệ dài nhất. 
+Bất biến là sau khi xử lý vị trí (i),`current`chính xác là độ dài của chuỗi con hợp lệ dài nhất kết thúc ở vị trí (i). Nếu ranh giới mới là`RB`hoặc`BR`, việc thêm ký tự hiện tại sẽ duy trì tính hợp lệ, do đó lần chạy trước sẽ kéo dài thêm một ký tự. Đối với mọi ranh giới khác, không có chuỗi con hợp lệ nào có độ dài ít nhất là hai có thể vượt qua ranh giới đó, do đó, chuỗi con hợp lệ duy nhất kết thúc ở vị trí hiện tại có độ dài bằng một. Việc lấy mức tối đa của các độ dài kết thúc này sẽ xem xét mọi chuỗi con hợp lệ có thể có chính xác ở nơi nó kết thúc, do đó mức tối đa cuối cùng là mức tối ưu toàn cục. 
 
 ## Giải pháp Python```python
 import sys
@@ -102,140 +84,152 @@ def solve():
     n = int(input())
     s = input().strip()
 
-    ans = 1
-    cur = 1
+    best = 1
+    current = 1
 
     for i in range(1, n):
         if s[i] in "RB" and s[i - 1] in "RB" and s[i] != s[i - 1]:
-            cur += 1
+            current += 1
         else:
-            cur = 1
+            current = 1
 
-        if cur > ans:
-            ans = cur
+        if current > best:
+            best = current
 
-    print(ans)
+    print(best)
 
 if __name__ == "__main__":
     solve()
-```Đầu vào được đọc với`readline`, quá đủ cho một chuỗi có độ dài (250.000). Bản thân chuỗi đó được lưu trữ một lần.`cur`đại diện cho hậu tố hợp lệ kết thúc ở vị trí hiện tại. điều kiện```
+```Đầu vào được đọc bằng cách sử dụng`sys.stdin.readline`, đủ cho một chuỗi có độ dài (250.000) và tránh chi phí đầu vào không cần thiết.`current`lưu trữ độ dài của hậu tố xen kẽ hợp lệ kết thúc ở vị trí hiện tại. điều kiện```
 s[i] in "RB" and s[i - 1] in "RB" and s[i] != s[i - 1]
-```kiểm tra chính xác xem cặp liền kề mới có phải là`RB`hoặc`BR`. Kiểm tra tư cách thành viên trong`RB`là cần thiết bởi vì`V`không thể xuất hiện trong chuỗi con hợp lệ có độ dài lớn hơn một. 
+```kiểm tra chính xác xem ranh giới giữa các vị trí`i - 1`Và`i`được cho phép. Cả hai ký tự phải không phải là`V`, và chúng phải khác nhau. Vì bảng chữ cái chỉ chứa`R`,`B`, Và`V`, điều này tương đương với việc nói rằng cặp này là`RB`hoặc`BR`. 
 
-Khi điều kiện thất bại,`cur`trở thành`1`còn hơn là`0`. Điều này xử lý cả nghỉ giải lao thông thường như`BB`và trường hợp đặc biệt của`V`. Viên ngọc hiện tại luôn có thể tự bắt đầu một chuỗi con hợp lệ mới. 
+Khi điều kiện không thành công,`current`trở thành`1`, còn hơn là`0`. Bản thân viên ngọc hiện tại luôn là một hạt một viên ngọc hợp lệ, ngay cả khi nó`V`. 
 
-Không có vấn đề tràn số nguyên trong Python và`cur`không bao giờ vượt quá (N). Quá trình quét bắt đầu tại chỉ mục`1`, do đó quyền truy cập ký tự trước đó luôn nằm trong chuỗi. 
+Câu trả lời được khởi tạo thành`1`bởi vì (N \ge 1). Điều này cũng xử lý tất cả-`V`trường hợp không có chi nhánh đặc biệt. Không thể tràn số nguyên trong Python và đối tượng có kích thước đầu vào được lưu trữ duy nhất là chính chuỗi đó. 
 
 ## Ví dụ đã hoạt động 
 
 ### Mẫu 1 
 
-Đầu vào là:```
-4
-RBBB
-```Trạng thái quan trọng là độ dài dòng điện xoay chiều`R/B`hậu tố. 
+Đầu vào là`RBBB`. Sự chuyển đổi liền kề hợp lệ duy nhất là giữa các`R`Và`B`nhân vật. Sau lần đầu tiên`B`, tiếp theo`B`ngắt quãng chạy xen kẽ và phần còn lại`B`lại phá vỡ nó lần nữa. 
 
-| Vị trí | Nhân vật | Trước | Cặp hợp lệ? |`cur`|`ans`| 
+| Vị trí | Nhân vật | Trước | Chuyển đổi hợp lệ | Hiện tại | Tốt nhất | 
 | --- | --- | --- | --- | --- | --- | 
-| 0 | R | - | - | 1 | 1 | 
-| 1 | B | R | Có | 2 | 2 | 
-| 2 | B | B | Không | 1 | 2 | 
-| 3 | B | B | Không | 1 | 2 | 
+| 0 | R | không | bắt đầu | 1 | 1 | 
+| 1 | B | R | vâng | 2 | 2 | 
+| 2 | B | B | không | 1 | 2 | 
+| 3 | B | B | không | 1 | 2 | 
 
-Hai viên ngọc đầu tiên hình thành`RB`, giá trị này đúng cho mọi người quan sát. Tiếp theo`B`tạo ra`BB`, do đó trình tự xen kẽ phải bắt đầu lại ở đó. Câu trả lời là`2`. 
+Chuỗi con`RB`có độ dài bằng hai và thỏa mãn mọi người quan sát. Chuỗi con không còn hoạt động vì mọi chuỗi con chứa hai chuỗi con liên tiếp`B`đồ trang sức vi phạm yêu cầu của người quan sát bình thường. Câu trả lời là`2`. 
 
 ### Mẫu 2 
 
-Đầu vào là:```
-5
-RBRBB
-```| Vị trí | Nhân vật | Trước | Cặp hợp lệ? |`cur`|`ans`| 
-| --- | --- | --- | --- | --- | --- | 
-| 0 | R | - | - | 1 | 1 | 
-| 1 | B | R | Có | 2 | 2 | 
-| 2 | R | B | Có | 3 | 3 | 
-| 3 | B | R | Có | 4 | 4 | 
-| 4 | B | B | Không | 1 | 4 | 
+Đầu vào là`RBRBB`. Bốn ký tự đầu tiên tạo thành một sự xen kẽ`R/B`sự liên tiếp. trận chung kết`B`liền kề với người khác`B`, vì vậy nó bắt đầu một lần chạy mới. 
 
-Tiền tố`RBRB`hoàn toàn xen kẽ, cho chiều dài`4`. trận chung kết`B`không thể mở rộng nó vì nó tạo ra`BB`. Câu trả lời là do đó`4`. 
+| Vị trí | Nhân vật | Trước | Chuyển đổi hợp lệ | Hiện tại | Tốt nhất | 
+| --- | --- | --- | --- | --- | --- | 
+| 0 | R | không | bắt đầu | 1 | 1 | 
+| 1 | B | R | vâng | 2 | 2 | 
+| 2 | R | B | vâng | 3 | 3 | 
+| 3 | B | R | vâng | 4 | 4 | 
+| 4 | B | B | không | 1 | 4 | 
+
+Chuỗi con`RBRB`có độ dài bằng bốn và mọi cặp liền kề đều bằng`RB`hoặc`BR`. trận chung kết`BB`ranh giới ngăn chặn câu trả lời dài năm, vì vậy kết quả là`4`. 
 
 ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | (O(N)) | Mỗi viên ngọc được xử lý chính xác một lần sau viên ngọc đầu tiên. | 
-| Không gian | (O(N)) | Chuỗi đầu vào yêu cầu lưu trữ (O(N)); bản thân thuật toán sử dụng (O(1)) không gian bổ sung. | 
+| Thời gian | (O(N)) | Mỗi viên ngọc được xử lý một lần với công việc liên tục. | 
+| Không gian | (O(N)) | Chuỗi đầu vào yêu cầu bộ nhớ (O(N)), trong khi bản thân thuật toán sử dụng không gian bổ sung (O(1)). | 
 
-Với (N \le 250.000), thuật toán chỉ thực hiện một số thao tác có thời gian không đổi cho mỗi ký tự. Điều này nằm trong giới hạn một giây một cách thoải mái, trong khi các phương pháp bậc hai sẽ yêu cầu hàng tỷ lần lặp trong trường hợp xấu nhất. 
+Với (N) nhiều nhất (250.000), quá trình quét chỉ thực hiện một số thao tác liên tục trong thời gian cho mỗi ký tự. Điều này dễ dàng tương thích với giới hạn thời gian 1 giây, trong khi mức sử dụng bộ nhớ thấp hơn nhiều so với giới hạn 1024 MB. 
 
 ## Trường hợp thử nghiệm```python
 import sys
 import io
 
-def solution(inp: str) -> str:
-    old_stdin = sys.stdin
-    sys.stdin = io.StringIO(inp)
-
+def solve():
+    input = sys.stdin.readline
     n = int(input())
     s = input().strip()
 
-    ans = 1
-    cur = 1
+    best = 1
+    current = 1
 
     for i in range(1, n):
         if s[i] in "RB" and s[i - 1] in "RB" and s[i] != s[i - 1]:
-            cur += 1
+            current += 1
         else:
-            cur = 1
+            current = 1
 
-        ans = max(ans, cur)
+        best = max(best, current)
 
-    sys.stdin = old_stdin
-    return str(ans)
+    print(best)
+
+def run(inp: str) -> str:
+    old_stdin = sys.stdin
+    old_stdout = sys.stdout
+
+    sys.stdin = io.StringIO(inp)
+    sys.stdout = io.StringIO()
+
+    try:
+        solve()
+        return sys.stdout.getvalue().strip()
+    finally:
+        sys.stdin = old_stdin
+        sys.stdout = old_stdout
 
 # Provided samples
-assert solution("4\nRBBB\n") == "2", "sample 1"
-assert solution("5\nRBRBB\n") == "4", "sample 2"
+assert run("4\nRBBB\n") == "2", "sample 1"
+assert run("5\nRBRBB\n") == "4", "sample 2"
 
 # Minimum-size input
-assert solution("1\nV\n") == "1", "single V is always valid"
+assert run("1\nV\n") == "1", "single V"
 
 # All equal values
-assert solution("5\nRRRRR\n") == "1", "equal adjacent colors are invalid"
+assert run("5\nRRRRR\n") == "1", "all equal"
 
-# V cannot be part of a multi-character valid substring
-assert solution("5\nRVBRB\n") == "4", "longest valid part is BRBR"
+# V cannot participate in a valid substring of length > 1
+assert run("3\nRVB\n") == "1", "V blocks both neighboring transitions"
 
 # Maximum-size input
-assert solution("250000\n" + "RB" * 125000 + "\n") == "250000", \
-    "entire maximum-length alternating string is valid"
+n = 250000
+s = "".join("R" if i % 2 == 0 else "B" for i in range(n))
+assert run(f"{n}\n{s}\n") == str(n), "maximum alternating string"
+
+# Boundary and off-by-one case
+assert run("6\nBRBBRB\n") == "3", "longest run is BRB"
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`1\nV\n`|`1`| Kích thước tối thiểu và thực tế là một`V`hợp lệ | 
-|`5\nRRRRR\n`|`1`| Lặp đi lặp lại các màu bằng nhau phải phá vỡ trình tự | 
-|`5\nRVBRB\n`|`4`|`V`không thể thuộc về một chuỗi con hợp lệ có độ dài lớn hơn một | 
-|`250000\n`theo sau là`RB`lặp lại 125000 lần |`250000`| Kích thước đầu vào tối đa và trường hợp ranh giới có độ dài đầy đủ | 
+|`1 / V`| 1 | Kích thước tối thiểu và thực tế là một`V`hợp lệ | 
+|`5 / RRRRR`| 1 | Các màu lặp lại không thể tạo thành một cặp liền kề hợp lệ | 
+|`3 / RVB`| 1 |`V`không thể ở cạnh một trong hai`R`hoặc`B`| 
+|`250000 / RBRB...`| 250000 | Kích thước đầu vào tối đa và lần chạy đạt tới chuỗi đầy đủ | 
+|`6 / BRBBRB`| 3 | Khởi động lại sau một ranh giới không hợp lệ và tránh từng lỗi một | 
 
 ## Vỏ cạnh 
 
-Đối với hộp đựng một viên ngọc```
+Đối với một viên ngọc duy nhất, hãy xem xét đầu vào```
 1
 V
-```vòng lặp không thực thi vì không có cặp liền kề.`ans`bắt đầu lúc`1`, do đó thuật toán in`1`. Đây là lý do tại sao việc khởi tạo câu trả lời về 0 cũng sẽ chỉ hoạt động nếu việc triển khai xử lý riêng việc quét trống, trong khi việc khởi tạo được chọn tự nhiên phù hợp với đảm bảo của vấn đề rằng (N \ge 1). 
+```Không có cặp liền kề nào cả, vì vậy mọi người quan sát đều coi hạt đó là hợp lệ. Thuật toán bắt đầu`current`Và`best`Tại`1`và không bao giờ đi vào vòng lặp, tạo ra`1`. 
 
 Đối với một chuỗi con chứa`V`, coi như```
-4
-RVBR
-```Tại vị trí`1`, cặp`RV`không hợp lệ, vì vậy`cur`trở thành`1`. Tại vị trí`2`, cặp`VB`cũng không hợp lệ, vì vậy`cur`còn lại`1`. Tại vị trí`3`,`BR`là hợp lệ, vì vậy`cur`trở thành`2`. Câu trả lời là`2`, tương ứng với chuỗi con cuối cùng`BR`. Điều này chứng tỏ rằng`V`không chỉ đơn thuần là dấu phân cách giữa hai chuỗi mà còn không thể tham gia vào chuỗi con hợp lệ nhiều viên ngọc. 
+3
+RVB
+```Ở vị trí một, cặp`RV`không hợp lệ vì người mù màu đỏ coi nó như hai viên ngọc màu đỏ. Thuật toán đặt lại lần chạy thành`1`. Ở vị trí thứ hai,`VB`không hợp lệ vì lý do mù màu xanh tương tự, vì vậy việc chạy vẫn được giữ nguyên`1`. Kết quả là`1`. 
 
-Đối với màu sắc lặp đi lặp lại,```
+Đối với màu sắc lặp đi lặp lại, hãy xem xét```
 5
 RRRRR
-```mỗi cặp liền kề là`RR`. Mỗi cặp thất bại xen kẽ`R/B`điều kiện, vậy`cur`liên tục đặt lại thành`1`. Còn lại tối đa`1`, điều này đúng vì bất kỳ chuỗi con nào có độ dài ít nhất là hai đều chứa các viên ngọc màu đỏ liền kề bằng nhau. 
+```đầu tiên`R`tạo ra một chuỗi có chiều dài một. Mỗi lần tiếp theo`R`bằng ký tự trước đó, do đó mọi chuyển đổi đều không hợp lệ và quá trình chạy liên tục được đặt lại về một ký tự. Câu trả lời là`1`. 
 
-Đối với ranh giới nơi chuỗi dài nhất kết thúc,```
-5
-BRBRB
-```mỗi cặp đều hợp lệ.`cur`tiến triển thông qua`1, 2, 3, 4, 5`, Và`ans`đạt tới`5`. Không có cách xử lý cuối chuỗi đặc biệt nào vì câu trả lời được cập nhật trong khi xử lý ký tự cuối cùng. 
+Đối với một hạt xen kẽ hoàn toàn, hãy xem xét```
+6
+RBRBRB
+```Mọi ranh giới đều là`RB`hoặc`BR`, Vì thế`current`tăng từ`1`bởi vì`6`. Tối đa trở thành`6`, cho thấy thuật toán không áp đặt bất kỳ hạn chế không cần thiết nào đối với độ dài của một đoạn xen kẽ`R/B`sự liên tiếp. 
 
-Đối với đầu vào xen kẽ kích thước tối đa, bao gồm`250000`các ký tự trong mẫu`RBRB...`, mọi cặp liền kề đều là`RB`hoặc`BR`. Do đó chiều dài hiện tại đạt tới`250000`và thuật toán trả về toàn bộ hạt. Điều này xác nhận rằng quá trình quét tuyến tính xử lý đầu vào lớn nhất được phép mà không có bất kỳ logic trường hợp đặc biệt nào.
+Trường hợp ranh giới`BRBBRB`rất hữu ích để bắt từng lỗi một. Quá trình quét tạo ra độ dài chạy`1, 2, 1, 1, 2, 3`, vậy câu trả lời là`3`, được biểu thị bằng chuỗi con cuối cùng`BRB`. Việc triển khai bất cẩn cập nhật mức tối đa trước khi đặt lại hoặc so sánh sai cặp chỉ số có thể báo cáo không chính xác`2`hoặc`4`.

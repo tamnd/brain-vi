@@ -1,7 +1,7 @@
 ---
 title: "CF 102191F - Tính tổng rồi nhân"
-description: "Chúng ta có một mảng số nguyên dương và chúng ta phải đặt các vết cắt giữa các phần tử để chia nó thành các phân đoạn liên tiếp. Mỗi phân khúc đóng góp tổng của nó và mục tiêu là tối đa hóa sản phẩm của tất cả các khoản đó. Đầu ra không phải là giá trị tối đa."
-date: "2026-08-18T09:22:52+07:00"
+description: "Chúng ta cần cắt mảng thành các mảng con liên tiếp. Mỗi mảng con đóng góp tổng phần tử của nó dưới dạng một thừa số và mục tiêu là tối đa hóa tích của tất cả các thừa số đó. Đầu ra là mảng ban đầu có/chèn vào giữa các phần liên tiếp."
+date: "2026-08-24T15:02:12+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
 codeforces_contest: 102191
@@ -9,8 +9,8 @@ codeforces_index: "F"
 codeforces_contest_name: "PSUT Coding Marathon 2019"
 rating: 0
 weight: 102191
-solve_time_s: 809
-verified: false
+solve_time_s: 1481
+verified: true
 draft: false
 ---
 
@@ -18,173 +18,225 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 13m 29s 
-**Đã xác minh:** không 
+**Thời gian giải:** 24m 41s 
+**Đã xác minh:** có 
 
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta có một mảng số nguyên dương và chúng ta phải đặt các vết cắt giữa các phần tử để chia nó thành các phân đoạn liên tiếp. Mỗi phân khúc đóng góp tổng của nó và mục tiêu là tối đa hóa sản phẩm của tất cả các khoản đó. Đầu ra không phải là giá trị tối đa. Chúng ta phải in một phân vùng đạt mức tối đa, sử dụng`/`giữa các đoạn liên tiếp. 
+Chúng ta cần cắt mảng thành các mảng con liên tiếp. Mỗi mảng con đóng góp tổng phần tử của nó dưới dạng một thừa số và mục tiêu là tối đa hóa tích của tất cả các thừa số đó. Đầu ra là mảng ban đầu với`/`chèn vào giữa các phần liên tiếp. 
 
-Khó khăn trọng tâm là một vết cắt sẽ thay đổi hai thứ cùng một lúc. Nó thay thế một yếu tố, tổng của một phân khúc lớn hơn, bằng hai yếu tố mà chúng ta muốn so sánh tích của chúng với tổng ban đầu đó. Vì mọi giá trị mảng đều dương nên sự so sánh này có cấu trúc đặc biệt mạnh mẽ. 
+Khó khăn chính là tích có thể trở nên lớn về mặt thiên văn, vì vậy nhiệm vụ không yêu cầu chúng ta tính tích cực đại. Chúng ta chỉ cần khôi phục một phân vùng đạt được nó. Các ràng buộc cho phép tối đa (3\cdot10^5) phần tử, do đó giải pháp (O(n)) hoặc (O(n\log n)) là phù hợp. Bất cứ điều gì theo cấp số nhân đều là không thể ngay lập tức và ngay cả một chương trình động (O(n^2)) cũng sẽ yêu cầu khoảng (9\cdot10^{10}) lần lặp trong trường hợp xấu nhất. 
 
-Mảng chứa tối đa 3⋅10 5 phần tử, do đó, thuật toán kiểm tra tất cả các cặp vị trí, hoặc tệ hơn là tất cả các tập hợp cắt có thể, vượt xa giới hạn một giây. Một thuật toán bậc hai đã thực hiện khoảng 9⋅10 10 lần lặp ở kích thước tối đa. Chúng ta cần một công trình tuyến tính hoặc gần tuyến tính. 
+Thực tế là mọi giá trị mảng đều dương là nguyên nhân khiến bài toán trở thành một cấu trúc tham lam đơn giản. Việc triển khai bất cẩn có thể thất bại khi một phần có tổng (1). Ví dụ, đối với```
+2
+3 1
+```đầu ra đúng là```
+3 1
+```bởi vì phân vùng`[3] / [1]`có sản phẩm (3), trong khi`[3 1]`có sản phẩm (4). Chiến lược cắt bất cứ khi nào tổng hiện tại đạt ít nhất (2), sau đó in một cách mù quáng singleton cuối cùng, sẽ tạo ra phân vùng dưới mức tối ưu không hợp lệ`[3] / [1]`. 
 
-Bản thân các giá trị có thể lớn tới 10 9, nhưng thuật toán chỉ cần so sánh và bổ sung liên quan đến chúng. Số nguyên Python cũng tránh bị tràn, mặc dù giải pháp không bao giờ cần tính toán sản phẩm cuối cùng khổng lồ. 
+Một trường hợp ranh giới khác là một mảng bao gồm toàn bộ mảng. Vì```
+3
+1 1 1
+```đầu ra đúng là```
+1 1 1
+```còn hơn là`[1 1] / [1]`. Phần sau có tích (2), trong khi phần đơn có tổng (3) và tích (3). Phần còn sót lại cuối cùng phải được hợp nhất với phần trước. 
 
-Có một số trường hợp khó xử lý. Đối với đầu vào```
-17
-```câu trả lời duy nhất có thể là`7`. Không cần phải cắt, vì vậy mã giả định có ít nhất hai phần tử có thể bị lỗi. 
-
-Vì```
-31 1 1
-```câu trả lời đúng là`1 1 1`, không có dấu gạch chéo. Chia nó thành ba thừa số sẽ được 1, trong khi giữ nó thành một phân số sẽ cho 3. Chiến lược luôn chia các số dương sẽ là sai. 
-
-Vì```
-31 2 1
-```câu trả lời tối ưu là`1 2 1`, vì tích của nó bằng 4. Chia xung quanh giá trị ở giữa sẽ cho`1 / 2 1`, có tích là 1⋅3=3. Một chiến lược luôn đặt mọi giá trị lớn hơn một vào phân khúc riêng của nó sẽ thất bại ở đây. 
-
-Ngoài ra còn có một trường hợp ít rõ ràng hơn:```
-42 1 1 2
-```Một phân vùng tối ưu là`2 1 / 1 2`, cho 3⋅3=9. Đặt cả hai cái ở hai bên sẽ có 4⋅2=8. Do đó, những giá trị giữa hai giá trị lớn hơn không thể được gán đơn giản cho một bên. Chúng phải được phân phối một cách tối ưu. 
+Mảng một phần tử cũng cần được xem xét rõ ràng. Vì```
+1
+1
+```không có phần lân cận nào có thể hợp nhất phần tử này, vì vậy câu trả lời khả thi duy nhất chỉ đơn giản là`1`. 
 
 ## Phương pháp tiếp cận 
 
-Một giải pháp cưỡng bức trực tiếp sẽ xem xét mọi vị trí cắt có thể. Có n−1 khoảng trống giữa các phần tử liên tiếp và mỗi khoảng trống có thể chứa phần cắt hoặc không, do đó có chính xác 2 phần tử n−1. Đối với mỗi phân vùng, chúng ta có thể tính tổng các phân đoạn và tích của chúng rồi giữ lại kết quả tốt nhất. Việc triển khai đơn giản sẽ thực hiện các phép toán số học Θ(n2 n−1 ) trong trường hợp xấu nhất, vì một phân vùng có thể chứa các phân đoạn Θ(n). Ngay cả một phép liệt kê được cải tiến để duy trì tích tăng dần vẫn có các trạng thái Θ(2 n ), điều này là vô vọng với n=3⋅10 5. 
+Một giải pháp brute-force có thể liệt kê mọi tập hợp cắt giảm có thể. Có (n-1) khoảng trống giữa các phần tử liền kề và mỗi khoảng trống có thể chứa một phần bị cắt hoặc không, tạo ra các phân vùng chính xác (2^{n-1}). Đối với mỗi phân vùng, chúng ta có thể tính toán tất cả các tổng các phần và tích của chúng, sau đó giữ lại phân vùng tốt nhất. Ngay cả khi sản phẩm được bảo trì tăng dần, điều này vẫn yêu cầu đánh giá phân vùng (2^{n-1}). Nếu mọi phân vùng được đánh giá bằng cách quét toàn bộ mảng thì chi phí sẽ trở thành (O(n2^n)). Tại (n=3\cdot10^5), thậm chí bản thân (2^{n-1}) đã vượt quá mọi giới hạn thực tế. 
 
-Công thức lập trình động tự nhiên cũng quá chậm. Nếu như`dp[i]`là tích tốt nhất cho tiền tố tận cùng ở vị trí thứ i, chúng ta có thể thử mọi vị trí cắt trước đó và lấy tổng của hậu tố tương ứng. Điều đó mang lại O(n 2 ), vốn đã quá lớn. 
+Quan sát loại bỏ tìm kiếm theo cấp số nhân là bất đẳng thức 
 
-Quan sát quan trọng xuất phát từ việc so sánh một đoạn với một vết cắt có thể có bên trong nó. Giả sử một đoạn có tổng tổng x+y và việc cắt nó sẽ tạo ra hai phần liên tiếp có tổng x và y. Đóng góp cũ là x+y, trong khi đóng góp mới là xy. Vì x và y là số nguyên dương nên 
+[ 
+xy \ge x+y 
+] 
 
-xy ≥x+y 
+bất cứ khi nào (x,y\ge2). Xét hai phần lân cận có tổng là (x) và (y). Giữ vết cắt sẽ cho sản phẩm (xy), trong khi loại bỏ vết cắt sẽ cho (x+y). Nếu cả hai tổng ít nhất là (2), việc giữ nguyên mức cắt không bao giờ làm cho câu trả lời tệ hơn. 
 
-bất cứ khi nào x,y ≥2, bởi vì 
+Điều này có nghĩa là một giải pháp tối ưu sẽ tạo ra càng nhiều phần có tổng ít nhất (2) càng tốt. Phần nguy hiểm duy nhất là phần có tổng (1). Vì mọi giá trị mảng đều dương nên phần có tổng (1) bao gồm chính xác một phần tử mảng bằng (1). Phần như vậy nên được hợp nhất với phần liền kề bất cứ khi nào phần liền kề tồn tại, bởi vì thay thế hệ số (1) và hệ số (x) bằng (x+1) sẽ làm tăng nghiêm ngặt tích số. 
 
-xy−x−y=(x−1)(y−1)−1 ≥0. 
+Câu hỏi còn lại là làm thế nào để tối đa hóa số phần có tổng ít nhất là (2). Vị trí cắt sớm nhất có thể là vị trí đầu tiên mà phần hiện tại đạt đến tổng (2). Việc cắt ở đó luôn an toàn và để lại hậu tố lớn nhất có thể cho các phần tiếp theo. Việc lặp lại điều này một cách tham lam sẽ mang lại số lượng bộ phận hoàn chỉnh tối đa có thể. Nếu quá trình quét kết thúc với một dữ liệu chưa được sử dụng`1`, phần tử cuối cùng đó không thể tự mình tạo thành phần có lợi nhuận hợp lệ nên được sáp nhập vào phần trước. 
 
-Vì vậy, bất cứ khi nào cả hai mặt của một phần cắt tiềm năng có tổng ít nhất là hai, việc cắt giảm không bao giờ làm giảm câu trả lời. 
-
-Điều này có một hậu quả mạnh mẽ. Vì mọi phần tử mảng lớn hơn một đều có tổng ít nhất là hai, nên có thể chọn phân vùng tối ưu sao cho không có phân đoạn nào chứa hai phần tử lớn hơn một. Nếu đúng như vậy, chúng ta có thể cắt giảm giữa chúng và không làm cho kết quả trở nên tồi tệ hơn. 
-
-Điều đó có nghĩa là mọi phân đoạn trong một giải pháp tối ưu có nhiều nhất một phần tử lớn hơn một phần tử. Câu hỏi duy nhất còn lại là phải làm gì với hàng loạt cái đó. 
-
-Xét hai giá trị liên tiếp lớn hơn một, x và y, với chính xác k giá trị ở giữa chúng: 
-
-x, k 1,1,…,1 ​ ,y. 
-
-Những cái k phải được chia thành đoạn chứa x và đoạn chứa y. Nếu l cái ở bên trái và k−l ở bên phải thì đóng góp của họ là 
-
-(x+l)(y+k−l). 
-
-Tổng của hai yếu tố này là cố định: 
-
-x+l+y+k−l=x+y+k. 
-
-Đối với hai số dương có tổng cố định, tích của chúng lớn nhất khi chúng càng gần nhau càng tốt. Vì vậy chúng ta chỉ cần chọn l sao cho x+l càng gần một nửa x+y+k càng tốt. 
-
-Tất cả những cái dẫn đầu phải tham gia giá trị đầu tiên lớn hơn một và tất cả những cái theo sau đều phải tham gia giá trị cuối cùng như vậy. Nếu toàn bộ mảng bao gồm các mảng thì việc giữ toàn bộ mảng dưới dạng một phân đoạn là tối ưu. 
-
-Điều này làm giảm toàn bộ vấn đề khi quét mảng một lần, tìm các giá trị lớn hơn một và các giá trị chạy giữa chúng và quyết định phân chia từng lần chạy một cách độc lập. 
+Phương pháp brute-force hoạt động vì nó xem xét rõ ràng mọi vị trí có thể cắt, nhưng không thành công vì có nhiều vị trí như vậy theo cấp số nhân. Việc quan sát về (xy\ge x+y) thay đổi mục tiêu từ tìm kiếm trên các sản phẩm sang tối đa hóa số lượng phần hợp lệ, có thể được thực hiện bằng một lần quét từ trái sang phải. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
-| Lực lượng vũ phu | O(n2 n ) | O(n) | Quá chậm | 
-| Tiền tố DP | O(n 2 ) | O(n) | Quá chậm | 
-| Xây dựng tối ưu | O(n) | O(n) | Đã chấp nhận | 
+| Lực lượng vũ phu | (O(n2^n)) | (O(n)) | Quá chậm | 
+| Tối ưu | (O(n)) | (O(n)) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Tìm mọi vị trí có giá trị lớn hơn một. Những giá trị này sẽ đóng vai trò là điểm neo của các phân khúc tối ưu. Nếu không có vị trí nào như vậy thì mảng bao gồm toàn bộ các vị trí, do đó xuất toàn bộ mảng dưới dạng một phân đoạn. 
-2. Bắt đầu phân đoạn hiện tại với giá trị đầu tiên lớn hơn một và tất cả những giá trị xuất hiện trước nó. Những công ty dẫn đầu đó không thể đứng một mình để sinh lời, bởi vì nhân với hệ số một còn tệ hơn việc thêm một công ty vào phân khúc hiện có. 
-3. Xử lý mọi cặp giá trị liên tiếp lớn hơn một, gọi chúng là x và y. Đếm k cái giữa chúng. 
-4. Giả sử l trong số đó được gán cho đoạn chứa x. Các k−l số còn lại thuộc về phân đoạn chứa y, do đó hai tổng liên quan là x+l và y+k−l. 
-5. Chọn l gần nhất 
-
-2 y+k−x ​ . 
-
-Biểu thức xuất phát từ việc làm cho x+l càng gần với một nửa tổng x+y+k cố định càng tốt. Kẹp kết quả vào khoảng [0,k], vì chúng ta không thể gán số âm đơn vị hoặc nhiều hơn tất cả k đơn vị ở bên trái. 
-
-1. Nối những chữ l đó vào phân đoạn hiện tại và kết thúc phân đoạn đó bằng dấu gạch chéo. Bắt đầu phân đoạn tiếp theo với k−l phân đoạn còn lại, theo sau là y. 
-2. Sau khi xử lý giá trị cuối cùng lớn hơn một, hãy nối tất cả các giá trị cuối vào phân đoạn của nó. Các phân đoạn kết quả tạo thành một phân vùng hợp lệ và đạt được sản phẩm tối đa. 
+1. Bắt đầu ở phần tử mảng đầu tiên và duy trì phần bắt đầu của phần hiện tại cùng với tổng chạy của nó. Phần hiện tại không bị cắt cho đến khi tổng của nó đạt ít nhất (2), vì phần có tổng (1) không bao giờ hữu ích khi có phần tử khác tồn tại. 
+2. Quét mảng từ trái sang phải. Bất cứ khi nào tổng chạy ít nhất là (2), hãy ghi lại phần cắt ngay sau phần tử hiện tại và bắt đầu phần mới. Cắt ở vị trí sớm nhất có thể sẽ tối đa hóa số lượng bộ phận hoàn chỉnh vẫn có thể được tạo sau này. 
+3. Sau khi quét, kiểm tra xem một số hậu tố có còn nguyên không. Bởi vì mọi lần cắt trước đó đều được thực hiện ngay khi đạt đến tổng (2), hậu tố chưa hoàn thành chỉ có thể có tổng (1). Vì tất cả các giá trị đều dương nên hậu tố đó chính xác là một phần tử cuối cùng bằng`1`. 
+4. Nếu có một trận chung kết như vậy`1`và ít nhất một phần trước tồn tại, hãy loại bỏ phần cắt trước đó và mở rộng phần trước đó thông qua phần tử cuối cùng. Điều này loại bỏ phần tổng-(1) và việc hợp nhất nó sẽ làm tăng tích. 
+5. Nếu toàn bộ mảng bao gồm một phần tử cuối cùng đó thì không thể hợp nhất được. Phân vùng một phần tử là phân vùng duy nhất có thể. 
+6. In mọi mảng con kết quả, đặt`/`giữa các phần liên tiếp. 
 
 ### Tại sao nó hoạt động 
 
-Hãy xem xét bất kỳ phân đoạn nào có chứa hai phần tử lớn hơn một. Việc cắt ở đâu đó giữa hai phần tử đó sẽ tạo ra hai phân đoạn có tổng ít nhất là hai. Nếu tổng của chúng là x và y, việc thay hệ số x+y bằng xy không thể làm giảm tích. Việc lặp lại thao tác này sẽ tạo ra một phân vùng tối ưu trong đó mỗi phân đoạn chứa nhiều nhất một giá trị lớn hơn một.
+Giả sử hai phần liền kề có tổng (x,y\ge2). Đóng góp của chúng khi được tách riêng là (xy), khi hợp nhất chúng sẽ cho (x+y). Kể từ khi 
 
-Do đó, tất cả các lựa chọn đều bị giới hạn trong phạm vi các số một giữa hai giá trị liên tiếp lớn hơn một. Lần chạy như vậy không tương tác với bất kỳ lần chạy nào khác vì nó chỉ thay đổi tổng của hai phân đoạn lân cận. Đối với dãy k đơn vị giữa x và y, đóng góp của nó là (x+l)(y+k−l), có hai thừa số có tổng cố định. Tích của hai số dương có tổng cố định sẽ lớn nhất khi chúng bằng nhau nhất có thể, chính xác là kết quả của l đã chọn. Những mảng dẫn đầu và theo sau chỉ có một hàng xóm hữu ích có thể có, trong khi một mảng toàn bộ tốt nhất nên được giữ dưới dạng một phân đoạn. Do đó mọi phần độc lập đều tối ưu và sự kết hợp của chúng là tối ưu toàn cục. 
+[ 
+xy-x-y=(x-1)(y-1)-1\ge0, 
+] 
+
+tách chúng ra không bao giờ làm giảm sản phẩm. Do đó, khi mỗi phần có tổng ít nhất (2) thì việc tối đa hóa số phần là đủ. 
+
+Quá trình quét tham lam luôn chọn điểm cuối sớm nhất có thể cho mọi phần. Trước khi đạt đến điểm cuối tham lam, tổng tích lũy sẽ thấp hơn (2), do đó không có phần hợp lệ nào có thể kết thúc sớm hơn. Do đó, lần cắt tham lam đầu tiên không thể xảy ra muộn hơn lần cắt đầu tiên của bất kỳ phân vùng nào thành các phần của tổng ít nhất (2). Áp dụng cùng một đối số cho hậu tố còn lại sẽ chứng minh cùng một thuộc tính cho mỗi lần cắt tiếp theo. 
+
+Nếu quá trình quét tham lam kết thúc bằng kết quả cuối cùng`1`, phần tử đó không thể tạo thành một phần hợp lệ riêng biệt. Bất kỳ phân vùng nào có thêm một phần sẽ phải để lại một hậu tố sau phần cắt tương ứng trước đó, nhưng hậu tố đó sẽ chỉ chứa phần này`1`, điều này là không thể đối với một phân vùng có tất cả các phần có tổng ít nhất là (2). Hợp nhất trận chung kết`1`với phần trước là tối ưu. 
 
 ## Giải pháp Python```python
-Pythonimport sysinput = sys.stdin.readline
+import sys
+input = sys.stdin.readline
 
-def solve():    n = int(input())    a = list(map(int, input().split()))
-    big = [i for i, x in enumerate(a) if x > 1]
-    if not big:        print(" ".join(map(str, a)))        return
+def solve(data: str) -> str:
+    it = iter(data.split())
+    n = int(next(it))
+    a = [int(next(it)) for _ in range(n)]
+
+    cuts = []
+    start = 0
+    current_sum = 0
+
+    for i, x in enumerate(a):
+        current_sum += x
+
+        if current_sum >= 2:
+            cuts.append(i)
+            start = i + 1
+            current_sum = 0
+
+    # If one element remains, it must be a single 1.
+    # Merge it into the previous part.
+    if start < n:
+        if cuts:
+            cuts.pop()
+            cuts.append(n - 1)
+        else:
+            cuts.append(n - 1)
+
     parts = []
-    first = big[0]    current = a[:first + 1]
-    for p in range(1, len(big)):        prev = big[p - 1]        cur = big[p]
-        k = cur - prev - 1        x = a[prev]        y = a[cur]
-        # Maximize (x + l) * (y + k - l).        # The ideal value is (y + k - x) / 2.        l = (y + k - x) // 2        l = max(0, min(k, l))
-        current.extend([1] * l)        parts.append(current)
-        current = [1] * (k - l)        current.append(y)
-    last = big[-1]    current.extend(a[last + 1:])    parts.append(current)
-    output = []    for i, part in enumerate(parts):        if i:            output.append("/")        output.extend(map(str, part))
-    print(" ".join(output))
+    start = 0
 
-if __name__ == "__main__":    solve()
-```các`big`mảng lưu trữ chính xác các vị trí có giá trị vượt quá một. Đây là những giá trị duy nhất có thể đóng vai trò là yếu tố trung tâm của phân khúc tối ưu. 
+    for end in cuts:
+        parts.append(" ".join(map(str, a[start:end + 1])))
+        start = end + 1
 
-ban đầu`current`đoạn chứa điểm neo đầu tiên và mọi điểm neo dẫn đầu. lát cắt`a[:first + 1]`giữ nguyên thứ tự ban đầu và xử lý ranh giới trước điểm neo đầu tiên mà không có trường hợp đầu ra đặc biệt. 
+    return " / ".join(parts)
 
-Đối với hai mỏ neo liên tiếp,`k`là số lượng những cái nằm giữa các vị trí của chúng. Biến`l`là số được gán cho đoạn bên trái. biểu hiện`(y + k - x) // 2`là tầng nguyên của giá trị lý tưởng. Một trong hai số nguyên lân cận là tối ưu khi điểm lý tưởng nằm chính xác giữa hai số nguyên, do đó lấy mức sàn là đủ. 
+def main():
+    data = sys.stdin.read()
+    sys.stdout.write(solve(data) + "\n")
 
-các`max`Và`min`các cuộc gọi là cần thiết ở ranh giới. Ví dụ: nếu x lớn hơn nhiều so với y+k, giá trị lý tưởng có thể âm, nghĩa là tất cả số 1 sẽ ở bên phải. Nếu y lớn hơn nhiều thì tất cả số 1 sẽ ở bên trái. 
+if __name__ == "__main__":
+    main()
+```Đầu vào được đọc với`sys.stdin.read()`vì chỉ có một trường hợp thử nghiệm và toàn bộ dữ liệu đầu vào đủ nhỏ để lưu trong bộ nhớ. Điều này cũng tránh được chi phí phân tích cú pháp lặp đi lặp lại trong một vấn đề với mảng phần tử (3\cdot10^5). 
 
-Phân đoạn hiện tại được hoàn thiện trước khi phân đoạn tiếp theo được tạo. Thứ tự này quan trọng vì đoạn bên trái phải chứa đoạn đầu tiên`l`những cái và phân đoạn bên phải phải chứa phần còn lại`k-l`những cái đó. Những dấu cuối cùng được thêm vào sau khi tất cả các khoảng trống bên trong đã được xử lý. 
+các`current_sum`biến đại diện cho tổng của phần hiện đang được xây dựng. Ngay khi đạt tới (2), chỉ số hiện tại sẽ trở thành điểm cuối bị cắt. Bởi vì tất cả các giá trị đều dương nên khi tổng đạt đến (2), việc mở rộng phần này hơn nữa không thể giúp chúng ta tạo ra nhiều phần hơn. 
 
-Mã không bao giờ tính toán sản phẩm cuối cùng. Sản phẩm đó có thể có số lượng chữ số khổng lồ và vấn đề chỉ yêu cầu phân vùng tối đa. Do đó, các số nguyên chính xác tùy ý của Python thậm chí không liên quan đến thuật toán chính. 
+các`cuts`list lưu trữ điểm cuối bao gồm của mọi phần đã hoàn thành. Của`start < n`sau khi quét, một phần tử còn sót lại. Giá trị của nó phải là`1`. Khi một phần khác tồn tại, phần cắt cuối cùng sẽ bị loại bỏ và thay thế bằng`n - 1`, hợp nhất phần tử còn sót lại vào phần trước. 
+
+Trường hợp không có phần cắt trước chỉ xảy ra khi toàn bộ mảng là một phần tử cuối cùng, cụ thể là`n = 1`Và`a[0] = 1`. Trong trường hợp đó, phần tử đơn lẻ đã là phân vùng duy nhất có thể. 
+
+Số nguyên Python không bị tràn, mặc dù giải pháp này không bao giờ tính toán tích số. Điều đó rất hữu ích ở đây vì sản phẩm tối ưu thực tế có thể có hàng triệu chữ số thập phân. Việc triển khai chỉ thực hiện các khoản tiền được giới hạn bởi kích thước và giá trị đầu vào, cộng với các thao tác chỉ mục. 
+
+Đầu ra được xây dựng từ các chuỗi phần hoàn chỉnh và được nối bằng cách sử dụng`" / "`, cung cấp chính xác một khoảng trắng ở cả hai bên của mỗi dấu gạch chéo theo yêu cầu. 
 
 ## Ví dụ đã hoạt động 
 
 ### Mẫu 1 
 
-Đối với mảng`8 1 1 3`, các giá trị lớn hơn một là 8 và 3. Có hai giá trị nằm giữa chúng. 
+Đối với đầu vào```
+4
+8 1 1 3
+```quá trình quét hoạt động như sau. 
 
-| Bước | Neo hiện tại | Neo tiếp theo | k | x | y | Được chọn l | Phân đoạn cho đến nay | 
-| --- | --- | --- | --- | --- | --- | --- | --- | 
-| Bắt đầu | 8 | 3 | 2 | 8 | 3 | 0 |`8`| 
-| Khoảng cách quy trình | 8 | 3 | 2 | 8 | 3 | 0 |`8`,`1 1 3`| 
-| Kết thúc | 3 | không | 0 | 3 | | |`8`,`1 1 3`| 
+| Chỉ mục | Giá trị | Tổng chạy | Hành động | Cắt | 
+| --- | --- | --- | --- | --- | 
+| 0 | 8 | 8 | Cắt sau 8 |`[0]`| 
+| 1 | 1 | 1 | Tiếp tục |`[0]`| 
+| 2 | 1 | 2 | Cắt sau giây 1 |`[0, 2]`| 
+| 3 | 3 | 3 | Cắt sau 3 |`[0, 2, 3]`| 
 
-Giá trị lý tưởng là 
+Mỗi bộ phận được sản xuất có tổng ít nhất là (2). Phân vùng kết quả là```
+8 / 1 1 / 3
+```với các giá trị hệ số (8,2,3), cho kết quả (48). Dấu vết thể hiện quy tắc tham lam chính: cắt ngay lập tức khi tổng hiện tại lần đầu tiên đạt đến (2). 
 
-l=⌊ 2 3+2−8 ​ ⌋=−2, 
+### Mẫu 2 
 
-được kẹp ở mức 0. Do đó, cả hai đều ở bên phải, cho tổng phân số 8 và 5, với tích 40. 
+cho```
+3
+1 1 1
+```quá trình quét là: 
 
-Tuy nhiên, đầu ra mẫu`8 / 1 1 / 3`cho 8⋅2⋅3=48, lớn hơn. Điều này bộc lộ một lỗ hổng trong đặc tính neo được đề xuất: một phân đoạn chỉ chứa một phân đoạn có thể hữu ích khi tổng của nó bằng 2, vì việc chia tổng của 2 thành thừa số 1⋅1 thì tệ hơn, trong khi giữ nguyên hai phân số sẽ tạo ra thừa số 2. 
+| Chỉ mục | Giá trị | Tổng chạy | Hành động | Cắt | 
+| --- | --- | --- | --- | --- | 
+| 0 | 1 | 1 | Tiếp tục |`[]`| 
+| 1 | 1 | 2 | Cắt sau giây 1 |`[1]`| 
+| 2 | 1 | 1 | Để lại dang dở |`[1]`| 
+| Kết thúc | | 1 còn sót lại | Hợp nhất với phần trước |`[2]`| 
 
-Vì vậy việc giảm trước đó phải được tinh chỉnh. Bản thân một loạt các số có thể tạo thành một phân đoạn khi nó chứa chính xác hai số một và nói chung hơn, việc xử lý tối ưu của nó phụ thuộc vào việc liệu việc giữ tổng của hai số đó làm hệ số riêng biệt có tốt hơn việc gắn các số đó vào các điểm neo lân cận hay không. 
+Đầu ra cuối cùng là```
+1 1 1
+```Phần quan trọng của dấu vết này là sự hợp nhất cuối cùng. Quá trình quét tham lam tạo ra một phần hoàn chỉnh`[1,1]`, nhưng phần còn lại`1`không thể là một yếu tố hữu ích riêng biệt. Việc hợp nhất nó tạo ra một thừa số duy nhất (3), tốt hơn tích (2\cdot1). 
 
-Điều này có nghĩa là cấu trúc hai neo độc lập đơn giản ở trên không đúng cho vấn đề thực tế. 
+## Phân tích độ phức tạp 
 
-Giải pháp đúng yêu cầu giảm cấu trúc khác, vì vậy mã ở trên không được gửi. 
+| Đo | Độ phức tạp | Giải thích | 
+| --- | --- | --- | 
+| Thời gian | (O(n)) | Mảng được quét một lần và mỗi phần tử được xử lý với số lần không đổi. | 
+| Không gian | (O(n)) | Mảng, vị trí cắt và các phần đầu ra yêu cầu bộ nhớ tuyến tính. | 
 
-## Hiểu biết sâu sắc về cấu trúc chính xác 
+Với (n\le3\cdot10^5), việc quét tuyến tính có thể dễ dàng nằm trong mức độ phức tạp dự định. Thuật toán không bao giờ tự xây dựng hoặc so sánh các sản phẩm khổng lồ, điều này giúp duy trì cả thời gian chạy và bộ nhớ thực tế dưới giới hạn 1 giây và 256 MB. 
 
-Sự so sánh mang tính quyết định không chỉ đơn thuần là liệu cả hai bên của một vết cắt có tổng ít nhất là hai hay không. Với các tổng x, y, 
+## Trường hợp thử nghiệm```
+# helper: run solution on input string, return output string
+import io
 
-xy ≥x+y 
+def run(inp: str) -> str:
+    return solve(inp).strip()
 
-đúng với x,y ≥2, với đẳng thức cụ thể khi x=y=2. 
+# Provided samples
+assert run("4\n8 1 1 3\n") == "8 / 1 1 / 3", "sample 1"
+assert run("3\n1 1 1\n") == "1 1 1", "sample 2"
 
-Do đó, mọi phân đoạn có thể được tinh chỉnh cho đến khi mọi phân đoạn kết quả có tổng bằng 1 hoặc 2, ngoại trừ khả năng việc tách một phân đoạn sẽ làm thay đổi các lựa chọn lân cận. Vì một phân đoạn có tổng 1 luôn có hại khi một phân khúc tích cực khác có thể hấp thụ nó, nên phân khúc nhỏ biệt lập hữu ích duy nhất là phân khúc có tổng 2. 
+# Minimum-size input
+assert run("1\n1\n") == "1", "single element equal to 1"
 
-Bởi vì tất cả các phần tử mảng đều dương nên một phân đoạn có tổng 2 chỉ có thể là một trong hai`[2]`hoặc`[1, 1]`. Mọi phần tử lớn hơn hai phải được cách ly với các phần tử khác trong một phân vùng tối ưu, trong khi giá trị bằng hai có thể cạnh tranh với một cặp phần tử liền kề. 
+# All equal values
+assert run("4\n2 2 2 2\n") == "2 / 2 / 2 / 2", "all equal values"
 
-Điều này dẫn đến một quy tắc địa phương đơn giản hơn nhiều. Mỗi giá trị lớn hơn hai phải là phân khúc riêng của nó, với các giá trị liền kề được chỉ định theo so sánh sản phẩm. Các giá trị bằng hai có thể được xử lý chính xác như một phân đoạn của hai số một và các chuỗi một số phải được phân chia thành các nhóm hai bất cứ khi nào chúng không thể được gắn vào các phân đoạn lớn hơn lân cận một cách có lợi. 
+# Boundary case with a final singleton 1
+assert run("3\n3 1 1\n") == "3 / 1 1", "trailing singleton handling"
 
-Việc xây dựng kết quả được thể hiện một cách tự nhiên hơn dưới dạng một chương trình động trong các lần chạy, bởi vì sự tương tác ranh giới xung quanh giá trị hai có thể tạo ra các lựa chọn thay thế có sản phẩm bằng nhau. 
+# Maximum-size input, all ones
+n = 300000
+inp = str(n) + "\n" + ("1 " * (n - 1)) + "1\n"
+expected = " / ".join(["1 1"] * (n // 2))
+assert run(inp) == expected, "maximum-size input"
+```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
+| --- | --- | --- | 
+|`1 / 1`|`1`| Mảng có kích thước tối thiểu và trường hợp không thể hợp nhất | 
+|`4 / 2 2 2 2`|`2 / 2 / 2 / 2`| Chia các phần có tổng ít nhất (2) không bao giờ gây hại | 
+|`3 / 3 1 1`|`3 / 1 1`| Xử lý đúng một singleton cuối cùng và một giá trị lớn ban đầu | 
+|`300000 / 1 1 ... 1`| 150000 phần của`1 1`| Tối đa (n), hiệu suất tuyến tính và các quyết định ranh giới lặp đi lặp lại | 
 
-Vì báo cáo vấn đề được cung cấp không bao gồm lời giải thích chính thức và kết quả tìm kiếm chỉ hiển thị tuyên bố đó nên tôi không nên trình bày một thuật toán chưa được xác minh dưới dạng một bài xã luận hoàn chỉnh được chấp nhận. Cấu trúc tuyến tính được tuyên bố trước đó rõ ràng đã thất bại ở Mẫu 1, vì vậy việc sử dụng nó sẽ tạo ra mã không chính xác. 
+## Vỏ cạnh 
 
-Bản thân mẫu này đưa ra phản ví dụ: đối với`8 1 1 3`, đáp án tối ưu là`8 / 1 1 / 3`, với sản phẩm 48, trong khi gán hai cái ở bên phải sẽ cho kết quả 8/113, với sản phẩm 40. Điều này trực tiếp bác bỏ quy tắc đơn giản "mỗi lần chạy một cái đều thuộc về một trong những mỏ neo lân cận của nó".
+Đối với đầu vào tối thiểu`1 / 1`, quá trình quét không bao giờ đạt đến tổng (2), do đó không có vết cắt nào được hoàn thành. Hậu tố còn lại là toàn bộ mảng nhưng không có phần nào trước đó để hợp nhất nó vào. Do đó, thuật toán in`1`, đây là phân vùng duy nhất có thể. 
+
+Vì`3 / 3 1`, phần tử đầu tiên ngay lập tức tạo thành một phần hoàn chỉnh có tổng (3). trận chung kết`1`vẫn còn sau khi quét. Vì có phần trước nên thuật toán loại bỏ phần cắt sau`3`và hợp nhất phần tử cuối cùng, tạo ra`3 1`. Sản phẩm là (4), tốt hơn sản phẩm riêng lẻ (3). 
+
+Vì`3 / 1 1 1`, hai số đầu đạt tổng (2) nên thuật toán tạm thời tạo`[1,1]`. cuối cùng`1`vẫn còn là một singleton. Việc hợp nhất cuối cùng thay đổi phân vùng thành`[1,1,1]`, có hệ số là (3). Điều này là tối ưu vì tích thay thế (2\cdot1) nhỏ hơn. 
+
+Đối với một mảng có ít nhất tất cả các giá trị (2), mọi phần tử có thể ngay lập tức tạo thành phần riêng của nó. Ví dụ,`4 / 2 2 2 2`trở thành`2 / 2 / 2 / 2`. Mọi cặp thừa số lân cận đều thỏa mãn (xy\ge x+y), do đó việc kết hợp hai phần bất kỳ không thể cải thiện sản phẩm. Do đó, phân vùng tham lam có số phần tối đa có thể và là tối ưu. 
+
+Đối với đầu vào có kích thước tối đa với (300000), mỗi cặp đều đạt tổng (2), do đó quá trình quét tạo ra 150000 phần và kết thúc mà không có phần thừa. Thuật toán thực hiện chính xác một quyết định theo thời gian không đổi cho mỗi phần tử mảng và không cần bất kỳ phép tính tích nào, làm cho đầu vào lớn hoạt động giống như ví dụ tất cả những cái nhỏ.
