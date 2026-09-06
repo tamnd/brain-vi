@@ -1,0 +1,26 @@
+---
+title: "CF 104542D - Hàng rắn thú vị"
+description: "Codeforces 104542D: Hàng rắn thú vị"
+date: "2026-06-30T09:15:00+07:00"
+tags: ["codeforces", "competitive-programming"]
+categories: ["algorithms"]
+codeforces_contest: 104542
+codeforces_index: "D"
+codeforces_contest_name: "TheForces Round #22 (Interesting-Forces)"
+rating: 0
+weight: 104542
+solve_time_s: 319
+verified: false
+draft: false
+---
+
+[CF 104542D - Hàng rắn thú vị](https://codeforces.com/problemset/problem/104542/D) 
+
+**Đánh giá:** - 
+**Thẻ:** - 
+**Thời gian giải:** 5 phút 19s 
+**Đã xác minh:** không 
+
+## Giải pháp```
+
+```
