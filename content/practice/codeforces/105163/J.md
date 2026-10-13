@@ -55,7 +55,7 @@ Quan sát cấu trúc quan trọng là việc tiếp cận một ô chỉ phụ 
 
 ## Hướng dẫn thuật toán 
 
-Chúng tôi xác định bảng DP trong đó mỗi mục nhập thể hiện chi phí di chuyển tối thiểu để đến một ô nhất định trong khi vẫn duy trì tính hợp lệ của tất cả các tiền tố dọc theo đường dẫn đã chọn. 
+Chúng tôi xác định bảng DP trong đó mỗi mục nhập biểu thị chi phí di chuyển tối thiểu để đến một ô nhất định trong khi vẫn duy trì tính hợp lệ của tất cả các tiền tố dọc theo đường dẫn đã chọn. 
 
 1. Khởi tạo bảng DP với tất cả các giá trị được đặt thành vô cùng, biểu thị các trạng thái không thể truy cập hoặc không hợp lệ. Ô bắt đầu được xử lý riêng vì nó xác định điểm mua ban đầu và chi phí cơ bản bằng 0 trước khi bắt đầu chuyển động. 
 2. Đối với mỗi ô theo thứ tự hàng lớn, hãy tính chi phí tốt nhất để đến từ hàng xóm trên cùng hoặc hàng xóm bên trái. Bước này phản ánh đường đi ngắn nhất của lưới tiêu chuẩn DP vì chuyển động bị hạn chế theo hướng phải và hướng xuống, đảm bảo sự phụ thuộc theo chu kỳ. 

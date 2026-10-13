@@ -18,7 +18,7 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 3m 13s 
+**Thời gian giải:** 3 phút 13s 
 **Đã xác minh:** không 
 
 ##Giải pháp 
@@ -38,15 +38,15 @@ Cách tiếp cận ngây thơ chỉ kiểm tra các vị trí liên tiếp trong
 
 ## Phương pháp tiếp cận 
 
-Ý tưởng vũ phu là trực tiếp. Đối với mỗi truy vấn, hãy trích xuất mảng con, sắp xếp nó, sau đó quét các phần tử liền kề để tính chênh lệch tối thiểu. Việc sắp xếp đảm bảo rằng các giá trị gần nhất trở thành hàng xóm, vì vậy chỉ kiểm tra các cặp liên tiếp trong danh sách đã sắp xếp là đủ để đảm bảo tính chính xác. 
+Ý tưởng vũ phu là trực tiếp. Đối với mỗi truy vấn, hãy trích xuất mảng con, sắp xếp nó và sau đó quét các phần tử liền kề để tính toán chênh lệch nhỏ nhất. Việc sắp xếp đảm bảo rằng các giá trị gần nhất sẽ trở thành hàng xóm, vì vậy chỉ cần kiểm tra các cặp liên tiếp trong danh sách đã sắp xếp là đủ để đảm bảo tính chính xác. 
 
-Điều này có tác dụng vì trong một chuỗi được sắp xếp, sự khác biệt tuyệt đối nhỏ nhất phải xảy ra giữa hai phần tử liên tiếp. Bất kỳ cặp không liền kề nào cũng có chênh lệch ít nhất bằng tổng các khoảng trống trung gian. 
+Điều này có hiệu quả vì trong một chuỗi được sắp xếp, sự khác biệt tuyệt đối nhỏ nhất phải xảy ra giữa hai phần tử liên tiếp. Bất kỳ cặp không liền kề nào cũng có chênh lệch ít nhất bằng tổng các khoảng trống trung gian. 
 
 Tuy nhiên, cách tiếp cận này trở nên tốn kém khi lặp lại trên nhiều truy vấn. Mỗi truy vấn có giá O(k log k) trong đó k là độ dài của phân đoạn. Trong trường hợp xấu nhất, k là O(N), do đó, một truy vấn tốn khoảng 10^4 log 10^4 thao tác và với 10^5 truy vấn, điều này dẫn đến khoảng 10^10 thao tác, vượt xa giới hạn. 
 
 Quan sát quan trọng là mảng đủ nhỏ để chúng ta có thể tính toán trước thông tin cho tất cả các cặp liền kề sau khi sắp xếp từng truy vấn, nhưng chúng ta phải tránh sắp xếp lặp lại. Điều này dẫn đến quan điểm tiền xử lý: thay vì sắp xếp lại mọi truy vấn, chúng tôi tính toán trước các cấu trúc tiền tố cho phép chúng tôi tái tạo lại hoặc xấp xỉ thông tin thứ tự được sắp xếp một cách hiệu quả. 
 
-Một phép biến đổi hữu ích là hãy nghĩ về “sự khác biệt liền kề theo thứ tự được sắp xếp trong một phạm vi”. Chúng tôi muốn khoảng cách tối thiểu giữa các giá trị trong một phạm vi, tương đương với việc tìm sự khác biệt tối thiểu giữa hai phần tử bất kỳ sau khi sắp xếp phạm vi đó. Điều này gợi ý việc duy trì thông tin thứ tự được sắp xếp tăng dần bằng cách sử dụng cây phân đoạn hoặc xử lý ngoại tuyến giống Mo, nhưng cách tiếp cận đơn giản và đầy đủ hơn ở đây xuất phát từ thực tế là N chỉ bằng 10^4. 
+Một phép biến đổi hữu ích là nghĩ về “sự khác biệt liền kề theo thứ tự được sắp xếp trong một phạm vi”. Chúng tôi muốn khoảng cách tối thiểu giữa các giá trị trong một phạm vi, tương đương với việc tìm sự khác biệt tối thiểu giữa hai phần tử bất kỳ sau khi sắp xếp phạm vi đó. Điều này gợi ý việc duy trì thông tin thứ tự được sắp xếp tăng dần bằng cách sử dụng cây phân đoạn hoặc xử lý ngoại tuyến giống Mo, nhưng cách tiếp cận đơn giản và đầy đủ hơn ở đây xuất phát từ thực tế là N chỉ bằng 10^4. 
 
 Chúng ta có thể tính toán trước tất cả các khác biệt theo cặp một cách gián tiếp bằng cách sắp xếp tất cả các phần tử và theo dõi chỉ số ban đầu của chúng. Sau đó, đối với bất kỳ thứ tự giá trị nào, chúng ta chỉ cần xem xét các hàng xóm trong mảng được sắp xếp toàn cục, nhưng bị giới hạn ở những thứ xuất hiện cùng nhau trong một khoảng truy vấn. Điều này giúp giảm bớt vấn đề khi kiểm tra các phần tử liền kề theo thứ tự sắp xếp giá trị và xác minh xem vị trí của chúng có trùng nhau trong phạm vi truy vấn hay không. Với cấu trúc dữ liệu như cây phân đoạn theo thứ tự giá trị hoặc tập hợp chỉ mục nhị phân trên mỗi nút, chúng ta có thể truy vấn các ràng buộc tồn tại một cách hiệu quả. 
 
@@ -78,7 +78,7 @@ Các cặp này đại diện cho các câu trả lời tiềm năng cho các tr
 Về mặt khái niệm, chúng tôi kích hoạt các chỉ số khi chúng tôi quét và duy trì sự khác biệt hợp lệ tốt nhất cho mỗi truy vấn. 
 6. Đối với mỗi khoảng truy vấn, chỉ xem xét các cạnh ứng cử viên có điểm cuối đều nằm trong khoảng đó và lấy chênh lệch tối thiểu giữa chúng. 
 
-Ý tưởng chính là mỗi truy vấn sẽ giảm xuống việc lọc một tập hợp các cạnh kề kề ứng cử viên được tính toán trước. 
+Ý tưởng chính là mỗi truy vấn sẽ giảm thiểu việc lọc một tập hợp các cạnh kề kề ứng cử viên được tính toán trước. 
 
 ### Tại sao nó hoạt động 
 

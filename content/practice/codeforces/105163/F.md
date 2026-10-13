@@ -55,7 +55,7 @@ Quan sát quan trọng là sự đóng góp của các điểm cuối không ph�
 
 ### 1. Tính toán trước những ứng viên xuất sắc nhất 
 
-Đối với mỗi nút, chúng tôi trích xuất tối đa bốn nút lân cận có trọng số cạnh lớn nhất. Điều này là đủ vì điểm cuối được xác định bằng cách chỉ chọn bốn cạnh đi ra tốt nhất. 
+Đối với mỗi nút, chúng tôi trích xuất tối đa bốn nút lân cận có trọng số cạnh lớn nhất. Điều này là đủ vì các điểm cuối được xác định bằng cách chỉ chọn bốn cạnh đi ra tốt nhất. 
 
 Bước này nén từng danh sách kề thành một bản tóm tắt có kích thước không đổi, đảm bảo các tính toán sau này vẫn bị giới hạn. 
 
@@ -67,7 +67,7 @@ A → B → C → D → E.
 
 Các nút bên trong B, C, D xác định cấu trúc, trong khi A và E được chọn dựa trên các cạnh đi ra tốt nhất tương ứng từ B và D. 
 
-Điểm mấu chốt là một khi B và D cố định thì A và E không còn là các biến tự do nữa. 
+Điểm mấu chốt là một khi B và D được cố định thì A và E không còn là các biến tự do nữa. 
 
 ### 3. Đếm các bộ ba ở giữa 
 
@@ -169,7 +169,7 @@ Giả sử một biểu đồ nhỏ trong đó nút 1 kết nối mạnh với c
 
 Đạt được mức tối đa khi cấu trúc ở giữa phù hợp với các vùng lân cận địa phương mạnh nhất. 
 
-Điều này xác nhận rằng các đóng góp của điểm cuối sẽ độc lập sau khi phân đoạn giữa được cố định. 
+Điều này xác nhận rằng sự đóng góp của điểm cuối là độc lập sau khi phân đoạn giữa được cố định. 
 
 ### Ví dụ 2 
 

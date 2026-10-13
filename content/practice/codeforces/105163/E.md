@@ -1,6 +1,6 @@
 ---
 title: "CF 105163E - Tam Quốc"
-description: "Bài toán mô tả quy trình chơi bài theo xác suất liên quan đến hai người chơi, Joey và Grey, trong đó số lượng quân bài dự kiến ​​cuối cùng phụ thuộc vào cả thành phần ban đầu của các chất và sự tương tác đệ quy giữa các kết quả."
+description: "Vấn đề mô tả một quy trình thẻ xác suất liên quan đến hai người chơi, Joey và Grey, trong đó số lượng thẻ dự kiến ​​​​cuối cùng phụ thuộc vào cả thành phần ban đầu của các bộ đồ và sự tương tác đệ quy giữa các kết quả."
 date: "2026-06-27T10:53:58+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
@@ -24,7 +24,7 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Bài toán mô tả quy trình chơi bài theo xác suất liên quan đến hai người chơi, Joey và Grey, trong đó số lượng quân bài dự kiến cuối cùng phụ thuộc vào cả thành phần ban đầu của các chất và sự tương tác đệ quy giữa các kết quả. Thay vì mô phỏng trực tiếp các ván rút, nhiệm vụ là tính toán giá trị kỳ vọng bắt nguồn từ hệ thống các mối quan hệ tuyến tính giữa các “trạng thái” khác nhau của ván bài của Joey. 
+Vấn đề mô tả một quy trình thẻ xác suất liên quan đến hai người chơi, Joey và Grey, trong đó số lượng thẻ dự kiến ​​cuối cùng phụ thuộc vào cả thành phần ban đầu của các bộ đồ và sự tương tác đệ quy giữa các kết quả. Thay vì mô phỏng trực tiếp các ván rút, nhiệm vụ là tính toán giá trị kỳ vọng bắt nguồn từ hệ thống các mối quan hệ tuyến tính giữa các “trạng thái” khác nhau của ván bài của Joey. 
 
 Về mặt khái niệm, ván bài của Joey có bốn loại bài, nhưng chỉ có hai trong số đó quan trọng cho đóng góp cuối cùng: quân bích và gậy. Các quân bài còn lại chỉ ảnh hưởng đến kỳ vọng cơ bản của hệ thống chứ không ảnh hưởng đến đóng góp cận biên của Joey. Chúng ta mô hình hóa sự đóng góp của quân bích là giá trị x và sự đóng góp của gậy là giá trị y. Những giá trị này không phải là hằng số độc lập; chúng phụ thuộc vào sự chuyển đổi xác suất của quá trình và vào kết quả cơ bản được mong đợi khi Joey không có thẻ liên quan. 
 
@@ -73,7 +73,7 @@ Bước 3: Giải hệ phương trình bằng phương pháp khử chuẩn. Tín
 
 Bước 4: Nếu D khác 0, hãy tính x và y bằng quy tắc Cramer. Điều này cung cấp các giá trị hợp lý chính xác thể hiện những đóng góp dự kiến. 
 
-Bước 5: Kiểm tra tính hợp lệ của giải pháp. Nếu x hoặc y âm, hãy coi hệ thống là không ổn định và chuyển sang quy tắc trường hợp vô hạn. 
+Bước 5: Kiểm tra tính hợp lệ của giải pháp. Nếu x hoặc y âm, coi hệ thống là không ổn định và chuyển sang quy tắc trường hợp vô hạn. 
 
 Bước 6: Nếu hợp lệ, tính kết quả cuối cùng là E + x·spade + y·club. 
 

@@ -47,7 +47,7 @@ Quan sát quan trọng là không thể phân biệt được vi khuẩn ngoại
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
 | Mô phỏng lực lượng vũ phu | O(dân số × N) | O(dân số) | Quá chậm | 
-| Hàm lũy thừa ma trận theo các trạng thái độ tuổi | O(20^3 log N) | O(20^2) | Đã chấp nhận | 
+| Hàm mũ ma trận theo các trạng thái độ tuổi | O(20^3 log N) | O(20^2) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
@@ -56,7 +56,7 @@ Chúng tôi lập mô hình hệ thống bằng cách sử dụng vectơ trạng
 1. Khởi tạo vectơ trạng thái với state[0] = 1 và tất cả các mục khác bằng 0. Điều này phản ánh một con vi khuẩn sơ sinh duy nhất ở thời điểm số 0. 
 2. Xác định cách hệ thống phát triển trong một phút. Mỗi vi khuẩn tăng thêm một tuổi nên trạng thái [i] chuyển sang trạng thái [i+1]. Vi khuẩn ở tuổi 19 chết và bị loại khỏi hệ thống. 
 3. Xử lý việc sao chép. Bất kỳ vi khuẩn trưởng thành nào cũng có thể sinh sản bốn phút một lần. Vì sự trưởng thành bắt đầu từ 2 tuổi nên quá trình sinh sản diễn ra ở các độ tuổi 2, 6, 10, 14 và 18 trong vòng đời 20 phút. Những độ tuổi này tương ứng với các giai đoạn sinh sản chính xác. 
-4. Ứng với mỗi độ tuổi đủ điều kiện sinh sản, trong phút đó mỗi vi khuẩn sinh ra 3 vi khuẩn mới có độ tuổi 0. Vì vậy trạng thái mới[0] được tăng gấp 3 lần tổng số vi khuẩn trong các lứa tuổi sinh sản đó. 
+4. Đối với mỗi độ tuổi đủ điều kiện sinh sản, trong phút đó mỗi vi khuẩn sinh ra 3 vi khuẩn mới có độ tuổi 0. Vì vậy trạng thái mới[0] được tăng gấp 3 lần tổng số vi khuẩn trong các lứa tuổi sinh sản đó. 
 5. Kết hợp các quy tắc này thành một ma trận chuyển tiếp 20×20 T trong đó T[i][j] mã hóa cách vi khuẩn ở độ tuổi j đóng góp vào độ tuổi i sau một phút. 
 6. Tính T^N bằng cách sử dụng lũy ​​thừa nhanh. 
 7. Nhân ma trận thu được với vectơ trạng thái ban đầu để thu được phân bố cuối cùng tại thời điểm N. 
@@ -66,7 +66,7 @@ Lý do điều này hoạt động là vì toàn bộ hệ thống phát triển
 
 ## Tại sao nó hoạt động 
 
-Bất biến chính là sau mỗi phút, vectơ trạng thái tóm tắt đầy đủ tất cả thông tin liên quan về hệ thống. Không cần có lịch sử ẩn giấu nào ngoài sự phân bố tuổi tác vì sự sinh sản và cái chết chỉ phụ thuộc vào độ tuổi hiện tại. Vì mọi chuyển đổi đều là tuyến tính trong vectơ trạng thái, ứng dụng lặp lại tạo thành một nửa nhóm các phép biến đổi tuyến tính, đảm bảo rằng việc lũy thừa ma trận chuyển tiếp thể hiện chính xác N bước tiến hóa mà không làm mất thông tin. 
+Bất biến chính là sau mỗi phút, vectơ trạng thái tóm tắt đầy đủ tất cả thông tin liên quan về hệ thống. Không cần có lịch sử ẩn giấu nào ngoài sự phân bố tuổi tác vì sự sinh sản và cái chết chỉ phụ thuộc vào độ tuổi hiện tại. Vì mọi chuyển đổi đều là tuyến tính trong vectơ trạng thái, ứng dụng lặp lại tạo thành một nửa nhóm các phép biến đổi tuyến tính, đảm bảo rằng việc lũy thừa ma trận chuyển đổi thể hiện chính xác N bước tiến hóa mà không làm mất thông tin. 
 
 ## Giải pháp Python```python
 import sys
@@ -174,7 +174,7 @@ Chúng tôi chỉ theo dõi tổng số theo khái niệm:
 | Thời gian | O(20^3 log N × T) | lũy thừa ma trận trên hệ thống 20 trạng thái cố định | 
 | Không gian | O(20^2) | Lưu trữ ma trận chuyển tiếp | 
 
-Thứ nguyên không đổi làm cho điều này trở nên hiệu quả ngay cả đối với N lên tới 10^9 và T lên tới 50, vì tất cả các phép tính nặng đều là logarit theo thời gian. 
+Thứ nguyên không đổi làm cho điều này trở nên hiệu quả ngay cả đối với N lên đến 10^9 và T lên tới 50, vì tất cả các phép tính nặng đều là logarit theo thời gian. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io

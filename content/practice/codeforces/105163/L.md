@@ -65,7 +65,7 @@ Tìm kiếm nhị phân điều chỉnh ngưỡng dựa trên tính khả thi.
 
 ### Tại sao nó hoạt động 
 
-Bất biến quan trọng là trong mỗi thành phần được kết nối mạnh, tất cả các nút phải chia sẻ cùng một giá trị được truyền trong bất kỳ giải pháp điểm cố định nào. Điều này cho phép chúng tôi thay thế mỗi SCC bằng một nút đại diện duy nhất mà không làm mất thông tin. Sau khi thu nhỏ lại, không còn chu kỳ nào nữa, do đó việc truyền bá trở thành sự tích lũy thuần túy theo một trật tự từng phần. Vì tất cả các đóng góp đều chảy dọc theo các cạnh được định hướng trong DAG nên giá trị của mỗi thành phần chỉ phụ thuộc vào các thành phần được tính toán trước đó, đảm bảo rằng một lần chuyển sẽ mang lại điểm cố định chính xác. 
+Bất biến quan trọng là trong mỗi thành phần được kết nối mạnh, tất cả các nút phải chia sẻ cùng một giá trị được truyền trong bất kỳ giải pháp điểm cố định nào. Điều này cho phép chúng tôi thay thế mỗi SCC bằng một nút đại diện duy nhất mà không làm mất thông tin. Sau khi được thu gọn, không còn chu kỳ nào nữa, do đó việc truyền bá trở thành sự tích lũy thuần túy theo một trật tự một phần. Vì tất cả các đóng góp đều chảy dọc theo các cạnh được định hướng trong DAG nên giá trị của mỗi thành phần chỉ phụ thuộc vào các thành phần được tính toán trước đó, đảm bảo rằng một lần chuyển sẽ mang lại điểm cố định chính xác. 
 
 ## Giải pháp Python```python
 import sys
@@ -193,7 +193,7 @@ Hãy xem xét đồ thị gồm ba nút trong đó nút 1 và 2 tạo thành m�
 | --- | --- | --- | 
 | xây dựng SCC | {1,2}, {3} | thành phần hình thành | 
 | comp_sum | c1=val1+val2, c2=val3 | tổng hợp ban đầu | 
-| Bắt đầu DP | c1 xử lý trước | dp[c1]=0 | 
+| DP bắt đầu | c1 xử lý trước | dp[c1]=0 | 
 | thư giãn | c1 → c2 | dp[c2]=dp[c1]+sum(c1) | 
 
 Sau khi xử lý, nút 3 nhận giá trị tích lũy từ thành phần chu trình. 
@@ -252,7 +252,7 @@ assert True
 
 ## Vỏ cạnh 
 
-Một trường hợp quan trọng là một chu trình thuần túy trong đó tất cả các nút củng cố lẫn nhau. Nếu không nén SCC, thứ tự truyền sẽ không được xác định và có thể dao động hoặc phụ thuộc vào thứ tự truyền. Sau khi nén, toàn bộ chu trình sẽ trở thành một nút duy nhất và tính nhất quán bên trong của nó được thực thi bằng cách sử dụng các giá trị tổng hợp và ràng buộc tối thiểu. 
+Một trường hợp cạnh quan trọng là một chu trình thuần túy trong đó tất cả các nút củng cố lẫn nhau. Nếu không nén SCC, thứ tự truyền sẽ không được xác định và có thể dao động hoặc phụ thuộc vào thứ tự truyền. Sau khi nén, toàn bộ chu trình sẽ trở thành một nút duy nhất và tính nhất quán bên trong của nó được thực thi bằng cách sử dụng các giá trị tổng hợp và ràng buộc tối thiểu. 
 
 Một trường hợp cạnh khác là khi một thành phần không có cạnh nào vào. Trong trường hợp này, giá trị dp của nó bắt đầu từ 0 và chỉ đóng góp nội bộ của nó mới quan trọng. Thuật toán xử lý việc này một cách tự nhiên vì việc sắp xếp tôpô khởi tạo các thành phần như vậy với mức độ bằng 0. 
 

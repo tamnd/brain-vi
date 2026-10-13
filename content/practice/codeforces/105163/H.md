@@ -26,21 +26,21 @@ draft: false
 
 Mỗi mục trong đầu vào có thể được xem như một “đối tượng có màu”, ngoại trừ một đối tượng có thể mang nhiều màu cùng một lúc. Chúng ta được cung cấp nhiều đối tượng như vậy và chúng ta muốn hiểu có bao nhiêu cách chúng ta có thể chọn chính xác.$k$các đối tượng sao cho sự kết hợp của các bộ màu của chúng tạo ra từng mặt nạ màu có thể có. 
 
-Thay vì suy nghĩ về các màu sắc riêng lẻ, chúng tôi biểu diễn mọi đối tượng dưới dạng một mặt nạ bit trên một vũ trụ màu sắc cố định. Một tập hợp con các màu tương ứng với một mặt nạ số nguyên và mỗi đối tượng đóng góp vào chính xác một mặt nạ trong một mảng$a$, Ở đâu$a[s]$là số lượng đối tượng có bộ màu chính xác$s$. 
+Thay vì nghĩ về các màu sắc riêng lẻ, chúng tôi biểu diễn mọi đối tượng dưới dạng một mặt nạ bit trên một vũ trụ màu sắc cố định. Một tập hợp con các màu tương ứng với một mặt nạ số nguyên và mỗi đối tượng đóng góp vào chính xác một mặt nạ trong một mảng$a$, Ở đâu$a[s]$là số lượng đối tượng có bộ màu chính xác$s$. 
 
 Nhiệm vụ là tính toán cho mọi mặt nạ$u$, có bao nhiêu cách chúng ta có thể chọn$k$các đối tượng sao cho sự kết hợp chính xác của mặt nạ của chúng$u$. 
 
 Cấu trúc ràng buộc ngụ ý rằng số lượng màu đủ nhỏ để chuyển đổi tập hợp con, thường là$2^m$với$m \leq 20$hoặc tương tự, trong khi số lượng đối tượng có thể lớn. Điều này ngay lập tức gợi ý rằng bất kỳ giải pháp nào lặp qua các tập hợp con của đối tượng đều là không thể, vì ngay cả$O(n \cdot 2^m)$trở nên quá lớn khi$n$là lớn. 
 
-Điểm áp lực ràng buộc thứ hai là tích chập trên các tập hợp con gây ra bởi các phép toán hợp. Sự kết hợp của các mặt nạ tương ứng với OR theo bit, không thể tách rời khỏi các bit theo nghĩa thông thường, do đó tích chập đơn giản là theo cấp số nhân về số lượng mặt nạ. 
+Điểm áp lực ràng buộc thứ hai là tích chập trên các tập con gây ra bởi các phép toán hợp. Sự kết hợp của các mặt nạ tương ứng với OR theo bit, không thể tách rời khỏi các bit theo nghĩa thông thường, do đó tích chập đơn giản là theo cấp số nhân về số lượng mặt nạ. 
 
 Một cách tiếp cận ngây thơ liệt kê tất cả$k$-các bộ đối tượng sẽ thất bại nặng nề ngay cả ở mức độ vừa phải$n$. Ví dụ, nếu$n = 10^5$Và$k = 3$, riêng số bộ ba là vào thứ tự$10^{15}$, điều đó hoàn toàn không thể thực hiện được. 
 
-Một trường hợp lỗi tinh vi hơn xuất phát từ việc cố gắng xử lý các tập hợp con một cách độc lập trên mỗi bit. Nếu chúng ta giả định không chính xác tính độc lập của các bit, chúng ta sẽ đếm quá mức các kết hợp trong đó hai đối tượng trùng nhau về phạm vi bao phủ màu sắc, bởi vì sự kết hợp không mang tính cộng mà là bình thường. 
+Một trường hợp lỗi tinh vi hơn xuất phát từ việc cố gắng xử lý các tập hợp con một cách độc lập trên mỗi bit. Nếu chúng ta giả định không chính xác tính độc lập của các bit, chúng ta sẽ đếm quá mức các kết hợp trong đó hai đối tượng trùng nhau về phạm vi bao phủ của màu sắc, bởi vì sự kết hợp không mang tính cộng mà là bình thường. 
 
 ## Phương pháp tiếp cận 
 
-Phối cảnh bạo lực bắt đầu từ định nghĩa: đối với mỗi mặt nạ mục tiêu$u$, liệt kê tất cả$k$-các bộ đối tượng, tính toán kết hợp của chúng và đếm các kết quả trùng khớp. Điều này đúng vì nó trực tiếp tuân theo định nghĩa của phép toán. Tuy nhiên, chi phí của mỗi công đoàn$O(m)$, và số lượng bộ dữ liệu là$O(n^k)$, vậy thậm chí$k = 3$trở nên không thể ở quy mô. 
+Phối cảnh bạo lực bắt đầu từ định nghĩa: đối với mỗi mặt nạ mục tiêu$u$, liệt kê tất cả$k$-các bộ đối tượng, tính toán sự kết hợp của chúng và đếm các kết quả trùng khớp. Điều này đúng vì nó trực tiếp tuân theo định nghĩa của phép toán. Tuy nhiên, chi phí của mỗi công đoàn$O(m)$, và số lượng bộ dữ liệu là$O(n^k)$, vậy thậm chí$k = 3$trở nên không thể ở quy mô. 
 
 Một quan điểm có cấu trúc hơn xuất phát từ việc nhận thấy rằng phép hợp trên các tập hợp con tương ứng với phép tích chập nửa vành trong phép toán OR. Điều này gợi ý sử dụng biến đổi tập hợp con, cụ thể là OR-FWT. Chúng tôi ánh xạ mảng$a$vào biến đổi OR-zeta của nó, trong đó$$FWT(a)[i] = \sum_{j \subseteq i} a[j]$$Phép biến đổi này chuyển phép tích chập OR thành phép nhân theo điểm trong không gian biến đổi. 
 
@@ -50,7 +50,7 @@ Bây giờ hãy xem xét việc lựa chọn$k$đồ vật. Trong không gian bi
 
 Tại thời điểm này, vấn đề giảm xuống còn việc đánh giá một hàm trên tất cả các mặt nạ tập hợp con, trong đó hàm đó$f(x) = \binom{x}{k}$, được áp dụng cho các giá trị được chuyển đổi OR-zeta. 
 
-Khó khăn cuối cùng là tính toán hệ số nhị thức cho nhiều giá trị lớn một cách hiệu quả. Tính toán giai thừa trực tiếp cho mỗi truy vấn quá chậm khi được thực hiện lặp đi lặp lại trên tất cả$2^m$mặt nạ. Đây là nơi áp dụng phép nội suy đa thức hoặc các kỹ thuật giai thừa được tính toán trước. Từ$\binom{x}{k}$là một bằng cấp-$k$đa thức trong$x$, nó có thể được đánh giá một cách hiệu quả thông qua việc tính toán trước các giai thừa lên đến một ngưỡng nhỏ và cập nhật nhân nhanh cho các giá trị lớn bằng cách sử dụng các khối được tính toán trước hoặc các bước nhảy giai thừa theo bảng điều khiển. 
+Khó khăn cuối cùng là tính toán hệ số nhị thức cho nhiều giá trị lớn một cách hiệu quả. Tính toán giai thừa trực tiếp cho mỗi truy vấn quá chậm khi được thực hiện lặp đi lặp lại trên tất cả$2^m$mặt nạ. Đây là nơi áp dụng phép nội suy đa thức hoặc các kỹ thuật giai thừa được tính toán trước. Từ$\binom{x}{k}$là một mức độ-$k$đa thức trong$x$, nó có thể được đánh giá một cách hiệu quả thông qua việc tính toán trước các giai thừa lên đến một ngưỡng nhỏ và cập nhật nhân nhanh cho các giá trị lớn bằng cách sử dụng các khối được tính toán trước hoặc các bước nhảy giai thừa theo bảng điều khiển. 
 
 Mục đích tối ưu hóa là tách các phạm vi nhỏ và lớn của$x$. Đối với nhỏ$x$, tính toán dựa trên giai thừa là trực tiếp. Đối với lớn$x$, các khối được tính toán trước hoặc bước giai thừa nhanh cho phép khấu hao$O(1)$hoặc đánh giá logarit cho mỗi truy vấn. 
 
@@ -65,7 +65,7 @@ Chúng ta tiến hành từ cấu trúc đại số được tạo ra bởi các
 
 1. Biểu diễn từng đối tượng dưới dạng bitmask và xây dựng một mảng$a$Ở đâu$a[s]$đếm xem có bao nhiêu đối tượng có mặt nạ chính xác$s$. Điều này nén đầu vào thành phân bố tần số trên các tập hợp con. 
 2. Áp dụng phép biến đổi OR-zeta cho$a$, sản xuất$A$, mỗi nơi$A[i]$bằng tổng trên tất cả các mặt nạ con của$i$. Bước này viết lại hành vi hợp tập hợp con thành một dạng trong đó các mặt nạ tương tác độc lập theo cấu trúc OR. 
-3. Phiên dịch$A[i]$như số lượng đối tượng có sẵn “tương thích” với mặt nạ$i$, theo nghĩa là tất cả những đối tượng đó được chứa trong$i$. 
+3. Phiên dịch$A[i]$như số lượng đối tượng có sẵn “tương thích” với mặt nạ$i$, theo nghĩa là tất cả các đối tượng đó được chứa trong$i$. 
 4. Đối với mỗi mặt nạ$i$, tính toán$B[i] = \binom{A[i]}{k}$. Điều này thể hiện việc lựa chọn$k$các đối tượng trong số những đối tượng tương thích với$i$. Quan sát quan trọng là trong không gian biến đổi, việc chọn kết hợp sẽ trở thành phép chọn tổ hợp trên mỗi tọa độ. 
 5. Áp dụng phép biến đổi OR-zeta nghịch đảo cho$B$, khôi phục mảng cuối cùng$ans$, mỗi nơi$ans[i]$đếm các cấu hình có liên kết chính xác$i$. 
 6. Xuất tất cả$ans[i]$. 
@@ -74,7 +74,7 @@ Tính chính xác phụ thuộc vào thực tế là phép biến đổi OR-zeta
 
 ### Tại sao nó hoạt động 
 
-Phép biến đổi OR-zeta viết lại từng giá trị dưới dạng tổng trên các tập hợp con, biến phép chập OR thành phép nhân theo điểm. Trong không gian biến đổi này, việc kết hợp$k$sự lựa chọn độc lập tương ứng với việc lựa chọn$k$đóng góp giữa nhiều kích thước$A[i]$. Hệ số nhị thức đếm chính xác các lựa chọn không có thứ tự, bảo toàn bội số. Bởi vì phép biến đổi có thể đảo ngược nên việc áp dụng số lần phục hồi nghịch đảo cho mặt nạ hợp chính xác mà không đếm quá mức chồng chéo. 
+Phép biến đổi OR-zeta ghi lại từng giá trị dưới dạng tổng trên các tập hợp con, biến phép chập OR thành phép nhân theo điểm. Trong không gian biến đổi này, việc kết hợp$k$sự lựa chọn độc lập tương ứng với việc lựa chọn$k$đóng góp giữa nhiều kích thước$A[i]$. Hệ số nhị thức đếm chính xác các lựa chọn không có thứ tự, bảo toàn bội số. Bởi vì phép biến đổi có thể đảo ngược nên việc áp dụng số lần phục hồi nghịch đảo cho mặt nạ hợp chính xác mà không đếm quá mức chồng chéo. 
 
 ## Giải pháp Python```python
 import sys
@@ -204,6 +204,6 @@ def run(inp: str) -> str:
 
 Một trường hợp lỗi nhỏ xuất hiện khi tất cả các đối tượng có chung một mặt nạ. Trong trường hợp đó, OR-FWT tạo ra các giá trị giống hệt nhau trên nhiều mặt nạ và bước nhị thức phải giảm chính xác mọi thứ thành một cấu hình khác 0 chỉ khi$k$bằng tổng số. Thuật toán xử lý việc này vì$\binom{x}{k}$sụp đổ về 0 trừ khi$k$phù hợp với bội số có sẵn và phép biến đổi nghịch đảo duy trì tính thưa thớt đó. 
 
-Một trường hợp cạnh khác phát sinh khi$k = 1$. Hàm nhị thức trở thành danh tính, do đó giải pháp giảm xuống việc áp dụng OR-FWT và nghịch đảo của nó, loại bỏ hoàn toàn. Bất kỳ lỗi triển khai nào trong việc xử lý dấu hiệu biến đổi ngược sẽ ngay lập tức phá vỡ trường hợp này. 
+Một trường hợp cạnh khác phát sinh khi$k = 1$. Hàm nhị thức trở thành danh tính, do đó, giải pháp giảm xuống việc áp dụng OR-FWT và nghịch đảo của nó, loại bỏ hoàn toàn. Bất kỳ lỗi triển khai nào trong việc xử lý dấu hiệu biến đổi ngược sẽ ngay lập tức phá vỡ trường hợp này. 
 
 Trường hợp thứ ba là khi tất cả các mặt nạ đều là các mặt nạ bit đơn rời rạc. Ở đây cấu trúc OR suy biến thành tập hợp con đếm trên các bit độc lập. Phép biến đổi vẫn hoạt động chính xác vì OR-FWT tích lũy tất cả các tập hợp con một cách tự nhiên và lựa chọn nhị thức tính chính xác các kết hợp của các phần tử riêng biệt mà không bị lạm phát chồng chéo.
