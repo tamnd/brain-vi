@@ -40,7 +40,7 @@ Một lỗi phổ biến khác là chỉ kiểm tra tính duy nhất theo cặp 
 
 Một cách diễn giải thô bạo sẽ coi mỗi vị trí thuộc về một lớp nhãn và sau đó kiểm tra tất cả các cặp chỉ mục: nếu các ký tự của chúng khớp nhau, hãy thực thi sự bình đẳng; mặt khác thực thi sự bất bình đẳng. Nói chung, đối với các chuỗi dài hơn, điều này trở thành một vấn đề ràng buộc về biểu đồ trong đó chúng tôi xác minh tính nhất quán trên tất cả các cặp. Đối với bài toán này, chỉ với bốn vị trí và một mẫu cố định, điều này giảm xuống còn việc kiểm tra một số điều kiện không đổi. 
 
-Nếu chúng tôi liệt kê rõ ràng tất cả các ràng buộc cặp, chúng tôi sẽ kiểm tra tối đa 6 cặp: (1,2), (1,3), (1,4), (2,3), (2,4), (3,4) và xác minh xem mỗi cặp có phải bằng nhau hay không dựa trên mẫu USST. Đây đã là O(1), vì vậy vũ lực ở đây là tối ưu một cách hiệu quả. 
+Nếu chúng tôi liệt kê rõ ràng tất cả các ràng buộc cặp, chúng tôi sẽ kiểm tra tối đa 6 cặp: (1,2), (1,3), (1,4), (2,3), (2,4), (3,4) và xác minh xem mỗi cặp có phải bằng nhau hay không dựa trên mẫu USST. Đây đã là O(1), vì vậy sức mạnh vũ phu ở đây là tối ưu một cách hiệu quả. 
 
 Quan sát chính là chúng ta không cần bất kỳ sự trừu tượng nào như ánh xạ các ký tự tới ID hoặc xây dựng cấu trúc dữ liệu. Cấu trúc cố định nên chúng ta có thể mã hóa trực tiếp các ràng buộc mà mẫu ngụ ý và xác minh chúng. 
 

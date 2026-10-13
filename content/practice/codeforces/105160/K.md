@@ -30,7 +30,7 @@ Nhiệm vụ này mô tả một cách xác định để gán các số cho lư
 
 Các ràng buộc cho phép n và m lên tới 1000, do đó ma trận có thể chứa tới một triệu ô. Bất kỳ giải pháp nào chạm vào từng ô một số lần không đổi đều có thể chấp nhận được. Một giải pháp cố gắng mô phỏng chuyển động không hiệu quả trên mỗi bước với chi phí quét hoặc đệ quy lặp đi lặp lại sẽ vẫn chỉ vượt qua trong Python nếu nó hoàn toàn tuyến tính về số lượng ô. Bất cứ điều gì tệ hơn O(nm) đều có nguy cơ bị hết thời gian vì một triệu thao tác đã gần đạt giới hạn trên đối với giải pháp Python 1 giây. 
 
-Một lỗi thường gặp xuất hiện khi xử lý trường hợp một hàng hoặc một cột. Ví dụ: nếu n bằng 1 và m bằng 5, kết quả mong đợi chỉ đơn giản là một chuỗi thẳng từ trái sang phải. Việc triển khai theo hình xoắn ốc ngây thơ luôn cố gắng đi qua cả bốn hướng mà không kiểm tra ranh giới sẽ ghi đè các giá trị hoặc lập chỉ mục ngoài phạm vi. 
+Một lỗi phổ biến xuất hiện khi xử lý trường hợp một hàng hoặc một cột. Ví dụ: nếu n bằng 1 và m bằng 5, kết quả mong đợi chỉ đơn giản là một chuỗi thẳng từ trái sang phải. Việc triển khai theo hình xoắn ốc ngây thơ luôn cố gắng đi qua cả bốn hướng mà không kiểm tra ranh giới sẽ ghi đè các giá trị hoặc lập chỉ mục ngoài phạm vi. 
 
 Một vấn đề tế nhị khác nảy sinh khi các ranh giới thu hẹp gặp nhau. Hãy xem xét một lưới 3 x 3. Sau khi hoàn thành lớp ngoài, ô trung tâm còn lại phải được điền đúng một lần. Điều kiện kết thúc không chính xác thường dẫn đến việc bỏ qua ô cuối cùng này hoặc ghi nó hai lần. 
 

@@ -57,7 +57,7 @@ Do đó, toàn bộ vấn đề quy về việc phân loại vị trí tương �
 2. Tính dx = x1 − x2 và dy = y1 − y2, rồi xác định d2 = dx·dx + dy·dy. Điều này thể hiện khoảng cách bình phương giữa các trung tâm. 
 3. Tính sumR = r1 + r2 và diffR = |r1 − r2|. Các giá trị này xác định ngưỡng cho cấu hình tiếp tuyến bên ngoài và bên trong. 
 4. Nếu d2 bằng 0 nhưng các đường tròn không giống nhau thì các đường tròn có cùng tâm nhưng có bán kính khác nhau. Trong trường hợp này, không có đường thẳng nào có thể tiếp tuyến với cả hai vì mọi tiếp tuyến của một đường tròn đều nằm hoàn toàn bên ngoài đường tròn đồng tâm kia. Chúng tôi xuất ra 0. 
-5. Nếu d2 < diffR², một vòng tròn nằm hoàn toàn bên trong vòng tròn kia mà không chạm vào. Không có đường tiếp tuyến nào có thể chạm vào cả hai ranh giới cùng một lúc, vì vậy chúng ta xuất ra 0. 
+5. Nếu d2 < diffR², một vòng tròn nằm hoàn toàn bên trong vòng tròn kia và không chạm vào nhau. Không có đường tiếp tuyến nào có thể chạm vào cả hai ranh giới cùng một lúc, vì vậy chúng ta xuất ra 0. 
 6. Nếu d2 bằng diffR² thì các đường tròn tiếp tuyến trong. Có duy nhất một tiếp tuyến chung trong. 
 7. Nếu d2 > diffR² và d2 < sumR², các vòng tròn sẽ chồng lên nhau. Trong miền này tồn tại chính xác hai tiếp tuyến chung ngoài. 
 8. Nếu d2 bằng sumR² thì các đường tròn là tiếp tuyến ngoài. Trong trường hợp này, tồn tại ba tiếp tuyến chung phân biệt: hai tiếp tuyến chung ngoài và một tiếp tuyến chung suy biến. 

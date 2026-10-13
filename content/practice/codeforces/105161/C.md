@@ -40,13 +40,13 @@ Một trường hợp cạnh khác là khi hai điểm gần như đối diện 
 
 ## Phương pháp tiếp cận 
 
-Chiến lược brute-force sẽ truy vấn mọi vị trí, xây dựng lại toàn bộ mảng$f(x)$, rồi thử tất cả$\binom{n}{2}$cặp để tìm ra cặp nào phù hợp với hàm quan sát được. Về nguyên tắc, điều này đúng vì mỗi cặp tạo ra một kiểu khoảng cách duy nhất. Tuy nhiên, nó đòi hỏi$O(n)$các truy vấn, và thậm chí tệ hơn,$O(n^2)$kiểm tra, vượt xa giới hạn truy vấn và các ràng buộc tính toán. 
+Chiến lược brute-force sẽ truy vấn mọi vị trí, xây dựng lại toàn bộ mảng$f(x)$, rồi thử tất cả$\binom{n}{2}$cặp để tìm ra cặp nào phù hợp với hàm quan sát được. Về nguyên tắc, điều này đúng vì mỗi cặp tạo ra một kiểu khoảng cách duy nhất. However, it requires$O(n)$các truy vấn, và thậm chí tệ hơn,$O(n^2)$kiểm tra, vượt xa giới hạn truy vấn và các ràng buộc tính toán. 
 
 Quan sát quan trọng là$f(x)$là tổng của hai hàm khoảng cách chu kỳ độc lập. Mỗi hàm khoảng cách đơn có cấu hình hình chữ V trên một chu kỳ: nó giảm tuyến tính về phía điểm ẩn và tăng sau khi đi qua điểm đó. Tổng của hai mặt cắt như vậy tạo ra một hàm có nhiều nhất là hai “vùng gấp khúc”, tương ứng chính xác với các điểm ẩn. 
 
-Thay vì xây dựng lại toàn bộ hàm, chúng ta chỉ cần xác định vị trí thay đổi hành vi độ dốc. Nếu chúng ta xem xét sự khác biệt$f(x+1) - f(x)$, trình tự hầu như không đổi ngoại trừ gần các điểm ẩn, nơi nó dịch chuyển. Điều này biến bài toán thành việc tìm các điểm chuyển tiếp theo một trình tự rời rạc trên một chu trình. 
+Thay vì xây dựng lại toàn bộ hàm, chúng ta chỉ cần xác định vị trí thay đổi hành vi độ dốc. Nếu chúng ta xem xét sự khác biệt$f(x+1) - f(x)$, dãy hầu như không đổi ngoại trừ gần các điểm ẩn, nơi nó dịch chuyển. Điều này biến bài toán thành việc tìm các điểm chuyển tiếp theo một trình tự rời rạc trên một chu trình. 
 
-Bởi vì chuỗi khác biệt là đơn điệu trong những khoảng thời gian lớn nên chúng ta có thể tìm kiếm nhị phân một điểm tại đó hành vi thay đổi. Khi một điểm ẩn được xác định (hoặc một vùng ứng cử viên bị cô lập), điểm thứ hai có thể được phục hồi bằng cách sử dụng truy vấn khoảng cách duy nhất và định hướng bằng cách sử dụng các đầu dò liền kề. 
+Vì chuỗi khác biệt là đơn điệu trong những khoảng thời gian lớn nên chúng ta có thể tìm kiếm nhị phân một điểm tại đó hành vi thay đổi. Khi một điểm ẩn được xác định (hoặc một vùng ứng cử viên bị cô lập), điểm thứ hai có thể được phục hồi bằng cách sử dụng truy vấn khoảng cách duy nhất và định hướng bằng cách sử dụng các đầu dò liền kề. 
 
 Điều này làm giảm vấn đề từ việc tái thiết toàn cục đến việc phát hiện những điểm gián đoạn về cấu trúc trong một đạo hàm rời rạc theo chu kỳ, có thể tuân theo tìm kiếm logarit. 
 
@@ -63,8 +63,8 @@ Chúng tôi đối xử$f(x)$như một hàm hộp đen trên một chu trình.
 2. Xét chuỗi các khác biệt rời rạc$d(x) = f(x+1) - f(x)$. Trên bất kỳ cung nào của chu trình không đi qua một điểm ẩn, sự khác biệt này là không đổi vì cả hai sự đóng góp khoảng cách đều thay đổi tuyến tính với độ dốc$+1$hoặc$-1$. 
 3. Xác định khoảng các chỉ số trong đó hành vi là đồng nhất và khoảng khác có hành vi khác nhau. Điều này đảm bảo rằng tồn tại ít nhất một chỉ số biên$x$Ở đâu$d(x) \neq d(x+1)$, tương ứng với việc vượt qua vùng ảnh hưởng điểm ẩn. 
 4. Sử dụng tìm kiếm nhị phân ở nửa đầu của chu kỳ, so sánh$d(mid)$Và$d(mid+1)$, để tìm chỉ số chuyển tiếp như vậy$x$. Cấu trúc đơn điệu của sự thay đổi độ dốc đảm bảo rằng khi chúng ta đi qua một điểm ẩn, mẫu đạo hàm sẽ dịch chuyển theo một hướng nhất quán. 
-5. Sau khi tìm thấy chỉ mục chuyển tiếp, hãy xác định chính xác điểm ẩn liên quan đến nó. Điều này đòi hỏi phải kiểm tra cả hai mặt của$x$, bởi vì sự gián đoạn có thể đến từ một trong hai điểm ẩn và có thể được bù đắp bằng các hiệu ứng bao bọc trên chu trình. 
-6. Sau khi xác định được một điểm ẩn$p$, truy vấn$f(p)$. Vì chúng ta biết đóng góp của một khoảng cách là bằng không,$f(p)$trực tiếp bằng khoảng cách đến điểm ẩn khác. 
+5. Sau khi tìm thấy chỉ mục chuyển tiếp, hãy xác định điểm ẩn chính xác được liên kết với nó. Điều này đòi hỏi phải kiểm tra cả hai mặt của$x$, bởi vì sự gián đoạn có thể đến từ một trong hai điểm ẩn và có thể được bù đắp bằng các hiệu ứng bao bọc trên chu trình. 
+6. Sau khi xác định được một điểm ẩn$p$, truy vấn$f(p)$. Vì chúng ta biết đóng góp của một khoảng cách là bằng 0,$f(p)$trực tiếp bằng khoảng cách đến điểm ẩn khác. 
 7. Khôi phục điểm ẩn thứ hai bằng cách tìm kiếm cả hai hướng từ$p$dọc theo chu trình cho đến khi tìm thấy một điểm ở khoảng cách chính xác. Vì khoảng cách trên một chu trình có hai ứng viên đối xứng nên chúng ta giải quyết sự mơ hồ bằng cách truy vấn các điểm liền kề xung quanh$p$và so sánh các giá trị trả về. 
 8. Xác thực cặp đã khôi phục bằng cách tùy chọn kiểm tra tính nhất quán với một hoặc hai truy vấn bổ sung nếu cần, đảm bảo việc xây dựng lại ổn định. 
 
@@ -179,7 +179,7 @@ Chúng tôi truy vấn:
 | 4 | 3 | 3 | 
 | 5 | 4 | 4 | 
 
-Từ những khác biệt chúng ta thấy sự thay đổi xung quanh$x = 3$, biểu thị một điểm dừng. 
+Từ sự khác biệt chúng ta thấy sự thay đổi xung quanh$x = 3$, biểu thị một điểm dừng. 
 
 Chúng tôi xác định ứng viên$p_1 = 2$. Truy vấn$f(2)$đóng góp 0 từ chính nó, cho phép trích xuất trực tiếp điểm thứ hai thông qua tính đối xứng khoảng cách, mang lại$7$. 
 
@@ -239,7 +239,7 @@ assert True
 
 ## Vỏ cạnh 
 
-Khi hai điểm ẩn nằm cạnh nhau, hàm số thay đổi độ dốc mạnh trên một vùng rất nhỏ. Tìm kiếm nhị phân vẫn tìm thấy chỉ số chuyển tiếp vì chênh lệch đạo hàm là cực đại ở biên, do đó, bất kỳ việc lấy mẫu tầm trung nào cuối cùng cũng phát hiện ra sự không nhất quán. 
+Khi hai điểm ẩn liền kề nhau, hàm số thay đổi độ dốc mạnh trên một vùng rất nhỏ. Tìm kiếm nhị phân vẫn tìm thấy chỉ số chuyển tiếp vì chênh lệch đạo hàm là cực đại ở biên, do đó, bất kỳ việc lấy mẫu tầm trung nào cuối cùng cũng phát hiện ra sự không nhất quán. 
 
 Khi các điểm gần như đối diện nhau, một nửa chu kỳ giảm nghiêm ngặt và nửa còn lại tăng nghiêm ngặt. Trong trường hợp này, điểm dừng được phát hiện đầu tiên có thể không rõ ràng, nhưng bất kỳ ứng cử viên nào trong vùng chuyển tiếp phẳng vẫn mang lại kết quả tái thiết hợp lệ sau khi phục hồi dựa trên khoảng cách. 
 

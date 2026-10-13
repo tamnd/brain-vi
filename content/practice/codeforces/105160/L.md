@@ -1,6 +1,6 @@
 ---
 title: "CF 105160L - \u73af\u5f62\u6570\u7ec4(cứng)"
-description: "Chúng ta có một lưới hình chữ nhật có kích thước $n nhân m$ có các ô chứa các số nguyên từ $1$ đến $n cdot m$. Thứ tự điền không theo hàng hoặc theo cột."
+description: "Chúng ta có một lưới hình chữ nhật có kích thước $n nhân m$ có các ô chứa đầy các số nguyên từ $1$ đến $n cdot m$. Thứ tự điền không theo hàng hoặc theo cột."
 date: "2026-06-27T11:03:07+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
@@ -38,7 +38,7 @@ Trường hợp cạnh tinh tế đến từ các lớp suy biến. Khi hình ch
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận bạo lực sẽ mô phỏng rõ ràng việc lấp đầy hình xoắn ốc: duy trì các ranh giới trên, dưới, trái và phải hiện tại và viết các số theo chiều kim đồng hồ trong khi thu hẹp các ranh giới vào trong. Mỗi bài tập viết một số, vì vậy tổng công việc cho mỗi ca kiểm thử là$O(nm)$. Điều này đã không thể thực hiện được đối với các lưới lớn và với tối đa$10^5$trường hợp thử nghiệm nó trở nên hoàn toàn không khả thi. 
+Cách tiếp cận bạo lực sẽ mô phỏng rõ ràng việc lấp đầy hình xoắn ốc: duy trì các ranh giới trên, dưới, trái và phải hiện tại và viết các số theo thứ tự chiều kim đồng hồ trong khi thu hẹp các ranh giới vào trong. Mỗi bài tập viết một số, vì vậy tổng công việc cho mỗi ca kiểm thử là$O(nm)$. Điều này đã không thể thực hiện được đối với các lưới điện lớn và với tối đa$10^5$trường hợp thử nghiệm nó trở nên hoàn toàn không khả thi. 
 
 Quan sát quan trọng là đường xoắn ốc có cấu trúc đều đặn. Lưới bao gồm các “vòng” hình chữ nhật đồng tâm. Mỗi vòng đóng góp một số phần tử có thể dự đoán được bằng với kích thước chu vi của nó. Khi chúng ta biết có bao nhiêu số được sử dụng bởi các lớp bên ngoài đầy đủ, chúng ta có thể xác định chính xác lớp nào chứa$x$, sau đó tính toán vị trí trong lớp đó bằng số học đơn giản. 
 
@@ -59,7 +59,7 @@ Chúng tôi duy trì bốn ranh giới mô tả lớp hiện tại: hàng trên 
 2. Nếu$x$lớn hơn kích thước của vòng hiện tại, hãy trừ kích thước vòng từ$x$, sau đó thu nhỏ các ranh giới vào trong một lớp ở tất cả các cạnh. Điều này chuyển chúng ta sang hình chữ nhật bên trong tiếp theo. 
 3. Lặp lại quá trình cho đến khi$x$nằm trong vòng hiện tại. Tại thời điểm đó, chúng tôi biết chính xác lớp chứa câu trả lời. 
 4. Khi đã ở trong vòng chính xác, chúng ta duyệt nó một cách hợp lý thành bốn đoạn. Đầu tiên chúng ta di chuyển dọc theo hàng trên cùng từ trái sang phải. Nếu như$x$rơi vào phân khúc này, vị trí của nó được xác định trực tiếp. Nếu không, chúng tôi trừ đoạn đó và tiếp tục. 
-5. Tiếp theo chúng ta di chuyển xuống cột bên phải, rồi dọc theo hàng dưới cùng từ phải sang trái và cuối cùng lên cột bên trái từ dưới lên trên. Mỗi phân đoạn được kiểm tra theo thứ tự và một lần$x$rơi vào một đoạn, chúng ta tính toán tọa độ của nó bằng cách dịch chuyển từ ranh giới thích hợp. 
+5. Tiếp theo chúng ta di chuyển xuống cột bên phải, rồi dọc theo hàng dưới cùng từ phải sang trái và cuối cùng lên cột bên trái từ dưới lên trên. Mỗi phân đoạn được kiểm tra theo thứ tự và một lần$x$rơi vào một đoạn, chúng ta tính tọa độ của nó bằng cách dịch chuyển từ ranh giới thích hợp. 
 
 Ý tưởng chính là mỗi phân đoạn là một cấp số cộng thẳng theo chỉ mục hàng hoặc cột. 
 

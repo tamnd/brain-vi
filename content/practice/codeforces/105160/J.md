@@ -30,7 +30,7 @@ Mỗi học sinh sống tại một nút duy nhất i. Tuyến xe buýt là mộ
 
 Bởi vì biểu đồ là một cây, nên bất kỳ tuyến đường đơn biên nào kết thúc tại nút 0 đều hoạt động giống như một đường đi từ trên xuống về phía gốc: nó không thể phân nhánh và không thể xem lại các cạnh, do đó, nó tương ứng một cách hiệu quả với việc chọn nút bắt đầu và đi dọc theo con đường đơn giản duy nhất hướng tới nút 0. 
 
-Một hệ quả quan trọng là một xe buýt có thể phục vụ nhiều học sinh khi và chỉ khi tất cả những học sinh đó nằm trên một đường đi gốc duy nhất, nghĩa là các nút của chúng được sắp xếp trên một chuỗi tổ tiên trong cây có gốc (bắt nguồn từ nút 0). 
+Một hệ quả quan trọng là một xe buýt có thể phục vụ nhiều học sinh khi và chỉ khi tất cả những học sinh đó nằm trên một đường dẫn gốc duy nhất, nghĩa là các nút của chúng được sắp xếp trên một chuỗi tổ tiên trong cây có gốc (bắt nguồn từ nút 0). 
 
 Chúng ta được yêu cầu đếm có bao nhiêu cách chọn 3 học sinh sao cho không phải tất cả các em đều được phục vụ bởi một chiếc xe buýt. Nói cách khác, chúng tôi đếm tất cả các bộ ba nút ngoại trừ những nút có ba nút nằm trên một đường dẫn từ gốc đến lá. 
 
@@ -58,7 +58,7 @@ Bây giờ hãy sửa nút v là nút sâu nhất trong bộ ba như vậy. Hai 
 Chúng ta root cây tại nút 0 và tính độ sâu của mỗi nút, trong đó độ sâu[v] là số nút sinh viên trên đường đi từ v đến nút 0, bao gồm cả chính v.
 
 1. Xây dựng danh sách kề của cây, bao gồm nút 0 nối với nút 1. 
-2. Chạy BFS hoặc DFS từ nút 0 để tính toán độ sâu và mối quan hệ gốc. Chúng tôi đặt độ sâu [0] = 0 và đối với bất kỳ phần tử con u nào của v, độ sâu [u] = độ sâu [v] + 1. Điều này đảm bảo độ sâu [v] đếm có bao nhiêu nút sinh viên nằm trên đường từ v đến phía gốc ngoại trừ nút 0. 
+2. Chạy BFS hoặc DFS từ nút 0 để tính toán độ sâu và mối quan hệ gốc. Chúng ta đặt độ sâu [0] = 0 và đối với bất kỳ u con nào của v, độ sâu [u] = độ sâu [v] + 1. Điều này đảm bảo độ sâu [v] đếm có bao nhiêu nút sinh viên nằm trên đường từ v đến phía gốc ngoại trừ nút 0. 
 3. Tính trước tổng số bộ ba học sinh là C(n, 3). Điều này đại diện cho tất cả các lựa chọn có thể. 
 4. Tính số bộ ba xấu. Với mỗi nút v, coi v là nút sâu nhất trong bộ ba. Sau đó, hai nút còn lại phải được chọn trong số các nút tổ tiên của v cũng là các nút sinh viên, trong đó có độ sâu [v] - 1. 
 
@@ -66,7 +66,7 @@ Vì vậy, sự đóng góp của v là C(độ sâu[v] - 1, 2), với điều k
 5. Tính tổng giá trị này trên tất cả các nút v. 
 6. Câu trả lời là tổng số bộ ba trừ đi bộ ba xấu. 
 
-Lý do sự phân tách này hoạt động là vì mỗi bộ ba “cùng một bus” hợp lệ tương ứng với chính xác một nút sâu nhất theo thứ tự cây. Khi nút đó được cố định, hai nút còn lại bị ràng buộc duy nhất nằm phía trên nút đó. 
+Lý do sự phân tách này hoạt động là vì mọi bộ ba “cùng một bus” hợp lệ tương ứng với chính xác một nút sâu nhất theo thứ tự cây. Khi nút đó được cố định, hai nút còn lại bị ràng buộc duy nhất nằm phía trên nút đó. 
 
 ## Giải pháp Python```python
 import sys

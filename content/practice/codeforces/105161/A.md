@@ -44,7 +44,7 @@ Quan sát quan trọng là sự hình thành tam giác chỉ được đưa ra k
 
 Đối với nhiều thành phần, trước tiên chúng ta gộp rừng thành một cây duy nhất nhưng phải chọn thứ tự gộp một cách cẩn thận. Thay vì kết nối các thành phần một cách tùy ý, chúng tôi ưu tiên coi mỗi thành phần đóng góp một số lá nhất định và chúng tôi luôn hợp nhất các thành phần theo cách giữ cho việc ghép các lá được cân bằng trên toàn cầu. 
 
-Chiến lược tham lam có hiệu quả: duy trì các thành phần được sắp xếp theo thước đo cấu trúc phản ánh mức độ tích hợp “đắt” của chúng, thường liên quan đến số lượng lá không thể ghép nối bên trong. Liên tục hợp nhất thành phần “đắt tiền” nhất vào thành phần khác, cập nhật các lá có sẵn và tiếp tục cho đến khi còn lại một cây. Sau đó, chúng tôi thực hiện giai đoạn ghép đôi lá cuối cùng để kết nối các lá theo cách tránh bất kỳ sự hình thành tam giác cục bộ nào.
+Chiến lược tham lam có hiệu quả: duy trì các thành phần được sắp xếp theo thước đo cấu trúc phản ánh mức độ tích hợp “đắt” của chúng, thường liên quan đến số lượng lá không thể ghép nối bên trong. Liên tục hợp nhất thành phần “đắt tiền” nhất vào thành phần khác, cập nhật các lá có sẵn và tiếp tục cho đến khi còn lại một cây. Sau đó, chúng tôi thực hiện giai đoạn ghép lá cuối cùng để kết nối các lá theo cách tránh bất kỳ sự hình thành tam giác cục bộ nào.
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -55,15 +55,15 @@ Chiến lược tham lam có hiệu quả: duy trì các thành phần được 
 
 Chúng tôi tiến hành bằng cách xử lý riêng từng thành phần được kết nối lúc đầu, sau đó dần dần hợp nhất chúng thành một cây duy nhất trong khi theo dõi cấu trúc lá. 
 
-1. Chúng tôi tính toán tất cả các thành phần được kết nối của forest. Mỗi thành phần là một cái cây nên chúng ta nhổ tùy ý và thu thập lá của nó. Điều này quan trọng vì chỉ có các lá mới là ứng cử viên để ghép nối mà không gây nguy cơ tạo ra hình tam giác trong cấu trúc bên trong. 
-2. Đối với mỗi thành phần, chúng tôi tính toán danh sách các lá của nó và xác định giá trị x là số lá vẫn chưa được ghép nối trong thành phần đó. X này xác định có bao nhiêu cạnh mà thành phần sẽ “đóng góp” vào cấu trúc cuối cùng. Lý do cho vấn đề này là vì mỗi cạnh được thêm vào chỉ có thể che phủ hai lá một cách an toàn, do đó x kiểm soát giới hạn dưới của các cạnh được yêu cầu. 
+1. Chúng tôi tính toán tất cả các thành phần được kết nối của forest. Mỗi thành phần là một cái cây nên ta nhổ tùy ý và thu thập lá của nó. Điều này quan trọng vì chỉ có các lá mới là ứng cử viên để ghép nối mà không gây nguy cơ tạo ra hình tam giác trong cấu trúc bên trong. 
+2. Đối với mỗi thành phần, chúng tôi tính toán danh sách các lá của nó và xác định giá trị x là số lá vẫn chưa được ghép nối trong thành phần đó. X này xác định có bao nhiêu cạnh mà thành phần sẽ “đóng góp” vào cấu trúc cuối cùng. Lý do vấn đề này là vì mỗi cạnh được thêm vào chỉ có thể che phủ hai lá một cách an toàn, do đó x kiểm soát giới hạn dưới của các cạnh được yêu cầu. 
 3. Chúng ta đặt tất cả các thành phần vào một cấu trúc được sắp xếp theo thứ tự x giảm dần. Chúng tôi luôn ưu tiên hợp nhất thành phần có sự mất cân bằng lá lớn nhất còn lại vì nó mang lại sự linh hoạt nhất trong việc phân phối các điểm cuối ghép nối trên toàn cấu trúc toàn cầu. 
 4. Chúng ta liên tục lấy thành phần có x lớn nhất và nối một trong các lá của nó với một lá của thành phần khác. Mỗi kết nối như vậy sẽ làm giảm sự mất cân bằng tổng thể, giảm thiểu hiệu quả số lượng kết nối nội bộ cần thiết trên toàn cầu. Bước này xây dựng một cây bao trùm trên các thành phần. 
 5. Sau khi tất cả các thành phần được hợp nhất thành một cây duy nhất, chúng tôi thu thập tất cả các lá còn lại của cấu trúc cuối cùng. 
 6. Chúng ta ghép các lá theo kiểu đối xứng: lá thứ i được nối với lá thứ (i + m/2), trong đó m là số lá. Điều này đảm bảo mỗi lá được sử dụng chính xác một lần và đảm bảo mọi cạnh của cây ban đầu nằm trên ít nhất một chu kỳ. 
 7. Chúng tôi xuất ra tất cả các cạnh được thêm vào. 
 
-Tại sao điều này có tác dụng gắn liền với cách tạo ra các chu kỳ. Mỗi cạnh được thêm vào giữa các lá tạo ra một chu trình đi qua đường dẫn duy nhất trong cây, bao gồm tất cả các cạnh dọc theo đường dẫn đó. Vì mỗi cạnh của cây nằm trên một số đường dẫn từ lá này sang lá khác do sự ghép đôi này gây ra nên mỗi cạnh trở thành một phần của ít nhất một chu trình, loại bỏ tất cả các cây cầu. Việc tránh tam giác xuất phát từ thực tế là các đường đi từ lá này sang lá khác không bao giờ tạo ra sự kề cận trực tiếp giữa ba đỉnh được kết nối lẫn nhau theo cách đóng 3 chu kỳ, vì chúng ta không bao giờ kết nối các đỉnh có chung mô hình kề cận cha-con hoặc anh chị em ruột để tạo ra một hình tam giác. 
+Tại sao điều này có tác dụng gắn liền với cách tạo ra các chu kỳ. Mỗi cạnh được thêm vào giữa các lá sẽ tạo ra một chu trình đi qua đường dẫn duy nhất trong cây, bao gồm tất cả các cạnh dọc theo đường dẫn đó. Vì mỗi cạnh của cây nằm trên một số đường dẫn từ lá này sang lá khác do sự ghép đôi này gây ra nên mỗi cạnh trở thành một phần của ít nhất một chu trình, loại bỏ tất cả các cây cầu. Việc tránh tam giác xuất phát từ thực tế là các đường đi từ lá này sang lá khác không bao giờ tạo ra sự kề cận trực tiếp giữa ba đỉnh được kết nối lẫn nhau theo cách đóng 3 chu kỳ, vì chúng ta không bao giờ kết nối các đỉnh có chung mô hình kề cận cha-con hoặc anh chị em ruột để tạo ra một hình tam giác. 
 
 ## Giải pháp Python```python
 import sys
@@ -145,7 +145,7 @@ Một điểm tinh tế là chúng tôi không bao giờ cố gắng cập nhậ
 
 Hãy xem xét một khu rừng đơn giản có hai thành phần: chuỗi 1-2-3 và một ngôi sao có tâm ở vị trí thứ 4 với các lá thứ 5 và 6. 
 
-Các lá là {1, 3, 5, 6}. 
+Lá là {1, 3, 5, 6}. 
 
 Chúng tôi sắp xếp chúng thành [1, 3, 5, 6], sau đó ghép nối (1, 5) và (3, 6). 
 
@@ -230,7 +230,7 @@ assert len(res.splitlines()) > 1
 
 ## Vỏ cạnh 
 
-Một thành phần nút đơn được xử lý một cách tự nhiên vì nó chỉ đóng góp một lá nếu bậc của nó bằng 0. Bước ghép đôi chỉ đơn giản là không khớp nếu tổng số lá là số lẻ, nhưng trong các cấu trúc hợp lệ, tình trạng này được cân bằng bởi các thành phần khác đóng góp lá. 
+Một thành phần nút đơn được xử lý một cách tự nhiên vì nó chỉ đóng góp một lá nếu bậc của nó bằng 0. Bước ghép đôi chỉ đơn giản là không khớp nếu tổng số lá là số lẻ, nhưng trong các cấu trúc hợp lệ, tình huống này được cân bằng bởi các thành phần khác đóng góp lá. 
 
 Biểu đồ hình sao là trường hợp nhạy cảm nhất vì tất cả các lá đều có chung một tâm. Thuật toán xử lý tất cả các lá một cách đồng nhất, do đó không có hai lá nào từ cùng một cha mẹ bị ép thành một hình tam giác có tâm vì chúng ta không bao giờ kết nối chúng trực tiếp qua tâm; mỗi kết nối nằm giữa các lá có đường đi ngắn nhất đủ dài để tránh tạo thành hình tam giác. 
 
