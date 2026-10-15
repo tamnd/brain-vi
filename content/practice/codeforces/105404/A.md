@@ -18,7 +18,7 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 1 phút 10 giây 
+**Thời gian giải:** 1 phút 10s 
 **Đã xác minh:** có 
 
 ## Giải pháp 
@@ -46,7 +46,7 @@ Câu hỏi cốt lõi giảm xuống việc kiểm tra xem ranh giới giữa ch
 
 ## Phương pháp tiếp cận 
 
-Cách trực tiếp nhất để giải quyết vấn đề là mô phỏng quá trình xếp hạng. Người ta có thể sắp xếp những người tham gia theo điểm số theo thứ tự giảm dần và sau đó kiểm tra vị trí giới hạn. Sau khi sắp xếp, chúng ta kiểm tra điểm ở vị trí`k`và so sánh nó với điểm số ở vị trí`k+1`. Nếu chúng khác nhau thì ranh giới rõ ràng. Nếu chúng bằng nhau thì ranh giới nằm trong một nhóm ràng buộc và sự phân chia không rõ ràng. 
+Cách trực tiếp nhất để giải quyết vấn đề là mô phỏng quá trình xếp hạng. Người ta có thể sắp xếp người tham gia theo điểm số theo thứ tự giảm dần và sau đó kiểm tra vị trí giới hạn. Sau khi sắp xếp, chúng ta kiểm tra điểm ở vị trí`k`và so sánh nó với điểm số ở vị trí`k+1`. Nếu chúng khác nhau thì ranh giới rõ ràng. Nếu chúng bằng nhau thì ranh giới nằm trong một nhóm ràng buộc và sự phân chia không rõ ràng. 
 
 Một biến thể bạo lực có thể thử, đối với mỗi người tham gia, để xác định xem họ có thể là một phần của một số giải pháp hàng đầu hợp lệ hay không.`k`phân công theo các ràng buộc ràng buộc, nhưng điều này nhanh chóng trở nên phức tạp không cần thiết. Cấu trúc của vấn đề đảm bảo rằng chỉ có mối quan hệ giữa`k`-th và`(k+1)`-th giá trị lớn nhất quan trọng. Mọi thứ khác đều không liên quan vì việc sắp xếp bên trong các nhóm có giá trị bằng nhau không làm thay đổi tính khả thi. 
 
@@ -86,7 +86,7 @@ for _ in range(t):
         print("EMPATE")
     else:
         print("BIEN")
-```Giải pháp đọc từng trường hợp kiểm thử, sắp xếp điểm theo thứ tự giảm dần và sau đó thực hiện một so sánh duy nhất tại ranh giới giới hạn. Chi tiết triển khai quan trọng đang sử dụng`k - 1`Và`k`do lập chỉ mục dựa trên 0. Đây là nguồn lỗi phổ biến nhất trong vấn đề này vì việc trộn các vị trí dựa trên 1 và 0 sẽ làm dịch chuyển ranh giới không chính xác. 
+```Giải pháp đọc từng trường hợp thử nghiệm, sắp xếp điểm theo thứ tự giảm dần và sau đó thực hiện một so sánh duy nhất tại ranh giới giới hạn. Chi tiết triển khai quan trọng đang sử dụng`k - 1`Và`k`do lập chỉ mục dựa trên 0. Đây là nguồn lỗi phổ biến nhất trong vấn đề này vì việc trộn các vị trí dựa trên 1 và 0 sẽ làm dịch chuyển ranh giới không chính xác. 
 
 Sắp xếp theo thứ tự ngược lại đảm bảo điểm cao nhất nằm ở phía trước, xếp đầu`k`tiếp giáp. Không cần cấu trúc dữ liệu bổ sung vì chỉ có hai vị trí quan trọng sau khi sắp xếp. 
 
@@ -183,7 +183,7 @@ assert run("""1
 | tất cả đều bình đẳng | NHẬN XÉT | nhóm liên kết đầy đủ khiến cho việc cắt giảm trở nên mơ hồ | 
 | giảm nghiêm ngặt | BIÊN | ranh giới rõ ràng sau khi sắp xếp | 
 | cà vạt ranh giới | NHẬN XÉT | giá trị bằng nhau trên điểm cắt | 
-| kích thước tối thiểu | BIÊN | trường hợp cơ sở đúng đắn | 
+| kích thước tối thiểu | BIÊN | tính đúng đắn của trường hợp cơ sở | 
 
 ## Vỏ cạnh 
 

@@ -36,9 +36,9 @@ Vì vậy vấn đề không còn là về các phép toán nữa mà là về v
 
 Từ những hạn chế,$t$có thể lên tới 30000 nên mỗi bài kiểm tra phải rất nhanh, lý tưởng nhất là$O(1)$hoặc$O(\sqrt{k})$lúc tệ nhất. Từ$n$,$m$, Và$k$có thể lớn, bất cứ điều gì liên quan đến mô phỏng trên lưới hoặc các hoạt động liệt kê đều không thể thực hiện được. 
 
-Một trường hợp thất bại phổ biến xuất phát từ lý luận theo “trình tự vẽ” thay vì hình học cuối cùng. Ví dụ: người ta có thể nghĩ sai về sự chồng chéo giữa các thao tác hàng và cột, làm thay đổi số lượng một cách phức tạp. Trong thực tế, sự chồng chéo không thành vấn đề: một ô có màu đen nếu hàng hoặc cột của nó được chọn, do đó kết quả hoàn toàn là phép nhân. 
+Một trường hợp thất bại phổ biến xuất phát từ lý luận theo “trình tự vẽ” thay vì hình học cuối cùng. Ví dụ: người ta có thể nghĩ sai về sự chồng chéo giữa các thao tác hàng và cột, làm thay đổi số lượng một cách phức tạp. Trong thực tế, sự chồng chéo không thành vấn đề: một ô sẽ có màu đen nếu hàng hoặc cột của nó được chọn, do đó kết quả hoàn toàn là phép nhân. 
 
-Một sai lầm tinh vi khác là điều trị$k$tùy ý mà quên rằng nó phải bằng diện tích hình chữ nhật bên trong lưới. Ví dụ, nếu$n = 3$,$m = 3$, Và$k = 5$, không có cách nào để hình thành một$3 \times 3$diện tích lưới của chính xác 5 ô trắng còn lại, mặc dù 5 ô có vẻ “có thể truy cập được” thông qua trực giác vẽ một phần. 
+Một sai lầm tinh tế khác là điều trị$k$tùy ý trong khi quên rằng nó phải bằng diện tích hình chữ nhật bên trong lưới. Ví dụ, nếu$n = 3$,$m = 3$, Và$k = 5$, không có cách nào để hình thành một$3 \times 3$diện tích lưới của chính xác 5 ô trắng còn lại, mặc dù 5 ô có vẻ “có thể truy cập được” thông qua trực giác vẽ một phần. 
 
 ## Phương pháp tiếp cận 
 
@@ -138,7 +138,7 @@ Dấu vết này cho thấy chúng ta chỉ cần một cặp nhân tố hợp l
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian |$O(t \sqrt{k})$| Mỗi bài kiểm tra sẽ quét các ước của$k$lên đến$\sqrt{k}$| 
+| Thời gian |$O(t \sqrt{k})$| Mỗi bài kiểm tra sẽ quét các ước của$k$lên tới$\sqrt{k}$| 
 | Không gian |$O(1)$| Chỉ sử dụng các biến không đổi | 
 
 Mặc dù$\sqrt{k}$về mặt lý thuyết có thể lớn, phép toán là số học số nguyên đơn giản và tổng số lần kiểm tra vẫn nằm trong giới hạn điển hình cho 30000 trường hợp thử nghiệm trong thực tế. 
@@ -197,4 +197,4 @@ Trường hợp góc là khi$k = 1$. Mặc dù vấn đề nêu$k \ge 2$, lý lu
 
 Một trường hợp tế nhị khác là khi$k$là nguyên tố. Ví dụ,$k = 13$với$n = 3$,$m = 10$. Hệ số hóa duy nhất là$1 \times 13$, không thành công trừ khi một chiều có thể chứa 13. Thuật toán loại bỏ chính xác tất cả các giá trị khác vì không tồn tại ước số nào khác ngoài 1. 
 
-Một trường hợp thú vị hơn là khi cả hai hệ số đều tồn tại nhưng chỉ có một hệ số phù hợp. Vì$n = 5$,$m = 20$,$k = 50$, chúng ta có cặp$(1,50)$,$(2,25)$,$(5,10)$,$(10,5)$. Chỉ một$(5,10)$Và$(10,5)$có liên quan và ít nhất một thỏa mãn các ràng buộc, do đó thuật toán sẽ chấp nhận ngay lập tức khi gặp nó.
+Một trường hợp thú vị hơn là khi cả hai hệ số đều tồn tại nhưng chỉ có một hệ số phù hợp. Vì$n = 5$,$m = 20$,$k = 50$, chúng ta có cặp$(1,50)$,$(2,25)$,$(5,10)$,$(10,5)$. Chỉ một$(5,10)$Và$(10,5)$có liên quan và ít nhất một thỏa mãn các ràng buộc, do đó thuật toán chấp nhận ngay lập tức khi gặp nó.

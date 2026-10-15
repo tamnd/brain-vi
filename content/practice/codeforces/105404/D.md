@@ -28,7 +28,7 @@ Chúng tôi được cung cấp nhiều giá trị tiền xu và số tiền m�
 
 Vấn đề quan trọng là Pedro có thể không đạt được chính xác số tiền còn lại bằng 0. Trong trường hợp đó, chúng tôi được phép giúp anh ta bằng cách thêm các đồng tiền mới có giá trị tùy ý và mục tiêu là giảm thiểu tổng giá trị của các đồng tiền mà chúng tôi thêm vào để sau khi chèn chúng vào bộ của anh ta và để anh ta chạy cùng một quy trình tham lam, anh ta thành công trong việc thanh toán chính xác$k$. 
 
-Khó khăn chính là quy trình này không phải là một tập hợp con tiêu chuẩn hoặc sự lựa chọn ba lô. Thứ tự được cố định bằng cách sắp xếp và các đồng tiền lớn có thể chặn việc sử dụng những đồng tiền nhỏ hơn sau này, điều này khiến tính khả thi phụ thuộc vào thứ tự toàn cầu thay vì chỉ tổng số. 
+Khó khăn chính là quy trình này không phải là một tập hợp con tiêu chuẩn hoặc sự lựa chọn ba lô. Thứ tự được cố định bằng cách sắp xếp và các đồng tiền lớn có thể chặn việc sử dụng những đồng tiền nhỏ hơn sau này, điều này khiến cho tính khả thi phụ thuộc vào thứ tự toàn cầu thay vì chỉ tổng số. 
 
 Các ràng buộc đi lên đến$n = 10^4$và giá trị lên đến$10^{13}$. Điều đó ngay lập tức loại trừ bất kỳ giải pháp nào cố gắng mô phỏng tất cả các tập hợp con hoặc cố gắng kiểm tra các sửa đổi theo cách kết hợp. Chúng ta cần thứ gì đó nhiều nhất$O(n \log n)$hoặc$O(n)$mỗi trường hợp thử nghiệm. 
 
@@ -40,11 +40,11 @@ Một trường hợp phức tạp phá vỡ lý luận ngây thơ là khi một
 
 Một chiến lược mạnh mẽ sẽ là xem xét tất cả các cách có thể để chèn thêm tiền và mô phỏng quá trình tham lam mỗi lần. Ngay cả khi chúng ta hạn chế số lượng nhỏ các đồng tiền được thêm vào, không gian trạng thái vẫn bùng nổ vì mỗi lần chèn sẽ thay đổi thứ tự sắp xếp và do đó trình tự các quyết định. Với tối đa$n = 10^4$, điều này hoàn toàn không thể thực hiện được. 
 
-Quan sát quan trọng là quá trình tham lam có tính quyết định sau khi nhiều tập hợp được cố định và sắp xếp. Điều duy nhất chúng tôi kiểm soát là mức độ "linh hoạt ngân sách" bổ sung mà chúng tôi đưa vào để quá trình quét tham lam không bao giờ bị kẹt trước khi tiếp cận chính xác$k$. 
+Quan sát quan trọng là quá trình tham lam có tính quyết định sau khi nhiều tập hợp được cố định và sắp xếp. Điều duy nhất chúng tôi kiểm soát là mức độ "linh hoạt ngân sách" bổ sung mà chúng tôi đưa vào để việc quét tham lam không bao giờ bị kẹt trước khi tiếp cận chính xác$k$. 
 
 Nếu chúng ta mô phỏng quy trình trên các đồng tiền gốc, chúng ta có thể theo dõi mục tiêu còn lại sau khi mỗi đồng tiền được xử lý. Bất cứ khi nào thuật toán gặp một đồng xu quá lớn, đồng xu đó sẽ bị bỏ qua và không được sử dụng, nhưng nó vẫn nằm trong thứ tự và ảnh hưởng gián tiếp đến các so sánh trong tương lai thông qua mục tiêu còn lại. 
 
-Cái nhìn sâu sắc về cấu trúc quan trọng là hãy suy nghĩ về mức độ “thâm hụt” mà chúng ta tích lũy trong mục tiêu còn lại trong khi quét. Bất cứ khi nào chúng tôi đạt đến điểm mà số tiền hiện tại không thể được sử dụng, mục tiêu còn lại vẫn dương và điều này cho thấy khoảng cách chỉ có thể được thu hẹp bằng cách thêm các đồng tiền giúp giảm thiểu yêu cầu còn lại sớm hơn trong đơn hàng một cách hiệu quả. 
+Cái nhìn sâu sắc về cấu trúc quan trọng là hãy suy nghĩ về mức độ “thâm hụt” mà chúng ta tích lũy trong mục tiêu còn lại trong khi quét. Bất cứ khi nào chúng tôi đạt đến điểm không thể sử dụng được số tiền hiện tại, mục tiêu còn lại vẫn dương và điều này cho thấy khoảng cách chỉ có thể được thu hẹp bằng cách thêm các đồng tiền giúp giảm thiểu yêu cầu còn lại sớm hơn trong đơn hàng một cách hiệu quả. 
 
 Giải pháp tối ưu giúp giảm bớt việc theo dõi tổng giá trị bổ sung cần thiết để đảm bảo rằng ở mọi tiền tố của chuỗi được sắp xếp, quy trình có thể tiếp tục nhất quán về 0 mà không bị kẹt. Điều này có thể được xử lý một cách tham lam bằng cách quét theo thứ tự được sắp xếp và duy trì mức độ “hỗ trợ” bổ sung cần thiết để giữ cho mục tiêu còn lại khả thi. 
 
@@ -64,7 +64,7 @@ Cấu trúc cuối cùng tương đương với việc đảm bảo rằng mỗi
 3. Duyệt qua từng đồng xu theo thứ tự sắp xếp và kiểm tra xem nó có thể được sử dụng hay không, nghĩa là giá trị của nó nhỏ hơn hoặc bằng`rem`. 
 4. Nếu đồng xu có thể được sử dụng, hãy trừ nó khỏi`rem`vì Pedro thanh toán bằng số tiền đó và giảm số tiền cần thiết. 
 5. Nếu đồng xu không thể được sử dụng, chúng tôi ghi nhận về mặt khái niệm rằng đồng xu này sẽ chặn tiến trình vì nó sẽ bị bỏ qua. Tại thời điểm này, chúng tôi có thể cần “sửa chữa” tính khả thi bằng cách thêm tiền. 
-6. Ý tưởng sửa chữa quan trọng là bất cứ khi nào một đồng xu bị bỏ qua do quá lớn so với`rem`, chúng ta phải đảm bảo rằng`rem`đủ lớn trong các giai đoạn trước của quy trình để tình huống này không cản trở việc hoàn thành cuối cùng. Điều này được xử lý bằng cách tích lũy một số tiền bổ sung cần thiết, theo dõi hiệu quả giá trị đồng xu bổ sung phải được đưa vào để quá trình tham lam không bao giờ bị mắc kẹt. 
+6. Ý tưởng sửa chữa quan trọng là bất cứ khi nào một đồng xu bị bỏ qua do quá lớn so với`rem`, chúng ta phải đảm bảo rằng`rem`đủ lớn trong các giai đoạn trước của quy trình để tình huống này không cản trở việc hoàn thành cuối cùng. Điều này được xử lý bằng cách tích lũy một khoản tiền bổ sung cần thiết, theo dõi hiệu quả số lượng giá trị đồng xu bổ sung phải được đưa vào để quá trình tham lam không bao giờ bị mắc kẹt. 
 7. Tiếp tục sử dụng tất cả các đồng tiền trong khi duy trì cả hai`rem`và câu trả lời tích lũy đại diện cho giá trị gia tăng tối thiểu. 
 
 Sau khi quét, giá trị tích lũy là số tiền bổ sung tối thiểu cần thiết. 
@@ -152,7 +152,7 @@ coins = [5, 4, 3, 2]
 | Thời gian |$O(n \log n)$| việc sắp xếp chiếm ưu thế trong mỗi trường hợp thử nghiệm | 
 | Không gian |$O(1)$| chỉ có một vài biến ngoài mảng đầu vào | 
 
-Các ràng buộc cho phép lên đến$10^4$tiền xu, do đó việc sắp xếp cộng với quét tuyến tính cho mỗi trường hợp thử nghiệm nằm trong giới hạn thoải mái. 
+Các ràng buộc cho phép lên đến$10^4$tiền xu, vì vậy việc sắp xếp cộng với quét tuyến tính cho mỗi trường hợp thử nghiệm nằm trong giới hạn thoải mái. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io
@@ -228,8 +228,8 @@ assert run("""1
 
 ## Vỏ cạnh 
 
-Trường hợp một cạnh là khi đồng xu lớn nhất đã vượt quá mục tiêu ngay lập tức. Ví dụ,$k = 3$, tiền xu$[10, 2]$. Thuật toán xử lý 10 trước, thấy rằng nó không thể sử dụng được và thêm vào$10 - 3 = 7$. This directly accounts for the fact that without intervention, the first decision already breaks feasibility.
+Trường hợp một cạnh là khi đồng xu lớn nhất đã vượt quá mục tiêu ngay lập tức. Ví dụ,$k = 3$, tiền xu$[10, 2]$. Thuật toán xử lý 10 trước, thấy rằng nó không thể sử dụng được và thêm vào$10 - 3 = 7$. Điều này trực tiếp giải thích cho thực tế là nếu không có sự can thiệp thì quyết định đầu tiên sẽ phá vỡ tính khả thi. 
 
- Another case is when the remaining target becomes zero early. Ví dụ,$k = 5$, tiền xu$[3, 2, 1]$. Sau khi lấy 3 và 2,`rem`trở thành số không. Tất cả số tiền còn lại thực sự không liên quan và thuật toán tích lũy chính xác mà không mất thêm chi phí. 
+Một trường hợp khác là khi mục tiêu còn lại về 0 sớm. Ví dụ,$k = 5$, tiền xu$[3, 2, 1]$. Sau khi lấy 3 và 2,`rem`trở thành số không. Tất cả số tiền còn lại thực sự không liên quan và thuật toán tích lũy chính xác mà không mất thêm chi phí. 
 
-Trường hợp tinh vi cuối cùng là khi nhiều đồng xu lớn xuất hiện sau`rem`đã giảm đáng kể rồi. Mỗi đồng xu như vậy đóng góp độc lập vào việc điều chỉnh cần thiết, vì mỗi đồng xu sẽ tạo ra một điểm không khả thi riêng biệt trong quá trình quét.
+Trường hợp tinh tế cuối cùng là khi nhiều đồng xu lớn xuất hiện sau`rem`đã giảm đáng kể rồi. Mỗi đồng xu như vậy đóng góp độc lập vào việc điều chỉnh cần thiết, vì mỗi đồng xu sẽ tạo ra một điểm không khả thi riêng biệt trong quá trình quét.

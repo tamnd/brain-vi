@@ -18,7 +18,7 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 1 phút 45 giây 
+**Thời gian giải:** 1 phút 45s 
 **Đã xác minh:** không 
 
 ## Giải pháp 

@@ -28,7 +28,7 @@ Chúng tôi được cung cấp một số trường hợp thử nghiệm độc
 
 Nói một cách cụ thể hơn, đối với mỗi mảng, chúng ta đang tìm kiếm một chỉ mục$i$sao cho với mọi$j$, giá trị$a_i$chia rẽ$a_j$không có phần còn lại. Nếu phần tử đó tồn tại, chúng tôi trả lời "SI", nếu không chúng tôi trả lời "KHÔNG". 
 
-Kích thước đầu vào buộc chúng ta phải suy nghĩ cẩn thận về hiệu quả của mỗi trường hợp kiểm thử. Có thể có tối đa 100 trường hợp thử nghiệm và mỗi trường hợp thử nghiệm có thể chứa tối đa 10.000 số. Một cách tiếp cận đơn giản để kiểm tra các cặp chia hết cho từng phần tử ứng cử viên so với tất cả các phần tử khác sẽ yêu cầu kiểm tra tới$n^2$mối quan hệ trên mỗi trường hợp thử nghiệm, trong trường hợp xấu nhất đạt đến$10^8$kiểm tra tính chia hết. Đó vẫn là ranh giới nhưng chỉ có thể vượt qua Python được tối ưu hóa nếu được triển khai cẩn thận, mặc dù điều đó là không cần thiết. 
+Kích thước đầu vào buộc chúng ta phải suy nghĩ cẩn thận về hiệu quả của mỗi trường hợp kiểm thử. Có thể có tối đa 100 trường hợp thử nghiệm và mỗi trường hợp thử nghiệm có thể chứa tối đa 10.000 số. Một cách tiếp cận đơn giản để kiểm tra các cặp chia hết cho từng phần tử ứng cử viên so với tất cả các phần tử khác sẽ yêu cầu kiểm tra tới$n^2$mối quan hệ trên mỗi trường hợp thử nghiệm, trong trường hợp xấu nhất đạt đến$10^8$kiểm tra tính chia hết. Đó vẫn là giới hạn nhưng chỉ có thể chuyển sang Python được tối ưu hóa nếu được triển khai cẩn thận, mặc dù điều đó là không cần thiết. 
 
 Một ràng buộc tinh vi hơn đến từ phạm vi giá trị: mỗi số có tối đa$10^9$. Điều này loại trừ bất kỳ phương pháp lập chỉ mục trực tiếp hoặc mảng tần số nào. Cấu trúc hoàn toàn là số học. 
 

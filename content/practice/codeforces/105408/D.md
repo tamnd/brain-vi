@@ -18,7 +18,7 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 1 phút 45 giây 
+**Thời gian giải:** 1 phút 45s 
 **Đã xác minh:** không 
 
 ## Giải pháp 
@@ -34,11 +34,11 @@ Các ràng buộc buộc chúng tôi phải đưa ra giải pháp gần tuyến 
 
 Một mô phỏng ngây thơ ngay lập tức thất bại. Mỗi con chồn nằm trong một chu trình hoán vị và độ dài chu trình có thể lớn bằng$n$, do đó mô phỏng lên đến$2024!^{2024!}$bước là không thể. Ngay cả việc giảm câu hỏi về tính tuần hoàn của chu kỳ vẫn để lại cho chúng ta bội số chung nhỏ nhất có thể rất lớn nếu chúng ta cố gắng đồng bộ hóa trực tiếp hai con chồn sương. 
 
-Ý tưởng ngây thơ thứ hai là mô phỏng toàn bộ chu trình hoán vị cho mỗi truy vấn và ghi lại tất cả các sự kiện lân cận. Điều đó sẽ tốn kém$O(n^2)$cho mỗi trường hợp thử nghiệm trong trường hợp xấu nhất và sẽ không vượt qua được các ràng buộc. 
+Ý tưởng ngây thơ thứ hai là mô phỏng toàn bộ chu trình hoán vị cho mỗi truy vấn và ghi lại tất cả các sự kiện kề. Điều đó sẽ tốn kém$O(n^2)$cho mỗi trường hợp thử nghiệm trong trường hợp xấu nhất và sẽ không vượt qua được các ràng buộc. 
 
 ## Phương pháp tiếp cận 
 
-Quan sát quan trọng là hoán vị phân hủy thành các chu trình độc lập. Mỗi con chồn di chuyển theo chu kỳ của nó với độ lệch cố định trên mỗi bước. Nếu chúng ta ấn định thời gian bắt đầu$k$, vị trí của con chồn sương được xác định hoàn toàn bởi chỉ số của nó trong chu kỳ của nó cộng với$k$modulo độ dài chu kỳ. 
+Quan sát quan trọng là hoán vị phân hủy thành các chu trình độc lập. Mỗi con chồn di chuyển theo chu kỳ của nó với độ lệch cố định trên mỗi bước. Nếu chúng ta ấn định thời gian bắt đầu$k$, vị trí của con chồn được xác định hoàn toàn bởi chỉ số của nó trong chu kỳ của nó cộng với$k$modulo độ dài chu kỳ. 
 
 Điều này biến vấn đề thành một câu hỏi đồng bộ hóa giữa hai bước đi theo chu kỳ. Đối với chồn sương$a$Và$b$, giả sử chúng nằm theo chu kỳ$A$Và$B$độ dài$L_A$Và$L_B$. Vào thời điểm$k$, vị trí của chúng trong chu kỳ của chúng thay đổi theo$k \bmod L_A$Và$k \bmod L_B$. Chúng ta muốn biết liệu có tồn tại một thời điểm$k$sao cho nhãn thực tế của chúng tạo thành một cạnh của vòng tròn cố định. 
 
@@ -75,7 +75,7 @@ Giá trị này xác định khi nào hai sự dịch chuyển theo chu kỳ đ�
 
 ### Tại sao nó hoạt động 
 
-Mỗi chu kỳ hoạt động giống như một chiếc đồng hồ mô-đun, trong đó mỗi bước sẽ nâng cao vị trí lên một bước. Hai con chồn sương thẳng hàng với một cặp vị trí vòng tròn cố định chỉ khi một lần duy nhất$k$thỏa mãn đồng thời hai ràng buộc mô-đun. Một hệ thống như vậy có nghiệm chính xác khi các ràng buộc bằng modulo gcd của độ dài chu kỳ. 
+Mỗi chu kỳ hoạt động giống như một chiếc đồng hồ mô-đun, trong đó mỗi bước sẽ nâng cao vị trí lên một. Hai con chồn sương thẳng hàng với một cặp vị trí vòng tròn cố định chỉ khi một lần duy nhất$k$thỏa mãn đồng thời hai ràng buộc mô-đun. Một hệ thống như vậy có nghiệm chính xác khi các ràng buộc bằng modulo gcd của độ dài chu kỳ. 
 
 Mỗi cạnh kề của vòng tròn mã hóa một ràng buộc như vậy. Việc lưu trữ tất cả các ràng buộc trên mỗi cặp chu kỳ sẽ bảo toàn chính xác tập hợp các sắp xếp có thể đạt được và không thể thực hiện được các tương tác khác vì các chu trình hoán vị tiến triển độc lập. 
 
@@ -225,4 +225,4 @@ Trường hợp cạnh khóa là khi cả hai con chồn được truy vấn đ�
 
 Một trường hợp tinh tế khác phát sinh khi không có cạnh đường tròn nào nối hai chu trình. Điều này có nghĩa là không có ràng buộc kề nào tồn tại giữa chúng, do đó không thể đồng bộ hóa được. Thuật toán xử lý chính xác điều này bằng cách kiểm tra sự vắng mặt của khóa cặp chu trình trong bản đồ. 
 
-Trường hợp cạnh cuối cùng là sự kề cận bao quanh giữa$n$Và$1$. Việc coi đường tròn là tuyến tính sẽ bỏ lỡ hoàn toàn kết nối này, nhưng thuật toán rõ ràng bao gồm cạnh này, đảm bảo cấu trúc ràng buộc hoàn chỉnh.
+Trường hợp cạnh cuối cùng là sự kề cận bao quanh giữa$n$Và$1$. Việc coi đường tròn là tuyến tính sẽ hoàn toàn bỏ lỡ kết nối này, nhưng thuật toán rõ ràng bao gồm cạnh này, đảm bảo cấu trúc ràng buộc hoàn chỉnh.

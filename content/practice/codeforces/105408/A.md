@@ -38,7 +38,7 @@ Một sai lầm ngây thơ là chỉ sắp xếp theo chuỗi đã chuyển đ�
 
 ## Phương pháp tiếp cận 
 
-Giải pháp trực tiếp sẽ xử lý từng truy vấn một cách độc lập bằng cách lặp qua tất cả các từ trong từ điển và kiểm tra xem mỗi từ có nhỏ hơn hoặc bằng truy vấn theo thứ tự đã xác định hay không. Điều này yêu cầu tính toán biểu mẫu được sắp xếp cho mỗi lần so sánh hoặc lưu trữ trước. Ngay cả khi quá trình tiền xử lý được thực hiện, mỗi truy vấn vẫn cần so sánh O(N), dẫn đến thời gian là O(NQ). Với 100000 truy vấn, điều này trở nên quá lớn. 
+Giải pháp trực tiếp sẽ xử lý từng truy vấn một cách độc lập bằng cách lặp lại tất cả các từ trong từ điển và kiểm tra xem mỗi từ có nhỏ hơn hoặc bằng truy vấn theo thứ tự đã xác định hay không. Điều này yêu cầu tính toán biểu mẫu được sắp xếp cho mỗi lần so sánh hoặc lưu trữ trước. Ngay cả khi quá trình tiền xử lý được thực hiện, mỗi truy vấn vẫn cần so sánh O(N), dẫn đến thời gian là O(NQ). Với 100000 truy vấn, điều này trở nên quá lớn. 
 
 Quan sát quan trọng là thứ tự xác định tổng thứ tự trên các từ nếu chúng ta coi mỗi từ là một cặp bao gồm phiên bản được sắp xếp của nó và chuỗi gốc. Khi mỗi từ được ánh xạ vào một cặp như vậy, chúng ta có thể sắp xếp toàn bộ từ điển một lần. Sau khi sắp xếp, mỗi truy vấn sẽ giảm xuống việc tìm vị trí của cặp của nó trong mảng được sắp xếp này, việc này có thể được thực hiện bằng cách sử dụng tìm kiếm nhị phân. 
 
@@ -55,7 +55,7 @@ Quan sát quan trọng là thứ tự xác định tổng thứ tự trên các 
 
 1. Đọc tất cả các từ trong từ điển và tính toán phiên bản chuyển đổi cho mỗi từ bằng cách sắp xếp các ký tự của nó. Phép biến đổi này nắm bắt khóa so sánh chính được sử dụng trong thứ tự. 
 2. Lưu trữ mỗi từ dưới dạng một cặp bao gồm phiên bản được sắp xếp và chuỗi gốc của nó. Cấu trúc cặp đảm bảo rằng việc bẻ dây được xử lý tự động. 
-3. Sắp xếp danh sách các cặp từ điển. Việc sắp xếp mang tính từ điển theo cặp, nghĩa là trước tiên nó so sánh các phiên bản được sắp xếp và sau đó là các chuỗi gốc nếu cần. 
+3. Sắp xếp danh sách các cặp từ điển. Việc sắp xếp mang tính từ điển trên cặp, nghĩa là trước tiên nó so sánh các phiên bản được sắp xếp và sau đó là các chuỗi gốc nếu cần. 
 4. Đối với mỗi từ truy vấn, hãy tính biểu diễn cặp giống nhau: phiên bản được sắp xếp và dạng ban đầu của nó. 
 5. Sử dụng tìm kiếm nhị phân để tìm xem có bao nhiêu cặp từ điển nhỏ hơn hoặc bằng cặp truy vấn này. Điều này tương đương với việc tìm vị trí giới hạn trên của cặp truy vấn trong mảng được sắp xếp. 
 6. Xuất chỉ mục kết quả cho mỗi truy vấn.
@@ -92,7 +92,7 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Ý tưởng cốt lõi trong quá trình triển khai là biểu diễn mỗi từ dưới dạng một bộ dữ liệu để so sánh bộ dữ liệu từ điển tích hợp của Python khớp chính xác với thứ tự được yêu cầu. Sắp xếp danh sách sau khi thiết lập thứ tự từ điển đầy đủ. 
+```Ý tưởng cốt lõi trong quá trình triển khai là biểu diễn mỗi từ dưới dạng một bộ dữ liệu sao cho việc so sánh bộ dữ liệu từ điển tích hợp của Python khớp chính xác với thứ tự được yêu cầu. Sắp xếp danh sách sau khi thiết lập thứ tự từ điển đầy đủ. 
 
 Đối với mỗi truy vấn, việc xây dựng cùng một bộ dữ liệu sẽ đảm bảo khả năng tương thích với danh sách đã sắp xếp. Việc sử dụng`bisect_right`rất quan trọng vì nó đếm tất cả các phần tử nhỏ hơn hoặc bằng truy vấn, bao gồm cả các từ trùng lặp. 
 
@@ -206,7 +206,7 @@ a
 
 ## Vỏ cạnh 
 
-Khi tất cả các từ trong từ điển giống hệt nhau, mọi truy vấn khớp với từ đó phải trả về số lượng đầy đủ. Việc biểu diễn bộ dữ liệu đảm bảo điều này vì tất cả các khóa trở nên giống hệt nhau và`bisect_right`đặt điểm chèn vào cuối khối, đếm tất cả các lần xuất hiện. 
+Khi tất cả các từ trong từ điển đều giống nhau, mọi truy vấn khớp với từ đó phải trả về số lượng đầy đủ. Việc biểu diễn bộ dữ liệu đảm bảo điều này vì tất cả các khóa trở nên giống hệt nhau và`bisect_right`đặt điểm chèn vào cuối khối, đếm tất cả các lần xuất hiện. 
 
 Khi các từ là đảo chữ, chẳng hạn như "ab" và "ba", phím được sắp xếp sẽ giống hệt nhau. Thứ tự thứ cấp theo chuỗi gốc đảm bảo vị trí xác định bên trong khối đó. Các truy vấn vẫn phải đếm tất cả các mục trong khối khi chuỗi gốc của truy vấn nằm sau một số mục trong số chúng theo từ điển. 
 

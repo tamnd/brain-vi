@@ -46,11 +46,11 @@ Một cách mạnh mẽ là lặp lại tất cả các bộ ba nút và kiểm 
 
 Để vượt qua sức mạnh vũ phu, chúng ta thay đổi quan điểm. Thay vì đếm trực tiếp các bộ ba hợp lệ, chúng ta đếm tất cả các bộ ba và trừ đi những bộ ba vi phạm ràng buộc. Bộ ba không hợp lệ nếu nó chứa ít nhất một cạnh giữa hai nút được chọn. Trên cây, các cạnh là những tương tác bị cấm duy nhất. 
 
-Vì vậy, chúng ta bắt đầu với tổng số bộ ba, tức là n chọn 3. Sau đó, chúng ta trừ các bộ ba bao gồm ít nhất một cạnh. Tuy nhiên, các cạnh có thể chồng lên nhau ở các đỉnh, do đó, phép trừ trực tiếp sẽ vượt qua các trường hợp trong đó bộ ba chứa hai cạnh có chung một nút. Điều đó có nghĩa là chúng ta cần một sự phân rã có cấu trúc. 
+Vì vậy, chúng ta bắt đầu với tổng các bộ ba, tức là n chọn 3. Sau đó, chúng ta trừ các bộ ba có ít nhất một cạnh. Tuy nhiên, các cạnh có thể chồng lên nhau ở các đỉnh, do đó, phép trừ trực tiếp sẽ vượt qua các trường hợp trong đó bộ ba chứa hai cạnh có chung một nút. Điều đó có nghĩa là chúng ta cần một sự phân rã có cấu trúc. 
 
 Cái nhìn sâu sắc quan trọng là phân loại các bộ ba hợp lệ dựa trên cấu trúc của chúng so với cây. Bất kỳ bộ ba hợp lệ nào cũng phải sao cho không có nút được chọn nào liền kề với nút được chọn khác. Tương tự, mọi nút được chọn phải đến từ một tập hợp các đỉnh theo cặp với khoảng cách ít nhất là hai. 
 
-Thay vì suy nghĩ toàn cầu, chúng ta nhổ cây và xem xét sự đóng góp của các cạnh và vùng lân cận của chúng. Một cách rõ ràng để giải quyết tình trạng đếm quá mức là sửa cấu trúc ở giữa do các bộ ba tạo ra có chứa chính xác một cạnh bên trong tập hợp đã chọn, sau đó sửa các phần trùng lặp bằng cách sử dụng cách tính dựa trên độ. Trong một cây, mỗi vùng kề bị cấm tương ứng với một cạnh và mẫu chồng chéo duy nhất phát sinh khi hai cạnh có chung một nút.
+Thay vì suy nghĩ toàn cầu, chúng tôi nhổ cây và xem xét sự đóng góp của các cạnh và vùng lân cận của chúng. Một cách rõ ràng để giải quyết tình trạng đếm quá mức là sửa cấu trúc ở giữa do các bộ ba tạo ra có chứa chính xác một cạnh bên trong tập hợp đã chọn, sau đó sửa các phần trùng lặp bằng cách sử dụng cách tính dựa trên độ. Trong một cây, mỗi vùng kề bị cấm tương ứng với một cạnh và mẫu chồng chéo duy nhất phát sinh khi hai cạnh có chung một nút.
 
 Điều này dẫn đến sự rút gọn tiêu chuẩn: đếm tất cả các bộ ba, trừ các bộ ba chứa một cạnh, sau đó điều chỉnh cho các bộ ba chứa hai cạnh. Các số hạng điều chỉnh có thể được biểu diễn hoàn toàn dưới dạng bậc của các nút, bởi vì mỗi nút đóng góp vào nhiều cạnh liền kề. 
 
@@ -245,6 +245,6 @@ assert solve_io("1\n6\n0 1\n0 2\n0 3\n1 4\n1 5\n") >= "0"
 
 Một cây tối thiểu có n bằng 3 chứa đúng một bộ ba có thể có. Trong đường dẫn gồm ba nút, mọi cặp đều liền kề hoặc được kết nối thông qua nút trung tâm, do đó không tồn tại bộ ba hợp lệ. Thuật toán tính tổng là 1 và trừ đi một hiệu chỉnh dương để loại bỏ nó hoàn toàn. 
 
-Đồ thị hình sao là một trường hợp quan trọng khác. Với một tâm được kết nối với tất cả các nút khác, bất kỳ bộ ba nào bao gồm tâm đều không hợp lệ vì nó đưa ra các cạnh. Các bộ ba duy nhất có thể có là giữa các lá, nhưng các lá không được kết nối với nhau, vì vậy tất cả các bộ ba lá đều hợp lệ. Công thức nắm bắt được điều này vì chỉ có tâm đóng góp một số hạng độ khác 0 và sự hiệu chỉnh của nó sẽ loại bỏ chính xác các cấu hình liên quan đến sự kề cận với tâm, chỉ để lại các kết hợp chỉ có lá. 
+Đồ thị hình sao là một trường hợp quan trọng khác. Với một tâm được kết nối với tất cả các nút khác, bất kỳ bộ ba nào bao gồm tâm đều không hợp lệ vì nó đưa ra các cạnh. Các bộ ba duy nhất có thể có là giữa các lá, nhưng các lá không được kết nối với nhau, vì vậy tất cả các bộ ba lá đều hợp lệ. Công thức nắm bắt được điều này vì chỉ có tâm đóng góp một số hạng độ khác 0 và việc hiệu chỉnh của nó sẽ loại bỏ chính xác các cấu hình liên quan đến sự kề cận với tâm, chỉ để lại các kết hợp chỉ có lá. 
 
 Một chuỗi thẳng kiểm tra xem các cấu trúc bị cấm chồng chéo có được tính gấp đôi hay không. Mỗi nút bên trong đóng góp tương ứng với bậc 2 của nó và phép trừ sẽ loại bỏ chính xác tất cả các bộ ba bao gồm các nút liên tiếp.

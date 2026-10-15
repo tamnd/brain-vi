@@ -93,7 +93,7 @@ for _ in range(t):
                 survivors_left += 1
 
     print(stack_right + survivors_left)
-```Bước sắp xếp là cần thiết vì thứ tự đầu vào thô không phản ánh các tương tác không gian. Sau khi sắp xếp, chúng tôi thu gọn động lực thành một lượt duy nhất. Biến`stack_right`đại diện cho các đối tượng chuyển động sang phải chưa được giải quyết và chưa gặp đối tượng chuyển động sang trái. Biến`survivors_left`theo dõi các vật thể chuyển động sang trái mà chưa bao giờ gặp phải vật thể chuyển động phải trước khi đến ranh giới. 
+```Bước sắp xếp là cần thiết vì thứ tự đầu vào thô không phản ánh các tương tác không gian. Sau khi sắp xếp, chúng tôi thu gọn động lực thành một lượt duy nhất. Biến`stack_right`đại diện cho các đối tượng chuyển động sang phải chưa được giải quyết và chưa gặp đối tượng chuyển động sang trái. Biến`survivors_left`theo dõi các vật thể chuyển động sang trái mà chưa bao giờ gặp một vật thể chuyển động phải trước khi đến ranh giới. 
 
 Một lỗi phổ biến là giả sử tính đối xứng và cố gắng mô phỏng cả hai hướng một cách độc lập, nhưng sự tương tác chính xác phụ thuộc hoàn toàn vào thứ tự xử lý từ trái sang phải. Một điểm tinh tế khác là chúng ta không bao giờ cần mô phỏng các vị thế thực tế theo thời gian; phương hướng và thứ tự quyết định đầy đủ kết quả. 
 
@@ -247,4 +247,4 @@ Trường hợp tất cả các vật thể chuyển động theo cùng một h�
 
 Một cấu hình xen kẽ hoàn toàn nhấn mạnh logic hủy bỏ. Mỗi đối tượng chuyển động sang phải ngay lập tức được ghép nối với đối tượng chuyển động sang trái tiếp theo theo trình tự. Ngăn xếp thực thi chính xác sự hủy diệt một-một và số đếm cuối cùng trở thành 0 khi các cặp được cân bằng hoàn hảo. 
 
-Một trường hợp có tất cả các đối tượng di chuyển sang trái đảm bảo rằng ngăn xếp vẫn trống xuyên suốt. Mọi đối tượng đều được phân loại là vật thể sống sót, xác nhận rằng thuật toán không nhầm lẫn khi yêu cầu một đối tượng chuyển động sang phải phù hợp để sinh tồn.
+Một trường hợp có tất cả các đối tượng di chuyển sang trái đảm bảo rằng ngăn xếp vẫn trống xuyên suốt. Mọi đối tượng đều được phân loại là vật sống sót, xác nhận rằng thuật toán không nhầm lẫn khi yêu cầu một đối tượng chuyển động sang phải phù hợp để sinh tồn.
