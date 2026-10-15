@@ -24,7 +24,7 @@ draft: false
 ## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi được đưa ra một số kịch bản độc lập. Trong mỗi cái có rất nhiều cookie, mỗi cookie thuộc một loại và có thời hạn biến mất. Jan muốn ăn bánh quy theo thời gian và mỗi lần anh ấy ăn một chiếc bánh quy, thời gian chờ đợi trước chiếc bánh quy tiếp theo sẽ tăng lên tùy theo số lượng bánh quy anh ấy đã ăn. Bánh quy đầu tiên có thể ăn ngay, bánh thứ hai yêu cầu đợi 1 đơn vị sau khi ăn bánh đầu tiên, bánh thứ ba yêu cầu đợi 2 đơn vị sau khi ăn bánh thứ hai, v.v. Nếu Jan đã ăn rồi$k-1$bánh quy và ăn$k$- vào lúc đó$t$, thì cái tiếp theo không thể ăn trước thời gian$t + (k-1)$. 
+Chúng tôi được đưa ra một số kịch bản độc lập. Trong mỗi cái có rất nhiều cookie, mỗi cookie thuộc một loại và có thời hạn biến mất. Jan muốn ăn bánh quy theo thời gian và mỗi lần anh ấy ăn một chiếc bánh quy, thời gian chờ đợi trước chiếc bánh quy tiếp theo sẽ tăng lên tùy theo số lượng bánh quy anh ấy đã ăn. Bánh quy đầu tiên có thể được ăn ngay lập tức, bánh thứ hai yêu cầu đợi 1 đơn vị sau khi ăn bánh đầu tiên, bánh thứ ba yêu cầu đợi 2 đơn vị sau khi ăn bánh thứ hai, v.v. Nếu Jan đã ăn rồi$k-1$bánh quy và ăn$k$- vào lúc đó$t$, thì cái tiếp theo không thể ăn trước thời gian$t + (k-1)$. 
 
 Mỗi chiếc bánh quy sẽ biến mất vào thời điểm nhất định, nhưng Jan cũng được phép ăn nó vào đúng thời điểm đó. Tồn tại nhiều loại bánh quy cùng loại và Jan có thể ăn bất kỳ số lượng nào trong số đó. Mục tiêu là tối đa hóa số lượng loại bánh quy riêng biệt mà Jan có thể ăn ít nhất một lần. 
 
@@ -42,7 +42,7 @@ Một trường hợp đặc biệt khác là khi một loại chỉ có cookie 
 
 Ý tưởng mạnh mẽ là xử lý từng loại một cách độc lập và cố gắng quyết định tập hợp con nào của các loại mà Jan có thể chọn thành công theo một số thứ tự. Đối với một tập hợp con cố định các loại, chúng tôi sẽ cố gắng chỉ định cho mỗi loại đã chọn một cookie đại diện và sau đó mô phỏng xem liệu chúng tôi có thể lên lịch cho chúng theo thứ tự nào đó tôn trọng thời hạn và quy tắc độ trễ ngày càng tăng hay không. 
 
-Điều này ngay lập tức trở nên tốn kém vì số lượng tập hợp con của các loại là theo cấp số nhân. Ngay cả khi chúng ta sửa một tập hợp con, việc kiểm tra tính khả thi bản thân nó không hề đơn giản, vì đối với mỗi thứ tự, chúng ta phải tính toán lại thời gian đến phụ thuộc vào vị trí trong chuỗi. Với$m$lên tới$5 \cdot 10^4$, điều này là không thể thực hiện được. 
+Điều này ngay lập tức trở nên tốn kém vì số lượng tập hợp con của các loại là theo cấp số nhân. Ngay cả khi chúng ta sửa một tập hợp con, việc kiểm tra tính khả thi bản thân nó không hề đơn giản, vì đối với mỗi thứ tự, chúng ta phải tính toán lại thời gian đến phụ thuộc vào vị trí trong chuỗi. Với$m$lên đến$5 \cdot 10^4$, điều này là không thể thực hiện được. 
 
 Quan sát quan trọng là chúng ta không bao giờ cần nhiều hơn một cookie cho mỗi loại và đối với mỗi loại, điều tối ưu là chỉ xem xét ứng viên có thời hạn sử dụng mới nhất, vì những cookie trước đó chỉ làm giảm tính linh hoạt. Khi chúng tôi quyết định chọn một loại, chúng tôi chỉ quan tâm đến loại cookie tốt nhất có thể hỗ trợ loại đó. 
 
@@ -66,7 +66,7 @@ Trước tiên, chúng tôi nén dữ liệu đầu vào để mỗi loại đư
 1. Đọc tất cả các cookie và tính toán cho từng loại thời hạn tối đa trong số các lần xuất hiện của nó. Điều này biến vấn đề thành việc lựa chọn giữa$m$các mục, mỗi mục có một thời hạn duy nhất. 
 2. Sắp xếp tất cả các loại theo thời hạn tính toán theo thứ tự không giảm. Lý do là trước tiên chúng tôi muốn cam kết thực hiện các loại hạn chế nhất, vì việc trì hoãn chúng chỉ làm tăng nguy cơ chúng tôi vượt quá thời hạn khi tình trạng trì hoãn ăn uống tích lũy ngày càng tăng. 
 3. Khởi tạo bộ đếm$k = 0$, đại diện cho số lượng loại chúng tôi đã chọn thành công cho đến nay. 
-4. Lặp lại danh sách các thời hạn đã được sắp xếp. Đối với từng loại có thời hạn$d$, tính thời gian Jan sẽ ăn chiếc bánh quy tiếp theo nếu chúng ta đưa nó vào. Thời gian đó là chi phí chờ đợi tích lũy hiện tại, bằng$k(k+1)/2$nếu được theo dõi chính xác, nhưng chúng ta có thể tránh được công thức đầy đủ bằng cách duy trì dần thời gian có sẵn tiếp theo. Nếu thời gian yêu cầu tiếp theo không vượt quá$d$, chúng tôi chấp nhận loại này và tăng dần$k$. Nếu không chúng tôi bỏ qua nó. 
+4. Lặp lại danh sách các thời hạn đã được sắp xếp. Đối với từng loại có thời hạn$d$, hãy tính thời gian Jan sẽ ăn chiếc bánh quy tiếp theo nếu chúng ta đưa nó vào. Thời gian đó là chi phí chờ đợi tích lũy hiện tại, bằng$k(k+1)/2$nếu được theo dõi chính xác, nhưng chúng ta có thể tránh được công thức đầy đủ bằng cách duy trì dần thời gian có sẵn tiếp theo. Nếu thời gian yêu cầu tiếp theo không vượt quá$d$, chúng tôi chấp nhận loại này và tăng dần$k$. Nếu không chúng tôi bỏ qua nó. 
 
 Ý tưởng quan trọng là việc chấp nhận một loại chỉ làm tăng độ trễ trong tương lai, vì vậy một khi một loại không vượt qua được bài kiểm tra tính khả thi thì sau này nó sẽ không bao giờ trở nên khả thi. 
 

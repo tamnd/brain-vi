@@ -1,6 +1,6 @@
 ---
 title: "CF 105455C - Thư rác"
-description: "Chúng ta có một số điểm trên một dòng biểu thị các hộp thư phải được "truy cập" và dọn dẹp, và một tập hợp điểm khác biểu thị những người có thể di chuyển dọc theo cùng một đường. Mỗi người bắt đầu ở một tọa độ cố định và có thể di chuyển một đơn vị mỗi giây sang trái hoặc phải."
+description: "Chúng ta có một số điểm trên một dòng biểu thị các hộp thư phải được “truy cập” và dọn dẹp, và một tập hợp điểm khác biểu thị những người có thể di chuyển dọc theo cùng một đường. Mỗi người bắt đầu ở một tọa độ cố định và có thể di chuyển một đơn vị mỗi giây sang trái hoặc phải."
 date: "2026-06-23T17:43:07+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
@@ -24,7 +24,7 @@ draft: false
 ## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta có một số điểm trên một dòng biểu thị các hộp thư phải được "truy cập" và dọn dẹp, và một tập hợp điểm khác biểu thị những người có thể di chuyển dọc theo cùng một đường. Mỗi người bắt đầu ở một tọa độ cố định và có thể di chuyển một đơn vị mỗi giây sang trái hoặc phải. Khoảnh khắc một người đứng trên vị trí hộp thư, hộp thư đó sẽ được làm sạch ngay lập tức. Nhiều người có thể tự do chồng lên nhau và nhiều hộp thư có thể có chung tọa độ. 
+Chúng ta có một số điểm trên một dòng biểu thị các hộp thư phải được “truy cập” và dọn dẹp, và một tập hợp điểm khác biểu thị những người có thể di chuyển dọc theo cùng một đường. Mỗi người bắt đầu ở một tọa độ cố định và có thể di chuyển một đơn vị mỗi giây sang trái hoặc phải. Khoảnh khắc một người đứng trên vị trí hộp thư, hộp thư đó sẽ được làm sạch ngay lập tức. Nhiều người có thể tự do chồng lên nhau và nhiều hộp thư có thể có chung tọa độ. 
 
 Nhiệm vụ là điều phối tất cả mọi người để mỗi hộp thư được truy cập ít nhất một lần và chúng tôi muốn có thời gian tối thiểu có thể cho đến khi hộp thư cuối cùng được dọn sạch. 
 

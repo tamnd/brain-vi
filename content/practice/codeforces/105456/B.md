@@ -55,17 +55,17 @@ Chúng tôi xây dựng câu trả lời bằng cách sử dụng một ngăn x�
 
 1. Khởi tạo một ngăn xếp trống và đặt bộ đếm xem chúng ta vẫn cần xóa bao nhiêu ký tự, tức là$n - k$. Điều này theo dõi tính linh hoạt của chúng tôi: mỗi lần xóa cho phép chúng tôi cải thiện thứ tự từ điển. 
 2. Lặp qua các ký tự của chuỗi từ trái sang phải. Tại mỗi ký tự, chúng tôi xem xét liệu nó có thể thay thế các ký tự trước đó trong câu trả lời từng phần hiện tại hay không. 
-3. Trong khi ngăn xếp không trống, ký tự cuối cùng trong ngăn xếp lớn hơn về mặt từ điển so với ký tự hiện tại và chúng tôi vẫn có sẵn các phần xóa, hãy bật ngăn xếp. Bước này đảm bảo rằng chúng ta không giữ lại một ký tự tệ hơn khi một ký tự tốt hơn có thể xuất hiện sớm hơn, cải thiện thứ tự từ điển càng sớm càng tốt. 
+3. Trong khi ngăn xếp không trống, ký tự cuối cùng trong ngăn xếp lớn hơn về mặt từ điển so với ký tự hiện tại và chúng tôi vẫn có sẵn các phần xóa, hãy bật ngăn xếp. Bước này đảm bảo rằng chúng ta không giữ lại ký tự xấu hơn khi ký tự tốt hơn có thể xuất hiện sớm hơn, cải thiện thứ tự từ điển càng sớm càng tốt. 
 4. Đẩy ký tự hiện tại vào ngăn xếp. Điều này mở rộng dãy ứng cử viên hiện tại. 
-5. Nếu đã hết số lần xóa cho phép nhưng vẫn còn thừa ký tự trong ngăn xếp thì chúng tôi không thể xóa thêm nữa nên chỉ cần tiếp tục đẩy và sau này sẽ cắt bớt nếu cần. 
+5. Nếu chúng tôi hết số lần xóa được phép nhưng vẫn còn thừa ký tự trong ngăn xếp, chúng tôi không thể xóa thêm, vì vậy chúng tôi chỉ cần tiếp tục đẩy và sau này sẽ cắt bớt nếu cần. 
 6. Sau khi xử lý tất cả các ký tự, ngăn xếp có thể chứa nhiều hơn$k$ký tự nếu chúng tôi chưa bao giờ sử dụng tất cả các thao tác xóa ở vị trí tối ưu. Trong trường hợp đó, hãy cắt bớt ngăn xếp thành ngăn xếp đầu tiên$k$nhân vật. 
 7. Ngăn xếp kết quả là dãy con nhỏ nhất về mặt từ điển có độ dài$k$. 
 
-Lý do điều này có hiệu quả là vì mỗi khi chúng tôi xóa một ký tự, chúng tôi chỉ làm như vậy khi một ký tự nhỏ hơn xuất hiện sau đó và chúng tôi vẫn còn đủ ký tự còn lại để hoàn thành một đoạn dài$k$sự liên tiếp. Điều này đảm bảo rằng chúng ta không bao giờ cản trở việc hình thành một câu trả lời hợp lệ trong khi luôn cải thiện thứ tự từ điển càng sớm càng tốt. 
+Lý do điều này có tác dụng là vì mỗi khi chúng tôi xóa một ký tự, chúng tôi chỉ làm như vậy khi một ký tự nhỏ hơn xuất hiện sau đó và chúng tôi vẫn còn đủ ký tự còn lại để hoàn thành một đoạn dài$k$sự liên tiếp. Điều này đảm bảo rằng chúng ta không bao giờ cản trở việc hình thành một câu trả lời hợp lệ trong khi luôn cải thiện thứ tự từ điển càng sớm càng tốt. 
 
 ### Tại sao nó hoạt động 
 
-Tại bất kỳ tiền tố nào của quá trình quét, ngăn xếp biểu thị chuỗi con tốt nhất có thể bằng cách sử dụng các ký tự được xử lý theo ràng buộc mà chúng tôi vẫn có thể mở rộng nó theo chiều dài$k$. Bước loại bỏ tham lam duy trì tính bất biến là ngăn xếp đơn điệu theo nghĩa là không có ký tự nào trước đó lớn hơn ký tự sau nếu quỹ loại bỏ cho phép sửa chữa. Bởi vì mỗi ký tự được đẩy và bật nhiều nhất một lần nên mọi quyết định đều tối ưu cục bộ và nhất quán trên toàn cầu với thứ tự từ điển. 
+Tại bất kỳ tiền tố nào của quá trình quét, ngăn xếp biểu thị chuỗi con tốt nhất có thể bằng cách sử dụng các ký tự được xử lý theo ràng buộc mà chúng tôi vẫn có thể mở rộng nó theo chiều dài$k$. Bước loại bỏ tham lam duy trì tính bất biến là ngăn xếp đơn điệu theo nghĩa là không có ký tự nào trước đó lớn hơn ký tự sau nếu quỹ loại bỏ cho phép sửa chữa. Bởi vì mỗi ký tự được đẩy và bật nhiều nhất một lần nên mọi quyết định đều tối ưu cục bộ và nhất quán toàn cục với thứ tự từ điển. 
 
 ## Giải pháp Python```python
 import sys
@@ -119,7 +119,7 @@ s = eatqvgjpog
 | 4 | q | một q | 3 | 
 | 5 | v | a q v | 3 | 
 | 6 | g | một g | 2 | 
-| 7 | j | a g j | 2 | 
+| 7 | j | a gj | 2 | 
 | 8 | p | a g j p | 2 | 
 | 9 | o | a g j o | 1 | 
 | 10 | g | a g j g | 0 | 
@@ -136,7 +136,7 @@ s = tqbjtqmif
 | 1 | t | t | 1 | 
 | 2 | q | q | 0 | 
 | 3 | b | q b | 0 | 
-| 4 | j | q bj | 0 | 
+| 4 | j | q b j | 0 | 
 | 5 | t | q b j t | 0 | 
 | 6 | q | q b j t q | 0 | 
 | 7 | m | q b j t m | 0 | 
@@ -223,7 +223,7 @@ abcddcba
 | --- | --- | --- | 
 |`1 1 a`|`a`| kích thước tối thiểu, không cần xóa | 
 |`5 1 edcba`|`a`| giảm tham lam hoàn toàn xuống còn một phút | 
-|`6 3 cbacba`|`aba`| các ký tự lặp đi lặp lại với dấu lùi | 
+|`6 3 cbacba`|`aba`| các ký tự lặp lại có quay lui | 
 |`8 4 abcddcba`|`abcb`| mô hình tăng/giảm hỗn hợp | 
 
 ## Vỏ cạnh 
@@ -235,7 +235,7 @@ Ví dụ, trường hợp cạnh khóa là khi chuỗi giảm nghiêm ngặt`dcb
 dcba
 ```Thực thi: 
 
-Ngăn xếp phát triển như`d -> c -> b`, với tính năng loại bỏ được sử dụng để loại bỏ các tiền tố lớn hơn ngay khi các ký tự nhỏ hơn xuất hiện. Việc cắt xén cuối cùng đảm bảo còn lại chính xác hai ký tự, mang lại`ba`, nhỏ nhất về mặt từ điển trong số tất cả các chuỗi con có độ dài 2. 
+Ngăn xếp phát triển như`d -> c -> b`, với tính năng xóa được sử dụng để loại bỏ các tiền tố lớn hơn ngay khi các ký tự nhỏ hơn xuất hiện. Việc cắt xén cuối cùng đảm bảo duy trì chính xác hai ký tự, mang lại`ba`, nhỏ nhất về mặt từ điển trong số tất cả các chuỗi con có độ dài 2. 
 
 Một trường hợp cạnh khác đã được sắp xếp đầu vào như`abcde`với$k = 3$. Không có hoạt động xóa nào được kích hoạt vì ngăn xếp đã tăng lên và việc cắt bớt cuối cùng chỉ cần lấy ba ký tự đầu tiên, tạo ra`abc`, điều này là tối ưu vì bất kỳ sự đưa vào nào sau này sẽ làm xấu đi trật tự từ điển. 
 

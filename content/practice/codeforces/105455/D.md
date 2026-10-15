@@ -65,7 +65,7 @@ Lý do điểm dừng này có ý nghĩa là vì tất cả các cạnh được
 
 ### Tại sao nó hoạt động 
 
-Khi xử lý các cạnh theo thứ tự giảm dần, DSU luôn biểu thị một phân vùng hợp lệ cho tất cả các cạnh có trọng số lớn hơn cạnh hiện tại. Nếu việc thêm cạnh hiện tại gây ra mâu thuẫn thì có nghĩa là giữa các cạnh có trọng số lớn hơn hoặc bằng giá trị này tồn tại một chu trình lẻ trong đồ thị ràng buộc. Chu kỳ lẻ đó không thể giải được đối với bất kỳ ngưỡng nào nhỏ hơn hoàn toàn so với$w$, bởi vì tất cả các cạnh có trọng lượng cao hơn vẫn hoạt động. Như vậy,$w$là ngưỡng nhỏ nhất mà chúng tôi buộc phải dừng việc đưa vào các ràng buộc xung đột, biến nó thành câu trả lời. 
+Khi xử lý các cạnh theo thứ tự giảm dần, DSU luôn biểu thị một phân vùng hợp lệ cho tất cả các cạnh có trọng số lớn hơn cạnh hiện tại. Nếu việc thêm cạnh hiện tại gây ra mâu thuẫn thì có nghĩa là giữa các cạnh có trọng số lớn hơn hoặc bằng giá trị này tồn tại một chu trình lẻ trong đồ thị ràng buộc. Chu kỳ lẻ đó không thể giải được đối với bất kỳ ngưỡng nào nhỏ hơn hoàn toàn so với$w$, bởi vì tất cả các cạnh có trọng số cao hơn vẫn hoạt động. Như vậy,$w$là ngưỡng nhỏ nhất mà chúng tôi buộc phải dừng việc đưa vào các ràng buộc xung đột, biến nó thành câu trả lời. 
 
 ## Giải pháp Python```python
 import sys

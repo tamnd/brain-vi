@@ -34,13 +34,13 @@ Sau mỗi năm, một số đoạn bị ngập vĩnh viễn khi mực nước bi
 
 Các ràng buộc làm cho cấu trúc rõ ràng:$n$Và$k$có thể đạt được$10^5$, do đó việc tính toán lại các đảo từ đầu sau mỗi truy vấn sẽ quá chậm. Bất kỳ giải pháp nào quét liên tục mảng cho mỗi truy vấn sẽ tốn kém$O(nk)$, đạt tới$10^{10}$hoạt động trong trường hợp xấu nhất và không thể thực hiện được. 
 
-Một trường hợp thất bại tinh tế đối với các phương pháp đơn giản là việc tính toán lại mà không nhớ trạng thái trước đó. Ví dụ, hãy xem xét chiều cao$[5, 1, 5]$và mực nước biển$1$sau đó$5$. Ở cấp độ$1$, ta có hai đảo: vị trí 0 và 2 khô. Ở cấp độ$5$, mọi thứ đều chìm trong nước nên câu trả lời là$0$. Ở đây, một lần quét đơn giản cho mỗi truy vấn vẫn hoạt động, nhưng nhiều tối ưu hóa không chính xác cố gắng "cập nhật số lượng cục bộ" mà không theo dõi rằng việc tràn giữa sẽ hợp nhất các sự kiện phân tách một cách chính xác theo lý luận ngược, phá vỡ tính nhất quán khi nhiều điểm tràn vào cùng một lúc. 
+Một trường hợp thất bại tinh tế đối với các phương pháp tiếp cận đơn giản là việc tính toán lại mà không nhớ trạng thái trước đó. Ví dụ, hãy xem xét chiều cao$[5, 1, 5]$và mực nước biển$1$sau đó$5$. Ở cấp độ$1$, ta có hai đảo: vị trí 0 và 2 khô. Ở cấp độ$5$, mọi thứ đều chìm trong nước nên câu trả lời là$0$. Ở đây, một lần quét đơn giản cho mỗi truy vấn vẫn hoạt động, nhưng nhiều tối ưu hóa không chính xác cố gắng "cập nhật số lượng cục bộ" mà không theo dõi rằng việc tràn giữa sẽ hợp nhất các sự kiện phân tách một cách chính xác theo lý luận ngược, phá vỡ tính nhất quán khi nhiều điểm tràn vào cùng một lúc. 
 
 Một trường hợp cạnh quan trọng khác là chiều cao bằng nhau. Vì lũ lụt xảy ra khi$a_i \le m_i$, các phân đoạn biến mất chính xác ở ngưỡng độ cao của chúng và việc không xử lý bình đẳng một cách chính xác sẽ dẫn đến số lượng đảo lệch nhau. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận trực tiếp sẽ tính toán lại số đảo sau mỗi mực nước biển bằng cách quét toàn bộ mảng và đếm số lần một đoạn khô bắt đầu. Điều này hiệu quả vì mỗi hòn đảo là một dãy các tế bào khô liền kề nhau, vì vậy chúng tôi có thể phát hiện một hòn đảo mới bất cứ khi nào$a_i > m$và một trong hai$i = 0$hoặc$a_{i-1} \le m$. Tính chính xác rất đơn giản, nhưng việc thực hiện điều này cho mọi truy vấn sẽ lặp lại cùng một quá trình truyền tải đầy đủ$k$lần. 
+Cách tiếp cận trực tiếp sẽ tính toán lại số đảo sau mỗi mực nước biển bằng cách quét toàn bộ mảng và đếm số lần một đoạn khô bắt đầu. Điều này hiệu quả vì mỗi hòn đảo là một dãy các tế bào khô liền kề nhau, vì vậy chúng ta có thể phát hiện một hòn đảo mới bất cứ khi nào$a_i > m$và một trong hai$i = 0$hoặc$a_{i-1} \le m$. Độ chính xác rất đơn giản, nhưng việc thực hiện điều này cho mọi truy vấn sẽ lặp lại cùng một quá trình truyền tải đầy đủ$k$lần. 
 
 Nút thắt là hiển nhiên: mỗi truy vấn đều tốn chi phí$O(n)$, do đó tổng độ phức tạp trở thành$O(nk)$. Với cả hai lên đến$10^5$, điều này vượt xa mọi giới hạn thực tế. 
 

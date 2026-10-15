@@ -42,7 +42,7 @@ Vấn đề là sự bùng nổ tổ hợp. Nếu tổng chiều dài là N thì
 
 Quan sát quan trọng là một palindrome hoàn toàn được xác định bởi nửa đầu của nó cộng với có thể là ký tự ở giữa. Sau khi chúng tôi quyết định có bao nhiêu chữ cái được đưa vào nửa bên trái, nửa bên phải sẽ bị ép buộc. Điều này biến bài toán từ tìm kiếm hoán vị thành bài toán đếm có ràng buộc. 
 
-Chúng ta chỉ cần quyết định xem có bao nhiêu A, B và C ở vế trái sao cho các số còn lại có thể phản chiếu chính xác. Điều đó có nghĩa là đối với mỗi ký tự, số được sử dụng ở cả hai bên phải là số chẵn và mọi ký tự lẻ còn sót lại (nhiều nhất là một loại) sẽ được đưa vào giữa. Sau khi xây dựng nửa bên trái, tính tối thiểu về mặt từ điển đạt được bằng cách điền nó một cách tham lam từ ký tự nhỏ nhất đến ký tự lớn nhất. 
+Chúng ta chỉ cần quyết định xem có bao nhiêu A, B và C ở vế trái sao cho các số còn lại có thể phản chiếu chính xác. Điều đó có nghĩa là đối với mỗi ký tự, số được sử dụng ở cả hai bên phải là số chẵn và mọi ký tự lẻ còn sót lại (nhiều nhất là một loại) sẽ được đưa vào giữa. Sau khi xây dựng nửa bên trái, tính tối thiểu từ điển đạt được bằng cách điền nó một cách tham lam từ ký tự nhỏ nhất đến ký tự lớn nhất. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -213,4 +213,4 @@ assert run("1\n1 1 1\n") == "ROP"
 
 Đối với đầu vào`1 1 1`, cả ba số đếm đều là số lẻ, do đó thuật toán ngay lập tức trả về “ROP” trước khi thử xây dựng. Điều này cho thấy việc kiểm tra tính khả thi sẽ ngăn chặn việc sắp xếp bắt buộc không chính xác. 
 
-Đối với đầu vào`2 0 3`, thuật toán gán C vào giữa, để lại các nửa cân bằng. Cấu trúc “AC + C + CA” đồng thời khẳng định tính đối xứng và tính chính xác về mặt từ điển.
+Đối với đầu vào`2 0 3`, thuật toán gán C vào giữa, để lại các nửa cân bằng. Cấu trúc “AC + C + CA” đồng thời khẳng định tính đối xứng và tính chính xác về từ vựng.

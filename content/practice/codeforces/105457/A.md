@@ -61,7 +61,7 @@ Chúng tôi quét hai chuỗi từ trái sang phải trong khi vẫn duy trì xe
 
 1. Bắt đầu với giả định rằng tất cả các ký tự trước đó đều bằng nhau, vì vậy chúng ta có thể tự do cố gắng thực thi sự bình đẳng ở mọi vị trí. 
 2. Tại mỗi chỉ số i, xác định xem có thể gán các ký tự sao cho a[i] == b[i]. Điều này luôn có thể thực hiện được trừ khi cả hai đều cố định và khác nhau, trong trường hợp đó sự bình đẳng không thể được duy trì và vị trí này trở thành điểm phân kỳ bắt buộc. 
-3. Nếu vẫn có thể đẳng thức ở vị trí i, hãy kiểm tra xem liệu thay vào đó chúng ta có thể áp đặt một bất đẳng thức nghiêm ngặt a[i] < b[i] trong khi vẫn nhất quán với các vị trí trước đó hay không. Điều này phụ thuộc vào các ràng buộc về ký tự: nếu a[i] là ký tự đại diện, nó có thể được làm nhỏ đến mức cần thiết; nếu b[i] là ký tự đại diện thì nó có thể được đặt đủ lớn; nếu không thì chúng ta so sánh trực tiếp các chữ cái cố định. 
+3. Nếu vẫn có thể đẳng thức ở vị trí i, hãy kiểm tra xem liệu thay vào đó chúng ta có thể áp đặt một bất đẳng thức nghiêm ngặt a[i] < b[i] trong khi vẫn nhất quán với các vị trí trước đó hay không. Điều này phụ thuộc vào các ràng buộc về ký tự: nếu a[i] là ký tự đại diện thì nó có thể được làm nhỏ đến mức cần thiết; nếu b[i] là ký tự đại diện thì nó có thể được đặt đủ lớn; nếu không thì chúng ta so sánh trực tiếp các chữ cái cố định. 
 4. Nếu có thể bất đẳng thức nghiêm ngặt ở vị trí này mà vẫn giữ nguyên đẳng thức trước nó thì có thể trả về ngay “si”. 
 5. Nếu không thể tiếp tục đẳng thức cũng như bất đẳng thức nghiêm ngặt một cách nhất quán, chúng tôi sẽ dừng sớm vì không có sự hoàn thành hợp lệ nào tồn tại ngoài tiền tố này. 
 6. Nếu chúng tôi quét xong mà không tìm thấy vị trí nghiêm ngặt hợp lệ, hãy trả về “không”. 
@@ -70,7 +70,7 @@ Chúng tôi quét hai chuỗi từ trái sang phải trong khi vẫn duy trì xe
 
 ### Tại sao nó hoạt động 
 
-Thuật toán dựa trên thực tế là so sánh từ điển được xác định hoàn toàn bởi vị trí khác nhau đầu tiên. Bất kỳ phép gán hợp lệ nào làm cho`a < b`phải có chỉ mục đầu tiên i trong đó tất cả các vị trí trước đó đều bằng nhau và`a[i] < b[i]`. Nếu không thể thực hiện được vị trí như vậy trong các phép gán ký tự đại diện thì không có phép gán đầy đủ nào có thể thành công. Ngược lại, nếu một vị trí như vậy tồn tại, chúng ta luôn có thể gán các vị trí trước đó để khớp và các vị trí sau một cách tùy ý, do đó tính khả thi ở một chỉ số là đủ. 
+Thuật toán dựa trên thực tế là so sánh từ điển được xác định hoàn toàn bởi vị trí khác nhau đầu tiên. Bất kỳ phép gán hợp lệ nào làm cho`a < b`phải có chỉ số đầu tiên i trong đó tất cả các vị trí trước đó đều bằng nhau và`a[i] < b[i]`. Nếu không thể thực hiện được vị trí như vậy trong các phép gán ký tự đại diện thì không có phép gán đầy đủ nào có thể thành công. Ngược lại, nếu một vị trí như vậy tồn tại, chúng ta luôn có thể gán các vị trí trước đó để khớp và các vị trí sau một cách tùy ý, do đó tính khả thi ở một chỉ số là đủ. 
 
 ## Giải pháp Python```python
 import sys
@@ -255,4 +255,4 @@ Trường hợp cạnh khóa là khi cả hai chuỗi giống hệt nhau ngoại
 
 Một trường hợp khác bị buộc phải chiếm ưu thế sớm. Vì`a = "b?"`Và`b = "a?"`, quá trình quét không thành công ở chỉ mục 0 vì ngay cả với các ký tự đại diện,`b > a`là điều không thể tránh khỏi. Thuật toán sẽ từ chối ngay lập tức do không thể duy trì sự bình đẳng hoặc tạo ra sự đột phá có lợi. 
 
-Trường hợp thứ ba là mâu thuẫn chậm trễ, chẳng hạn như`a = "a?c"`Và`b = "a?c"`. Mặc dù các ký tự đại diện tồn tại nhưng không có vị trí nào cho phép cải tiến nghiêm ngặt mà không vi phạm các ràng buộc bình đẳng trước đó. Quá trình quét kết thúc và trả về chính xác “không”.
+Trường hợp thứ ba là mâu thuẫn bị trì hoãn, chẳng hạn như`a = "a?c"`Và`b = "a?c"`. Mặc dù các ký tự đại diện tồn tại nhưng không có vị trí nào cho phép cải tiến nghiêm ngặt mà không phá vỡ các ràng buộc bình đẳng trước đó. Quá trình quét kết thúc và trả về chính xác “không”.

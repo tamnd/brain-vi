@@ -28,7 +28,7 @@ Chúng ta được cung cấp một danh sách các lịch học, mỗi lịch �
 
 Thời gian là tuyến tính từ`0`ĐẾN`m`, vì vậy mặc dù cách giải thích là “giờ trong một ngày” nhưng không có sự bao hàm. Hạn chế duy nhất là các khoảng được chọn phải rời rạc theo từng cặp và được phép chạm vào điểm cuối vì lớp học kết thúc vào thời điểm đó.`t`không trùng lặp với một bắt đầu từ`t`. 
 
-Đầu vào có thể chứa nhiều trường hợp kiểm thử độc lập, mỗi trường hợp có tối đa`5 · 10^5`khoảng thời gian trong phiên bản khó nhất. Thang đo đó ngay lập tức loại trừ mọi giải pháp so sánh các cặp khoảng hoặc khám phá các tập hợp con. Một bậc hai hoặc thậm chí`O(n log n)`giải pháp cho mỗi trường hợp thử nghiệm vẫn ổn, nhưng bất cứ điều gì tệ hơn`O(n log n)`tổng thể sẽ thất bại do thời gian chạy chiếm ưu thế sắp xếp lặp đi lặp lại. 
+Đầu vào có thể chứa nhiều trường hợp kiểm thử độc lập, mỗi trường hợp có tối đa`5 · 10^5`khoảng thời gian trong phiên bản khó nhất. Thang đo đó ngay lập tức loại trừ bất kỳ giải pháp nào so sánh các cặp khoảng hoặc khám phá các tập hợp con. Một bậc hai hoặc thậm chí`O(n log n)`giải pháp cho mỗi trường hợp thử nghiệm vẫn ổn, nhưng bất cứ điều gì tệ hơn`O(n log n)`tổng thể sẽ thất bại do thời gian chạy chiếm ưu thế sắp xếp lặp đi lặp lại. 
 
 Trường hợp cạnh tinh tế xuất hiện khi nhiều khoảng thời gian có cùng thời gian bắt đầu hoặc kết thúc. Ví dụ, hãy xem xét`m = 2`với khoảng thời gian`[0, 2]`,`[0, 1]`,`[1, 2]`. Câu trả lời tối ưu là`2`, nhưng một chiến lược ngây thơ luôn chọn khoảng thời gian bắt đầu sớm nhất có thể chọn`[0, 2]`và chặn mọi thứ khác. Một cạm bẫy khác phát sinh khi các khoảng được lồng vào nhau:`[0, 10]`,`[1, 2]`,`[2, 3]`, trong đó câu trả lời đúng là 2 chứ không phải 1. 
 
@@ -53,7 +53,7 @@ Chúng tôi xử lý từng trường hợp thử nghiệm một cách độc l�
 
 1. Đọc tất cả các khoảng thời gian và lưu trữ chúng theo cặp`(a, b)`. Chúng đại diện cho các khối thời gian cố định phải được chọn mà không bị trùng lặp. 
 2. Sắp xếp tất cả các khoảng thời gian theo thời gian kết thúc`b`. Lý do cho việc đặt hàng này là việc chọn khoảng thời gian hoàn thiện sớm hơn sẽ duy trì được tính khả dụng cao nhất trong tương lai. 
-3. Khởi tạo một biến`current_time = 0`, theo dõi thời gian sớm nhất mà chúng ta có thể rảnh để lên lịch cho khoảng thời gian tiếp theo. 
+3. Khởi tạo một biến`current_time = 0`, theo dõi thời gian sớm nhất mà chúng ta có thể tự do lên lịch cho khoảng thời gian tiếp theo. 
 4. Lặp lại các khoảng thời gian theo thứ tự được sắp xếp. 
 5. Đối với mỗi khoảng thời gian`(a, b)`, nếu như`a >= current_time`, chọn nó và đặt`current_time = b`. Điều này đảm bảo chúng tôi không bao giờ chồng chéo và luôn cam kết khoảng thời gian tương thích hoàn thiện sớm nhất. 
 6. Đếm xem chúng tôi đã chọn bao nhiêu khoảng thời gian và xuất giá trị này. 

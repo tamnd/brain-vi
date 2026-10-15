@@ -195,8 +195,8 @@ assert run("1\n0 0\n") == "0", "origin"
 
 ## Vỏ cạnh 
 
-Tại điểm gốc (0, 0), hình khối đã ở dạng thẳng đứng hợp lệ và không có chuyển động nào xảy ra. Thuật toán kiểm tra rõ ràng trường hợp này trước khi áp dụng bất kỳ sự phân tách nào, đảm bảo rằng số học mô-đun không đưa ra một chi phí còn lại khác 0 một cách sai lầm. 
+Tại điểm gốc (0, 0), hình khối đã ở dạng thẳng đứng hợp lệ và không có chuyển động nào xảy ra. Thuật toán kiểm tra rõ ràng trường hợp này trước khi áp dụng bất kỳ sự phân rã nào, đảm bảo rằng số học mô-đun không đưa ra một chi phí còn lại khác 0 một cách sai lầm. 
 
-Đối với một điểm như (3, 0), tính toán dựa trên thương số mang lại sự đóng góp toàn bộ chu trình rõ ràng với phần còn lại bằng 0. Điều này chứng tỏ rằng việc phân tách thành các khối 3 bước xử lý việc căn chỉnh một cách chính xác khi không cần chỉnh sửa. 
+Đối với một điểm như (3, 0), tính toán dựa trên thương số mang lại sự đóng góp toàn bộ chu trình rõ ràng với phần còn lại bằng 0. Điều này chứng tỏ rằng việc phân tách thành các khối 3 bước xử lý chính xác việc căn chỉnh khi không cần chỉnh sửa. 
 
 Đối với các tọa độ nhỏ như (1, 0) hoặc (0, 1), logic còn lại chiếm ưu thế trong kết quả. Những trường hợp này xác nhận rằng sự kề cận trực tiếp trên lưới không tương ứng với một giải pháp di chuyển đơn lẻ vì một cuộn nhất thiết phải thay đổi hướng, buộc phải có những bước điều chỉnh bổ sung trước khi kết thúc thẳng đứng tại ô mục tiêu.
