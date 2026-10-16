@@ -30,7 +30,7 @@ Nói cách khác, chúng ta phải phân chia các ô lưới thành các nhóm 
 
 Nếu cách xếp như vậy tồn tại, chúng ta phải xuất ra một phép gán hợp lệ; nếu không thì chúng tôi cho ra rằng điều đó là không thể. 
 
-Đầu vào có thể chứa tới$10^5$trường hợp thử nghiệm và tổng của tất cả$n \cdot m$trong tất cả các bài kiểm tra nhiều nhất là$2 \cdot 10^5$. Điều này ngay lập tức buộc chúng ta phải xây dựng thời gian tuyến tính trên tổng kích thước lưới. Bất kỳ giải pháp nào cố gắng quay lại, tìm kiếm theo luồng hoặc tìm kiếm nhiều trên mỗi thử nghiệm đều sẽ thất bại, vì ngay cả$O(nm \log nm)$mỗi bài kiểm tra là quá lớn trong trường hợp xấu nhất. 
+Đầu vào có thể chứa tới$10^5$trường hợp thử nghiệm và tổng của tất cả$n \cdot m$trong tất cả các bài kiểm tra nhiều nhất là$2 \cdot 10^5$. Điều này ngay lập tức buộc chúng ta phải xây dựng thời gian tuyến tính trên tổng kích thước lưới. Bất kỳ giải pháp nào cố gắng quay lại, tìm kiếm theo luồng hoặc tìm kiếm nhiều theo thử nghiệm đều sẽ thất bại, vì ngay cả$O(nm \log nm)$mỗi bài kiểm tra là quá lớn trong trường hợp xấu nhất. 
 
 Một ràng buộc cấu trúc quan trọng được ẩn giấu: mỗi phần luôn bao gồm chính xác bốn ô, vì vậy điều kiện cần là$n \cdot m$chia hết cho 4. Nếu điều này không thành công thì không thể xếp gạch bất kể độ linh hoạt của mảnh. 
 
@@ -40,7 +40,7 @@ Vì vậy, khó khăn thực sự không phải là số học, mà là việc �
 
 ## Phương pháp tiếp cận 
 
-Một ý tưởng mạnh mẽ sẽ là coi lưới như một không gian trạng thái và thử đặt mỗi tetromino ở tất cả các vị trí và hướng có thể, đánh dấu các ô đã sử dụng và đệ quy. Đây thực chất là một bài toán che phủ chính xác trên biểu đồ lưới. Mặc dù đơn giản về mặt khái niệm, mỗi vị trí có nhiều hướng và vị trí bắt đầu, đồng thời có nhiều nhánh tìm kiếm. Ngay cả đối với các lưới vừa phải, số lượng cấu hình một phần vẫn tăng theo cấp số nhân và lên tới$2 \cdot 10^5$tổng số ô qua các thử nghiệm, phương pháp này ngay lập tức không khả thi. 
+Một ý tưởng mạnh mẽ sẽ là coi lưới như một không gian trạng thái và thử đặt mỗi tetromino ở tất cả các vị trí và hướng có thể, đánh dấu các ô đã sử dụng và đệ quy. Đây thực chất là một bài toán che phủ chính xác trên biểu đồ lưới. Mặc dù đơn giản về mặt khái niệm, mỗi vị trí có nhiều hướng và vị trí bắt đầu, đồng thời có nhiều nhánh tìm kiếm. Ngay cả đối với các lưới vừa phải, số lượng cấu hình một phần vẫn tăng theo cấp số nhân và lên tới$2 \cdot 10^5$tổng số ô trong các thử nghiệm, phương pháp này ngay lập tức không khả thi. 
 
 Quan sát quan trọng là chúng ta thực sự không cần phải tôn trọng các ràng buộc về hình dạng hình học một cách rõ ràng. Cả hai phần đều là tetromino, cho phép xoay và phản xạ và chúng ta chỉ cần phân vùng hợp lệ của lưới thành các khối có kích thước 4. Điều này có nghĩa là chúng ta có thể tập trung vào việc xây dựng việc phân tách lưới thành các nhóm 4 ô tùy ý, miễn là chúng ta có thể gán mỗi nhóm cho một trong hai phần có sẵn theo một hướng nào đó. Tính linh hoạt của việc có hai loại tetromino loại bỏ nhu cầu phân biệt các hình dạng trong quá trình xây dựng và giảm bớt nhiệm vụ nhóm các ô một cách có hệ thống. 
 
@@ -107,7 +107,7 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Việc triển khai tuân theo quá trình quét hàng chính chính xác như được mô tả. Chi tiết quan trọng là chúng tôi chỉ gán nhãn khi đã thu thập được bốn ô. Điều này đảm bảo rằng không có một phần tetromino nào được ghi vào lưới. 
+```Việc triển khai tuân theo quá trình quét hàng chính xác như được mô tả. Chi tiết quan trọng là chúng tôi chỉ gán nhãn khi đã thu thập được bốn ô. Điều này đảm bảo rằng không có một phần tetromino nào được ghi vào lưới. 
 
 Lưới được phân bổ trước để việc ghi có thời gian không đổi. Vì mỗi ô được xử lý chính xác một lần nên độ phức tạp vẫn tuyến tính trong tổng kích thước đầu vào. 
 

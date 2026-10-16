@@ -1,6 +1,6 @@
 ---
 title: "CF 105481G - \u987e\u5f71\u81ea\u601c"
-description: "Chúng tôi được cung cấp một hoặc nhiều mảng. Đối với mỗi mảng, chúng tôi xem xét từng mảng con liền kề và gán cho nó một giá trị dựa trên một quy tắc đơn giản: lấy phần tử lớn nhất bên trong mảng con, đếm số lần giá trị lớn nhất này xuất hiện và nếu số lượng đó ít nhất là k thì mảng con sẽ đóng góp…"
+description: "Chúng tôi được cung cấp một hoặc nhiều mảng. Đối với mỗi mảng, chúng tôi xem xét từng mảng con liền kề và gán cho nó một giá trị dựa trên một quy tắc đơn giản: lấy phần tử lớn nhất bên trong mảng con, đếm số lần giá trị tối đa này xuất hiện và nếu số đó ít nhất là k thì mảng con sẽ đóng góp…"
 date: "2026-06-23T18:19:42+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
@@ -24,7 +24,7 @@ draft: false
 ## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi được cung cấp một hoặc nhiều mảng. Đối với mỗi mảng, chúng tôi xem xét từng mảng con liền kề và gán cho nó một giá trị dựa trên một quy tắc đơn giản: lấy phần tử lớn nhất bên trong mảng con, đếm xem giá trị tối đa này xuất hiện bao nhiêu lần và liệu số lượng đó có ít nhất là`k`, mảng con đóng góp`1`, nếu không thì nó góp phần`0`. Nhiệm vụ là tính tổng của những đóng góp này trên tất cả các mảng con. 
+Chúng tôi được cung cấp một hoặc nhiều mảng. Đối với mỗi mảng, chúng tôi xem xét từng mảng con liền kề và gán cho nó một giá trị dựa trên một quy tắc đơn giản: lấy phần tử lớn nhất bên trong mảng con, đếm xem giá trị lớn nhất này xuất hiện bao nhiêu lần và liệu số lượng đó có ít nhất là`k`, mảng con đóng góp`1`, nếu không thì nó góp phần`0`. Nhiệm vụ là tính tổng của những đóng góp này trên tất cả các mảng con. 
 
 Vì vậy, vấn đề không phải là tính toán trực tiếp cực đại mà là đếm tần suất giá trị tối đa bên trong một phân đoạn được “lặp lại đủ”. Mọi mảng con đều đủ điều kiện hoặc không đủ điều kiện và chúng tôi đang đếm xem có bao nhiêu mảng con đủ điều kiện. 
 
@@ -42,7 +42,7 @@ Cách tiếp cận vũ phu rất đơn giản. Đối với mỗi chỉ mục b�
 
 Quan sát quan trọng là điều kiện chỉ phụ thuộc vào phần tử lớn nhất của mảng con. Nếu chúng tôi sửa giá trị tối đa là bao nhiêu, hãy nói một giá trị`x`, thì chúng ta chỉ quan tâm đến các mảng con trong đó không có phần tử nào vượt quá`x`, và trong số đó, chúng tôi muốn ít nhất`k`sự xuất hiện của`x`. Điều này biến vấn đề thành việc đếm, đối với mỗi giá trị, có bao nhiêu mảng con có tần số tối đa và đủ được kiểm soát của giá trị đó. 
 
-Chúng ta có thể xử lý các giá trị theo thứ tự giảm dần. Khi chúng ta xem xét một giá trị`x`, chúng tôi tạm thời xử lý tất cả các phần tử lớn hơn`x`là “ranh giới chặn” chia mảng thành các phân đoạn độc lập. Bên trong mỗi phân khúc, chúng tôi chỉ quan tâm đến các vị trí có giá trị bằng`x`. 
+Chúng ta có thể xử lý các giá trị theo thứ tự giảm dần. Khi chúng ta xem xét một giá trị`x`, chúng tôi tạm thời xử lý tất cả các phần tử lớn hơn`x`là “ranh giới chặn” chia mảng thành các phân đoạn độc lập. Trong mỗi phân khúc, chúng tôi chỉ quan tâm đến các vị trí có giá trị bằng`x`. 
 
 Bây giờ vấn đề trở thành: trong mỗi phân đoạn, đếm các mảng con trong đó`x`ít nhất xuất hiện`k`lần. Đây là một bài toán đếm cổ điển “ít nhất k lần xuất hiện trong mảng con”, có thể giải được bằng cách tiếp cận hai con trỏ trên các vị trí của`x`bên trong mỗi phân đoạn. 
 
@@ -66,7 +66,7 @@ Chúng tôi duy trì vị trí của`x`và sử dụng cửa sổ trượt qua c
 
 ### Tại sao nó hoạt động 
 
-Tính đúng đắn phụ thuộc vào việc phân tích các mảng con theo phần tử lớn nhất của chúng. Mỗi mảng con hợp lệ có một giá trị tối đa duy nhất`x`. Một khi chúng tôi sửa chữa`x`, bất kỳ phần tử nào lớn hơn`x`sẽ làm mất hiệu lực mảng con, do đó mảng con hợp lệ phải nằm hoàn toàn trong các vùng được giới hạn bởi các phần tử lớn hơn. Bên trong một vùng như vậy, việc đếm các mảng con trong đó`x`ít nhất xuất hiện`k`thời gian độc lập với các giá trị khác. Mỗi mảng con được tính chính xác một lần khi xử lý giá trị lớn nhất của nó, vì nó chỉ được xem xét khi`x`là giá trị được phép lớn nhất trong phân khúc của nó. 
+Tính đúng đắn phụ thuộc vào việc phân tách các mảng con theo phần tử lớn nhất của chúng. Mỗi mảng con hợp lệ có một giá trị tối đa duy nhất`x`. Một khi chúng tôi sửa chữa`x`, bất kỳ phần tử nào lớn hơn`x`sẽ làm mất hiệu lực mảng con, do đó mảng con hợp lệ phải nằm hoàn toàn trong các vùng được giới hạn bởi các phần tử lớn hơn. Bên trong một vùng như vậy, việc đếm các mảng con trong đó`x`ít nhất xuất hiện`k`thời gian độc lập với các giá trị khác. Mỗi mảng con được tính chính xác một lần khi xử lý giá trị lớn nhất của nó, vì nó chỉ được xem xét khi`x`là giá trị được phép lớn nhất trong phân khúc của nó. 
 
 ## Giải pháp Python```python
 import sys
@@ -135,9 +135,9 @@ if __name__ == "__main__":
     main()
 ```Giải pháp bắt đầu bằng cách nhóm các chỉ số có giá trị bằng nhau để chúng ta có thể suy luận cục bộ về mức tối đa của từng ứng cử viên. Các ranh giới lớn hơn tiếp theo và lớn hơn trước đó được tính toán bằng các ngăn xếp đơn điệu. Chúng xác định các phân đoạn tối đa trong đó một giá trị nhất định có thể đóng vai trò là mức tối đa mà không bị phần tử lớn hơn vô hiệu hóa. 
 
-Đối với mỗi giá trị, chúng tôi xem xét số lần xuất hiện và chọn cửa sổ có kích thước`k`. Cửa sổ xác định yêu cầu tối thiểu để thỏa mãn điều kiện tần số. Khi lần xuất hiện thứ k được khắc phục, chúng tôi đếm xem có bao nhiêu lựa chọn tồn tại để mở rộng mảng con sang trái và phải trong khi vẫn nằm trong ranh giới phân đoạn hợp lệ. 
+Đối với mỗi giá trị, chúng tôi xem xét số lần xuất hiện và chọn cửa sổ có kích thước`k`. Cửa sổ xác định yêu cầu tối thiểu để thỏa mãn điều kiện tần số. Khi lần xuất hiện thứ k được khắc phục, chúng tôi đếm có bao nhiêu lựa chọn tồn tại để mở rộng mảng con sang trái và phải trong khi vẫn nằm trong ranh giới phân đoạn hợp lệ. 
 
-Một điểm tinh tế là mỗi cửa sổ tương ứng với nhiều mảng con và chúng tôi nhân các lựa chọn độc lập của điểm cuối bên trái và bên phải. Hệ số hóa này làm giảm số đếm xuống O(1) trên mỗi cửa sổ. 
+Một điểm tinh tế là mỗi cửa sổ tương ứng với nhiều mảng con và chúng tôi nhân các lựa chọn độc lập của điểm cuối bên trái và bên phải. Hệ số hóa này làm giảm số lượng đếm xuống O(1) trên mỗi cửa sổ. 
 
 ## Ví dụ đã hoạt động 
 
@@ -178,7 +178,7 @@ a = [1, 4, 2, 1]
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | O(n) khấu hao mỗi lần kiểm tra | Mỗi chỉ mục tham gia tối đa một số lượng hoạt động ranh giới và sự xuất hiện không đổi | 
+| Thời gian | O(n) khấu hao mỗi lần kiểm tra | Mỗi chỉ mục tham gia vào nhiều nhất một số lượng hoạt động ranh giới và sự xuất hiện không đổi | 
 | Không gian | O(n) | Lưu trữ vị trí và mảng ranh giới | 
 
 Tổng kích thước đầu vào trên tất cả các trường hợp thử nghiệm được giới hạn bởi 1e6, do đó, giải pháp khấu hao tuyến tính là đủ. Quá trình tiền xử lý dựa trên ngăn xếp và quét theo giá trị đều có tỷ lệ tương ứng với kích thước mảng. 

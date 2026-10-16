@@ -36,9 +36,9 @@ Trường hợp cạnh bê tông là`0-0`. Đầu ra đúng vẫn là`0-0`. Mộ
 
 ## Phương pháp tiếp cận 
 
-Một cách diễn giải thô bạo sẽ coi A và B là các số, mô phỏng việc hoán đổi bằng cách chuyển đổi chúng thành số nguyên và xây dựng lại chuỗi. Điều này hoạt động chính xác vì việc hoán đổi không phụ thuộc vào cấu trúc số, nhưng đó là chi phí không cần thiết đối với đầu vào có kích thước cố định nhỏ như vậy. 
+Cách diễn giải thô bạo sẽ coi A và B là số, mô phỏng việc hoán đổi bằng cách chuyển đổi chúng thành số nguyên và xây dựng lại chuỗi. Điều này hoạt động chính xác vì việc hoán đổi không phụ thuộc vào cấu trúc số, nhưng đó là chi phí không cần thiết đối với đầu vào có kích thước cố định nhỏ như vậy. 
 
-Sự đơn giản hóa thực sự đến từ việc nhận thấy rằng định dạng đầu vào rất cứng nhắc: chính xác một ký tự, sau đó là dấu gạch nối, rồi một ký tự. Không có sự mơ hồ, không có phân tích cú pháp nhiều chữ số và không xử lý khoảng trắng. Việc “tính toán” chỉ là vấn đề sắp xếp lại ký tự. 
+Sự đơn giản hóa thực sự xuất phát từ việc nhận thấy rằng định dạng đầu vào rất cứng nhắc: chính xác một ký tự, sau đó là dấu gạch nối, rồi một ký tự. Không có sự mơ hồ, không có phân tích cú pháp nhiều chữ số và không xử lý khoảng trắng. Việc “tính toán” chỉ là vấn đề sắp xếp lại ký tự. 
 
 Do đó, giải pháp giảm bớt việc đọc chuỗi và hoán đổi các ký tự xung quanh dấu gạch nối. Không có số học nào được yêu cầu cả. 
 
@@ -64,7 +64,7 @@ input = sys.stdin.readline
 
 s = input().strip()
 print(f"{s[2]}-{s[0]}")
-```Việc thực hiện hoàn toàn dựa vào việc lập chỉ mục vị trí. các`.strip()`đảm bảo rằng các ký tự dòng mới không ảnh hưởng đến việc lập chỉ mục. Vì định dạng được đảm bảo là`digit-digits`, lập chỉ mục`s[0]`Và`s[2]`luôn được an toàn. 
+```Việc thực hiện dựa hoàn toàn vào việc lập chỉ mục vị trí. các`.strip()`đảm bảo rằng các ký tự dòng mới không ảnh hưởng đến việc lập chỉ mục. Vì định dạng được đảm bảo là`digit-digits`, lập chỉ mục`s[0]`Và`s[2]`luôn được an toàn. 
 
 Một lỗi phổ biến là cố gắng chia cho`-`và quên xây dựng lại định dạng một cách chính xác. Trong khi`split('-')`cũng hoạt động, việc lập chỉ mục trực tiếp đơn giản hơn và tránh được việc phân bổ chuỗi trung gian. 
 

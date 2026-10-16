@@ -30,7 +30,7 @@ Mỗi lần xóa sẽ thay đổi chuỗi ngay lập tức, do đó các lần x
 
 Kích thước đầu vào lên tới một triệu ký tự. Điều này đã loại trừ bất kỳ giải pháp nào liên tục quét lại chuỗi từ đầu cho từng ứng cử viên`T`, vì có 26³ mẫu có thể có, khoảng 17 nghìn và thậm chí một đường tuyến tính duy nhất cho mỗi mẫu cũng sẽ quá chậm trong Python. 
 
-Một trường hợp cạnh tinh tế xuất phát từ thực tế là việc xóa tạo ra các mối quan hệ kề cận mới. Ví dụ, nếu chuỗi là`abca`và chúng tôi xóa`abc`, các ký tự còn lại`a`Và`a`trở nên liền kề và có thể hình thành các bộ ba hợp lệ mới với bối cảnh xung quanh ở các bước sau. Điều này có nghĩa là chúng ta không thể đơn giản đếm số lần xuất hiện của`T`trong chuỗi gốc. 
+Một trường hợp cạnh tinh tế xuất phát từ thực tế là việc xóa tạo ra các mối quan hệ kề cận mới. Ví dụ, nếu chuỗi là`abca`và chúng tôi xóa`abc`, các ký tự còn lại`a`Và`a`trở nên liền kề và có thể hình thành các bộ ba hợp lệ mới với bối cảnh xung quanh trong các bước sau. Điều này có nghĩa là chúng ta không thể đơn giản đếm số lần xuất hiện của`T`trong chuỗi gốc. 
 
 Một trường hợp góc cạnh khác là việc xóa ngoài cùng bên trái một cách tham lam sẽ làm thay đổi cấu trúc tương lai. Một ý tưởng ngây thơ như “chỉ đếm những lần xuất hiện chồng chéo” đã thất bại. Ví dụ, trong`aaaaaa`với`T = aaa`, các lần xóa ngoài cùng bên trái lặp đi lặp lại sẽ tiếp tục thay đổi căn chỉnh và số lần xóa không chỉ là số lượng chuỗi con ban đầu. 
 
@@ -162,7 +162,7 @@ Chúng tôi chỉ thấy một lần xóa và cấu trúc còn lại khác với
 | Thời gian | O(26³ · n) | Mỗi mẫu trong số 17576 mẫu sẽ quét chuỗi một lần với các thao tác ngăn xếp theo thời gian không đổi trên mỗi ký tự | 
 | Không gian | O(n) | Ngăn xếp lưu trữ tối đa chuỗi giảm hiện tại đầy đủ | 
 
-Tổng công việc là khoảng 17 triệu lượt tuyến tính qua các thao tác đơn giản, có thể chấp nhận được trong Python được tối ưu hóa theo các giới hạn Codeforces điển hình khi được triển khai mà không cần phí tổn như tạo chuỗi con hoặc đệ quy. 
+Tổng công việc là khoảng 17 triệu lượt tuyến tính qua các thao tác đơn giản, có thể chấp nhận được trong Python được tối ưu hóa theo các giới hạn Codeforces điển hình khi được triển khai mà không cần chi phí như tạo chuỗi con hoặc đệ quy. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io

@@ -100,7 +100,7 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Giải pháp trực tiếp tuân theo mô phỏng cho mỗi học sinh. Bước không hề tầm thường duy nhất là áp dụng giới hạn một cách chính xác: bài tập sau khi sửa đổi là`min(a, x + d)`, phải được tính toán trước khi tính tổng với điểm thi. 
+```Giải pháp trực tiếp tuân theo mô phỏng cho mỗi học sinh. Bước không hề tầm thường duy nhất là áp dụng giới hạn một cách chính xác: bài tập sau khi sửa đổi là`min(a, x + d)`, phải được tính trước khi tính tổng với điểm thi. 
 
 Cờ “trước” đảm bảo chúng tôi chỉ tính những học sinh đã trượt ban đầu. Nếu không có điều này, kết quả sẽ không chính xác bao gồm những học sinh đã đậu và vẫn đậu. 
 
@@ -148,7 +148,7 @@ d = 5
 | Thời gian |$O(n)$| Mỗi học sinh được xử lý một lần với các phép tính số học có thời gian không đổi | 
 | Không gian |$O(1)$| Chỉ một số biến được sử dụng ngoài bộ nhớ đầu vào | 
 
-Giới hạn$n \le 1000$làm cho các mô phỏng thậm chí lặp đi lặp lại trở nên tầm thường. Giải pháp này vừa vặn một cách thoải mái trong giới hạn vì nó thực hiện tối đa vài nghìn phép tính số học. 
+Giới hạn$n \le 1000$làm cho các mô phỏng thậm chí lặp đi lặp lại trở nên tầm thường. Giải pháp này phù hợp một cách thoải mái trong giới hạn vì nó thực hiện tối đa vài nghìn phép tính số học. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io
@@ -195,7 +195,7 @@ assert run("1\n40 100 100\n35 60\n10\n") == "1"
 
 ## Vỏ cạnh 
 
-Một trường hợp quan trọng là khi một học sinh vừa mới vượt qua trước khi thực hiện thao tác và chỉ tiếp cận được nó sau khi cắt. 
+Một trường hợp quan trọng là khi một học sinh vừa mới vượt qua trước khi thực hiện thao tác và chỉ tiếp cận được thao tác đó sau khi cắt. 
 
 đầu vào:```
 n = 1

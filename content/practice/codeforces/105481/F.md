@@ -69,9 +69,9 @@ Giải pháp tiến hành bằng cách giảm mọi thứ về Laplacian của �
 
 ### Tại sao nó hoạt động 
 
-Biểu đồ trạng thái được hình thành bởi chiều dài-$m$bước đi là một biểu đồ đường lặp của một$k$-đồ thị Euler chính quy. Cấu trúc biểu đồ đường duy trì sự cân bằng Euler trong khi nâng độ phức tạp của bước đi lên một chiều. Trong các biểu đồ như vậy, số lượng truyền tải toàn cầu bị chi phối bởi sự phân rã kiểu định lý TỐT NHẤT: một sản phẩm của sự đóng góp mức độ cục bộ và số lượng phát quang toàn cầu. 
+Biểu đồ trạng thái được hình thành bởi chiều dài-$m$bước đi là một biểu đồ đường lặp của một$k$-đồ thị Euler chính quy. Cấu trúc biểu đồ đường duy trì sự cân bằng Euler trong khi nâng độ phức tạp của bước đi lên một chiều. Trong các biểu đồ như vậy, số lượng truyền tải toàn cầu bị chi phối bởi sự phân tách kiểu định lý TỐT NHẤT: một sản phẩm của sự đóng góp mức độ cục bộ và số lượng phát triển toàn cầu. 
 
-Tính đều đặn đảm bảo rằng mọi đỉnh đều đóng góp các số hạng bậc như nhau, do đó tất cả các tổ hợp không tầm thường đều tập trung vào cấu trúc cây bao trùm của đồ thị ban đầu. Chiều dài của con rắn chỉ kiểm soát số lần cấu trúc phân nhánh cục bộ này được sao chép dọc theo mỗi nhánh.$n-1$các ràng buộc độc lập của việc truyền tải kéo dài, tạo ra số mũ$m(n-1)$. 
+Tính đều đặn đảm bảo rằng mọi đỉnh đều đóng góp giống nhau vào các số hạng bậc, do đó tất cả các tổ hợp không tầm thường đều tập trung vào cấu trúc cây bao trùm của đồ thị ban đầu. Chiều dài của con rắn chỉ kiểm soát số lần cấu trúc phân nhánh cục bộ này được sao chép dọc theo mỗi nhánh.$n-1$các ràng buộc độc lập của việc truyền tải kéo dài, tạo ra số mũ$m(n-1)$. 
 
 ## Giải pháp Python```python
 import sys

@@ -57,7 +57,7 @@ Vì dung lượng có thể hoán đổi cho nhau nên về cơ bản chúng tô
 
 ## Hướng dẫn thuật toán 
 
-Trước tiên, chúng tôi tính tổng cây con cho mỗi nút. Đây là một DFS duy nhất từ ​​gốc tổng hợp các trọng số của lá trở lên. 
+Đầu tiên chúng ta tính tổng cây con cho mỗi nút. Đây là một DFS duy nhất từ ​​gốc tổng hợp các trọng số của lá trở lên. 
 
 Tiếp theo, chúng tôi thu thập hai mảng: một mảng cho tổng cây con của tất cả các nút bên trong (đây là những dung lượng tối thiểu bắt buộc) và một mảng cho tất cả dung lượng có sẵn từ các nút nội bộ. 
 
@@ -167,7 +167,7 @@ Sửa đổi một công suất:```
 | 2 | 1000 | 700 | trận đấu | 
 | 3 | 1400 | - | thất bại | 
 
-Ngay cả khi kết hợp nhỏ tốt hơn, yêu cầu lớn nhất vẫn chiếm ưu thế hơn tính khả thi. 
+Ngay cả khi kết hợp nhỏ tốt hơn, yêu cầu lớn nhất vẫn chiếm ưu thế về tính khả thi. 
 
 ## Phân tích độ phức tạp 
 
@@ -256,6 +256,6 @@ assert run("3\n0 10\n1 5\n1 5\n") == "YES\n"
 
 Cây một nút chỉ chứa gốc nên không cần hoán đổi nội bộ. DFS gán trực tiếp giá trị lá và danh sách yêu cầu trống, do đó thuật toán ngay lập tức trả về CÓ. 
 
-Một cây có độ lệch cao trong đó một cây con chứa gần như tất cả các lá sẽ tạo ra yêu cầu vượt trội. Thuật toán tham lam sẽ thất bại một cách chính xác nếu không có dung lượng nào có thể đáp ứng được tổng số cây con lớn này, vì yêu cầu đó xuất hiện ở cuối danh sách đã sắp xếp và tiêu thụ dung lượng lớn nhất hiện có sau cùng. 
+Một cây có độ lệch cao trong đó một cây con chứa gần như tất cả các lá sẽ tạo ra yêu cầu vượt trội. Thuật toán tham lam sẽ thất bại một cách chính xác nếu không có dung lượng nào có thể bao gồm tổng cây con lớn này, vì yêu cầu đó xuất hiện ở cuối danh sách đã sắp xếp và tiêu thụ dung lượng lớn nhất hiện có sau cùng. 
 
 Một trường hợp có nhiều cây con nhỏ và một cây con có dung lượng lớn kiểm tra xem logic bỏ qua con trỏ có hoạt động chính xác hay không. Thuật toán loại bỏ các dung lượng nhỏ không thể sử dụng được và vẫn tìm thấy kết quả phù hợp hợp lệ cho tất cả các yêu cầu còn lại, xác nhận rằng việc sắp xếp lại dung lượng cục bộ là hoàn toàn đủ.

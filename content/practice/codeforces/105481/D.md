@@ -30,7 +30,7 @@ Mỗi hình cố định hoạt động giống như một đa giác cứng, có
 
 Vấn đề là yêu cầu điểm cuối cùng tối đa có thể nếu chúng ta chọn thời điểm đóng băng một cách tối ưu và những điểm hoạt động nào sẽ được đưa vào mỗi bao lồi. 
 
-Ràng buộc$n \le 5000$loại trừ bất kỳ giải pháp nào liên tục tính toán lại bao lồi theo cách tổ hợp đơn giản. Việc mô phỏng trực tiếp tất cả các cách phân chia điểm thành các nhóm sẽ bùng nổ về mặt tổ hợp, vì mọi tập hợp con của điểm đều có khả năng được cố định lại với nhau. Thậm chí chỉ cần xem xét tất cả các nhóm có thể cũng đã dẫn đến hành vi theo cấp số nhân. 
+Ràng buộc$n \le 5000$loại trừ bất kỳ giải pháp nào liên tục tính toán lại bao lồi theo cách tổ hợp đơn giản. Việc mô phỏng trực tiếp tất cả các cách phân chia điểm thành các nhóm sẽ bùng nổ về mặt tổ hợp, vì mọi tập hợp con của các điểm đều có khả năng được cố định lại với nhau. Thậm chí chỉ cần xem xét tất cả các nhóm có thể cũng đã dẫn đến hành vi theo cấp số nhân. 
 
 Một quan sát tinh tế nhưng quan trọng là điều duy nhất quan trọng để ghi điểm là điểm có thể tiếp cận cao nhất trong số tất cả các thân lồi được xây dựng và mỗi thân đóng góp độc lập sau khi nó được hình thành. Điều này cho thấy quy trình có thể được điều chỉnh lại bằng cách chọn các tập hợp con có bao lồi tạo ra một số giá trị hình học và kết hợp chúng theo thứ tự duy trì phạm vi tiếp cận theo chiều dọc tối đa. 
 
@@ -40,7 +40,7 @@ Một sai lầm ngây thơ là cho rằng luôn lấy tất cả các điểm ho
 
 Một cách giải thích bạo lực là xem xét mọi cách có thể để phân vùng$n$điểm thành các nhóm và với mỗi nhóm tính toán bao lồi của nó, sau đó mô phỏng tất cả các thứ tự xếp chồng có thể có. Về nguyên tắc, điều này đúng vì nó phản ánh trực tiếp các quy tắc của quy trình. Tuy nhiên, số lượng phân vùng bị chi phối bởi số Bell, số này tăng nhanh hơn hàm mũ và thậm chí việc tính toán bao lồi cho mỗi tập hợp con sẽ dẫn đến thời gian chạy không khả thi. 
 
-Cái nhìn sâu sắc quan trọng là ngừng suy nghĩ về việc phân nhóm theo thứ tự thời gian và thay vào đó tập trung vào yếu tố quyết định cuối cùng câu trả lời: các cặp điểm có thể xác định “cấu trúc hỗ trợ” khi được xoay tối ưu. Vấn đề nằm ở việc hiểu một đoạn hoặc một cạnh có thể được nâng lên cao bao nhiêu khi được coi như một bao lồi suy biến và cách kết hợp nhiều điểm góp phần tạo ra khoảng cách hiệu quả lớn hơn. 
+Cái nhìn sâu sắc quan trọng là ngừng suy nghĩ về việc nhóm theo thứ tự thời gian và thay vào đó tập trung vào yếu tố quyết định cuối cùng câu trả lời: các cặp điểm có thể xác định “cấu trúc hỗ trợ” khi được xoay tối ưu. Vấn đề nằm ở việc hiểu một đoạn hoặc một cạnh có thể được nâng lên cao bao nhiêu khi được coi như một bao lồi suy biến và cách kết hợp nhiều điểm góp phần tạo ra khoảng cách hiệu quả lớn hơn. 
 
 Khi chúng ta xem mỗi thân tàu bị đóng băng đóng góp một khoảng hình học, bài toán sẽ tương đương với việc tìm khoảng cách bình phương tối đa giữa các điểm kết hợp hiệu quả nhất định. Gợi ý ví dụ đã tiết lộ cấu trúc: câu trả lời cuối cùng tương ứng với khoảng cách Euclide xuất phát từ việc kết hợp tọa độ trực giao, điều này cho thấy cấu hình tối ưu được điều chỉnh bởi các chỉ tiêu vectơ tổng hợp hoặc cặp đôi. 
 
@@ -53,7 +53,7 @@ Bản thân phép toán bao lồi không đưa ra các giá trị cực trị m�
 
 ## Hướng dẫn thuật toán 
 
-1. Giải thích từng điểm$(x, y)$góp phần tạo ra các khoảng hình học cực trị tiềm tàng khi kết hợp với một điểm khác. Phép toán bao lồi đảm bảo rằng chỉ các điểm ngoài cùng quan trọng, do đó các điểm bên trong có thể bị bỏ qua để cực đại hóa các điểm cực trị. 
+1. Giải thích từng điểm$(x, y)$góp phần tạo ra các khoảng hình học cực trị tiềm tàng khi kết hợp với một điểm khác. Phép toán bao lồi đảm bảo rằng chỉ có các điểm ngoài cùng quan trọng, vì vậy các điểm bên trong có thể bị bỏ qua để cực đại hóa các điểm cực trị. 
 2. Quan sát rằng bất kỳ điểm cực trị cuối cùng hợp lệ nào cũng phải nằm trên một đoạn hoặc cạnh được tạo bởi hai điểm ban đầu, vì các đỉnh bao lồi luôn là điểm gốc. 
 3. Với mỗi cặp điểm$i, j$, tính khoảng cách Euclide giữa chúng:$$d(i,j) = \sqrt{(x_i - x_j)^2 + (y_i - y_j)^2}$$Điều này thể hiện phạm vi tiếp cận theo chiều dọc tối đa có thể đạt được khi đoạn đó được xoay một cách tối ưu để căn chỉnh theo hướng dọc. 
 4. Theo dõi khoảng cách tối đa như vậy trên tất cả các cặp. Giá trị này tương ứng với tọa độ y cao nhất có thể đạt được sau khi xếp chồng và xoay thân tàu một cách tối ưu. 
@@ -159,4 +159,4 @@ Trường hợp cạnh tới hạn xảy ra khi tất cả các điểm đều g
 
 Một trường hợp cạnh khác là khi các điểm tạo thành một phân bố giống như vòng tròn hoàn hảo. Mặc dù việc xây dựng bao lồi trên các tập hợp con có vẻ phù hợp nhưng câu trả lời tối ưu vẫn đến từ cặp điểm xa nhất trên ranh giới đường tròn. Quét theo cặp xác định chính xác các điểm đối cực mà không cần bất kỳ tính toán nào về thân tàu. 
 
-Trường hợp tinh vi cuối cùng là khi nhiều điểm thẳng hàng nhưng thứ tự kích hoạt gợi ý các ràng buộc nhóm. Do quá trình tính toán hoàn toàn bỏ qua cấu trúc kích hoạt và chỉ phụ thuộc vào các cực trị hình học nên tính cộng tuyến không thay đổi hành vi: chỉ các điểm cuối mới góp phần đưa ra câu trả lời và thuật toán sẽ chọn chúng một cách tự nhiên thông qua khoảng cách tối đa theo cặp.
+Trường hợp khó phát hiện cuối cùng là khi nhiều điểm thẳng hàng nhưng thứ tự kích hoạt gợi ý các ràng buộc về nhóm. Do quá trình tính toán hoàn toàn bỏ qua cấu trúc kích hoạt và chỉ phụ thuộc vào các cực trị hình học nên tính cộng tuyến không thay đổi hành vi: chỉ các điểm cuối mới góp phần đưa ra câu trả lời và thuật toán sẽ chọn chúng một cách tự nhiên thông qua khoảng cách tối đa theo cặp.

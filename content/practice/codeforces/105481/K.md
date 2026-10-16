@@ -34,13 +34,13 @@ Số lượng hoạt động nhiều nhất là$5 \cdot 10^3$, vì vậy chúng 
 
 Một cách tiếp cận ngây thơ để tính toán lại các tổng tập hợp con từ đầu sau mỗi thao tác là quá chậm, vì mỗi lần tính toán lại tốn khoảng$O(nV)$hoặc$O(V \cdot \#\text{elements})$, và làm điều đó cho đến$5 \cdot 10^3$có lúc trở nên bất khả thi. 
 
-Một cạm bẫy tinh vi là việc xóa bỏ sẽ phá vỡ sự đơn điệu. Nếu chúng tôi chỉ có phần chèn thêm thì bộ có thể truy cập chỉ tăng lên và bản cập nhật bitset ba lô tiêu chuẩn là đủ. Hoạt động xóa buộc chúng tôi phải duy trì cấu trúc động hoàn toàn thay vì DP một chiều. 
+Một cạm bẫy tinh vi là việc xóa bỏ sẽ phá vỡ tính đơn điệu. Nếu chúng tôi chỉ có phần chèn thêm thì bộ có thể truy cập chỉ tăng lên và bản cập nhật bitset ba lô tiêu chuẩn là đủ. Hoạt động xóa buộc chúng tôi phải duy trì cấu trúc động hoàn toàn thay vì DP một chiều. 
 
 Một trường hợp cạnh khác là các giá trị lặp lại. Vì các phần chèn vào không được đảm bảo là duy nhất nên chúng ta phải xử lý$S$như một multiset thực sự. Ví dụ, chèn$x$hai lần có thể tạo ra số tiền yêu cầu sử dụng cả hai bản sao và việc xóa một bản sao chỉ có thể rút lại một phần các khoản đóng góp đó. 
 
 ## Phương pháp tiếp cận 
 
-Ý tưởng brute-force rất đơn giản: duy trì multiset hiện tại và tính toán lại DP tổng tập hợp con sau mỗi thao tác. Chúng tôi giữ một mảng boolean$dp[s]$cho biết liệu tổng$s$có thể đạt được và với mỗi yếu tố$x$chúng tôi thực hiện một quá trình chuyển đổi ba lô cổ điển$dp[s] \leftarrow dp[s] \lor dp[s-x]$từ cao xuống thấp. Điều này tính toán chính xác tất cả các tổng tập hợp con cho trạng thái hiện tại. 
+Ý tưởng brute-force rất đơn giản: duy trì multiset hiện tại và tính toán lại DP tổng tập hợp con sau mỗi thao tác. Chúng tôi giữ một mảng boolean$dp[s]$cho biết liệu tổng$s$có thể đạt được và với mỗi yếu tố$x$chúng tôi thực hiện chuyển đổi chiếc ba lô cổ điển$dp[s] \leftarrow dp[s] \lor dp[s-x]$từ cao xuống thấp. Điều này tính toán chính xác tất cả các tổng tập hợp con cho trạng thái hiện tại. 
 
 Vấn đề là việc tính toán lại từ đầu sau mỗi thao tác là quá tốn kém. Mỗi lần xây dựng lại chi phí$O(V \cdot |S|)$, và kể từ đó$|S|$có thể$O(n)$, tổng công việc trở thành$O(n^2 V)$, vượt xa giới hạn. 
 
@@ -71,7 +71,7 @@ Bước này biến đổi một chuỗi động thành một tập hợp các k
 
 Chúng tôi xây dựng cây phân đoạn trên phạm vi chỉ mục$[1, n]$. Mỗi nút tương ứng với một khoảng thời gian. Với mỗi khoảng phần tử$[l, r]$, chúng tôi chèn giá trị của nó$x$vào tất cả các nút cây phân đoạn bao phủ đầy đủ khoảng này. Điều này đảm bảo rằng mỗi nút chỉ lưu trữ các phần tử được đảm bảo hoạt động trong toàn bộ phân đoạn của nó. 
 
-Lý do sự phân rã này có hiệu quả là vì mọi điểm thời gian đều thuộc về$O(\log n)$các nút và mọi phần tử được lưu trữ chính xác trong các nút đại diện cho phạm vi tối thiểu trong khoảng thời gian hoạt động của nó. 
+Lý do sự phân tách này có hiệu quả là vì mọi điểm thời gian đều thuộc về$O(\log n)$các nút và mọi phần tử được lưu trữ chính xác trong các nút đại diện cho phạm vi tối thiểu trong khoảng thời gian hoạt động của nó. 
 
 ### 3. Sử dụng DP bitset cho tổng tập hợp con 
 
@@ -232,12 +232,12 @@ def run(inp: str) -> str:
 | --- | --- | --- | 
 | tất cả các phần chèn tăng nhỏ | DP đang phát triển | khai triển đơn điệu | 
 | chèn lặp lại rồi xóa | tính đúng bội số | xử lý nhiều bộ | 
-| xen kẽ thêm/xóa | sự ổn định của khoảng | tính chính xác của các cập nhật động | 
+| xen kẽ thêm/xóa | sự ổn định của khoảng | tính chính xác của các bản cập nhật động | 
 | cạnh phần tử đơn | hành vi DP cơ bản | khởi tạo đúng đắn | 
 
 ## Vỏ cạnh 
 
-Một trường hợp tinh vi là việc chèn lặp đi lặp lại cùng một giá trị trước khi xóa. Ví dụ, chèn$x$hai lần và sau đó xóa nó một lần vẫn phải để lại một bản sao hoạt động. Việc xây dựng khoảng thời gian xử lý việc này bằng cách ghép nối các thao tác xóa với lần chèn không khớp gần đây nhất, do đó, mỗi bản sao đều có tuổi thọ riêng. 
+Một trường hợp tinh tế là việc chèn lặp lại cùng một giá trị trước khi xóa. Ví dụ, chèn$x$hai lần và sau đó xóa nó một lần vẫn phải để lại một bản sao hoạt động. Việc xây dựng khoảng thời gian xử lý việc này bằng cách ghép nối các thao tác xóa với lần chèn không khớp gần đây nhất, do đó, mỗi bản sao đều có tuổi thọ riêng. 
 
 Một trường hợp khác là khi multiset trở nên trống. DP phải thiết lập lại chỉ$\{0\}$, nghĩa là không tồn tại tổng dương. Việc biểu diễn cây phân đoạn đương nhiên tạo ra một DP trống tại thời điểm đó vì không có khoảng thời gian nào đóng góp cho lá đó. 
 

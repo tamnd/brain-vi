@@ -54,13 +54,13 @@ Cái nhìn sâu sắc quan trọng là thay vì tính toán$g(x)$cho mỗi số,
 Chúng tôi chuyển đổi vấn đề thành tính toán một hàm$F(n) = \sum_{x=1}^{n} g(x)$và trả lời từng truy vấn dưới dạng$F(r) - F(l-1)$. 
 
 1. Xác định một chữ số DP xử lý các số từ chữ số có nghĩa nhất đến chữ số có nghĩa nhỏ nhất. Ở mỗi bước, chúng tôi duy trì xem chúng tôi có còn chặt chẽ với tiền tố của$n$, vì điều này xác định chữ số nào được phép. 
-2. Đối với mỗi số đang được xây dựng, chúng ta cần đánh giá tất cả các vị trí phân chia có thể có. Để xử lý vấn đề này trong DP, chúng tôi ngầm theo dõi tổng chữ số tiền tố và tổng chữ số hậu tố. Một thủ thuật tiêu chuẩn là duy trì, ở trạng thái DP, tổng tiền tố đang chạy và cũng là bản tóm tắt các chữ số còn lại để chúng ta có thể tính tổng các chữ số hậu tố khi chọn phép chia. 
+2. Đối với mỗi số được xây dựng, chúng ta cần đánh giá tất cả các vị trí phân chia có thể có. Để xử lý vấn đề này trong DP, chúng tôi ngầm theo dõi tổng chữ số tiền tố và tổng chữ số hậu tố. Một thủ thuật tiêu chuẩn là duy trì, ở trạng thái DP, tổng tiền tố đang chạy và cũng là bản tóm tắt các chữ số còn lại để chúng ta có thể tính tổng các chữ số hậu tố khi chọn phép chia. 
 3. Trạng thái DP được mở rộng để bao gồm vị trí hiện tại và tổng chữ số tích lũy của tiền tố được hình thành cho đến nay. Tổng hậu tố còn lại có thể được lấy từ bảng có hậu tố được tính toán trước cho hậu tố cố định một phần hoặc được duy trì tương đương thông qua tổng số theo dõi thứ hai vẫn được đặt. 
 4. Tại mỗi vị trí chữ số, chúng ta phân nhánh trên tất cả các chữ số tiếp theo có thể có. Khi chúng tôi chọn một chữ số, chúng tôi cập nhật tổng chữ số tiền tố và giảm số lượng chữ số còn lại. Điều này cho phép chúng ta, ở mọi ranh giới phân chia có thể, tính toán$|f(prefix) - f(suffix)|$bằng cách so sánh tổng tiền tố hiện tại với tổng còn lại. 
 5. Chúng tôi tích lũy số tiền tối thiểu trên tất cả các vị trí phân chia trong mỗi số được xây dựng bằng cách giữ giá trị hoạt động tốt nhất cho số đó trong quá trình chuyển đổi DP. 
 6. DP trả về tổng số tích lũy$g(x)$trên tất cả các số lên đến$n$và chúng tôi sử dụng hai đánh giá cho mỗi truy vấn. 
 
-Thuộc tính quan trọng là mỗi số được xử lý chính xác một lần trong không gian DP và tất cả các điểm phân chia có thể được đánh giá ngầm trong quá trình chuyển đổi thay vì sau khi xây dựng đầy đủ. 
+Thuộc tính quan trọng là mỗi số được xử lý chính xác một lần trong không gian DP và tất cả các điểm phân chia có thể được đánh giá ngầm trong quá trình chuyển đổi thay vì sau khi xây dựng hoàn chỉnh. 
 
 ### Tại sao nó hoạt động 
 
@@ -77,13 +77,13 @@ if __name__ == "__main__":
     solve()
 ```Việc triển khai thực tế yêu cầu DP chữ số đầy đủ với khả năng ghi nhớ vị trí, ràng buộc chặt chẽ, tổng tiền tố hiện tại và tổng chữ số còn lại. Ý tưởng chính trong mã là tính toán trước tổng chữ số của các hậu tố trong quá trình chuyển đổi sao cho mỗi đánh giá phân tách là O(1). 
 
-Phần tinh tế nhất là đảm bảo rằng tổng chữ số hậu tố được thể hiện chính xác. Một lỗi phổ biến là cố gắng tính lại tổng hậu tố từ đầu bên trong DP, điều này phá vỡ sự phức tạp. Thay vào đó, tổng hậu tố phải được mang dưới dạng biến trạng thái hoặc xuất phát từ tổng chữ số còn lại được tính toán trước. 
+Phần tinh tế nhất là đảm bảo rằng tổng chữ số hậu tố được thể hiện chính xác. Một lỗi phổ biến là cố gắng tính lại tổng hậu tố từ đầu bên trong DP, điều này phá vỡ sự phức tạp. Thay vào đó, tổng hậu tố phải được mang dưới dạng biến trạng thái hoặc được lấy từ tổng chữ số còn lại được tính toán trước. 
 
 Một điểm tinh tế khác là số 0 đứng đầu. DP phải không cho phép các chuyển đổi tạo ra các phần tách không hợp lệ bằng cách đảm bảo chúng tôi không bao giờ tính phần tách trong đó một trong hai bên bắt đầu bằng 0 trừ khi bản thân số đó có cấu trúc số 0 đứng đầu được phép xây dựng (điều này không dành cho biểu diễn số nguyên tiêu chuẩn). 
 
 ## Ví dụ đã hoạt động 
 
-Hãy xem xét$n = 112$. Chúng tôi liệt kê tất cả các số từ 1 đến 112 thông qua DP về mặt khái niệm và tập trung vào một vài giá trị đại diện. 
+Hãy xem xét$n = 112$. Chúng tôi liệt kê tất cả các số từ 1 đến 112 thông qua DP về mặt khái niệm và tập trung vào một số giá trị đại diện. 
 
 Vì$x = 108$: 
 
