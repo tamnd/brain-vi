@@ -3,7 +3,7 @@
   "lang": "vi",
   "source_repo": "/tmp/brain",
   "target_repo": "/tmp/bs/vi/repo",
-  "last_run": "2026-10-16T02:32:25.456118Z",
+  "last_run": "2026-10-16T02:54:25.040758Z",
   "batch": 0,
   "translator": {
     "provider": "google",
@@ -113766,6 +113766,86 @@
       "source_hash": "sha256:1cbab2adda67ba14b5be36cb6baa6cf5238e4e73da597654ed5f768644ac3281",
       "translated_at": "2026-10-16T02:32:25.456092Z",
       "dest_path": "content/practice/codeforces/105475/C.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/105475/D.md": {
+      "source_hash": "sha256:6d6fd94d69f0a141c11e9c27f86865c891a91c8125148e7244d3c03c1baaf21f",
+      "translated_at": "2026-10-16T02:47:54.079863Z",
+      "dest_path": "content/practice/codeforces/105475/D.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/105475/E.md": {
+      "source_hash": "sha256:81c92e9dd2902a95be5b6121217dca773ec232204c5828a2c405fc6f2f072816",
+      "translated_at": "2026-10-16T02:48:13.613924Z",
+      "dest_path": "content/practice/codeforces/105475/E.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/105476/A.md": {
+      "source_hash": "sha256:eb28cfa5ad0846dbb95c1444992de4d3c1036832f3d8ede74baa04c2f0191008",
+      "translated_at": "2026-10-16T02:48:47.611519Z",
+      "dest_path": "content/practice/codeforces/105476/A.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/105476/B.md": {
+      "source_hash": "sha256:5a1c325911a87eb623d801260544604f41acb7c2168c17951bdbf266f5b64f58",
+      "translated_at": "2026-10-16T02:49:38.653650Z",
+      "dest_path": "content/practice/codeforces/105476/B.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/105476/C.md": {
+      "source_hash": "sha256:a6c016ae147255dba865b1fa71ede328469029b9b8014aeb25c98318a70b9e36",
+      "translated_at": "2026-10-16T02:50:18.381521Z",
+      "dest_path": "content/practice/codeforces/105476/C.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/105476/D.md": {
+      "source_hash": "sha256:5aa504bb1cd3cb9471c483328988561eefd3c8c79cb874401b01ae218bfa29a6",
+      "translated_at": "2026-10-16T02:50:49.331588Z",
+      "dest_path": "content/practice/codeforces/105476/D.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/105476/E.md": {
+      "source_hash": "sha256:b122b90c52cd5d302de0a87c7bd88f4647dccd9edfdf8abc0800449b2c6372f5",
+      "translated_at": "2026-10-16T02:51:44.022072Z",
+      "dest_path": "content/practice/codeforces/105476/E.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/105477/A.md": {
+      "source_hash": "sha256:02aa521a25d77c090c53e77c7806ebdeabb29b560f17fafd1c36a484cf441521",
+      "translated_at": "2026-10-16T02:52:36.884316Z",
+      "dest_path": "content/practice/codeforces/105477/A.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/105477/B.md": {
+      "source_hash": "sha256:45ddc857cf4f68acfde1a9fda93a70d297aa6fc10f0d6be1d7e1ad457e9a91d2",
+      "translated_at": "2026-10-16T02:54:10.504809Z",
+      "dest_path": "content/practice/codeforces/105477/B.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/105477/C.md": {
+      "source_hash": "sha256:992071fa47b9dc41cf559e7ec0b14e35d859b9064fa19465c5a2b868b27baaa6",
+      "translated_at": "2026-10-16T02:54:25.040736Z",
+      "dest_path": "content/practice/codeforces/105477/C.md",
       "status": "done",
       "tokens_used": 0,
       "provider": "google"
