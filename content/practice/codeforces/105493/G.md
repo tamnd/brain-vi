@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 59s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi đang lập mô hình lịch đào tạo nhằm cải thiện hai kỹ năng độc lập trong một số ngày. Mỗi kỹ năng có cấp độ ban đầu, cấp độ mục tiêu và hai cách để rèn luyện nó: chế độ luyện tập thông thường giúp tăng kỹ năng từ từ và chế độ chuyên sâu giúp thúc đẩy tiến bộ mạnh mẽ hơn nhưng tốn kém hơn về tổng nỗ lực. 
@@ -59,7 +59,7 @@ Sự tương tác chỉ xảy ra thông qua cách chúng tôi phân bổ “nh�
 
 Trước tiên, chúng tôi tính toán hai đại lượng cơ bản, Np và Nm, đại diện cho số lần nâng cấp hiệu quả cần thiết cho từng kỹ năng khi được xử lý độc lập. Những điều này đến từ việc chuyển đổi khoảng cách giữa giá trị hiện tại và mục tiêu thành một số cải tiến đơn vị theo chiến lược đào tạo tốt nhất có thể. 
 
-Tiếp theo, chúng ta giả sử không mất tính tổng quát rằng Np nhỏ hơn hoặc bằng Nm. Thứ tự này cho phép chúng tôi coi một kỹ năng là kỹ năng “rẻ hơn” về mặt nỗ lực cần thiết, điều này giúp đơn giản hóa cách chúng tôi phân bổ thời gian đào tạo chung. 
+Tiếp theo, chúng ta giả sử không mất tính tổng quát rằng Np nhỏ hơn hoặc bằng Nm. Thứ tự này cho phép chúng tôi coi một kỹ năng là kỹ năng “rẻ hơn” xét về nỗ lực cần thiết, điều này giúp đơn giản hóa cách chúng tôi phân bổ thời gian đào tạo chung. 
 
 Chúng tôi giới thiệu một biến U, biểu thị số ngày dành cho chế độ mà một kỹ năng được đào tạo thường xuyên thay vì đào tạo chuyên sâu. Những ngày còn lại sau đó buộc phải tập luyện chuyên sâu để bù đắp. 
 
@@ -120,7 +120,7 @@ Sau đó, chúng tôi tính toán trực tiếp Np và Nm, đây là phần tr�
 
 Sau đó, biến U được tính toán bằng cách sử dụng giới hạn dẫn xuất, thể hiện số ngày đào tạo thông thường tối đa có thể được phân bổ một cách an toàn mà không vi phạm các ràng buộc khả thi. Sau đó, chi phí cuối cùng được tập hợp thành tổng có trọng số của các khoản đóng góp đào tạo chuyên sâu và thường xuyên. 
 
-Sự tinh tế chính là đảm bảo rằng việc phân chia trần được thực hiện chính xác và giới hạn dựa trên bất đẳng thức trên U được áp dụng theo đúng hướng tùy thuộc vào Np hoặc Nm nào lớn hơn. 
+Sự tinh tế chính là đảm bảo rằng việc phân chia trần được thực hiện chính xác và giới hạn dựa trên bất đẳng thức trên U được áp dụng theo hướng chính xác tùy thuộc vào Np hoặc Nm nào lớn hơn. 
 
 ## Ví dụ đã hoạt động 
 

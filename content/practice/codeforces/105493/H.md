@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 2m 45s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi đang mô phỏng một du khách di chuyển qua lại giữa hai điểm dừng A và B, sử dụng hai thời gian biểu cố định. Một lịch trình liệt kê thời gian khởi hành từ A đến B và lịch trình còn lại liệt kê thời gian khởi hành từ B đến A. Mỗi lần du khách lên xe buýt, hành trình sẽ mất một khoảng thời gian cố định và sau khi đến nơi, họ có thể tiếp tục chờ chuyến xe buýt tiếp theo theo hướng ngược lại. 
@@ -32,7 +32,7 @@ Chi tiết quan trọng là du khách không tùy tiện lựa chọn giữa cá
 
 Các ràng buộc ngụ ý rằng cả hai lịch trình đều có thể lớn, thường lên tới tổng số khoảng 200.000 mục. Một mô phỏng đơn giản quét toàn bộ danh sách ở mỗi bước sẽ liên tục duyệt qua các mảng, dẫn đến hành vi bậc hai trong trường hợp xấu nhất. Với thang đo này, chỉ có giải pháp tuyến tính hoặc gần tuyến tính là an toàn nên chúng ta phải đảm bảo mỗi bus được xem xét tối đa một lần hoặc logarit. 
 
-Một vài tình huống khó khăn quan trọng. Một là khi không có xe buýt nào khả dụng sau thời điểm hiện tại, mặc dù các xe buýt sau này vẫn tồn tại. Ví dụ: nếu chúng ta đang ở thời điểm 10 ở A và xe buýt A-to-B tiếp theo ở lúc 5 thì điều đó không liên quan và phải được bỏ qua. Một trường hợp khó phát hiện khác là khi đi xe buýt sẽ đến quá muộn so với thời điểm giới hạn toàn cầu; ngay cả khi có xe buýt, nó vẫn phải bị từ chối và có thể cản trở tiến trình tiếp theo. Cuối cùng, tính chất di chuyển xen kẽ có nghĩa là một sai sót trong chuyển động của con trỏ có thể khiến con trỏ phải xem xét lại nhiều lần trên cùng một đoạn, dẫn đến các vòng lặp vô hạn hoặc tính hai lần. 
+Một vài tình huống khó khăn quan trọng. Một là khi không có xe buýt nào khả dụng sau thời điểm hiện tại, mặc dù các xe buýt sau này vẫn tồn tại. Ví dụ: nếu chúng ta đang ở thời điểm 10 ở A và xe buýt A-to-B tiếp theo ở lúc 5 thì điều đó không liên quan và phải được bỏ qua. Một trường hợp khó phát hiện khác là khi đi xe buýt sẽ đến quá muộn so với thời điểm giới hạn toàn cầu; ngay cả khi có xe buýt, nó vẫn phải bị từ chối và có thể cản trở tiến trình tiếp theo. Cuối cùng, tính chất di chuyển xen kẽ có nghĩa là một sai sót nhỏ trong chuyển động của con trỏ có thể khiến con trỏ phải xem xét lại nhiều lần trên cùng một đoạn, dẫn đến các vòng lặp vô hạn hoặc tính hai lần. 
 
 ## Phương pháp tiếp cận 
 

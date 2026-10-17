@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 50s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi được cung cấp một chuỗi các phòng được lập chỉ mục từ 1 trở đi và chúng tôi xử lý chúng theo thứ tự nghiêm ngặt. Trong khi di chuyển qua tiền tố của các phòng, chúng ta duy trì một giá trị số nguyên duy nhất được gọi là câu trả lời hiện tại. 
@@ -66,7 +66,7 @@ Chúng tôi xử lý các phòng từ phải sang trái để luôn biết có b
 5. Nếu phòng i là ngã ba thì nhân lên`multiplier`lên 2. Điều này cập nhật hiệu ứng cho tất cả các phòng trước đó vì giờ đây chúng sẽ được áp dụng thêm một lần nhân đôi trong tương lai. 
 6. Tiếp tục cho đến khi tất cả các phòng được xử lý và xuất ra`answer`. 
 
-Thứ tự các thao tác trong mỗi bước là rất quan trọng. Trước tiên, chúng tôi phải áp dụng khoản đóng góp bằng cách sử dụng hệ số nhân hiện tại trước khi cập nhật nó, vì phòng hiện tại sẽ không bị ảnh hưởng bởi trạng thái kết nối của chính nó khi xem xét việc nhân đôi dựa trên hậu tố. 
+Thứ tự các thao tác trong mỗi bước là rất quan trọng. Trước tiên, chúng tôi phải áp dụng khoản đóng góp bằng cách sử dụng hệ số nhân hiện tại trước khi cập nhật nó, vì phòng hiện tại sẽ không bị ảnh hưởng bởi trạng thái giao nhau của chính nó khi xem xét nhân đôi dựa trên hậu tố. 
 
 ### Tại sao nó hoạt động 
 
@@ -179,6 +179,6 @@ Một phòng đơn không nằm ở ngã ba là trường hợp đơn giản nh�
 
 Đối với phòng nối đơn, thuật toán vẫn cộng 1 trước khi áp dụng bất kỳ phép nhân nào. Vì không có phòng nào ở bên phải nên hệ số nhân vẫn là 1 và kết quả lại là 1. Điều này phù hợp với thực tế là việc nhân đôi chỉ ảnh hưởng đến các phòng trước đó và không có phòng nào cả. 
 
-Trong một mảng hoàn toàn không có điểm nối, hệ số nhân không bao giờ thay đổi từ 1. Mỗi lần lặp sẽ cộng chính xác 1, do đó kết quả cuối cùng là n, khớp với cách diễn giải là chỉ xảy ra gia số. 
+Trong một mảng hoàn toàn không có điểm nối, số nhân không bao giờ thay đổi từ 1. Mỗi lần lặp lại cộng chính xác 1, do đó kết quả cuối cùng là n, khớp với cách giải thích rằng chỉ có sự gia tăng xảy ra. 
 
 Trong một mảng nối đầy đủ, hệ số nhân tiến triển thành 1, 2, 4, 8 khi chúng ta di chuyển sang trái. Mỗi đóng góp được tính theo số lượng điểm nối trong tương lai và tổng hình học cuối cùng được tạo ra một cách chính xác bằng cách tích lũy ngược lại.

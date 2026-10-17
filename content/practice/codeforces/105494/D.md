@@ -1,6 +1,6 @@
 ---
 title: "CF 105494D - Phân nhóm"
-description: "Chúng ta được cho một mảng các số nguyên và được yêu cầu chia nó thành nhiều nhóm. Chi phí của một giải pháp là số lượng nhóm và mọi phần tử phải thuộc về chính xác một nhóm."
+description: "Chúng ta được cho một mảng các số nguyên và được yêu cầu chia nó thành nhiều nhóm. Chi phí của một giải pháp là số lượng nhóm và mọi phần tử phải thuộc về đúng một nhóm."
 date: "2026-06-23T21:01:58+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
@@ -21,10 +21,10 @@ draft: false
 **Thời gian giải:** 1m 2s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được cho một mảng các số nguyên và được yêu cầu chia nó thành nhiều nhóm. Chi phí của một giải pháp là số lượng nhóm và mọi phần tử phải thuộc về chính xác một nhóm. Một nhóm chỉ được coi là hợp lệ nếu hai điều kiện bên trong nó được thỏa mãn: số phần tử không vượt quá một giới hạn cố định và sự khác biệt giữa phần tử nhỏ nhất và lớn nhất trong nhóm đó không vượt quá một ngưỡng cố định. 
+Chúng ta được cho một mảng các số nguyên và được yêu cầu chia nó thành nhiều nhóm. Chi phí của một giải pháp là số lượng nhóm và mọi phần tử phải thuộc về đúng một nhóm. Một nhóm chỉ được coi là hợp lệ nếu hai điều kiện bên trong nó được thỏa mãn: số phần tử không vượt quá một giới hạn cố định và sự khác biệt giữa phần tử nhỏ nhất và lớn nhất trong nhóm đó không vượt quá một ngưỡng cố định. 
 
 Tuyên bố về cấu trúc quan trọng trong câu lệnh là thứ tự của các phần tử trong đầu vào không quan trọng. Khi chúng tôi sắp xếp mảng, mọi giải pháp tối ưu đều có thể được chuyển đổi thành một giải pháp tối ưu khác trong đó mỗi nhóm tương ứng với một phân đoạn liền kề của mảng được sắp xếp này. Điều này làm giảm vấn đề từ việc phân vùng tùy ý đến việc chọn vị trí cắt dọc theo một đường. 
 
@@ -36,13 +36,13 @@ Một số trường hợp cần lưu ý. Nếu tất cả các giá trị đề
 
 Phối cảnh brute-force là xem xét mọi cách có thể để chia mảng đã sắp xếp thành các phân đoạn liền kề và xác minh xem mỗi phân đoạn có thỏa mãn cả hai ràng buộc hay không. Đối với mỗi phân đoạn, chúng tôi sẽ quét các phần tử của nó để tính toán kích thước và phạm vi của nó, tức là O(n) trên mỗi phân đoạn trong trường hợp xấu nhất. Vì có nhiều cách để phân vùng một mảng theo cấp số nhân nên phương pháp này nhanh chóng trở nên không khả thi. Ngay cả việc lập trình động trên tất cả các vị trí cắt trước đó cũng dẫn đến O(n²), vì đối với mỗi vị trí, chúng tôi sẽ thử tất cả các điểm dừng trước đó và tính toán lại tính hợp lệ. 
 
-Quan sát quan trọng là khi mảng được sắp xếp, tính hợp lệ của một phân đoạn chỉ phụ thuộc vào ranh giới bên trái của nó và khoảng cách chúng ta mở rộng sang bên phải. Khi chúng ta mở rộng một phân đoạn, cả kích thước và phạm vi giá trị đều thay đổi đơn điệu. Điều này có nghĩa là chúng ta không bao giờ cần phải xem xét lại các quyết định trước đó trong một phân khúc: chúng ta có thể tham lam mở rộng phân khúc hiện tại cho đến khi việc thêm phần tử tiếp theo vi phạm một trong hai ràng buộc, sau đó chúng ta phải bắt đầu một phân khúc mới. 
+Quan sát quan trọng là khi mảng được sắp xếp, tính hợp lệ của một phân đoạn chỉ phụ thuộc vào ranh giới bên trái của nó và khoảng cách chúng ta mở rộng sang bên phải. Khi chúng tôi mở rộng một phân khúc, cả kích thước và phạm vi giá trị đều thay đổi đơn điệu. Điều này có nghĩa là chúng ta không bao giờ cần phải xem xét lại các quyết định trước đó trong một phân khúc: chúng ta có thể tham lam mở rộng phân khúc hiện tại cho đến khi việc thêm phần tử tiếp theo vi phạm một trong hai ràng buộc, sau đó chúng ta phải bắt đầu một phân khúc mới. 
 
 Điều này biến vấn đề thành một lần quét tuyến tính duy nhất trong đó mỗi phần tử được xử lý một lần. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
-| Phân vùng Brute Force | O(2^n) hoặc O(n²) DP | O(n) | Quá chậm | 
+| Phân vùng vũ phu | O(2^n) hoặc O(n²) DP | O(n) | Quá chậm | 
 | Quét tham lam trên mảng được sắp xếp | O(n log n) (sắp xếp) + O(n) | O(1) thêm | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán
@@ -50,11 +50,11 @@ Quan sát quan trọng là khi mảng được sắp xếp, tính hợp lệ c�
 1. Sắp xếp mảng theo thứ tự không giảm. Điều này đảm bảo rằng bất kỳ nhóm hợp lệ nào cũng có thể được biểu diễn dưới dạng một phân đoạn liền kề và cả hai phần tử tối thiểu và tối đa của một phân khúc luôn ở cuối phân đoạn đó. 
 2. Bắt đầu một nhóm mới ở phần tử đầu tiên. Lưu trữ hai thông tin: giá trị đầu tiên của nhóm hiện tại và vị trí chỉ mục của nó. 
 3. Lặp lại mảng từ trái sang phải. Tại mỗi phần tử, hãy kiểm tra xem việc thêm nó vào nhóm hiện tại có vi phạm một trong hai ràng buộc hay không. 
-4. Nếu sự khác biệt giữa phần tử hiện tại và phần tử đầu tiên của nhóm vượt quá ngưỡng cho phép hoặc nếu số lượng phần tử trong nhóm vượt quá k, thì hãy đóng nhóm hiện tại trước phần tử này và bắt đầu một nhóm mới tại vị trí này. 
+4. Nếu sự khác biệt giữa phần tử hiện tại và phần tử đầu tiên của nhóm vượt quá ngưỡng cho phép hoặc nếu số lượng phần tử trong nhóm vượt quá k, thì hãy đóng nhóm hiện tại trước phần tử này và bắt đầu một nhóm mới ở vị trí này. 
 5. Khi bắt đầu một nhóm mới, hãy đặt lại giá trị và vị trí đầu tiên được lưu trữ. 
 6. Tiếp tục cho đến khi tất cả các phần tử được xử lý. Số lần chúng tôi thành lập một nhóm mới chính là câu trả lời. 
 
-Việc triển khai chỉ duy trì ranh giới bên trái của phân khúc hiện tại. Điều này là đủ vì mảng đã được sắp xếp, do đó giá trị tối thiểu luôn ở ranh giới bên trái và giá trị tối đa là phần tử hiện tại đang được xem xét. 
+Việc triển khai chỉ duy trì ranh giới bên trái của phân đoạn hiện tại. Điều này là đủ vì mảng đã được sắp xếp, do đó giá trị tối thiểu luôn ở ranh giới bên trái và giá trị tối đa là phần tử hiện tại đang được xem xét. 
 
 ### Tại sao nó hoạt động 
 

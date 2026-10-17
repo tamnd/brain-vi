@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1 phút 19s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một chuỗi các thay đổi được áp dụng theo thời gian, trong đó mỗi phần tử mô tả số lượng kiến trong tổ kiến thay đổi như thế nào sau một lần quan sát. Giá trị dương có nghĩa là kiến ​​được thêm vào, giá trị âm có nghĩa là kiến ​​rời đi. 
@@ -40,7 +40,7 @@ Một trường hợp khó phát hiện khi tất cả các thay đổi đều �
 
 ## Phương pháp tiếp cận 
 
-Cách giải thích bạo lực là tưởng tượng việc chọn số lượng kiến ban đầu và mô phỏng quá trình. Đối với mỗi giá trị bắt đầu ứng cử viên, chúng tôi sẽ duyệt qua mảng và duy trì tổng số đang chạy, kiểm tra xem nó có trở thành số âm hay không. Nếu đúng như vậy thì giá trị ban đầu quá nhỏ nên chúng ta thử giá trị lớn hơn. 
+Giải thích bạo lực là tưởng tượng việc chọn số lượng kiến ban đầu và mô phỏng quá trình. Đối với mỗi giá trị bắt đầu ứng cử viên, chúng tôi sẽ duyệt qua mảng và duy trì tổng số đang chạy, kiểm tra xem nó có trở thành số âm hay không. Nếu đúng như vậy thì giá trị ban đầu quá nhỏ nên chúng ta thử giá trị lớn hơn. 
 
 Điều này hiệu quả vì nó trực tiếp thực thi ràng buộc ở mỗi bước. Tuy nhiên, đối với mỗi ứng cử viên, chúng tôi quét toàn bộ mảng và trong trường hợp xấu nhất, chúng tôi có thể cần thử một giá trị bắt đầu tỷ lệ thuận với độ lớn của độ lệch âm trong tổng tiền tố. Điều này dẫn đến kết quả trong trường hợp xấu nhất là n lượt kiểm tra cho mỗi ứng viên và lên tới O(maxPrefix) ứng viên, con số này trở nên quá lớn. 
 
@@ -167,4 +167,4 @@ assert run("3\n-1 -2 -3\n") == "6", "strong deficit"
 
 ## Vỏ cạnh 
 
-Đối với mảng một phần tử chứa số dương, tổng chạy không bao giờ giảm xuống dưới 0, do đó tiền tố tối thiểu bằng 0 và đầu ra bằng 0. Đối với một yếu tố tiêu cực duy nhất như`[-7]`, tổng tiền tố ngay lập tức trở thành số âm, đạt`-7`, do đó độ lệch yêu cầu chính xác là`7`. Thuật toán nắm bắt chính xác cả hai trường hợp vì nó khởi tạo tiền tố tối thiểu về 0 và chỉ cập nhật nó khi tổng chạy thấp hơn xuất hiện.
+Đối với mảng một phần tử chứa số dương, tổng chạy không bao giờ giảm xuống dưới 0, do đó tiền tố tối thiểu bằng 0 và đầu ra bằng 0. Đối với một yếu tố tiêu cực duy nhất như`[-7]`, tổng tiền tố ngay lập tức trở thành âm, đạt`-7`, do đó độ lệch yêu cầu chính xác là`7`. Thuật toán nắm bắt chính xác cả hai trường hợp vì nó khởi tạo tiền tố tối thiểu về 0 và chỉ cập nhật nó khi tổng chạy thấp hơn xuất hiện.

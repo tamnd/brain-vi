@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 59s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Mỗi cơ sở nhận được một số lượt ghé thăm trong một số ngày cố định. Từ lịch sử này, chúng tôi tính toán một mảng tần số$c_i$, trong đó mỗi giá trị thể hiện số lần thành lập$i$đã được viếng thăm. 
@@ -32,11 +32,11 @@ Quá trình sau đó mô phỏng liên tục việc giảm những thâm hụt n
 
 Đầu ra thực tế là số lượng hoạt động tối thiểu cần thiết theo các quy tắc này, trong đó các hoạt động đang ghép hai mức thâm hụt hoặc tăng tổng mức thâm hụt khi việc ghép nối là không thể hoặc không đủ. 
 
-Các ràng buộc ngụ ý rằng một mô phỏng đơn giản phải xử lý tới$O(D \cdot n)$tương tác và mỗi tương tác liên quan đến việc chọn các giá trị cực trị nhiều lần. Điều này cho thấy rằng bất kỳ giải pháp nào dựa vào việc quét mảng lặp đi lặp lại sẽ quá chậm và thậm chí mô phỏng dựa trên heap phải được phân tích cẩn thận về hành vi trong trường hợp xấu nhất. 
+Các ràng buộc ngụ ý rằng một mô phỏng đơn giản phải xử lý tới$O(D \cdot n)$tương tác và mỗi tương tác liên quan đến việc chọn các giá trị cực trị nhiều lần. Điều này cho thấy rằng bất kỳ giải pháp nào dựa vào việc quét lặp lại các mảng sẽ quá chậm và thậm chí mô phỏng dựa trên heap phải được phân tích cẩn thận về hành vi trong trường hợp xấu nhất. 
 
 Một trường hợp thất bại tinh vi xuất hiện khi tổng thâm hụt là số lẻ hoặc khi mức thâm hụt lớn nhất quá lớn so với phần còn lại. 
 
-Ví dụ: nếu chúng ta có một cơ sở duy nhất có mức thâm hụt 2, chẳng hạn$h = [2]$, quá trình không thể ghép nối nó với bất cứ điều gì. Việc ghép nối tham lam ngây thơ sẽ thất bại ngay lập tức, nhưng hành vi đúng đắn là kích hoạt mức tăng toàn cầu cho đến khi có thể ghép nối. 
+Ví dụ: nếu chúng ta có một cơ sở duy nhất có mức thâm hụt 2, chẳng hạn$h = [2]$, quá trình không thể ghép nối nó với bất cứ điều gì. Việc ghép đôi tham lam ngây thơ sẽ thất bại ngay lập tức, nhưng hành vi đúng đắn là kích hoạt sự gia tăng toàn cầu cho đến khi việc ghép đôi trở nên khả thi. 
 
 Một ví dụ khác là$h = [3, 1]$. Tổng số là chẵn, nhưng mức thâm hụt lớn nhất vượt quá phần còn lại. Việc ghép nối tham lam không thể giảm sự mất cân bằng một cách hợp lý trừ khi thuật toán kiểm tra rõ ràng các điều kiện khả thi. 
 
@@ -59,7 +59,7 @@ Tuy nhiên, mỗi thao tác đều yêu cầu trích xuất giá trị cực đ�
 
 ## Hướng dẫn thuật toán 
 
-Chúng tôi làm việc với mảng thâm hụt$h$, một biểu diễn nhiều tập hợp cho biết mỗi cơ sở cách xa mức tối đa hiện tại$M$. 
+Chúng tôi làm việc với mảng thâm hụt$h$, một biểu diễn nhiều tập hợp cho thấy mỗi cơ sở cách xa mức tối đa hiện tại$M$. 
 
 1. Tính tần số ban đầu$c_i$, bộ$M = \max(c_i)$, và xác định$h_i = M - c_i$. Điều này bình thường hóa vấn đề để tất cả công việc diễn ra dưới dạng thâm hụt thay vì số lượng thô. 
 2. Duy trì hai uẩn: tổng$S = \sum h_i$và giá trị tối đa$maxH = \max(h_i)$. Những điều này tóm tắt liệu việc ghép nối có thể thực hiện được về mặt cấu trúc mà không cần mô phỏng các hoạt động riêng lẻ hay không. 

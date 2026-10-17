@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 52s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một quy trình rất đơn giản bắt đầu từ một đối tượng duy nhất, được gọi là một bộ phận. Mỗi lần chúng ta nhấn Enter, số phần sẽ tăng thêm đúng một phần. Sau khi thực hiện một số lần nhấn, hệ thống kết thúc với chính xác$n$các bộ phận. 
@@ -73,7 +73,7 @@ Chúng tôi in sự khác biệt được tính toán làm câu trả lời.
 
 ### Tại sao nó hoạt động 
 
-Hệ thống phát triển theo cách tuyến tính chặt chẽ: mỗi thao tác tăng trạng thái chính xác một và không có thao tác nào giảm hoặc sửa đổi kích thước gia tăng. Điều này tạo ra ánh xạ một-một giữa các thao tác và số gia tăng trong số phần. Vì trạng thái ban đầu được cố định ở mức 1 nên việc đạt tới$n$yêu cầu chính xác$n - 1$số gia tăng. Không có chuỗi hoạt động thay thế nào tồn tại, vì vậy số lượng này là cần thiết và đủ. 
+Hệ thống phát triển theo cách tuyến tính chặt chẽ: mỗi thao tác tăng trạng thái chính xác một và không có thao tác nào giảm hoặc sửa đổi kích thước gia tăng. Điều này tạo ra ánh xạ một-một giữa các thao tác và số gia tăng trong số phần. Vì trạng thái ban đầu được cố định ở mức 1 nên việc đạt tới$n$yêu cầu chính xác$n - 1$số gia tăng. Không có chuỗi hoạt động thay thế nào tồn tại, vì vậy số lượng này vừa cần vừa đủ. 
 
 ## Giải pháp Python```python
 import sys

@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 54s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một dãy các độ cao của các ngọn núi được sắp xếp thành một đường thẳng. Một tham số$k$xác định khi nào hai ngọn núi lân cận được coi là "tương thích": nếu chênh lệch độ cao giữa các vị trí liền kề vượt quá$k$, thì sự kề cận đó bị phá vỡ. Bất cứ khi nào có sự gián đoạn xảy ra, một dãy núi mới lại bắt đầu. Nói cách khác, mỗi đoạn liền kề có chênh lệch độ cao liền kề nhiều nhất là$k$tạo thành một dãy núi. 
@@ -157,7 +157,7 @@ Hợp lệ nhỏ nhất$k$là$8$.
 | Thời gian |$O(n \log n)$| Sắp xếp sự khác biệt liền kề chiếm ưu thế | 
 | Không gian |$O(n)$| Lưu trữ mảng khác biệt | 
 
-Thuật toán dễ dàng phù hợp với các ràng buộc điển hình cho$n$lên tới$2 \cdot 10^5$, vì việc sắp xếp và quét tuyến tính đều hiệu quả ở quy mô đó. 
+Thuật toán dễ dàng phù hợp với các ràng buộc điển hình cho$n$lên đến$2 \cdot 10^5$, vì việc sắp xếp và quét tuyến tính đều hiệu quả ở quy mô đó. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io
@@ -189,8 +189,8 @@ def run(inp: str) -> str:
 
 ## Vỏ cạnh 
 
-Trường hợp cạnh then chốt là khi tất cả các khác biệt liền kề đều bằng nhau. Ví dụ,$h = [1, 10, 1, 10]$. Tất cả sự khác biệt đều$9$. Vì$m = 2$, bất kì$k < 9$tạo ra 3 phân đoạn và bất kỳ$k \ge 9$tạo ra 1 đoạn. Không có cách nào để có được chính xác 2 phân đoạn. Phương pháp sai phân được sắp xếp phát hiện chính xác điều này vì khoảng thời gian cho giá trị được yêu cầu$k$trở nên trống rỗng. 
+Trường hợp cạnh then chốt là khi tất cả các sai phân liền kề đều bằng nhau. Ví dụ,$h = [1, 10, 1, 10]$. Tất cả sự khác biệt đều$9$. Vì$m = 2$, bất kì$k < 9$tạo ra 3 phân đoạn và bất kỳ$k \ge 9$tạo ra 1 đoạn. Không có cách nào để có được chính xác 2 phân đoạn. Phương pháp sai phân được sắp xếp phát hiện chính xác điều này vì khoảng thời gian cho giá trị được yêu cầu$k$trở nên trống rỗng. 
 
-Một trường hợp khác là khi$m = 1$. Vì$h = [5, 2, 8]$, sự khác biệt là$[3,6]$. yêu cầu$k$phải ít nhất là 6. Thuật toán chọn ranh giới trên một cách chính xác, đảm bảo một phân đoạn được kết nối duy nhất. 
+Một trường hợp khác là khi$m = 1$. Vì$h = [5, 2, 8]$, sự khác biệt là$[3,6]$. Yêu cầu$k$phải ít nhất là 6. Thuật toán chọn ranh giới trên một cách chính xác, đảm bảo một phân đoạn được kết nối duy nhất. 
 
 Cuối cùng, khi$m = n$, mọi sự kề cận đều phải phá vỡ. Đối với bất kỳ mảng nào, điều này tương ứng với$k$nhỏ hơn mức chênh lệch tối thiểu. Cấu trúc khoảng sẽ tự nhiên giảm xuống “dưới phần tử nhỏ nhất” và thuật toán trả về ngưỡng hợp lệ tối thiểu tương ứng.

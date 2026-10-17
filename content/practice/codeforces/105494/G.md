@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 53s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi được cung cấp một bộ sưu tập quái vật, mỗi con quái vật được mô tả bằng hai con số. Một giá trị thể hiện số vàng bạn cần có trước khi có thể đánh bại quái vật đó và giá trị còn lại thể hiện số vàng bạn nhận được sau khi đánh bại nó. Bạn bắt đầu với một số vàng ban đầu và liên tục chọn quái vật để chiến đấu. Bạn chỉ có thể chiến đấu với một con quái vật nếu số vàng hiện tại của bạn ít nhất đạt đến ngưỡng yêu cầu. Sau khi đánh bại nó, số vàng của bạn sẽ tăng theo phần thưởng của nó. 
@@ -52,7 +52,7 @@ Một cách tiếp cận có cấu trúc hơn là mô phỏng quy trình từng 
 
 ## Hướng dẫn thuật toán 
 
-Chúng tôi duy trì hai cấu trúc ưu tiên. Một kho lưu trữ những quái vật vẫn không thể tiếp cận được vì chúng ta thiếu đủ vàng, được sắp xếp theo yêu cầu ngày càng tăng. Những quái vật lưu trữ khác mà chúng tôi hiện có thể đánh bại, được sắp xếp theo mức độ phần thưởng giảm dần. 
+Chúng tôi duy trì hai cấu trúc ưu tiên. Một kho lưu trữ những quái vật vẫn không thể tiếp cận được vì chúng ta thiếu đủ vàng, được sắp xếp theo yêu cầu ngày càng tăng. Những quái vật lưu trữ khác mà chúng tôi hiện có thể đánh bại, được sắp xếp theo mức phần thưởng giảm dần. 
 
 Chúng tôi cũng duy trì một biến cw đại diện cho số vàng hiện tại và bộ đếm số lượng quái vật mà chúng tôi đã đánh bại. 
 
@@ -133,7 +133,7 @@ Heap lưu trữ phần thưởng dưới dạng âm vì heapq của Python là m
 | 4 | 15 | - | [ -3, -1 ] | - | 
 | 5 | 15 | - | [ -3, -1 ] | 3 | 
 
-Quá trình này cho thấy việc tăng vàng sẽ mở khóa những quái vật sau này như thế nào và tại sao luôn chọn phần thưởng cao nhất trong số những phần thưởng hiện có sẽ tối đa hóa phạm vi tiếp cận trong tương lai. 
+Quá trình này cho thấy cách tăng vàng để mở khóa những quái vật sau này và tại sao luôn chọn phần thưởng cao nhất trong số những phần thưởng hiện có sẽ tối đa hóa phạm vi tiếp cận trong tương lai. 
 
 ### Ví dụ 2 
 

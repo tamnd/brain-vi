@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 44s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi đang mô phỏng một chiếc xe buýt di chuyển qua dãy đèn giao thông. Giữa các giao lộ, xe buýt dành một khoảng thời gian di chuyển cố định và tại mỗi giao lộ, xe buýt có thể phải chờ tùy thuộc vào trạng thái hiện tại của tín hiệu giao thông định kỳ. 
@@ -40,7 +40,7 @@ Việc triển khai đơn giản cũng có thể xử lý sai offset di, đặc 
 
 Mô phỏng lực lượng vũ phu sẽ theo dõi thời gian liên tục và đối với mỗi giao lộ, thời gian sẽ tăng dần cho đến khi đèn chuyển sang màu xanh lục. Sau khi di chuyển đến từng ngã tư, chúng ta tăng thời gian bằng ai, sau đó liên tục kiểm tra trạng thái đèn bằng cách mô phỏng chu kỳ từng giây. Điều này đúng vì nó phản ánh chính xác quy trình thực, nhưng nó có thể giảm xuống O (tổng thời gian trong tất cả các lần chờ), điều này không khả thi khi thời gian chờ đợi lớn. 
 
-Quan sát quan trọng là chúng ta không bao giờ cần mô phỏng từng giây riêng lẻ. Trạng thái đèn giao thông có tính tuần hoàn nên bất cứ lúc nào chúng ta cũng chỉ cần biết mình đang ở đâu trong chu kỳ của nó. Thay vì tăng lên từng giây một, chúng ta có thể tính trực tiếp pha của ánh sáng bằng cách sử dụng số học mô-đun. 
+Quan sát quan trọng là chúng ta không bao giờ cần mô phỏng từng giây riêng lẻ. Trạng thái đèn giao thông có tính chu kỳ nên bất cứ lúc nào chúng ta cũng chỉ cần biết mình đang ở đâu trong chu kỳ của nó. Thay vì tăng lên từng giây một, chúng ta có thể tính trực tiếp pha của ánh sáng bằng cách sử dụng số học mô-đun. 
 
 Khi chúng ta đến giao lộ i, đã biết thời gian đã trôi qua kể từ lúc xuất phát. Chu kỳ của ánh sáng lặp lại sau mỗi gi + ri giây. Vì đèn xanh cuối cùng bắt đầu di giây trước thời gian 0 nên tổng thời gian đã trôi qua kể từ lần bắt đầu xanh tham chiếu đó là thời gian + di. Việc giảm modulo này theo độ dài chu kỳ sẽ cho chúng ta vị trí hiện tại trong chu kỳ. Nếu vị trí này nằm trong khoảng màu xanh lá cây, chúng ta sẽ vượt qua ngay lập tức. Nếu không, chúng ta sẽ chuyển thẳng sang giai đoạn xanh tiếp theo. 
 
@@ -112,7 +112,7 @@ Hãy xem xét một trường hợp đơn giản với hai giao điểm.
 | 1 | 3 | 3 | 10 | 3 | màu xanh lá cây | 3 | 
 | 2 | 7 | 8 | 5 | 3 | chờ đợi màu đỏ 2 | 9 | 
 
-Điều này xác nhận cách chờ đợi chỉ được kích hoạt khi vị trí mô-đun vượt quá cửa sổ màu xanh lá cây. 
+Điều này xác nhận việc chờ đợi chỉ được kích hoạt khi vị trí mô-đun vượt quá cửa sổ màu xanh lá cây. 
 
 Bây giờ hãy xem xét trường hợp biên trong đó xe buýt đến đúng ranh giới màu đỏ. 
 
@@ -156,15 +156,15 @@ assert run("1\n3 0 4 0\n") == "7"
 assert run("1\n0 2 3 0\n") == "0"
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-| mẫu 2 nút giao | 9 | độ chính xác mô phỏng bình thường | 
+| mẫu 2 nút giao nhau | 9 | độ chính xác mô phỏng bình thường | 
 | luôn xanh bù đắp | 10 | không có hành vi chờ đợi | 
 | luôn có vỏ màu đỏ | 7 | xử lý chờ đợi toàn bộ chu kỳ | 
 | ranh giới du lịch bằng không | 0 | trường hợp cạnh đến ngay lập tức | 
 
 ## Vỏ cạnh 
 
-Một trường hợp quan trọng là khi thời gian đến diễn ra chính xác khi bắt đầu giai đoạn màu đỏ. Ví dụ, với gi = 3, ri = 4, nếu rem = 3 thì chúng ta đang ở điểm chuyển tiếp. Điều kiện rem >= gi đảm bảo chúng ta coi đây là màu đỏ và áp dụng chờ đợi. Thời gian chờ được tính toán là khoảng thời gian - rem, chuyển sang lần bắt đầu xanh tiếp theo một cách chính xác. 
+Một trường hợp quan trọng là khi thời gian đến diễn ra chính xác khi bắt đầu giai đoạn màu đỏ. Ví dụ, với gi = 3, ri = 4, nếu rem = 3 thì chúng ta đang ở điểm chuyển tiếp. Điều kiện rem >= gi đảm bảo chúng ta coi đây là màu đỏ và áp dụng chờ đợi. Thời gian chờ được tính toán là khoảng thời gian − rem, chuyển sang lần bắt đầu xanh tiếp theo một cách chính xác. 
 
 Một trường hợp cạnh khác là giá trị di lớn. Giả sử di là 10^12 trong khi chu kỳ nhỏ. Hoạt động modulo tự động bình thường hóa điều này, vì vậy chúng ta không bao giờ cần giảm di một cách rõ ràng trước đó. Ví dụ: nếu chu kỳ = 6 và di = 10^12 thì (time + di) % 6 sẽ nắm bắt chính xác pha mà không bị tràn hoặc chia tỷ lệ không chính xác. 
 
-Trường hợp tinh tế cuối cùng là khi gi = 0. Trong trường hợp đó, rem < gi không bao giờ đúng, do đó mỗi lần đến đều kích hoạt việc chờ đợi một chu kỳ đầy đủ. Công thức vẫn hoạt động vì chu kỳ − rem luôn tiến tới ranh giới chu kỳ tiếp theo, đảm bảo tính chính xác mà không cần viết hoa đặc biệt.
+Trường hợp tinh tế cuối cùng là khi gi = 0. Trong trường hợp đó, rem < gi không bao giờ đúng, do đó mỗi lần đến sẽ kích hoạt việc chờ đợi một chu kỳ đầy đủ. Công thức vẫn hoạt động vì chu kỳ − rem luôn tiến tới ranh giới chu kỳ tiếp theo, đảm bảo tính chính xác mà không cần viết hoa đặc biệt.
