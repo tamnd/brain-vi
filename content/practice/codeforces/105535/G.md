@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1 phút 21s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được đưa ra một dãy và được yêu cầu xem xét mọi mảng con liền kề có độ dài chẵn. Đối với mỗi mảng con như vậy, chúng ta ghép các phần tử từ đầu vào trong: đầu tiên với cuối cùng, thứ hai với thứ hai cuối cùng, v.v. Mỗi cặp tạo ra một tổng và tất cả các tổng này tạo thành một tập hợp nhiều liên kết với mảng con. 
@@ -64,7 +64,7 @@ Chúng tôi xử lý từng giá trị gcd có thể có bằng cách chuyển �
 7. Sau khi tính toán F[g] cho tất cả g, hãy chuyển đổi các số đếm này thành số lượng gcd chính xác bằng cách sử dụng tích lũy số chia giảm dần: trừ đi phần đóng góp của bội số để tách riêng các giá trị gcd chính xác. 
 8. Tổng g nhân với số mảng con có gcd chính xác bằng g. 
 
-Thuộc tính chính xác của khóa là khi mở rộng một mảng con hợp lệ, tất cả các cặp được nhân đôi bên trong vẫn không thay đổi so với trạng thái trước đó. Ràng buộc mới duy nhất được đưa ra ở mỗi lần mở rộng là cặp ngoài cùng, do đó tính hợp lệ có thể được kiểm tra dần dần mà không cần xem lại phần bên trong. 
+Thuộc tính chính xác chính là khi mở rộng một mảng con hợp lệ, tất cả các cặp được nhân đôi bên trong vẫn không thay đổi so với trạng thái trước đó. Ràng buộc mới duy nhất được đưa ra ở mỗi lần mở rộng là cặp ngoài cùng, do đó tính hợp lệ có thể được kiểm tra dần dần mà không cần xem lại phần bên trong. 
 
 ### Tại sao nó hoạt động 
 
@@ -124,7 +124,7 @@ if __name__ == "__main__":
     solve()
 ```Việc triển khai trước tiên sẽ xây dựng số lượng mảng con thỏa mãn điều kiện chia hết cho mỗi gcd ứng cử viên. Vòng lặp lồng nhau qua tâm và phần mở rộng là công cụ cấu trúc quan trọng: nó đảm bảo mỗi mảng con chẵn được tạo chính xác một lần, luôn từ điểm giữa của nó. 
 
-Giai đoạn thứ hai chuyển đổi số lượng chia hết cho g thành số lượng gcd chính xác. Đây là ước số tiêu chuẩn DP trong đó bội số cao hơn được trừ trước, đảm bảo không tính hai lần. 
+Giai đoạn thứ hai chuyển đổi số lượng chia hết cho g thành số lượng gcd chính xác. Đây là ước số tiêu chuẩn DP trong đó các bội số cao hơn được trừ trước, đảm bảo không tính hai lần. 
 
 Phải cẩn thận khi lập chỉ mục cho phần mở rộng trung tâm: mỗi trung tâm tương ứng với một gốc mảng con có độ dài chẵn riêng biệt và việc mở rộng sẽ tăng chiều dài lên hai lần mỗi lần. Điều này tránh được các vấn đề riêng lẻ giữa độ dài lẻ và chẵn. 
 

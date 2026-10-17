@@ -1,6 +1,6 @@
 ---
 title: "CF 105535B - Mã hóa cặp byte"
-description: "Chúng ta được cung cấp một chuỗi byte, mỗi giá trị ban đầu nằm trong phạm vi từ 0 đến 255. Quá trình này liên tục nén các cặp liền kề bằng cách liên tục chọn một cặp giá trị có thứ tự cụ thể và thu gọn tất cả các lần xuất hiện của nó trong một thao tác hàng loạt."
+description: "Chúng ta được cung cấp một chuỗi byte, mỗi giá trị ban đầu nằm trong phạm vi từ 0 đến 255. Quá trình này liên tục nén các cặp liền kề bằng cách chọn liên tục một cặp giá trị có thứ tự cụ thể và thu gọn tất cả các lần xuất hiện của nó trong một thao tác hàng loạt."
 date: "2026-06-23T01:24:29+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
@@ -21,10 +21,10 @@ draft: false
 **Thời gian giải:** 58s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được cung cấp một chuỗi byte, mỗi giá trị ban đầu nằm trong phạm vi từ 0 đến 255. Quá trình này liên tục nén các cặp liền kề bằng cách liên tục chọn một cặp giá trị có thứ tự cụ thể và thu gọn tất cả các lần xuất hiện của nó trong một thao tác hàng loạt. 
+Chúng ta được cung cấp một chuỗi byte, mỗi giá trị ban đầu nằm trong phạm vi từ 0 đến 255. Quá trình này liên tục nén các cặp liền kề bằng cách chọn liên tục một cặp giá trị có thứ tự cụ thể và thu gọn tất cả các lần xuất hiện của nó trong một thao tác hàng loạt. 
 
 Sự xuất hiện của một cặp có nghĩa là hai phần tử liên tiếp trong mảng. Nếu chúng ta nhìn vào từng cặp liền kề, chúng ta sẽ đếm xem mỗi cặp có thứ tự xuất hiện bao nhiêu lần. Trong số tất cả các cặp có ít nhất một lần xuất hiện, chúng tôi chọn cặp xuất hiện thường xuyên nhất. Nếu bằng nhau, chúng tôi chọn cặp nhỏ nhất về mặt từ điển, nghĩa là phần tử đầu tiên nhỏ hơn sẽ thắng và nếu các phần tử đó bằng nhau thì phần tử thứ hai nhỏ hơn sẽ thắng. 
 
@@ -67,12 +67,12 @@ Mỗi nút phần tử biết giá trị của nó và con trỏ tới các nút
 
 Chúng tôi cũng theo dõi nhãn tăng dần duy nhất bắt đầu từ 256 cho các giá trị mới được tạo. 
 
-### bước 
+### Các bước 
 
 1. Xây dựng danh sách liên kết đôi từ mảng đầu vào và tính toán tất cả các cặp liền kề ban đầu. 
 
 Điều này cung cấp cho chúng ta cấu trúc tần số cơ bản để chọn lần nén đầu tiên. 
-2. Đối với mỗi cặp liền kề (x, y), hãy tăng tần số của nó và đẩy nó vào hàng đợi ưu tiên được khóa bởi (tần số, -x, -y). 
+2. Đối với mỗi cặp liền kề (x, y), hãy tăng tần số của nó và đẩy nó vào hàng ưu tiên được khóa bởi (tần số, -x, -y). 
 
 Điều này đảm bảo chúng tôi luôn có thể lấy được cặp thường xuyên nhất bằng cách bẻ dây chính xác. 
 3. Lặp lại tới k lần: 

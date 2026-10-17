@@ -21,10 +21,10 @@ draft: false
 **Thời gian giải:** 1 phút 12s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được cho một dãy các điểm cố định$C_1, C_2, \dots, C_n$trên một mặt phẳng và một điểm đặc biệt$D$. Đối với mỗi$C_i$, chúng ta phải chọn đường tròn có tâm tại$C_i$, có bán kính$r_i$. Chúng ta cũng được phép lựa chọn$n-1$dòng$l_1, \dots, l_{n-1}$, trong đó mỗi dòng$l_i$phải đi qua$D$và tiếp tuyến với cả hai đường tròn có tâm tại$C_i$Và$C_{i+1}$. 
+Chúng ta được cho một dãy các điểm cố định$C_1, C_2, \dots, C_n$trên một mặt phẳng và một điểm đặc biệt$D$. Đối với mỗi$C_i$, chúng ta phải chọn đường tròn có tâm tại$C_i$, với bán kính$r_i$. Chúng ta cũng được phép lựa chọn$n-1$dòng$l_1, \dots, l_{n-1}$, trong đó mỗi dòng$l_i$phải đi qua$D$và tiếp tuyến với cả hai đường tròn có tâm tại$C_i$Và$C_{i+1}$. 
 
 Về mặt hình học, mỗi đường đi qua$D$áp đặt một ràng buộc hình học chung trên hai bán kính liên tiếp: nó ấn định khoảng cách giữa hai tâm từ đường thẳng đó và những khoảng cách đó phải bằng bán kính. Mục tiêu là ấn định bán kính sao cho tất cả các ràng buộc đó có thể được thỏa mãn đồng thời, đồng thời tối đa hóa tổng diện tích hình tròn, tỷ lệ thuận với$\sum r_i^2$. 
 
@@ -134,7 +134,7 @@ if __name__ == "__main__":
     solve()
 ```Giải pháp trước tiên sẽ lấy lại tất cả các điểm sao cho các ràng buộc tiếp tuyến trở thành các ràng buộc phép chiếu tương ứng với$D$. Mỗi cạnh sau đó được chuyển đổi thành một cạnh đối xứng$2 \times 2$dạng bậc hai. Thay vì tìm kiếm một cách rõ ràng các hướng tiếp tuyến, chúng tôi tính toán giá trị riêng chính, trực tiếp mang lại đóng góp bán kính bình phương tối đa có thể đạt được cho cạnh đó. 
 
-Một cạm bẫy triển khai phổ biến là trộn số học số nguyên với tính toán giá trị riêng của dấu phẩy động. Vì tọa độ lên đến$2^{16}$, giá trị bình phương trung gian có thể đạt tới$2^{32}$, vì vậy số nguyên 64 bit phải được sử dụng trước khi chuyển đổi sang float. 
+Một cạm bẫy triển khai phổ biến là trộn lẫn số học số nguyên với tính toán giá trị riêng của dấu phẩy động. Vì tọa độ lên đến$2^{16}$, giá trị bình phương trung gian có thể đạt tới$2^{32}$, vì vậy số nguyên 64 bit phải được sử dụng trước khi chuyển đổi sang float. 
 
 Một điểm tinh tế khác là duy trì việc ghép nối chính xác các điểm được tạo; bất kỳ cách xây dựng sai lệch nào trong trình tự sẽ phá vỡ mọi mối quan hệ hình học, vì mọi cạnh đều phụ thuộc vào sự kề cận chính xác. 
 

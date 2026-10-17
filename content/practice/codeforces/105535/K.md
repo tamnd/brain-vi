@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 54s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một lịch không còn là cấu trúc một năm tiêu chuẩn nữa mà thay vào đó bao gồm một chuỗi các tháng, mỗi tháng có số ngày riêng. Một ngày được biểu diễn dưới dạng một cặp số nguyên: một ngày trong tháng và chỉ số tháng. 
@@ -101,7 +101,7 @@ Truy vấn đầu tiên: (2, 1) đến (1, 2).
 | --- | --- | --- | --- | --- | --- | --- | --- | 
 | 1 | 1 | 2 | 2 | 1 | 0 + 2 = 2 | 3 + 1 = 4 | 3 | 
 
-Khoảng thời gian tương ứng với ngày từ 2 đến 4 trong mảng phẳng, do đó kết quả là 3. 
+Khoảng thời gian tương ứng với ngày từ 2 đến 4 trong mảng được làm phẳng, do đó kết quả là 3. 
 
 Điều này xác nhận rằng quá trình chuyển đổi giữa các tháng được xử lý rõ ràng bằng ánh xạ tiền tố. 
 
@@ -120,7 +120,7 @@ Bây giờ hãy xem xét trường hợp một tháng với [10], truy vấn (1,
 | Thời gian | O(n + m) | Việc xây dựng tiền tố là tuyến tính tính theo tháng, mỗi truy vấn là O(1) | 
 | Không gian | O(n) | mảng tiền tố lưu trữ độ dài tháng tích lũy | 
 
-Các ràng buộc cho phép tổng số tháng và truy vấn lên tới 100000, do đó, quá trình xử lý trước tuyến tính và xử lý truy vấn theo thời gian không đổi thoải mái phù hợp trong giới hạn. 
+Các ràng buộc cho phép tổng số tháng và truy vấn lên tới 100000, do đó, việc xử lý tiền xử lý tuyến tính và xử lý truy vấn theo thời gian không đổi thoải mái phù hợp trong giới hạn. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io
@@ -163,10 +163,10 @@ assert run("""3 1
 """) == "9"
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-| single month full span | 10 | inclusive counting |
- | same day query | 1 | off-by-one handling |
- | chuyển tiếp qua tháng | 3, 5 | prefix correctness |
- | full year query | 9 | tính chính xác của bản đồ toàn cầu | 
+| một tháng đầy đủ | 10 | tính bao gồm | 
+| truy vấn cùng ngày | 1 | xử lý từng cái một | 
+| chuyển tiếp qua tháng | 3, 5 | tính chính xác của tiền tố | 
+| truy vấn cả năm | 9 | tính chính xác của bản đồ toàn cầu | 
 
 ## Vỏ cạnh 
 

@@ -1,5 +1,5 @@
 ---
-title: "CF 105535J - Đa giác vui vẻ"
+title: "CF 105535J - Đa giác vui nhộn"
 description: "Chúng ta được yêu cầu xây dựng một đa giác đơn giản với chính xác n đỉnh được đặt trên các điểm lưới số nguyên trong một hộp giới hạn lớn."
 date: "2026-06-23T01:27:04+07:00"
 tags: ["codeforces", "competitive-programming"]
@@ -14,14 +14,14 @@ verified: true
 draft: false
 ---
 
-[CF 105535J - Đa giác vui nhộn](https://codeforces.com/problemset/problem/105535/J) 
+[CF 105535J - Đa giác vui vẻ](https://codeforces.com/problemset/problem/105535/J) 
 
 **Đánh giá:** - 
 **Thẻ:** - 
 **Thời gian giải:** 1 phút 13s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được yêu cầu dựng một đa giác đơn giản với chính xác`n`các đỉnh được đặt trên các điểm lưới số nguyên trong một hộp giới hạn lớn. Đa giác không được tự cắt nhau, tất cả các đỉnh phải phân biệt và cứ ba đỉnh liên tiếp phải tạo thành một ngã rẽ thật sự, nghĩa là chúng ta không được phép đi trên một đường thẳng trong ba điểm liên tiếp. Diện tích của đa giác phải khớp với một giá trị bắt buộc được cung cấp gián tiếp dưới dạng`2s`, trong đó diện tích thực tế có thể là số nguyên hoặc nửa số nguyên tùy thuộc vào tính chẵn lẻ của giá trị này. 
@@ -32,7 +32,7 @@ Các ràng buộc lớn về số lượng ca kiểm thử, nhưng mỗi cấu t
 
 Một điểm tinh tế là “đa giác đơn giản” và “không có ba điểm thẳng hàng liên tiếp” cùng loại trừ nhiều cách xây dựng ngây thơ như đi tới đi lui trên một đường thẳng hoặc xếp chồng các điểm trên đường lưới. Một điểm tinh tế quan trọng khác là diện tích không bắt buộc phải liên quan đến độ lồi; đa giác có thể không lồi, điều này cho phép chúng ta tự do sử dụng các cấu trúc ngoằn ngoèo tự tránh. 
 
-Các trường hợp cạnh xuất hiện chủ yếu ở xung quanh kích thước nhỏ`n`. Vì`n = 3`, đa giác là một hình tam giác, do đó giới hạn diện tích trở nên cứng nhắc: chúng ta chỉ có thể đạt được các diện tích tương ứng với các tam giác có tọa độ nguyên, nghĩa là diện tích hai lần phải là số nguyên. Nếu như`2s`là số lẻ, diện tích là nửa số nguyên, vẫn có thể đạt được, do đó không có gì là không thể nếu chỉ tính chẵn lẻ. Trường hợp nguy hiểm thực sự duy nhất là cố gắng thỏa mãn khu vực không đủ bậc tự do, nhưng ngay cả các hình tam giác cũng đã trải rộng trên tất cả các khu vực nửa số nguyên trên lưới, do đó không cần phải bắt buộc`NO`các trường hợp phát sinh từ hình học một mình trong các ràng buộc. 
+Các trường hợp cạnh xuất hiện chủ yếu ở xung quanh kích thước nhỏ`n`. Vì`n = 3`, đa giác là một hình tam giác, do đó giới hạn diện tích trở nên cứng nhắc: chúng ta chỉ có thể đạt được các diện tích tương ứng với các tam giác có tọa độ nguyên, nghĩa là diện tích hai lần phải là số nguyên. Nếu như`2s`là số lẻ, diện tích là nửa số nguyên, vẫn có thể đạt được, do đó không có khả năng không thể xảy ra chỉ từ tính chẵn lẻ. Trường hợp nguy hiểm thực sự duy nhất là cố gắng thỏa mãn khu vực không đủ bậc tự do, nhưng ngay cả các hình tam giác cũng đã trải rộng trên tất cả các khu vực nửa số nguyên trên lưới, do đó không cần phải bắt buộc`NO`các trường hợp phát sinh từ hình học một mình trong các ràng buộc. 
 
 Chế độ thất bại thú vị hơn đến từ các công trình vô tình tạo ra sự cộng tác. Ví dụ: đặt các điểm như`(0,0), (1,0), (2,0)`ngay lập tức vi phạm quy tắc không cộng tuyến liên tiếp mặc dù nó có thể trông giống như một đoạn cơ sở vô hại. Tương tự, bất kỳ nỗ lực nào nhằm “làm đặc” một đa giác bằng cách chia nhỏ các cạnh sẽ phá vỡ ràng buộc nếu được thực hiện một cách ngây thơ. 
 
@@ -58,7 +58,7 @@ Chúng tôi cũng khai thác thực tế rằng sự đơn giản sẽ dễ dàn
 Chúng tôi xây dựng một đa giác đơn giản x-monotone với hai chuỗi: chuỗi phía dưới nằm gần y = 0 và chuỗi phía trên mã hóa khu vực cần thiết. 
 
 1. Chúng tôi sửa một chuỗi tọa độ x theo chiều ngang từ`0`ĐẾN`n-1`. Điều này mang lại cho chúng ta thứ tự từ trái sang phải tự nhiên nhằm ngăn chặn sự tự giao nhau khi chúng ta xác định chính xác các đường bao trên và dưới. Lý do để sửa tính đơn điệu x là vì nó làm giảm tính đơn giản của việc kiểm tra thuộc tính cấu trúc hơn là ràng buộc hình học. 
-2. Chúng tôi xây dựng một chuỗi thấp hơn xen kẽ một chút theo hướng y, ví dụ xen kẽ giữa`y = 0`Và`y = 1`. Điều này tránh được tình trạng cấm ba điểm thẳng hàng liên tiếp trong khi vẫn giữ cho chuỗi gần như phẳng. Sự xen kẽ là rất quan trọng vì một chuỗi phẳng hoàn toàn sẽ vi phạm điều kiện cộng tuyến liên tiếp. 
+2. Chúng tôi xây dựng một chuỗi thấp hơn xen kẽ một chút theo hướng y, ví dụ xen kẽ giữa`y = 0`Và`y = 1`. Điều này tránh được tình trạng cấm ba điểm thẳng hàng liên tiếp trong khi vẫn giữ cho dây xích gần như phẳng. Sự xen kẽ là rất quan trọng vì một chuỗi phẳng hoàn toàn sẽ vi phạm điều kiện cộng tuyến liên tiếp. 
 3. Chúng tôi xây dựng chuỗi trên tương tự như trên chuỗi dưới, đảm bảo rằng chuỗi này luôn ở trên tất cả các điểm của chuỗi dưới. Sự tách biệt này đảm bảo rằng các cạnh không giao nhau giữa các chuỗi. 
 4. Chúng tôi tính toán mức đóng góp diện tích đã ký mục tiêu từ chuỗi thấp hơn, được cố định sau khi chuỗi được chọn. Sử dụng phối cảnh công thức dây giày, diện tích còn lại mà chúng ta cần được giảm xuống thành phương trình tuyến tính theo giá trị y của chuỗi trên. 
 5. Chúng tôi gán tọa độ y trên chuỗi trên một cách tham lam sao cho mỗi đỉnh đóng góp một lượng tăng dần có kiểm soát vào tổng diện tích. Vì mỗi số hạng trong tổng dây giày chỉ phụ thuộc vào các đỉnh liền kề nên chúng ta có thể điều chỉnh độ cao của mỗi đỉnh mới để bù cho sai số tích lũy. 

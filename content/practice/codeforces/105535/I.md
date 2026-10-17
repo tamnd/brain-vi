@@ -1,6 +1,6 @@
 ---
 title: "CF 105535I - Nghị định của Hoàng gia"
-description: "Chúng ta có một lưới $n nhân m$ trong đó mỗi ô có trọng số không âm. Một quá trình ngẫu nhiên chọn hai điểm trong lưới và hai điểm đó xác định một hình chữ nhật có các cạnh song song với lưới. Nhiệm vụ là tính diện tích dự kiến ​​của hình chữ nhật đó."
+description: "Chúng ta có một lưới $n lần m$ trong đó mỗi ô có trọng số không âm. Một quá trình ngẫu nhiên chọn hai điểm trong lưới và hai điểm đó xác định một hình chữ nhật có các cạnh song song với lưới. Nhiệm vụ là tính diện tích dự kiến ​​của hình chữ nhật đó."
 date: "2026-06-23T23:06:20+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 52s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi được cấp một$n \times m$lưới trong đó mỗi ô có trọng số không âm. Một quá trình ngẫu nhiên chọn hai điểm trong lưới và hai điểm đó xác định một hình chữ nhật có các cạnh song song với lưới. Nhiệm vụ là tính diện tích dự kiến ​​của hình chữ nhật đó. 
@@ -46,7 +46,7 @@ Lực lượng vũ phu sẽ lặp lại trên tất cả các cặp ô và với
 
 Quan sát quan trọng là kỳ vọng của$|X_1 - X_2|$trên một phân phối có trọng số chỉ phụ thuộc vào tổng tiền tố của trọng số và vị trí có trọng số. Thay vì liệt kê theo cặp, chúng ta có thể tính toán các khoản đóng góp bằng cách sử dụng tổng tích lũy trên các hàng và cột riêng biệt. Cấu trúc 2D tách biệt rõ ràng thành các phần x và y, và mỗi phần giảm xuống bài toán khoảng cách dự kiến ​​có trọng số 1D. Mỗi bài toán 1D có thể được tính theo thời gian tuyến tính bằng cách sử dụng tổng tiền tố, tránh tất cả các tương tác cặp. 
 
-Khi chúng tôi tính toán sự khác biệt tuyệt đối dự kiến ​​về chỉ số hàng và chỉ số cột, chúng tôi kết hợp chúng với hiệu chỉnh liên tục trong ô, điều này đóng góp một hằng số$1/6$thuật ngữ trên mỗi trục cho các điểm thống nhất trong các khoảng đơn vị. 
+Khi chúng tôi tính toán sự khác biệt tuyệt đối dự kiến ​​về chỉ số hàng và chỉ mục cột, chúng tôi kết hợp chúng với hiệu chỉnh liên tục trong ô, điều này đóng góp một hằng số$1/6$thuật ngữ trên mỗi trục cho các điểm thống nhất trong các khoảng đơn vị. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -58,13 +58,13 @@ Khi chúng tôi tính toán sự khác biệt tuyệt đối dự kiến ​​v
 Trước tiên, chúng tôi tách vấn đề thành việc hiểu tọa độ dọc theo một trục, sau đó kết hợp cả hai trục. 
 
 1. Tính tổng trọng lượng$W = \sum p_{i,j}$. Bình thường hóa tất cả các xác suất một cách ngầm định bằng cách làm việc với các trọng số thô và chia ở cuối. 
-2. Xây dựng trọng lượng hàng$R[i] = \sum_j p_{i,j}$và trọng lượng cột$C[j] = \sum_i p_{i,j}$. Điều này phân tách các phân phối x và y vì x chỉ phụ thuộc vào việc chọn cột và y chỉ phụ thuộc vào việc chọn hàng. 
+2. Xây dựng trọng lượng hàng$R[i] = \sum_j p_{i,j}$và trọng lượng cột$C[j] = \sum_i p_{i,j}$. Điều này tách biệt các phân phối x và y vì x chỉ phụ thuộc vào việc chọn cột và y chỉ phụ thuộc vào việc chọn hàng. 
 3. Đối với trục x, xử lý từng cột$j$như một phân đoạn$[j, j+1)$được chọn với xác suất tỷ lệ thuận với$C[j]$. Tính toán dự kiến$|x_1 - x_2|$sử dụng phân rã thành: 
 
 khoảng cách giữa các phần nguyên$|j_1 - j_2|$, cộng với sự đóng góp dự kiến ​​của các khoản bù trừ thống nhất trong các khoảng đơn vị. 
 4. Tính phần rời rạc cho các cột sử dụng tổng tiền tố. Khi quét các cột từ trái sang phải, hãy duy trì trọng số tích lũy và tổng chỉ số có trọng số tích lũy. Mỗi cột mới đóng góp sự tương tác của nó với tất cả các cột trước đó trong$O(1)$. 
 5. Lặp lại quy trình tương tự cho các hàng để tính toán dự kiến$|y_1 - y_2|$. 
-6. Tính hiệu chỉnh liên tục: cho hai biến thống nhất độc lập trong$[0,1)$, sự khác biệt tuyệt đối dự kiến ​​là$1/3$. Vì các đóng góp của x và y được nhân lên nên mỗi trục đóng góp một hiệu chỉnh cộng mà cuối cùng dẫn đến hệ số nhân tách biệt khoảng cách lưới số nguyên và phương sai trong ô. 
+6. Tính hiệu chỉnh liên tục: cho hai biến thống nhất độc lập trong$[0,1)$, sự khác biệt tuyệt đối mong đợi là$1/3$. Vì các đóng góp của x và y được nhân lên nên mỗi trục đóng góp một hiệu chỉnh cộng mà cuối cùng dẫn đến hệ số nhân tách biệt khoảng cách lưới số nguyên và phương sai trong ô. 
 7. Tổng hợp kết quả: diện tích dự kiến ​​bằng$E[|x_1-x_2|] \cdot E[|y_1-y_2|]$, vì x và y độc lập. 
 8. Xuất kết quả theo modulo$10^9+7$, sử dụng nghịch đảo mô-đun để chuẩn hóa theo tổng bình phương trọng số. 
 

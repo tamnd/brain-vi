@@ -1,6 +1,6 @@
 ---
 title: "CF 105535D - Khoảng cách mong muốn"
-description: "Chúng ta được cho một tập hợp các điểm trên mặt phẳng, ngoại trừ một điểm bị thiếu. Đã có $n-1$ điểm cố định và chúng ta được phép chọn tọa độ của điểm thứ $n$-th."
+description: "Chúng ta được cho một tập hợp các điểm trên mặt phẳng, ngoại trừ một điểm bị thiếu. Đã có sẵn $n-1$ điểm cố định và chúng ta được phép chọn tọa độ của điểm thứ $n$-thứ cuối cùng."
 date: "2026-06-23T23:05:28+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1m 1s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cho một tập hợp các điểm trên mặt phẳng, ngoại trừ một điểm bị thiếu. Đã có rồi$n-1$điểm cố định và chúng ta được phép chọn tọa độ của điểm cuối cùng$n$-điểm thứ. Khi điểm này được thêm vào, chúng tôi xem xét tất cả các khoảng cách theo cặp giữa các điểm, nhưng khoảng cách không phải là khoảng cách Euclide hay Manhattan. Thay vào đó, đó là khoảng cách Chebyshev, được định nghĩa là mức chênh lệch tọa độ lớn nhất theo chiều ngang và chiều dọc. 
@@ -30,11 +30,11 @@ Vì vậy, mỗi cặp điểm đóng góp một giá trị và chúng ta thu đ
 
 Nhiệm vụ là chọn tọa độ nguyên cho điểm còn thiếu trong một hộp giới hạn lớn sao cho trung vị của tất cả các khoảng cách Chebyshev theo cặp trở nên chính xác.$k$hoặc xác định rằng không có vị trí nào như vậy tồn tại. 
 
-Những ràng buộc ngụ ý$n$có thể lớn như$2 \cdot 10^5$, điều này ngay lập tức loại trừ mọi cách tiếp cận tính toán rõ ràng tất cả các khoảng cách theo cặp. Ngay cả việc lưu trữ chúng cũng cần khoảng 2 mục nhập \cdot 10^5^2, điều này là không thể thực hiện được. Bất kỳ giải pháp nào cũng phải tránh liệt kê các cặp và thay vào đó dựa vào tính chất đếm hoặc cấu trúc của khoảng cách. 
+Những ràng buộc ngụ ý$n$có thể lớn như$2 \cdot 10^5$, điều này ngay lập tức loại trừ mọi cách tiếp cận tính toán rõ ràng tất cả các khoảng cách theo cặp. Ngay cả việc lưu trữ chúng cũng cần khoảng 2 mục nhập \cdot 10^5^2, điều này là không khả thi. Bất kỳ giải pháp nào cũng phải tránh liệt kê các cặp và thay vào đó dựa vào tính chất đếm hoặc cấu trúc của khoảng cách. 
 
-Một khó khăn tinh vi xuất phát từ thực tế là việc thêm một điểm sẽ thay đổi tất cả các khoảng cách liên quan đến nó, trong khi vẫn giữ nguyên các khoảng cách hiện có. Điều đó có nghĩa là chúng ta không giải quyết vấn đề trung vị tĩnh mà thay vào đó điều chỉnh phân phối bằng cách giới thiệu chính xác$n-1$những giá trị mới. 
+Một khó khăn tinh tế xuất phát từ thực tế là việc thêm một điểm sẽ thay đổi tất cả các khoảng cách liên quan đến nó, trong khi vẫn giữ nguyên các khoảng cách hiện có. Điều đó có nghĩa là chúng ta không giải quyết vấn đề trung vị tĩnh mà thay vào đó điều chỉnh phân phối bằng cách giới thiệu chính xác$n-1$những giá trị mới. 
 
-Một trường hợp thất bại phổ biến là cố gắng đoán điểm mới một cách tham lam dựa trên hình học cục bộ. Ví dụ: nếu tất cả các điểm hiện có được nhóm lại nhưng điểm trung vị phải lớn, người ta có thể thử đặt điểm mới ở xa. Tuy nhiên, điều này có thể đồng thời tạo ra quá nhiều khoảng cách lớn, làm dịch chuyển đường trung tuyến theo hướng ngược lại. Sự kết hợp giữa điểm mới và tất cả các điểm hiện có là nguyên nhân khiến cho trực giác hình học ngây thơ trở nên không đáng tin cậy. 
+Một trường hợp thất bại phổ biến là cố gắng đoán điểm mới một cách tham lam dựa trên hình học cục bộ. Ví dụ: nếu tất cả các điểm hiện có được nhóm lại nhưng điểm trung vị phải lớn, người ta có thể thử đặt điểm mới ở xa. Tuy nhiên, điều này có thể đồng thời tạo ra quá nhiều khoảng cách lớn, làm dịch chuyển đường trung tuyến theo hướng ngược lại. Sự kết hợp giữa điểm mới và tất cả các điểm hiện có là điều làm cho trực giác hình học ngây thơ trở nên không đáng tin cậy. 
 
 ## Phương pháp tiếp cận 
 
@@ -44,7 +44,7 @@ Quan sát quan trọng là chúng ta không cần biết rõ ràng tất cả c�
 
 Đối với khoảng cách Chebyshev, điều kiện$\max(|x_i-x_j|, |y_i-y_j|) \le k$tương đương với cả hai$|x_i-x_j| \le k$Và$|y_i-y_j| \le k$. Điều này chuyển đổi mỗi điểm thành một hình vuông cạnh$2k$tập trung vào nó và các cặp là "tốt" nếu tọa độ của chúng nằm trong các ô vuông chồng lên nhau. 
 
-Thay vì suy luận trực tiếp về các cặp, chúng ta lật ngược góc nhìn: với mỗi điểm, chúng ta quan tâm đến việc có bao nhiêu điểm khác nằm trong một điểm.$k$-radius vùng lân cận Chebyshev. Việc thêm điểm mới góp phần$n-1$những khoảng cách mới, và mỗi khoảng cách đó đều là$\le k$hoặc$> k$. Vì vậy, tác dụng của điểm mới hoàn toàn được xác định bởi số lượng điểm hiện có nằm trong bán kính quả cầu Chebyshev của nó$k$. 
+Thay vì suy luận trực tiếp về các cặp, chúng ta lật ngược góc độ: với mỗi điểm, chúng ta quan tâm đến việc có bao nhiêu điểm khác nằm trong một điểm.$k$-radius vùng lân cận Chebyshev. Việc thêm điểm mới góp phần$n-1$những khoảng cách mới, và mỗi khoảng cách đó đều là$\le k$hoặc$> k$. Vì vậy, tác dụng của điểm mới hoàn toàn được xác định bởi số lượng điểm hiện có nằm trong bán kính quả cầu Chebyshev của nó$k$. 
 
 Do đó, chúng ta rút gọn nhiệm vụ thành việc tìm một điểm sao cho số điểm hiện có trong nó$k$-khu vực lân cận tạo ra sự cân bằng chính xác cần thiết ở điểm trung vị cuối cùng. Điều này trở thành một vấn đề khả thi về mặt hình học đối với các ràng buộc liên kết theo trục. 
 
@@ -68,7 +68,7 @@ Giải pháp tối ưu khai thác thực tế là không gian trả lời có th
 
 ### Tại sao nó hoạt động 
 
-Ràng buộc Chebyshev tạo ra các vùng hình vuông thẳng hàng theo trục xung quanh mỗi điểm hiện có và số điểm bên trong hình vuông đó là không đổi trong mỗi ô của sự sắp xếp được hình thành bởi các đường ranh giới dọc và ngang tại$x_i \pm k$Và$y_i \pm k$. Bất kỳ lời giải tối ưu nào cũng có thể được dịch chuyển bên trong một ô mà không làm thay đổi các điểm nằm trong khoảng cách$k$, do đó việc hạn chế sự chú ý đến các đại diện do ranh giới tạo ra sẽ bảo tồn tất cả các trường hợp hợp lệ có thể có. Điều này biến một không gian tìm kiếm liên tục thành nhiều vùng tương đương hữu hạn trong khi vẫn giữ nguyên điều kiện đếm cặp. 
+Ràng buộc Chebyshev tạo ra các vùng hình vuông thẳng hàng theo trục xung quanh mỗi điểm hiện có và số điểm bên trong hình vuông đó là không đổi trong mỗi ô của sự sắp xếp được hình thành bởi các đường ranh giới dọc và ngang tại$x_i \pm k$Và$y_i \pm k$. Bất kỳ lời giải tối ưu nào cũng có thể được dịch chuyển bên trong một ô mà không làm thay đổi các điểm nằm trong khoảng cách$k$, do đó, việc hạn chế sự chú ý đến các đại diện do ranh giới tạo ra sẽ bảo tồn tất cả các trường hợp hợp lệ có thể có. Điều này biến một không gian tìm kiếm liên tục thành nhiều vùng tương đương hữu hạn trong khi vẫn giữ nguyên điều kiện đếm cặp. 
 
 ## Giải pháp Python```python
 import sys
@@ -127,9 +127,9 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Giải pháp trước tiên sẽ khắc phục yêu cầu trung bình thành điều kiện đếm chính xác. Sau đó, nó tính toán sự đóng góp từ các điểm hiện có để chúng ta biết chính xác có bao nhiêu cạnh “tốt” phải đến từ điểm mới. 
+```Giải pháp trước tiên sẽ khắc phục yêu cầu trung bình thành điều kiện đếm chính xác. Sau đó, nó tính toán phần đóng góp từ các điểm hiện có để chúng ta biết chính xác có bao nhiêu cạnh “tốt” phải đến từ điểm mới. 
 
-Bước tạo ứng viên là rất quan trọng. Thay vì tìm kiếm toàn bộ lưới, chúng tôi chỉ xem xét các tọa độ được căn chỉnh theo các điểm hiện có được dịch chuyển bởi$k$, bởi vì hàm chỉ báo cho biết một điểm có nằm trong khoảng cách Chebyshev hay không$k$chỉ thay đổi ở ngưỡng đó. Điều này đảm bảo rằng nếu một vị trí hợp lệ tồn tại ở bất kỳ đâu thì ít nhất một đại diện từ khu vực đó sẽ được kiểm tra. 
+Bước tạo ứng viên là rất quan trọng. Thay vì tìm kiếm toàn bộ lưới, chúng tôi chỉ xem xét các tọa độ được căn chỉnh theo các điểm hiện có được dịch chuyển bởi$k$, bởi vì hàm chỉ thị cho biết một điểm có nằm trong khoảng cách Chebyshev hay không$k$chỉ thay đổi ở ngưỡng đó. Điều này đảm bảo rằng nếu một vị trí hợp lệ tồn tại ở bất kỳ đâu thì ít nhất một đại diện từ khu vực đó sẽ được kiểm tra. 
 
 chức năng`count_within`đánh giá xem ứng viên có thể thỏa mãn bao nhiêu ràng buộc. Mặc dù được viết dưới dạng quét tuyến tính, nhưng nó được áp dụng trên một tập ứng cử viên đã được rút gọn, giữ cho độ phức tạp tổng thể có thể quản lý được theo lý do đã định. 
 

@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 53s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Nhiệm vụ mô phỏng một đoạn hội thoại đăng ký cố định cho một đội thi, trong đó phần thay đổi duy nhất là tên đội. Chương trình nhận được một chuỗi dòng duy nhất đại diện cho tên đó và phải in một đoạn hội thoại theo kịch bản gồm nhiều dòng trong đó tên được chèn nguyên văn vào các vị trí cụ thể. 
@@ -40,7 +40,7 @@ Một cách tiếp cận mạnh mẽ sẽ là xây dựng từng dòng trong s�
 
 Quan sát chính là không có cấu trúc tổ hợp, không phân tích cú pháp và không liên quan đến việc ra quyết định. Toàn bộ vấn đề giảm xuống định dạng chuỗi xác định cộng với một phép chuyển đổi ký tự đơn lẻ. Lý do duy nhất tồn tại vấn đề này là để kiểm tra việc thực hiện cẩn thận các quy tắc định dạng và chuyển đổi kiểu chữ ASCII. 
 
-Do đó, giải pháp tối ưu chỉ đơn giản là tính toán trước phiên bản đã chuyển đổi của tên nhóm cho dòng thứ sáu, sau đó in đoạn hội thoại cố định bằng cách sử dụng chuỗi đã chuyển đổi đó đúng một lần. Điều này tránh mọi quá trình xử lý lặp đi lặp lại và đảm bảo sự rõ ràng. 
+Do đó, giải pháp tối ưu chỉ đơn giản là tính toán trước phiên bản đã chuyển đổi của tên nhóm cho dòng thứ sáu, sau đó in đoạn hội thoại cố định bằng cách sử dụng chuỗi đã chuyển đổi đó đúng một lần. Điều này tránh mọi quá trình xử lý lặp lại và đảm bảo sự rõ ràng. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -65,7 +65,7 @@ Công việc tính toán duy nhất là bước 2, nơi diễn ra quá trình ch
 
 ### Tại sao nó hoạt động 
 
-Tính chính xác dựa trên thực tế là mẫu đầu ra hoàn toàn mang tính xác định và độc lập với bất kỳ cách giải thích nào về đầu vào ngoài sự thay thế trực tiếp. Dòng thứ sáu yêu cầu một hàm thuần túy được áp dụng cho chuỗi đầu vào: ánh xạ ký tự khôn ngoan để bảo toàn các ký tự không phải chữ thường và chữ in hoa chữ thường. Vì ánh xạ này được áp dụng chính xác một lần và chỉ được sử dụng ở vị trí đã định nên không có khả năng chuyển đổi không nhất quán giữa các dòng khác nhau. Phần còn lại của đầu ra sử dụng chuỗi thô không thay đổi, đảm bảo tính nhất quán với cấu trúc hội thoại của bài toán. 
+Tính chính xác dựa trên thực tế là mẫu đầu ra hoàn toàn mang tính xác định và độc lập với bất kỳ cách giải thích nào về đầu vào ngoài sự thay thế trực tiếp. Dòng thứ sáu yêu cầu một hàm thuần túy được áp dụng cho chuỗi đầu vào: ánh xạ ký tự khôn ngoan để bảo toàn các ký tự không phải chữ thường và chữ in hoa chữ thường. Vì ánh xạ này được áp dụng chính xác một lần và chỉ được sử dụng ở vị trí đã định nên không có khả năng chuyển đổi không nhất quán giữa các đường khác nhau. Phần còn lại của đầu ra sử dụng chuỗi thô không thay đổi, đảm bảo tính nhất quán với cấu trúc hội thoại của bài toán. 
 
 ## Giải pháp Python```python
 import sys
@@ -95,7 +95,7 @@ print("Oh, now I see. Here are your badges. Good luck!")
 
 Phần còn lại của chương trình là một chuỗi các câu lệnh in được định dạng. Mỗi dòng được mã hóa cứng ngoại trừ hai nội suy của chuỗi gốc và nội suy đơn của chuỗi được chuyển đổi. Cần cẩn thận để không đưa thêm khoảng trắng hoặc dòng mới, vì giám khảo mong đợi kết quả đầu ra chính xác. 
 
-Một chi tiết triển khai tinh tế là việc sử dụng`rstrip("\n")`khi đọc đầu vào. Điều này đảm bảo rằng chỉ ký tự dòng mới bị xóa trong khi vẫn giữ lại mọi khoảng trắng bên trong, là một phần của tên nhóm. 
+Một chi tiết triển khai tinh tế là việc sử dụng`rstrip("\n")`khi đọc đầu vào. Điều này đảm bảo rằng chỉ ký tự dòng mới bị xóa trong khi vẫn giữ nguyên mọi khoảng trắng bên trong, là một phần của tên nhóm. 
 
 ## Ví dụ đã hoạt động 
 
@@ -110,7 +110,7 @@ Department of Graph Efficiency (DOGE) **2025**
 | 1 | Cục Hiệu quả Đồ thị (DOGE) **2025** | đọc lần đầu | được lưu trữ | 
 | 2 | Cục Hiệu quả Đồ thị (DOGE) **2025** | chữ hoa được chuyển đổi | BỘ PHẬN HIỆU QUẢ ĐỒ HỌA (DOGE) **2025** | 
 
-Đầu ra cuối cùng đặt chuỗi gốc vào dòng 2 và 4 và chuỗi đã chuyển đổi ở dòng 6. 
+Đầu ra cuối cùng đặt chuỗi gốc vào dòng 2 và 4, và chuỗi đã chuyển đổi ở dòng 6. 
 
 Ví dụ này xác nhận rằng dấu cách, dấu chấm câu và chữ số không thay đổi trong khi chỉ các chữ cái viết thường bị ảnh hưởng. 
 
@@ -222,7 +222,7 @@ Oh, now I see. Here are your badges. Good luck!
 
 ## Vỏ cạnh 
 
-Trường hợp một cạnh là tên nhóm một ký tự bao gồm một chữ cái viết thường. Trong trường hợp này, dòng thứ sáu phải chuyển nó thành chữ hoa trong khi tất cả các dòng khác lặp lại không thay đổi. Thuật toán xử lý việc này một cách chính xác vì vòng chuyển đổi xử lý từng ký tự một cách độc lập và định dạng không có bất kỳ độ dài tối thiểu nào vượt quá một ký tự. 
+Trường hợp một cạnh là tên nhóm một ký tự bao gồm một chữ cái viết thường. Trong trường hợp này, dòng thứ sáu phải chuyển nó thành chữ hoa trong khi tất cả các dòng khác lặp lại không thay đổi. Thuật toán xử lý việc này một cách chính xác vì vòng lặp chuyển đổi xử lý từng ký tự một cách độc lập và định dạng không có bất kỳ độ dài tối thiểu nào vượt quá một ký tự. 
 
 Một trường hợp cạnh khác là tên chỉ chứa các ký tự không phải chữ cái như chữ số hoặc ký hiệu. Hàm biến đổi không thay đổi những điều này, vì vậy dòng thứ sáu sẽ giống với dòng thứ tư ngoại trừ tiền tố. Điều này đúng vì bài toán chỉ xác định phép biến đổi cho các chữ cái Latinh viết thường. 
 

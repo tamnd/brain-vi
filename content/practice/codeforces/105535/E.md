@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 57s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cho một đồ thị vô hướng liên thông tạo thành một cây, bắt nguồn từ phòng 1. Mỗi phòng chứa một số vật trưng bày và tổng số vật trưng bày của tất cả các phòng nhiều nhất là 2 · 10^5. Petya bắt đầu từ phòng 1 và phải kết thúc ở phòng 1. Mỗi lần đi qua một hành lang, anh ấy lại đến một căn phòng và nghiên cứu chính xác một vật trưng bày chưa từng thấy trước đây từ căn phòng đó. Anh ta không được phép nghiên cứu cùng một cuộc triển lãm hai lần và không được phép bắt đầu nghiên cứu cho đến khi đã di chuyển qua ít nhất một hành lang. 
@@ -30,7 +30,7 @@ Nhiệm vụ là xây dựng bất kỳ bước đi nào trong cây bắt đầu
 
 Ràng buộc n 10^5 ngụ ý rằng bất kỳ giải pháp nào về cơ bản phải tuyến tính hoặc tuyến tính về số lượng nút. Vì tổng số vật trưng bày cũng bị giới hạn bởi 2 · 10^5 nên độ dài đầu ra có thể lớn nhưng vẫn có thể quản lý được trong O(total_exhibits). Bất kỳ cách tiếp cận nào cố gắng mô phỏng việc quay lại tùy ý hoặc tìm kiếm qua các hoán vị của lượt truy cập đều không khả thi ngay lập tức. 
 
-Một hạn chế tinh tế là Petya phải quay về 1 và mỗi bước di chuyển tương ứng với việc vào một nút. Điều này có nghĩa là mỗi lần di chuyển sẽ tiêu tốn chính xác một đơn vị nhu cầu từ nút điểm cuối, do đó cấu trúc bị hạn chế chặt chẽ bởi năng lực của nút. 
+Một hạn chế tinh vi là Petya phải quay về 1 và mỗi bước di chuyển tương ứng với việc vào một nút. Điều này có nghĩa là mỗi lần di chuyển sẽ tiêu tốn chính xác một đơn vị nhu cầu từ nút điểm cuối, do đó cấu trúc bị hạn chế chặt chẽ bởi năng lực của nút. 
 
 Một trường hợp quan trọng là khi tất cả các phần trưng bày đều tập trung vào một lá duy nhất. Ví dụ: nếu cây là 1-2-3 và chỉ nút 3 có tất cả các biểu hiện, một tuyến hợp lệ phải nảy qua lại dọc theo đường dẫn 1-2-3 nhiều lần. Bất kỳ giải pháp nào không tính đến việc sử dụng cạnh nhiều lần sẽ không thành công. 
 

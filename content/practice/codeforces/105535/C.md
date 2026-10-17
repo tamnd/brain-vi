@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1 phút 8 giây 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi được cung cấp một số nguyên không dấu 32 bit cố định$a$. Đối với mỗi trường hợp thử nghiệm, chúng ta phải tìm tất cả các số nguyên không dấu 32 bit$b$sao cho hai đại lượng trở nên giống nhau khi xem modulo$2^{32}$: 
@@ -71,7 +71,7 @@ Chúng tôi coi không gian tìm kiếm là hai phần rời rạc: số mũ nh�
 
 ### Tại sao nó hoạt động 
 
-chức năng$f(b) = a^b \bmod 2^{32}$cư xử thường xuyên đối với nhỏ$b$, nhưng trở nên có cấu trúc cao và cuối cùng mang tính tuần hoàn. chức năng$g(b) = a \oplus b$tăng tuyến tính theo số lần lật bit và không có sự liên kết định kỳ với lũy thừa ngoại trừ những trường hợp cực kỳ hạn chế. Cách duy nhất để đẳng thức tồn tại bên ngoài một vùng giới hạn là nếu bản thân số mũ trùng với điểm ổn định của cả hai phép biến đổi, đó chính xác là ứng cử viên$b = a$. Mọi thứ khác phải nằm trong tiền tố nhỏ nơi lũy thừa chưa tách khỏi các giá trị đơn giản. 
+chức năng$f(b) = a^b \bmod 2^{32}$cư xử thường xuyên đối với nhỏ$b$, nhưng trở nên có cấu trúc cao và cuối cùng mang tính tuần hoàn. chức năng$g(b) = a \oplus b$tăng tuyến tính theo số lần lật bit và không có sự liên kết định kỳ với lũy thừa ngoại trừ những trường hợp cực kỳ hạn chế. Cách duy nhất để đẳng thức tồn tại bên ngoài một vùng giới hạn là nếu số mũ trùng với điểm ổn định của cả hai phép biến đổi, đó chính xác là ứng cử viên$b = a$. Mọi thứ khác phải nằm trong tiền tố nhỏ nơi lũy thừa chưa tách khỏi các giá trị đơn giản. 
 
 ## Giải pháp Python```python
 import sys
@@ -204,6 +204,6 @@ assert run("2\n1\n0\n") == "1 0\n0", "mixed cases"
 
 cho$a = 0$, thuật toán ngay lập tức không trả về giá trị nào. Vòng lặp kết thúc$b < 32$chỉ bị bỏ qua sau lần thoát sớm này, ngăn chặn việc đưa vào không chính xác$b = 0$, điều này sẽ gợi ý sai một đẳng thức hợp lệ bởi vì$0^0$được định nghĩa là 1 trong khi XOR cho 0. 
 
-cho$a = 1$, thuật toán kiểm tra$b = 0$rõ ràng trong phạm vi nhỏ. Tại$b = 0$, cả hai bên đều đánh giá lần lượt là 1 và 1, do đó nó được đưa vào một cách chính xác. Tất cả khác$b$trong phạm vi nhỏ không thành công vì XOR thay đổi giá trị trong khi lũy thừa không đổi. 
+cho$a = 1$, thuật toán kiểm tra$b = 0$rõ ràng trong phạm vi nhỏ. Tại$b = 0$, cả hai bên đều đánh giá tương ứng là 1 và 1, do đó nó được đưa vào một cách chính xác. Tất cả khác$b$trong phạm vi nhỏ không thành công vì XOR thay đổi giá trị trong khi lũy thừa không đổi. 
 
-Đối với lớn hơn$a$, ứng viên$b = a$được đánh giá riêng biệt. Thuật toán tính toán trực tiếp cả$a^a \bmod 2^{32}$Và$a \oplus a$, đảm bảo tính chính xác mà không giả định bất kỳ sự đơn giản hóa cấu trúc nào. Nếu chúng khớp nhau, nó sẽ được đưa vào bất kể độ lớn, giúp xử lý một cách an toàn các trường hợp điểm cố định nằm ngoài tìm kiếm giới hạn ban đầu.
+Đối với lớn hơn$a$, ứng viên$b = a$được đánh giá riêng biệt. Thuật toán tính toán trực tiếp cả$a^a \bmod 2^{32}$Và$a \oplus a$, đảm bảo tính chính xác mà không giả định bất kỳ sự đơn giản hóa cấu trúc nào. Nếu chúng khớp nhau, nó sẽ được bao gồm bất kể độ lớn, giúp xử lý một cách an toàn các trường hợp điểm cố định nằm ngoài tìm kiếm giới hạn ban đầu.
