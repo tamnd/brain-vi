@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1 phút 9 giây 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta có một cây trong đó mỗi đỉnh mang một nhãn số. Từ cây này, chúng ta xem xét bất kỳ đường đi đơn giản nào giữa hai đỉnh. Khi một đường dẫn được cố định, nó sẽ tạo thành một chuỗi tuyến tính các giá trị nút theo thứ tự chúng xuất hiện dọc theo đường dẫn đó. 
@@ -181,7 +181,7 @@ if __name__ == "__main__":
     solve()
 ```Giải pháp dựa vào việc duy trì, đối với mỗi bước xử lý centroid, một cây Fenwick trên các giá trị nén lưu trữ độ dài chuỗi con tăng dần tốt nhất cho đến nay từ centroid vào các cây con đã xử lý. Mỗi DFS tính toán các phần mở rộng LIS dọc theo các đường dẫn có gốc trung tâm và BIT đảm bảo chúng ta có thể mở rộng bất kỳ giá trị nào một cách hiệu quả theo thời gian logarit. 
 
-Một chi tiết triển khai tinh tế là nén các giá trị nút. Vì các giá trị lên tới 10^9 nên tất cả các so sánh được thực hiện thông qua các thứ hạng nén để việc lập chỉ mục Fenwick vẫn nhỏ gọn và hợp lệ. 
+Một chi tiết triển khai tinh tế là nén các giá trị nút. Vì các giá trị lên tới 10^9 nên tất cả các so sánh được thực hiện thông qua các thứ hạng được nén để việc lập chỉ mục Fenwick vẫn nhỏ gọn và hợp lệ. 
 
 Một lựa chọn quan trọng khác là đặt lại cây Fenwick trên mỗi tương tác cây con. Điều này đảm bảo rằng mỗi lần hợp nhất cấp độ trung tâm chỉ xem xét các đường dẫn đi qua trọng tâm đó và tránh làm ảnh hưởng đến các kết quả ở các cấp độ phân tách khác nhau. 
 

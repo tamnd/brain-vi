@@ -21,16 +21,16 @@ draft: false
 **Thời gian giải:** 47s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi bắt đầu với một bộ sưu tập$n$bộ đơn, nơi đặt$i$ban đầu chỉ chứa phần tử$i$. Sau đó, chúng tôi xử lý$q$hoạt động. Mỗi thao tác cần hai bộ hiện có trước đó$X_i$Và$Y_i$, tạo thành một tập hợp mới có các phần tử chính xác là sự kết hợp của hai tập hợp đó và gán cho nó một chỉ mục mới$n + i$. Điều duy nhất chúng tôi được yêu cầu xuất ra cho mỗi thao tác là kích thước gần đúng của tập hợp mới được tạo này chứ không phải giá trị chính xác. 
+Chúng tôi bắt đầu với một bộ sưu tập$n$bộ đơn, nơi đặt$i$ban đầu chỉ chứa phần tử$i$. Sau đó, chúng tôi xử lý$q$hoạt động. Mỗi thao tác cần hai bộ hiện có trước đó$X_i$Và$Y_i$, tạo thành một tập hợp mới có các phần tử chính xác là sự kết hợp của hai tập hợp đó và gán cho nó một chỉ mục mới$n + i$. Điều duy nhất chúng tôi được yêu cầu xuất ra cho mỗi thao tác là kích thước gần đúng của tập hợp mới được tạo này, không phải giá trị chính xác. 
 
 Hạn chế chính là chúng ta không cần độ chính xác chính xác. Nếu quy mô thực sự của liên minh là$A$, số nguyên bất kỳ$B$như vậy$0.5A \le B \le 2A$được chấp nhận. Điều này ngay lập tức chuyển vấn đề từ việc bảo trì thiết lập chính xác sang theo dõi lượng số gần đúng. 
 
 Khó khăn tiềm ẩn quan trọng là các tập hợp có thể trùng lặp rất nhiều thông qua các phép hợp lặp đi lặp lại, vì vậy ý ​​tưởng ngây thơ về tổng kích thước là sai trừ khi bằng cách nào đó chúng ta tính đến các giao điểm, những giao điểm không xác định và tốn kém để tính toán chính xác. 
 
-Các giới hạn quan trọng theo một cách có cấu trúc. Với tối đa$5 \cdot 10^5$hoạt động, bất cứ điều gì tính toán lại các tập hợp một cách rõ ràng hoặc lưu trữ các phần tử đầy đủ trên mỗi tập hợp đều không thể thực hiện được. Ngay cả việc duy trì các bit rõ ràng cũng sẽ quá lớn cả về bộ nhớ và thời gian nếu được thực hiện một cách ngây thơ. Chúng ta buộc phải biểu diễn để nén các tập hợp thành các bản tóm tắt. 
+Các giới hạn quan trọng theo cách có cấu trúc. Với tối đa$5 \cdot 10^5$hoạt động, bất cứ điều gì tính toán lại các tập hợp một cách rõ ràng hoặc lưu trữ các phần tử đầy đủ trên mỗi tập hợp đều không thể thực hiện được. Ngay cả việc duy trì các bit rõ ràng cũng sẽ quá lớn cả về bộ nhớ và thời gian nếu được thực hiện một cách ngây thơ. Chúng ta buộc phải biểu diễn để nén các tập hợp thành các bản tóm tắt. 
 
 Trường hợp cạnh tinh tế xuất hiện khi sự chồng chéo quá mức. Nếu hai tập hợp giống hệt nhau, kích thước hợp của chúng sẽ không tăng gấp đôi, nhưng sẽ là một tổng đơn giản. Một trường hợp có vấn đề khác là chuỗi lặp lại, trong đó lỗi sẽ tích lũy nếu chúng ta ước lượng kém ở mỗi bước. 
 
@@ -38,11 +38,11 @@ Ví dụ: nếu tập 1 = {1,2,3} và tập 2 = {2,3,4}, hợp là {1,2,3,4}, c�
 
 ## Phương pháp tiếp cận 
 
-Ý tưởng về bạo lực rất đơn giản: duy trì mọi tập hợp một cách rõ ràng dưới dạng tập hợp băm hoặc vùng chứa được sắp xếp. Đối với mỗi truy vấn, hãy tính hợp của hai tập hợp được tham chiếu, chèn tất cả các phần tử vào cấu trúc mới và đếm kích thước của nó. Điều này đúng vì nó mô phỏng chính xác định nghĩa. Tuy nhiên, trong trường hợp xấu nhất, mỗi bộ có thể tăng kích thước$O(n)$, và có$O(q)$công đoàn. Mỗi liên kết có thể tiêu tốn thời gian tuyến tính theo kích thước của các tập hợp được hợp nhất, dẫn đến độ phức tạp tổng cộng theo thứ tự$O(nq)$, điều này vượt xa khả thi đối với$5 \cdot 10^5$. 
+Ý tưởng về bạo lực rất đơn giản: duy trì mọi tập hợp một cách rõ ràng dưới dạng tập hợp băm hoặc vùng chứa được sắp xếp. Đối với mỗi truy vấn, hãy tính hợp của hai tập hợp được tham chiếu, chèn tất cả các phần tử vào cấu trúc mới và đếm kích thước của nó. Điều này đúng vì nó mô phỏng chính xác định nghĩa. Tuy nhiên, trong trường hợp xấu nhất, mỗi bộ có thể tăng kích thước$O(n)$, và có$O(q)$công đoàn. Mỗi liên kết có thể tiêu tốn thời gian tuyến tính theo kích thước của các tập hợp được hợp nhất, dẫn đến độ phức tạp tổng thể theo thứ tự$O(nq)$, điều này vượt xa khả thi đối với$5 \cdot 10^5$. 
 
 Quan sát quan trọng là chúng ta không bao giờ được yêu cầu về cấu trúc chính xác mà chỉ được yêu cầu xấp xỉ về số lượng trong một thừa số không đổi. Điều này gợi ý rõ ràng rằng chúng ta không nên theo dõi các phần tử mà thay vào đó hãy duy trì ước tính bằng số của từng kích thước tập hợp hoạt động gần giống như một đại lượng phụ hoặc đại lượng chiếm ưu thế tối đa trong phép hợp. 
 
-Bí quyết cốt lõi là nhận ra rằng đối với các hoạt động hợp nhất, kích thước thực thỏa mãn$$|A \cup B| = |A| + |B| - |A \cap B|.$$Chúng tôi không thể tính toán giao điểm, nhưng chúng tôi cũng không cần nó một cách chính xác. Nếu chúng ta chấp nhận độ trễ cấp số nhân, thì một phương pháp suy nghiệm ổn định là coi các công đoàn gần như là phép cộng đồng thời ngăn chặn lạm phát lặp đi lặp lại bằng cách đảm bảo rằng chúng ta không tính hai lần các giá trị cực kỳ giống nhau theo cách ngày càng phát triển không giới hạn. 
+Bí quyết cốt lõi là nhận ra rằng đối với các hoạt động hợp nhất, kích thước thực thỏa mãn$$|A \cup B| = |A| + |B| - |A \cap B|.$$Chúng ta không thể tính toán giao điểm, nhưng chúng ta cũng không cần nó một cách chính xác. Nếu chúng ta chấp nhận độ trễ cấp số nhân, thì một phương pháp suy nghiệm ổn định là coi các công đoàn gần như là phép cộng đồng thời ngăn chặn lạm phát lặp đi lặp lại bằng cách đảm bảo rằng chúng ta không tính hai lần các giá trị cực kỳ giống nhau theo cách ngày càng phát triển không giới hạn. 
 
 Một cách rõ ràng để đạt được điều này là biểu thị từng kích thước đã đặt theo thang logarit và hợp nhất bằng cách sử dụng quy tắc giống tối đa với mức tăng trưởng được kiểm soát, đảm bảo rằng mỗi hợp nhất trả về một giá trị trong một hệ số không đổi của liên kết thực sự. Vì điều kiện chấp nhận cho phép hệ số là 2 nên phép tính gần đúng logarit ngẫu nhiên hoặc làm tròn là đủ. 
 

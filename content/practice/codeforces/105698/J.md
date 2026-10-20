@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1 phút 8 giây 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cho một chồng các khối hình chữ nhật thẳng đứng. Mỗi khối có trọng lượng cố định tỷ lệ thuận với chiều rộng của nó và khoảng cách vị trí cố định theo chiều ngang$[l_i, r_i]$. Các khối được đặt chồng lên nhau theo thứ tự và mỗi khối phải đỡ mọi thứ phía trên nó mà không bị lật. 
@@ -32,9 +32,9 @@ Bây giờ thiếu một khối, nhưng chúng tôi không biết khối nào. N
 
 Các ràng buộc đi lên đến$n = 2 \cdot 10^5$, do đó, bất kỳ giải pháp nào tính toán lại độ ổn định từ đầu cho mỗi lần xóa đều quá chậm. Một sự ngây thơ$O(n^2)$hoặc$O(n^2 \log n)$cách tiếp cận sẽ không vượt qua. 
 
-Một vấn đề tế nhị xuất hiện ở chỗ việc loại bỏ sẽ làm thay đổi cấu trúc như thế nào. Nếu một khối bị loại bỏ ở giữa, tất cả các điều kiện ổn định cho các khối phía trên nó sẽ thay đổi vì “bộ hỗ trợ” của chúng mất đi chính xác một phần tử. Điều này có nghĩa là chúng tôi không xử lý việc kiểm tra độc lập cho mỗi vị trí mà xử lý tổng tiền tố thay đổi toàn cầu. 
+Một vấn đề tế nhị xuất hiện ở chỗ việc loại bỏ sẽ làm thay đổi cấu trúc như thế nào. Nếu một khối bị loại bỏ ở giữa, tất cả các điều kiện ổn định cho các khối phía trên nó sẽ thay đổi vì “bộ hỗ trợ” của chúng mất đi chính xác một phần tử. Điều này có nghĩa là chúng tôi không xử lý các kiểm tra độc lập cho mỗi vị trí mà xử lý các tổng tiền tố thay đổi toàn cầu. 
 
-Một cạm bẫy phổ biến là giả định rằng chỉ có các điều kiện cục bộ xung quanh khối bị loại bỏ mới quan trọng. Điều đó là sai. Việc loại bỏ một khối thấp sẽ ảnh hưởng đến tất cả các kiểm tra phía trên nó, bởi vì tất cả các kiểm tra đó đều phụ thuộc vào khối lượng tích lũy. 
+Một cạm bẫy phổ biến là giả định rằng chỉ có các điều kiện cục bộ xung quanh khối bị loại bỏ mới quan trọng. Điều đó là sai. Việc loại bỏ khối thấp sẽ ảnh hưởng đến tất cả các kiểm tra phía trên nó, bởi vì tất cả các kiểm tra đó đều phụ thuộc vào khối lượng tích lũy. 
 
 Một vấn đề tế nhị khác là tòa tháp ban đầu có thể đã không ổn định. Ngay cả khi tiền tố không hợp lệ trong cấu hình ban đầu, việc xóa khối sau có thể khắc phục được nó, vì khối bị xóa đó có thể là một phần của việc vi phạm phân phối hàng loạt. 
 
@@ -42,17 +42,17 @@ Một vấn đề tế nhị khác là tòa tháp ban đầu có thể đã khô
 
 Cách tiếp cận trực tiếp là mô phỏng từng lần loại bỏ một cách độc lập. Đối với một khối bị loại bỏ cố định$k$, chúng tôi xây dựng lại tổng tiền tố và tính toán lại tất cả khối tâm cho tất cả các khối bị ảnh hưởng. Mỗi chi phí mô phỏng$O(n)$, và làm điều đó cho tất cả$k$dẫn đến$O(n^2)$, quá lớn đối với$n = 2 \cdot 10^5$. 
 
-Trở ngại chính là mỗi lần kiểm tra độ ổn định đều phụ thuộc vào tổng tiền tố của trọng số và vị trí có trọng số. Khi chúng tôi xóa một phần tử, mọi tiền tố sau phần tử đó sẽ thay đổi theo cách đại số nhất quán. Điều này cho thấy chúng ta nên tính toán trước các tập hợp tiền tố một lần và sử dụng lại chúng. 
+Trở ngại chính là mỗi lần kiểm tra độ ổn định đều phụ thuộc vào tổng tiền tố của trọng số và vị trí có trọng số. Khi chúng tôi xóa một phần tử, mọi tiền tố sau phần tử đó sẽ thay đổi theo cách đại số nhất quán. Điều này gợi ý rằng chúng ta nên tính toán trước các tập hợp tiền tố một lần và sử dụng lại chúng. 
 
 Đối với một khối$i$, cho phép:$$W_i = \sum_{j=1}^i w_j, \quad X_i = \sum_{j=1}^i w_j c_j$$Ở đâu$w_j = r_j - l_j$Và$c_j = \frac{l_j + r_j}{2}$. Khi đó khối tâm phía trên$i$là:$$\frac{X_{i-1}}{W_{i-1}}$$Sau khi loại bỏ khối$k$, khối bất kỳ$i > k$bây giờ thấy:$$\frac{X_{i-1} - X_k}{W_{i-1} - W_k}$$Điều này biến đổi mọi điều kiện ổn định thành một bất đẳng thức hợp lý bao gồm$X_k$Và$W_k$, nhưng được đánh giá qua nhiều$i$. Đối với một cố định$k$, chúng tôi cần tất cả$i > k$để thỏa mãn:$$l_i \le \frac{X_{i-1} - X_k}{W_{i-1} - W_k} \le r_i$$Mỗi bất đẳng thức có thể được sắp xếp lại thành các ràng buộc tuyến tính trên$X_k$, được tham số hóa bởi$W_k$. Để cố định$i$, điều này trở thành:$$X_k \le (X_{i-1} - l_i W_{i-1}) + l_i W_k$$
 
 $$X_k \ge (X_{i-1} - r_i W_{i-1}) + r_i W_k$$Vì vậy để cố định$k$, mọi ràng buộc từ$i > k$trở thành một tập hợp các giới hạn trên và dưới tuyến tính trên$X_k$, trong đó mỗi giới hạn là một dòng được đánh giá tại$W_k$. Điều này tự nhiên làm giảm việc duy trì đường bao của các hàm tuyến tính và truy vấn chúng tại một điểm. 
 
-Chúng tôi có thể xử lý$k$từ phải sang trái. Khi di chuyển sang trái, chúng tôi dần dần thêm các ràng buộc từ các chỉ mục$i > k$. Đối với mỗi như vậy$i$, chúng ta thêm hai dòng: một dòng đóng góp vào giới hạn trên và một dòng đóng góp vào giới hạn dưới. Sau đó chúng tôi truy vấn xem điểm$(W_k, X_k)$nằm trong vùng khả thi. 
+Chúng tôi có thể xử lý$k$từ phải sang trái. Khi di chuyển sang trái, chúng tôi dần dần thêm các ràng buộc từ các chỉ mục$i > k$. Đối với mỗi như vậy$i$, chúng ta thêm hai dòng: một dòng đóng góp vào giới hạn trên và một dòng đóng góp vào giới hạn dưới. Sau đó chúng tôi truy vấn liệu điểm$(W_k, X_k)$nằm trong vùng khả thi. 
 
-Để hỗ trợ chèn động các dòng và truy vấn điểm, cây Li Chao là sự phù hợp tự nhiên. 
+Để hỗ trợ việc chèn động các dòng và truy vấn điểm, cây Li Chao là sự lựa chọn tự nhiên. 
 
-Cuối cùng, chúng ta cũng cần đảm bảo rằng tiền tố lên tới$k-1$trong mảng ban đầu đã hợp lệ. Điều này có thể được tính toán trước một lần bằng cách sử dụng kiểm tra tiền tố tiêu chuẩn. Nếu tiền tố không hợp lệ, việc xóa phần tử sau không thể khắc phục các vi phạm trước đó trừ khi phần tử bị xóa đó nằm bên trong tiền tố vi phạm, vì vậy chúng tôi phải thực thi cẩn thận để không có vi phạm tiền tố nào còn tồn tại trong phần không thay đổi. 
+Cuối cùng, chúng ta cũng cần đảm bảo rằng tiền tố lên tới$k-1$trong mảng ban đầu đã hợp lệ. Điều này có thể được tính toán trước một lần bằng cách sử dụng kiểm tra tiền tố tiêu chuẩn. Nếu tiền tố không hợp lệ, việc xóa phần tử sau không thể khắc phục các vi phạm trước đó trừ khi phần tử bị xóa đó nằm bên trong tiền tố vi phạm, vì vậy chúng tôi phải thực thi cẩn thận rằng không có vi phạm tiền tố nào còn tồn tại trong phần không thay đổi. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -67,14 +67,14 @@ Chúng tôi cũng tính toán xem mỗi tiền tố trong cấu hình ban đầu
 
 Sau đó, chúng tôi xử lý các chỉ số từ phải sang trái, duy trì hai cấu trúc Li Chao: một cho giới hạn trên và một cho giới hạn dưới. Mỗi cấu trúc lưu trữ các hàm tuyến tính trong biến$W_k$và chúng tôi truy vấn chúng tại$W_k$để đánh giá tính khả thi tại vị trí$k$. 
 
-### bước 
+### Các bước 
 
 1. Tính trọng lượng$w_i = r_i - l_i$và trung tâm$c_i = \frac{l_i + r_i}{2}$. Xây dựng mảng tiền tố$W_i$Và$X_i$. 
-2. Tính toán trước độ ổn định của tiền tố cho tháp ban đầu bằng cách sử dụng các kiểm tra trung tâm tiền tố. Điều này cho chúng tôi biết tiền tố nào đã không hợp lệ trước khi xóa. 
-3. Lặp lại$k$từ$n$xuống tới$1$, duy trì hai cây Li Chao ban đầu trống. 
+2. Tính toán trước độ ổn định của tiền tố cho tháp ban đầu bằng cách sử dụng kiểm tra trung tâm tiền tố. Điều này cho chúng tôi biết tiền tố nào đã không hợp lệ trước khi xóa. 
+3. Lặp lại$k$từ$n$xuống$1$, duy trì hai cây Li Chao ban đầu trống. 
 4. Trước khi xử lý$k$, chèn các ràng buộc đến từ chỉ mục$k+1$vào cả hai cây Li Chao. Mỗi chỉ số đóng góp hai dòng xuất phát từ các bất đẳng thức ổn định được sắp xếp lại. 
 5. Truy vấn cả hai cấu trúc tại$W_k$. Cấu trúc phía trên đưa ra giới hạn tối đa được phép trên$X_k$và cấu trúc thấp hơn đưa ra giới hạn tối thiểu được phép. 
-6. Nếu$X_k$nằm trong khoảng truy vấn và điều kiện tiền tố lên tới$k-1$hợp lệ, đánh dấu câu trả lời là CÓ. 
+6. Nếu$X_k$nằm trong khoảng truy vấn và điều kiện tiền tố lên đến$k-1$hợp lệ, đánh dấu câu trả lời là CÓ. 
 7. Nếu không thì đánh dấu KHÔNG. 
 
 Lý do chính khiến điều này có hiệu quả là mọi ràng buộc hậu tố chỉ phụ thuộc vào$X_k$Và$W_k$và mỗi sự phụ thuộc như vậy là tuyến tính trong$W_k$. Điều này cho phép chúng ta biểu diễn tất cả các điều kiện khả thi trong tương lai dưới dạng một tập hợp các đường và tư cách thành viên giảm xuống việc kiểm tra xem một điểm có nằm giữa hai đường bao hay không. 
@@ -203,7 +203,7 @@ for k in range(n, 0, -1):
 print("\n".join(ans))
 ```Mảng tiền tố$W$Và$X$mã hóa toàn bộ phân bố khối lượng sao cho mọi tính toán khối tâm đều giảm xuống thành một phép trừ đơn giản. Các cấu trúc Li Chao duy trì tất cả các ràng buộc tuyến tính có nguồn gốc từ hậu tố, do đó, mỗi truy vấn sẽ kiểm tra xem điểm ứng viên có thỏa mãn đồng thời mọi điều kiện ổn định trong tương lai hay không. 
 
-Một chi tiết triển khai tinh tế là tất cả các so sánh đều phụ thuộc vào các trung tâm nổi$c_i$. Khi triển khai cuộc thi nghiêm ngặt, điều này nên được thay thế bằng số học số nguyên nhân đôi để tránh các vấn đề về độ chính xác, vì tất cả đầu vào đều là số nguyên và điểm giữa có thể được biểu diễn dưới dạng phân số một cách nhất quán. 
+Một chi tiết triển khai tinh tế là tất cả các so sánh đều phụ thuộc vào các tâm nổi$c_i$. Khi triển khai cuộc thi nghiêm ngặt, điều này nên được thay thế bằng số học số nguyên nhân đôi để tránh các vấn đề về độ chính xác, vì tất cả đầu vào đều là số nguyên và điểm giữa có thể được biểu diễn dưới dạng phân số một cách nhất quán. 
 
 ## Ví dụ đã hoạt động 
 
@@ -267,8 +267,8 @@ assert run("4\n0 1\n1 3\n2 5\n3 6\n") is not None
 
 ## Vỏ cạnh 
 
-Trường hợp cạnh chính là khi khối bị loại bỏ ở gần đỉnh. Trong tình huống này, hầu hết tất cả các ràng buộc tiền tố vẫn không thay đổi, do đó, chỉ tính hợp lệ của tiền tố mới chiếm ưu thế trong câu trả lời. Thuật toán xử lý vấn đề này vì tính khả thi của tiền tố được kiểm tra độc lập trước bất kỳ đánh giá Li Chao nào. 
+Trường hợp cạnh chính là khi khối bị loại bỏ ở gần đỉnh. Trong tình huống này, hầu hết tất cả các ràng buộc tiền tố vẫn không thay đổi, do đó chỉ tính hợp lệ của tiền tố mới chiếm ưu thế trong câu trả lời. Thuật toán xử lý vấn đề này vì tính khả thi của tiền tố được kiểm tra độc lập trước bất kỳ đánh giá Li Chao nào. 
 
 Một trường hợp cạnh khác xảy ra khi tất cả các khối có chiều rộng và khoảng cách đối xứng giống nhau. Trong những trường hợp như vậy, khối tâm vẫn bất biến khi bị loại bỏ, và các đường bao Li Chao co lại thành những đường gần như giống hệt nhau. Thuật toán vẫn hoạt động vì mỗi ràng buộc giảm xuống mức kiểm tra tính bằng nhau thay vì phân tách nghiêm ngặt. 
 
-Trường hợp khó phát hiện cuối cùng là khi việc xóa xảy ra ở cuối ngăn xếp. Ở đây, tiền tố của mọi khối khác đều thay đổi và tất cả các ràng buộc hậu tố đều hoạt động. Cấu trúc Li Chao được sử dụng đầy đủ và tính chính xác phụ thuộc vào việc duy trì nhất quán tất cả các giới hạn tuyến tính được chèn, việc quét từ phải sang trái đảm bảo.
+Trường hợp khó phát hiện cuối cùng là khi việc xóa xảy ra ở cuối ngăn xếp. Ở đây, tiền tố của mọi khối khác đều thay đổi và tất cả các ràng buộc hậu tố đều hoạt động. Cấu trúc Li Chao được sử dụng đầy đủ và tính chính xác phụ thuộc vào việc duy trì nhất quán tất cả các giới hạn tuyến tính được chèn vào, việc quét từ phải sang trái đảm bảo.

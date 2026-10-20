@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 47s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta có n người bạn ngồi trong một bữa tiệc, mỗi người có một loại đồ uống ưa thích duy nhất. Kaz chỉ định cho mỗi người bạn chính xác một ly đồ uống, tạo thành một hoán vị có kích thước n. Một số người bạn có thể nhận ngay đồ uống phù hợp của mình, trong khi những người khác thì không. 
@@ -42,7 +42,7 @@ Với n = 2, cấu trúc trở nên giàu thông tin. Nếu cả hai người đ
 
 Phối cảnh brute-force bắt đầu bằng cách sửa một hoán vị và cố gắng tính toán số vòng dự kiến theo quy trình ngẫu nhiên được mô tả. Đối với bất kỳ trạng thái nào của k người tham gia còn lại, người ta sẽ mô phỏng rằng một hoán vị ngẫu nhiên thống nhất được áp dụng cho k mục, đếm xem có bao nhiêu điểm cố định xuất hiện, loại bỏ chúng và tiếp tục. Ngay cả khi chúng ta có thể tính toán kỳ vọng cho một hoán vị một cách hiệu quả, thì việc đánh giá tất cả n! hoán vị là không thể. 
 
-Sự đơn giản hóa quan trọng xuất phát từ việc tách vai trò của hoán vị ban đầu khỏi tính ngẫu nhiên của quá trình. Sau nhiệm vụ đầu tiên, điều duy nhất quan trọng là có bao nhiêu người ban đầu “sai”, bởi vì mỗi vòng tiếp theo sẽ phá hủy hoàn toàn cấu trúc bằng cách áp dụng một hoán vị ngẫu nhiên thống nhất mới cho tập hợp còn lại. Việc xác định ai sai là không liên quan, chỉ có kích thước của tập hợp còn lại mới quan trọng. 
+Sự đơn giản hóa quan trọng xuất phát từ việc tách vai trò của hoán vị ban đầu khỏi tính ngẫu nhiên của quá trình. Sau nhiệm vụ đầu tiên, điều quan trọng duy nhất là có bao nhiêu người ban đầu “sai”, bởi vì mỗi vòng tiếp theo sẽ phá hủy hoàn toàn cấu trúc bằng cách áp dụng một hoán vị ngẫu nhiên thống nhất mới cho tập hợp còn lại. Việc xác định ai sai là không liên quan, chỉ có kích thước của tập hợp còn lại mới quan trọng. 
 
 Một thực tế xác suất quan trọng là trong một hoán vị ngẫu nhiên đồng nhất của k phần tử, số điểm cố định dự kiến ​​luôn chính xác là 1 với k ≥ 1. Điều này có nghĩa là trong mỗi vòng có ít nhất một người tham gia còn lại, số người dự kiến rời khỏi vòng đó là 1. 
 
@@ -84,7 +84,7 @@ p = list(range(2, n + 1)) + [1]
 
 print(float(n))
 print(*p)
-```Bước đầu tiên xử lý trường hợp suy biến trong đó không thể thực hiện được quá trình trao đổi. Đối với tất cả n lớn hơn, việc xây dựng đảm bảo một hoán vị không có điểm cố định bằng cách sử dụng phép dịch chu kỳ đơn giản. Điều này là đủ vì bất kỳ sự xáo trộn nào cũng là tối ưu. 
+```Bước đầu tiên xử lý trường hợp suy biến trong đó không thể thực hiện được quá trình trao đổi. Đối với tất cả n lớn hơn, việc xây dựng đảm bảo một hoán vị không có điểm cố định bằng cách sử dụng phép dịch chuyển tuần hoàn đơn giản. Điều này là đủ vì bất kỳ sự xáo trộn nào cũng là tối ưu. 
 
 Giá trị được in chỉ đơn giản là được chuyển đổi sang định dạng dấu phẩy động. Không có sự phụ thuộc vào cơ cấu ngoài việc đảm bảo sự tham gia ban đầu tối đa. 
 
@@ -156,7 +156,7 @@ assert run("1000\n").split("\n")[0] == "1000.0\n".strip(), "large n format check
 
 ## Vỏ cạnh 
 
-Với n = 1, thuật toán đưa ra một hoán vị tầm thường và trả về chính xác 0,0 vì không có người tham gia nào tham gia vào quá trình trao đổi. Logic được xây dựng hoàn toàn bỏ qua bước làm xáo trộn. 
+Với n = 1, thuật toán đưa ra một hoán vị tầm thường và trả về chính xác 0,0 vì không có người tham gia nào tham gia quá trình trao đổi. Logic được xây dựng hoàn toàn bỏ qua bước làm xáo trộn. 
 
 Với n = 2, hoán vị [2, 1] đảm bảo cả hai người tham gia ban đầu đều không chính xác. Sau một lần xáo trộn, cả hai đều được giải quyết đồng thời theo kỳ vọng, mang lại chính xác số vòng dự kiến ​​cho hai người tham gia. 
 

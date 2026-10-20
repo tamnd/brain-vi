@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 55s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi được yêu cầu xây dựng một tiện ích nhỏ giống như mạng thần kinh, hoạt động giống như phép cộng mô-đun trên mô-đun chính$p$. Mô hình này khác thường: thay vì tính toán trực tiếp số học, nó mã hóa đầu vào bằng cách sử dụng vectơ một nóng, biến đổi chúng thông qua hai ma trận thực đã học, áp dụng bước cắt giống ReLU và cuối cùng chấm điểm từng lớp đầu ra có thể có bằng tích chấm. Lớp chiến thắng phải luôn ngang bằng$(a + b) \bmod p$cho mỗi cặp đầu vào$a, b \in [0, p-1]$. 
@@ -161,14 +161,14 @@ assert run("97\n") != "", "large prime boundary"
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
 | 3 | ma trận hợp lệ | trường hợp nguyên tố tối thiểu | 
-| 5 | ma trận hợp lệ | cấu trúc nhỏ không cần thiết | 
+| 5 | ma trận hợp lệ | cấu trúc nhỏ không tầm thường | 
 | 97 | ma trận hợp lệ | mở rộng ranh giới lớn | 
 
 ## Vỏ cạnh 
 
 cho$p = 3$, cấu trúc vẫn tạo ra các phần nhúng riêng biệt cho các phần dư 0, 1 và 2. Mặc dù các giá trị đặc trưng gần nhau do chia tỷ lệ tuyến tính, ma trận bộ giải mã vẫn duy trì sự phân tách vì mỗi phần dư có một hướng gradient duy nhất trong không gian đặc trưng. 
 
-Vì$p = 2$, vấn đề không được phép xảy ra, nhưng cùng một cấu trúc sẽ bị suy biến vì tất cả các phần nhúng đều thu gọn thành một đoạn đường hai điểm, loại bỏ sự phân tách. Điều này nêu bật lý do tại sao cần tối thiểu 3. 
+Vì$p = 2$, vấn đề không được phép xảy ra, nhưng cùng một cấu trúc sẽ bị suy biến vì tất cả các phần nhúng đều thu gọn thành một đoạn đường hai điểm, loại bỏ sự phân tách. Điều này nhấn mạnh lý do tại sao cần tối thiểu 3. 
 
 Vì$p = 97$, trường hợp lớn nhất, khoảng cách số trở nên rất nhỏ giữa các lần nhúng dư lượng liên tiếp. Tuy nhiên, vì tính đúng đắn chỉ phụ thuộc vào thứ tự của tích số chấm chứ không phụ thuộc vào độ chính xác của độ lớn, nên sự phân tách vẫn ổn định trong điều kiện số học chính xác. 
 

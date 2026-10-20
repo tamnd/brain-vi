@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 45s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một tập hợp các chuỗi nhị phân ẩn, mỗi chuỗi có độ dài cố định 50. Có n chuỗi này, nhưng chúng không được tiết lộ trực tiếp. Thay vào đó, chúng ta chỉ có thể tương tác với chúng thông qua truy vấn so sánh hai vị trí i và j và trả về khoảng cách Hamming giữa các chuỗi tương ứng, nghĩa là có bao nhiêu vị trí bit khác nhau giữa chúng. 
@@ -46,7 +46,7 @@ Vấn đề là chi phí. Có n(n − 1)/2 cặp và mỗi cặp yêu cầu mộ
 
 Một quan sát quan trọng là nếu hai chuỗi bằng nhau thì chúng không thể phân biệt được theo tất cả các so sánh khoảng cách của Hamming với bất kỳ chuỗi thứ ba nào. Điều đó có nghĩa là với mọi k, d(i, k) đều bằng d(j, k) bất cứ khi nào i và j trùng lặp. Vì vậy, các bản sao có thể được phát hiện bằng cách so sánh các cấu hình khoảng cách, nhưng cấu hình đầy đủ thì quá đắt. 
 
-Chúng tôi khai thác tính ngẫu nhiên theo cách khác nhau. Vì các chuỗi là ngẫu nhiên đồng nhất nên mỗi vị trí bit hoạt động giống như một tính năng ngẫu nhiên độc lập. Chúng tôi có thể lọc dần dần các ứng viên bằng cách sử dụng chiến lược loại bỏ dựa trên trục. Chúng tôi duy trì một chỉ mục ứng cử viên được coi là đại diện cho một trong các chuỗi trùng lặp, sau đó so sánh tất cả các chỉ mục khác với nó. Bất cứ khi nào chúng tôi tìm thấy một chỉ mục khác có khoảng cách bằng 0, chúng tôi đã hoàn thành. Mặt khác, chúng tôi loại bỏ các ứng cử viên không nhất quán bằng cách nhóm những ứng viên phù hợp với cùng cấu trúc khoảng cách và thu hẹp dần.
+Chúng tôi khai thác tính ngẫu nhiên theo cách khác nhau. Vì các chuỗi là ngẫu nhiên đồng nhất nên mỗi vị trí bit hoạt động giống như một tính năng ngẫu nhiên độc lập. Chúng tôi có thể lọc dần dần các ứng viên bằng cách sử dụng chiến lược loại bỏ dựa trên trục. Chúng tôi duy trì một chỉ mục ứng cử viên được coi là đại diện cho một trong các chuỗi trùng lặp, sau đó so sánh tất cả các chỉ mục khác với nó. Bất cứ khi nào chúng tôi tìm thấy một chỉ mục khác có khoảng cách bằng 0, chúng tôi đã hoàn thành. Mặt khác, chúng tôi loại bỏ các ứng cử viên không nhất quán bằng cách nhóm những ứng cử viên phù hợp với cùng cấu trúc khoảng cách và thu hẹp dần.
 
 Cách đóng khung hiệu quả hơn là chọn một gốc tùy ý và tính khoảng cách tới nó. Trong số tất cả các nút, ít nhất một trong các nút trùng lặp có chung cấu trúc khoảng cách đến gốc với nút trùng lặp còn lại. Bằng cách tinh chỉnh lặp đi lặp lại một tập ứng cử viên bằng cách sử dụng các trục xoay ngẫu nhiên và phân vùng theo khoảng cách, chúng tôi đảm bảo rằng cặp trùng lặp vẫn nằm trong cùng một nhóm trong khi kích thước nhóm dự kiến ​​sẽ giảm nhanh chóng do tính ngẫu nhiên. 
 
@@ -62,7 +62,7 @@ Cách đóng khung hiệu quả hơn là chọn một gốc tùy ý và tính kh
 1. Chọn một chỉ mục tùy ý làm đại diện ứng cử viên ban đầu. Điều này phục vụ như một điểm tham chiếu để so sánh tất cả các chuỗi khác. 
 2. Truy vấn khoảng cách Hamming từ ứng viên đến mọi chỉ mục khác. Điều này tạo ra một chữ ký khoảng cách liên quan đến ứng cử viên. 
 3. Phân chia tất cả các chỉ số thành các nhóm dựa trên giá trị khoảng cách trả về của chúng. Mỗi nhóm chứa các chỉ số có các chuỗi nằm ở cùng khoảng cách Hamming với ứng cử viên. 
-4. Xác định các nhóm có ít nhất hai người. Vì chỉ có một chuỗi được sao chép nên chỉ một nhóm có thể chứa cả hai bản sao của cùng một chuỗi. Bất kỳ nhóm nào khác có kích thước lớn hơn một đều cực kỳ khó xảy ra trong trường hợp ngẫu nhiên và có thể được bỏ qua một cách an toàn theo dự đoán. 
+4. Xác định các nhóm có ít nhất hai người. Vì chỉ có một chuỗi được sao chép nên chỉ một nhóm có thể chứa cả hai bản sao của cùng một chuỗi. Bất kỳ nhóm nào khác có kích thước lớn hơn một đều cực kỳ khó xảy ra trong trường hợp ngẫu nhiên và có thể được bỏ qua một cách an toàn theo dự kiến. 
 5. Hạn chế sự chú ý vào nhóm có ứng viên. Nếu nhiều nhóm có kích thước ≥ 2, hãy chọn bất kỳ nhóm nào và tinh chỉnh thêm. 
 6. Lặp lại quy trình bên trong nhóm đã chọn bằng cách chọn một trục mới từ bên trong nhóm đó và chỉ tính lại khoảng cách trong nhóm. Điều này dần dần thu hẹp không gian tìm kiếm. 
 7. Tiếp tục cho đến khi chỉ còn lại hai chỉ số. Các chuỗi này phải tương ứng với các chuỗi giống hệt nhau và một truy vấn duy nhất giữa chúng sẽ trả về khoảng cách bằng 0, kết thúc tương tác. 

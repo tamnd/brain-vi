@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1m 2s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một chuỗi các khoảng thời gian và sau mỗi khoảng thời gian mới xuất hiện, chúng ta phải trả lời một câu hỏi lập kế hoạch: chỉ sử dụng các khoảng thời gian đã thấy cho đến nay, số lượng lớn nhất trong số chúng có thể được chọn là bao nhiêu để không trùng lặp về thời gian. 
@@ -34,7 +34,7 @@ Các ràng buộc rất lớn: lên tới 300.000 khoảng và giá trị tọa 
 
 Một trường hợp thất bại phổ biến đối với các phương pháp tiếp cận ngây thơ xuất hiện khi các khoảng được lồng nhau dày đặc hoặc chồng chéo lên nhau. Ví dụ: nếu chúng ta liên tục chèn các khoảng như`[1, 100000]`,`[2, 99999]`,`[3, 99998]`, một cách tiếp cận tham lam hoặc tính toán lại quét lại tất cả các khoảng thời gian mỗi lần trở nên cực kỳ tốn kém, mặc dù câu trả lời chỉ thay đổi dần dần. 
 
-Một trường hợp cạnh tinh tế khác là quy tắc ranh giới. Vì việc chạm vào các điểm cuối được coi là xung đột nên các khoảng thời gian`[1, 2]`Và`[2, 3]`không thể lấy cả hai. Bất kỳ giải pháp nào xử lý vấn đề này như một vấn đề "chồng chéo không nghiêm ngặt" tiêu chuẩn với`r <= l`khả năng tương thích sẽ tạo ra kết quả không chính xác. 
+Một trường hợp cạnh tinh tế khác là quy tắc ranh giới. Vì việc chạm vào các điểm cuối được coi là xung đột nên các khoảng thời gian`[1, 2]`Và`[2, 3]`không thể lấy cả hai. Bất kỳ giải pháp nào xử lý vấn đề này như một vấn đề “chồng chéo không nghiêm ngặt” tiêu chuẩn với`r <= l`khả năng tương thích sẽ tạo ra kết quả không chính xác. 
 
 ## Phương pháp tiếp cận 
 
@@ -42,7 +42,7 @@ Cách giải thích brute-force rất đơn giản: sau mỗi khoảng thời gi
 
 Điều này hiệu quả vì việc lập kế hoạch theo khoảng thời gian có cấu trúc con tối ưu: nếu chúng tôi cố định một khoảng thời gian là khoảng thời gian được chọn cuối cùng thì chúng tôi chỉ cần giải pháp tốt nhất kết thúc trước khi nó bắt đầu. Tuy nhiên, việc lặp lại điều này từ đầu sau mỗi lần chèn sẽ tốn`O(i log i)`hoặc`O(i^2)`mỗi truy vấn tùy thuộc vào chi tiết triển khai. Tổng hợp tất cả các tiền tố, nó trở thành khối trong trường hợp xấu nhất, vượt xa giới hạn. 
 
-Quan sát quan trọng là chúng ta thực sự không bao giờ cần tính toán lại cấu trúc toàn cục. Mỗi khoảng`(l, r)`chỉ hỏi một câu hỏi: chuỗi nào có thể đạt được tốt nhất và kết thúc đúng trước ngày`l`? Khi chúng tôi biết giá trị đó, chúng tôi có thể mở rộng nó bằng cách lấy khoảng thời gian này, tạo ra chuỗi ứng cử viên kết thúc tại`r`. Vì vậy, mỗi khoảng đóng góp chính xác một lần chuyển đổi trên đường đi dài nhất DP theo thời gian. 
+Quan sát quan trọng là chúng ta thực sự không bao giờ cần tính toán lại cấu trúc toàn cục. Mỗi khoảng`(l, r)`chỉ hỏi một câu hỏi: chuỗi nào có thể đạt được tốt nhất và kết thúc đúng trước ngày`l`? Khi chúng tôi biết giá trị đó, chúng tôi có thể mở rộng nó bằng cách lấy khoảng này, tạo ra chuỗi ứng cử viên kết thúc tại`r`. Vì vậy, mỗi khoảng đóng góp chính xác một lần chuyển đổi trên đường đi dài nhất DP theo thời gian. 
 
 Điều này gợi ý việc duy trì cấu trúc theo các vị trí thời gian có thể trả lời các truy vấn tối đa tiền tố và hỗ trợ cập nhật điểm. Chúng tôi lưu trữ vào mỗi thời điểm`t`độ dài chuỗi tốt nhất kết thúc chính xác tại`t`và chúng tôi duy trì cực đại tiền tố trên các giá trị này. Sau đó, mỗi khoảng thời gian sẽ trở thành một truy vấn duy nhất cộng với một bản cập nhật. 
 

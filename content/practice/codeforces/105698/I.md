@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 53s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cho một dãy các số nguyên dương và chúng ta muốn đếm xem có bao nhiêu dãy con không trống là “an toàn” theo nghĩa là chúng không bao giờ chứa bộ ba phần tử có thể tạo thành một tam giác. 

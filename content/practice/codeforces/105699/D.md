@@ -21,10 +21,10 @@ draft: false
 **Thời gian giải:** 51s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được cung cấp một tập hợp đầy đủ các “khoảng cách” theo cặp giữa tối đa mười điểm chưa biết trong không gian ba chiều. Những giá trị này không phải là khoảng cách Euclide chính xác. Mỗi khoảng cách hình học thực sự bị nhiễu loạn độc lập bởi một giá trị ngẫu nhiên nhỏ trong khoảng$[-0.1, 0.1]$, và chúng ta chỉ được cung cấp ma trận kết quả. 
+Chúng ta được cung cấp một tập hợp đầy đủ các “khoảng cách” theo cặp giữa tối đa mười điểm chưa biết trong không gian ba chiều. Những giá trị này không phải là khoảng cách Euclide chính xác. Mỗi khoảng cách hình học thực sự đã bị nhiễu loạn độc lập bởi một giá trị ngẫu nhiên nhỏ trong khoảng$[-0.1, 0.1]$, và chúng ta chỉ được cung cấp ma trận kết quả. 
 
 Nhiệm vụ là tái tạo lại bất kỳ tập hợp điểm nào trong không gian 3D sao cho đối với mỗi cặp chỉ số, khoảng cách Euclide giữa các điểm được xây dựng phù hợp với ma trận được cung cấp với cùng dung sai 0,1. Nói cách khác, chúng tôi không được yêu cầu khôi phục cấu hình ban đầu chính xác mà chỉ nhúng các điểm sao cho tất cả các khoảng cách theo cặp khớp với các phép đo nhiễu trong một sai số cộng nhỏ. 
 
@@ -32,7 +32,7 @@ Cấu trúc ở đây là một vấn đề tái thiết số liệu ở chiều
 
 Một điều tinh tế quan trọng là đầu vào không được đảm bảo có thể thực hiện được một cách hoàn hảo trong$\mathbb{R}^3$do tiếng ồn. Bất kỳ phương pháp tái tạo hình học xác định nào giả định tính nhất quán chính xác giữa các khoảng cách đều có thể thất bại do tạo ra một hệ thống không nhất quán. Ví dụ: cố gắng giải các giao điểm hình cầu chính xác cho bốn mỏ neo có thể dễ dàng không tạo ra giải pháp nào do nhiễu loạn ± 0,1, mặc dù tồn tại một phép nhúng gần đúng hợp lệ. 
 
-Trường hợp chính là sự không nhất quán này. Một cách tiếp cận ngây thơ cố gắng tái tạo lại các điểm bằng cách sử dụng phép tính ba chiều chính xác hoặc các phương trình hình học cổ điển sẽ thất bại khi các khoảng cách nhiễu loạn vi phạm các ràng buộc đại số chính xác, dù chỉ một chút. Một dạng lỗi khác là tính không ổn định về mặt số học khi giải các hệ thống gần như đơn nhất, điều này thường gặp khi các điểm gần nhau hoặc gần như đồng phẳng trong dữ liệu nhiễu. 
+Trường hợp chính chính là sự không nhất quán này. Một cách tiếp cận ngây thơ cố gắng tái tạo lại các điểm bằng cách sử dụng phép tính ba phương chính xác hoặc các phương trình hình học cổ điển sẽ thất bại khi các khoảng cách nhiễu loạn vi phạm các ràng buộc đại số chính xác, dù chỉ một chút. Một dạng lỗi khác là tính không ổn định về số khi giải các hệ thống gần như đơn nhất, điều này thường gặp khi các điểm gần nhau hoặc gần như đồng phẳng trong dữ liệu nhiễu. 
 
 Bởi vì$n$là cực kỳ nhỏ, thay vào đó chúng ta có thể coi đây là một vấn đề tối ưu hóa liên tục: tìm tọa độ giảm thiểu sự khác biệt giữa khoảng cách thực tế và các giá trị đã cho. 
 
@@ -42,7 +42,7 @@ Một cách giải thích bạo lực sẽ cố gắng đặt từng điểm m�
 
 Một ý tưởng khác là thử tìm kiếm tổ hợp trên các vị trí tương đối, nhưng không gian trạng thái là liên tục và mỗi điểm đóng góp ba bậc tự do, khiến cho việc rời rạc hóa không khả thi ngay cả đối với$n=10$trừ khi cực kỳ thô, điều này phá vỡ sự đảm bảo về độ chính xác. 
 
-Quan sát quan trọng là vấn đề chỉ yêu cầu tính nhất quán gần đúng trong phạm vi ±0,1. Điều này biến nó thành một vấn đề giảm thiểu căng thẳng kinh điển: chúng ta muốn đặt các điểm vào$\mathbb{R}^3$sao cho độ lệch bình phương giữa khoảng cách tính toán và khoảng cách đã cho là nhỏ. Từ$n$nhiều nhất là 10, tổng số biến chỉ là 30 và chúng ta có thể tối ưu hóa trực tiếp chúng bằng các phương pháp số lặp. 
+Quan sát quan trọng là vấn đề chỉ yêu cầu tính nhất quán gần đúng trong phạm vi ±0,1. Điều này biến nó thành một bài toán giảm thiểu căng thẳng kinh điển: chúng ta muốn đặt các điểm vào$\mathbb{R}^3$sao cho độ lệch bình phương giữa khoảng cách tính toán và khoảng cách đã cho là nhỏ. Từ$n$nhiều nhất là 10, tổng số biến chỉ là 30 và chúng ta có thể tối ưu hóa trực tiếp chúng bằng các phương pháp số lặp. 
 
 Chúng tôi xác định hàm năng lượng trên tất cả các cấu hình và liên tục điều chỉnh tọa độ để giảm nó. Việc khởi tạo ngẫu nhiên sẽ tránh được các cấu trúc cục bộ xấu và việc sàng lọc cục bộ sẽ nhanh chóng điều chỉnh các khoảng cách vì hệ thống rất nhỏ. Về cơ bản, đây là quy mô đa chiều trong một môi trường rất nhỏ, ồn ào, trong đó ngay cả việc giảm độ dốc đơn giản hoặc ủ mô phỏng cũng hội tụ một cách đáng tin cậy. 
 
@@ -58,8 +58,8 @@ Chúng tôi mô hình hóa từng điểm$b_i = (x_i, y_i, z_i)$như một biế
 
 1. Bắt đầu bằng cách gán tọa độ ngẫu nhiên trong một phạm vi hợp lý, ví dụ như các giá trị thống nhất trong$[-1, 1]$cho mỗi tọa độ. Điều này mang lại khả năng nhúng ban đầu không làm sai lệch bất kỳ cấu trúc cụ thể nào. Bắt đầu ngẫu nhiên là quan trọng vì mục tiêu không lồi và có nhiều cực tiểu cục bộ. 
 2. Xác định hàm mất mát trên tất cả các cặp$(i, j)$là chênh lệch bình phương giữa khoảng cách được tính toán và giá trị đã cho:$$L = \sum_{i < j} (||b_i - b_j|| - d_{i,j})^2$$Bình phương đảm bảo độ dốc mượt mà và xử lý các sai lệch lớn mạnh mẽ hơn. 
-3. Lặp đi lặp lại cải thiện cấu hình bằng cách liên tục chọn một điểm$i$và làm xáo trộn tọa độ của nó một chút. Sau mỗi lần nhiễu loạn, hãy tính lại sự thay đổi tổng tổn thất. 
-4. Chấp nhận thay đổi nếu nó làm giảm tổn thất. Nếu nó làm tăng tổn thất, vẫn chấp nhận nó với xác suất nhỏ là giảm dần theo thời gian. Hành vi ủ mô phỏng này giúp hệ thống không sớm bị mắc kẹt ở mức cực tiểu cục bộ kém. 
+3. Lặp đi lặp lại cải thiện cấu hình bằng cách liên tục chọn một điểm$i$và làm xáo trộn tọa độ của nó một chút. Sau mỗi lần nhiễu loạn, tính lại sự thay đổi tổng tổn thất. 
+4. Chấp nhận thay đổi nếu nó làm giảm tổn thất. Nếu nó làm tăng tổn thất thì vẫn chấp nhận với xác suất nhỏ là giảm dần theo thời gian. Hành vi ủ mô phỏng này giúp hệ thống không sớm bị mắc kẹt ở mức cực tiểu cục bộ kém. 
 5. Lặp lại quá trình cập nhật với số lần lặp cố định, thường là khoảng vài trăm nghìn bước. Bởi vì$n \le 10$, mỗi lần đánh giá tổn thất chỉ có chi phí$O(n)$, vì vậy điều này là hiệu quả. 
 6. Sau khi hội tụ, xuất ra tọa độ cuối cùng của tất cả các điểm. 
 
@@ -129,7 +129,7 @@ if __name__ == "__main__":
     solve()
 ```Mã duy trì cấu hình ứng cử viên của các điểm và liên tục làm nhiễu loạn từng điểm một. Sau mỗi lần nhiễu loạn, nó sẽ đánh giá mức độ phù hợp của cấu hình với ma trận khoảng cách đã cho. Nếu cấu hình được cải thiện, nó sẽ được giữ nguyên; nếu không thì đôi khi nó vẫn có thể được chấp nhận để tránh bẫy cục bộ. Cấu hình tốt nhất được tìm thấy trong quá trình tìm kiếm sẽ được lưu trữ riêng biệt để đảm bảo rằng sự xuống cấp tạm thời không ảnh hưởng đến câu trả lời cuối cùng. 
 
-Thông số nhiệt độ giảm dần khiến hệ thống trở nên bảo thủ hơn theo thời gian. Những lần lặp đầu sẽ khám phá rộng rãi, trong khi những lần lặp sau sẽ tinh chỉnh các lỗi hình học nhỏ. 
+Thông số nhiệt độ giảm dần, khiến hệ thống trở nên bảo thủ hơn theo thời gian. Những lần lặp lại đầu tiên sẽ khám phá rộng rãi, trong khi những lần lặp lại sau đó sẽ tinh chỉnh các lỗi hình học nhỏ. 
 
 Một điểm thực hiện tinh tế là việc tính toán lại tất cả các khoảng cách theo cặp có thể được chấp nhận ở đây vì$n \le 10$, vì vậy ngay cả một đầy đủ$O(n^2)$tính toán lại mỗi lần lặp vẫn nhanh. 
 
@@ -145,8 +145,8 @@ Ma trận đầu vào:```
 
 | Giai đoạn lặp lại | Vị trí điểm (xấp xỉ) | Khoảng cách chính | Xu hướng thua lỗ | 
 | --- | --- | --- | --- | 
-| Ban đầu | ngẫu nhiên | không nhất quán | cao |
- | Giữa | tam giác có cấu trúc một phần | hai bên gần bằng 1 | giảm dần | 
+| Ban đầu | ngẫu nhiên | không nhất quán | cao | 
+| Giữa | tam giác có cấu trúc một phần | hai bên gần bằng 1 | giảm dần | 
 | Cuối cùng | gần tam giác đều | tất cả ~1 | gần bằng không | 
 
 Điều này cho thấy cách điều chỉnh cục bộ căn chỉnh đồng thời tất cả các ràng buộc thay vì thực thi từng cạnh một. 
@@ -155,7 +155,7 @@ Bây giờ hãy xem xét một phiên bản hơi nhiễu loạn:```
 0.0 1.0 1.0
 1.0 0.0 1.05
 1.0 1.05 0.0
-```Ở đây tính nhất quán chính xác là không thể, nhưng thuật toán tìm thấy một cấu hình trong đó tất cả các cạnh đều nằm trong dung sai cho phép. Hệ thống ổn định ở dạng gần như cân bằng với độ biến dạng nhẹ, thể hiện khả năng chống nhiễu tốt. 
+```Ở đây tính nhất quán chính xác là không thể, nhưng thuật toán tìm thấy một cấu hình trong đó tất cả các cạnh đều nằm trong dung sai cho phép. Hệ thống ổn định ở dạng gần như cân bằng với một chút biến dạng, thể hiện khả năng chống nhiễu tốt. 
 
 ## Phân tích độ phức tạp 
 
