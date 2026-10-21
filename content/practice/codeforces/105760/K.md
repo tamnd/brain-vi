@@ -21,14 +21,14 @@ draft: false
 **Thời gian giải:** 1 phút 12s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi có một cây với một số nút được đánh dấu là chứa nhật ký. Khi một khúc gỗ bị cắt, nửa đen của nó vẫn giữ nguyên và nửa đỏ của nó phải rơi vào một nút liền kề mà **không** chứa khúc gỗ đen. Mỗi nhật ký phải chọn chính xác một nút không phải nhật ký lân cận làm đích đến cho nửa màu đỏ của nó. Mục đích là đếm xem có bao nhiêu cấu hình cắt hợp lệ. Câu trả lời là bắt buộc theo modulo`1,000,000,007`. 
 
 Hạn chế về kiểu dáng là phần thú vị. Một nút chứa nhật ký màu đen không được phép có nhật ký màu đỏ ở hai nút lân cận khác nhau. Nút nhật ký đen có thể có 0 hoặc một đích màu đỏ lân cận, nhưng không bao giờ có hai hoặc nhiều hơn. 
 
-Cây chứa tới`100000`nút. Bất kỳ giải pháp nào xem xét sự kết hợp các lựa chọn một cách rõ ràng đều là vô vọng. Ngay cả hệ số phân nhánh là hai trên mỗi nhật ký cũng đã tạo ra hành vi theo cấp số nhân. Cây DP tuyến tính hoặc gần tuyến tính là hướng thực tế duy nhất. 
+Cây chứa tới`100000`nút. Bất kỳ giải pháp nào xem xét sự kết hợp các lựa chọn một cách rõ ràng đều vô vọng. Ngay cả hệ số phân nhánh là hai trên mỗi nhật ký cũng đã tạo ra hành vi theo cấp số nhân. Cây DP tuyến tính hoặc gần tuyến tính là hướng thực tế duy nhất. 
 
 Một quan sát tinh tế sẽ đơn giản hóa tình trạng một cách đáng kể. 
 
@@ -48,12 +48,12 @@ Bây giờ hãy nhìn lại nút nhật ký. Nó chọn chính xác một nút k
 
 Điều đó biến vấn đề thành một cây DP với hai loại nút: 
 
-- nút đăng nhập 
+- nút nhật ký 
 - các nút không đăng nhập 
 
-Đối với nút không có nhật ký, chúng tôi theo dõi xem một số nhật ký con có kích hoạt nút đó hay không. 
+Đối với nút không có nhật ký, chúng tôi theo dõi xem nhật ký con nào đó có kích hoạt nút đó hay không. 
 
-Đối với nút nhật ký, chúng tôi theo dõi xem nó có gửi nửa màu đỏ của mình tới nút không phải nhật ký gốc hay đến một trong các nút không phải nhật ký con của nó hay không. 
+Đối với nút nhật ký, chúng tôi theo dõi xem nó gửi nửa màu đỏ của nó đến nút không phải nhật ký gốc hay đến một trong các nút không phải nhật ký con của nó. 
 
 Cấu trúc cây cho phép các lựa chọn này được kết hợp độc lập giữa các cây con. 
 
@@ -307,7 +307,7 @@ Các kết quả hợp lệ là:
 
 Trả lời = 2. 
 
-Dấu vết chứng tỏ rằng nhiều nhật ký có thể gửi một nửa màu đỏ vào cùng một nút không phải nhật ký và chỉ có trạng thái hoạt động/không hoạt động mới quan trọng. 
+Dấu vết chứng minh rằng nhiều nhật ký có thể gửi một nửa màu đỏ vào cùng một nút không phải nhật ký và chỉ có trạng thái hoạt động/không hoạt động mới quan trọng. 
 
 ## Phân tích độ phức tạp 
 

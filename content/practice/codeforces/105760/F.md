@@ -1,6 +1,6 @@
 ---
 title: "CF 105760F - Sách Quyền Anh"
-description: "Chúng ta được cho một dãy sách được sắp xếp theo một thứ tự cố định trên giá. Mỗi cuốn sách có hai thuộc tính: chiều rộng của nó, góp phần bổ sung vào khoảng không gian theo chiều ngang mà một chiếc hộp phải che phủ, và chiều cao của nó, xác định chiều cao của chiếc hộp nếu bao gồm cuốn sách đó."
+description: "Chúng ta được đưa cho một dãy sách được sắp xếp theo một thứ tự cố định trên giá. Mỗi cuốn sách có hai thuộc tính: chiều rộng của nó, góp phần bổ sung vào khoảng không gian theo chiều ngang mà một chiếc hộp phải che phủ, và chiều cao của nó, xác định chiều cao của chiếc hộp nếu bao gồm cuốn sách đó."
 date: "2026-06-26T07:29:29+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
@@ -21,10 +21,10 @@ draft: false
 **Thời gian giải:** 2m 42s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được cho một dãy sách được sắp xếp theo một thứ tự cố định trên giá. Mỗi cuốn sách có hai thuộc tính: chiều rộng của nó, góp phần bổ sung vào khoảng không gian theo chiều ngang mà một chiếc hộp phải che phủ, và chiều cao của nó, xác định chiều cao của chiếc hộp nếu bao gồm cuốn sách đó. 
+Chúng ta được đưa cho một dãy sách được sắp xếp theo một thứ tự cố định trên giá. Mỗi cuốn sách có hai thuộc tính: chiều rộng của nó, góp phần bổ sung vào khoảng không gian theo chiều ngang mà một chiếc hộp phải che phủ, và chiều cao của nó, xác định chiều cao của chiếc hộp nếu bao gồm cuốn sách đó. 
 
 Chúng ta phải phân chia chuỗi thành đúng k đoạn liền kề. Mỗi phân đoạn tương ứng với một hộp và các cuốn sách bên trong hộp phải giữ nguyên thứ tự ban đầu và liên tiếp trên giá. Đối với một phân khúc đã chọn, chi phí của chiếc hộp được tính bằng cách lấy tổng chiều rộng của tất cả các cuốn sách trong phân khúc đó và nhân với chiều cao tối đa của những cuốn sách đó. 
 
@@ -40,9 +40,9 @@ Một vài tình huống góc quan trọng cho sự chính xác.
 
 Nếu k = n thì mỗi cuốn sách đều được cô lập trong hộp riêng của nó. Chi phí trở thành tổng của wi × hi. Bất kỳ giải pháp nào vô tình hợp nhất ngay cả một cặp liền kề sẽ đánh giá thấp hoặc đánh giá quá cao tùy thuộc vào thứ tự chiều cao. 
 
-Nếu k = 1 thì tất cả sách đều nằm trong một hộp, do đó câu trả lời là (tổng tất cả các chiều rộng) × (chiều cao tối đa). Đây là một biện pháp kiểm tra độ chính xác hữu ích cho cả quá trình khởi tạo và chuyển tiếp DP. 
+Nếu k = 1 thì tất cả sách đều nằm trong một hộp nên câu trả lời là (tổng tất cả các chiều rộng) × (chiều cao tối đa). Đây là một biện pháp kiểm tra độ chính xác hữu ích cho cả quá trình khởi tạo và chuyển tiếp DP. 
 
-Một trường hợp tế nhị khác là khi độ cao không đơn điệu. Ví dụ: việc cắt giảm tham lam ở độ cao tối đa cục bộ có thể không thành công: một cuốn sách cao ở đầu phân khúc sẽ tăng giá ngay cả khi tốt hơn là nó nên được đặt trong một hộp riêng, nhưng việc cô lập nó có thể làm tăng hệ số nhân chiều rộng sau này. Điều này phá hủy mọi cấu trúc tham lam chỉ dựa trên các quyết định của địa phương. 
+Một trường hợp tế nhị khác là khi độ cao không đơn điệu. Ví dụ: việc cắt giảm tham lam ở độ cao tối đa cục bộ có thể không thành công: một cuốn sách cao ở đầu phân khúc sẽ tăng giá ngay cả khi nó tốt hơn nên được đặt trong một hộp riêng, nhưng việc cô lập nó có thể làm tăng hệ số nhân chiều rộng sau này. Điều này phá hủy bất kỳ cấu trúc tham lam nào chỉ dựa trên các quyết định của địa phương. 
 
 ## Phương pháp tiếp cận 
 

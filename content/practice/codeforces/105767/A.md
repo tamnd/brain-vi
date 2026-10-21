@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 39s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Nhiệm vụ là xây dựng một mảng có độ dài`n`trong đó mọi giá trị nằm giữa`1`Và`2n`và không có giá trị nào trong mảng có thể chia một giá trị khác ở một vị trí khác. Các giá trị thực tế không quan trọng ngoài việc đáp ứng hai quy tắc này, vì vậy mọi cách xây dựng hợp lệ đều được chấp nhận. 
@@ -36,7 +36,7 @@ Một sai lầm khác là chọn một tập hợp không có thừa số lặp 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận trực tiếp là chọn liên tục các số từ`1`ĐẾN`2n`và kiểm tra xem số đã chọn có chia hết hay chia hết cho số đã chọn trước đó hay không. Điều này đúng vì nó kiểm tra rõ ràng điều kiện bắt buộc trước khi thêm từng phần tử. Tuy nhiên, trong trường hợp xấu nhất, nó so sánh hầu hết mọi cặp giá trị được chọn. Với`n = 100000`, điều này có thể đạt tới khoảng`10^10`kiểm tra khả năng chia hết, vượt xa giới hạn một giây thông thường cho phép. 
+Cách tiếp cận trực tiếp là chọn nhiều lần các số từ`1`ĐẾN`2n`và kiểm tra xem số đã chọn có chia hết hay chia hết cho bất kỳ số nào đã chọn trước đó hay không. Điều này đúng vì nó kiểm tra rõ ràng điều kiện bắt buộc trước khi thêm từng phần tử. Tuy nhiên, trong trường hợp xấu nhất, nó so sánh hầu hết mọi cặp giá trị được chọn. Với`n = 100000`, điều này có thể đạt tới khoảng`10^10`kiểm tra khả năng chia hết, vượt xa giới hạn một giây thông thường cho phép. 
 
 Quan sát quan trọng là việc chia hết sẽ không thể thực hiện được nếu mọi số được chọn đều lớn hơn`n`. Hãy xem xét khoảng thời gian từ`n + 1`ĐẾN`2n`. Nó chứa chính xác`n`số, vì vậy nó đủ lớn để lấp đầy mảng. Nếu một số`x`nằm trong khoảng này, bất kỳ bội số thích hợp nào của`x`ít nhất là`2x`, lớn hơn`2n`. Vì toàn bộ mảng chỉ chứa các số lên tới`2n`, không có số nào được chọn khác có thể là bội số của`x`. 
 

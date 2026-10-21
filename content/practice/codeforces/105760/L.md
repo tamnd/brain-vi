@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 20s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Chắc chắn rồi - vui lòng gửi báo cáo vấn đề đầy đủ của Codeforces (hoặc ít nhất là tên liên kết/vấn đề). 
 
 Khi đã có nó, tôi sẽ viết một bài xã luận phù hợp về lập trình cạnh tranh với: 

@@ -21,12 +21,12 @@ draft: false
 **Thời gian giải:** 49s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Bài toán khái quát các Tháp Hà Nội cổ điển thành một hệ thống lớn hơn nhiều với nhiều chốt. 
 
-Thay vì ba cái chốt và một số lượng đĩa tùy ý, chúng ta được cấp$k$chốt. Câu đố chứa chính xác$n = \frac{k(k-1)}{2}$đĩa. Tất cả các đĩa bắt đầu được xếp chồng lên nhau trên một chốt duy nhất$s$, và mục tiêu là di chuyển toàn bộ ngăn xếp sang một chốt khác$e$. 
+Thay vì ba chốt và số lượng đĩa tùy ý, chúng ta được cấp$k$chốt. Câu đố chứa chính xác$n = \frac{k(k-1)}{2}$đĩa. Tất cả các đĩa bắt đầu được xếp chồng lên nhau trên một chốt duy nhất$s$, và mục tiêu là di chuyển toàn bộ ngăn xếp sang một chốt khác$e$. 
 
 Quy tắc thông thường của Hà Nội vẫn được áp dụng: tại bất kỳ thời điểm nào, mỗi chốt giữ một chồng đĩa được sắp xếp theo kích thước và di chuyển bao gồm việc lấy đĩa trên cùng của một chốt và đặt nó lên một chốt khác, miễn là nó không vi phạm thứ tự kích thước. 
 
@@ -34,7 +34,7 @@ Yêu cầu đầu ra duy nhất là tạo ra bất kỳ chuỗi di chuyển hợ
 
 Kích thước đầu vào ngay lập tức định hình hướng thuật toán. Từ$k \le 1000$, tổng số đĩa theo thứ tự$5 \cdot 10^5$, do đó, bất kỳ chiến lược nào mô phỏng rõ ràng đệ quy Hà Nội cổ điển theo từng đĩa trên tất cả các đĩa là không thể. Một sự ngây thơ$O(2^n)$đệ quy có giá trị lớn về mặt thiên văn. Ngay cả các cách tiếp cận bậc hai hoặc bậc ba trên đĩa cũng không liên quan vì chúng ta không cần phải mô phỏng từng đĩa riêng lẻ theo nghĩa cổ điển. 
 
-Thay vào đó, ràng buộc$2(k-1)^2$là gợi ý về cấu trúc quan trọng: câu trả lời phụ thuộc bậc hai vào số lượng chốt chứ không phụ thuộc theo cấp số nhân vào số lượng đĩa. Điều đó cho thấy rõ ràng rằng các đĩa không được xử lý riêng lẻ mà được nhóm thành các khối có cấu trúc gắn liền với hệ thống chốt. 
+Thay vào đó, ràng buộc$2(k-1)^2$là gợi ý về cấu trúc quan trọng: câu trả lời phụ thuộc bậc hai vào số lượng chốt chứ không phải theo cấp số nhân vào số lượng đĩa. Điều đó cho thấy rõ ràng rằng các đĩa không được xử lý riêng lẻ mà được nhóm thành các khối có cấu trúc gắn liền với hệ thống chốt. 
 
 Một trường hợp khó nhận thấy là khi$k = 3$. Sau đó$n = 3$, và vấn đề thoái hóa thành Hà Nội 3 chốt tiêu chuẩn với số lượng đĩa cố định nhỏ. Một giải pháp bất cẩn gây thiệt hại lớn$k$cấu trúc có thể không xử lý đúng trường hợp cơ bản này, vì nhiều cấu trúc đệ quy dựa vào việc có các chốt trung gian. 
 
@@ -65,7 +65,7 @@ Cách tiếp cận bạo lực hoạt động về mặt khái niệm vì bản 
 
 Việc xây dựng có thể được hiểu là sự lưu thông có kiểm soát của các đĩa thông qua các chốt trung gian. Chúng tôi duy trì rằng bất cứ lúc nào, tất cả các đĩa luôn được xếp chồng lên nhau một cách chính xác trên các chốt và chúng tôi dần dần “bóc” cấu trúc từ nguồn đến đích. 
 
-### bước 
+### Các bước 
 
 1. Xác định chốt nguồn$s$, chốt đích$e$, và tập hợp các chốt trung gian. Thuật toán sẽ liên tục sử dụng các chốt trung gian làm bộ đệm tạm thời để tránh xung đột giữa các đĩa lớn. 
 2. Về mặt khái niệm, hãy sắp xếp các chốt từ$1$ĐẾN$k$và xử lý quá trình này như xóa dần dần các chốt theo thứ tự chỉ mục tăng dần trong khi vẫn duy trì tính hợp pháp của đĩa. Thứ tự này là tùy ý nhưng cố định để đảm bảo định tuyến xác định. 
@@ -129,7 +129,7 @@ Chi tiết triển khai chính là các bước di chuyển hoàn toàn không m
 | 2 | tuyến đường tới đích | (1→3, 1→2) | 
 | 3 | hoàn tất chuyển khoản | (1→3, 1→2, 3→2) | 
 
-Điều này cho thấy một chốt trung gian duy nhất là đủ để làm trung gian cho tất cả các giao dịch chuyển tiền. Cấu trúc đảm bảo không xếp chồng bất hợp pháp vì mọi di chuyển đều tôn trọng thứ tự chốt tương đối. 
+Điều này chứng tỏ làm thế nào một chốt trung gian duy nhất có thể đủ để dàn xếp tất cả các giao dịch chuyển tiền. Cấu trúc đảm bảo không xếp chồng bất hợp pháp vì mọi di chuyển đều tôn trọng thứ tự chốt tương đối. 
 
 ### Ví dụ: k = 4, s = 1, e = 4 
 

@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 44s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một vùng không phận hình trụ nơi có thể có người chơi dù lượn. 
@@ -65,7 +65,7 @@ Vấn đề là độ chính xác. Để có được thời gian vào và ra đ
 
 Quan sát quan trọng là máy bay đi theo quỹ đạo đường thẳng ở dạng 3D. 
 
-Hãy để thời gian trôi qua$t$. 
+Hãy để thời gian trôi đi$t$. 
 
 Tọa độ ngang là hàm tuyến tính của$t$:$$x(t)=x_a+v_x t$$
 
@@ -148,7 +148,7 @@ Vùng thứ nhất là hình trụ thẳng đứng vô hạn có hình chiếu n
 
 Vùng thứ hai là tấm độ cao giữa$l$Và$u$. Đôi khi, hàm độ cao tuyến tính đi vào và rời khỏi vùng này thu được từ bất đẳng thức tuyến tính. 
 
-Một chiếc máy bay ở bên trong hình trụ giới hạn chính xác khi nó thuộc cả hai vùng cùng một lúc. Giao nhau giữa các khoảng thời gian tương ứng sẽ tạo ra thời gian chính xác khi cả hai điều kiện đều đúng. Vì mỗi khoảng thời gian được tính toán chính xác từ các phương trình chuyển động nên thời gian vào và ra kết quả là chính xác. 
+Một chiếc máy bay ở bên trong hình trụ giới hạn chính xác khi nó thuộc về cả hai vùng cùng một lúc. Giao nhau giữa các khoảng thời gian tương ứng sẽ tạo ra thời gian chính xác khi cả hai điều kiện đều đúng. Vì mỗi khoảng thời gian được tính toán chính xác từ các phương trình chuyển động nên thời gian vào và ra kết quả là chính xác. 
 
 ## Giải pháp Python```python
 import sys
@@ -230,9 +230,9 @@ for _ in range(n):
 
 Khoảng độ cao được xử lý riêng vì độ cao chỉ phụ thuộc vào hàm tuyến tính. Khi tốc độ giảm bằng 0, cần phải xử lý đặc biệt vì việc chia cho 0 sẽ không hợp lệ. 
 
-Khoảng cách vòng tròn xuất phát từ việc thay thế quỹ đạo vào phương trình vòng tròn. Bất đẳng thức bậc hai thu được là bài toán giao tuyến đường tròn tiêu chuẩn. Phân biệt xác định liệu quỹ đạo có bao giờ chạm đến vòng tròn hay không. 
+Khoảng cách vòng tròn xuất phát từ việc thay thế quỹ đạo vào phương trình vòng tròn. Bất đẳng thức bậc hai thu được là bài toán giao tuyến đường tròn tiêu chuẩn. Phân biệt xác định xem quỹ đạo có bao giờ chạm đến vòng tròn hay không. 
 
-Giao điểm cuối cùng kết hợp đồng thời ba yêu cầu: thời gian trong tương lai, độ cao hợp lệ và vị trí nằm ngang hợp lệ. 
+Giao lộ cuối cùng kết hợp đồng thời ba yêu cầu: thời gian trong tương lai, độ cao hợp lệ và vị trí nằm ngang hợp lệ. 
 
 Một epsilon nhỏ được sử dụng khi so sánh các giá trị dấu phẩy động. Nếu không có nó, các lỗi số nhỏ xung quanh các giao lộ tiếp tuyến có thể phân loại sai một chuyến bay là an toàn. 
 
@@ -280,8 +280,8 @@ Flight 2400 is safe.
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | O(n) | Công việc liên tục trên mỗi chiếc máy bay | 
-| Không gian | O(1) | Chỉ có một số biến dấu phẩy động được lưu trữ | 
+| Thời gian | O(n) | Công việc liên tục trên mỗi máy bay | 
+| Không gian | O(1) | Chỉ một số biến dấu phẩy động được lưu trữ | 
 
 Với tối đa 100 máy bay, thời gian bay không đáng kể. Giải pháp chỉ thực hiện một số phép tính số học và căn bậc hai cho mỗi chuyến bay. 
 
@@ -341,6 +341,6 @@ assert True
 0 0 1000 0 1000
 1
 1000 -5000 0 0 5000 5000 4000
-```Máy bay hạ cánh trong phạm vi độ cao hợp lệ từ rất sớm, rất lâu trước khi đến được vòng tròn. Khoảng cách độ cao và khoảng cách vòng tròn không trùng nhau. Giao lộ cuối cùng trống nên đầu ra là "Chuyến bay 1000 an toàn". 
+```Máy bay hạ cánh trong phạm vi độ cao hợp lệ từ rất sớm, rất lâu trước khi đến vòng tròn. Khoảng cách độ cao và khoảng cách vòng tròn không trùng nhau. Giao lộ cuối cùng trống nên đầu ra là "Chuyến bay 1000 an toàn". 
 
-Trường hợp này khẳng định rằng việc thỏa mãn từng điều kiện riêng lẻ là chưa đủ. Thời gian phải trùng lặp.
+Trường hợp này khẳng định rằng việc thỏa mãn từng điều kiện riêng lẻ là chưa đủ. Thời gian phải chồng chéo lên nhau.

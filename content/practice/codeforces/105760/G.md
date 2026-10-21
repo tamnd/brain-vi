@@ -21,12 +21,12 @@ draft: false
 **Thời gian giải:** 1 phút 19s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cho các số từ 1 đến n và chèn chúng vào cây tìm kiếm nhị phân trống theo thứ tự đã chọn. Quy tắc BST thông thường được áp dụng: giá trị nhỏ hơn ở bên trái, giá trị lớn hơn ở bên phải và mỗi giá trị mới được đặt ở nơi kết thúc quá trình tìm kiếm. 
 
-Trong số tất cả các lệnh chèn có thể có, chúng ta chỉ quan tâm đến những lệnh buộc BST kết quả trở nên suy biến hoàn toàn, nghĩa là chiều cao của nó trở thành n − 1. Nói cách khác, cây thực sự là một chuỗi, vì vậy mỗi nút được chèn đều có nhiều nhất một nút con. 
+Trong số tất cả các lệnh chèn có thể có, chúng ta chỉ quan tâm đến những lệnh buộc BST kết quả trở nên suy biến hoàn toàn, nghĩa là chiều cao của nó trở thành n − 1. Nói cách khác, cây thực sự là một chuỗi, do đó, mỗi nút được chèn đều có nhiều nhất một nút con. 
 
 Nhiệm vụ không chỉ là đếm các đơn hàng này mà còn liệt kê chúng theo thứ tự từ điển và xuất ra đơn hàng thứ k. Nếu tồn tại ít hơn k hoán vị như vậy thì câu trả lời là không thể. 
 

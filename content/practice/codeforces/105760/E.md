@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 46s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi đang mô phỏng một mạng lưới truyền thông đang phát triển của máy tính. Ban đầu mỗi máy tính đều bị cô lập nên mỗi máy tính sẽ tạo thành một nhóm riêng. Theo thời gian, các kết nối được thêm vào giữa các cặp máy tính và các kết nối này hợp nhất các nhóm thành các thành phần được kết nối lớn hơn. 
@@ -32,7 +32,7 @@ Khó khăn chính là cả số lượng thành phần và kích thước của 
 
 Kích thước đầu vào lên tới khoảng 300.000 thao tác, do đó, bất kỳ giải pháp nào tính toán lại các thành phần được kết nối từ đầu cho mỗi thao tác sẽ quá chậm. Việc tính toán lại đầy đủ tốn ít nhất thời gian tuyến tính theo số lượng nút, dẫn đến trường hợp xấu nhất bậc hai không thể thực hiện được. 
 
-Cấu trúc dựa trên tìm kiếm kết hợp ngay lập tức trở thành ứng cử viên đương nhiên vì nó hỗ trợ việc hợp nhất động một cách hiệu quả. 
+Cấu trúc dựa trên tìm kiếm liên kết ngay lập tức trở thành ứng cử viên đương nhiên vì nó hỗ trợ việc hợp nhất động một cách hiệu quả. 
 
 Có một số trường hợp phức tạp có xu hướng phá vỡ các giải pháp ngây thơ. Người ta quên rằng việc hợp nhất hai nút đã có trong cùng một thành phần sẽ không làm thay đổi cấu trúc nào cả. Ví dụ: nếu chúng tôi cố gắng kết nối 1 và 2 nhiều lần: 
 
@@ -75,7 +75,7 @@ Chúng tôi duy trì cấu trúc Disjoint Set Union và hai giá trị chung: s�
 2. Với mỗi phép cộng cạnh giữa u và v, hãy tìm đại diện DSU của chúng. Điều này cho chúng ta biết chúng thuộc về thành phần nào. 
 3. Nếu cả hai nút đều đã có trong cùng một thành phần thì chúng tôi sẽ không làm gì cả. Cấu trúc và tất cả các cốt liệu vẫn không thay đổi. 
 4. Nếu chúng thuộc về các thành phần khác nhau, chúng ta hợp nhất thành phần nhỏ hơn thành thành phần lớn hơn. Điều này giúp DSU hoạt động hiệu quả và đảm bảo hoạt động gần như liên tục. 
-5. Gọi kích thước của hai thành phần là a và b. Chúng tôi cập nhật tổng bình phương chung bằng cách thêm 2ab, vì (a+b)² thay thế a² + b². Chúng tôi cũng giảm số lượng thành phần đi 1. 
+5. Gọi kích thước của hai thành phần là a và b. Chúng tôi cập nhật tổng bình phương chung bằng cách thêm 2ab, vì (a+b)² thay thế a² + b². Chúng tôi cũng giảm số lượng thành phần xuống 1. 
 6. Sau khi xử lý một thao tác, nếu là truy vấn, chúng ta xuất ra giá trị hiện tại của sum_of_squares/thành phần. 
 
 Tính chính xác dựa trên thực tế là tất cả thông tin được yêu cầu chỉ phụ thuộc vào kích thước thành phần và DSU duy trì các kích thước này một cách chính xác trong các hoạt động hợp nhất. Mỗi lần hợp nhất sẽ cập nhật tổng hợp một cách nhất quán với danh tính đại số cho hình vuông. 
@@ -137,7 +137,7 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Lớp DSU xử lý kết nối trong khi nén đường dẫn để đảm bảo hoạt động nhanh chóng. Hàm hợp chỉ trả về một giá trị khi việc hợp nhất thực sự xảy ra, điều này ngăn chặn các cập nhật không chính xác khi các cạnh dư thừa xuất hiện. 
+```Lớp DSU xử lý kết nối trong khi nén đường dẫn để đảm bảo hoạt động nhanh chóng. Hàm hợp chỉ trả về một giá trị khi việc hợp nhất thực sự xảy ra, điều này ngăn cản việc cập nhật không chính xác khi các cạnh dư thừa xuất hiện. 
 
 Vòng lặp chính giữ hai bất biến: comp luôn bằng số gốc DSU và sumsq luôn bằng tổng kích thước thành phần bình phương. Truy vấn chỉ cần đọc hai giá trị này. 
 
@@ -219,4 +219,4 @@ Sau khi hợp nhất 1 và 2, chúng ta nhận được các thành phần có k
 
 Một trường hợp cạnh khác là khi đồ thị không bao giờ nhận được bất kỳ cạnh nào. Câu trả lời cho mọi truy vấn chỉ đơn giản là 1, vì tổng bình phương là n và có n thành phần. Thuật toán khởi tạo chính xác ở trạng thái này và không bao giờ sửa đổi nó trừ khi xảy ra sự kết hợp. 
 
-Trường hợp tinh vi cuối cùng là n lớn không có truy vấn, chỉ có phần kết hợp. DSU vẫn hoạt động chính xác vì tất cả các bản cập nhật đều cục bộ và độc lập với thời gian truy vấn, đồng thời tổng hợp vẫn hợp lệ sau mỗi lần hợp nhất.
+Trường hợp tinh tế cuối cùng là n lớn không có truy vấn, chỉ có phần hợp. DSU vẫn hoạt động chính xác vì tất cả các bản cập nhật đều cục bộ và độc lập với thời gian truy vấn, đồng thời tổng hợp vẫn hợp lệ sau mỗi lần hợp nhất.

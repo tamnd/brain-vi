@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 27s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Chắc chắn rồi - tôi có thể làm điều đó, nhưng trước tiên tôi cần giải quyết vấn đề. 
 
 Vui lòng dán toàn bộ báo cáo vấn đề của Codeforces (hoặc ít nhất là các phần chính: định dạng đầu vào/đầu ra, các ràng buộc và câu lệnh). Nếu bạn cũng có một liên kết hoặc ID cuộc thi/vấn đề thì điều đó cũng có tác dụng. 

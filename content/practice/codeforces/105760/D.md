@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 53s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Nhiệm vụ mô tả một cách trưng bày hình chữ nhật các mặt hàng thực phẩm phải được sắp xếp theo một khuôn mẫu ràng buộc cụ thể. Mỗi mục có thể được coi là chiếm một vị trí trong lưới hoặc chuỗi và mục tiêu là xây dựng một sự sắp xếp hợp lệ thỏa mãn một tập hợp các quy tắc kề được ngụ ý bởi cấu trúc đầu vào. 
@@ -53,7 +53,7 @@ Do đó, thay vì tìm kiếm trên tất cả các hoán vị, chúng tôi xây
 
 1. Xây dựng biểu đồ trong đó mỗi mục là một nút và mỗi ràng buộc trở thành một cạnh vô hướng. Điều này mã hóa các yêu cầu liền kề trực tiếp vào cấu trúc chứ không phải là các quy tắc ngầm. 
 2. Tính cấp độ của từng nút. Các nút cấp 1 đại diện cho các điểm cuối của chuỗi, trong khi các nút cấp 2 nằm bên trong chuỗi hoặc chu trình. Sự phân loại này rất quan trọng để bắt đầu tái thiết một cách chính xác. 
-3. Đối với mỗi thành phần được kết nối, hãy chọn nút bắt đầu. Nếu nút cấp 1 tồn tại, hãy bắt đầu từ đó vì nó đảm bảo hướng tuyến tính tự nhiên. Nếu không, thành phần này sẽ tạo thành một chu trình và bất kỳ nút nào cũng có thể đóng vai trò là điểm bắt đầu. 
+3. Đối với mỗi thành phần được kết nối, hãy chọn một nút bắt đầu. Nếu nút cấp 1 tồn tại, hãy bắt đầu từ đó vì nó đảm bảo hướng tuyến tính tự nhiên. Nếu không, thành phần này sẽ tạo thành một chu trình và bất kỳ nút nào cũng có thể đóng vai trò là điểm bắt đầu. 
 4. Di chuyển ngang qua thành phần bằng một bước đi đơn giản luôn di chuyển đến một hàng xóm chưa được ghé thăm. Đánh dấu các nút là đã truy cập để tránh xem lại và đảm bảo mỗi nút xuất hiện chính xác một lần theo thứ tự đầu ra. 
 5. Nối các nút theo thứ tự chúng được truy cập trong quá trình truyền tải. Trình tự này trở thành sự sắp xếp được xây dựng lại cho thành phần đó. 
 6. Ghép nối tất cả các chuỗi thành phần để tạo ra sự sắp xếp cuối cùng. 
@@ -115,7 +115,7 @@ Mảng độ được tính ngay sau khi xây dựng đồ thị. Điều này �
 
 các`walk`hàm thực hiện truyền tải tuyến tính. Nó duy trì cả nút hiện tại và nút trước đó để tránh ngay lập tức lùi lại các cạnh vô hướng. Điều này tránh sự cần thiết của DFS dựa trên ngăn xếp đầy đủ trong khi vẫn tạo ra quá trình truyền tải giống như đường dẫn rõ ràng. Mảng đã truy cập đảm bảo rằng các chu trình được xử lý an toàn mà không có vòng lặp vô hạn. 
 
-Vòng lặp chính trước tiên xử lý tất cả các nút có mức độ tối đa là một, điều này đảm bảo rằng tất cả các thành phần tuyến tính được xử lý từ một điểm cuối tự nhiên. Các nút chưa được truy cập còn lại thuộc về các chu trình hoặc các thành phần bị ngắt kết nối không có điểm cuối và chúng sẽ được xử lý sau đó. 
+Vòng lặp chính trước tiên xử lý tất cả các nút có mức độ tối đa là một, điều này đảm bảo rằng tất cả các thành phần tuyến tính được xử lý từ một điểm cuối tự nhiên. Các nút chưa được truy cập còn lại thuộc về các chu trình hoặc các thành phần bị ngắt kết nối không có điểm cuối và chúng được xử lý sau đó. 
 
 ## Ví dụ đã hoạt động 
 
@@ -136,7 +136,7 @@ Chúng tôi theo dõi quá trình truyền tải:
 
 ### Ví dụ 2 
 
-Hãy xem xét một chu kỳ 1 - 2 - 3 - 4 - 1. 
+Xét chu kỳ 1 - 2 - 3 - 4 - 1. 
 
 | Bước | Hiện tại | Trước | Đã truy cập | Đầu ra | 
 | --- | --- | --- | --- | --- | 
@@ -221,8 +221,8 @@ assert True
 
 ## Vỏ cạnh 
 
-Một trường hợp cạnh quan trọng là khi đồ thị bao gồm toàn bộ một chu trình. Trong tình huống đó, không có nút nào có cấp độ 1, do đó thuật toán sẽ quay trở lại vòng lặp thứ hai xử lý các nút chưa được truy cập một cách chính xác. Bắt đầu từ bất kỳ nút nào, quá trình truyền tải tiếp tục tiến về phía trước cho đến khi nó quay trở lại nút đã truy cập, đảm bảo kết thúc mà không quay lại điểm bắt đầu không chính xác. 
+Một trường hợp cạnh quan trọng là khi đồ thị bao gồm toàn bộ một chu trình. Trong tình huống đó, không có nút nào có mức độ 1, do đó thuật toán sẽ quay trở lại vòng lặp thứ hai xử lý các nút chưa được truy cập một cách chính xác. Bắt đầu từ bất kỳ nút nào, quá trình truyền tải tiếp tục tiến về phía trước cho đến khi nó quay trở lại nút đã truy cập, đảm bảo kết thúc mà không quay lại điểm bắt đầu không chính xác. 
 
-Một trường hợp khác là một tập hợp các nút bị cô lập bị ngắt kết nối hoàn toàn. Mỗi nút có độ 0, vì vậy mỗi nút được coi là một thành phần tầm thường. Việc truyền tải truy cập từng nút một cách độc lập, tạo ra bất kỳ thứ tự nào, hợp lệ vì không có ràng buộc nào tồn tại giữa các nút. 
+Một trường hợp khác là tập hợp các nút bị cô lập bị ngắt kết nối hoàn toàn. Mỗi nút có độ 0, vì vậy mỗi nút được coi là một thành phần tầm thường. Việc truyền tải truy cập từng nút một cách độc lập, tạo ra bất kỳ thứ tự nào, hợp lệ vì không có ràng buộc nào tồn tại giữa các nút. 
 
-Trường hợp tinh vi cuối cùng xảy ra khi có nhiều thành phần tồn tại, một số chuỗi và một số chu kỳ. Thứ tự giữa các thành phần không bị hạn chế, do đó, thuật toán xử lý tất cả các điểm cuối của chuỗi trước rồi mới quay vòng, đảm bảo phạm vi bao phủ đầy đủ mà không thiếu các nút hoặc số lượt truy cập trùng lặp.
+Trường hợp tinh tế cuối cùng xảy ra khi có nhiều thành phần tồn tại, một số chuỗi và một số chu kỳ. Thứ tự giữa các thành phần không bị hạn chế, do đó, thuật toán xử lý tất cả các điểm cuối của chuỗi trước rồi mới quay vòng, đảm bảo phạm vi bao phủ đầy đủ mà không bỏ sót nút hoặc trùng lặp lượt truy cập.
