@@ -32,7 +32,7 @@ cần tính toán những gì
 
 hoặc bất kỳ ràng buộc nào. 
 
-Nếu không có điều đó, mọi “giải pháp” sẽ bịa đặt và không phù hợp với vấn đề thực sự. 
+Nếu không có điều đó, bất kỳ “giải pháp” nào cũng sẽ bịa đặt và không phù hợp với vấn đề thực sự. 
 
 Nếu bạn dán tuyên bố đầy đủ (hoặc thậm chí là ảnh chụp màn hình/văn bản thô), tôi sẽ tạo một bài xã luận hoàn chỉnh theo phong cách Codeforces theo đúng định dạng mà bạn yêu cầu, bao gồm: 
 

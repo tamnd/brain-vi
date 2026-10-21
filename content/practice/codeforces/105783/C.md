@@ -38,7 +38,7 @@ Một trường hợp thất bại khó phát hiện phổ biến là giả sử
 
 ## Phương pháp tiếp cận 
 
-Chiến lược bạo lực sẽ coi mọi chuỗi hộp được chọn có thể có là một đường dẫn. Từ bất kỳ hộp hiện tại nào, chúng ta có thể di chuyển đến bất kỳ hộp nào khác, kiểm tra xem nó có thỏa mãn điều kiện kẹo tăng nghiêm ngặt và ràng buộc màu sắc khác nhau hay không, rồi tiếp tục đệ quy cho đến khi đạt được ít nhất k kẹo. Cách tiếp cận này đúng vì nó tuân thủ trực tiếp các quy tắc của quy trình. Tuy nhiên, không gian trạng thái của nó là rất lớn. Ngay cả khi chúng ta chỉ xem xét các chuỗi có độ dài lên tới n, số lượng hoán vị là giai thừa theo n và mỗi chuyển đổi yêu cầu kiểm tra các ràng buộc, khiến nó hoàn toàn không khả thi. 
+Chiến lược bạo lực sẽ coi mọi chuỗi hộp được chọn có thể có là một đường dẫn. Từ bất kỳ hộp hiện tại nào, chúng ta có thể di chuyển đến bất kỳ hộp nào khác, kiểm tra xem nó có thỏa mãn điều kiện kẹo tăng nghiêm ngặt và ràng buộc màu sắc khác nhau hay không, rồi tiếp tục đệ quy cho đến khi đạt được ít nhất k kẹo. Cách tiếp cận này đúng vì nó tuân thủ trực tiếp các quy tắc của quy trình. Tuy nhiên, không gian trạng thái của nó là rất lớn. Ngay cả khi chúng ta chỉ xem xét các chuỗi có độ dài lên đến n, số hoán vị là giai thừa theo n và mỗi chuyển đổi yêu cầu kiểm tra các ràng buộc, khiến nó hoàn toàn không khả thi. 
 
 Quan sát quan trọng là khi chúng ta quyết định thứ tự các hộp mà chúng ta sẽ ăn, chi phí di chuyển chỉ phụ thuộc vào vị trí của các hộp được chọn liên tiếp và tính hợp lệ của quá trình chuyển đổi chỉ phụ thuộc vào thuộc tính cục bộ của hai hộp đó. Điều này biến vấn đề thành việc chọn một chuỗi các chỉ số có trọng số giữa các phần tử liên tiếp và một ràng buộc đơn điệu về các giá trị. 
 
@@ -194,4 +194,4 @@ Trường hợp cạnh khóa là khi vị trí bắt đầu đã nằm trên h�
 
 Một trường hợp khác là khi nhiều hộp có giá trị kẹo bằng nhau. Yêu cầu bất bình đẳng nghiêm ngặt có nghĩa là việc chuyển đổi giữa chúng bị cấm ngay cả khi màu sắc khác nhau. Việc triển khai đơn giản chỉ kiểm tra màu sắc sẽ cho phép các chuỗi không hợp lệ không chính xác. 
 
-Một trường hợp khó phát hiện cuối cùng là khi các giải pháp tối ưu yêu cầu bỏ qua các ô gần đó để chuyển sang các ô ở xa. DP xử lý chính xác vấn đề này vì nó khám phá tất cả các chuyển đổi bất kể khoảng cách, đảm bảo rằng không có giả định địa phương tham lam nào hạn chế không gian tìm kiếm.
+Một trường hợp khó phát hiện cuối cùng là khi các giải pháp tối ưu yêu cầu bỏ qua các ô gần đó để chuyển sang các ô ở xa. DP xử lý chính xác điều này vì nó khám phá tất cả các chuyển đổi bất kể khoảng cách, đảm bảo rằng không có giả định địa phương tham lam nào hạn chế không gian tìm kiếm.

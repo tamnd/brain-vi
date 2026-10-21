@@ -1,6 +1,6 @@
 ---
 title: "CF 105782J - Hoa đa chiều"
-description: "Chúng ta được cung cấp một hệ thống trong đó một “bông hoa” bắt đầu ở điểm gốc trong lưới số nguyên có chiều $d$. Thời gian tiến triển theo từng bước riêng biệt và ở mỗi bước bông hoa mở rộng hình dạng của nó bằng cách di chuyển một đơn vị dọc theo chính xác một trong các trục tọa độ."
+description: "Chúng ta được cung cấp một hệ thống trong đó một “bông hoa” bắt đầu ở gốc trong lưới số nguyên có chiều $d$. Thời gian tiến triển theo từng bước riêng biệt và ở mỗi bước bông hoa mở rộng hình dạng của nó bằng cách di chuyển một đơn vị dọc theo chính xác một trong các trục tọa độ."
 date: "2026-06-25T15:52:40+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
@@ -131,7 +131,7 @@ Kết quả là 216 modulo$998244353$.
 | Thời gian |$O(\log t)$| Tính lũy thừa nhanh làm giảm phép nhân lặp lại thành các bước logarit | 
 | Không gian |$O(1)$| Chỉ sử dụng một số biến cố định | 
 
-Những hạn chế$d, t \le 2 \cdot 10^5$thực hiện điều này đủ nhanh, vì lũy thừa logarit về cơ bản là thời gian không đổi ở thang đo này. 
+Những hạn chế$d, t \le 2 \cdot 10^5$thực hiện việc này đủ nhanh một cách dễ dàng, vì lũy thừa logarit về cơ bản là thời gian không đổi ở thang đo này. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io
@@ -174,4 +174,4 @@ cho$t = 0$, thuật toán tính toán$(2d)^0 = 1$, phù hợp với sự tiến 
 
 Vì$d = 1$, cơ số trở thành 2, nên đáp án là$2^t$. Điều này tương ứng với một trục đơn với hai lựa chọn hướng cho mỗi bước và quá trình tính toán vẫn ổn định mà không cần có khung đặc biệt. 
 
-Đối với các giá trị lớn như$d = t = 2 \cdot 10^5$, lũy thừa mô-đun đảm bảo tính toán nằm trong thời gian logarit. Thuật toán không bao giờ xây dựng các giá trị trung gian ngoài mô-đun, do đó tránh được tình trạng tràn xuyên suốt.
+Đối với các giá trị lớn như$d = t = 2 \cdot 10^5$, lũy thừa mô-đun đảm bảo tính toán nằm trong thời gian logarit. Thuật toán không bao giờ xây dựng các giá trị trung gian ngoài mô đun, do đó tránh được tình trạng tràn xuyên suốt.

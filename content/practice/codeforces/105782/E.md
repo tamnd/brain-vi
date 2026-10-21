@@ -26,7 +26,7 @@ draft: false
 
 Chúng ta được cung cấp một hệ thống tiến hóa trên một mạng lưới các ô trong đó mỗi ô có thể chứa hoặc không chứa một bông hoa. Theo thời gian, hai loại hành động được áp dụng: một ô có thể biến thành ô hoa và có thể thêm kết nối giữa hai ô. Các kết nối này hoạt động giống như các cạnh bổ sung giữa các ô bên cạnh tính liền kề tiềm ẩn của chính lưới. 
 
-Tại bất kỳ thời điểm nào, chúng ta chỉ xem xét các tế bào hoa và mối liên hệ giữa chúng. Hai tế bào hoa thuộc cùng một nhóm nếu chúng có thể tiếp cận được với nhau bằng cách di chuyển qua mạng lưới liền kề hoặc kết nối ngầm. Mỗi nhóm như vậy đóng góp một “chi phí năng lượng” dựa trên quy mô của nhóm và mức độ kết nối nội bộ của nhóm đó. 
+Tại bất kỳ thời điểm nào, chúng ta chỉ xem xét các tế bào hoa và mối liên hệ giữa chúng. Hai tế bào hoa thuộc cùng một nhóm nếu chúng có thể tiếp cận được với nhau bằng cách di chuyển qua mạng lưới liền kề hoặc kết nối ngầm. Mỗi nhóm như vậy đóng góp một “chi phí năng lượng” dựa trên quy mô của nó và mức độ kết nối nội bộ của nó. 
 
 Đối với một nhóm, nếu nó chứa$f$tế bào hoa và$c$kết nối hợp lệ giữa các tế bào hoa bên trong nhóm đó, sự đóng góp của nó được xác định là$\max(f - \sqrt{c}, 0)$. Tổng năng lượng là tổng của giá trị này trên tất cả các nhóm sau mỗi lần cập nhật. 
 
@@ -34,7 +34,7 @@ Tại bất kỳ thời điểm nào, chúng ta chỉ xem xét các tế bào ho
 
 Các ràng buộc ngụ ý một số lượng nhỏ các bản cập nhật, lên tới khoảng một nghìn, trên một lưới có kích thước tối đa là một trăm x một trăm. Điều đó đã gợi ý rằng chúng ta không cần bất cứ thứ gì như xử lý ngoại tuyến nặng nề hoặc kết nối động nâng cao. Một cấu trúc với các liên kết có thời gian gần như không đổi là đủ. 
 
-Một cách tiếp cận đơn giản sẽ tính toán lại tất cả các thành phần được kết nối sau mỗi truy vấn bằng cách sử dụng BFS hoặc DFS đầy đủ trên lưới và tất cả các kết nối. Cái đó đã tốn rồi$O(n^2)$cho mỗi truy vấn chỉ để duyệt qua lưới và vì mỗi thành phần cũng sẽ yêu cầu đếm các cạnh nên tổng công việc trở nên gần như$O(d \cdot n^2)$, có thể chấp nhận được tại$n \le 100$, nhưng chỉ khi được thực hiện cẩn thận. Tuy nhiên, việc tính toán lại các cạnh một cách chính xác và quét liên tục tất cả các cặp nút và kết nối là việc lặp đi lặp lại một cách không cần thiết. 
+Một cách tiếp cận đơn giản sẽ tính toán lại tất cả các thành phần được kết nối sau mỗi truy vấn bằng cách sử dụng BFS hoặc DFS đầy đủ trên lưới và tất cả các kết nối. Cái đó đã tốn rồi$O(n^2)$cho mỗi truy vấn chỉ để duyệt qua lưới và vì mỗi thành phần cũng sẽ yêu cầu đếm các cạnh nên tổng công việc sẽ trở nên gần như$O(d \cdot n^2)$, có thể chấp nhận được tại$n \le 100$, nhưng chỉ khi được thực hiện cẩn thận. Tuy nhiên, việc tính toán lại các cạnh một cách chính xác và quét liên tục tất cả các cặp nút và kết nối là việc lặp đi lặp lại một cách không cần thiết. 
 
 Một vấn đề tinh tế hơn xuất hiện trong cách tính các cạnh. Một lỗi phổ biến là tính toán các cạnh của lưới hoặc cạnh ngầm một cách không nhất quán. Một cách khác là đếm gấp đôi các cạnh hoặc bao gồm các cạnh chạm vào các ô không hoạt động. Ví dụ: nếu một kết nối được thêm vào giữa ô hiện hoạt và ô không hoạt động, kết nối đó sẽ không ảnh hưởng đến cấu trúc thành phần hiện tại cho đến khi ô không hoạt động chuyển sang hoạt động. 
 
@@ -181,9 +181,9 @@ for _ in range(d):
     print(f"{answer:.10f}")
 ```DSU duy trì cả số liệu thống kê về kết nối và thành phần. Chi tiết triển khai chính là mỗi khi một thành phần được sửa đổi, đóng góp trước đó của nó sẽ bị xóa trước khi cập nhật và được thêm lại sau khi hợp nhất. Điều này ngăn chặn việc đếm hai lần khi các thành phần thay đổi kích thước hoặc cấu trúc. 
 
-Tính lân cận của lưới được xử lý hoàn toàn trong quá trình kích hoạt, trong khi các kết nối ngầm chỉ được lưu trữ và áp dụng khi cả hai điểm cuối đều hoạt động. 
+Tính lân cận của lưới được xử lý hoàn toàn trong quá trình kích hoạt, trong khi các kết nối ngầm chỉ được lưu trữ và áp dụng khi cả hai điểm cuối đều hoạt động.
 
-## Ví dụ đã hoạt động 
+ ## Ví dụ đã hoạt động 
 
 Hãy xem xét một trường hợp nhỏ trong đó một$2 \times 2$lưới bắt đầu bằng một ô hiện hoạt và sau đó dần dần có được các kết nối. 
 
