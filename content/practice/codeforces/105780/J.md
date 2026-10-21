@@ -56,11 +56,11 @@ Input:
 
 Output:
 126
-```Một tọa độ được sử dụng hai lần chỉ có hai lịch sử hướng có thể chứ không phải bốn. Khi dấu hiệu đầu tiên được chọn, tất cả các bước di chuyển trong tương lai trên tọa độ đó sẽ bị buộc phải thực hiện. 
+```Tọa độ được sử dụng hai lần chỉ có hai lịch sử hướng có thể chứ không phải bốn. Khi dấu hiệu đầu tiên được chọn, tất cả các bước di chuyển trong tương lai trên tọa độ đó sẽ bị buộc phải thực hiện. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận trực tiếp sẽ cố gắng mô phỏng tất cả các lịch sử tăng trưởng có thể có. Tại mỗi giây ban đầu có`2d`các lựa chọn, và mặc dù số lượng các lựa chọn có sẵn giảm đi một chút khi tọa độ cố định, số lượng các lịch sử có thể có vẫn tăng theo cấp số nhân. Vì`t`giây, điều này gần như theo thứ tự`(2d)^t`, làm cho nó không thể sử dụng được ngay cả đối với đầu vào rất nhỏ. 
+Cách tiếp cận trực tiếp sẽ cố gắng mô phỏng tất cả các lịch sử tăng trưởng có thể có. Tại mỗi giây ban đầu có`2d`các lựa chọn, và mặc dù số lượng các lựa chọn có sẵn giảm đi một chút khi tọa độ cố định, số lượng các lịch sử có thể có vẫn tăng theo cấp số nhân. Vì`t`giây này đại khái là theo thứ tự`(2d)^t`, làm cho nó không thể sử dụng được ngay cả đối với đầu vào rất nhỏ. 
 
 Quan sát hữu ích đến từ việc tách biệt các lựa chọn được thực hiện trên mỗi tọa độ. Giả sử một tọa độ cụ thể được chọn chính xác`k`lần trong toàn bộ quá trình. Nếu như`k = 0`, có một hành vi có thể xảy ra: tọa độ không bao giờ được chạm vào. Nếu như`k > 0`, có chính xác hai hành vi có thể xảy ra: tất cả các bước đi đã chọn đều đi theo hướng tích cực hoặc tất cả các bước đi đã chọn đều đi theo hướng tiêu cực. 
 
@@ -130,11 +130,11 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Mảng giai thừa cho phép tính mọi hệ số nhị thức trong thời gian không đổi.`inv_fact`được xây dựng bằng định lý nhỏ Fermat vì môđun là số nguyên tố. 
+```Mảng giai thừa cho phép tính toán mọi hệ số nhị thức trong thời gian không đổi.`inv_fact`được xây dựng bằng định lý nhỏ Fermat vì môđun là số nguyên tố. 
 
 Vòng lặp tuân theo công thức trực tiếp.`pow_two`cửa hàng`2^i`tăng dần, tránh tính lũy thừa lặp lại. giá trị`pow(i, t, MOD)`xử lý số mũ lớn một cách hiệu quả bằng cách sử dụng lũy ​​thừa nhị phân mô-đun. 
 
-Vụ án`i = 0`được xử lý một cách tự nhiên. Vì những ràng buộc có`t >= 1`,`0^t`là`0`, vì vậy thuật ngữ đó không đóng góp gì cả. Không cần phải có trường hợp đặc biệt. 
+Vụ án`i = 0`được xử lý một cách tự nhiên. Vì những hạn chế có`t >= 1`,`0^t`là`0`, vì vậy thuật ngữ đó không đóng góp gì cả. Không cần phải có trường hợp đặc biệt. 
 
 Tất cả các phép cộng đều được giảm modulo`MOD`sau mỗi lần lặp. Số nguyên Python không bị tràn, nhưng việc giữ giá trị ở mức giảm sẽ tránh sự tăng trưởng không cần thiết và giữ cho việc triển khai gần với công thức toán học. 
 
@@ -146,7 +146,7 @@ Tất cả các phép cộng đều được giảm modulo`MOD`sau mỗi lần l
 2 1
 ```Vòng lặp xem xét việc chọn không, một hoặc hai chiều khi khai triển. 
 
-| tôi | C(d, i) | 2^i | nó^t | Đóng góp | 
+| tôi | C(d, i) | 2^i | nó ^ t | Đóng góp | 
 | --- | --- | --- | --- | --- | 
 | 0 | 1 | 1 | 0 | 0 | 
 | 1 | 2 | 2 | 1 | 4 | 
@@ -154,7 +154,7 @@ Tất cả các phép cộng đều được giảm modulo`MOD`sau mỗi lần l
 
 Các dấu hiệu được áp dụng bằng cách sử dụng`(-1)^(d-i)`: 
 
-| tôi | Đã ký đóng góp | 
+| tôi | Đóng góp đã ký | 
 | --- | --- | 
 | 0 | 0 | 
 | 1 | -4 | 
@@ -168,7 +168,7 @@ Kết quả là`4`.
 
 đầu vào:```
 3 3
-```| tôi | C(3, i) | 2^i | tôi^3 | Đã ký đóng góp | 
+```| tôi | C(3, i) | 2^i | tôi^3 | Đóng góp đã ký | 
 | --- | --- | --- | --- | --- | 
 | 0 | 1 | 1 | 0 | 0 | 
 | 1 | 3 | 2 | 1 | 6 | 
@@ -256,4 +256,4 @@ Vì:```
 
 Đối với một đầu vào lớn như:```
 12345 67890
-```thuật toán không bao giờ xây dựng đường dẫn hoặc trạng thái. Nó chỉ thực hiện tuyến tính vượt qua các kích thước, đó là lý do tại sao nó vẫn khả thi mặc dù có rất nhiều lịch sử phát triển có thể có.
+```thuật toán không bao giờ xây dựng đường dẫn hoặc trạng thái. Nó chỉ thực hiện tuyến tính vượt qua các kích thước, đó là lý do tại sao nó vẫn khả thi mặc dù có rất nhiều lịch sử tăng trưởng có thể có.

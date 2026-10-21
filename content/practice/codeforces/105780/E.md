@@ -67,10 +67,10 @@ Giải pháp kết nối động tiên tiến hơn sẽ duy trì các thành ph�
 ## Hướng dẫn thuật toán 
 
 1. Lưu trữ xem mỗi ô hiện có một bông hoa hay không và lưu trữ mọi kết nối ngầm đã được thêm vào. Các thao tác chỉ mang tính chất bổ sung nên chúng ta không bao giờ cần loại bỏ thông tin. 
-2. Sau mỗi truy vấn, hãy tạo một cấu trúc hợp tập rời rạc mới chứa tất cả`n * n`tế bào. Ban đầu mỗi tế bào là riêng biệt. Chúng tôi xây dựng lại vì tổng kích thước của lưới nhỏ. 
-3. Nối từng cặp ô liền kề theo chiều ngang hoặc chiều dọc. Điều này thể hiện kết nối lưới bình thường. Lý do chúng tôi bao gồm tất cả các ô, kể cả ô đất, là vì một bông hoa trong tương lai có thể xuất hiện trên bất kỳ ô nào và khả năng kết nối ngầm hoặc lưới là một thuộc tính của chính các ô đó. 
+2. Sau mỗi truy vấn, hãy tạo một cấu trúc hợp tập hợp rời rạc mới chứa tất cả`n * n`tế bào. Ban đầu mỗi tế bào là riêng biệt. Chúng tôi xây dựng lại vì tổng kích thước của lưới nhỏ. 
+3. Nối từng cặp ô liền kề theo chiều ngang hoặc chiều dọc. Điều này thể hiện kết nối lưới bình thường. Lý do chúng tôi bao gồm tất cả các ô, kể cả ô đất, là vì một bông hoa trong tương lai có thể xuất hiện trên bất kỳ ô nào và khả năng kết nối ngầm hoặc lưới là một đặc tính của chính các ô đó. 
 4. Tham gia cả hai điểm cuối của mọi kết nối ngầm. Điều này bổ sung thêm các đường dẫn bổ sung được tạo bởi hoạt động của Karp. 
-5. Đi qua từng ô và đếm số lượng ô hoa bên trong mỗi thành phần DSU. Chỉ có tế bào hoa góp phần vào`f`. 
+5. Đi qua từng ô và đếm số lượng ô hoa bên trong mỗi thành phần DSU. Chỉ có tế bào hoa mới góp phần`f`. 
 6. Đi qua mọi kết nối ngầm và đếm nó bên trong thành phần của nó. Bởi vì mọi cạnh ngầm đã được hợp nhất vào DSU nên cả hai điểm cuối đều có cùng một đại diện, do đó mỗi cạnh thuộc về chính xác một chồi. 
 7. Đối với mỗi thành phần có chứa hoa, hãy thêm`max(f - sqrt(c), 0)`để trả lời. In năng lượng thu được. 
 
@@ -280,13 +280,13 @@ assert run("""3 1
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
 | Cắm hoa đơn | 1.0000000000 | Cập nhật hoa lặp đi lặp lại hoặc đơn giản | 
-| Đường hầm trước nhiều hoa | 0,0000000000 thì giá trị lớn hơn | Kết nối thông qua tế bào để sau này thu được hoa | 
+| Đường hầm trước nhiều hoa | 0,0000000000 thì giá trị lớn hơn | Kết nối qua tế bào để sau này thu được hoa | 
 | Lưới hoa đầy đủ | Giảm năng lượng sau một đường hầm | Đếm đường hầm riêng biệt với hoa | 
 | Lưới trống có đường hầm | 0 | Bỏ qua các thành phần không có hoa | 
 
 ## Vỏ cạnh 
 
-Việc cắm hoa lặp đi lặp lại không tạo ra bông hoa mới. Trong đầu vào```
+Việc cắm hoa lặp đi lặp lại không tạo ra một bông hoa mới. Trong đầu vào```
 2 1
 10
 00

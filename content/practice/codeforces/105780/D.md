@@ -34,4 +34,4 @@ Khi đã có nó, tôi sẽ viết một bài xã luận phù hợp về lập t
 - Phương pháp triển khai rõ ràng (kiểu C++ nếu bạn muốn) 
 - Trường hợp cạnh + cạm bẫy thường gặp 
 
-Nếu bạn cũng muốn có một phong cách cụ thể (ví dụ: phong cách biên tập blog Codeforces, thân thiện với người mới bắt đầu hoặc phong cách cuộc thi ngắn gọn), hãy cho tôi biết.
+Nếu bạn cũng muốn có một phong cách cụ thể (ví dụ: phong cách biên tập blog Codeforces, thân thiện với người mới bắt đầu hoặc phong cách thi đấu ngắn gọn), hãy cho tôi biết.

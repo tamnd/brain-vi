@@ -1,6 +1,6 @@
 ---
 title: "CF 105780F - X Đánh Dấu Cái Nồi"
-description: "Tôi chưa thể đưa ra một bài xã luận chính xác vì tuyên bố thực tế dành cho Codeforces 105780F - “X Marks the Pot” bị thiếu trong lời nhắc của bạn. Hiện tại không có mô tả nào về lưới/mảng/đầu vào đại diện cho điều gì, vì vậy mọi “giải pháp” đều chỉ là phỏng đoán và có thể không chính xác."
+description: "Tôi chưa thể đưa ra một bài xã luận chính xác vì tuyên bố thực tế dành cho Codeforces 105780F - “X Marks the Pot” bị thiếu trong lời nhắc của bạn. Hiện tại không có mô tả nào về lưới/mảng/đầu vào đại diện cho điều gì, vì vậy mọi “giải pháp” sẽ chỉ là phỏng đoán và có thể không chính xác."
 date: "2026-06-25T15:53:54+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
@@ -22,7 +22,7 @@ draft: false
 **Đã xác minh:** không 
 
 ##Giải pháp 
-Tôi chưa thể đưa ra một bài xã luận chính xác vì tuyên bố thực tế về **Codeforces 105780F - “X Marks the Pot”** bị thiếu trong lời nhắc của bạn. Hiện tại không có mô tả nào về lưới/mảng/đầu vào đại diện cho điều gì, vì vậy mọi “giải pháp” đều chỉ là phỏng đoán và có thể không chính xác. 
+Tôi chưa thể đưa ra một bài xã luận chính xác vì tuyên bố thực tế về **Codeforces 105780F - “X Marks the Pot”** bị thiếu trong lời nhắc của bạn. Hiện tại không có mô tả nào về lưới/mảng/đầu vào đại diện cho điều gì, vì vậy mọi “giải pháp” sẽ chỉ là phỏng đoán và có thể không chính xác. 
 
 Để viết loại bài xã luận mà bạn đang yêu cầu (đạo hàm, bất biến, dấu vết đã làm việc, mã đầy đủ), tôi cần ít nhất một trong những điều sau: 
 
