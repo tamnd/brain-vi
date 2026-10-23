@@ -40,7 +40,7 @@ Một cách tiếp cận ngây thơ sẽ cố gắng kết nối một cách tha
 
 ## Phương pháp tiếp cận 
 
-Nỗ lực tự nhiên đầu tiên là quan sát rằng chỉ có tính chẵn lẻ của mỗi đỉnh mới quan trọng. Người ta có thể tính tất cả các đỉnh có bậc lẻ, rồi cố gắng sửa chúng một cách tham lam: liên tục chọn hai đỉnh lẻ và nối chúng lại. Điều này có vẻ đúng vì mỗi cạnh được thêm vào sẽ lật tính chẵn lẻ của cả hai điểm cuối. 
+Nỗ lực tự nhiên đầu tiên là quan sát rằng chỉ tính chẵn lẻ của mỗi đỉnh mới quan trọng. Người ta có thể tính tất cả các đỉnh có bậc lẻ, rồi cố gắng sửa chúng một cách tham lam: liên tục chọn hai đỉnh lẻ và nối chúng lại. Điều này có vẻ đúng vì mỗi cạnh được thêm vào sẽ lật tính chẵn lẻ của cả hai điểm cuối. 
 
 Việc ghép đôi tham lam này đã gần đạt đến mức tối ưu, nhưng câu hỏi thực sự là liệu chúng ta có cần phải làm điều gì đó phức tạp hơn việc ghép các đỉnh một cách tùy ý hay không. Tư duy vũ phu sẽ là tìm kiếm trên tất cả các cách có thể để thêm cạnh và xác minh điều kiện, nhưng điều đó nhanh chóng trở thành cấp số nhân vì mỗi lựa chọn cạnh thay đổi hai giá trị chẵn lẻ và không gian tìm kiếm tăng lên theo tổ hợp với số đỉnh lẻ. 
 
@@ -61,12 +61,12 @@ Chúng tôi xử lý biểu đồ và chỉ làm việc với mức độ tươn
 
 1. Tính bậc của mỗi đỉnh bằng cách lặp qua tất cả các cạnh và tăng dần cả hai điểm cuối. Các vòng lặp tự đóng góp 2 vào cùng một đỉnh, điều này không ảnh hưởng đến tính chẵn lẻ, nhưng chúng tôi vẫn tính chúng trong tính toán mức độ. 
 2. Tập hợp tất cả các đỉnh có bậc lẻ vào danh sách. Danh sách này thể hiện chính xác sự mất cân bằng trong biểu đồ. 
-3. Nếu danh sách trống, đồ thị đã thỏa mãn điều kiện và không cần thêm cạnh nào. 
+3. Nếu danh sách trống, biểu đồ đã thỏa mãn điều kiện và không cần thêm cạnh nào. 
 4. Nếu độ dài danh sách là số lẻ, hãy lấy một đỉnh từ nó và kết nối nó với chính nó bằng vòng tự lặp. Điều này loại bỏ đỉnh đó khỏi danh sách lẻ về mặt khái niệm vì tính chẵn lẻ của nó tăng 0 mod 2 khi tính độ sau khi thêm 2. 
 5. Bây giờ tất cả các đỉnh còn lại trong danh sách đều có số chẵn. Ghép nối chúng một cách tuần tự: lấy các đỉnh theo thứ tự hai cùng một lúc và nối mỗi cặp với một cạnh mới. 
-6. Output all constructed edges.
+6. Xuất ra tất cả các cạnh được xây dựng. 
 
- Lý do đằng sau việc ghép nối tuần tự là bất kỳ ghép nối nào cũng hợp lệ vì mỗi cạnh độc lập cố định chính xác hai đỉnh lẻ và không ảnh hưởng đến các đỉnh khác. 
+Lý do đằng sau việc ghép nối tuần tự là bất kỳ ghép nối nào cũng hợp lệ vì mỗi cạnh độc lập cố định chính xác hai đỉnh lẻ và không ảnh hưởng đến các đỉnh khác. 
 
 ### Tại sao nó hoạt động 
 
@@ -136,7 +136,7 @@ Các đỉnh lẻ là [1, 3].
 Đầu ra:```
 1
 1 3
-```Điều này cho thấy rằng chỉ cần thêm một cạnh là đủ khi có đúng hai đỉnh là số lẻ. 
+```Điều này chứng tỏ rằng chỉ cần thêm một cạnh là đủ khi có đúng hai đỉnh lẻ. 
 
 ### Ví dụ 2 
 
@@ -156,7 +156,7 @@ Các đỉnh lẻ là [1, 2].
 Đầu ra:```
 1
 1 2
-```Điều này chứng tỏ rằng các đỉnh cô lập được xử lý một cách tự nhiên vì độ 0 là số chẵn và không nằm trong danh sách số lẻ. 
+```Điều này chứng tỏ rằng các đỉnh cô lập được xử lý một cách tự nhiên vì độ 0 là số chẵn và không nằm trong danh sách lẻ. 
 
 ## Phân tích độ phức tạp 
 
@@ -229,6 +229,6 @@ assert run("4 0\n") == "2\n1 2\n3 4"
 
 Một đồ thị có chính xác một đỉnh và không có cạnh nào cho thấy sự cần thiết của các vòng tự lặp. Độ bằng 0, vốn đã chẵn nên không cần thực hiện hành động nào. Thuật toán tạo ra một danh sách trống một cách chính xác vì danh sách lẻ trống. 
 
-Một đồ thị có chính xác một đỉnh có bậc lẻ sau khi xử lý yêu cầu xử lý đặc biệt. Ví dụ: nếu độ là [1, 0, 0] thì danh sách lẻ là [1]. Nếu không có bước tự lặp, thuật toán sẽ thất bại vì không có đỉnh đối tác. Vòng lặp tự giải quyết vấn đề này bằng cách thêm (1, 1), tăng độ lên 2 và duy trì tính chính xác của tính chẵn lẻ trong khi loại bỏ đơn lẻ. 
+Một biểu đồ trong đó có chính xác một đỉnh có bậc lẻ sau khi xử lý yêu cầu xử lý đặc biệt. Ví dụ: nếu độ là [1, 0, 0] thì danh sách lẻ là [1]. Nếu không có bước tự lặp, thuật toán sẽ thất bại vì không có đỉnh đối tác. Vòng lặp tự giải quyết vấn đề này bằng cách thêm (1, 1), tăng độ lên 2 và duy trì tính chính xác của tính chẵn lẻ trong khi loại bỏ đơn lẻ. 
 
-Một biểu đồ lớn có nhiều đỉnh lẻ xác nhận việc ghép nối tuyến tính. Vì mỗi cạnh lật tính chẵn lẻ ở đúng hai đỉnh nên việc ghép bất kỳ phân vùng nào của tập lẻ đều hợp lệ. Thuật toán không phụ thuộc vào cấu trúc mà chỉ phụ thuộc vào số chẵn lẻ, vì vậy nó vẫn đúng ngay cả khi các đỉnh lẻ được phân bổ tùy ý trên đồ thị.
+Một biểu đồ lớn có nhiều đỉnh lẻ xác nhận việc ghép nối tuyến tính. Vì mỗi cạnh lật tính chẵn lẻ ở đúng hai đỉnh nên việc ghép bất kỳ phân vùng nào của tập lẻ đều hợp lệ. Thuật toán không phụ thuộc vào cấu trúc mà chỉ phụ thuộc vào số chẵn lẻ nên nó vẫn đúng ngay cả khi các đỉnh lẻ được phân bố tùy ý trên đồ thị.

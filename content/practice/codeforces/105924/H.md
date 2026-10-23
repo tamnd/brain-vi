@@ -42,7 +42,7 @@ Giải thích trực tiếp là vấn đề về dòng chảy: mỗi nhóm là m
 
 Một giải pháp bạo lực sẽ cố gắng phân công mọi người một cách tham lam hoặc thậm chí xây dựng một mạng lưới toàn diện. Điều đó ngay lập tức dẫn đến một dòng chảy hai bên với$O(n^2)$các cạnh và có khả năng$O(n^3)$hoặc hành vi tệ hơn trong mỗi lần kiểm tra, tốc độ này quá chậm. 
 
-Quan sát quan trọng là điểm bất quy tắc duy nhất trong biểu đồ là một cạnh bị cấm duy nhất trên mỗi hàng và trên mỗi cột. Điều này làm cho cấu trúc gần như hoàn chỉnh có hai bên và các ràng buộc “gần như hoàn chỉnh” như vậy thường thừa nhận các giải pháp tham lam khi các nút được xử lý theo thứ tự tôn trọng khả năng chặt chẽ. 
+Quan sát quan trọng là điểm bất quy tắc duy nhất trong biểu đồ là một cạnh bị cấm duy nhất trên mỗi hàng và trên mỗi cột. Điều này làm cho cấu trúc gần như hoàn chỉnh có hai bên và các ràng buộc “gần như hoàn chỉnh” như vậy thường thừa nhận các giải pháp tham lam khi các nút được xử lý theo thứ tự tôn trọng khả năng hạn chế về năng lực. 
 
 Thay vì giải quyết trực tiếp dòng chảy, chúng tôi đảo ngược quan điểm: hãy nghĩ đến việc mỗi thành phố có “ngân sách năng lực” hạn chế$cap_i = \lfloor X / c_i \rfloor$. Chúng ta phải phân phối tất cả$b_i$giữa các thành phố để tổng lượng tiêu thụ của mỗi thành phố không vượt quá khả năng của thành phố đó, và nhóm$i$không thể đóng góp cho thành phố$a_i$. 
 
@@ -209,7 +209,7 @@ assert True
 
 ## Vỏ cạnh 
 
-Trường hợp nguy cấp xảy ra khi một thành phố có công suất cực kỳ nhỏ do có quá nhiều$c_i$, trong khi nhóm bị cấm của nó cũng là một trong những nhóm đóng góp lớn nhất. Trong tình huống đó, nếu không có nhóm nào khác có thể bù đắp đầy đủ thì quá trình tham lam sẽ thất bại ngay tại thành phố đó. Thuật toán phát hiện điều này vì trong quá trình xử lý, tất cả các nhóm tương thích đều cạn kiệt trước khi sức chứa của thành phố được lấp đầy, dẫn đến việc bị từ chối ngay lập tức. 
+Trường hợp nguy kịch xảy ra khi một thành phố có công suất cực kỳ nhỏ do có quá nhiều$c_i$, trong khi nhóm bị cấm của nó cũng là một trong những nhóm đóng góp lớn nhất. Trong tình huống đó, nếu không có nhóm nào khác có thể bù đắp đầy đủ thì quá trình tham lam sẽ thất bại ngay tại thành phố đó. Thuật toán phát hiện điều này vì trong quá trình xử lý, tất cả các nhóm tương thích đều cạn kiệt trước khi sức chứa của thành phố được lấp đầy, dẫn đến việc bị từ chối ngay lập tức. 
 
 Một trường hợp khác là khi tất cả chi phí đều bằng nhau. Khi đó năng lực chỉ phụ thuộc vào$X$và vấn đề giảm xuống mức khả thi thuần túy của việc phân phối tổng dưới các cạnh bị cấm. Trật tự tham lam vẫn có tác dụng vì tất cả các thành phố đều có mức độ ưu tiên tương đương và mọi thứ tự đều mang lại kết quả khả thi như nhau. 
 

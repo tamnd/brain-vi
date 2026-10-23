@@ -1,6 +1,6 @@
 ---
 title: "CF 105924D - \u4fdd\u536b\u841d\u535c"
-description: "Chúng ta có một thế giới một chiều hoạt động giống như một làn đường từ vị trí 0 đến điểm cuối lớn. Kẻ thù xuất hiện ở đầu bên trái vào những thời điểm cụ thể, mỗi kẻ thù có một giá trị máu ban đầu. Sau khi xuất hiện, mỗi kẻ địch sẽ di chuyển ngay một đơn vị mỗi giây."
+description: "Chúng ta có một thế giới một chiều hoạt động giống như một làn đường từ vị trí 0 đến điểm cuối lớn. Kẻ thù sinh ra ở đầu bên trái vào những thời điểm cụ thể, mỗi kẻ thù có một giá trị máu ban đầu. Sau khi sinh ra, mỗi kẻ địch sẽ di chuyển ngay một đơn vị mỗi giây."
 date: "2026-06-21T15:38:34+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
@@ -24,7 +24,7 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta có một thế giới một chiều hoạt động giống như một làn đường từ vị trí 0 đến điểm cuối lớn. Kẻ thù xuất hiện ở đầu bên trái vào những thời điểm cụ thể, mỗi kẻ thù có một giá trị máu ban đầu. Sau khi xuất hiện, mỗi kẻ địch sẽ di chuyển ngay một đơn vị mỗi giây. Đồng thời, một nhóm tháp liên tục tấn công kẻ thù dựa trên vị trí của chúng. 
+Chúng ta có một thế giới một chiều hoạt động giống như một làn đường từ vị trí 0 đến điểm cuối lớn. Kẻ thù sinh ra ở đầu bên trái vào những thời điểm cụ thể, mỗi kẻ thù có một giá trị máu ban đầu. Sau khi sinh ra, mỗi kẻ địch sẽ di chuyển ngay một đơn vị mỗi giây. Đồng thời, một nhóm tháp liên tục tấn công kẻ thù dựa trên vị trí của chúng. 
 
 Mỗi tháp bao phủ một khoảng cố định trên đường và có giá trị sát thương cố định. Trong mỗi giây, sau khi di chuyển xảy ra, mỗi tháp sẽ xem xét tất cả kẻ thù hiện còn sống trong khoảng thời gian của nó và chỉ tấn công kẻ thù ngoài cùng bên phải trong số chúng, trừ đi sát thương từ máu của kẻ thù đó. Nhiều tháp hoạt động đồng thời, do đó, nhiều kẻ thù có thể bị tấn công trong cùng một giây và một kẻ thù có thể bị nhiều tháp nhắm mục tiêu. 
 
@@ -175,9 +175,9 @@ for i, (t, b) in enumerate(arr):
         ans[i] = hp
 
 print("\n".join(map(str, ans)))
-```Cây phân đoạn được xây dựng dựa trên các quái vật được sắp xếp theo thời gian sinh sản của chúng, vì điều này tương ứng với thứ tự tương đối của chúng sau khi loại bỏ chuyển động đồng nhất. Mỗi nút lưu trữ ứng cử viên tốt nhất (thời gian sinh sản nhỏ nhất trong số các quái vật còn sống trong phân đoạn đó). Cập nhật đánh dấu quái vật sẽ bị loại bỏ sau khi chúng chết. 
+```Cây phân đoạn được xây dựng dựa trên các quái vật được sắp xếp theo thời gian sinh sản của chúng, vì điều này tương ứng với thứ tự tương đối của chúng sau khi loại bỏ chuyển động đồng nhất. Mỗi nút lưu trữ ứng cử viên tốt nhất (thời gian sinh sản nhỏ nhất trong số các quái vật còn sống trong phân khúc đó). Cập nhật đánh dấu quái vật sẽ bị loại bỏ sau khi chúng chết. 
 
-Vòng lặp bên trong giải quyết một "vòng tấn công" bằng cách kiểm tra mọi tháp, chuyển phạm vi của nó thành khoảng chỉ số theo thời gian xuất hiện và truy vấn cây phân đoạn để tìm quái vật đủ điều kiện ngoài cùng bên phải. Chúng tôi chọn đòn tấn công có tác động mạnh nhất trong số các tòa tháp và áp dụng nó nhiều lần cho đến khi quái vật chết hoặc không tòa tháp nào có thể tiếp cận được nó. 
+Vòng lặp bên trong giải quyết một "vòng tấn công" bằng cách kiểm tra mọi tháp, chuyển phạm vi của nó thành khoảng chỉ số theo thời gian xuất hiện và truy vấn cây phân đoạn để tìm quái vật đủ điều kiện ngoài cùng bên phải. Chúng tôi chọn đòn tấn công có tác động mạnh nhất trong số các tòa tháp và áp dụng nó nhiều lần cho đến khi quái vật chết hoặc không có tòa tháp nào có thể tiếp cận được nó. 
 
 Chi tiết triển khai quan trọng là việc chuyển đổi phạm vi không gian thành phạm vi chỉ số thời gian bằng cách sử dụng l = time - ri và r = time - li, thay thế chuyển động bằng lập chỉ mục tĩnh. 
 
@@ -271,6 +271,6 @@ assert run("""3 3
 
 Trường hợp một bên là khi không có tháp nào che được vị trí của quái vật sau khi biến hình. Trong trường hợp đó, truy vấn cây phân đoạn không trả về gì cho mỗi tháp và vòng lặp sẽ kết thúc ngay lập tức. Quái vật chỉ đơn giản là sống sót và chúng tôi cung cấp lượng máu còn lại của nó, điều này phù hợp với thực tế là không bao giờ có thiệt hại. 
 
-Một trường hợp khác là nhiều tháp đồng thời nhắm mục tiêu vào cùng một quái vật. Vì mỗi tháp truy vấn cây phân đoạn một cách độc lập nên tất cả chúng đều có thể phân giải thành cùng một chỉ mục trong một lần lặp. Thuật toán tích lũy sát thương một cách chính xác một cách tự nhiên bằng cách áp dụng các đóng góp của tháp theo trình tự trong cùng một bước và việc loại bỏ chỉ xảy ra khi lượng máu giảm xuống 0. 
+Một trường hợp khác là nhiều tháp đồng thời nhắm mục tiêu vào cùng một quái vật. Vì mỗi tháp truy vấn cây phân đoạn một cách độc lập nên tất cả chúng đều có thể phân giải thành cùng một chỉ mục trong một lần lặp. Thuật toán tích lũy sát thương một cách tự nhiên một cách chính xác bằng cách áp dụng các đóng góp của tháp theo trình tự trong cùng một bước và việc loại bỏ chỉ xảy ra khi máu giảm xuống 0. 
 
 Trường hợp lợi thế cuối cùng xảy ra khi một quái vật ở chính xác trong phạm vi của tháp sau khi biến đổi. Chuyển đổi ti ∈ [t - ri, t - li] bao gồm các điểm cuối một cách chính xác, do đó việc căn chỉnh ranh giới được giữ nguyên. Truy vấn cây phân đoạn bao gồm cả hai bên, do đó không xảy ra lỗi riêng lẻ nào trong việc lựa chọn phạm vi.

@@ -24,9 +24,9 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được cho một hoán vị có độ dài n và chúng ta được phép áp dụng tối đa k phép toán cục bộ. Mỗi hoạt động nhắm vào một cặp vị trí liền kề. Chúng ta hoán đổi hai phần tử, nhưng việc hoán đổi có tác dụng phụ đặc biệt: nếu phần tử bên trái trước khi hoán đổi nhỏ hơn phần tử bên phải thì phần tử bên trái đó sẽ bị xóa khỏi chuỗi sau khi hoán đổi. Mặt khác, nếu phần tử bên trái lớn hơn, hoán đổi là hoán đổi thuần túy và không có phần tử nào biến mất. 
+Chúng ta được cho một hoán vị có độ dài n và chúng ta được phép áp dụng tối đa k phép toán cục bộ. Mỗi hoạt động nhắm vào một cặp vị trí liền kề. Chúng ta hoán đổi hai phần tử, nhưng việc hoán đổi có một tác dụng phụ đặc biệt: nếu phần tử bên trái trước khi hoán đổi nhỏ hơn phần tử bên phải thì phần tử bên trái đó sẽ bị xóa khỏi chuỗi sau khi hoán đổi. Mặt khác, nếu phần tử bên trái lớn hơn, hoán đổi là hoán đổi thuần túy và không có phần tử nào biến mất. 
 
-Vì vậy, mỗi lần di chuyển chỉ sắp xếp lại hai hàng xóm hoặc cả hai sắp xếp lại chúng và xóa chính xác một giá trị, cụ thể là giá trị nhỏ hơn khi cặp tăng trước khi hoán đổi. 
+Vì vậy, mỗi lần di chuyển chỉ sắp xếp lại hai hàng xóm hoặc vừa sắp xếp lại chúng vừa xóa chính xác một giá trị, cụ thể là giá trị nhỏ hơn khi cặp này tăng trước khi hoán đổi. 
 
 Mục tiêu là áp dụng tối đa k thao tác như vậy sao cho chuỗi cuối cùng càng ngắn càng tốt. Trong số tất cả các chuỗi có độ dài tối thiểu có thể, chúng ta phải xuất ra chuỗi có độ dài nhỏ nhất về mặt từ điển. 
 
@@ -61,10 +61,10 @@ Lực lượng vũ phu hoạt động bằng cách mô phỏng rõ ràng các gi
 
 ## Hướng dẫn thuật toán 
 
-Chúng tôi xử lý hoán vị từ trái sang phải trong khi duy trì một ngăn xếp biểu thị tiền tố tốt nhất có thể hiện tại của câu trả lời cuối cùng. 
+Chúng tôi xử lý hoán vị từ trái sang phải trong khi duy trì một ngăn xếp biểu thị tiền tố tốt nhất có thể có hiện tại của câu trả lời cuối cùng. 
 
 1. Bắt đầu với một ngăn xếp trống và k thao tác khả dụng được hiểu là quỹ xóa. 
-2. Đối với mỗi phần tử x trong hoán vị, hãy thử chèn nó vào ngăn xếp trong khi vẫn giữ được cấu trúc tối ưu. Trước khi chèn x, hãy so sánh nó với phần tử cuối cùng trong ngăn xếp. Nếu phần tử cuối cùng nhỏ hơn x và chúng ta vẫn còn ngân sách k, hãy xóa phần tử cuối cùng thay vì giữ lại. Mỗi lần loại bỏ tương ứng với việc dành một thao tác để loại bỏ một phần tử có thể cải thiện cục bộ theo thứ tự từ điển. 
+2. Với mỗi phần tử x trong hoán vị, hãy cố gắng chèn nó vào ngăn xếp trong khi vẫn giữ được cấu trúc tối ưu. Trước khi chèn x, hãy so sánh nó với phần tử cuối cùng trong ngăn xếp. Nếu phần tử cuối cùng nhỏ hơn x và chúng ta vẫn còn ngân sách k, hãy xóa phần tử cuối cùng thay vì giữ lại. Mỗi lần loại bỏ tương ứng với việc dành một thao tác để loại bỏ một phần tử có thể cải thiện cục bộ theo thứ tự từ điển. 
 3. Lặp lại bước trước khi ngăn xếp không trống, k dương và phần tử cuối cùng của ngăn xếp nhỏ hơn x. Điều này đảm bảo rằng chúng tôi loại bỏ tất cả các phần tử nhỏ hơn hiện có hại và có thể làm xấu đi trật tự từ điển nếu được giữ lại. 
 4. Sau khi không còn việc xóa nào có ích nữa, hãy thêm x vào ngăn xếp. 
 5. Tiếp tục cho đến khi tất cả các phần tử được xử lý. 
@@ -115,7 +115,7 @@ if __name__ == "__main__":
 | 4 | [3] | không thể xóa (k=0) | 0 | [3,4] | 
 | 5 | [3,4] | không xóa | 0 | [3,4,5] | 
 
-Kết quả cuối cùng là`[3, 4, 5]`về mặt cấu trúc, nhưng do các lần xóa trước đó thu gọn tiền tố nên chúng tôi kết thúc bằng tiền tố rút gọn nhằm tối đa hóa số lần xóa theo ngân sách. 
+Kết quả cuối cùng là`[3, 4, 5]`về mặt cấu trúc, nhưng vì các lần xóa trước đó thu gọn tiền tố nên chúng tôi kết thúc bằng tiền tố rút gọn nhằm tối đa hóa số lần xóa theo ngân sách. 
 
 Dấu vết này cho thấy các phần tử nhỏ ban đầu được ưu tiên loại bỏ như thế nào khi các phần tử lớn hơn xuất hiện. 
 
@@ -140,7 +140,7 @@ Ví dụ này cho thấy việc sử dụng ngân sách nhiều lần để lo�
 | Thời gian | O(n) | mỗi phần tử được đẩy và xuất hiện nhiều nhất một lần | 
 | Không gian | O(n) | ngăn xếp lưu trữ các phần tử còn lại | 
 
-Hành vi tuyến tính là cần thiết vì cả n và k đều có thể đạt tới 10^6. Bất kỳ giải pháp nào truy cập lại các phần tử hoặc mô phỏng giao dịch hoán đổi trực tiếp sẽ vượt quá giới hạn thời gian. 
+Hành vi tuyến tính là cần thiết vì cả n và k đều có thể đạt tới 10^6. Bất kỳ giải pháp nào xem lại các phần tử hoặc mô phỏng trực tiếp các giao dịch hoán đổi sẽ vượt quá giới hạn thời gian. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io
@@ -182,6 +182,6 @@ assert run("6 3\n2 1 4 3 6 5") == "3\n2 4 6"
 
 Đối với một dãy tăng chặt, về nguyên tắc mọi cặp liền kề đều đủ điều kiện để xóa, nhưng thuật toán chỉ xóa tối đa k phần tử. Đối với đầu vào`[1,2,3,4]`với k = 2 thì ngăn xếp sẽ bị loại bỏ`1`khi xử lý`2`, sau đó loại bỏ`2`khi xử lý`3`, rời đi`[3,4]`. Điều này phù hợp với chiến lược tối ưu là luôn xóa sớm các phần tử nhỏ nhất có sẵn. 
 
-Đối với một chuỗi giảm nghiêm ngặt như`[5,4,3,2,1]`, không xảy ra việc xóa vì không có phần tử nào thỏa mãn điều kiện kề tăng dần. Ngăn xếp chỉ tăng lên và k không bao giờ được sử dụng. 
+Đối với một chuỗi giảm nghiêm ngặt như`[5,4,3,2,1]`, không có sự xóa nào xảy ra vì không có phần tử nào thỏa mãn điều kiện kề tăng dần. Ngăn xếp chỉ tăng lên và k không bao giờ được sử dụng. 
 
 Đối với các đỉnh xen kẽ như`[1,3,2,4,3,5]`, việc xóa xảy ra bất cứ khi nào một phần tử lớn mới xuất hiện sau phần tử nhỏ hơn được giữ lại. Thuật toán ưu tiên loại bỏ các giá trị nhỏ hơn trước đó một cách chính xác, tạo ra tiền tố có giá trị cao nhỏ gọn.

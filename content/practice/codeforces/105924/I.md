@@ -103,9 +103,9 @@ if __name__ == "__main__":
 
 ## Ví dụ đã hoạt động 
 
-Xét trường hợp có n = 2, a = [3, 4]. Các cặp là (1,3) và (2,4). Nếu s = 1 và t = 4, chúng ta có đối tác (1) = 3, do đó t không phải là đối tác và tồn tại một đường dẫn hợp lệ. 
+Xét trường hợp có n = 2, a = [3, 4]. Các cặp là (1,3) và (2,4). Nếu s = 1 và t = 4, chúng ta có đối tác (1) = 3, do đó t không phải là đối tác và tồn tại một đường dẫn hợp lệ.
 
-| Bước | s | t | (các) đối tác | Quyết định | 
+ | Bước | s | t | (các) đối tác | Quyết định | 
 | --- | --- | --- | --- | --- | 
 | 1 | 1 | 4 | 3 | Không bằng → Có | 
 

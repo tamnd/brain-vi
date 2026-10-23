@@ -59,7 +59,7 @@ Chúng ta root cây ở nút 1. Với mỗi nút$v \neq 1$, cho phép$e_v$là c�
 
 Chúng tôi xây dựng DP trên cây có gốc. 
 
-1. Đối với mỗi nút$v$, xác định một bảng DP trên cây con của nó để lưu trữ bao nhiêu cách hợp lệ tồn tại để chọn một số cạnh nhất định bên trong cây con đó, tôn trọng ràng buộc rằng các cạnh cha phải đứng sau tất cả các cạnh của cây con. 
+1. Đối với mỗi nút$v$, xác định một bảng DP trên cây con của nó để lưu trữ bao nhiêu cách hợp lệ tồn tại để chọn một số cạnh nhất định bên trong cây con đó, tôn trọng ràng buộc rằng các cạnh cha mẹ phải đến sau tất cả các cạnh của cây con con. 
 
 Điều này nắm bắt cấu trúc tổ hợp của các lệnh xóa hợp lệ bên trong cây con. 
 2. Đối với mỗi nút$v$, chúng tôi cũng duy trì DP thứ hai tích lũy tổng đóng góp của trọng số nút cho tất cả các quy trình xóa một phần bên trong cây con. 
@@ -170,7 +170,7 @@ Hãy xem xét một cây nhỏ trong đó nút 1 kết nối với nút 2 và 3 
 | 0 | không | a1 + a2 + a3 | 
 | 1 | (1-2) hoặc (1-3) | các nút kết nối còn lại | 
 
-Điều này chứng tỏ rằng mỗi lựa chọn cạnh sẽ xác định độc lập cây con nào được tách ra và DP phải tính đến cả hai lựa chọn một cách đối xứng. 
+Điều này chứng tỏ rằng mỗi lựa chọn cạnh xác định độc lập cây con nào được tách ra và DP phải tính đến cả hai lựa chọn một cách đối xứng. 
 
 Bây giờ hãy xem xét chuỗi 1-2-3 với$k=2$. Các chuỗi hợp lệ phải loại bỏ cạnh sâu hơn trước cạnh trên do cây con bị vô hiệu hóa. 
 

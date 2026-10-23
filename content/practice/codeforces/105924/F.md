@@ -67,7 +67,7 @@ Lý do việc giảm này có hiệu quả là vì trong mỗi chiều tròn, h�
 
 ### Tại sao nó hoạt động 
 
-Hàm chi phí chia thành tổng của hai hàm khoảng cách vòng tròn độc lập. Mỗi chức năng này có chính xác hai hướng cải tiến từ bất kỳ điểm bắt đầu nào trong một chu kỳ. Bất kỳ tối ưu toàn cục nào trong một khoảng giới hạn đều phải xảy ra tại một ranh giới hoặc tại hình chiếu của điểm bắt đầu lên khoảng trong không gian tròn. Điều này hạn chế không gian giải pháp cho một số lượng ứng cử viên không đổi và việc đánh giá toàn diện đối với tập hợp rút gọn này đảm bảo tính chính xác. 
+Hàm chi phí chia thành tổng của hai hàm khoảng cách vòng tròn độc lập. Mỗi chức năng này có chính xác hai hướng cải tiến từ bất kỳ điểm bắt đầu nào trong một chu kỳ. Bất kỳ mức tối ưu toàn cục nào trong một khoảng giới hạn đều phải xảy ra tại một ranh giới hoặc tại hình chiếu của điểm bắt đầu lên khoảng trong không gian hình tròn. Điều này hạn chế không gian giải pháp cho một số lượng ứng cử viên không đổi và việc đánh giá toàn diện đối với tập hợp rút gọn này đảm bảo tính chính xác. 
 
 ## Giải pháp Python```python
 import sys
@@ -224,4 +224,4 @@ Trường hợp cạnh then chốt là khi giải pháp tối ưu chính xác l�
 
 Một trường hợp khác là khi cả hai điểm cuối của khoảng đều tốt như nhau. Ví dụ: nếu điểm bắt đầu cách đều (0, 0) và (1, 1), cả hai đều mang lại chi phí giống nhau. Sự so sánh từ điển học`(h, m) < best_time`đảm bảo (0, 0) được chọn một cách nhất quán. 
 
-Trường hợp tinh tế cuối cùng là khi vấn đề bao quanh vòng tròn, chẳng hạn như chuyển từ giờ 11 sang 0.`dist`hàm đánh giá chính xác cả hai hướng, do đó (11 → 0) được coi là khoảng cách 1 thay vì 11, duy trì tính chính xác ngay cả khi khoảng nằm giữa ranh giới mô-đun.
+Một trường hợp tinh tế cuối cùng là khi vấn đề bao quanh vòng tròn, chẳng hạn như chuyển từ giờ 11 sang 0.`dist`hàm đánh giá chính xác cả hai hướng, do đó (11 → 0) được coi là khoảng cách 1 thay vì 11, duy trì tính chính xác ngay cả khi khoảng nằm giữa ranh giới mô-đun.

@@ -38,7 +38,7 @@ Ví dụ, nếu$n = 1, m = 2$, chúng ta có một hàng duy nhất, do đó hà
 
 Ý tưởng brute-force sẽ cố gắng gán cho mọi ô 0 hoặc 1 và kiểm tra xem điều kiện có đúng hay không. Đối với mỗi ma trận ứng cử viên, chúng tôi tính toán tất cả các XOR hàng và XOR cột, sau đó xác minh tất cả$nm$hạn chế. Điều này đòi hỏi$O(nm)$mỗi lần kiểm tra, và có$2^{nm}$các ma trận có thể có, có kích thước lớn về mặt thiên văn ngay cả đối với các lưới nhỏ như$3 \times 3$. Cách tiếp cận này chỉ hữu ích khi kiểm tra độ chính xác của các dẫn xuất. 
 
-Để tiếp tục, chúng ta cần viết lại điều kiện theo cách tách biệt các giá trị ô cục bộ khỏi cấu trúc chung. Hãy để chúng tôi xác định: 
+Để tiếp tục, chúng ta cần viết lại điều kiện theo cách tách các giá trị ô cục bộ khỏi cấu trúc chung. Hãy để chúng tôi xác định: 
 
 -$R_i$: XOR của hàng$i$-$C_j$: XOR của cột$j$Điều kiện trở thành:$$R_i \oplus C_j = A_{i,j}$$Điều này đã cho chúng ta biết một điều quan trọng: mọi ô được xác định hoàn toàn bởi XOR hàng và cột XOR của nó. Vì vậy, thay vì chọn ma trận, chúng ta chọn XOR hàng và XOR cột và ma trận là bắt buộc. 
 

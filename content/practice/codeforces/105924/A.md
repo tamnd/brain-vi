@@ -30,7 +30,7 @@ Nói một cách cụ thể hơn, đối với mỗi mảng con, chúng tôi tí
 
 Kích thước đầu vào lên tới một trăm nghìn phần tử và mỗi giá trị có thể lớn tới một triệu. Điều này ngay lập tức loại trừ bất kỳ cách tiếp cận nào kiểm tra tất cả các mảng con O(n²) một cách rõ ràng, vì điều đó sẽ yêu cầu khoảng 10¹⁰ thao tác trong trường hợp xấu nhất, vượt xa giới hạn thời gian thông thường. Bất kỳ giải pháp khả thi nào cũng phải xử lý từng vị trí trong thời gian gần tuyến tính hoặc logarit và sử dụng lại cấu trúc giữa các mảng con lân cận thay vì tính toán lại từ đầu. 
 
-Một vấn đề tinh vi trong bài toán này là cả gcd và min đều hoạt động đơn điệu khi mở rộng điểm cuối cố định bên trái sang bên phải, nhưng cấu trúc của các mảng con hợp lệ phụ thuộc đồng thời vào cả hai đầu. Một điểm khó khăn khác là các mảng con có cùng giá trị gcd có thể chồng chéo theo những cách phức tạp và điều tương tự cũng áp dụng cho các giá trị tối thiểu. Một nỗ lực ngây thơ chỉ theo dõi một trong các thuộc tính này một cách độc lập sẽ bỏ lỡ điều kiện tương tác rằng chúng phải bằng nhau trên cùng một phân đoạn. 
+Một vấn đề tinh vi trong vấn đề này là cả gcd và min đều hoạt động đơn điệu khi mở rộng điểm cuối cố định bên trái sang bên phải, nhưng cấu trúc của các mảng con hợp lệ phụ thuộc đồng thời vào cả hai đầu. Một điểm khó khăn khác là các mảng con có cùng giá trị gcd có thể chồng chéo theo những cách phức tạp và điều tương tự cũng áp dụng cho các giá trị tối thiểu. Một nỗ lực ngây thơ chỉ theo dõi một trong các thuộc tính này một cách độc lập sẽ bỏ lỡ điều kiện tương tác rằng chúng phải bằng nhau trên cùng một phân đoạn. 
 
 Một ví dụ nhỏ minh họa yêu cầu. Giả sử mảng là`[4, 2, 6]`. Mảng con`[2, 6]`có gcd bằng 2 và tối thiểu bằng 2, vì vậy nó hợp lệ. Tuy nhiên`[4, 2, 6]`có gcd 2 nhưng tối thiểu là 2, cũng hợp lệ, trong khi`[4, 2]`có gcd 2 nhưng tối thiểu là 2. Mặt khác`[4, 6]`có gcd 2 nhưng tối thiểu là 4, vì vậy nó không hợp lệ. Thách thức không phải là tính toán gcd hoặc min riêng lẻ mà là căn chỉnh hiệu quả các phân đoạn sao cho phù hợp. 
 
@@ -40,9 +40,9 @@ Một giải pháp bạo lực sẽ liệt kê mọi mảng con và tính toán 
 
 Quan sát quan trọng là khi chúng ta cố định điểm cuối bên phải của một mảng con, tập hợp các giá trị gcd có thể có trên tất cả các điểm cuối bên trái sẽ tạo thành một cấu trúc nén nhỏ: khi chúng ta di chuyển sang trái, các giá trị gcd chỉ thay đổi O(log A) lần vì gcd giảm nghiêm ngặt thông qua các ước số. Một ý tưởng tương tự giữ mức tối thiểu bằng cách sử dụng ngăn xếp đơn điệu: đối với điểm cuối bên phải cố định, mức tối thiểu trên tất cả các mảng con kết thúc ở đó cũng chỉ thay đổi O(1) thời gian khấu hao cho mỗi lần mở rộng ranh giới bên trái, tạo thành các đoạn liền kề có mức tối thiểu bằng nhau. 
 
-Vì vậy, thay vì suy nghĩ theo các mảng con riêng lẻ, chúng tôi duy trì cho mỗi điểm cuối bên phải hai phân vùng của phạm vi điểm cuối bên trái. Một phân vùng nhóm tất cả các vị trí bên trái tạo ra cùng một gcd cho các mảng con kết thúc bằng r và các nhóm còn lại tất cả các vị trí bên trái tạo ra cùng mức tối thiểu. Sau đó, vấn đề giảm xuống còn giao nhau giữa hai phân vùng này và tính tổng độ dài của các phân đoạn trong đó cả hai phân vùng đều gán cùng một giá trị. 
+Vì vậy, thay vì suy nghĩ theo từng mảng con riêng lẻ, chúng tôi duy trì cho mỗi điểm cuối bên phải hai phân vùng của phạm vi điểm cuối bên trái. Một phân vùng nhóm tất cả các vị trí bên trái tạo ra cùng một gcd cho các mảng con kết thúc bằng r và các nhóm còn lại tất cả các vị trí bên trái tạo ra cùng mức tối thiểu. Sau đó, vấn đề giảm xuống còn giao nhau giữa hai phân vùng này và tính tổng độ dài của các phân đoạn trong đó cả hai phân vùng đều gán cùng một giá trị. 
 
-Điều này biến vấn đề đếm tổng thể thành một sự hợp nhất trên mỗi vị trí của hai phân tách khoảng được sắp xếp. 
+Điều này biến vấn đề đếm tổng thể thành một sự hợp nhất trên mỗi vị trí của hai phân rã khoảng được sắp xếp. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -61,7 +61,7 @@ Khi cả hai cấu trúc được xây dựng cho vị trí r, chúng ta có hai
 
 ### Tại sao nó hoạt động
 
-Tại bất kỳ điểm cuối bên phải cố định r nào, mọi điểm cuối bên trái có thể có đều thuộc về chính xác một khoảng gcd và đúng một khoảng thời gian tối thiểu. Những phân vùng này là đầy đủ và rời rạc. Do đó, bất kỳ mảng con nào cũng được xác định duy nhất bởi một cặp nhãn khoảng và sự đóng góp của nó là hợp lệ khi và chỉ khi cả hai nhãn tương ứng với cùng một giá trị. Vì cả gcd và giá trị tối thiểu đều không đổi trong các khoảng tương ứng của chúng, nên việc kiểm tra sự bằng nhau ở mức khoảng tương đương với việc kiểm tra nó cho từng mảng con riêng lẻ. Quá trình quét đảm bảo mọi điểm cuối bên trái được tính chính xác một lần trên r. 
+Tại bất kỳ điểm cuối bên phải cố định r nào, mọi điểm cuối bên trái có thể có đều thuộc về chính xác một khoảng gcd và đúng một khoảng phút. Những phân vùng này là đầy đủ và rời rạc. Do đó, bất kỳ mảng con nào cũng được xác định duy nhất bởi một cặp nhãn khoảng và đóng góp của nó là hợp lệ khi và chỉ khi cả hai nhãn tương ứng với cùng một giá trị. Vì cả gcd và giá trị tối thiểu đều không đổi trong các khoảng tương ứng của chúng, nên việc kiểm tra sự bằng nhau ở mức khoảng tương đương với việc kiểm tra nó cho từng mảng con riêng lẻ. Quá trình quét đảm bảo mọi điểm cuối bên trái được tính chính xác một lần trên r. 
 
 ## Giải pháp Python```python
 import sys
@@ -241,7 +241,7 @@ def run(inp: str) -> str:
 
 ## Vỏ cạnh 
 
-Đối với một mảng phần tử duy nhất như`[x]`, cả gcd và tối thiểu đều bằng nhau một cách tầm thường`x`, do đó mỗi vị trí đóng góp chính xác một mảng con hợp lệ. Thuật toán xử lý việc này vì cả cấu trúc gcd và min đều khởi tạo một khoảng duy nhất bao gồm phần tử đó. 
+Đối với một mảng phần tử duy nhất như`[x]`, cả gcd và tối thiểu đều bằng nhau`x`, do đó mỗi vị trí đóng góp chính xác một mảng con hợp lệ. Thuật toán xử lý việc này vì cả cấu trúc gcd và min đều khởi tạo một khoảng duy nhất bao gồm phần tử đó. 
 
 Đối với một mảng không đổi như`[2, 2, 2, 2]`, mọi mảng con có gcd bằng 2 và tối thiểu bằng 2. Cấu trúc khoảng thu gọn thành một giá trị lặp lại duy nhất trên tất cả các phạm vi và quá trình quét sẽ đếm tất cả các mảng con n(n+1)/2 mà không liệt kê chúng một cách rõ ràng. 
 
