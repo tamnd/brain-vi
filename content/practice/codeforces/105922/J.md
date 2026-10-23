@@ -1,5 +1,5 @@
 ---
-title: "CF 105922J - Trò chơi chẵn lẻ"
+title: "CF 105922J - Odd-Even Game"
 description: "Chúng ta được cho hai số nguyên và chúng ta được biết một đặc tính cấu trúc chặt chẽ về chúng: một trong số chúng được đảm bảo là số lẻ và số còn lại được đảm bảo là số chẵn. Mỗi con số đại diện cho “sự lựa chọn của người chơi” trong một trò chơi so sánh rất đơn giản."
 date: "2026-06-22T15:31:44+07:00"
 tags: ["codeforces", "competitive-programming"]
@@ -14,25 +14,25 @@ verified: true
 draft: false
 ---
 
-[CF 105922J - Trò chơi Chẵn Lẻ](https://codeforces.com/problemset/problem/105922/J) 
+[CF 105922J - Odd-Even Game](https://codeforces.com/problemset/problem/105922/J)
 
-**Đánh giá:** - 
-**Thẻ:** - 
-**Thời gian giải:** 53s 
-**Đã xác minh:** có 
+**Rating:** -  
+**Tags:** -  
+**Solve time:** 53s  
+**Verified:** yes  
 
-##Giải pháp 
-## Hiểu vấn đề 
+## Solution
+## Problem Understanding
 
-Chúng ta được cho hai số nguyên và chúng ta được biết một đặc tính cấu trúc chặt chẽ về chúng: một trong số chúng được đảm bảo là số lẻ và số còn lại được đảm bảo là số chẵn. Mỗi con số đại diện cho “sự lựa chọn của người chơi” trong một trò chơi so sánh rất đơn giản. Một người chơi thích số lẻ, người kia thích số chẵn, nhưng điều duy nhất quan trọng cuối cùng là sự so sánh số giữa hai giá trị. 
+We are given two integers, and we are told a strict structural property about them: one of them is guaranteed to be odd and the other is guaranteed to be even. Each number represents a “player’s choice” in a very simple comparison game. One player prefers odd numbers, the other prefers even numbers, but the only thing that ultimately matters is the numeric comparison between the two values.
 
-Nhiệm vụ là xuất ra số nào trong hai số lớn hơn, nhưng đầu ra không phải là số đó. Thay vào đó, chúng tôi xuất ra`1`nếu số lớn hơn là số lẻ, và`2`nếu số lớn hơn là số chẵn. 
+The task is to output which of the two numbers is larger, but the output is not the number itself. Instead, we output `1` if the larger number happens to be the odd one, and `2` if the larger number happens to be the even one.
 
-Các ràng buộc cực kỳ nhỏ về mặt thuật toán: các giá trị lên tới 10^9, dễ dàng phù hợp với các loại số nguyên tiêu chuẩn. Quan trọng hơn, chỉ có hai giá trị và không có cấu trúc ẩn như mảng, đồ thị hoặc nhiều truy vấn. Điều này ngay lập tức loại trừ mọi nhu cầu về tiền xử lý, cấu trúc dữ liệu hoặc thuật toán tiệm cận hiệu quả. Bất kỳ giải pháp nào so sánh trực tiếp hai số đều chạy trong thời gian không đổi. 
+The constraints are extremely small in algorithmic terms: values go up to 10^9, which easily fits in standard integer types. More importantly, there are only two values and no hidden structure like arrays, graphs, or multiple queries. This immediately rules out any need for preprocessing, data structures, or asymptotically efficient algorithms. Any solution that directly compares the two numbers runs in constant time.
 
-Không có trường hợp cạnh ẩn phức tạp nào về kích thước, nhưng có một cạm bẫy về mặt khái niệm: đầu ra được gắn với tính chẵn lẻ chứ không phải với vị trí. Một người đọc ngây thơ có thể giả định không chính xác “in 1 nếu a > b”, nhưng điều đó sẽ bỏ qua số lớn hơn là số lẻ hay số chẵn, điều này rất cần thiết cho việc lập bản đồ câu trả lời. 
+There are no tricky hidden edge cases in terms of size, but there is a conceptual pitfall: the output is tied to parity, not to position. A naive reader might incorrectly assume “print 1 if a > b”, but that would ignore whether the larger number is odd or even, which is essential to the mapping of the answer.
 
-Một ví dụ nhỏ cho thấy cấu trúc rõ ràng. Nếu đầu vào là`3 2`, số lẻ lớn hơn nên kết quả đầu ra là`1`. Nếu đầu vào là`1 2`, số chẵn lớn hơn nên kết quả là`2`. Sự nhầm lẫn chỉ nảy sinh nếu người ta quên rằng tính chẵn lẻ xác định nhãn nào sẽ được in chứ không phải số nào được in. 
+A small example shows the structure clearly. If the input is `3 2`, số lẻ lớn hơn nên kết quả đầu ra là`1`. If the input is `1 2`, số chẵn lớn hơn nên kết quả là`2`. Sự nhầm lẫn chỉ nảy sinh nếu người ta quên rằng tính chẵn lẻ xác định nhãn nào sẽ được in chứ không phải số nào được in. 
 
 ## Phương pháp tiếp cận 
 
@@ -49,10 +49,10 @@ Nhận xét quan trọng là bài toán không yêu cầu xây dựng bất cứ
 
 ## Hướng dẫn thuật toán 
 
-1. Đọc hai số nguyên`a`Và`b`. Đây là những đầu vào duy nhất cần thiết để xác định kết quả. 
-2. Kiểm tra xem số nào lớn hơn. Điều này xác định ứng cử viên nào sẽ “chiến thắng” theo nghĩa so sánh. 
-3. Xác định tính chẵn lẻ của số lớn hơn bằng cách kiểm tra xem nó có chia hết cho 2 hay không. 
-4. Nếu số lớn hơn là số lẻ, xuất ra`1`, vì người chơi số lẻ sẽ thắng cuộc so sánh. Ngược lại, xuất ra`2`, vì số lớn hơn phải là số chẵn. 
+1. Đọc hai số nguyên`a`Và`b`. These are the only inputs needed to determine the result.
+2. Check which of the two numbers is larger. This determines which candidate is “winning” in the comparison sense.
+3. Determine the parity of the larger number by checking whether it is divisible by 2.
+4. If the larger number is odd, output `1`, vì người chơi số lẻ sẽ thắng cuộc so sánh. Ngược lại, xuất ra`2`, vì số lớn hơn phải là số chẵn. 
 
 Bước lý luận quan trọng ở đây là tính chẵn lẻ không được sử dụng để quyết định thứ tự mà chỉ để ánh xạ người chiến thắng tới nhãn đầu ra được yêu cầu. Vì bài toán đảm bảo chính xác một số lẻ và một số chẵn nên không có sự mơ hồ trong ánh xạ này. 
 
