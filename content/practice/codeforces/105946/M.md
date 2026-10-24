@@ -40,7 +40,7 @@ Ví dụ: nếu lượng oxy ban đầu nhỏ và kim loại tốt nhất cần 
 
 ## Phương pháp tiếp cận 
 
-Chiến lược vũ lực trực tiếp coi mọi quyết định là lựa chọn số lượng đơn vị mỗi kim loại cần khai thác trước khi chạy máy chiết. Sau đó, nó mô phỏng thời gian trôi qua, lượng oxy giảm dần mỗi giây và lượng oxy chỉ tăng lên sau khi quá trình xử lý hoàn tất. Mỗi lô là sự kết hợp của số lượng đơn vị được chọn trên tất cả các kim loại. 
+Chiến lược brute-force trực tiếp coi mọi quyết định là lựa chọn số lượng đơn vị mỗi kim loại cần khai thác trước khi chạy máy chiết. Sau đó, nó mô phỏng thời gian trôi qua, lượng oxy giảm dần mỗi giây và lượng oxy chỉ tăng lên sau khi quá trình xử lý hoàn tất. Mỗi lô là sự kết hợp của số lượng đơn vị được chọn trên tất cả các kim loại. 
 
 Cách tiếp cận này đúng vì nó phản ánh chính xác quy trình: chọn thành phần lô, xác minh rằng oxy không bao giờ giảm xuống dưới 0 trong quá trình khai thác và xử lý, áp dụng mức tăng oxy và lặp lại cho đến khi đạt được mục tiêu. Vấn đề là hệ số phân nhánh là rất lớn. Ngay cả khi chúng tôi hạn chế kích thước lô hợp lý, mỗi lô có thể chọn kết hợp kim loại tùy ý, do đó số lượng trình tự có thể tăng theo cấp số nhân theo thời gian. Trường hợp xấu nhất trở nên không thể xảy ra ngay cả đối với các giới hạn vừa phải. 
 

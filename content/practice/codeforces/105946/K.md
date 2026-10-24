@@ -18,7 +18,7 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 1 phút 30 giây 
+**Thời gian giải:** 1 phút 30s 
 **Đã xác minh:** có 
 
 ##Giải pháp 
@@ -32,19 +32,19 @@ Chúng ta không xây dựng một đa thức duy nhất nhưng$k$khác nhau và
 
 Ràng buộc gốc là phần cứng nhắc nhất về mặt cấu trúc. Nếu một đa thức có tất cả$r_j$là nghiệm thì nó phải chia hết cho đa thức monic$$P(x) = \prod_{j=1}^m (x - r_j).$$Điều này ngay lập tức buộc mọi câu trả lời hợp lệ phải có dạng$$p(x) = P(x)\,Q(x),$$Ở đâu$Q(x)$là một đa thức nguyên khác. Vì cả hai$p$Và$P$chắc hẳn là Monic,$Q$cũng phải là monic. 
 
-Ràng buộc hệ số là phần linh hoạt duy nhất: chúng ta được phép định hình$Q$và thông qua tích chập với$P$, chúng tôi gián tiếp kiểm soát các hệ số của$p$. Thách thức là đảm bảo rằng với mỗi đa thức, chúng ta có thể “trồng” tất cả những gì cần thiết$c_i$đâu đó trong mảng hệ số trong khi vẫn giữ cấu trúc nhất quán. 
+The coefficient constraint is the only flexible part: we are allowed to shape$Q$và thông qua tích chập với$P$, chúng tôi gián tiếp kiểm soát các hệ số của$p$. Thách thức là đảm bảo rằng với mỗi đa thức, chúng ta có thể “trồng” tất cả những gì cần thiết$c_i$đâu đó trong mảng hệ số trong khi vẫn giữ cấu trúc nhất quán. 
 
 Bởi vì$n, m \le 8$Và$k \le 100$, việc xây dựng không phải là tiệm cận chặt chẽ mà là thiết kế một họ đa thức với đủ bậc tự do để mỗi giá trị cần thiết có thể được nhúng độc lập. 
 
-Một nỗ lực ngây thơ sẽ cố gắng áp đặt các hệ số cưỡng bức của$Q$và kiểm tra xem tất cả các ràng buộc có được thỏa mãn hay không. Điều này không thành công vì ngay cả một đa thức bậc vừa phải cũng có không gian hệ số rất lớn và thỏa mãn các ràng buộc bằng hệ số chính xác trong khi vẫn bảo toàn tính chia hết của nghiệm sẽ trở thành một hệ số nguyên nhiều chiều. 
+Một nỗ lực ngây thơ sẽ cố gắng áp đặt các hệ số cưỡng bức của$Q$và kiểm tra xem tất cả các ràng buộc có được thỏa mãn hay không. Điều này không thành công vì ngay cả một đa thức mức độ vừa phải cũng có không gian hệ số rất lớn và việc thỏa mãn các ràng buộc bằng hệ số chính xác trong khi vẫn bảo toàn tính chia hết của nghiệm sẽ trở thành một hệ số nguyên nhiều chiều. 
 
-Một trường hợp phức tạp hơn là giả sử chúng ta có thể “thay đổi” hoặc “mở rộng” các hệ số một cách tự do. Ví dụ như chuyển$P(x)$bằng cách nhân với$x^t$chỉ di chuyển các hệ số nhưng không thay đổi giá trị của chúng, vì vậy nó không thể chèn tùy ý$c_i$. Tương tự, việc thêm các hằng số sẽ phá vỡ các ràng buộc gốc vì nó phá hủy khả năng chia hết cho$P(x)$. 
+Một trường hợp phức tạp hơn là giả sử chúng ta có thể “thay đổi” hoặc “mở rộng” các hệ số một cách tự do. Ví dụ như chuyển$P(x)$bằng cách nhân với$x^t$chỉ di chuyển các hệ số nhưng không thay đổi giá trị của chúng nên nó không thể chèn tùy ý$c_i$. Tương tự, việc thêm các hằng số sẽ phá vỡ các ràng buộc gốc vì nó phá hủy khả năng chia hết cho$P(x)$. 
 
 Khó khăn chính là các nghiệm thực thi một cấu trúc nhân cứng nhắc, trong khi các yêu cầu hệ số mang tính cộng tính và cục bộ. 
 
 ## Phương pháp tiếp cận 
 
-Quan điểm bạo lực là coi đây là một hệ thống dựa trên các hệ số của$Q(x)$. Nếu như$\deg Q = d$, sau đó$p(x)$có bằng cấp$m+d$và mỗi hệ số của$p$là tổng tích chập của các hệ số của$P$Và$Q$. Người ta có thể thử tìm kiếm trên tất cả số nguyên$Q$với các hệ số bị chặn và xác minh xem tất cả$c_i$xuất hiện trong đa thức kết quả. Về nguyên tắc thì điều này đúng, nhưng không gian có thể$Q$tăng theo cấp số nhân với mức độ giới hạn. Ngay cả việc giới hạn các hệ số trong một phạm vi nhỏ cũng dẫn đến một không gian tìm kiếm lớn về mặt thiên văn. 
+Quan điểm bạo lực là coi đây là một hệ thống dựa trên các hệ số của$Q(x)$. Nếu như$\deg Q = d$, sau đó$p(x)$có bằng cấp$m+d$và mỗi hệ số của$p$là tổng tích chập của các hệ số của$P$Và$Q$. Người ta có thể cố gắng tìm kiếm trên tất cả số nguyên$Q$với các hệ số bị chặn và xác minh xem tất cả$c_i$xuất hiện trong đa thức kết quả. Về nguyên tắc thì điều này đúng, nhưng không gian có thể$Q$tăng theo cấp số nhân với mức độ giới hạn. Ngay cả việc giới hạn các hệ số trong một phạm vi nhỏ cũng dẫn đến một không gian tìm kiếm lớn về mặt thiên văn. 
 
 Quan sát quan trọng là tích chập là tuyến tính trong các hệ số của$Q$. Điều này có nghĩa là mỗi hệ số của$p$là sự kết hợp tuyến tính của các hệ số của$Q$, với trọng số nguyên cố định được xác định bởi$P$. Nếu chúng ta thiết kế$Q$cẩn thận, chúng ta có thể lập bản đồ từ$Q$với các hệ số đã chọn của$p$hoạt động giống như một hệ thống tuyến tính tam giác. 
 
@@ -181,11 +181,11 @@ Chúng tôi chọn$Q(x) = x^D + \cdots$với$D=98$. Mỗi hệ số của$Q$sau 
 | Bước | Mục tiêu$c_i$| Vị trí trong poly cuối cùng | Bật hành động$q_t$| 
 | --- | --- | --- | --- | 
 | 1 | 2 | khe cấp độ cao A | bộ$q_t$buộc hệ số 2 | 
-| 2 | 6 | khe cấp độ cao B | đặt cái khác$q_t$độc lập | 
+| 2 | 6 | khe cấp độ cao B | đặt cái khác$q_t$independently |
 
-Điều này chứng tỏ mỗi hệ số có thể được cố định độc lập mà không ảnh hưởng đến các hệ số cố định trước đó. 
+ This demonstrates that each coefficient can be fixed independently without affecting previously fixed ones.
 
-### Ví dụ 2 
+ ### Ví dụ 2 
 
 đầu vào:```
 n=1, m=1, k=1

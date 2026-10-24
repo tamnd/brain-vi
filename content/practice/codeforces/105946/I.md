@@ -41,7 +41,7 @@ Trường hợp cạnh tinh tế xuất hiện khi cùng một vị trí nhận 
 1 2
 1 3
 1 2
-```Nếu chúng ta cố gắng giữ lại tất cả các lệnh, hai hệ thống sẽ phân kỳ vì một hệ thống có thể từ chối ghi đè trong khi hệ thống kia chấp nhận chúng, tạo ra các giá trị cuối cùng khác nhau tùy thuộc vào thao tác nào "được thực hiện". Câu trả lời đúng yêu cầu loại bỏ một cách có chọn lọc các lệnh để cả hai cách diễn giải đều “đồng ý” một cách hiệu quả về việc cách viết nào là lệnh có ý nghĩa cuối cùng cho mỗi vị trí. 
+```Nếu chúng ta cố gắng giữ lại tất cả các lệnh, hai hệ thống sẽ phân kỳ vì một hệ thống có thể từ chối ghi đè trong khi hệ thống kia chấp nhận chúng, tạo ra các giá trị cuối cùng khác nhau tùy thuộc vào thao tác nào "được thực hiện". Câu trả lời đúng yêu cầu loại bỏ các lệnh một cách có chọn lọc để cả hai cách diễn giải đều “đồng ý” một cách hiệu quả về việc cách viết nào là lệnh có ý nghĩa cuối cùng cho mỗi vị trí. 
 
 ## Phương pháp tiếp cận 
 
@@ -55,7 +55,7 @@ Cái nhìn sâu sắc quan trọng là đảo ngược quan điểm. Thay vì ng
 
 Nếu chúng ta nhóm các phép toán theo chỉ mục thì mỗi nhóm sẽ trở thành một chuỗi các giá trị. Chúng tôi muốn giữ một dãy con sao cho khi áp dụng, cả hai hệ thống đều tạo ra cùng một giá trị cuối cùng. Điều đó có nghĩa là giá trị được lưu giữ cuối cùng ở mỗi chỉ mục phải giống nhau bất kể hành vi ghi đè, vì vậy, chúng tôi đang chọn một “bản ghi đại diện cuối cùng” nhất quán cho mỗi chỉ mục và đảm bảo tất cả các hoạt động được lưu giữ đều tương thích với nó. 
 
-Cấu trúc tối ưu sẽ trở nên rõ ràng hơn nếu chúng ta xử lý các phép toán theo thứ tự ngược lại. Khi quét lùi, chúng tôi quyết định xem lần ghi này có phải là lần đầu tiên chúng tôi nhìn thấy một giá trị ở chỉ mục đó hay không. Nếu đúng như vậy, chúng tôi có thể giữ nó làm người đại diện cuối cùng cho vị trí đó. Bất kỳ thao tác ghi xung đột nào trước đó có thể ghi đè lên nó đều phải được loại bỏ. 
+Cấu trúc tối ưu sẽ trở nên rõ ràng hơn nếu chúng ta xử lý các phép toán theo thứ tự ngược lại. Khi quét lùi, chúng tôi quyết định xem liệu lần ghi này có phải là lần đầu tiên chúng tôi nhìn thấy một giá trị ở chỉ mục đó hay không. Nếu đúng như vậy, chúng tôi có thể giữ nó làm người đại diện cuối cùng cho vị trí đó. Bất kỳ thao tác ghi xung đột nào trước đó có thể ghi đè lên nó đều phải được loại bỏ. 
 
 Điều này biến thành logic “lựa chọn lần xuất hiện cuối cùng” cổ điển: đối với mỗi chỉ mục, chỉ lần xuất hiện cuối cùng của mỗi giá trị mới có thể phù hợp và trong số đó, chúng tôi chọn phép gán hiệu quả mới nhất để xác định trạng thái cuối cùng. Mọi hoạt động xung đột khác phải được xóa. 
 
@@ -72,7 +72,7 @@ Chúng tôi xử lý các hoạt động được nhóm theo chỉ mục nhưng 
 
 1. Thực hiện các thao tác từ lệnh cuối cùng đến lệnh đầu tiên. Điều này đảm bảo rằng khi chúng ta gặp một cặp$(i, x)$, chúng ta đang thấy lần cuối cùng nhiệm vụ chính xác này có thể quan trọng. 
 2. Duy trì một cuốn từ điển`seen[i]`lưu trữ liệu chỉ mục$i$đã chấp nhận một giá trị cuối cùng. Nếu không, chúng tôi cũng theo dõi giá trị nào được chỉ định. 
-3. Duy trì một bộ`used[i]`hoặc trên toàn cầu một bản đồ đánh dấu xem một cặp cụ thể$(i, x)$đã được xem xét rồi. Điều này ngăn việc đếm nhiều lần xuất hiện của cùng một giá trị tại cùng một chỉ mục. 
+3. Duy trì một bộ`used[i]`hoặc trên toàn cầu một bản đồ đánh dấu xem một cặp cụ thể$(i, x)$đã được xem xét rồi. Điều này ngăn cản việc đếm nhiều lần xuất hiện của cùng một giá trị tại cùng một chỉ mục. 
 4. Đối với mỗi thao tác$(i, x)$, nếu chỉ số$i$chưa được gán giá trị cuối cùng, chúng tôi chấp nhận thao tác này như là thao tác ghi xác định cho chỉ mục và nhãn hiệu đó$i$như được phân công. 
 5. Nếu chỉ số$i$đã được chỉ định nhưng giá trị hiện tại khác với giá trị cuối cùng đã chọn, thao tác này không thể cùng tồn tại trong một giải pháp nhất quán và phải được tính là bị bỏ qua. 
 6. Đếm tất cả các hoạt động không được chấp nhận là góp phần tạo nên cấu hình nhất quán cuối cùng; số này là câu trả lời. 
@@ -81,7 +81,7 @@ Chúng tôi xử lý các hoạt động được nhóm theo chỉ mục nhưng 
 
 ### Tại sao nó hoạt động 
 
-Sau khi chúng tôi sửa giá trị cuối cùng của một chỉ mục bằng cách gặp phải lần xuất hiện ngược đầu tiên của nó, mọi giá trị khác tại chỉ mục đó sẽ ghi đè lên nó theo một cách hiểu hoặc bị bỏ qua theo cách hiểu khác. Sự không phù hợp này chính xác là nguyên nhân gây ra sự phân kỳ. Bằng cách cam kết giá trị gặp đầu tiên theo thứ tự ngược lại, chúng tôi đảm bảo rằng tất cả các hoạt động được chấp nhận còn lại đều nhất quán với một phép gán cuối cùng duy nhất cho mỗi chỉ mục, loại bỏ mọi khả năng có sự bất đồng giữa ngữ nghĩa ghi đè. 
+Khi chúng tôi sửa giá trị cuối cùng của một chỉ mục bằng cách gặp phải lần xuất hiện ngược đầu tiên của nó, mọi giá trị khác tại chỉ mục đó sẽ ghi đè lên nó theo một cách hiểu hoặc bị bỏ qua theo cách hiểu khác. Sự không phù hợp này chính xác là nguyên nhân gây ra sự phân kỳ. Bằng cách cam kết giá trị gặp đầu tiên theo thứ tự ngược lại, chúng tôi đảm bảo rằng tất cả các hoạt động được chấp nhận còn lại đều nhất quán với một phép gán cuối cùng duy nhất cho mỗi chỉ mục, loại bỏ mọi khả năng có sự bất đồng giữa ngữ nghĩa ghi đè. 
 
 ## Giải pháp Python```python
 import sys
@@ -204,7 +204,7 @@ assert run("5 3\n1 1\n2 2\n3 3\n") == "0"
 assert run("2 5\n1 1\n1 2\n1 1\n1 2\n1 3\n") == "3"
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-| hoạt động đơn lẻ | 0 | trường hợp cơ sở đúng đắn | 
+| hoạt động đơn lẻ | 0 | tính đúng đắn của trường hợp cơ sở | 
 | xung đột lặp đi lặp lại | 3 | xử lý nhiều lần ghi đè tại một chỉ mục | 
 | chỉ số riêng biệt | 0 | không xóa không cần thiết | 
 | mô hình xen kẽ | 3 | đúng đắn trong những xung đột đan xen | 

@@ -28,7 +28,7 @@ Chúng ta được cho một đấu trường hình vuông có cạnh dài$r$, v
 
 Khi đường thẳng được vẽ, nó sẽ chia mặt phẳng thành hai nửa mặt phẳng. Sự kiện mà chúng ta quan tâm được gọi là “thú vị”. Một đường đi sẽ thú vị nếu nó không đi qua chính xác bất kỳ anh hùng nào, đồng thời nó không dồn tất cả các anh hùng về một phía. Nói cách khác, ít nhất một anh hùng phải nằm nghiêm ngặt ở mỗi bên chiến tuyến. 
 
-Kích thước đầu vào lớn, lên đến$5 \cdot 10^4$trường hợp thử nghiệm và tổng số$10^5$điểm. Điều này ngay lập tức loại trừ bất kỳ phương pháp nào xem xét tất cả các cặp điểm hoặc mô phỏng nhiều đường ngẫu nhiên. Bất kỳ giải pháp nào cũng phải giảm vấn đề xuống một số lượng nhỏ các sự kiện hình học cho mỗi trường hợp thử nghiệm, thường là tuyến tính hoặc gần tuyến tính sau khi sắp xếp. 
+Kích thước đầu vào lớn, lên tới$5 \cdot 10^4$trường hợp thử nghiệm và tổng số$10^5$điểm. Điều này ngay lập tức loại trừ bất kỳ phương pháp nào xem xét tất cả các cặp điểm hoặc mô phỏng nhiều đường ngẫu nhiên. Bất kỳ giải pháp nào cũng phải giảm vấn đề xuống một số lượng nhỏ các sự kiện hình học cho mỗi trường hợp thử nghiệm, thường là tuyến tính hoặc gần tuyến tính sau khi sắp xếp. 
 
 Trường hợp cạnh tinh tế là điều kiện “đường đi qua một điểm”. Vì đường thẳng được tạo từ các biến ngẫu nhiên liên tục nên xác suất để nó đi qua bất kỳ điểm cố định nào là bằng không. Thậm chí có tới$10^5$điểm, sự kết hợp của hữu hạn nhiều sự kiện có độ đo bằng 0 vẫn có xác suất bằng không. Vì vậy điều kiện này không ảnh hưởng đến đáp án số và có thể được bỏ qua trong tính toán. 
 
@@ -42,7 +42,7 @@ Một lực lượng vũ phu có cấu trúc hơn sẽ sửa chữa góc$\theta$
 
 Quan sát quan trọng là cả tập hợp điểm và hình vuông đều tạo ra hành vi tuyến tính từng đoạn trong không gian góc. Đối với một hướng cố định, phép chiếu của tất cả các điểm bị chi phối bởi bao lồi của tập điểm và các giá trị cực trị chỉ phụ thuộc vào các đỉnh của bao. Tương tự, phạm vi độ lệch dòng hợp lệ chỉ phụ thuộc vào cách hình vuông chiếu lên cùng một hướng. Điều này làm giảm toàn bộ bài toán liên tục thành tích phân một hàm số chỉ thay đổi ở nhiều góc hữu hạn được xác định bởi các cạnh bao lồi và các hướng đỡ vuông. 
 
-Một khi điều này được nhận ra, bài toán sẽ trở thành một phép tính tích phân trên$\theta \in [0, \pi)$của một biểu thức hữu tỉ được xây dựng từ sin và cos, trong đó cấu trúc của biểu thức chỉ thay đổi ở các góc tới hạn của thân tàu. Điều đó cho phép chia tích phân thành$O(n)$các khoảng góc sau khi tính toán bao lồi. 
+Một khi điều này được nhận ra, bài toán sẽ trở thành một phép tính tích phân trên$\theta \in [0, \pi)$của một biểu thức hữu tỉ được xây dựng từ sin và cosin, trong đó cấu trúc của biểu thức chỉ thay đổi ở các góc tới hạn của thân tàu. Điều đó cho phép chia tích phân thành$O(n)$các khoảng góc sau khi tính toán bao lồi. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -61,8 +61,8 @@ Bây giờ chúng ta tính xác suất của sự kiện bù cho một giá tr�
 
 1. Tính bao lồi của tập điểm. Điều này là đủ vì cực trị của các hình chiếu tuyến tính trên một tập hợp luôn đạt được ở các đỉnh thân, do đó các điểm bên trong không bao giờ ảnh hưởng đến$\min s_i$hoặc$\max s_i$. 
 2. Đối với mỗi đỉnh thân tàu$p_i$, biểu diễn hình chiếu của nó dưới dạng$f_i(\theta) = x_i \cos\theta + y_i \sin\theta$. Giá trị lớn nhất trên tất cả các điểm là hàm từng phần bằng với hàm hỗ trợ của bao lồi. Chức năng này chỉ thay đổi khi một đỉnh thân tàu khác trở nên cực trị, điều này xảy ra ở các góc mà các cạnh thân tàu liền kề hoán đổi ưu thế. 
-3. Tương tự, tính toán hình chiếu tối thiểu là số âm của hình chiếu tối đa của các điểm phủ định, có thể được xử lý bằng cách áp dụng logic thân tương tự cho$(-x_i, -y_i)$. 
-4. Xác định khoảng cách hình chiếu của hình vuông theo phương$\theta$. Các đỉnh vuông thể hiện bốn chức năng:$0$,$r\cos\theta$,$r\sin\theta$, Và$r(\cos\theta + \sin\theta)$. Mức tối thiểu và tối đa trong số này xác định một khoảng$[L(\theta), U(\theta)]$, và thứ tự này chỉ thay đổi ở các góc$\pi/2$,$3\pi/4$, Và$0$. 
+3. Tương tự, tính toán phép chiếu tối thiểu là số âm của phép chiếu cực đại của các điểm phủ định, có thể được xử lý bằng cách áp dụng logic thân tương tự cho$(-x_i, -y_i)$. 
+4. Xác định khoảng cách hình chiếu của hình vuông theo phương$\theta$. Các đỉnh vuông có bốn chức năng:$0$,$r\cos\theta$,$r\sin\theta$, Và$r(\cos\theta + \sin\theta)$. Mức tối thiểu và tối đa trong số này xác định một khoảng$[L(\theta), U(\theta)]$, và thứ tự này chỉ thay đổi ở các góc$\pi/2$,$3\pi/4$, Và$0$. 
 5. Chia$[0, \pi)$thành các khoảng con trong đó cả hai đỉnh đỡ thân tàu và các điểm cuối của hình chiếu vuông đều cố định. Bên trong mỗi khoảng,$\min s_i$,$\max s_i$,$L(\theta)$, Và$U(\theta)$đều là biểu thức hình sin rõ ràng với hệ số cố định. 
 6. Trên mỗi khoảng, tính toán sự đóng góp của các đường khoan như sau:$$\text{length}\big([L, U] \setminus [\min s_i, \max s_i]\big)
 = \max(0, \min s_i - L) + \max(0, U - \max s_i).$$Chia cho$U - L$để có được xác suất có điều kiện cho phạm vi góc đó. 
@@ -235,4 +235,4 @@ Khi tất cả các điểm trùng nhau, mọi hình chiếu đều thu gọn v�
 
 Khi tất cả các điểm nằm trên một đoạn thẳng thì bao lồi chỉ có hai đỉnh. Khoảng chiếu không bao giờ phát triển chiều rộng bên trong và góc quét không tạo ra sự đóng góp nào cho các đường thú vị, phù hợp với đầu ra dự kiến. 
 
-Khi các điểm trải rộng trên toàn hình vuông, bao lồi chiếm ưu thế và chỉ các đỉnh của bao mới ảnh hưởng đến cực trị. Các điểm bên trong bị bỏ qua mà không thay đổi bất kỳ khoảng chiếu nào, đó là lý do tại sao việc giảm xuống thân tàu là an toàn.
+Khi các điểm trải rộng trên toàn hình vuông, bao lồi sẽ chi phối hành vi và chỉ các đỉnh của bao mới ảnh hưởng đến cực trị. Các điểm bên trong bị bỏ qua mà không thay đổi bất kỳ khoảng chiếu nào, đó là lý do tại sao việc giảm xuống thân tàu là an toàn.

@@ -24,15 +24,15 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được cho một đồ thị vô hướng đơn giản, liên thông với$n$huyện và$m$những con đường hiện hữu. Quận 1 là điểm khởi đầu của mỗi người dân. Mỗi quận$u$có$c_u$công nhân và mọi công nhân đều đi từ quận 1 đến nơi làm việc$u$và sau đó quay trở lại 1 dọc theo con đường ngắn nhất. 
+Chúng ta được cho một đồ thị vô hướng đơn giản, liên thông với$n$huyện và$m$những con đường hiện có. Quận 1 là điểm khởi đầu của mỗi người dân. Mỗi quận$u$có$c_u$công nhân và mọi công nhân đều đi từ quận 1 đến nơi làm việc$u$và sau đó quay trở lại 1 dọc theo con đường ngắn nhất. 
 
-Vì biểu đồ không có trọng số nên khoảng cách di chuyển là độ dài đường đi ngắn nhất thông thường tính theo các cạnh. Tổng lưu lượng giao thông hàng ngày tỷ lệ thuận với tổng số công nhân trong quận đó trên tất cả các quận nhân với hai lần khoảng cách từ 1 đến quận đó. Vì vậy số lượng quan tâm được xác định hoàn toàn bởi vectơ khoảng cách ngắn nhất$d(1,u)$. 
+Vì biểu đồ không có trọng số nên khoảng cách di chuyển là độ dài đường đi ngắn nhất thông thường tính theo các cạnh. Tổng lưu lượng giao thông hàng ngày tỷ lệ thuận với tổng số công nhân trong quận đó nhân với tổng khoảng cách từ 1 đến quận đó trên tất cả các quận. Vì vậy số lượng quan tâm được xác định hoàn toàn bởi vectơ khoảng cách ngắn nhất$d(1,u)$. 
 
-Chúng ta được phép thêm các cạnh giữa bất kỳ cặp quận nào chưa được kết nối trước đó. Mục tiêu là thêm càng nhiều cạnh mới càng tốt đồng thời đảm bảo rằng sau tất cả những lần bổ sung này, mọi khoảng cách ngắn nhất từ ​​quận 1 vẫn không thay đổi, điều này cũng giữ cho tổng lưu lượng giao thông không thay đổi. 
+Chúng ta được phép thêm các cạnh giữa bất kỳ cặp quận nào chưa được kết nối trước đó. Mục tiêu là thêm càng nhiều cạnh mới càng tốt, đồng thời đảm bảo rằng sau tất cả những lần bổ sung này, mọi khoảng cách ngắn nhất từ ​​quận 1 vẫn không thay đổi, điều này cũng giữ cho tổng lưu lượng giao thông không thay đổi. 
 
 Thang đo ràng buộc$n, m \le 2 \cdot 10^5$ngay lập tức loại trừ mọi phương pháp tính toán lại đường đi ngắn nhất sau mỗi lần chèn cạnh giả định. Bất kỳ giải pháp nào mô phỏng rõ ràng các phần bổ sung hoặc chạy BFS nhiều lần sẽ quá chậm. Do đó, vấn đề là yêu cầu mô tả đặc điểm cấu trúc của những cạnh nào là “an toàn” để thêm vào. 
 
-Một trường hợp lỗi khó phát hiện sẽ xuất hiện nếu chúng ta cho rằng chúng ta có thể tự do kết nối các nút ở xa nhau trong cây BFS. Ví dụ: nếu chúng ta kết nối một nút rất gần 1 với một nút ở xa, chúng ta có thể vô tình rút ngắn khoảng cách đến các phần của biểu đồ mà trước đây chỉ đạt được thông qua các đường dẫn dài hơn. Ngay cả một cạnh được thêm vào cũng có thể lan truyền các cải tiến qua nhiều lớp, vì vậy chỉ kiểm tra các điểm cuối là không đủ. 
+Một trường hợp lỗi nhỏ xuất hiện nếu chúng ta cho rằng chúng ta có thể tự do kết nối các nút ở xa nhau trong cây BFS. Ví dụ: nếu chúng ta kết nối một nút rất gần 1 với một nút ở xa, chúng ta có thể vô tình rút ngắn khoảng cách đến các phần của biểu đồ mà trước đây chỉ đạt được thông qua các đường dẫn dài hơn. Ngay cả một cạnh được thêm vào cũng có thể lan truyền các cải tiến qua nhiều lớp, vì vậy chỉ kiểm tra các điểm cuối là không đủ. 
 
 ## Phương pháp tiếp cận 
 
@@ -40,7 +40,7 @@ Quan sát quan trọng là mục tiêu chỉ phụ thuộc vào khoảng cách n
 
 Một cách giải thích vũ phu là đơn giản. Đối với mọi cạnh bị thiếu có thể$(u,v)$, chúng ta tưởng tượng việc thêm nó và tính toán lại BFS từ nút 1 để xem liệu khoảng cách có giảm đi không. Điều này sẽ tốn kém$O(n)$mỗi BFS và có$O(n^2)$các cạnh ứng cử viên, dẫn đến$O(n^3)$hành vi trong trường hợp xấu nhất, vượt xa giới hạn. 
 
-Thông tin chi tiết về cấu trúc quan trọng là xem xét phân lớp BFS từ nút 1 trong biểu đồ gốc. Cho phép$dist[u] = d(1,u)$. Mọi đường đi ngắn nhất từ ​​1 phải di chuyển qua các lớp không giảm, tăng tối đa 1 trên mỗi cạnh. 
+Cái nhìn sâu sắc về cấu trúc quan trọng là xem xét phân lớp BFS từ nút 1 trong biểu đồ gốc. Cho phép$dist[u] = d(1,u)$. Mọi đường đi ngắn nhất từ ​​1 phải di chuyển qua các lớp không giảm, tăng tối đa 1 trên mỗi cạnh. 
 
 Nếu chúng ta thêm một cạnh mới$(u,v)$, bất kỳ đường dẫn ngắn hơn mới được tạo từ 1 đến nút nào đó đều phải đi qua cạnh đó dưới dạng lối tắt giữa hai lớp đã biết. Để giảm khoảng cách, cạnh mới phải tạo một tuyến đường ngắn hơn đến một số nút so với tuyến đường ngắn nhất ban đầu của nó. Điều này chỉ có thể xảy ra nếu cạnh mới kết nối hai nút mà sự tương tác của chúng tạo ra một lối tắt qua các lớp mà trước đây yêu cầu nhiều bước hơn. 
 
@@ -238,6 +238,6 @@ assert solve("""5 6
 
 Trường hợp cạnh chính là khi tất cả các nút nằm trong một lớp BFS duy nhất sau root. Trong tình huống đó, mọi nút đều có khoảng cách 1, do đó mọi cạnh mới đều nằm giữa các nút có khoảng cách bằng nhau. Thuật toán đếm chính xác tất cả các cạnh bị thiếu trong biểu đồ hoàn chỉnh, nghĩa là mọi cặp có thể được kết nối mà không thay đổi khoảng cách vì không có đường dẫn thay thế nào ngắn hơn tới bất kỳ nút nào có thể xuất hiện vượt quá khoảng cách tối thiểu vốn đã là 1. 
 
-Một tình huống quan trọng khác là biểu đồ có hình dạng như một cây có gốc tại 1. Mỗi nút nằm trong một lớp riêng biệt hoặc có cấu trúc chặt chẽ không có cặp nào trong lớp. Thuật toán tạo ra số 0, phù hợp với thực tế là bất kỳ cạnh nào được thêm vào trong cây nhất thiết phải tạo ra một lối tắt làm giảm khoảng cách từ gốc. 
+Một tình huống quan trọng khác là biểu đồ có hình dạng như một cái cây có gốc tại 1. Mỗi nút nằm trong một lớp riêng biệt hoặc có cấu trúc chặt chẽ không có cặp nào trong lớp. Thuật toán tạo ra số 0, phù hợp với thực tế là bất kỳ cạnh nào được thêm vào trong cây nhất thiết phải tạo ra một lối tắt làm giảm khoảng cách từ gốc. 
 
 Cuối cùng, hãy xem xét các biểu đồ trong đó nhiều nút chia sẻ một lớp nhưng có kết nối xuôi dòng khác nhau. Mặc dù cấu trúc bên trong khác nhau nhưng thuật toán xử lý toàn bộ lớp một cách thống nhất. Điều này là an toàn vì bất kỳ lối tắt tiềm năng nào cũng sẽ yêu cầu các lớp chéo, điều này đã bị loại trừ bởi phân vùng khoảng cách.

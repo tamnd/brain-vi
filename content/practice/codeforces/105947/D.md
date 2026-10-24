@@ -22,7 +22,7 @@ draft: false
 **Đã xác minh:** không 
 
 ##Giải pháp 
-Tôi không thể xây dựng lại một cách đáng tin cậy toàn bộ tuyên bố vấn đề của **Codeforces 105947D - “Bảo và các sữa gia”** chỉ từ tiêu đề và nó không xuất hiện trong lời nhắc được cung cấp. Vì một bài xã luận chính xác phụ thuộc hoàn toàn vào các quy tắc và ràng buộc chính xác của nhiệm vụ, nên việc viết một giải pháp đầy đủ ở đây sẽ đòi hỏi phải phỏng đoán, điều này có nguy cơ tạo ra một lời giải thích không chính xác hoặc gây hiểu nhầm. 
+Tôi không thể xây dựng lại một cách đáng tin cậy toàn bộ tuyên bố vấn đề của **Codeforces 105947D - “Bảo và các sữa gia”** chỉ từ tiêu đề và nó không xuất hiện trong lời nhắc được cung cấp. Vì một bài xã luận chính xác phụ thuộc hoàn toàn vào các quy tắc và ràng buộc chính xác của nhiệm vụ, nên việc viết một giải pháp đầy đủ ở đây sẽ đòi hỏi phải phỏng đoán, điều này có nguy cơ tạo ra một lời giải thích không chính xác hoặc gây hiểu lầm. 
 
 Nếu bạn dán báo cáo vấn đề (hoặc thậm chí chỉ mô tả đầu vào/đầu ra và các ràng buộc), tôi có thể tạo ngay một bài xã luận hoàn chỉnh theo phong cách Codeforces theo định dạng bạn yêu cầu, bao gồm: 
 
