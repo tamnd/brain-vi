@@ -26,7 +26,7 @@ draft: false
 
 Chúng ta được cho một hoán vị$q$chiều dài$n$. Chúng ta cần đếm xem có bao nhiêu hoán vị$p$có cùng độ dài thỏa mãn hai điều kiện. Đầu tiên,$p$về mặt từ điển phải lớn hơn$q$. Thứ hai,$p$tạo ra một đồ thị có thể được tô bằng ba màu sao cho mỗi cạnh nối hai đỉnh có màu khác nhau. 
 
-Việc xây dựng đồ thị được xác định hoàn toàn bằng phép nghịch đảo của$p$. Với mỗi cặp chỉ số$i < j$, chúng tôi kết nối$i$Và$j$nếu và chỉ khi$p_i > p_j$. Vì vậy, đồ thị chính xác là đồ thị đảo ngược của hoán vị, trong đó mỗi nghịch đảo trở thành một cạnh. 
+Việc xây dựng đồ thị được xác định hoàn toàn bằng phép nghịch đảo của$p$. Với mỗi cặp chỉ số$i < j$, chúng tôi kết nối$i$Và$j$nếu và chỉ nếu$p_i > p_j$. Vì vậy, đồ thị chính xác là đồ thị đảo ngược của hoán vị, trong đó mỗi nghịch đảo trở thành một cạnh. 
 
 Hạn chế chính là đồ thị đảo ngược này phải có 3 màu theo nghĩa rõ ràng là các đỉnh liền kề luôn có các màu khác nhau, do đó, đây là đồ thị 3 màu thích hợp. 
 
@@ -67,7 +67,7 @@ Kết thúc so sánh:
 
 1. Chúng tôi diễn giải lại việc xây dựng hoán vị là chọn các giá trị từ vị trí nhỏ nhất đến lớn nhất trong khi vẫn duy trì cấu trúc ngăn chặn việc hình thành nhóm đảo ngược 4 chiều bị cấm. Hệ quả quan trọng là quá trình này chỉ phụ thuộc vào việc các phần tử mở rộng chuỗi giảm dần hiện có như thế nào. 
 2. Chúng tôi duy trì DP trên các vị trí mà trạng thái mã hóa số lượng chuỗi giảm hiện đang tồn tại, với tối đa 3 chuỗi hoạt động được phép. Mỗi chuỗi được biểu thị bằng giá trị cuối cùng hiện tại của nó. Khi chèn một giá trị mới, chúng tôi sẽ thêm giá trị đó vào chuỗi hiện có nếu nó nhỏ hơn phần tử cuối cùng hoặc bắt đầu một chuỗi mới nếu tồn tại ít hơn 3 chuỗi. Điều này phản ánh hành vi sắp xếp kiên nhẫn và nó đảm bảo rằng không có 4 yếu tố không tương thích lẫn nhau phát sinh. 
-3. Chúng tôi mở rộng DP bằng cờ từ điển. Khi xây dựng$p$, chúng tôi quyết định ở mỗi vị trí xem chúng tôi có phù hợp hay không$q_i$hoặc vượt quá nó. Nếu chúng ta vượt quá nó ở vị trí khác nhau đầu tiên thì tất cả các lựa chọn tiếp theo sẽ không bị ràng buộc. Nếu chúng tôi khớp, chúng tôi phải tôn trọng chính xác các số có sẵn còn lại phù hợp với$q$. 
+3. Chúng tôi mở rộng DP bằng cờ từ điển. Khi xây dựng$p$, chúng tôi quyết định ở mỗi vị trí xem chúng tôi có khớp không$q_i$hoặc vượt quá nó. Nếu chúng ta vượt quá nó ở vị trí khác nhau đầu tiên thì tất cả các lựa chọn tiếp theo sẽ không bị ràng buộc. Nếu khớp, chúng ta phải tôn trọng chính xác các số có sẵn còn lại phù hợp với$q$. 
 4. Chúng tôi lặp lại các vị trí từ trái sang phải và đối với mỗi vị trí và trạng thái, chúng tôi thử tất cả các số hợp lệ chưa sử dụng để duy trì điều kiện khả thi 3 chuỗi. Quá trình chuyển đổi cập nhật cấu trúc chuỗi một cách xác định bằng cách chèn giá trị đã chọn vào chuỗi ngoài cùng bên trái có phần tử cuối cùng lớn hơn hoặc mở chuỗi mới nếu có thể. 
 5. Chúng tôi tích lũy số lượng modulo 998244353, chia DP thành hai lớp: chặt chẽ (tiền tố bằng$q$) và miễn phí (đã lớn hơn). 
 

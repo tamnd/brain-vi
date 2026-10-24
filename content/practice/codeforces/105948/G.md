@@ -26,7 +26,7 @@ draft: false
 
 Chúng ta được cho một lưới hình vuông có độ dài cạnh là$2n$. Bên trong lưới này, có một quy trình cố định được mô tả trong phần trước của bài toán (迷宫 I) cho phép chúng ta thêm các cạnh giữa các ô theo các quy tắc cục bộ nhất định. Bằng cách áp dụng nhiều lần quy trình này, các đồ thị cuối cùng khác nhau có thể được tạo ra trên cùng một$2n \times 2n$Cái bảng. 
 
-Nhiệm vụ là đếm xem có thể thu được bao nhiêu cấu hình cạnh cuối cùng khác biệt theo cách này. Hai cấu hình được coi là khác nhau nếu tồn tại ít nhất một cạnh kề có mặt trong một cấu hình nhưng không có ở cấu hình kia. Vì số lượng này tăng lên rất nhanh nên câu trả lời phải được báo cáo theo modulo$m$. 
+Nhiệm vụ là đếm xem có thể thu được bao nhiêu cấu hình cạnh cuối cùng khác biệt theo cách này. Hai cấu hình được coi là khác nhau nếu tồn tại ít nhất một cạnh kề có mặt trong một cấu hình nhưng không có ở cấu hình kia. Vì số đếm này tăng cực kỳ nhanh nên câu trả lời phải được báo cáo theo modulo$m$. 
 
 Mỗi trường hợp thử nghiệm cung cấp một cặp$(n, m)$và mục tiêu là tính toán số lượng cấu hình có thể truy cập cho tham số kích thước đó. 
 
@@ -36,7 +36,7 @@ Cấu trúc của đầu vào gợi ý rằng câu trả lời chỉ phụ thu�
 
 Một dạng lỗi phổ biến trong các bài toán thuộc loại này là cố gắng mô phỏng các quy tắc xây dựng cục bộ. Ngay cả khi mỗi thao tác trông có vẻ đơn giản, số lượng chuỗi thao tác có thể thực hiện được thường tăng theo cấp số nhân với$n$, làm cho việc mô phỏng không thể thực hiện được. 
 
-Một trường hợp phức tạp khác là khi$n = 1$. Trong trường hợp đó lưới chỉ$2 \times 2$và số lượng cấu hình có thể có là rất nhỏ. Bất kỳ công thức nào cũng phải xử lý chính xác trường hợp cơ bản này mà không dựa vào các phép tính gần đúng tiệm cận. 
+Một trường hợp phức tạp khác là khi$n = 1$. Trong trường hợp đó lưới chỉ$2 \times 2$và số lượng cấu hình có thể có là rất ít. Bất kỳ công thức nào cũng phải xử lý chính xác trường hợp cơ bản này mà không dựa vào các phép tính gần đúng tiệm cận. 
 
 ## Phương pháp tiếp cận 
 
@@ -53,7 +53,7 @@ mô-đun$m$yêu cầu sau đó biến nhiệm vụ thành lũy thừa mô-đun.
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
 | Liệt kê cấu hình Brute Force | Hàm mũ | Hàm mũ | Quá chậm | 
-| Phân tách lớp độc lập |$O(\log n)$mỗi trường hợp thử nghiệm |$O(1)$| Đã chấp nhận | 
+| Phân hủy lớp độc lập |$O(\log n)$mỗi trường hợp thử nghiệm |$O(1)$| Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 

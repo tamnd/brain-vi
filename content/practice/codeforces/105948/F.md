@@ -18,7 +18,7 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 1 phút 10 giây 
+**Thời gian giải:** 1 phút 10s 
 **Đã xác minh:** có 
 
 ##Giải pháp 
@@ -26,13 +26,13 @@ draft: false
 
 Chúng tôi được cấp một$2^n \times 2^n$lưới các điểm mạng. Mỗi ô được gán một thứ tự duy nhất bằng cách sử dụng chỉ mục đường cong Hilbert, đây là một phép truyền tải lấp đầy không gian đệ quy tạo ra sự hoán vị của tất cả các ô lưới từ chỉ số nhỏ nhất đến chỉ số lớn nhất. 
 
-Sau khi sửa thứ tự này, chúng tôi xây dựng một cấu trúc ngẫu nhiên trên lưới. Chúng tôi xử lý các ô theo thứ tự Hilbert tăng dần. Khi xử lý một ô$(x, y)$, chúng ta xem xét bốn lưới lân cận của nó, nhưng chỉ giữ lại những lưới có thứ tự Hilbert nhỏ hơn ô hiện tại. Trong số những người hàng xóm đủ điều kiện này, chúng tôi chọn ngẫu nhiên một ô thống nhất và kết nối ô hiện tại với ô đó. Ô đầu tiên theo thứ tự Hilbert là ô bắt đầu và tất cả các ô khác cuối cùng sẽ gắn vào các ô trước đó, do đó việc xây dựng tạo ra một cây có gốc. 
+Sau khi sửa thứ tự này, chúng tôi xây dựng một cấu trúc ngẫu nhiên trên lưới. Chúng tôi xử lý các ô theo thứ tự Hilbert tăng dần. Khi xử lý một ô$(x, y)$, chúng ta xem xét bốn lưới lân cận của nó, nhưng chỉ giữ lại những lưới có thứ tự Hilbert nhỏ hơn ô hiện tại. Trong số những người hàng xóm đủ điều kiện này, chúng tôi chọn ngẫu nhiên một ô thống nhất và kết nối ô hiện tại với ô đó. Ô đầu tiên theo thứ tự Hilbert là ô bắt đầu và tất cả các ô khác cuối cùng sẽ gắn vào các ô trước đó, do đó việc xây dựng sẽ tạo ra một cây có gốc. 
 
 Nhiệm vụ là tính toán khoảng cách đường đi ngắn nhất dự kiến ​​từ ô bắt đầu$(0,0)$đến ô đích$(2^n - 1, 0)$trong cây ngẫu nhiên thu được, trong đó khoảng cách là số đỉnh trên đường đi duy nhất giữa chúng. 
 
-Kích thước lưới tăng lên khi$2^n \le 1024$, do đó có nhiều nhất khoảng một triệu nút. Một mô phỏng đơn giản trên tất cả tính ngẫu nhiên là không thể vì mỗi nút có thể phân nhánh theo tối đa bốn hướng và số lượng cây có thể có là số mũ theo số lượng nút. Ngay cả việc lưu trữ phân bố xác suất đầy đủ của cây cũng nằm ngoài tầm với. 
+Kích thước lưới tăng lên khi$2^n \le 1024$, vậy có nhiều nhất khoảng một triệu nút. Một mô phỏng đơn giản trên tất cả tính ngẫu nhiên là không thể vì mỗi nút có thể phân nhánh theo tối đa bốn hướng và số lượng cây có thể có là số mũ theo số lượng nút. Ngay cả việc lưu trữ phân bố xác suất đầy đủ của cây cũng nằm ngoài tầm với. 
 
-Một điểm tinh tế là tuy có cấu trúc ngẫu nhiên nhưng đồ thị luôn là cây có gốc tại ô Hilbert đầu tiên. Điều đó có nghĩa là khoảng cách từ gốc tới bất kỳ nút nào chính xác bằng độ sâu của nó trong cây có gốc này. Vì vậy, vấn đề thực sự là yêu cầu độ sâu dự kiến ​​của nút mục tiêu. 
+Một điểm tinh tế là tuy có cấu trúc ngẫu nhiên nhưng đồ thị luôn là cây có gốc tại ô Hilbert đầu tiên. Điều đó có nghĩa là khoảng cách từ gốc đến bất kỳ nút nào chính xác bằng độ sâu của nó trong cây có gốc này. Vì vậy, vấn đề thực sự là yêu cầu độ sâu dự kiến ​​của nút mục tiêu. 
 
 Một lỗi phổ biến là cố gắng tính toán các đường đi ngắn nhất trong biểu đồ dự kiến ​​hoặc tính khoảng cách trung bình trên nhiều lần thực hiện ngẫu nhiên một cách trực tiếp. Điều đó dẫn đến các phương pháp tiếp cận theo cấp số nhân hoặc Monte Carlo bị hết thời gian hoặc không chính xác. 
 
@@ -71,7 +71,7 @@ Chúng tôi xác định`dp[x][y]`như độ sâu dự kiến ​​của nút$(
 
 Đối với mỗi nút$(x,y)$theo thứ tự được sắp xếp, chúng tôi kiểm tra bốn lưới lân cận của nó. Chúng tôi chỉ giữ những người hàng xóm nằm trong giới hạn và có chỉ số Hilbert nhỏ hơn. 
 
-Nếu có$k$những hàng xóm như vậy, nút chọn ngẫu nhiên một cách thống nhất làm nút cha của nó, vì vậy$$dp[x][y] = 1 + \frac{1}{k} \sum dp[\text{neighbor}]$$Nếu không có hàng xóm như vậy thì nó phải là gốc. 
+Nếu có$k$những nút lân cận như vậy, nút chọn ngẫu nhiên một nút thống nhất làm nút gốc của nó, vì vậy$$dp[x][y] = 1 + \frac{1}{k} \sum dp[\text{neighbor}]$$Nếu không có hàng xóm như vậy thì nó phải là gốc. 
 
 Sự lặp lại là hợp lệ vì cha mẹ được chọn độc lập và thống nhất trong số các ứng cử viên có sẵn. 
 
@@ -147,7 +147,7 @@ tx, ty = m - 1, 0
 print(dp[tx][ty])
 ```Việc triển khai đầu tiên tính toán các chỉ số Hilbert để khôi phục thứ tự xử lý. Sau khi sắp xếp, nó thực hiện một bước lập trình động duy nhất. Đối với mỗi ô, nó sẽ kiểm tra các ô lân cận đã được xử lý và tính trung bình độ sâu dự kiến ​​của chúng. 
 
-Một chi tiết tinh tế là chúng tôi không bao giờ lưu trữ rõ ràng xác suất của cấu trúc cây. Tất cả tính ngẫu nhiên được hấp thụ vào công thức kỳ vọng, do đó trạng thái vẫn là một vô hướng duy nhất trên mỗi ô. 
+Một chi tiết tinh tế là chúng tôi không bao giờ lưu trữ rõ ràng xác suất của cấu trúc cây. Tất cả tính ngẫu nhiên được hấp thụ vào công thức kỳ vọng, do đó trạng thái vẫn là một đại lượng vô hướng duy nhất trên mỗi ô. 
 
 ## Ví dụ đã hoạt động 
 
@@ -164,9 +164,9 @@ Mục tiêu là (1,0), vì vậy câu trả lời là 2.
 
 Điều này cho thấy các nút chỉ phụ thuộc vào những kỳ vọng đã được tính toán trước đó và không bao giờ yêu cầu cấu trúc cây tổng thể. 
 
-### Theo dõi lưới lớn hơn một chút 
+### Theo dõi để có lưới lớn hơn một chút 
 
-cho$n = 2$, các nút tích lũy dần dần các giá trị độ sâu từ các nút lân cận đã được xử lý. Các ô gần gốc có xu hướng có độ sâu dự kiến ​​nhỏ hơn vì chúng gần nhau hơn theo thứ tự Hilbert và có ít lựa chọn phân nhánh hơn, trong khi các ô ở xa hơn có tính trung bình hơn so với nhiều ô bố mẹ có thể hơn. 
+cho$n = 2$, các nút tích lũy dần dần các giá trị độ sâu từ các nút lân cận đã được xử lý. Các ô gần gốc có xu hướng có độ sâu dự kiến ​​nhỏ hơn vì chúng gần nhau hơn theo thứ tự Hilbert và có ít lựa chọn phân nhánh hơn, trong khi các ô ở xa hơn có tính trung bình so với nhiều bố mẹ có thể hơn. 
 
 Điều này xác nhận rằng DP truyền tải chính xác tính ngẫu nhiên cục bộ vào cấu trúc dự kiến ​​​​toàn cầu. 
 
@@ -201,7 +201,7 @@ def run(inp: str) -> str:
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
 | 1 | 2 | cây Hilbert tối thiểu | 
-| 2 | triển khai cụ thể | độ chính xác của việc truyền bá | 
+| 2 | triển khai cụ thể | tính chính xác của việc truyền bá | 
 | 10 | giá trị lớn | hiệu suất và sự ổn định | 
 
 ## Vỏ cạnh 

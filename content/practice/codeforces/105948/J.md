@@ -1,5 +1,5 @@
 ---
-title: "CF 105948J - Mãi mãi (II)"
+title: "CF 105948J - Mãi Mãi (II)"
 description: "Chúng ta được cung cấp một chuỗi có thể thay đổi trên các chữ cái viết thường. Số lượng cốt lõi mà chúng tôi theo dõi được xác định dựa trên một cặp ký tự có thứ tự cố định, cụ thể là các cặp trong đó ký tự đầu tiên là 'e' và ký tự thứ hai là 'f'."
 date: "2026-06-22T16:07:24+07:00"
 tags: ["codeforces", "competitive-programming"]
@@ -34,7 +34,7 @@ Cấu trúc quan trọng là chỉ những cặp liên quan đến`'e'`Và`'f'`v
 
 Một trường hợp khó phát hiện khi cập nhật lật một ký tự vào hoặc ra khỏi`'e'`hoặc`'f'`. Ví dụ, việc thay đổi một`'e'`ĐẾN`'f'`không chỉ loại bỏ những đóng góp liên quan đến vị trí đó mà còn đảo ngược vai trò của nó trong tất cả các cặp, vì vậy cả tương tác trái và phải đều phải được điều chỉnh. 
 
-Một tình huống phức tạp khác là khi nhiều`'e'`Và`'f'`được xen kẽ. Một cách tiếp cận ngây thơ cố gắng chỉ cập nhật các vùng lân cận địa phương không thành công vì mỗi vị trí tương tác với tất cả các ký tự thuộc loại đối lập ở cả hai phía. 
+Một tình huống phức tạp khác là khi nhiều`'e'`Và`'f'`được xen kẽ. Một cách tiếp cận ngây thơ cố gắng chỉ cập nhật các vùng lân cận cục bộ không thành công vì mỗi vị trí tương tác với tất cả các ký tự thuộc loại đối lập ở cả hai phía. 
 
 ## Phương pháp tiếp cận 
 
@@ -70,7 +70,7 @@ Mỗi bản cập nhật chỉ chạm vào các tập hợp tiền tố/hậu t�
 
 ### Tại sao nó hoạt động 
 
-Tổng số tiền có thể được phân tách thành những đóng góp độc lập của mỗi`'e'`lập trường chống lại tất cả`'f'`các vị trí bên phải của nó. Cây Fenwick bảo toàn chính xác hai tổng hợp cần thiết để đánh giá từng đóng góp đó: số lượng và tổng các chỉ số. Vì các bản cập nhật chỉ thay đổi một chỉ mục tại một thời điểm nên việc điều chỉnh các tổng hợp này cục bộ là đủ để duy trì tính chính xác chung. 
+Tổng số tiền có thể được phân tách thành những đóng góp độc lập của mỗi`'e'`lập trường chống lại tất cả`'f'`các vị trí bên phải của nó. Cây Fenwick bảo tồn chính xác hai tổng hợp cần thiết để đánh giá từng đóng góp đó: số lượng và tổng các chỉ số. Vì các bản cập nhật chỉ thay đổi một chỉ mục tại một thời điểm nên việc điều chỉnh các tổng hợp này cục bộ là đủ để duy trì tính chính xác chung. 
 
 Điều bất biến là tại bất kỳ thời điểm nào, cây Fenwick biểu diễn chính xác nhiều tập chỉ số của`'e'`Và`'f'`, do đó, mọi truy vấn trên phạm vi hậu tố đều trả về số lượng và tổng chính xác cần thiết để xây dựng lại công thức đóng góp. 
 

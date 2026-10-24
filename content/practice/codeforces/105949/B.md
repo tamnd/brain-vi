@@ -24,7 +24,7 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được cung cấp một “hệ thống mã hóa” ẩn hoạt động từng chữ số trên các số có độ dài cơ sở 3$n$. Tại mỗi vị trí$i$, tồn tại một hoán vị cố định$f_i$của các chữ số$\{0,1,2\}$. Khi một số được mã hóa, mỗi chữ số sẽ được thay thế độc lập bằng cách sử dụng hoán vị vị trí của nó. 
+Chúng ta được cung cấp một “hệ thống mã hóa” ẩn hoạt động từng chữ số trên các số có độ dài cơ sở 3$n$. Tại mỗi vị trí$i$, có một hoán vị cố định$f_i$của các chữ số$\{0,1,2\}$. Khi một số được mã hóa, mỗi chữ số sẽ được thay thế độc lập bằng cách sử dụng hoán vị vị trí của nó. 
 
 Điều phức tạp là chúng ta không bao giờ nhìn thấy trực tiếp các hoán vị. Thay vào đó, chúng tôi được phép gửi truy vấn bao gồm hai chuỗi ternary được mã hóa$a$Và$b$. Hệ thống giải mã chúng bằng cách sử dụng các ánh xạ không xác định, cộng các số bậc ba đơn giản thu được (với cơ số 3), sau đó mã hóa lại từng chữ số kết quả. 
 
@@ -68,7 +68,7 @@ Một khi chúng ta biết$f_i(0)$Và$f_i(1)$, chữ số còn lại trong$\{0,1
 3. Đối với từng vị trí$i$, quyết tâm$f_i(2)$là chữ số duy nhất trong$\{0,1,2\}$không xuất hiện ở$\{f_i(0), f_i(1)\}$. 
 4. Xuất tất cả các hoán vị theo thứ tự dưới dạng chuỗi. 
 
-Lý do cốt lõi khiến điều này có hiệu quả là vì chúng tôi cố tình hạn chế mỗi tổng chữ số tối đa là 1, điều này ngăn chặn bất kỳ sự lan truyền mang nào. Điều này loại bỏ tất cả tương tác giữa các vị trí và giảm hệ thống tương tác xuống còn$n$các chức năng cục bộ độc lập. 
+Lý do cốt lõi khiến điều này có hiệu quả là vì chúng tôi cố tình hạn chế mỗi tổng chữ số tối đa là 1, điều này ngăn cản bất kỳ sự lan truyền mang nào. Điều này loại bỏ tất cả tương tác giữa các vị trí và giảm hệ thống tương tác xuống còn$n$các chức năng cục bộ độc lập. 
 
 ### Tại sao nó hoạt động 
 

@@ -26,15 +26,15 @@ draft: false
 
 Chúng ta được cung cấp một hàm được xác định trên các số nguyên dương thông qua hệ số nguyên tố của chúng. Đối với một số$x$, chúng ta phân tách nó thành lũy thừa nguyên tố$x = \prod p_i^{\alpha_i}$. chức năng$F(x)$được xây dựng bằng cách lấy riêng từng lũy ​​thừa nguyên tố và đóng góp một số hạng nhân số mũ với số nguyên tố, sau đó nhân tất cả các đóng góp đó với nhau. Cụ thể, mọi quyền lực hàng đầu$p^\alpha$đóng góp một yếu tố$\alpha \cdot p$, Và$F(x)$là tích của các thừa số này trên tất cả các số nguyên tố trong$x$. Ngoài ra,$F(1)=1$. 
 
-Nhiệm vụ là tính tổng tiền tố$$S(N) = \sum_{i=1}^{N} F(i)$$cho rất lớn$N$, lên tới$10^{11}$, theo modulo$998244353$. 
+Nhiệm vụ là tính tổng tiền tố$$S(N) = \sum_{i=1}^{N} F(i)$$cho rất lớn$N$, lên đến$10^{11}$, theo modulo$998244353$. 
 
 Đây không phải là một vấn đề mô phỏng trực tiếp. Kích thước đầu vào khiến không thể lặp lại tối đa$N$, do đó cấu trúc của$F(x)$phải được khai thác. 
 
-Hàm ý ràng buộc chính là bất kỳ thuật toán nào có sự phụ thuộc tuyến tính hoặc gần tuyến tính vào$N$là không thể. Thậm chí$O(\sqrt{N})$mỗi truy vấn sẽ quá chậm nếu được thực hiện lặp đi lặp lại bên trong một phân tách đơn giản. Chúng ta cần một cái gì đó gần gũi hơn$O(N^{2/3})$hoặc tốt hơn, thường đạt được thông qua kỹ thuật tính tổng hàm nhân, chẳng hạn như đệ quy kiểu sàng Min_25. 
+Hàm ý ràng buộc chính là bất kỳ thuật toán nào có sự phụ thuộc tuyến tính hoặc gần tuyến tính vào$N$là không thể. Thậm chí$O(\sqrt{N})$mỗi truy vấn sẽ quá chậm nếu được thực hiện lặp đi lặp lại bên trong một phân tách đơn giản. Chúng ta cần thứ gì đó gần gũi hơn$O(N^{2/3})$hoặc tốt hơn, thường đạt được thông qua kỹ thuật tính tổng hàm nhân, chẳng hạn như đệ quy kiểu sàng Min_25. 
 
 Một vài hành vi cạnh rất dễ mắc sai lầm. 
 
-Nếu chúng ta bỏ qua phép nhân và cố gắng tính$F(x)$độc lập cho mỗi$x$, thậm chí tính toán hệ số lên đến$10^{11}$nhiều lần sẽ hết thời gian. 
+Nếu chúng ta bỏ qua phép nhân và cố gắng tính$F(x)$độc lập cho mỗi$x$, thậm chí tính toán hệ số lên tới$10^{11}$nhiều lần sẽ hết thời gian. 
 
 Nếu chúng ta giả sử sai về tính nhân hoàn toàn, chúng ta có thể thử$F(ab)=F(a)F(b)$luôn luôn, điều đó thất bại khi$a$Và$b$chia sẻ số nguyên tố. Ví dụ,$F(p^2)=2p$, nhưng nếu chúng ta coi nó như$F(p)^2=p^2$, chúng ta đã sai rồi. 
 
@@ -59,7 +59,7 @@ Hiệu quả đến từ việc chúng ta chỉ xử lý rõ ràng các số ngu
 
 Chúng ta viết lại bài toán dưới dạng tính tổng của hàm nhân$F(n)$lên đến$N$, trong đó hành vi quyền lực chính được biết rõ ràng. 
 
-1. Đầu tiên, chúng ta tạo ra tất cả các số nguyên tố lên tới$\sqrt{N}$. Những số nguyên tố này là những số nguyên tố duy nhất cần thiết để xây dựng tất cả các phân tích nhân tử trong phân rã đệ quy. Điều này hoạt động vì bất kỳ số nào$n \le N$có nhiều nhất một thừa số nguyên tố lớn hơn$\sqrt{N}$. 
+1. Đầu tiên, chúng ta tạo ra tất cả các số nguyên tố lên đến$\sqrt{N}$. Những số nguyên tố này là những số nguyên tố duy nhất cần thiết để xây dựng tất cả các phân tích nhân tử trong phân rã đệ quy. Điều này hoạt động vì bất kỳ số nào$n \le N$có nhiều nhất một thừa số nguyên tố lớn hơn$\sqrt{N}$. 
 2. Chúng ta định nghĩa hàm đệ quy$G(x, j)$, đại diện cho tổng của$F(n)$cho tất cả$n \le x$mà các thừa số nguyên tố của nó ít nhất là$j$-thứ nguyên tố trở lên. Trạng thái này tránh việc tính hai lần bằng cách thực thi giới hạn dưới đối với các số nguyên tố được phép. 
 3. Chúng tôi tính toán hàm tiền tố cơ sở cho tất cả các số nguyên$1 \le x \le N$ở dạng nén, thường theo dõi các giá trị tại$x$Và$N/x$. Điều này cho phép tái sử dụng các trạng thái đã tính toán vì nhiều lệnh gọi đệ quy có chung giá trị thương. 
 4. Đối với mỗi tiểu bang$G(x, j)$, chúng ta bắt đầu từ giả định rằng tất cả các số hợp lệ đều hoạt động như thể không bị hạn chế, sau đó trừ đi phần đóng góp từ các số chia hết cho$j$-th số nguyên tố$p_j$. Phép trừ này liệt kê các quyền hạn$p_j^k$và đính kèm cấu trúc đệ quy còn lại:$$n = p_j^k \cdot m$$Ở đâu$m \le x / p_j^k$. 
@@ -67,7 +67,7 @@ Chúng ta viết lại bài toán dưới dạng tính tổng của hàm nhân$F
 6. Chúng tôi ghi nhớ mọi tính toán$G(x, j)$bởi vì các trạng thái giống nhau xuất hiện lặp đi lặp lại do sự lặp lại thương số trong đệ quy dựa trên phép chia. 
 7. Câu trả lời cuối cùng là$G(N, 1)$, xem xét tất cả các số nguyên tố ngay từ đầu. 
 
-Tính đúng đắn đến từ tính bất biến ở mỗi cấp độ đệ quy$j$, hàm chỉ đếm các số có chỉ số nguyên tố bị loại trừ nhỏ nhất ít nhất$j$. Điều này phân chia tất cả các số nguyên duy nhất theo cấu trúc nguyên tố của chúng, đảm bảo mỗi số nguyên đóng góp chính xác một lần, với hệ số hóa của nó được phân tách nhất quán qua các mức đệ quy. 
+Tính đúng đắn đến từ tính bất biến ở mỗi cấp độ đệ quy$j$, hàm chỉ đếm các số có chỉ số nguyên tố bị loại trừ nhỏ nhất ít nhất là$j$. Điều này phân chia tất cả các số nguyên duy nhất theo cấu trúc nguyên tố của chúng, đảm bảo mỗi số nguyên đóng góp chính xác một lần, với hệ số hóa của nó được phân tách nhất quán qua các mức đệ quy. 
 
 ## Giải pháp Python```python
 import sys
@@ -169,7 +169,7 @@ Bây giờ chúng ta theo dõi cách tích lũy các số nguyên tố 2 và 3.
 | 2 | 4 | 4 | 2 | 8 | 
 | 3 | 8 | 6 | 1 | 6 | 
 
-Điều này chứng tỏ mức độ đóng góp theo cấp số nhân với số lần xuất hiện của mỗi lũy thừa nguyên tố. 
+Điều này chứng tỏ mức độ đóng góp theo cấp số nhân với số lần xuất hiện của mỗi lũy thừa cơ bản. 
 
 Đối với số nguyên tố 3: 
 
@@ -184,7 +184,7 @@ Bây giờ chúng ta theo dõi cách tích lũy các số nguyên tố 2 và 3.
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian |$O(N^{2/3})$dự kiến ​​| Mỗi trạng thái đệ quy được tính toán một lần và các chuyển đổi phụ thuộc vào lũy thừa nguyên tố lên tới$\sqrt{N}$| 
+| Thời gian |$O(N^{2/3})$dự kiến ​​| Mỗi trạng thái đệ quy được tính toán một lần và các chuyển đổi phụ thuộc vào lũy thừa nguyên tố lên đến$\sqrt{N}$| 
 | Không gian |$O(N^{2/3})$| Ghi nhớ trạng thái thương và lưu trữ danh sách nguyên tố | 
 
 Phép đệ quy trên các trạng thái thương đảm bảo rằng chỉ các giá trị riêng biệt của$x$Và$N/x$được xử lý. Vì$N \le 10^{11}$, điều này nằm trong giới hạn thực tế theo tối ưu hóa Min_25 điển hình. 
@@ -220,8 +220,8 @@ assert True
 
 ## Vỏ cạnh 
 
-Một trường hợp cạnh quan trọng là$N=1$. Sự đệ quy phải quay trở lại$F(1)=1$, mặc dù phép phân tích nhân tổng quát sẽ tạo ra một tích rỗng. Nếu không có trường hợp cơ sở rõ ràng, nhiều triển khai sẽ trả về 0 không chính xác. 
+Một trường hợp cạnh quan trọng là$N=1$. Sự đệ quy phải quay trở lại$F(1)=1$, mặc dù phép phân tích nhân tổng quát sẽ tạo ra một tích rỗng. Nếu không có trường hợp cơ sở rõ ràng, nhiều triển khai trả về 0 không chính xác. 
 
 Một trường hợp khác là các số là lũy thừa nguyên tố thuần túy, chẳng hạn như$2^{10}$. Ở đây, sự đóng góp đến từ mọi cấp số mũ lên đến 10 và việc bỏ qua lũy thừa trung gian sẽ đánh giá thấp kết quả. Thuật toán lặp lại rõ ràng trên tất cả$k$, đảm bảo không thiếu lớp nào. 
 
-Trường hợp cạnh thứ ba là khi$N$nằm ngay dưới một hình vuông của ranh giới nguyên tố. Ví dụ, xung quanh$p^2$, phép đệ quy phải đếm chính xác cả đóng góp đơn và đóng góp bình phương mà không cần tính kép. Việc hạn chế chỉ số nguyên tố trong phép đệ quy đảm bảo mỗi lần phân tách là duy nhất và ngăn chặn sự chồng chéo giữa các phân tích nhân tử.
+Trường hợp cạnh thứ ba là khi$N$nằm ngay dưới một hình vuông của ranh giới nguyên tố. Ví dụ, xung quanh$p^2$, phép đệ quy phải đếm chính xác cả đóng góp đơn và đóng góp bình phương mà không cần tính kép. Việc hạn chế chỉ số nguyên tố trong đệ quy đảm bảo mỗi lần phân tách là duy nhất và ngăn chặn sự chồng chéo giữa các phân tích nhân tử.

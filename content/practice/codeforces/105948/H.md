@@ -28,11 +28,11 @@ Chúng ta được cung cấp một mảng các số nguyên dương có độ d
 
 Do đó, đầu ra là một chuỗi các kỳ vọng, mỗi kỳ vọng một$k$, mỗi người tiếp quản tất cả$\binom{n}{k}$tập hợp con. 
 
-Những hạn chế là nhỏ về mặt$n$, điều này ngay lập tức loại bỏ bất kỳ số mũ nào trong$n$lần một yếu tố bổ sung cho mỗi tập hợp con. Tuy nhiên, khó khăn thực sự không phải là phép liệt kê mà là sự phụ thuộc vào giá trị trung bình của tập hợp con, kết hợp tất cả các phần tử được chọn theo cách phi tuyến tính. Bất kỳ giải pháp nào tính toán lại rõ ràng giá trị trung bình trên mỗi tập hợp con đều đắt tiền và điều kiện bổ sung$c_i > f(c)$giới thiệu một so sánh toàn cầu bên trong mỗi tập hợp con. 
+Những hạn chế là nhỏ về mặt$n$, điều này ngay lập tức loại bỏ bất kỳ số mũ nào trong$n$lần một yếu tố bổ sung cho mỗi tập hợp con. Tuy nhiên, khó khăn thực sự không phải là liệt kê mà là sự phụ thuộc vào giá trị trung bình của tập hợp con, kết hợp tất cả các phần tử được chọn theo cách phi tuyến tính. Bất kỳ giải pháp nào tính toán lại rõ ràng giá trị trung bình trên mỗi tập hợp con đều đắt tiền và điều kiện bổ sung$c_i > f(c)$giới thiệu một so sánh toàn cầu bên trong mỗi tập hợp con. 
 
-Trường hợp cạnh tinh tế xuất hiện khi tất cả các phần tử đều bằng nhau. Khi đó, mọi tập hợp con đều có giá trị trung bình bằng mọi phần tử, do đó không có phần tử nào lớn hơn giá trị trung bình và câu trả lời luôn là 0. Bất kỳ lý do nào giả định bất đẳng thức nghiêm ngặt hành xử đối xứng xung quanh giá trị trung bình vẫn phải bảo toàn trường hợp suy biến này, nếu không nó có thể vô tình đưa ra một kỳ vọng khác 0. 
+Trường hợp cạnh tinh tế xuất hiện khi tất cả các phần tử đều bằng nhau. Khi đó mọi tập hợp con đều có giá trị trung bình bằng mọi phần tử, do đó không có phần tử nào lớn hơn giá trị trung bình và câu trả lời luôn là 0. Bất kỳ lý do nào giả định bất đẳng thức nghiêm ngặt hành xử đối xứng xung quanh giá trị trung bình vẫn phải bảo toàn trường hợp suy biến này, nếu không nó có thể vô tình đưa ra một kỳ vọng khác 0. 
 
-Một trường hợp tế nhị khác là khi phân phối bị lệch. Ví dụ, nếu mảng là$[1, 1, 1, 100]$, các tập hợp con chứa 100 có độ lệch cao so với giá trị trung bình hướng lên, điều này thay đổi những phần tử nào được tính là trên mức trung bình theo cách phụ thuộc vào toàn bộ thành phần tập hợp con chứ không chỉ các giá trị riêng lẻ. 
+Một trường hợp tế nhị khác là khi phân phối bị lệch. Ví dụ, nếu mảng là$[1, 1, 1, 100]$, các tập hợp con chứa 100 có độ lệch cao so với giá trị trung bình hướng lên trên, điều này thay đổi thành phần nào được tính là trên mức trung bình theo cách phụ thuộc vào toàn bộ thành phần tập hợp con chứ không chỉ các giá trị riêng lẻ. 
 
 ## Phương pháp tiếp cận 
 
@@ -42,7 +42,7 @@ Trở ngại chính là điều kiện$c_i > \frac{1}{k}\sum c$là bất đẳng
 
 Quan sát trọng tâm là sửa một phần tử$a_i$và hỏi: có bao nhiêu tập con có kích thước$k$yếu tố này có góp phần vào số lượng “trên mức trung bình” không? Nếu chúng ta có thể tính toán, đối với mỗi phần tử, mức đóng góp dự kiến ​​của nó thì tính tuyến tính của kỳ vọng cho phép chúng ta tính tổng các khoản đóng góp và chia một cách hợp lý. Khó khăn nằm ở việc phân tích xác suất để một phần tử cố định lớn hơn giá trị trung bình của tập hợp con. 
 
-Viết lại điều kiện$a_i > \frac{S}{k}$BẰNG$k a_i > S$, Ở đâu$S$là tổng của tập con được chọn. Nếu chúng ta có điều kiện bao gồm$a_i$, phần còn lại$k-1$các phần tử tạo thành một tập hợp con từ phần tử kia$n-1$các phần tử. Khi đó bất đẳng thức trở thành một ràng buộc đối với tổng của đã chọn$k-1$các phần tử. Điều này làm giảm vấn đề đếm các tập hợp con có kích thước$k-1$có tổng dưới ngưỡng được xác định bởi$a_i$. 
+Viết lại điều kiện$a_i > \frac{S}{k}$BẰNG$k a_i > S$, Ở đâu$S$là tổng của tập con được chọn. Nếu chúng ta có điều kiện bao gồm$a_i$, phần còn lại$k-1$các phần tử tạo thành một tập hợp con từ phần tử kia$n-1$các phần tử. Khi đó bất đẳng thức trở thành một ràng buộc đối với tổng của số đã chọn$k-1$các phần tử. Điều này làm giảm vấn đề đếm các tập hợp con có kích thước$k-1$có tổng dưới ngưỡng được xác định bởi$a_i$. 
 
 Điều này biến bài toán thành bài toán đếm kiểu ba lô trên tổng các tập hợp con, nhưng với$n \le 50$, chúng ta có thể khai thác thực tế là các giá trị nhỏ ($\le n$). Điều này cho phép lập trình động giả đa thức trên kích thước và tổng tập hợp con. 
 
@@ -62,11 +62,11 @@ Chúng tôi biểu thị mảng là$a$và đặt tổng của tập hợp con đ
 3. Đối với mỗi phần tử cố định$a_i$, chúng tôi tạm thời xóa nó và tính tổng số tập hợp con trên phần còn lại$n-1$các phần tử. Chúng tôi xác định$ways[t][s]$bằng số lượng tập hợp con có kích thước$t$với tổng$s$. 
 4. Đối với cố định$k$, nếu như$a_i$được bao gồm trong tập hợp con, chúng ta cần chọn$k-1$các phần tử khác có tổng bằng$S'$. điều kiện$a_i > \frac{a_i + S'}{k}$đơn giản hóa để$k a_i > a_i + S'$, kể từ đây$S' < (k-1)a_i$. 
 5. Vì vậy, đối với mỗi$i$, sự đóng góp dự kiến ​​​​của nó vào số lượng phần tử trên mức trung bình trong kích thước-$k$tập hợp con là:$$\frac{\sum_{t=0}^{(k-1)a_i - 1} ways[k-1][t]}{\binom{n}{k}}$$6. Chúng tôi tổng hợp sự đóng góp này$i$để đạt được giá trị kỳ vọng của$g(c)$cho mỗi$k$. 
-7. Tất cả các tính toán được thực hiện theo modulo$998244353$, sử dụng nghịch đảo mô-đun để chuẩn hóa theo hệ số nhị thức. 
+7. Tất cả các tính toán được thực hiện modulo$998244353$, sử dụng nghịch đảo mô-đun để chuẩn hóa theo hệ số nhị thức. 
 
 ### Tại sao nó hoạt động 
 
-Độ chính xác dựa trên tính tuyến tính của kỳ vọng được áp dụng cho các biến chỉ báo cho mỗi phần tử nằm trên giá trị trung bình của tập hợp con. Chỉ báo của mỗi phần tử chỉ phụ thuộc vào tổng tập hợp con loại trừ phần tử đó khi chúng ta đưa vào điều kiện của nó. Điều này loại bỏ sự phụ thuộc vòng tròn giữa giá trị trung bình và thành phần tập hợp con. DP liệt kê chính xác tất cả các tập hợp con của các phần tử còn lại được nhóm theo kích thước và tổng, đồng thời sự bất đẳng thức giảm xuống điều kiện tiền tố đơn giản đối với tổng. Vì mỗi tập hợp con được tính chính xác một lần cho mỗi phần tử được bao gồm và việc chuẩn hóa là thống nhất trên tất cả$\binom{n}{k}$tập hợp con, kỳ vọng là chính xác. 
+Độ chính xác dựa trên tính tuyến tính của kỳ vọng được áp dụng cho các biến chỉ báo cho từng phần tử nằm trên giá trị trung bình của tập hợp con. Chỉ báo của mỗi phần tử chỉ phụ thuộc vào tổng tập hợp con loại trừ phần tử đó khi chúng ta đưa vào điều kiện của nó. Điều này loại bỏ sự phụ thuộc vòng tròn giữa giá trị trung bình và thành phần tập hợp con. DP liệt kê chính xác tất cả các tập hợp con của các phần tử còn lại được nhóm theo kích thước và tổng, đồng thời sự bất đẳng thức giảm xuống điều kiện tiền tố đơn giản đối với tổng. Vì mỗi tập hợp con được tính chính xác một lần cho mỗi phần tử được bao gồm và việc chuẩn hóa là thống nhất trên tất cả$\binom{n}{k}$tập hợp con, kỳ vọng là chính xác. 
 
 ## Giải pháp Python```python
 import sys

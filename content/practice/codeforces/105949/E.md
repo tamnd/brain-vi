@@ -24,7 +24,7 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được cung cấp một đồ thị có hướng đầy đủ về$n$các đỉnh được gắn nhãn trong đó mỗi cặp đỉnh có chính xác một cạnh định hướng giữa chúng, tạo thành một giải đấu. Trong số tất cả các giải đấu như vậy, chúng ta cần đếm chính xác có bao nhiêu giải đấu chứa ít nhất một chu kỳ có độ dài đơn giản được định hướng.$k$. Một chu kỳ dài$k$nghĩa là chúng ta có thể chọn$k$các đỉnh riêng biệt và sắp xếp chúng sao cho mỗi cặp liên tiếp đi theo các cạnh được định hướng và đỉnh cuối cùng quay trở lại đỉnh đầu tiên. 
+Chúng ta được cung cấp một đồ thị có hướng đầy đủ về$n$các đỉnh được gắn nhãn trong đó mỗi cặp đỉnh có chính xác một cạnh định hướng giữa chúng, tạo thành một giải đấu. Trong số tất cả các giải đấu như vậy, chúng ta cần đếm chính xác có bao nhiêu giải đấu chứa ít nhất một chu kỳ có độ dài đơn giản được định hướng.$k$. Một chu kỳ dài$k$nghĩa là chúng ta có thể chọn$k$các đỉnh riêng biệt và sắp xếp chúng sao cho mỗi cặp liên tiếp đi theo các cạnh có hướng và đỉnh cuối cùng sẽ quay trở lại đỉnh đầu tiên. 
 
 Đầu vào bao gồm hai số nguyên$n$Và$k$. Đầu ra là số lượng giải đấu được dán nhãn trên$n$đỉnh chứa ít nhất một đỉnh như vậy$k$-cycle, lấy modulo 998244353. 
 
@@ -76,7 +76,7 @@ số cách chọn đỉnh
 
 số lượng các giải đấu được kết nối mạnh mẽ trên$s$đỉnh, 
 
-và cách sắp xếp những thứ còn lại$i-s$đỉnh. 
+và cách sắp xếp những việc còn lại$i-s$đỉnh. 
 7. Tính tổng tất cả các phân tách hợp lệ thành$dp[n]$. 
 8. Đầu ra$2^{\binom{n}{2}} - dp[n]$. 
 
@@ -234,4 +234,4 @@ Khi nào$k > n$, không giải đấu nào có thể chứa đựng một$k$-cyc
 
 Khi$k = 3$, hạn chế của SCC không còn yêu cầu tất cả các thành phần có kích thước 1, điều này chỉ bắt buộc các giải đấu chuyển tiếp. Thuật toán rút gọn thành phép trừ một cách chính xác$n!$từ$2^{\binom{n}{2}}$, phù hợp với đặc điểm đã biết của các giải đấu theo chu kỳ. 
 
-Vì$n = k$, DP cho phép chính xác một khối kích thước$k$, được cân bằng bởi$g[k]$. Vì bất kỳ giải đấu nào được kết nối mạnh mẽ trên$k$đỉnh chứa một$k$-cycle, điều này tính chính xác những cấu hình đóng góp vào câu trả lời, đảm bảo rằng phép trừ sẽ loại bỏ chính xác các giải đấu có thành phần đó tồn tại.
+Vì$n = k$, DP cho phép chính xác một khối kích thước$k$, được cân bằng bởi$g[k]$. Vì bất kỳ giải đấu nào được kết nối mạnh mẽ trên$k$đỉnh chứa một$k$-cycle, điều này tính chính xác các cấu hình đóng góp vào câu trả lời, đảm bảo rằng phép trừ sẽ loại bỏ chính xác các giải đấu có thành phần đó tồn tại.

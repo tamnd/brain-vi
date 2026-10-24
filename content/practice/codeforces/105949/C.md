@@ -18,7 +18,7 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 1m 23s 
+**Thời gian giải:** 1 phút 23s 
 **Đã xác minh:** có 
 
 ##Giải pháp 
@@ -54,7 +54,7 @@ Khi S(x) được tính toán trước cho mọi x dưới dạng danh sách, ch
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
-| Mô phỏng lực lượng vũ phu | O(N2) hoặc tệ hơn | O(N) | Quá chậm | 
+| Mô phỏng lực lượng vũ phu | O(N²) hoặc tệ hơn | O(N) | Quá chậm | 
 | DP với S(x) được tính toán trước | O(N log N) | O(N log N) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
@@ -114,7 +114,7 @@ def main():
 
 if __name__ == "__main__":
     main()
-```Mảng DP E lưu trữ thời gian dự kiến ​​tối ưu cho mọi trạng thái. Hành động bị động rất đơn giản vì nó chỉ phụ thuộc vào hành động trước đó. Hành động tích cực tổng hợp trên S(x) và chi tiết triển khai chính là sự thay đổi từng đơn vị trong việc lập chỉ mục: mọi y được lấy mẫu đều chuyển sang y − 1 do sự giảm bắt buộc sau hành động. 
+```Mảng DP E lưu trữ thời gian dự kiến ​​tối ưu cho mọi trạng thái. Hành động bị động rất đơn giản vì nó chỉ phụ thuộc vào hành động trước đó. Hành động tích cực tổng hợp trên S(x) và chi tiết triển khai chính là sự dịch chuyển từng đơn vị trong việc lập chỉ mục: mọi y được lấy mẫu đều chuyển sang y − 1 do sự giảm bắt buộc sau hành động. 
 
 Việc xây dựng div và mults đảm bảo rằng S(x) được xây dựng tổng cộng khoảng O(N log N), đủ cho N lên tới 100000. 
 
