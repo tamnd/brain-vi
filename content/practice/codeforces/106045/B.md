@@ -18,12 +18,12 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 1 phút 57s 
+**Thời gian giải:** 1 phút 57 giây 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Tôi chưa thể viết một bài xã luận chính xác cho vấn đề này vì thiếu báo cáo vấn đề. 
 
 “Codeforces 106045B - Roman Empire” không đủ để xây dựng lại nhiệm vụ một cách đáng tin cậy và tôi không nên đoán các quy tắc, ràng buộc hoặc đầu ra bắt buộc. Ngay cả những khác biệt nhỏ trong cách giải thích cũng có thể làm thay đổi hoàn toàn giải pháp và khiến bài xã luận trở nên sai lệch. 
 
-Dán báo cáo vấn đề đầy đủ (hoặc thậm chí chỉ mô tả đầu vào/đầu ra và các ràng buộc) và tôi sẽ tạo một bài xã luận hoàn chỉnh theo kiểu Codeforces theo định dạng bạn đã chỉ định.
+Dán báo cáo vấn đề đầy đủ (hoặc thậm chí chỉ mô tả đầu vào/đầu ra và các ràng buộc) và tôi sẽ tạo một bài xã luận hoàn chỉnh theo phong cách Codeforces theo định dạng bạn đã chỉ định.

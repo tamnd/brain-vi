@@ -21,10 +21,10 @@ draft: false
 **Thời gian giải:** 19s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Tôi không thể viết một bài xã luận chính xác cho Codeforces 106045D từ thông tin được cung cấp. 
 
-Báo cáo vấn đề, định dạng đầu vào và định dạng đầu ra trong lời nhắc của bạn trống và tìm kiếm trên web chỉ tiết lộ rằng vấn đề với tên này tồn tại trong một cuộc thi thể dục chứ không phải tuyên bố hoặc ràng buộc thực tế. 
+Báo cáo vấn đề, định dạng đầu vào và định dạng đầu ra trong lời nhắc của bạn trống và tìm kiếm trên web chỉ cho thấy rằng vấn đề với tên này tồn tại trong một cuộc thi thể dục chứ không phải tuyên bố hoặc ràng buộc thực tế. 
 
 Để tạo ra một bài xã luận hoàn chỉnh với: 
 

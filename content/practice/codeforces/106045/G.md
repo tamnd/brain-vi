@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 47s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta cần xây dựng một mảng`n`số nguyên dương có tính chất rất cụ thể. 
@@ -36,7 +36,7 @@ Cho phép`G`là gcd của toàn bộ mảng. Đối với mọi vị trí`i`, n�
 
 Sự ràng buộc`l ≤ 10^18`là hạn chế thú vị nhất. Vì câu trả lời chỉ phụ thuộc vào cấu trúc chia hết nên chúng ta mong đợi một cách xây dựng theo lý thuyết số có lcm nằm trong giới hạn này. 
 
-Phần nguy hiểm của vấn đề là điều kiện phải được giữ cho mọi phần tử bị loại bỏ. Một công trình chỉ hoạt động cho một số vị trí là không hợp lệ. 
+Phần nguy hiểm của vấn đề là điều kiện phải được giữ cho phần tử bị loại bỏ _every_. Một công trình chỉ hoạt động cho một số vị trí là không hợp lệ. 
 
 Coi như`n = 3`và mảng:```
 6 10 15
@@ -142,7 +142,7 @@ Ngay cả lcm tối thiểu có thể có của một mảng thú vị cũng s�
 
 Sau khi chuẩn hóa, mỗi vị trí phải tương ứng với một số nguyên tố riêng biệt chia hết các phần tử khác và không chia phần tử của vị trí đó. Điều này buộc lcm phải chứa ít nhất`n`số nguyên tố riêng biệt. Lcm nhỏ nhất có thể đạt được bằng cách sử dụng giá trị đầu tiên`n`số nguyên tố. 
 
-Việc xây dựng đạt được chính xác giới hạn dưới đó. Gcd của tất cả các phần tử là`1`bởi vì mọi số nguyên tố đều bị thiếu trong một phần tử. Khi phần tử`i`được loại bỏ, số nguyên tố`p_i`xuất hiện trong mọi phần tử còn lại, do đó gcd của tập hợp còn lại ít nhất là`p_i > 1`. Do đó mỗi lần loại bỏ đều làm tăng gcd. 
+Việc xây dựng đạt được chính xác giới hạn dưới đó. Gcd của tất cả các phần tử là`1`bởi vì mọi số nguyên tố đều bị thiếu một phần tử. Khi phần tử`i`được loại bỏ, số nguyên tố`p_i`xuất hiện trong mọi phần tử còn lại, do đó gcd của tập hợp còn lại ít nhất là`p_i > 1`. Do đó mỗi lần loại bỏ đều làm tăng gcd. 
 
 Vì lcm của công trình chính xác là`P`, nó thỏa mãn giới hạn một cách chính xác khi`P ≤ l`. 
 
@@ -178,7 +178,7 @@ for _ in range(t):
 sys.stdout.write("\n".join(ans))
 ```Phần đầu tiên tính toán trước 15 số nguyên tố đầu tiên và tích các tiền tố của chúng. Điều này cho phép mọi trường hợp thử nghiệm trả lời câu hỏi về sự tồn tại trong thời gian không đổi. 
 
-Séc`n > 15`là điều cần thiết. Từ`l`không bao giờ vượt quá`10^18`, lcm không thể chứa nhiều hơn 15 số nguyên tố riêng biệt. Bất kỳ mảng thú vị nào cũng cần ít nhất`n`các số nguyên tố khác nhau, làm cho các giá trị lớn hơn không thể được. 
+Séc`n > 15`là điều cần thiết. Từ`l`không bao giờ vượt quá`10^18`, lcm không thể chứa nhiều hơn 15 số nguyên tố riêng biệt. Bất kỳ mảng thú vị nào cũng cần ít nhất`n`các số nguyên tố riêng biệt, làm cho các giá trị lớn hơn không thể thực hiện được. 
 
 Việc xây dựng chính nó là đơn giản. Nếu như`P`là sản phẩm đầu tiên`n`số nguyên tố, mỗi phần tử có được bằng cách loại bỏ chính xác một thừa số nguyên tố khỏi`P`. 
 

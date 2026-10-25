@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 27s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Tôi chưa thể viết một bài xã luận chính xác theo phong cách Codeforces cho vấn đề này vì thiếu nội dung vấn đề thực tế. 
 
 Hiện tại, tôi chỉ có tiêu đề “Ngôi nhà vui chơi của Pythagoras”, nhưng không có định nghĩa về những gì đầu vào mô tả, những gì cần tính toán hoặc thậm chí là các ràng buộc. Nếu không có điều đó, mọi giải pháp sẽ chỉ là phỏng đoán và điều đó sẽ đánh bại mục đích của một bài xã luận cho phép ai đó tìm lại thuật toán một cách đáng tin cậy. 

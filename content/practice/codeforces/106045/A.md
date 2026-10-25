@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1 phút 29s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi có một mạng lưới nơi Pacman bắt đầu từ một ô và muốn tiếp cận ô thức ăn. Các bức tường chặn chuyển động và ma cà rồng chiếm giữ các tế bào khác. Pacman muốn chọn con đường tiếp cận thức ăn trong khi mất càng ít điểm càng tốt. Ăn đồ ăn luôn mang lại 500 điểm, trong khi mỗi ma cà rồng gặp được Pacman sẽ bị giảm 10 điểm. 
@@ -58,9 +58,9 @@ P..
 
 Cách tiếp cận bạo lực là tạo ra các tuyến đường khả thi từ Pacman đến thức ăn. Với mỗi tuyến đường, chúng tôi có thể mô phỏng ma cà rồng và đếm xem có bao nhiêu con có thể cắn được. Điều này đúng vì nó tuân thủ trực tiếp các quy tắc trò chơi, nhưng số lượng tuyến đường trong một lưới có thể rất lớn. Trong một lưới mở, số lượng đường đi có thể tăng theo cấp số nhân, vì vậy ngay cả với một bảng nhỏ thì điều này cũng trở nên không thể. 
 
-Nhận xét quan trọng là một con đường dài hơn không bao giờ có thể giúp ích được cho Pacman. Nếu một tuyến đường có đường vòng hoặc đường vòng, việc loại bỏ nó sẽ khiến Pacman đến được mọi ô sau sớm hơn. Đến sớm hơn chỉ có thể khiến ma cà rồng khó bắt được anh ta hơn. Vì vậy, chiến lược tối ưu luôn sử dụng con đường ngắn nhất từ ​​Pacman đến thức ăn. 
+Nhận xét quan trọng là một con đường dài hơn không bao giờ có thể giúp ích cho Pacman. Nếu một tuyến đường có đường vòng hoặc đường vòng, việc loại bỏ nó sẽ khiến Pacman đến được mọi ô sau sớm hơn. Đến sớm hơn chỉ có thể khiến ma cà rồng khó bắt được anh ta hơn. Vì vậy, chiến lược tối ưu luôn sử dụng con đường ngắn nhất từ ​​Pacman đến thức ăn. 
 
-Bây giờ chúng ta chỉ cần biết ma cà rồng nào có thể đi được con đường ngắn nhất. Đặt khoảng cách ngắn nhất từ ​​Pacman đến thức ăn là D. Một ma cà rồng ở ô V có thể bắt được Pacman nếu nó nằm trên con đường ngắn nhất nào đó giữa Pacman và thức ăn. Điều kiện để có điều đó là: 
+Bây giờ chúng ta chỉ cần biết ma cà rồng nào có thể đi được con đường ngắn nhất. Đặt khoảng cách ngắn nhất từ ​​Pacman đến thức ăn là D. Một ma cà rồng ở ô V có thể bắt được Pacman nếu nó nằm trên con đường ngắn nhất giữa Pacman và thức ăn. Điều kiện để có điều đó là: 
 
 dist(P, V) + dist(V, F) = D 
 
@@ -151,13 +151,13 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```BFS đầu tiên tính toán khoảng cách Pacman phải di chuyển để đến từng ô. BFS thứ hai cũng thực hiện tương tự từ phía thực phẩm, cung cấp khoảng cách còn lại sau bất kỳ vị trí nào. 
+```BFS đầu tiên tính toán khoảng cách Pacman phải di chuyển để đến được từng ô. BFS thứ hai thực hiện tương tự từ phía thực phẩm, cung cấp khoảng cách còn lại sau bất kỳ vị trí nào. 
 
 Kiểm tra sự bình đẳng là cốt lõi của giải pháp. Một ô thuộc về đường đi ngắn nhất chính xác khi khoảng cách từ điểm bắt đầu đến ô cộng với khoảng cách từ ô đến đích bằng khoảng cách ngắn nhất toàn cầu. Chúng tôi áp dụng điều này trực tiếp vào các vị trí ma cà rồng. 
 
-Việc triển khai sử dụng hàng đợi BFS vì mọi chuyển động đều có chi phí như nhau. Mảng khoảng cách được khởi tạo bằng`-1`, which also handles walls and unreachable cells naturally. There are no off by one issues because Pacman's arrival time at a cell on a shortest route is exactly the BFS distance from the start.
+Việc triển khai sử dụng hàng đợi BFS vì mọi chuyển động đều có chi phí như nhau. Mảng khoảng cách được khởi tạo bằng`-1`, cũng xử lý các bức tường và các ô không thể tiếp cận một cách tự nhiên. Không có một vấn đề nào xảy ra vì thời gian đến của Pacman tại một ô trên tuyến đường ngắn nhất chính xác là khoảng cách BFS tính từ lúc bắt đầu. 
 
- ## Ví dụ đã hoạt động 
+## Ví dụ đã hoạt động 
 
 Đối với lưới này:```
 1

@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 58s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi có một mảng và một số nguyên cố định$m$, được gọi là con số bị nguyền rủa. 
@@ -252,7 +252,7 @@ $$g=\gcd(12,8)=4.$$| Vị trí | Giá trị | Chia hết cho 4? |
 | Thời gian |$O(D \log n)$mỗi hoạt động | Mỗi cập nhật hoặc truy vấn chạm nhiều nhất một cây Fenwick trên mỗi ước số | 
 | Không gian |$O(Dn)$| Một cây Fenwick cho mỗi ước số của$m$| 
 
-Từ$m \le 5000$, số ước$D$là nhỏ. Kết hợp với giới hạn toàn cầu của$10^5$các phần tử mảng và truy vấn, điều này phù hợp một cách thoải mái trong giới hạn. 
+Từ$m \le 5000$, số ước$D$là nhỏ. Kết hợp với giới hạn toàn cầu của$10^5$các phần tử mảng và truy vấn, điều này hoàn toàn phù hợp trong giới hạn. 
 
 ## Trường hợp thử nghiệm```python
 # helper: run solution on input string, return output string
@@ -397,7 +397,7 @@ assert run(
 2 1 3 20
 ```Đây$$g=\gcd(20,10)=10.$$Chỉ có giá trị đầu tiên chia hết cho 10. 
 
-Cây Fenwick cho số chia 10 báo cáo một phần tử chia hết trong phạm vi. Độ dài khoảng là 3, vì vậy câu trả lời là$$3-1=2.$$Điều này phù hợp với hành vi thực tế vì việc thêm 20 không bao giờ làm thay đổi dư lượng modulo 10. 
+Cây Fenwick cho số chia 10 báo cáo một phần tử chia hết trong phạm vi. Độ dài khoảng là 3, vì vậy câu trả lời là$$3-1=2.$$Điều này phù hợp với hành vi thực tế vì việc thêm 20 không bao giờ làm thay đổi phần dư theo modulo 10. 
 
 ### Trường hợp 2: Giá trị không chia hết cho$m$, nhưng vẫn không k-tốt 
 
@@ -407,7 +407,7 @@ Cây Fenwick cho số chia 10 báo cáo một phần tử chia hết trong phạ
 4
 1
 2 1 1 12
-```Chúng tôi có$$g=\gcd(12,8)=4.$$Giá trị 4 chia hết cho 4 nên được tính là không k-good. 
+```chúng tôi có$$g=\gcd(12,8)=4.$$Giá trị 4 chia hết cho 4 nên được tính là không k-good. 
 
 Thực vậy,$$4+12=16,$$đó là chia hết cho 8. 
 

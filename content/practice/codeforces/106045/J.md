@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 24s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 ## Phương pháp tiếp cận 

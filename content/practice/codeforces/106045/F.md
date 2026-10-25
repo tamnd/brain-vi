@@ -21,5 +21,5 @@ draft: false
 **Thời gian giải:** 5 phút 52 giây 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Phân tích
