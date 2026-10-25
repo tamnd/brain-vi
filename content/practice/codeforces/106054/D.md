@@ -28,7 +28,7 @@ Mỗi vòng của trò chơi được mô tả đầy đủ: chúng tôi biết 
 
 Được đưa ra một ứng cử viên là con át chủ bài, mỗi vòng sẽ có một người chiến thắng nhất định. Nếu cả hai quân bài có cùng chất thì bên nào có giá trị cao hơn sẽ thắng. Nếu có đúng một quân bài có quân bài tẩy, quân bài đó sẽ thắng bất kể giá trị. Nếu không, người chơi đầu tiên trong vòng sẽ thắng. Vì các vòng được chơi tuần tự và người chiến thắng trong mỗi vòng sẽ bắt đầu vòng tiếp theo, nên thứ tự của người chơi trước đã được ấn định bởi các kết quả được ghi lại, vì vậy chúng tôi không cần mô phỏng thứ tự chơi mà chỉ xác thực xem liệu lựa chọn quân bài tẩy nhất định có tái tạo số lượng người chiến thắng được quan sát hay không. 
 
-Nhiệm vụ là kiểm tra xem bộ đồ nào, trong số những bộ xuất hiện ở đầu vào, có thể được chọn làm quân át chủ bài để khi tất cả các vòng được đánh giá theo quy tắc, tổng số vòng mà mỗi người chơi thắng khớp với số đếm đã cho. Nếu không có bộ đồ nào hoạt động, chúng tôi sẽ xuất ra một dấu hoa thị. 
+Nhiệm vụ là kiểm tra xem bộ đồ nào, trong số những bộ xuất hiện ở đầu vào, có thể được chọn làm quân át chủ bài để khi tất cả các vòng được đánh giá theo quy tắc, tổng số vòng mà mỗi người chơi thắng khớp với số đếm đã cho. Nếu không có bộ đồ nào phù hợp, chúng tôi sẽ xuất ra dấu hoa thị. 
 
 Các ràng buộc cho phép lên tới 100000 vòng. Bất kỳ giải pháp nào thử tất cả các bộ quần áo và tính toán lại tất cả các vòng một cách ngây thơ sẽ chặt chẽ nhưng vẫn khả thi nếu mỗi đánh giá là tuyến tính. Tuy nhiên, một giải pháp tính toán lại nhiều hơn một lượng không đổi cho mỗi vòng cho mỗi bộ sẽ trở nên quá chậm, vì số lượng các bộ riêng biệt cũng tùy thuộc vào số vòng. 
 
@@ -126,9 +126,9 @@ if __name__ == "__main__":
 
 Đối với mỗi vòng, thay vì tính toán lại đầy đủ kết quả của từng bộ đồ, chúng tôi chỉ ghi lại thực tế là nếu một bộ đồ bằng một trong những bộ đồ đã chơi thì bộ đồ đó sẽ buộc chủ nhân của nó phải thắng vòng đó. Đây là nơi xảy ra sự giảm thiểu cần thiết: mỗi vòng đóng góp tối đa hai phần tăng, một phần cho mỗi bộ đồ tham gia. 
 
-Tính toán cơ sở hiển thị trong mã là cố ý tối thiểu vì nó không cần thiết trực tiếp trong lần đếm cuối cùng; tác dụng quyết định là việc át chủ bài chỉ xảy ra khi ứng cử viên có mặt trong vòng thi. 
+Tính toán cơ bản hiển thị trong mã là cố ý tối thiểu vì nó không cần thiết trực tiếp trong lần đếm cuối cùng; tác dụng quyết định là việc át chủ bài chỉ xảy ra khi ứng cử viên có mặt trong vòng đấu. 
 
-Cuối cùng, chúng tôi quét tất cả các bộ và kiểm tra xem bộ nào khớp với tổng số tiền thắng được yêu cầu. 
+Cuối cùng, chúng tôi quét tất cả các bộ đồ và kiểm tra xem bộ nào phù hợp với tổng số tiền thắng được yêu cầu. 
 
 ## Ví dụ đã hoạt động 
 
@@ -176,7 +176,7 @@ Số lượng tích lũy cuối cùng cho mỗi bộ đồ luôn mang lại cho 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | O(R) | Mỗi vòng đóng góp tối đa hai bản cập nhật cho phù hợp với quầy | 
+| Thời gian | O(R) | Mỗi vòng đóng góp tối đa hai bản cập nhật cho phù hợp với bộ đếm | 
 | Không gian | O(S) | Một mục cho mỗi bộ đồ riêng biệt | 
 
 Kích thước đầu vào đạt tới 100000 vòng, do đó việc xử lý tuyến tính với bản đồ băm vừa vặn thoải mái trong giới hạn. Việc sử dụng bộ nhớ vẫn tỷ lệ thuận với số lượng bộ đồ riêng biệt, cũng bị giới hạn bởi số lượng thẻ. 
@@ -202,8 +202,8 @@ assert True
 
 ## Vỏ cạnh 
 
-Một trường hợp quan trọng là khi tất cả các lá bài có cùng chất. Trong tình huống đó, mọi kết quả của vòng đấu chỉ phụ thuộc vào các giá trị, vì vậy mọi ứng cử viên đều hành xử giống hệt như quân át chủ bài. Thuật toán chỉ định chính xác các bộ đếm giống hệt nhau cho tất cả các bộ quần áo và trả về bất kỳ bộ đếm nào phù hợp. 
+Một trường hợp quan trọng là khi tất cả các lá bài có cùng chất. Trong tình huống đó, mọi kết quả của vòng đấu chỉ phụ thuộc vào các giá trị, vì vậy mọi bộ đồ ứng cử viên đều hành xử giống như quân át chủ bài. Thuật toán chỉ định chính xác các bộ đếm giống hệt nhau cho tất cả các bộ quần áo và trả về bất kỳ bộ đếm nào phù hợp. 
 
 Một trường hợp khác là khi một bộ đồ chỉ xuất hiện ở một bên trong tất cả các vòng đấu. Bộ đồ đó sẽ luôn thiên vị theo một hướng duy nhất và bộ đếm sẽ phản ánh lợi thế đơn điệu đó mà không cần xử lý đặc biệt. 
 
-Trường hợp tinh tế cuối cùng là khi M và N đều bằng 0 ngoại trừ một bên, buộc một người chơi phải thua tất cả các hiệp. Thuật toán sẽ từ chối tất cả các trận đấu một cách tự nhiên trừ khi mỗi vòng đã phù hợp với sự phân bổ cực đoan đó, bởi vì các bộ đếm được tích lũy nghiêm ngặt theo ảnh hưởng xác định và không thể tạo ra các chiến thắng bị thiếu.
+Một trường hợp tinh vi cuối cùng là khi M và N đều bằng 0 ngoại trừ một bên, buộc một người chơi phải thua tất cả các hiệp. Thuật toán sẽ từ chối tất cả các trận đấu một cách tự nhiên trừ khi mỗi vòng đã phù hợp với sự phân bổ cực đoan đó, bởi vì các bộ đếm được tích lũy nghiêm ngặt theo ảnh hưởng xác định và không thể tạo ra các chiến thắng bị thiếu.

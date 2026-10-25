@@ -79,7 +79,7 @@ Khi chúng ta có ít nhất một chỉ số may mắn, mọi phần tử đề
 
 ### Tại sao nó hoạt động 
 
-Tính đúng đắn đến từ việc coi yếu tố may mắn như một cánh cổng vĩnh viễn. Bất kỳ sự hoán đổi nào giữa hai vị trí tùy ý đều có thể được phân tách thành một chuỗi các hoán đổi liên quan đến trục, bởi vì trục luôn hợp pháp để hoán đổi với bất kỳ yếu tố nào hiện không may mắn hoặc bản thân nó không may mắn. Điều này cho phép chúng tôi đủ linh hoạt để mô phỏng các chuyển vị tùy ý. Vì chúng tôi luôn đặt một phần tử chính xác cho mỗi bước và không bao giờ hoàn tác các vị trí trước đó nên quy trình sẽ duy trì tiền tố ngày càng tăng của các vị trí cố định chính xác. 
+Tính đúng đắn đến từ việc coi yếu tố may mắn như một cánh cổng vĩnh viễn. Bất kỳ sự hoán đổi nào giữa hai vị trí tùy ý đều có thể được phân tách thành một chuỗi các hoán đổi liên quan đến trục, bởi vì trục luôn hợp pháp để hoán đổi với bất kỳ yếu tố nào hiện không may mắn hoặc bản thân nó không may mắn. Điều này mang lại cho chúng tôi đủ sự linh hoạt để mô phỏng các chuyển vị tùy ý. Vì chúng tôi luôn đặt một phần tử chính xác cho mỗi bước và không bao giờ hoàn tác các vị trí trước đó nên quy trình sẽ duy trì tiền tố ngày càng tăng của các vị trí cố định chính xác. 
 
 ## Giải pháp Python```python
 import sys
@@ -159,7 +159,7 @@ for x, y in ops:
 | tôi=1 | [4,2,1] | 0 | cần 2 ở vị trí 1 | 
 | hoán đổi trục-j | [1,2,4] | cập nhật | hoán đổi trục với chỉ số 2 rồi điều chỉnh | 
 
-Sau hai lần hoán đổi, 2 được đặt chính xác và trục xoay giúp đưa 1 vào đúng vị trí. Dấu vết cho thấy rằng mặc dù 1 và 2 không thể trao đổi trực tiếp, nhưng việc định tuyến qua 4 lại có thể thực hiện được. 
+Sau hai lần hoán đổi, 2 được đặt chính xác và trục xoay giúp đưa 1 vào đúng vị trí. Dấu vết cho thấy rằng mặc dù 1 và 2 không thể trao đổi trực tiếp nhưng việc định tuyến qua 4 lại có thể thực hiện được. 
 
 ### Ví dụ 2 
 
@@ -208,4 +208,4 @@ assert True  # sample placeholder
 
 Khi không có số may mắn, thuật toán sẽ từ chối ngay lập tức trừ khi mảng đã được sắp xếp. Điều này là cần thiết vì nếu không có một trục xoay hợp lệ thì không thể thực hiện hoán đổi nào cả. Ví dụ,`[3,1,2]`không có giá trị may mắn nào tạo ra`-1`trực tiếp, phù hợp với thực tế là không có hoạt động nào là hợp pháp. 
 
-Khi phần tử trục di chuyển trong quá trình sắp xếp, thuật toán sẽ cập nhật chỉ mục của nó sau mỗi lần hoán đổi. Nếu bản cập nhật này bị bỏ qua, các lần hoán đổi tiếp theo sẽ dẫn đến vị trí không chính xác và âm thầm làm hỏng cấu trúc. Điều này đặc biệt rõ ràng trong trường hợp trục xoay tham gia vào việc cố định các vị trí ban đầu, khiến nó di chuyển qua mảng nhiều lần.
+Khi phần tử trục xoay di chuyển trong quá trình sắp xếp, thuật toán sẽ cập nhật chỉ mục của nó sau mỗi lần hoán đổi. Nếu bản cập nhật này bị bỏ qua, các lần hoán đổi tiếp theo sẽ dẫn đến vị trí không chính xác và âm thầm làm hỏng cấu trúc. Điều này đặc biệt rõ ràng trong trường hợp trục xoay tham gia vào việc cố định các vị trí ban đầu, khiến nó di chuyển qua mảng nhiều lần.

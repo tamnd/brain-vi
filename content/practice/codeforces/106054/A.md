@@ -28,9 +28,9 @@ Chúng ta được cấp một chuỗi có độ dài cố định là 10, chỉ
 
 Vì vậy, nhiệm vụ không phải là tìm “T”, “A” và “P” ở bất kỳ đâu một cách độc lập. Chúng phải xuất hiện theo thứ tự này bên trong chuỗi gốc, có thể có các chữ cái khác ở giữa và chúng ta được phép bỏ qua những chữ cái bổ sung đó. 
 
-Các ràng buộc cực kỳ nhỏ vì độ dài chuỗi luôn chính xác là 10. Điều đó ngay lập tức cho chúng ta biết rằng ngay cả các phương pháp bậc hai hoặc bậc ba cũng sẽ là quá mức cần thiết. Quét tuyến tính là đủ và thậm chí việc sử dụng vũ lực đối với các chuỗi tiếp theo cũng có thể được chấp nhận về mặt hiệu suất. 
+Các ràng buộc cực kỳ nhỏ vì độ dài chuỗi luôn chính xác là 10. Điều đó ngay lập tức cho chúng ta biết rằng ngay cả các phương pháp bậc hai hoặc bậc ba cũng sẽ là quá mức cần thiết. Quét tuyến tính là đủ và thậm chí việc sử dụng vũ lực đối với các chuỗi tiếp theo cũng có thể chấp nhận được về mặt hiệu suất. 
 
-Có một số tình huống khó khăn đáng được nêu ra một cách rõ ràng. Một chuỗi chứa cả ba chữ cái nhưng sai thứ tự sẽ thất bại. Ví dụ: “PATXXXTXXX” chứa tất cả các ký tự nhưng không theo đúng thứ tự nên không hợp lệ. Một trường hợp khác là khi thiếu hoàn toàn một trong các chữ cái bắt buộc, chẳng hạn như “CONTRACETO”, lỗi này sẽ ngay lập tức thất bại vì không có chữ “P”. Cuối cùng, các chữ cái lặp đi lặp lại có thể gây hiểu nhầm. Một chuỗi như “TAAAPPPPPP” là hợp lệ vì chúng ta có thể chọn “T” hợp lệ đầu tiên, sau đó là bất kỳ “A” nào sau đó, sau đó là “P”, giữ nguyên thứ tự. 
+Có một số tình huống khó khăn đáng được nêu ra một cách rõ ràng. Một chuỗi chứa cả ba chữ cái nhưng sai thứ tự sẽ thất bại. Ví dụ: “PATXXXTXXX” chứa tất cả các ký tự nhưng không theo đúng thứ tự nên không hợp lệ. Một trường hợp khác là khi thiếu hoàn toàn một trong các chữ cái bắt buộc, chẳng hạn như “CONTRACETO”, lỗi này sẽ ngay lập tức thất bại vì không có chữ “P”. Cuối cùng, các chữ cái lặp đi lặp lại có thể gây hiểu nhầm. Một chuỗi như “TAAAPPPPPP” hợp lệ vì chúng ta có thể chọn “T” hợp lệ đầu tiên, sau đó là bất kỳ “A” nào sau đó, sau đó là “P”, giữ nguyên thứ tự. 
 
 ## Phương pháp tiếp cận 
 
@@ -55,7 +55,7 @@ Quan sát quan trọng là chúng ta chỉ cần theo dõi tiến trình thông 
 4. Nếu tại bất kỳ thời điểm nào`i`trở thành 3, chúng tôi đã khớp tất cả các ký tự của “TAP”, vì vậy chúng tôi có thể dừng sớm. 
 5. Sau khi quét toàn bộ chuỗi (hoặc dừng sớm), kiểm tra xem`i == 3`. Nếu có thì xuất ra “S”, nếu không thì xuất ra “N”. 
 
-Sở dĩ chỉ tiến lên trong các trận đấu là vì chúng ta phải giữ gìn trật tự. Việc bỏ qua các ký tự không khớp đảm bảo chúng ta đang tìm kiếm một chuỗi con thay vì một chuỗi con một cách hiệu quả. 
+Sở dĩ chỉ tiến lên trong các trận đấu là vì chúng ta phải giữ gìn trật tự. Việc bỏ qua các ký tự không khớp đảm bảo rằng chúng ta đang tìm kiếm một chuỗi con một cách hiệu quả thay vì một chuỗi con. 
 
 ### Tại sao nó hoạt động 
 
@@ -122,7 +122,7 @@ Chúng tôi không bao giờ đạt được`P`sau khi hoàn thành “TA”, v�
 | Thời gian | O(10) | quét tuyến tính đơn trên chuỗi có độ dài cố định | 
 | Không gian | O(1) | chỉ có một con trỏ không đổi và chuỗi đích | 
 
-Các ràng buộc cố định kích thước đầu vào ở mười ký tự, do đó thuật toán chạy trong thời gian không đổi và thỏa mãn cả giới hạn thời gian và bộ nhớ. 
+Các ràng buộc cố định kích thước đầu vào ở mức mười ký tự, do đó thuật toán chạy trong thời gian không đổi và thỏa mãn cả giới hạn thời gian và bộ nhớ. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io

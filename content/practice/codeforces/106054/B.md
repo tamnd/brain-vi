@@ -69,7 +69,7 @@ Trong một chuỗi, một khi chúng ta chọn$P_r$, mọi giá trị tiền t�
 
 Vì vậy, mỗi chuỗi có chính xác một bậc tự do: giá trị tiền tố bắt đầu của nó. 
 
-### 4. Chuyển đổi về$A_i \ge 0$hạn chế 
+### 4. Chuyển về$A_i \ge 0$hạn chế 
 
 Chúng tôi tính toán:$$A_i = P_i - P_{i-1}$$Tính không âm trở thành:$$P_i \ge P_{i-1}$$Trong mỗi chuỗi, điều này trở thành một tập hợp các bất đẳng thức tuyến tính trên giá trị bắt đầu được chọn. Chúng tôi tính toán giá trị bắt đầu khả thi tối thiểu và xem có bao nhiêu lựa chọn số nguyên vẫn nhất quán. 
 
@@ -133,7 +133,7 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Việc triển khai phản ánh sự giảm thiểu cấu trúc quan trọng: sau khi được phân tách thành các chuỗi modulo độc lập, những khác biệt bên trong của mỗi chuỗi sẽ được khắc phục hoàn toàn bằng đầu vào$B$và quyền tự do duy nhất còn lại là sự thay đổi toàn cầu được kìm hãm bởi tính không âm, để lại chính xác một cấu hình hợp lệ cho mỗi chuỗi. 
+```Việc triển khai phản ánh sự rút gọn cấu trúc quan trọng: sau khi được phân tách thành các chuỗi modulo độc lập, những khác biệt bên trong của mỗi chuỗi sẽ được khắc phục hoàn toàn bằng đầu vào$B$và quyền tự do duy nhất còn lại là sự thay đổi toàn cầu được kìm hãm bởi tính không âm, để lại chính xác một cấu hình hợp lệ cho mỗi chuỗi. 
 
 Điều tinh tế quan trọng là việc lan truyền ràng buộc thực sự xảy ra hoàn toàn trong không gian tiền tố; một khi điều đó được nhận ra, việc đếm sẽ sụp đổ đáng kể. 
 
@@ -218,10 +218,10 @@ assert run("1 1\n5\n") == "1"
 
 ## Vỏ cạnh 
 
-cho$K = 1$, mọi phần tử đều được cố định trực tiếp bằng tổng khối. Thuật toán xử lý chính xác từng vị trí như một chuỗi riêng của nó và vì mỗi chuỗi không có quyền tự do sau khi sửa các ràng buộc tiền tố nên kết quả chính xác là một mảng. 
+cho$K = 1$, mọi phần tử được cố định trực tiếp bằng tổng khối. Thuật toán xử lý chính xác từng vị trí như một chuỗi riêng và vì mỗi chuỗi không có tự do sau khi sửa các ràng buộc tiền tố nên kết quả chính xác là một mảng. 
 
 Vì$K = N$, có một phương trình duy nhất trên toàn bộ mảng. Công thức tiền tố tạo ra một chuỗi có toàn quyền tự do trong phần bù tiền tố, nhưng tính không âm gắn nó vào một cấu hình hợp lệ duy nhất, một lần nữa tạo ra một giải pháp. 
 
-Tối thiểu$N$, chẳng hạn như$N=1$, không có tương tác nào và cấu trúc tiền tố suy biến thành một biến duy nhất, được cố định trực tiếp bởi ràng buộc tổng khối duy nhất. 
+Tối thiểu$N$, chẳng hạn như$N=1$, không có tương tác và cấu trúc tiền tố suy biến thành một biến duy nhất, được cố định trực tiếp bởi ràng buộc tổng khối duy nhất. 
 
 Những trường hợp này xác nhận rằng cả hai thái cực hoàn toàn tự do và hoàn toàn cứng nhắc đều sụp đổ một cách nhất quán dưới cùng một quan điểm phân rã chuỗi.

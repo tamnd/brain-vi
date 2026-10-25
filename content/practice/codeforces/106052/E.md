@@ -1,6 +1,6 @@
 ---
 title: "CF 106052E - Lấy mẫu kem"
-description: "Chúng tôi được cung cấp một hàng hương vị kem. Mỗi vị trí chứa một mức giá duy nhất, do đó mảng là một hoán vị của các giá trị từ 1 đến n. Hãy coi hàng này như một dòng điểm, mỗi điểm được gắn nhãn bằng một chi phí riêng biệt. Tyger bắt đầu bằng cách chọn bất kỳ vị trí nào làm hương vị đầu tiên của mình."
+description: "Chúng tôi được cung cấp một hàng hương vị kem. Mỗi vị trí chứa một mức giá duy nhất, vì vậy mảng là một hoán vị của các giá trị từ 1 đến n. Hãy coi hàng này như một dòng điểm, mỗi điểm được gắn nhãn bằng một chi phí riêng biệt. Tyger bắt đầu bằng cách chọn bất kỳ vị trí nào làm hương vị đầu tiên của mình."
 date: "2026-06-25T12:23:23+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
@@ -24,9 +24,9 @@ draft: false
 ## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi được cung cấp một hàng hương vị kem. Mỗi vị trí chứa một mức giá duy nhất, do đó mảng là một hoán vị của các giá trị từ 1 đến n. Hãy coi hàng này như một dòng điểm, mỗi điểm được gắn nhãn bằng một chi phí riêng biệt. 
+Chúng tôi được cung cấp một hàng hương vị kem. Mỗi vị trí chứa một mức giá duy nhất, vì vậy mảng là một hoán vị của các giá trị từ 1 đến n. Hãy coi hàng này như một dòng điểm, mỗi điểm được gắn nhãn bằng một chi phí riêng biệt. 
 
-Tyger bắt đầu bằng cách chọn bất kỳ vị trí nào làm hương vị đầu tiên của mình. Sau đó, anh ta liên tục mở rộng “khu vực đã đến thăm” của mình từng bước một. Ở mỗi bước, chỉ những hương vị liền kề với ít nhất một hương vị đã truy cập mới là ứng cử viên. Trong số những ứng cử viên ranh giới đó, anh luôn chọn người có mức giá nhỏ nhất. Điều này tiếp tục cho đến khi tất cả các hương vị được truy cập, vì vậy quy trình xác định một quá trình truyền tải đầy đủ xác định sau khi vị trí bắt đầu được cố định. 
+Tyger bắt đầu bằng cách chọn bất kỳ vị trí nào làm hương vị đầu tiên của mình. Sau đó, anh ta liên tục mở rộng “khu vực đã đến thăm” của mình từng bước một. Ở mỗi bước, chỉ những hương vị liền kề với ít nhất một hương vị đã truy cập mới là ứng cử viên. Trong số những ứng viên ranh giới đó, anh luôn chọn người có mức giá nhỏ nhất. Điều này tiếp tục cho đến khi tất cả các hương vị được truy cập, do đó quy trình xác định một quá trình truyền tải đầy đủ xác định sau khi vị trí bắt đầu được cố định. 
 
 Đối với mỗi truy vấn, chúng ta được hỏi: nếu chúng ta buộc một hương vị p cụ thể xuất hiện chính xác vào ngày k trong quá trình mở rộng tham lam này, thì có bao nhiêu vị trí bắt đầu sẽ khiến điều đó xảy ra? 
 
@@ -38,7 +38,7 @@ Một vài trường hợp thất bại tinh vi sẽ xuất hiện nếu chúng 
 
 Nếu chúng tôi mô phỏng một cách ngây thơ cho từng vị trí bắt đầu, chúng tôi sẽ tính toán lại việc mở rộng n bước đầy đủ cho mỗi lần bắt đầu, dẫn đến O(n² log n) hoặc tệ hơn tùy thuộc vào cách chúng tôi duy trì ranh giới. TLE này thậm chí đối với n = 2000. 
 
-Một cạm bẫy khác là giả định rằng quá trình này hoạt động giống như “luôn mở rộng theo hướng tối thiểu toàn cục”. Điều đó là sai vì ranh giới phụ thuộc vào những gì đã được truy cập, do đó, cùng một vị trí có thể đạt được sớm hơn hoặc muộn hơn tùy thuộc vào việc mở rộng đến từ bên trái hay bên phải. 
+Một cạm bẫy khác là giả định quá trình này hoạt động giống như “luôn mở rộng theo hướng tối thiểu toàn cục”. Điều đó là sai vì ranh giới phụ thuộc vào những gì đã được truy cập, do đó, cùng một vị trí có thể đạt được sớm hơn hoặc muộn hơn tùy thuộc vào việc mở rộng đến từ bên trái hay bên phải. 
 
 Ví dụ: trong cấu hình nhỏ như [3, 1, 4, 2], bắt đầu từ 3 khiến 1 có thể truy cập ngay lập tức và buộc nó sớm, trong khi bắt đầu từ 4 sẽ trì hoãn quyền truy cập xuống 1. Vì vậy, chỉ mục ngày của một giá trị không phải là nội tại của riêng mảng mà nó phụ thuộc vào mô hình tăng trưởng khoảng thời gian ban đầu. 
 
@@ -147,7 +147,7 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Đầu tiên, mã xây dựng các ràng buộc nhỏ hơn gần nhất, xác định khoảng thời gian tối đa trong đó một giá trị có thể chiếm ưu thế mà không bị gián đoạn. Sau đó nó cố gắng chuyển mỗi vị trí bắt đầu thành một ngày đóng góp cho mỗi cặp (p, k). Câu trả lời cuối cùng cho mỗi truy vấn được trích xuất từ ​​số tiền tố được tính toán trước trên k. 
+```Đầu tiên, mã xây dựng các ràng buộc nhỏ hơn gần nhất, xác định khoảng thời gian tối đa trong đó một giá trị có thể chiếm ưu thế mà không bị gián đoạn. Sau đó, nó cố gắng chuyển mỗi vị trí bắt đầu thành một ngày đóng góp cho mỗi cặp (p, k). Câu trả lời cuối cùng cho mỗi truy vấn được trích xuất từ ​​số tiền tố được tính toán trước trên k. 
 
 Phần tế nhị nhất là diễn giải chính xác cách vị trí bắt đầu xác định chỉ số ngày. Mô hình khoảng cách tuyệt đối chỉ hoạt động vì mỗi bước mở rộng sẽ tăng khoảng cách lên đúng một điểm cuối, do đó việc đạt được p chỉ phụ thuộc vào số lần mở rộng cần thiết để bù đắp khoảng cách ngay từ đầu. 
 
@@ -179,7 +179,7 @@ Chúng tôi chỉ tính số ngày bắt đầu khi ngày bằng 1, tức là s 
 7 1
 4 2 6 3 7 1 5
 2 3
-```Chúng tôi phân tích vị trí 2 (giá trị 2). Phân khúc thống trị của nó bị giới hạn chặt chẽ vì các giá trị nhỏ hơn ở gần đó hạn chế việc mở rộng. 
+```Chúng tôi phân tích vị trí 2 (giá trị 2). Phân khúc thống trị của nó bị giới hạn chặt chẽ vì các giá trị nhỏ hơn gần đó hạn chế việc mở rộng. 
 
 | bắt đầu s | khoảng cách tới 2 | ngày | 
 | --- | --- | --- | 
@@ -231,7 +231,7 @@ assert run("7 1\n4 2 6 3 7 1 5\n2 3\n") == "0", "impossible case"
 | phần tử đơn | 1 | độ đúng cơ sở | 
 | mảng tăng dần | khác nhau | lan truyền ranh giới | 
 | hoán vị hỗn hợp | không trống | cấu trúc chung | 
-| trường hợp giống mẫu | 1 | tính đúng đắn trên mẫu đã biết | 
+| trường hợp giống mẫu | 1 | tính chính xác trên mẫu đã biết | 
 | truy vấn không thể | 0 | xử lý ngày không liên lạc được | 
 
 ## Vỏ cạnh 

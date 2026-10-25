@@ -32,7 +32,7 @@ Vì vậy, nhiệm vụ không phải là về một hoán vị đơn lẻ mà l
 
 Ràng buộc$N \le 2 \cdot 10^5$ngay lập tức loại trừ bất kỳ giải pháp nào tính toán lại điều kiện từ đầu cho mỗi vòng quay. Một phương pháp đơn giản sẽ mô phỏng mỗi vòng quay và với mỗi vòng quay, hãy kiểm tra tất cả các chỉ số, chi phí$O(N^2)$. Với$N = 2 \cdot 10^5$, như thế sẽ là quá chậm. 
 
-Trường hợp cạnh tinh vi là khi hoán vị đã được cấu trúc theo chu kỳ có độ dài 1 hoặc 2. Ví dụ: nếu mọi phần tử đều là nghịch đảo của chính nó theo hoán vị (như danh tính), thì mỗi phép quay hoạt động khác nhau nhưng vẫn đóng góp rất nhiều. Bất kỳ giải pháp chính xác nào cũng phải xử lý thống nhất cả cấu trúc chu trình dày đặc và cấu trúc thưa thớt mà không cần tính toán lại mỗi vòng quay. 
+Trường hợp cạnh tinh vi là khi hoán vị đã được cấu trúc theo chu kỳ có độ dài 1 hoặc 2. Ví dụ: nếu mọi phần tử đều là nghịch đảo của chính nó theo hoán vị (như danh tính), thì mỗi phép quay sẽ hoạt động khác nhau nhưng vẫn đóng góp rất nhiều. Bất kỳ giải pháp chính xác nào cũng phải xử lý thống nhất cả cấu trúc chu trình dày đặc và cấu trúc thưa thớt mà không cần tính toán lại mỗi vòng quay. 
 
 ## Phương pháp tiếp cận 
 
@@ -44,7 +44,7 @@ Quan sát quan trọng là các phép quay không làm thay đổi cấu trúc t
 
 Bây giờ hãy xem xét phép quay có tác dụng gì. Một phép quay sẽ thay đổi một cách hiệu quả phần tử nào được coi là vị trí 1, nhưng thứ tự tuần hoàn tương đối của các chỉ số vẫn được giữ nguyên. Điều này cho phép chúng ta diễn giải lại các đóng góp theo cách giống như tích chập vòng tròn: mỗi cặp hợp lệ$(x, P[x])$góp phần thực hiện nhiều phép quay tùy thuộc vào cách sắp xếp vị trí của chúng sau khi dịch chuyển. 
 
-Chúng tôi giảm vấn đề xuống việc đếm, cho mọi chỉ số$i$, có bao nhiêu phép quay thẳng hàng$i$Và$P[P[i]]$ở các vị trí tương đối chính xác sao cho điều kiện bán cố định được giữ nguyên. Điều này biến thành số lần xuất hiện trong các ca dịch chuyển tròn, có thể được xử lý bằng cách ánh xạ từng điều kiện vào các modulo offset$N$và tổng hợp các đóng góp bằng cách sử dụng tính năng đếm tần số trên một mảng nhân đôi. 
+Chúng tôi giảm vấn đề xuống việc đếm, cho mọi chỉ số$i$, có bao nhiêu phép quay thẳng hàng$i$Và$P[P[i]]$ở các vị trí tương đối chính xác sao cho điều kiện bán cố định được giữ nguyên. Điều này biến thành số lần xuất hiện trong các ca dịch chuyển vòng tròn, có thể được xử lý bằng cách ánh xạ từng điều kiện vào các modulo offset$N$và tổng hợp các đóng góp bằng cách sử dụng tính năng đếm tần số trên một mảng nhân đôi. 
 
 Điều này biến đổi vấn đề từ việc kiểm tra một thuộc tính trên tất cả các phép quay thành việc đếm các độ lệch khớp trong cấu trúc vòng tròn, có thể được tính theo thời gian tuyến tính. 
 
@@ -61,12 +61,12 @@ Chúng tôi giải thích hoán vị dưới dạng một mảng tròn và biế
 2. Lưu ý rằng đối với chỉ số cố định$x$, điều kiện$P[P[x]] = x$định nghĩa một cấu trúc xác định bao gồm ba vị trí:$x$,$P[x]$, Và$P[P[x]]$. Vì chúng ta biết cả giá trị và vị trí của nó nên chúng ta có thể biểu diễn điều này hoàn toàn dưới dạng các chỉ số trong hoán vị ban đầu. 
 3. Đối với mỗi chỉ số$i$, tính toán$j = P[i]$Và$k = P[j]$. Điều kiện được thỏa mãn ở một phép quay cụ thể nếu phép quay làm dịch chuyển mảng sao cho vị trí tương đối của$i, j, k$phù hợp với mẫu yêu cầu để được đánh giá ở cùng vị trí cấu trúc sau khi xoay. Điều này làm giảm điều kiện căn chỉnh mô-đun trên các chỉ mục. 
 4. Dịch mỗi bộ ba hợp lệ thành một phương trình bù có dạng$k - i \equiv t \pmod{N}$, Ở đâu$t$là sự quay làm cho$i$xuất hiện ở vị trí 1. Mỗi chỉ số đóng góp vào chính xác một hoặc một số lượng nhỏ các phần bù. 
-5. Sử dụng dải tần có kích thước$N$để đếm xem có bao nhiêu chỉ số đóng góp cho mỗi phần bù xoay. Đối với mỗi$i$, tính toán độ dịch chuyển cần thiết và tăng nhóm tương ứng. 
-6. Câu trả lời cuối cùng là tổng của tất cả các nhóm xoay vòng, vì mỗi nhóm biểu thị số lượng chỉ số trở thành bán cố định theo vòng quay đó. 
+5. Sử dụng mảng tần số có kích thước$N$để đếm xem có bao nhiêu chỉ số đóng góp cho mỗi phần bù xoay. Đối với mỗi$i$, tính toán độ dịch chuyển cần thiết và tăng nhóm tương ứng. 
+6. Câu trả lời cuối cùng là tổng của tất cả các nhóm xoay vòng, vì mỗi nhóm biểu thị số lượng chỉ số trở thành bán cố định theo phép quay đó. 
 
 ### Tại sao nó hoạt động 
 
-Bất biến quan trọng là điều kiện$P[P[x]] = x$chỉ phụ thuộc vào khoảng cách chu kỳ tương đối giữa$x$,$P[x]$, Và$P[P[x]]$, không phải ở vị trí tuyệt đối của chúng trong mảng. Một phép quay bảo toàn tất cả các khác biệt vòng tròn theo cặp giữa các chỉ số, do đó, bất kỳ trường hợp nào có điều kiện giữ trong một căn chỉnh đều tương ứng với chính xác một độ lệch xoay tạo ra nó. Bởi vì mỗi cấu hình hợp lệ được tính chính xác một lần trên các nhóm bù trừ, tính tổng trên tất cả các nhóm sẽ mang lại tổng đóng góp cho tất cả các lần xoay. 
+Bất biến quan trọng là điều kiện$P[P[x]] = x$chỉ phụ thuộc vào khoảng cách chu kỳ tương đối giữa$x$,$P[x]$, Và$P[P[x]]$, không phải ở vị trí tuyệt đối của chúng trong mảng. Một phép quay bảo toàn tất cả các khác biệt vòng tròn theo cặp giữa các chỉ số, do đó, bất kỳ trường hợp nào có điều kiện giữ trong một căn chỉnh đều tương ứng với chính xác một độ lệch xoay tạo ra nó. Bởi vì mỗi cấu hình hợp lệ được tính chính xác một lần trên các nhóm bù trừ, tính tổng trên tất cả các nhóm sẽ mang lại tổng đóng góp trên tất cả các vòng quay. 
 
 ## Giải pháp Python```python
 import sys
@@ -131,7 +131,7 @@ Bây giờ chúng tôi tổng hợp tần số:
 - 2 → 2 
 - 3 → 1 
 
-Tổng là$1 + 2 + 1 = 4$. Điều này tương ứng với tổng đóng góp qua các phép quay, trong đó mỗi phần bù biểu thị số lượng chỉ số trở thành bán cố định theo ca đó. 
+Tổng là$1 + 2 + 1 = 4$. Điều này tương ứng với tổng đóng góp qua các phép quay, trong đó mỗi phần bù biểu thị số lượng chỉ số trở nên bán cố định theo ca đó. 
 
 Dấu vết này cho thấy mỗi chỉ mục đóng góp độc lập như thế nào cho một lớp xoay thay vì được tính toán lại cho mỗi hoán vị. 
 
