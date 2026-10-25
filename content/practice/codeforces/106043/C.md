@@ -21,6 +21,6 @@ draft: false
 **Thời gian giải:** 1 phút 27s 
 **Đã xác minh:** không 
 
-## Giải pháp```
+##Giải pháp```
 
 ```

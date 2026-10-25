@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1 phút 9 giây 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cho một đồ thị có trọng số vô hướng được kết nối. Bắt đầu từ đỉnh`s`và kết thúc ở đỉnh`t`, chúng ta có thể đi theo bất kỳ bước đi nào, không nhất thiết phải là một con đường đơn giản. Các đỉnh và cạnh có thể được xem lại tùy ý nhiều lần. 
@@ -32,7 +32,7 @@ Nhiệm vụ là xác định có bao nhiêu số dư phân biệt modulo`k`có 
 
 Biểu đồ có thể chứa tới`10^5`đỉnh và`2·10^5`các cạnh cho mỗi trường hợp thử nghiệm. Bất kỳ giải pháp nào cố gắng liệt kê các bước đi đều vô vọng, vì ngay cả số lượng đường đi đơn giản cũng có thể là số mũ. Chúng ta cần mô tả đặc điểm cấu trúc của tất cả các tổng đường dẫn có thể đạt được. 
 
-Trường hợp cạnh nguy hiểm nhất là một cái cây. Trong một cây chỉ có một đường đi đơn giản giữa hai đỉnh, nhưng các bước đi vẫn không phải là duy nhất vì chúng ta có thể đi qua một cạnh và ngay lập tức quay lại. 
+Trường hợp cạnh nguy hiểm nhất là một cái cây. Trong một cái cây chỉ có một đường đi đơn giản giữa hai đỉnh, nhưng các bước đi vẫn không phải là duy nhất vì chúng ta có thể đi qua một cạnh và ngay lập tức quay lại. 
 
 Ví dụ:```
 2 1 4 1 2
@@ -56,13 +56,13 @@ Trường hợp cạnh cuối cùng là`k = 1`. Mỗi số đều bằng nhau`0 
 
 ## Phương pháp tiếp cận 
 
-Một ý tưởng mạnh mẽ là tạo ra các bước đi từ`s`ĐẾN`t`, tính trọng số của chúng theo modulo`k`, và đánh dấu dư lượng có thể tiếp cận. Điều này ngay lập tức gặp rắc rối vì biểu đồ có thể chứa các chu trình. Số lần đi bộ là vô hạn và thậm chí việc hạn chế chúng ta đi bộ ngắn cũng không giúp ích gì vì kích thước biểu đồ đạt tới`10^5`. 
+Một ý tưởng mạnh mẽ là tạo ra các bước đi từ`s`ĐẾN`t`, tính trọng số của chúng theo modulo`k`và đánh dấu dư lượng có thể tiếp cận. Điều này ngay lập tức gặp rắc rối vì biểu đồ có thể chứa các chu trình. Số lần đi bộ là vô hạn và thậm chí việc hạn chế chúng ta đi bộ ngắn cũng không giúp ích gì vì kích thước biểu đồ đạt tới`10^5`. 
 
 Quan sát quan trọng là tất cả các bước đi khác nhau chỉ bằng cách chèn các bước đi khép kín. Nếu chúng ta biết sự thay đổi trọng lượng nào có thể được tạo ra bằng cách đi bộ kín thì mọi`s -> t`walk chỉ đơn giản là một giá trị cơ bản cố định cộng với một số kết hợp của những thay đổi đó. 
 
 Chọn bất kỳ cây bao trùm nào và để`dist[v]`là khoảng cách của cây từ gốc đến`v`. 
 
-Đối với cạnh không phải cây`(u,v,w)`, so sánh đường đi của cây từ gốc đến`v`với con đường đi từ gốc đến`u`và sau đó sử dụng cạnh này. Sự khác biệt```
+Đối với cạnh không phải cây`(u,v,w)`, so sánh đường đi của cây từ gốc đến`v`với con đường đi từ gốc tới`u`và sau đó sử dụng cạnh này. Sự khác biệt```
 dist[u] + w - dist[v]
 ```đo lường trọng lượng có thể được đưa vào một lần đi bộ bằng cách sử dụng chu trình đó. 
 
@@ -93,7 +93,7 @@ Giá trị đó chính là câu trả lời.
 1. Xây dựng cây bao trùm bằng DFS hoặc BFS. 
 2. Trong khi duyệt cây, hãy tính`dist[v]`, tổng trọng số của cây từ gốc đến đỉnh`v`. 
 3. Khởi tạo`G = 0`. 
-4. Với mọi cạnh đồ thị`(u,v,w)`, cập nhật:```
+4. Đối với mọi cạnh đồ thị`(u,v,w)`, cập nhật:```
 G = gcd(G, 2w)
 ```Điều này giải thích cho việc đi ngang qua một cạnh và quay trở lại ngay lập tức. 
 5. Đối với cùng một cạnh, hãy cập nhật:```
@@ -107,13 +107,13 @@ k / d
 
 Khoảng cách cây cho một hàm tiềm năng. Mỗi lần duyệt cạnh có thể được viết dưới dạng đóng góp co giãn cộng với số hạng sai lệch. 
 
-Khi hoàn thành`s -> t`bước đi được mở rộng theo cách này, các bộ phận thu gọn về một hằng số cố định chỉ phụ thuộc vào`s`Và`t`. Sự tự do duy nhất đến từ sự kết hợp số nguyên của các giá trị sai lệch và`2w`các hoạt động quay lại. 
+Khi hoàn thành`s -> t`bước đi được mở rộng theo cách này, các bộ phận thu gọn về một hằng số cố định chỉ phụ thuộc vào`s`Và`t`. Sự tự do duy nhất đến từ sự kết hợp số nguyên của các giá trị sai lệch và`2w`hoạt động quay lại. 
 
 Tập hợp tất cả sự khác biệt về trọng lượng đi bộ chính xác là nhóm con cộng được tạo ra bởi các giá trị đó. Bất kỳ nhóm con cộng nào của các số nguyên đều được tạo bởi gcd của nó, đó là`G`. 
 
-Modulo`k`, dư lượng có thể tiếp cận được tạo thành nhóm con tuần hoàn được tạo bởi`G mod k`. Một nhóm con tuần hoàn được tạo bởi`G`có kích thước`k / gcd(k,G)`, giving the required count.
+Modulo`k`, dư lượng có thể tiếp cận được tạo thành nhóm con tuần hoàn được tạo bởi`G mod k`. Một nhóm con tuần hoàn được tạo bởi`G`có kích thước`k / gcd(k,G)`, đưa ra số lượng cần thiết. 
 
- ## Giải pháp Python```python
+## Giải pháp Python```python
 import sys
 from math import gcd
 
@@ -373,10 +373,10 @@ Bây giờ hãy xem xét:```
 1
 2 1 1 1 2
 1 2 100
-```Mọi số nguyên đều bằng`0 mod 1`. Thuật toán tính toán:```
+```Mọi số nguyên đều đồng dạng với`0 mod 1`. Thuật toán tính toán:```
 answer = 1 / gcd(1, G) = 1
 ```đó là kết quả duy nhất có thể xảy ra. 
 
 Cuối cùng, hãy xem xét một biểu đồ có độ lệch chu kỳ gcd đã`1`. Một lần`G = 1`, chúng ta có:```
 gcd(k, G) = 1
-```và câu trả lời trở thành`k`. Thuật toán nhận dạng chính xác rằng mọi modulo dư`k`có thể được sản xuất.
+```và câu trả lời trở thành`k`. Thuật toán nhận ra chính xác rằng mọi modulo dư`k`có thể được sản xuất.

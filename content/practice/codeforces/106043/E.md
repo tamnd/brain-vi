@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 18s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Tôi không thể viết một bài xã luận chính xác cho vấn đề này vì thiếu tuyên bố thực tế, định dạng đầu vào, định dạng đầu ra và các ràng buộc. 
 
 Chỉ riêng tựa đề "Codeforces 106043E - Castlefall" là chưa đủ để tái hiện lại vấn đề. Tôi đã kiểm tra các tài liệu tham khảo công khai có sẵn, nhưng chúng không bao gồm chính tuyên bố đó, chỉ có các trang siêu dữ liệu về cuộc thi và trạng thái gửi bài. 

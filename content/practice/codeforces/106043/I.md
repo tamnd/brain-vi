@@ -21,24 +21,24 @@ draft: false
 **Thời gian giải:** 48s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cho một dãy có độ dài$N$chỉ bao gồm số không và số một. Nhiệm vụ là đếm xem có bao nhiêu hoán vị của chỉ số$1 \dots N$là “hợp lệ” theo hai quy tắc đồng thời. 
 
 Quy tắc đầu tiên hạn chế _hình dạng_ của hoán vị: các giá trị được lấy theo thứ tự tạo thành một mẫu xen kẽ nghiêm ngặt, bắt đầu bằng một đỉnh, do đó chuỗi sẽ đi lên cao-thấp-cao-thấp, v.v. Cụ thể, mọi vị trí bên trong phải lớn hơn cả hai vị trí lân cận hoặc nhỏ hơn cả hai vị trí lân cận theo nghĩa xen kẽ cố định. 
 
-Quy tắc thứ hai liên kết từng vị trí trong hoán vị với mảng ban đầu: nếu một chỉ mục$P_i$được đặt ở vị trí$i$, thì giá trị$A_{P_i}$phải phù hợp với tính chẵn lẻ của$i$. Nói cách khác, các vị trí xen kẽ nhau theo loại bit bắt buộc và mỗi phần tử của hoán vị phải tôn trọng ràng buộc chẵn lẻ đó. 
+Quy tắc thứ hai liên kết từng vị trí trong hoán vị với mảng ban đầu: nếu một chỉ mục$P_i$được đặt ở vị trí$i$, thì giá trị$A_{P_i}$phải phù hợp với tính chẵn lẻ của$i$. Nói cách khác, các vị trí xen kẽ theo loại bit bắt buộc và mỗi phần tử của hoán vị phải tôn trọng ràng buộc chẵn lẻ đó. 
 
 Vì vậy, chúng tôi không chỉ đếm các hoán vị, chúng tôi đang đếm các hoán vị đồng thời thỏa mãn ràng buộc hình dạng xen kẽ toàn cục và ràng buộc tương thích cục bộ giữa các chỉ số và bit được gán của chúng. 
 
 Đầu ra là một modulo số nguyên duy nhất$998244353$, và kể từ đó$N$có thể lớn (lên đến$10^6$), rõ ràng chúng ta không thể liệt kê các hoán vị hoặc thậm chí kiểm tra chúng một cách riêng lẻ. 
 
-Một quan điểm ngây thơ đã gợi ý một không gian tìm kiếm ở quy mô giai thừa, do đó, bất kỳ điều gì liên quan đến việc xây dựng hoán vị rõ ràng hoặc quay lui đều ngay lập tức không khả thi. 
+Một quan điểm ngây thơ đã đề xuất một không gian tìm kiếm ở quy mô giai thừa, do đó, bất kỳ điều gì liên quan đến việc xây dựng hoán vị rõ ràng hoặc quay lui đều ngay lập tức không khả thi. 
 
 Các trường hợp lỗi tinh vi xuất hiện khi số lượng số 0 và số 1 không cân bằng so với vị trí chẵn lẻ. Ví dụ, nếu$N=1$Và$A=[0]$, không có hoán vị hợp lệ vì vị trí$1$đòi hỏi sự chẵn lẻ$1$, nhưng phần tử duy nhất có giá trị$0$. Cách tiếp cận bạo lực vẫn có thể “đếm” một hoán vị và bỏ lỡ sự tương tác ràng buộc này. 
 
-Trường hợp cạnh thú vị hơn xảy ra khi tất cả các giá trị giống hệt nhau. Nếu như$A=[1,1,1,1]$, ràng buộc chẵn lẻ buộc cấu trúc trên các chỉ số, nhưng ràng buộc hoán vị xen kẽ vẫn yêu cầu một mẫu lên xuống cụ thể. Nhiều cách tiếp cận tổ hợp ngây thơ sẽ được tính quá mức ở đây bằng cách bỏ qua rằng hình dạng hoán vị không tự do một khi các phép gán chẵn lẻ được cố định. 
+Một trường hợp cạnh thú vị hơn xảy ra khi tất cả các giá trị đều giống hệt nhau. Nếu như$A=[1,1,1,1]$, ràng buộc chẵn lẻ buộc cấu trúc trên các chỉ số, nhưng ràng buộc hoán vị xen kẽ vẫn yêu cầu một mẫu lên xuống cụ thể. Nhiều cách tiếp cận tổ hợp ngây thơ sẽ được tính quá mức ở đây bằng cách bỏ qua rằng hình dạng hoán vị không tự do một khi các phép gán chẵn lẻ được cố định. 
 
 ## Phương pháp tiếp cận 
 

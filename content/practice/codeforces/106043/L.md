@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 26s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Tôi có thể viết bài xã luận, nhưng thiếu báo cáo vấn đề thực tế cho **Codeforces 106043L - Sự cố thú vị** và tôi không thể xác định được vấn đề Codeforces phù hợp từ tổ hợp ID/tiêu đề đó. Kết quả tìm kiếm không chứa câu lệnh hoặc định dạng đầu vào cần thiết để rút ra thuật toán. 
 
 Vui lòng dán toàn bộ báo cáo vấn đề (hoặc ít nhất là đầu vào, đầu ra, các ràng buộc và ví dụ) và tôi sẽ tạo ra bài xã luận hoàn chỉnh theo cấu trúc chính xác mà bạn yêu cầu.

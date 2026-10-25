@@ -21,14 +21,14 @@ draft: false
 **Thời gian giải:** 49s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cấp một hàng đá, mỗi viên đá có một màu, được biểu thị bằng một chuỗi ký tự. Mục tiêu là biến đổi hàng sao cho không có hai viên đá liền kề nào có cùng màu. Chúng tôi không được phép sắp xếp lại các viên đá; thay vào đó, chúng ta có thể loại bỏ đá. Nhiệm vụ là xác định số lần loại bỏ tối thiểu cần thiết để chuỗi còn lại không có ký tự bằng nhau liên tiếp. 
 
-Nói cách khác, chúng tôi muốn nén chuỗi thành một chuỗi “liền kề xen kẽ chặt chẽ” bằng cách xóa càng ít ký tự càng tốt. Trình tự cuối cùng phải giữ nguyên thứ tự ban đầu nhưng được phép xóa bất kỳ số lượng nào. 
+Nói cách khác, chúng tôi muốn nén chuỗi thành một chuỗi “liền kề xen kẽ chặt chẽ” bằng cách xóa càng ít ký tự càng tốt. Trình tự cuối cùng phải giữ nguyên thứ tự ban đầu, nhưng được phép xóa bất kỳ số lượng nào. 
 
-Kích thước đầu vào trong vấn đề này nhỏ (phiên bản Codeforces điển hình có n lên tới 50), điều này ngay lập tức gợi ý rằng ngay cả quét bậc hai hoặc tuyến tính với các hằng số nhỏ cũng đủ. Bất cứ điều gì vượt quá O(n2) đều không cần thiết và thậm chí O(n2) là quá mức cần thiết. 
+Kích thước đầu vào trong vấn đề này nhỏ (phiên bản Codeforces điển hình có n lên đến 50), điều này ngay lập tức gợi ý rằng ngay cả quét bậc hai hoặc tuyến tính với các hằng số nhỏ cũng đủ. Bất cứ điều gì vượt quá O(n2) đều không cần thiết và thậm chí O(n2) là quá mức cần thiết. 
 
 Các trường hợp cạnh khóa xuất hiện khi chuỗi đã hợp lệ hoặc khi tất cả các ký tự giống hệt nhau. 
 
@@ -42,7 +42,7 @@ Một giải pháp đúng sẽ tránh hoàn toàn việc mô phỏng và thay v�
 
 Ý tưởng brute-force là cố gắng xóa các tập hợp con ký tự một cách rõ ràng và kiểm tra xem chuỗi kết quả có cặp liền kề bằng nhau hay không. Đối với mỗi tập hợp con, chúng tôi xây dựng lại chuỗi và xác thực nó trong O(n). Vì có 2ⁿ tập hợp con nên điều này nhanh chóng trở nên không khả thi ngay cả đối với n khiêm tốn; tại n = 50, giá trị này rất lớn về mặt thiên văn và hoàn toàn không thể sử dụng được. 
 
-Quan sát quan trọng là chúng ta thực sự không cần quyết định những ký tự nào còn lại, chỉ có bao nhiêu cặp bằng nhau liên tiếp tồn tại trong chuỗi gốc. Mỗi khi chúng ta nhìn thấy hai ký tự liền kề giống hệt nhau thì ít nhất một trong số chúng phải bị loại bỏ. Nếu chúng ta quét từ trái sang phải và đếm xem có bao nhiêu vị trí tôi thỏa mãn s[i] == s[i−1], thì mỗi lần xuất hiện như vậy thể hiện một lần xóa bắt buộc trong một chiến lược tối ưu. 
+Quan sát quan trọng là chúng ta thực sự không cần phải quyết định những ký tự nào còn lại, chỉ có bao nhiêu cặp bằng nhau liên tiếp tồn tại trong chuỗi gốc. Mỗi khi chúng ta nhìn thấy hai ký tự liền kề giống hệt nhau thì ít nhất một trong số chúng phải bị loại bỏ. Nếu chúng ta quét từ trái sang phải và đếm xem có bao nhiêu vị trí tôi thỏa mãn s[i] == s[i−1], thì mỗi lần xuất hiện như vậy thể hiện một lần xóa bắt buộc trong một chiến lược tối ưu. 
 
 Điều này có hiệu quả vì bất kỳ khối tối đa nào gồm các ký tự giống hệt nhau có độ dài k đều có thể được giảm xuống thành một ký tự đơn, yêu cầu xóa chính xác k−1. Tổng hợp điều này qua tất cả các lần chạy sẽ đưa ra câu trả lời. 
 
@@ -87,7 +87,7 @@ if __name__ == "__main__":
     solve()
 ```Giải pháp dựa trên một lần quét tuyến tính duy nhất. Biến`deletions`theo dõi chính xác có bao nhiêu cặp bằng nhau liền kề tồn tại trong chuỗi gốc. Chúng tôi không bao giờ sửa đổi chuỗi để tránh các lỗi dịch chuyển chỉ mục thường gặp trong các phương pháp mô phỏng tham lam. 
 
-Vòng lặp bắt đầu ở chỉ số 1 vì mỗi lần so sánh đều so với ký tự trước đó. Điều này tránh việc kiểm tra ngoài giới hạn và nắm bắt rõ ràng mọi vùng lân cận một lần. 
+Vòng lặp bắt đầu ở chỉ số 1 vì mỗi lần so sánh đều so sánh với ký tự trước đó. Điều này tránh việc kiểm tra ngoài giới hạn và nắm bắt rõ ràng mọi vùng lân cận một lần. 
 
 ## Ví dụ đã hoạt động 
 
@@ -109,7 +109,7 @@ Vòng lặp bắt đầu ở chỉ số 1 vì mỗi lần so sánh đều so v�
 
 Đầu ra cuối cùng là 4, phù hợp với ý tưởng rằng một khối có độ dài 5 cần 4 lần xóa. 
 
-Ví dụ này cho thấy các phân đoạn đồng nhất tích lũy các lần xóa một cách tuyến tính trong bao lâu. 
+Ví dụ này cho thấy các phân đoạn thống nhất tích lũy các lần xóa một cách tuyến tính trong bao lâu. 
 
 ## Phân tích độ phức tạp 
 

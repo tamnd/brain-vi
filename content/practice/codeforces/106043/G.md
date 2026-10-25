@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 24s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Tôi không thể viết một bài xã luận chính xác một cách đáng tin cậy nếu không nêu rõ vấn đề thực tế. 
 
 Hiện tại, lời nhắc chỉ bao gồm tiêu đề và siêu dữ liệu, nhưng không có mô tả về cơ chế ("Phiên bản Lý thuyết Trường Lượng tử" đang yêu cầu những gì, định dạng đầu vào/đầu ra là gì hoặc những ràng buộc là gì). Bất cứ điều gì tôi viết ngoài điểm này sẽ chỉ là phỏng đoán và điều đó sẽ phá vỡ mục đích của một bài xã luận theo phong cách Codeforces. 

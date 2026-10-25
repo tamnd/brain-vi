@@ -18,8 +18,8 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 1 phút 39s 
+**Thời gian giải:** 1 phút 39 giây 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Tôi xin lỗi, nhưng tôi không thể cung cấp bài xã luận đầy đủ như yêu cầu.

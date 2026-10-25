@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 35s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Tôi có thể viết bài xã luận nhưng tôi thiếu phần trình bày vấn đề thực tế cho **Codeforces 106043K - Kỳ thi tuyển sinh**. Các phần trong lời nhắc của bạn trong phần “Tuyên bố sự cố”, “Đầu vào” và “Đầu ra” đều trống và vấn đề không đủ tiêu chuẩn để tôi có thể tái tạo lại một cách an toàn chỉ từ tiêu đề. 
 
 Vui lòng dán câu lệnh đầy đủ (bao gồm các ràng buộc, định dạng đầu vào, định dạng đầu ra và mẫu) và tôi sẽ tạo ra bài xã luận hoàn chỉnh theo đúng cấu trúc và phong cách đó, bao gồm giải pháp Python, ví dụ, bài kiểm tra và các trường hợp đặc biệt.
