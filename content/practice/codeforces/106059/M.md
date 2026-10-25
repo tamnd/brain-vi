@@ -46,7 +46,7 @@ Quan sát chính là hoạt động chỉ phụ thuộc vào số liệu thống
 
 Khi chúng tôi sắp xếp tiền tố, hệ thống sẽ trở nên đối xứng xung quanh chỉ số trung vị của nó. Mỗi thao tác chọn một vị trí ngẫu nhiên một cách hiệu quả và thay thế nó bằng phần tử trung vị của nhiều tập hợp còn lại, luôn có cùng giá trị được xếp hạng ở giữa theo thứ tự được sắp xếp. Do đó, quá trình này sẽ đẩy cấu hình về trạng thái trong đó tất cả các phần tử đều sụp đổ vào vị trí trung bình.
 
-Thời gian dự kiến ​​​​sẽ sụp đổ có thể được biểu thị dưới dạng tích lũy tuyến tính theo khoảng cách từ mỗi phần tử đến vị trí trung bình trong không gian xếp hạng. Mỗi bước làm giảm tổng “khối lượng sai lệch xếp hạng” này trong kỳ vọng theo một phân số cố định, dẫn đến biểu thức dạng đóng liên quan đến tỷ lệ hài hòa trên kích thước tiền tố. 
+Thời gian dự kiến ​​​​sẽ sụp đổ có thể được biểu thị dưới dạng tích lũy tuyến tính theo khoảng cách từ mỗi phần tử đến vị trí trung bình trong không gian xếp hạng. Mỗi bước làm giảm tổng “khối lượng lệch thứ hạng” này trong kỳ vọng theo một phân số cố định, dẫn đến biểu thức dạng đóng liên quan đến tỷ lệ hài hòa trên kích thước tiền tố. 
 
 Điều này cho phép chúng tôi duy trì cấu trúc được sắp xếp cho từng tiền tố và cập nhật dần dần các đóng góp khi chúng tôi chèn các phần tử mới. 
 
@@ -60,7 +60,7 @@ Thời gian dự kiến ​​​​sẽ sụp đổ có thể được biểu t
 Chúng tôi xử lý từng tiền tố một, duy trì thứ tự sắp xếp của các phần tử được thấy cho đến nay. 
 
 1. Chèn phần tử tiếp theo vào cấu trúc được sắp xếp đại diện cho tiền tố hiện tại. Điều này cho phép chúng tôi biết vị trí xếp hạng của nó trong số tất cả các phần tử tiền tố, đây là thông tin duy nhất liên quan đến hoạt động dựa trên trung vị. 
-2. Gọi k là kích thước tiền tố hiện tại. Vị trí trung vị trong không gian xếp hạng là (k+1)/2. Đây là vị trí mục tiêu ổn định mà tất cả các phần tử đang được hướng tới một cách hiệu quả bằng cách thay thế trung vị lặp đi lặp lại. 
+2. Gọi k là kích thước tiền tố hiện tại. Vị trí trung vị trong không gian xếp hạng là (k+1)/2. Đây là vị trí mục tiêu ổn định mà tất cả các yếu tố đang được hướng tới một cách hiệu quả bằng cách thay thế trung vị lặp đi lặp lại. 
 3. Tính tổng độ lệch của các phần tử so với vị trí trung vị này theo khoảng cách xếp hạng. Đối với mỗi phần tử, chúng tôi xem xét vị trí của nó trong tiền tố được sắp xếp cách xa chỉ số trung vị bao xa. Điều này đo lường mức độ “xa” của nó so với việc căn chỉnh với cấu hình hấp thụ. 
 4. Số lượng thao tác dự kiến ​​​​cần thiết cho tiền tố có kích thước k tỷ lệ thuận với tổng độ lệch này được chia tỷ lệ theo hệ số tùy thuộc vào k. Cụ thể, mỗi thao tác ảnh hưởng đến một chỉ số được chọn thống nhất, do đó mức giảm dự kiến ​​trên mỗi bước là 1/k khối lượng sai lệch còn lại, dẫn đến hiệu ứng chia tỷ lệ hài hòa. 
 5. Chúng tôi duy trì tổng độ lệch này tăng dần bằng cách sử dụng cây Fenwick hoặc cấu trúc thống kê thứ tự. Mỗi lần chèn sẽ cập nhật thứ hạng của các phần tử và điều chỉnh tổng độ lệch một cách hiệu quả. 
@@ -153,7 +153,7 @@ Hãy xem xét mảng [3, 1, 2].
 
 Đối với tiền tố [3], vị trí trung vị là 1 và phần tử duy nhất đã ở vị trí đó. Tổng độ lệch là 0, vì vậy giá trị kỳ vọng là 0. 
 
-Đối với tiền tố [3, 1], mảng được sắp xếp là [1, 3], vị trí trung vị là 1,5, do đó cả hai phần tử đều đóng góp vào độ lệch như nhau. Cấu trúc hiển thị khoảng cách đối xứng 0,5 mỗi khoảng, cho độ lệch tổng cộng là 1. Sau khi chia tỷ lệ 1/2, chúng ta nhận được giá trị mong đợi. 
+Đối với tiền tố [3, 1], mảng được sắp xếp là [1, 3], vị trí trung vị là 1,5, do đó cả hai phần tử đều đóng góp vào độ lệch bằng nhau. Cấu trúc hiển thị khoảng cách đối xứng 0,5 mỗi khoảng, cho độ lệch tổng cộng là 1. Sau khi chia tỷ lệ 1/2, chúng ta nhận được giá trị mong đợi. 
 
 | Tiền tố | Đã sắp xếp | Vị trí trung bình | Độ lệch | Tổng cộng | Thu nhỏ | 
 | --- | --- | --- | --- | --- | --- | 

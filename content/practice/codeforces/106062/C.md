@@ -24,11 +24,11 @@ draft: false
 ## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được cung cấp một chuỗi các thực thể, mỗi thực thể được mô tả bằng ba số hoạt động giống như các tham số của hồ sơ đào tạo. Khi xử lý chuỗi từ trái sang phải, mỗi vị trí$i$phải chọn đúng một vị trí trước đó$j < i$và đạt được số điểm được xác định bởi sự tương tác hỗn hợp giữa các thông số của chúng. 
+Chúng ta được cung cấp một chuỗi các thực thể, mỗi thực thể được mô tả bằng ba số hoạt động giống như các tham số của hồ sơ đào tạo. Khi xử lý chuỗi từ trái qua phải, mỗi vị trí$i$phải chọn đúng một vị trí trước đó$j < i$và đạt được số điểm được xác định bởi sự tương tác hỗn hợp giữa các thông số của chúng. 
 
 Cụ thể, mỗi phần tử$i$đóng góp một truy vấn trên tất cả các phần tử trước đó. Đối với một cặp cố định$(i, j)$, điểm số là tổng của hai phần: một phần nhân giá trị từ$j$với giá trị từ$i$và phần thứ hai chia một giá trị khác từ$j$bởi một giá trị từ$i$. Nhiệm vụ là tính toán cho mọi vị trí$i$, số điểm tối đa có thể đạt được bằng cách chọn điểm tốt nhất trước đó$j$và xuất giá trị tối đa đó dưới dạng phân số rút gọn. 
 
-Định dạng đầu ra buộc chúng ta phải xử lý từng câu trả lời chính xác như một số hữu tỷ, nghĩa là chúng ta không thể tính gần đúng hoặc sắp xếp lại các phép toán trong dấu phẩy động. Mỗi kết quả phải được đơn giản hóa đến mức thấp nhất. 
+Định dạng đầu ra buộc chúng ta phải xử lý từng câu trả lời chính xác như một số hữu tỷ, nghĩa là chúng ta không thể tính gần đúng hoặc sắp xếp lại các phép tính trong dấu phẩy động. Mỗi kết quả phải được đơn giản hóa đến mức thấp nhất. 
 
 Các ràng buộc đẩy giải pháp tới hành vi tuyến tính hoặc gần tuyến tính$N$, có thể lớn tới một triệu. Một cách tiếp cận bậc hai so sánh rõ ràng từng cặp$(i, j)$sẽ yêu cầu về$10^{12}$đánh giá trong trường hợp xấu nhất, điều này không thể thực hiện được ngay cả với mã được tối ưu hóa cao. 
 
@@ -36,13 +36,13 @@ Một vấn đề tinh tế hơn là mỗi truy vấn phụ thuộc vào một h
 
 Một trường hợp đặc biệt bộc lộ lối suy luận tham lam không chính xác là khi hai ứng cử viên trước đó đánh đổi hành vi dốc và chặn. Giả sử một phần tử trước đó có giá trị lớn$d_j$nhưng nhỏ$h_j$, và một cái khác có nhỏ$d_j$nhưng lớn$h_j$. Đối với một nhỏ$a_i d_i$, thứ hai chiếm ưu thế; cho lớn$a_i d_i$, cái đầu tiên chiếm ưu thế. Bất kỳ chiến lược nào chỉ theo dõi một “yếu tố tốt nhất trước đó” sẽ thất bại. 
 
-Trường hợp thất bại tinh tế thứ hai xảy ra khi tất cả$d_j$giống hệt nhau. Khi đó bài toán chuyển sang việc chọn giá trị lớn nhất$h_j$, nhưng việc triển khai đơn giản luôn duy trì cấu trúc thân tàu mà không xử lý các bản sao một cách cẩn thận có thể đưa ra các dòng dư thừa và vẫn truyền các truy vấn không chính xác nếu không được triển khai mạnh mẽ. 
+Trường hợp thất bại tinh vi thứ hai xảy ra khi tất cả$d_j$giống hệt nhau. Khi đó bài toán chuyển sang việc chọn giá trị lớn nhất$h_j$, nhưng việc triển khai đơn giản luôn duy trì cấu trúc thân tàu mà không xử lý các bản sao một cách cẩn thận có thể tạo ra các dòng dư thừa và vẫn truyền các truy vấn không chính xác nếu không được triển khai mạnh mẽ. 
 
 ## Phương pháp tiếp cận 
 
 Một giải pháp mạnh mẽ trực tiếp lặp đi lặp lại trên mỗi cặp$(i, j)$với$j < i$, đánh giá biểu thức và theo dõi mức tối đa. Điều này đúng vì nó kiểm tra rõ ràng tất cả các ứng cử viên, nhưng chi phí của nó là bậc hai. Với$N = 10^6$, điều này dẫn đến khoảng$5 \cdot 10^{11}$hoạt động vượt quá giới hạn cho phép. 
 
-Quan sát chính là viết lại biểu thức thành dạng tuyến tính tiêu chuẩn theo một biến duy nhất tùy thuộc vào$i$. Điểm ban đầu của một cặp$(i, j)$là$$d_j \cdot a_i + \frac{h_j}{d_i}.$$nhân với$d_i$(là số dương và do đó giữ nguyên thứ tự) cho$$d_i \cdot d_j \cdot a_i + h_j.$$Đối với một cố định$i$, định nghĩa$C_i = a_i \cdot d_i$. Khi đó biểu thức trở thành$$h_j + d_j \cdot C_i.$$Bây giờ cấu trúc đã rõ ràng: mỗi chỉ mục trước đó$j$định nghĩa một hàm tuyến tính trong biến$C$,$$f_j(C) = d_j \cdot C + h_j,$$và cho mỗi$i$, chúng ta cần giá trị tối đa trong số tất cả các dòng được chèn trước đó được đánh giá tại$C_i$. 
+Quan sát chính là viết lại biểu thức thành dạng tuyến tính tiêu chuẩn theo một biến duy nhất tùy thuộc vào$i$. Điểm ban đầu của một cặp$(i, j)$là$$d_j \cdot a_i + \frac{h_j}{d_i}.$$nhân với$d_i$(là số dương và do đó giữ nguyên thứ tự) cho$$d_i \cdot d_j \cdot a_i + h_j.$$Đối với một cố định$i$, định nghĩa$C_i = a_i \cdot d_i$. Khi đó biểu thức trở thành$$h_j + d_j \cdot C_i.$$Bây giờ cấu trúc đã rõ ràng: mỗi chỉ mục trước đó$j$định nghĩa một hàm tuyến tính trong biến$C$,$$f_j(C) = d_j \cdot C + h_j,$$và cho mỗi$i$, chúng tôi cần giá trị tối đa trong số tất cả các dòng được chèn trước đó được đánh giá tại$C_i$. 
 
 Đây chính xác là một bài toán thủ thuật bao lồi động với thứ tự chèn các dòng và các điểm truy vấn tùy ý. Vì độ dốc$d_j$không đảm bảo tính đơn điệu, thân tàu dựa trên deque tiêu chuẩn không được áp dụng. Cấu trúc mạnh mẽ cho cài đặt này là cây Li Chao, hỗ trợ chèn dòng và truy vấn các giá trị tối đa theo thời gian logarit trên phạm vi tọa độ giới hạn. 
 
@@ -60,7 +60,7 @@ Chúng tôi xử lý các phần tử từ trái sang phải trong khi vẫn duy
 1. Xác định cây Li Chao trên miền giá trị có thể có của$C = a_i \cdot d_i$. Miền này có thể được giới hạn bởi$10^{12}$vì cả hai yếu tố nhiều nhất$10^6$. 
 2. Đối với mỗi chỉ số$i$, tính toán$C_i = a_i \cdot d_i$. Giá trị này trở thành tọa độ x của truy vấn. 
 3. Trước khi xử lý$i$, cây chứa các dòng tương ứng chính xác với tất cả các chỉ số$j < i$, mỗi cái được biểu diễn dưới dạng$f_j(C) = d_j C + h_j$. 
-4. Truy vấn cây Li Chao tại$C_i$để đạt giá trị lớn nhất$best_i = \max_j (d_j C_i + h_j)$. Điều này có tác dụng vì cây duy trì đường bao phía trên của tất cả các dòng được chèn trước đó. 
+4. Truy vấn cây Li Chao tại$C_i$để đạt giá trị lớn nhất$best_i = \max_j (d_j C_i + h_j)$. Điều này có hiệu quả vì cây duy trì đường bao phía trên của tất cả các dòng được chèn trước đó. 
 5. Tính đáp án cuối cùng dưới dạng phân số: 
 
 tử số$= best_i$, 
@@ -179,7 +179,7 @@ Hãy xem xét một đầu vào nhỏ:```
 
 ### Dấu vết 
 
-| tôi | C_i = a_i d_i | Kết quả truy vấn | Tốt nhất | Dòng đã chèn | 
+| tôi | C_i = a_i d_i | Kết quả truy vấn | Tốt nhất | Dòng được chèn | 
 | --- | --- | --- | --- | --- | 
 | 1 | - | - | - | 4C+3 | 
 | 2 | 1×5 = 5 | 4·5 + 3 = 23 | 1 | 5C+2 | 
@@ -219,6 +219,6 @@ assert True
 
 ## Vỏ cạnh 
 
-Một trường hợp tối thiểu chỉ có một phần tử sẽ ngay lập tức cho biết liệu việc triển khai có giả định sai sự tồn tại của một ứng cử viên trước đó hay không. Đầu ra đúng chỉ đơn giản là phần tử được ghép nối với chính nó hoàn toàn không bao giờ xảy ra, vì vậy mã phải khởi tạo trong trường hợp đặc biệt. 
+Một trường hợp tối thiểu chỉ có một phần tử sẽ ngay lập tức cho biết liệu việc triển khai có giả định sai sự tồn tại của ứng cử viên trước đó hay không. Đầu ra đúng chỉ đơn giản là phần tử được ghép nối với chính nó hoàn toàn không bao giờ xảy ra, vì vậy mã phải khởi tạo trong trường hợp đặc biệt. 
 
 Ví dụ, một trường hợp có độ dốc giống nhau$d_j = 5$cho tất cả$j$, kiểm tra xem cấu trúc có chỉ giữ đường chặn cao nhất hay không. Nếu việc triển khai thân đơn giản giữ nhiều dòng dư thừa, nó vẫn có thể hoạt động nhưng có nguy cơ kém hiệu quả hoặc phân nhánh truy vấn không chính xác nếu logic cắt tỉa sai.

@@ -60,13 +60,13 @@ Khi biểu đồ này được xây dựng, chúng ta cần các đường đi n
 Chúng tôi chuyển đổi lưới thành biểu đồ trạng thái có hướng có các nút là cặp (ô, hướng). Mỗi trạng thái có chính xác một chuyển tiếp đi ra: chúng ta đi theo đường trượt theo hướng đó cho đến khi chạm vào một bức tường hoặc ranh giới, sau đó chúng ta rẽ phải và hạ cánh ở một trạng thái mới. Điều này làm cho hệ thống có tính xác định và hoạt động. 
 
 1. Đối với mỗi ô băng, xác định bốn trạng thái định hướng tương ứng lên, phải, xuống và trái. Điều này mở rộng lưới thành nhiều nhất các nút 4nm. Lý do cho việc mở rộng này là vì đường đi trong tương lai phụ thuộc vào hướng, do đó, việc thu gọn các hướng sẽ mất tính chính xác. 
-2. Tính toán trước, đối với mỗi hàng và cột, các ranh giới tường gần nhất để chúng ta có thể nhảy từ một ô theo một hướng nhất định trực tiếp đến điểm dừng tiếp theo trong O(1). Điều này tránh việc mô phỏng trượt từng bước. 
-3. Đối với mỗi trạng thái, hãy tính trạng thái tiếp theo bằng cách áp dụng quy tắc trượt một lần: di chuyển cho đến khi bị chặn, sau đó xoay sang phải và xác định ô và hướng kết quả. Điều này đưa ra một biểu đồ có hướng trong đó mọi nút đều có bậc ngoài 1. 
+2. Tính toán trước, đối với mỗi hàng và cột, các ranh giới tường gần nhất để chúng ta có thể nhảy từ một ô theo một hướng nhất định trực tiếp đến điểm dừng tiếp theo trong O(1). Điều này tránh mô phỏng trượt từng bước. 
+3. Đối với mỗi trạng thái, hãy tính toán trạng thái tiếp theo bằng cách áp dụng quy tắc trượt một lần: di chuyển cho đến khi bị chặn, sau đó xoay sang phải và xác định ô và hướng kết quả. Điều này đưa ra một biểu đồ có hướng trong đó mọi nút đều có bậc ngoài 1. 
 4. Đảo ngược biểu đồ này vào danh sách kề sắp tới. Điều này là cần thiết vì chúng tôi muốn tính toán khoảng cách ngắn nhất tới tất cả các mục tiêu có thể một cách hiệu quả từ nhiều nguồn. 
-5. Chạy BFS đa nguồn (hoặc Dijkstra nếu trọng số cạnh khác nhau, nhưng ở đây trọng số là thống nhất trên mỗi ô được truy cập) từ tất cả các trạng thái mục tiêu có thể có. Mỗi trạng thái được chỉ định một khoảng cách biểu thị số lượng ô được truy cập tối thiểu cần thiết để tiếp cận nó khi bắt đầu từ mục tiêu lùi về phía sau theo các cạnh đảo ngược. 
+5. Chạy BFS đa nguồn (hoặc Dijkstra nếu trọng số cạnh khác nhau, nhưng ở đây trọng số là thống nhất trên mỗi ô được truy cập) từ tất cả các trạng thái mục tiêu có thể có. Mỗi trạng thái được chỉ định một khoảng cách biểu thị số lượng ô được truy cập tối thiểu cần thiết để tiếp cận trạng thái đó khi bắt đầu từ mục tiêu lùi về phía sau theo các cạnh đảo ngược. 
 6. Đối với mỗi truy vấn, hãy đánh giá tất cả bốn hướng ban đầu có thể có từ ô bắt đầu. Mỗi cái tương ứng với một trạng thái; chúng tôi lấy khoảng cách tối thiểu giữa các trạng thái tương ứng với việc tiếp cận ô mục tiêu. Nếu không thể truy cập được, xuất −1. 
 
-Tính chính xác phụ thuộc vào việc xử lý từng đoạn slide như một đơn vị chuyển tiếp xác định. Mỗi trạng thái có chính xác một trạng thái kế tiếp, vì vậy biểu đồ mã hóa một tập hợp các chuỗi và chu trình chức năng rời rạc. Đường dẫn ngắn nhất trên biểu đồ này tương ứng chính xác với số lượng ô được truy cập tối thiểu vì trọng số của mỗi cạnh là số lượng ô đi qua trong phân đoạn đó. 
+Tính chính xác phụ thuộc vào việc xử lý từng đoạn slide như một đơn vị chuyển tiếp xác định. Mỗi trạng thái có chính xác một trạng thái kế tiếp, do đó biểu đồ mã hóa một tập hợp các chuỗi và chu trình chức năng rời rạc. Đường dẫn ngắn nhất trên biểu đồ này tương ứng chính xác với số lượng ô được truy cập tối thiểu vì trọng số của mỗi cạnh là số lượng ô đi qua trong phân đoạn đó. 
 
 ## Giải pháp Python```python
 import sys
@@ -207,9 +207,9 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Việc triển khai bắt đầu bằng việc xử lý trước các bức tường gần nhất theo từng hướng, nén việc trượt thành các bước nhảy thời gian không đổi. các`next_state`hàm mã hóa quy tắc chính xác: di chuyển đến ô băng hợp lệ cuối cùng theo hướng đã chọn, sau đó xoay sang phải. 
+```Việc triển khai bắt đầu bằng việc xử lý trước các bức tường gần nhất theo từng hướng, nén việc trượt thành các bước nhảy theo thời gian không đổi. các`next_state`hàm mã hóa quy tắc chính xác: di chuyển đến ô băng hợp lệ cuối cùng theo hướng đã chọn, sau đó xoay sang phải. 
 
-Cấu trúc biểu đồ mã hóa mọi cặp (ô, hướng) thành một chỉ số nguyên duy nhất. Danh sách kề ngược lại cho phép truyền các khoảng cách về phía sau. Quá trình giống BFS tính toán độ dài chuỗi ngắn nhất trong cấu trúc đồ thị hàm số. 
+Cấu trúc biểu đồ mã hóa mọi cặp (ô, hướng) thành một chỉ số nguyên duy nhất. Danh sách kề ngược lại cho phép truyền các khoảng cách ngược lại. Quá trình giống BFS tính toán độ dài chuỗi ngắn nhất trong cấu trúc đồ thị hàm số. 
 
 Logic truy vấn sử dụng tất cả bốn hướng bắt đầu vì lựa chọn ban đầu là miễn phí. Mảng khoảng cách biểu thị các bước giữa các lần chuyển đổi trạng thái, vì vậy chúng tôi hiểu nó là chi phí trong các phân đoạn đã truy cập. Câu trả lời cuối cùng sẽ điều chỉnh bằng cách thêm lượt truy cập ô ban đầu. 
 
@@ -227,9 +227,9 @@ Lưới:```
 | --- | --- | --- | --- | 
 | 1 | (1,1, phải) | trượt vào tường | di chuyển dọc theo hàng trên cùng | 
 | 2 | rẽ phải | đi xuống | lượt xác định | 
-| 3 | tiếp tục | đạt được con đường mục tiêu | cuối cùng đạt đến (3,3) | 
+| 3 | tiếp tục | đạt được con đường mục tiêu | eventually reaches (3,3) |
 
-Ví dụ này cho thấy rằng ngay cả trong một lưới mở đơn giản, đường đi không thẳng mà phụ thuộc hoàn toàn vào việc lựa chọn hướng đầu tiên và những lần rẽ bắt buộc tiếp theo. 
+ Ví dụ này cho thấy rằng ngay cả trong một lưới mở đơn giản, đường đi không thẳng mà phụ thuộc hoàn toàn vào việc lựa chọn hướng đầu tiên và những lần rẽ bắt buộc tiếp theo. 
 
 ### Ví dụ 2 
 
@@ -254,7 +254,7 @@ Lưới:```
 | Thời gian | O(nm) | mỗi trạng thái có chuyển tiếp O(1), BFS xử lý tất cả các trạng thái một lần | 
 | Không gian | O(nm) | lưới cửa hàng, các bức tường gần nhất và biểu đồ trạng thái | 
 
-Quá trình tiền xử lý chạy theo thời gian tuyến tính trên kích thước lưới, vừa vặn thoải mái trong giới hạn 10^5. Sau đó, mỗi truy vấn sẽ được trả lời theo thời gian cố định theo từng hướng kiểm tra, giúp giải pháp phù hợp với tối đa 10^5 truy vấn. 
+Quá trình tiền xử lý chạy theo thời gian tuyến tính trên kích thước lưới, vừa vặn thoải mái trong giới hạn 10^5. Sau đó, mỗi truy vấn sẽ được trả lời trong thời gian không đổi theo mỗi lần kiểm tra hướng, giúp giải pháp phù hợp với tối đa 10^5 truy vấn. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io

@@ -30,7 +30,7 @@ Từ góc độ tính toán, đối tượng cấu trúc chính ở đây là m�
 
 Các ràng buộc ngụ ý bởi loại vấn đề này thường cho phép các giá trị lên tới khoảng 10^9 hoặc 10^12. Điều đó ngay lập tức loại trừ bất kỳ cách tiếp cận nào cố gắng phân tích các số bằng cách chia đơn giản lên đến n, vì điều đó sẽ yêu cầu tới 10^9 thao tác cho mỗi trường hợp thử nghiệm trong trường hợp xấu nhất. Ngay cả việc lặp lại tới n cũng vượt xa giới hạn khả thi. Cách tiếp cận giới hạn căn bậc hai, trong đó mỗi số chỉ được kiểm tra tối đa √n, là hướng hợp lý duy nhất nếu chúng ta dựa vào việc kiểm tra tính chia hết trực tiếp. 
 
-Có một số trường hợp khó xử lý. 
+Có một số trường hợp khó xử lý sai. 
 
 Một là giá trị 1. Ví dụ: nếu đầu vào là 1, việc kiểm tra tính nguyên tố đơn giản chỉ kiểm tra khả năng chia hết từ 2 trở lên có thể phân loại không chính xác thành số nguyên tố vì không tìm thấy ước số nào. Đầu ra đúng sẽ coi 1 là số không nguyên tố. 
 

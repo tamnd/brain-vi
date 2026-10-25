@@ -42,14 +42,14 @@ Quan điểm brute-force là thử tất cả các hoán vị của mảng và k
 
 Quan sát quan trọng là chúng ta không thực sự quan tâm đến thứ tự mà quan tâm đến sự kết hợp hoàn hảo giữa các chỉ số và giá trị. Mỗi chỉ mục i xác định một tập hợp các giá trị được phép ở vị trí đó và mỗi giá trị có thể thuộc một tập hợp con các chỉ mục. Đây đương nhiên là một biểu đồ hai bên: một bên biểu thị các phần tử mảng, bên kia biểu thị vị trí và một cạnh tồn tại nếu điều kiện tổng có thể được thỏa mãn. 
 
-Sau khi được định dạng lại theo cách này, nhiệm vụ sẽ trở thành kiểm tra xem liệu một kết quả khớp hoàn hảo có tồn tại trong biểu đồ hai bên có kích thước n ≤ 1000 hay không. Biểu đồ đủ thưa thớt vì với một giá trị cố định a, các vị trí hợp lệ tôi thỏa mãn rằng a + i là một hình vuông. Với mỗi a, i phải nằm trong một khoảng ngắn được tạo ra bởi các ô vuông liên tiếp, do đó số cạnh ứng viên trên mỗi nút là nhỏ. 
+Sau khi được định dạng lại theo cách này, nhiệm vụ sẽ trở thành kiểm tra xem có tồn tại sự khớp hoàn hảo trong biểu đồ lưỡng cực có kích thước n ≤ 1000 hay không. Biểu đồ đủ thưa thớt vì với một giá trị cố định a, các vị trí hợp lệ tôi thỏa mãn rằng a + i là một hình vuông. Với mỗi a, i phải nằm trong một khoảng ngắn được tạo ra bởi các ô vuông liên tiếp, do đó số cạnh ứng viên trên mỗi nút là nhỏ. 
 
 Chúng ta có thể xây dựng biểu đồ một cách hiệu quả bằng cách lặp qua các căn bậc hai có thể có của k hoặc tương đương bằng cách lặp qua từng giá trị và quét k trong một phạm vi giới hạn. Sau khi xây dựng danh sách kề, việc so khớp đường dẫn tăng cường tiêu chuẩn (thuật toán Kuhn) là đủ với các ràng buộc. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
 | Hoán vị Brute Force | Ồ (n!) | O(n) | Quá chậm | 
-| Kết hợp lưỡng cực (Kuhn) | O(n²√V) trong thực tế | O(n²) | Đã chấp nhận | 
+| Kết hợp lưỡng cực (Kuhn) | O(n2√V) trong thực tế | O(n²) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 

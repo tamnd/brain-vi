@@ -1,6 +1,6 @@
 ---
 title: "CF 106059L - Lễ hội đèn lồng"
-description: "Vấn đề cơ bản là yêu cầu chúng ta xử lý một hàng đèn lồng dọc theo bờ sông, tại đó mỗi chiếc đèn lồng đều bật hoặc tắt. Dữ liệu đầu vào cung cấp cho chúng ta một chuỗi có độ dài n và mỗi vị trí chứa số 0 nghĩa là đèn lồng không sáng hoặc số 1 nghĩa là nó đang phát sáng."
+description: "Vấn đề cơ bản là yêu cầu chúng ta xử lý một hàng đèn lồng dọc theo bờ sông, tại đó mỗi chiếc đèn lồng đều bật hoặc tắt. Đầu vào cung cấp cho chúng ta một chuỗi có độ dài n và mỗi vị trí chứa số 0 nghĩa là đèn lồng không sáng hoặc số 1 nghĩa là nó đang phát sáng."
 date: "2026-06-22T18:42:04+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
@@ -24,11 +24,11 @@ draft: false
 ## Giải pháp 
 ## Hiểu vấn đề 
 
-Vấn đề cơ bản là yêu cầu chúng ta xử lý một hàng đèn lồng dọc theo bờ sông, tại đó mỗi chiếc đèn lồng đều bật hoặc tắt. Dữ liệu đầu vào cung cấp cho chúng ta một chuỗi có độ dài n và mỗi vị trí chứa số 0 nghĩa là đèn lồng không sáng hoặc số 1 nghĩa là nó đang phát sáng. Nhiệm vụ là xác định xem hiện tại có bao nhiêu chiếc đèn lồng đang thắp sáng, tương đương với việc đếm xem có bao nhiêu giá trị trong dãy bằng 1. 
+Vấn đề cơ bản là yêu cầu chúng ta xử lý một hàng đèn lồng dọc theo bờ sông, tại đó mỗi chiếc đèn lồng đều bật hoặc tắt. Đầu vào cung cấp cho chúng ta một chuỗi có độ dài n và mỗi vị trí chứa số 0 nghĩa là đèn lồng không sáng hoặc số 1 nghĩa là nó đang phát sáng. Nhiệm vụ là xác định xem hiện tại có bao nhiêu chiếc đèn lồng đang thắp sáng, tương đương với việc đếm xem có bao nhiêu giá trị trong dãy bằng 1. 
 
 Mặc dù tuyên bố này đóng khung điều này trong bối cảnh lễ hội, nhưng không có gì quan trọng về vị trí, sự liền kề hoặc cấu trúc ngoài các giá trị thô. Trình tự này độc lập và mỗi phần tử góp phần đưa ra câu trả lời mà không tương tác với phần tử khác. 
 
-Ràng buộc n lên tới 2 × 10^5 cho chúng ta biết rằng chúng ta phải quét mảng theo thời gian tuyến tính. Bất kỳ cách tiếp cận nào liên tục xử lý các phần tử giống nhau hoặc sử dụng các vòng lặp lồng nhau trên mảng sẽ quá chậm. Giải pháp bậc hai sẽ bao hàm khoảng 4 × 10^10 phép tính trong trường hợp xấu nhất, vượt xa giới hạn thời gian. Điều này ngay lập tức gợi ý rằng tích lũy một lượt là hướng đi chính xác. 
+Ràng buộc n lên tới 2 × 10^5 cho chúng ta biết chúng ta phải quét mảng theo thời gian tuyến tính. Bất kỳ cách tiếp cận nào liên tục xử lý các phần tử giống nhau hoặc sử dụng các vòng lặp lồng nhau trên mảng sẽ quá chậm. Giải pháp bậc hai sẽ bao hàm khoảng 4 × 10^10 phép tính trong trường hợp xấu nhất, vượt xa giới hạn thời gian. Điều này ngay lập tức gợi ý rằng tích lũy một lượt là hướng đi chính xác. 
 
 Các trường hợp cạnh ở đây chủ yếu liên quan đến định dạng đầu vào và kích thước ranh giới. Nếu n = 1, chúng ta chỉ cần trả về giá trị đơn đó. Nếu tất cả các giá trị là 0 thì câu trả lời là 0. Nếu tất cả các giá trị là 1 thì câu trả lời là n. Một vấn đề nhỏ có thể xuất hiện trong quá trình triển khai là giả sử dòng thứ hai luôn được định dạng rõ ràng hoặc chứa chính xác n số nguyên cách nhau bằng dấu cách, nhưng quên rằng đầu vào có thể trải dài trên các dòng lớn yêu cầu phân tích cú pháp nhanh. 
 

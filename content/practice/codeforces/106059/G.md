@@ -44,7 +44,7 @@ Những quan sát này cho thấy cấu trúc của các giải pháp tối ưu 
 
 Phương pháp brute-force sẽ thử mọi hướng có thể có của tất cả các cạnh, tính toán tập chìm kết quả, chạy BFS hoặc đường đi ngắn nhất trong biểu đồ có hướng cho mỗi đỉnh và đánh giá chi phí. Điều này đúng về nguyên tắc vì nó tuân theo định nghĩa. Tuy nhiên, mỗi cạnh có hai hướng, do đó có$2^m$định hướng, và thậm chí đối với$m = 100$, điều này hoàn toàn không thể thực hiện được. 
 
-Cái nhìn sâu sắc quan trọng đến từ việc diễn giải lại ý nghĩa của một đỉnh có khoảng cách nhỏ đến bồn. Nếu một đỉnh có đường dẫn trực tiếp đến một sink thì dọc theo đường dẫn đó các cạnh phải di chuyển liên tục về phía lớp sink. Điều này gợi ý rằng đồ thị nên được xếp lớp sao cho các cạnh chủ yếu hướng từ các đỉnh “mức” cao hơn về phía các đỉnh thấp hơn. 
+Cái nhìn sâu sắc quan trọng đến từ việc diễn giải lại ý nghĩa của việc một đỉnh có khoảng cách nhỏ đến điểm chìm. Nếu một đỉnh có đường dẫn trực tiếp đến một sink thì dọc theo đường dẫn đó các cạnh phải di chuyển liên tục về phía lớp sink. Điều này gợi ý rằng đồ thị nên được xếp lớp sao cho các cạnh chủ yếu hướng từ các đỉnh “mức” cao hơn về phía các đỉnh thấp hơn. 
 
 Bởi vì biểu đồ là lưỡng cực, chúng ta có thể khai thác một ràng buộc cấu trúc rất mạnh: chúng ta có thể coi một phân vùng là “nguồn của dòng chảy” và phân vùng kia là “điểm chìm của dòng chảy” và định hướng các cạnh một cách nhất quán trên toàn phân vùng. Sau khi chúng ta sửa một phân vùng kép, bất kỳ cạnh nào cũng phải đi từ bên này sang bên kia, do đó, mỗi hướng của cạnh tương ứng với việc chọn bên nào “cao hơn” theo nghĩa được định hướng. 
 
@@ -54,7 +54,7 @@ Bây giờ hãy xem hàm chi phí đang làm gì. Một đỉnh đóng góp$w_i$
 
 Vấn đề còn lại là chọn đỉnh nào là điểm chìm và cách định hướng các cạnh sao cho mỗi cạnh đều giảm mức độ trong khi giảm thiểu tổng trọng số của các mức. Điều này có thể được giải quyết bằng cách coi nó là sự lan truyền kiểu đường dẫn ngắn nhất trên cấu trúc lưỡng cực, trong đó cấu hình tối ưu tương ứng với việc chọn phép gán hướng nhất quán nhằm giảm thiểu khoảng cách có trọng số, giúp giảm thiểu việc tính toán phân lớp giống BFS từ các ứng cử viên chìm tốt nhất và định hướng các cạnh tương ứng. 
 
-Bởi vì$n$là nhỏ, chúng ta có thể thử rõ ràng hai định hướng toàn cầu có thể có được tạo ra bởi tính chẵn lẻ của lưỡng phân vùng và tính toán chi phí phát sinh, giữ mức chi phí tốt nhất. 
+Bởi vì$n$là nhỏ, chúng ta có thể thử rõ ràng hai định hướng toàn cầu có thể có được tạo ra bởi tính chẵn lẻ của hai phân vùng và tính toán chi phí phát sinh, giữ giá trị tốt nhất. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -229,7 +229,7 @@ assert run("3 3\n5 5 5\n1 2\n2 3\n1 3\n") != ""
 assert run("5 4\n1 2 3 4 5\n1 2\n2 3\n3 4\n4 5\n") != ""
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-| đồ thị đường dẫn | định hướng hợp lệ | độ chính xác của việc truyền bá | 
+| đồ thị đường dẫn | định hướng hợp lệ | tính chính xác của việc truyền bá | 
 | chu kỳ | chi phí hữu hạn | xử lý sự tồn tại chìm | 
 | trọng lượng đồng đều | xử lý đối xứng | trường hợp cà vạt | 
 | cạnh tối thiểu | tính đúng đắn cơ bản | trường hợp cơ sở | 
@@ -238,6 +238,6 @@ assert run("5 4\n1 2 3 4 5\n1 2\n2 3\n3 4\n4 5\n") != ""
 
 Trường hợp cạnh khóa là khi một bên phân vùng chứa một đỉnh duy nhất. Trong cấu trúc hình ngôi sao, đỉnh đó trở thành một điểm chìm phổ quát hoặc một nguồn phổ quát tùy theo hướng. Thuật toán xử lý việc này một cách tự nhiên vì màu BFS vẫn chỉ định một phân vùng hợp lệ và việc đảo ngược hướng sẽ lật lựa chọn bồn rửa một cách nhất quán. 
 
-Một trường hợp khác là một đường đi dài trong đó tất cả các trọng số đều tập trung ở một điểm cuối. Nếu điểm cuối đó không gần với điểm chìm theo một hướng thì đóng góp của nó sẽ trở nên lớn và hướng thay thế sẽ trở nên tối ưu. Tính toán khoảng cách dựa trên BFS phản ánh chính xác sự bất đối xứng này do khoảng cách truyền tuyến tính dọc theo đường dẫn. 
+Một trường hợp khác là một đường đi dài trong đó tất cả các trọng số đều tập trung ở một điểm cuối. Nếu điểm cuối đó không gần với điểm chìm theo một hướng thì đóng góp của nó sẽ trở nên lớn và hướng thay thế sẽ trở nên tối ưu. Tính toán khoảng cách dựa trên BFS phản ánh chính xác sự bất đối xứng này do khoảng cách truyền tuyến tính dọc theo đường đi. 
 
 Trường hợp cuối cùng là đồ thị lưỡng cực dày đặc trong đó nhiều đỉnh có cấu trúc giống hệt nhau. Ở đây tồn tại nhiều bộ chìm với chi phí bằng nhau và cả hai hướng có thể hòa nhau. Thuật toán duy trì tính chính xác vì nó đánh giá rõ ràng cả hai hướng tổng thể và chọn bất kỳ hướng tối ưu nào mà không dựa vào tính duy nhất.

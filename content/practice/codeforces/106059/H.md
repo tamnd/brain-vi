@@ -54,7 +54,7 @@ Mặt khác, bằng cách chọn các tập con khác nhau bằng cách hoán đ
 
 hãy để$g = gcd(|a_i - a_{i-1}|)$trên mảng sau khi sắp xếp. Sau đó:$$gcd(S_k) = gcd(k \cdot a_1, g)$$Sau khi chuẩn hóa, câu trả lời trở nên độc lập với cấu trúc tập hợp con ngoài hai giá trị này, do đó mỗi truy vấn giảm xuống còn một phép tính gcd duy nhất. 
 
-Lực lượng vũ phu hoạt động vì nó liệt kê rõ ràng cấu trúc, nhưng không thành công vì vụ nổ tập hợp con che giấu một bất biến đại số tuyến tính đơn giản. Việc quan sát rằng các tổng tập hợp con là các phép biến đổi affine của sự kết hợp các sai phân làm giảm vấn đề khi tính toán một gcd đơn lẻ trên mảng. 
+Lực lượng vũ phu hoạt động vì nó liệt kê rõ ràng cấu trúc, nhưng không thành công vì vụ nổ tập hợp con che giấu một bất biến đại số tuyến tính đơn giản. Việc quan sát rằng các tổng tập hợp con là các phép biến đổi affine của sự kết hợp các hiệu làm giảm vấn đề khi tính toán một gcd đơn lẻ trên mảng. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -70,7 +70,7 @@ Lực lượng vũ phu hoạt động vì nó liệt kê rõ ràng cấu trúc, 
 
 ### Tại sao nó hoạt động 
 
-Mỗi tập con có tổng kích thước$k$có thể được viết dưới dạng đóng góp cơ sở cố định cộng với sự kết hợp tuyến tính của sự khác biệt giữa các phần tử mảng. Những khác biệt đó đều là bội số của$g$, do đó mỗi tổng tập hợp con nằm trong một cấp số cộng với bước$g$. Sự thay đổi duy nhất còn lại trên tất cả các tổng tập hợp con xuất phát từ số lần phần tử cơ sở được đưa vào một cách hiệu quả, được kiểm soát bởi$k \cdot a_1$. Vì gcd phân phối trên các tổ hợp tuyến tính nên gcd của toàn bộ tập hợp phải chia cả số hạng cơ sở không đổi và kích thước bước$g$và không có ước số chung lớn hơn có thể tồn tại vì sự khác biệt đã tạo ra tất cả các lớp dư lượng theo modulo$g$. 
+Mỗi tập con có tổng kích thước$k$có thể được viết dưới dạng đóng góp cơ sở cố định cộng với sự kết hợp tuyến tính của sự khác biệt giữa các phần tử mảng. Những khác biệt đó đều là bội số của$g$, do đó mỗi tổng tập hợp con nằm trong một cấp số cộng với bước$g$. Sự thay đổi duy nhất còn lại trên tất cả các tổng tập hợp con xuất phát từ số lần phần tử cơ sở được đưa vào một cách hiệu quả, được kiểm soát bởi$k \cdot a_1$. Vì gcd phân phối trên các tổ hợp tuyến tính nên gcd của toàn bộ tập hợp phải chia cả số hạng cơ sở không đổi và kích thước bước$g$và không có ước chung lớn hơn nào có thể tồn tại vì hiệu đã tạo ra tất cả các lớp dư lượng theo modulo$g$. 
 
 ## Giải pháp Python```python
 import sys
@@ -101,11 +101,11 @@ for _ in range(t):
         res.append(str(gcd(k * base, g)))
     
     print(" ".join(res))
-```Đầu tiên, mã này xử lý trường hợp một phần tử tầm thường trong đó tổng tập hợp con duy nhất chính là phần tử đó. Đối với các mảng lớn hơn, nó tính toán gcd của các khác biệt liên tiếp, mô tả đầy đủ tất cả các khác biệt theo cặp trong mảng sau khi hành vi sắp xếp được ngầm nắm bắt thông qua độ ổn định của gcd. 
+```Đầu tiên, mã này xử lý trường hợp một phần tử tầm thường trong đó tổng tập hợp con duy nhất chính là phần tử đó. Đối với các mảng lớn hơn, nó tính toán gcd của các khác biệt liên tiếp, mô tả đầy đủ tất cả các khác biệt theo cặp trong mảng sau khi hành vi sắp xếp được ghi lại hoàn toàn thông qua độ ổn định của gcd. 
 
-Đối với mỗi$k$, nó tính gcd giữa số hạng tỉ lệ tuyến tính$k \cdot a_1$và gcd cấu trúc$g$. Điều này trực tiếp triển khai dạng đóng dẫn xuất mà không cần xây dựng bất kỳ tập hợp con nào. 
+Đối với mỗi$k$, nó tính gcd giữa số hạng tỷ lệ tuyến tính$k \cdot a_1$và gcd cấu trúc$g$. Điều này trực tiếp triển khai dạng đóng dẫn xuất mà không cần xây dựng bất kỳ tập hợp con nào. 
 
-Một điểm tinh tế là chúng ta không bao giờ sắp xếp mảng một cách rõ ràng trong quá trình triển khai được hiển thị, bởi vì gcd của các khác biệt liền kề theo thứ tự ban đầu đã bằng gcd của tất cả các khác biệt theo cặp chỉ khi mảng được diễn giải theo các giả định thứ tự nhất quán; trong thực tế, việc triển khai đúng sẽ được sắp xếp trước tiên để làm cho bất biến trở nên hoàn toàn nghiêm ngặt. 
+Một điểm tinh tế là chúng tôi không bao giờ sắp xếp mảng một cách rõ ràng trong cách triển khai được hiển thị, bởi vì gcd của các khác biệt liền kề theo thứ tự ban đầu đã bằng gcd của tất cả các khác biệt theo cặp chỉ khi mảng được diễn giải theo các giả định thứ tự nhất quán; trong thực tế, việc triển khai đúng sẽ được sắp xếp trước tiên để làm cho bất biến trở nên hoàn toàn nghiêm ngặt. 
 
 ## Ví dụ đã hoạt động 
 
@@ -149,7 +149,7 @@ a = [5, 5, 5]
 | Thời gian |$O(n \log A)$mỗi bài kiểm tra | tính toán gcd trên mảng và in các hoạt động gcd | 
 | Không gian |$O(1)$thêm | chỉ lưu trữ gcd đang chạy và bộ đệm đầu ra | 
 
-Giải pháp là tuyến tính theo kích thước mảng, phù hợp thoải mái trong giới hạn mà tổng$n$qua các bài kiểm tra là$10^5$. Ngay cả với 10.000 trường hợp thử nghiệm, thuật toán chỉ thực hiện các thao tác gcd đơn giản cho mỗi phần tử. 
+Giải pháp là tuyến tính trong kích thước mảng, phù hợp thoải mái trong giới hạn mà tổng$n$qua các bài kiểm tra là$10^5$. Ngay cả với 10.000 trường hợp thử nghiệm, thuật toán chỉ thực hiện các thao tác gcd đơn giản cho mỗi phần tử. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io
@@ -204,6 +204,6 @@ Khi mảng có một phần tử duy nhất, mọi$S_k$chứa chính xác một 
 
 Khi tất cả các phần tử giống hệt nhau, mọi khác biệt đều bằng 0, do đó gcd cấu trúc trở thành 0. Biểu thức giảm xuống còn$gcd(k \cdot a_1, 0) = k \cdot a_1$, phù hợp với thực tế là mọi tổng tập hợp con đều chính xác$k \cdot a_1$. 
 
-Khi các phần tử liên tiếp như$1,2,3,4$, sự khác biệt đều bằng nhau, vì vậy cấu trúc gcd là một. Điều này buộc mọi câu trả lời phải là một bất kể$k$, vì mọi chuỗi tổng tập hợp con đều bao trùm tất cả các dư lượng mod 1, điều này không đáng kể nhưng phù hợp với công thức. 
+Khi các phần tử liên tiếp như$1,2,3,4$, sự khác biệt đều bằng một, vì vậy cấu trúc gcd là một. Điều này buộc mọi câu trả lời phải là một bất kể$k$, vì mọi chuỗi tổng tập hợp con đều bao trùm tất cả các phần dư mod 1, điều này không đáng kể nhưng phù hợp với công thức. 
 
 Khi các giá trị thưa thớt, chẳng hạn như$2$Và$6$, sự khác biệt gcd là$4$và các tổng tập hợp con xen kẽ theo bội số của cấu trúc này. Công thức kết hợp chính xác điều này với$k \cdot a_1$, tạo ra các đầu ra có tỷ lệ chính xác với kích thước tập hợp con trong khi vẫn tôn trọng khoảng cách bất biến.

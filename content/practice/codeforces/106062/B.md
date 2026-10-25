@@ -24,7 +24,7 @@ draft: false
 ## Giải pháp 
 ## Hiểu vấn đề 
 
-Nhiệm vụ đưa ra một cây có gốc với nút`1`như là gốc. Chúng ta phải gán cho mỗi nút một số khác nhau`1`ĐẾN`n`. Việc gán chỉ có giá trị nếu tất cả các điều kiện nhất định về đường dẫn được thỏa mãn. Một điều kiện cho biết rằng trên đường dẫn giữa hai nút, một nút cụ thể phải chứa giá trị nhỏ nhất trong số tất cả các nút trên đường dẫn đó hoặc nó phải chứa giá trị lớn nhất. Mục đích là đưa ra bất kỳ bài tập hoặc báo cáo hợp lệ nào không tồn tại. 
+Nhiệm vụ đưa ra một cây có gốc với nút`1`như là gốc. Chúng ta phải gán cho mỗi nút một số khác nhau`1`ĐẾN`n`. Việc gán chỉ có giá trị nếu tất cả các điều kiện nhất định về đường dẫn được thỏa mãn. Một điều kiện cho biết rằng trên đường dẫn giữa hai nút, một nút cụ thể phải chứa giá trị nhỏ nhất trong số tất cả các nút trên đường dẫn đó hoặc nó phải chứa giá trị lớn nhất. Mục đích là đưa ra bất kỳ nhiệm vụ hoặc báo cáo hợp lệ nào không tồn tại. 
 
 Đầu vào mô tả các cạnh của cây trước, sau đó là các yêu cầu về đường dẫn. Đầu ra là hoán vị của các giá trị được gán cho các nút. Nếu một nút nhận được giá trị`x`, thì mọi nút có giá trị nhỏ hơn phải được xem xét trước nó theo thứ tự xây dựng cuối cùng. 
 
@@ -66,7 +66,7 @@ Một lực lượng vũ phu hợp lý hơn sẽ cố gắng chuyển từng đi
 
 Quan sát chính là chúng ta không thực sự cần mọi so sánh riêng biệt. Chúng ta chỉ cần biết thứ tự tương đối của các nút. Nếu chúng ta xây dựng một đồ thị có hướng trong đó một cạnh`u -> v`có nghĩa là "u phải nhận được giá trị nhỏ hơn v", khi đó phép gán hợp lệ tồn tại chính xác khi biểu đồ này không có chu kỳ. Thứ tự tôpô của biểu đồ này đưa ra các giá trị cuối cùng. 
 
-Vấn đề còn lại là tạo ra các cạnh thứ tự này một cách hiệu quả. Một đường dẫn có thể được phân tách bằng kỹ thuật cây tiêu chuẩn. Chúng tôi xử lý trước cây theo thứ tự DFS và sử dụng cây phân đoạn theo thứ tự này. Toàn bộ cây con hoặc các đoạn đường dẫn sau đó có thể được biểu diễn bằng các nút cây phân đoạn. Thay vì thêm hàng ngàn cạnh từ`c`đến mọi nút trên đường đi, chúng tôi thêm các cạnh từ`c`tới số logarit của các nút phân đoạn bao phủ đường dẫn đó. Bản thân các nút cây phân đoạn kết nối với các đỉnh ban đầu mà chúng đại diện, duy trì ý nghĩa của việc so sánh. 
+Vấn đề còn lại là tạo ra các cạnh thứ tự này một cách hiệu quả. Một đường dẫn có thể được phân tách bằng kỹ thuật cây tiêu chuẩn. Chúng tôi xử lý trước cây theo thứ tự DFS và sử dụng cây phân đoạn theo thứ tự này. Toàn bộ cây con hoặc các đoạn đường dẫn sau đó có thể được biểu diễn bằng các nút cây phân đoạn. Thay vì thêm hàng ngàn cạnh từ`c`đến mọi nút trên đường dẫn, chúng tôi thêm các cạnh từ`c`tới số logarit của các nút phân đoạn bao phủ đường dẫn đó. Bản thân các nút cây phân đoạn kết nối với các đỉnh ban đầu mà chúng đại diện, duy trì ý nghĩa của việc so sánh. 
 
 Sau sự chuyển đổi này, tất cả các yêu cầu chỉ tạo ra`O((n + m) log n)`các cạnh đồ thị. Sau đó, chúng ta có thể chạy sắp xếp cấu trúc liên kết và gán các giá trị tăng dần theo thứ tự đó. 
 
@@ -85,7 +85,7 @@ Lý do cho bước này là vì các đường dẫn là những đối tượng
 
 Các giá trị cuối cùng chỉ là thứ hạng của các nút. Cạnh có hướng thể hiện chính xác thứ tự mà hoán vị cuối cùng phải đáp ứng. 
 
-1. Đối với mọi yêu cầu có nút`c`là mức tối thiểu trên một đường dẫn, hãy phân tách đường dẫn đó thành các phạm vi cây phân đoạn. Thêm các cạnh từ`c`tới các nút cây phân đoạn bao gồm các phạm vi đó. 
+1. Đối với mọi yêu cầu có nút`c`là mức tối thiểu trên một đường dẫn, hãy phân tách đường dẫn đó thành các phạm vi cây phân đoạn. Thêm các cạnh từ`c`đến các nút cây phân đoạn bao gồm các phạm vi đó. 
 
 Mỗi nút được bao phủ bởi các nút phân đoạn đó cuối cùng sẽ nhận được giá trị lớn hơn`c`. 
 
@@ -95,9 +95,9 @@ Mỗi nút trên đường dẫn phải có giá trị nhỏ hơn`c`.
 
 1. Thêm các cạnh bên trong cây phân đoạn từ nút phân đoạn cha mẹ đến nút phân đoạn con của nó. Đồng thời kết nối các nút phân đoạn lá với các đỉnh cây được biểu diễn. 
 
-Điều này làm cho biểu đồ nén hoạt động giống hệt như biểu đồ so sánh ban đầu. Điều kiện đường đi có thể đi qua cây phân đoạn và đến mọi đỉnh bị ảnh hưởng. 
+Điều này làm cho biểu đồ nén hoạt động giống hệt như biểu đồ so sánh ban đầu. Một điều kiện đường đi có thể đi qua cây phân đoạn và đến mọi đỉnh bị ảnh hưởng. 
 
-1. Chạy thuật toán Kahn để sắp xếp tôpô. Nếu một số đỉnh không thể được xử lý, biểu đồ sẽ chứa một chu trình, nghĩa là các yêu cầu mâu thuẫn với nhau. 
+1. Chạy thuật toán Kahn để sắp xếp tôpô. Nếu một số đỉnh không thể được xử lý thì biểu đồ sẽ chứa một chu trình, nghĩa là các yêu cầu mâu thuẫn với nhau. 
 
 Một chu trình có nghĩa là có một chuỗi yêu cầu yêu cầu một nút phải nhỏ hơn chính nó. 
 
@@ -326,7 +326,7 @@ assert run("""5 1
 | Hai nút với một yêu cầu | Một hoán vị hợp lệ | Xử lý cây nhỏ nhất | 
 | Hai yêu cầu tối thiểu trên một con đường |`-1`| Phát hiện không thể đặt hàng | 
 | Các ràng buộc tối thiểu và tối đa cùng nhau | Hoán vị hợp lệ | Kiểm tra hướng cạnh | 
-| Dây chuyền dài | Hoán vị hợp lệ | Bài tập xử lý đường dẫn | 
+| Chuỗi dài | Hoán vị hợp lệ | Bài tập xử lý đường dẫn | 
 
 ## Vỏ cạnh 
 

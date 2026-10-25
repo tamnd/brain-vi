@@ -24,13 +24,13 @@ draft: false
 ## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi được cung cấp một danh sách các giá trị bằng số, mỗi giá trị cho mỗi học sinh, thể hiện giá trị của mỗi học sinh đối với một chỗ ở ký túc xá. Chỉ có phần trên cùng`m`sinh viên theo giá trị khai báo sẽ nhận được quyền ở ký túc xá. Cơ chế này xác định “giá thị trường” bắt nguồn từ ranh giới giữa`m`-th và`(m+1)`- được định giá cao nhất. Mức giá đó được sử dụng để tính toán số tiền mà người chiến thắng phải trả và số tiền mà người không chiến thắng nhận được, theo cách cân bằng tổng dòng tiền của tất cả học sinh. 
+Chúng tôi được cung cấp một danh sách các giá trị bằng số, mỗi giá trị cho mỗi học sinh, thể hiện giá trị của mỗi học sinh đối với một chỗ ở ký túc xá. Chỉ có phần trên cùng`m`sinh viên theo giá trị khai báo sẽ nhận được quyền ở ký túc xá. Cơ chế này xác định “giá thị trường” bắt nguồn từ ranh giới giữa`m`-th và`(m+1)`- được định giá cao nhất. Mức giá đó được sử dụng để tính toán số tiền người thắng cuộc trả và số tiền người không thắng cuộc nhận được, theo cách cân bằng tổng dòng tiền của tất cả học sinh. 
 
 Sau khi tính toán hệ thống thanh toán từng phần lý tưởng này, bài toán đưa ra một hạn chế thực tế: chỉ cho phép các giao dịch số nguyên. Vì vậy, hệ thống được làm tròn và trường đại học sẽ giải quyết mọi sự mất cân bằng do làm tròn. 
 
 Đầu ra bắt buộc bao gồm ba giá trị: số nguyên mà mỗi người chiến thắng trả, số nguyên mà mỗi người không chiến thắng nhận được và sự mất cân bằng tuyệt đối mà trường đại học phải bù đắp. 
 
-Các ràng buộc cho phép tối đa 200.000 sinh viên, vì vậy mọi giải pháp ít nhất phải`O(n log n)`hoặc tốt hơn. Một loại đầy đủ có thể chấp nhận được, nhưng bất cứ thứ gì bậc hai đều không khả thi ngay lập tức vì nó sẽ yêu cầu khoảng 40 tỷ phép tính trong trường hợp xấu nhất. 
+Các ràng buộc cho phép tối đa 200.000 sinh viên, vì vậy mọi giải pháp ít nhất phải`O(n log n)`hoặc tốt hơn. Một loại đầy đủ có thể chấp nhận được, nhưng bất kỳ thứ gì bậc hai đều không thể thực hiện được ngay lập tức vì nó sẽ yêu cầu khoảng 40 tỷ phép tính trong trường hợp xấu nhất. 
 
 Một sai lầm ngây thơ là tính toán lại thứ hạng nhiều lần hoặc mô phỏng chuyển khoản một cách rõ ràng. Ví dụ: nếu chúng tôi cố gắng chọn liên tục phần trên cùng`m`các phần tử không được sắp xếp, mỗi lựa chọn có thể tiêu tốn thời gian tuyến tính, dẫn đến`O(nm)`hành vi này quá chậm khi cả hai đều lớn. 
 
@@ -158,7 +158,7 @@ Một điểm tinh tế là công thức thắng và công thức không thắng
 | ban đầu | 40 | 20 | 240 | - | - | - | 
 | tính toán | 40 | 20 | 240 | 6 | 24 | 0 | 
 
-Trong trường hợp này, việc làm tròn sẽ căn chỉnh hoàn hảo để hệ thống cân bằng mà không cần bất kỳ sự điều chỉnh nào. 
+Trong trường hợp này, việc làm tròn sẽ căn chỉnh hoàn hảo để hệ thống cân bằng mà không có bất kỳ sự điều chỉnh nào. 
 
 ## Phân tích độ phức tạp 
 
@@ -215,6 +215,6 @@ assert run("5 3\n1 2 3 4 5\n") is not None
 
 Một trường hợp cạnh quan trọng xảy ra khi tất cả các giá trị đều bằng nhau. Trong trường hợp đó, các giá trị biên giống hệt nhau, do đó giá được tính toán giảm xuống một số duy nhất và tất cả các chênh lệch phân số đều biến mất. Thuật toán vẫn hoạt động chính xác vì việc sắp xếp duy trì tính kề cận và cả hai`vm`Và`vmp1`bằng nhau, tạo ra sự chuyển giao không phương sai nhất quán. 
 
-Một trường hợp khác là khi`m = 1`. Chỉ có học sinh đứng đầu mới là người chiến thắng nên toàn bộ sự mất cân bằng phụ thuộc vào một thao tác của một tầng duy nhất. Thuật toán vẫn hoạt động vì tất cả các công thức vẫn hợp lệ ngay cả khi tập hợp người chiến thắng có kích thước bằng một và thao tác trần cho những người không chiến thắng được phân bổ đồng đều. 
+Một trường hợp khác là khi`m = 1`. Chỉ có học sinh đứng đầu mới là người chiến thắng nên toàn bộ sự mất cân bằng phụ thuộc vào một thao tác duy nhất của một tầng. Thuật toán vẫn hoạt động vì tất cả các công thức vẫn hợp lệ ngay cả khi tập hợp người chiến thắng có kích thước bằng một và thao tác trần cho những người không chiến thắng được phân bổ đồng đều. 
 
 Khi`m = n - 1`, chỉ có một học sinh không đạt giải. Trong kịch bản này,`(n - m) * Q`thu gọn thành một thuật ngữ duy nhất, vì vậy bất kỳ lỗi làm tròn nào trong`Q`trực tiếp xác định mức bồi thường của trường. Thuật toán xử lý vấn đề này một cách chính xác vì sự mất cân bằng được tính toán trên toàn cầu chứ không phải cho mỗi học sinh, đảm bảo tính toán bảo toàn chính xác sau khi làm tròn.
