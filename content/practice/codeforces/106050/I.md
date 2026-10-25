@@ -59,9 +59,9 @@ Chúng tôi tính toán các đường đi ngắn nhất từ ​​khách sạn
 2. Chạy Dijkstra một lần từ mỗi điểm tham quan P. Điều này tạo ra khoảng cách đường đi ngắn nhất giữa mỗi cặp điểm tham quan. Bước này chuyển đổi biểu đồ gốc thành biểu đồ có trọng số được kết nối đầy đủ trên P + 1 nút quan trọng. 
 3. Lưu trữ thời gian di chuyển trong ma trận dist trong đó dist[i][j] là thời gian ngắn nhất từ ​​nút i đến nút j và bao gồm khách sạn làm chỉ mục. 
 4. Xác định trạng thái DP dp[mask][i], nghĩa là tổng thời gian tối thiểu cần thiết để bắt đầu từ khách sạn, ghé thăm chính xác tập hợp các điểm tham quan trong mặt nạ và kết thúc tại điểm thu hút i. 
-5. Khởi tạo DP bằng cách xem xét từng điểm thu hút i. Chi phí là dist[hotel][i] cộng với thời gian ở điểm tham quan đó. The happiness for these states is just f[i].
- 6. Transition by trying to extend a visited set. From dp[mask][i], try going to any unvisited j. Trạng thái mới là mặt nạ ∪ {j}, kết thúc tại j, với chi phí tăng thêm dist[i][j] cộng với thời gian truy cập t[j]. Chúng tôi dành thời gian tối thiểu có thể cho mỗi tiểu bang. 
-7. After filling DP, scan all states. Đối với mọi dp[mask][i] không vượt quá ngân sách thời gian, hãy tính tổng mức độ hạnh phúc của mặt nạ và theo dõi mức tối đa. 
+5. Khởi tạo DP bằng cách xem xét từng điểm thu hút i. Chi phí là dist[hotel][i] cộng với thời gian ở điểm tham quan đó. Hạnh phúc của những trạng thái này chỉ là f[i]. 
+6. Chuyển đổi bằng cách cố gắng mở rộng tập hợp đã truy cập. Từ dp[mask][i], hãy thử truy cập bất kỳ j nào chưa được truy cập. Trạng thái mới là mặt nạ ∪ {j}, kết thúc tại j, với chi phí tăng thêm dist[i][j] cộng với thời gian truy cập t[j]. Chúng tôi dành thời gian tối thiểu có thể cho mỗi tiểu bang. 
+7. Sau khi điền DP, hãy quét tất cả các trạng thái. Đối với mọi dp[mask][i] không vượt quá ngân sách thời gian, hãy tính tổng mức độ hạnh phúc của mặt nạ và theo dõi mức tối đa. 
 
 Lý do điều này có tác dụng là vì khi biểu đồ được nén thành khoảng cách đường đi ngắn nhất giữa các nút quan trọng, quyết định duy nhất còn lại là sắp xếp thứ tự của một tập hợp nhỏ. DP liệt kê ngầm tất cả các đơn hàng hợp lệ trong khi chỉ giữ lại cách tốt nhất (thời gian tối thiểu) để tiếp cận từng cấu hình kết thúc tập hợp con. Điều này ngăn cản việc thăm dò dư thừa các hoán vị tương đương chỉ khác nhau về cấu trúc bên trong chứ không khác nhau về tập hợp con và điểm kết thúc đã chọn. 
 
