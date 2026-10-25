@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 41s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Nhiệm vụ mô tả một lưới 2D biểu thị không gian trên Sao Mộc, trong đó mỗi ô thuộc về một trong một số “dải” ngang. Mỗi ô có thể trống, bị bão chặn, có thể là vị trí xuất phát hoặc là đích đến. 
@@ -52,7 +52,7 @@ Quan sát quan trọng là thay vì đẩy lưới tiến lên theo thời gian,
 
 Điều này biến bài toán thành tìm kiếm đường đi ngắn nhất trong không gian trạng thái trong đó thời gian được theo dõi rõ ràng hoặc được mã hóa ngầm thông qua các dịch chuyển mô-đun. Vì mỗi lần di chuyển sẽ tăng thời gian lên một lần nên BFS đương nhiên sẽ phù hợp, nhưng chúng tôi tránh tính toán lại toàn bộ lưới bằng cách tính toán tính hợp lệ của ô theo yêu cầu. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Mô phỏng lực lượng vũ phu | O((R·C)²) | O(R·C) | Quá chậm | 
 | BFS nhận biết thời gian với phép chuyển đổi tọa độ | O(R·C) | O(R·C) | Đã chấp nhận | 
@@ -209,12 +209,12 @@ SD
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
 | Lưới 1×1 | 0 | khởi đầu tầm thường=mục tiêu | 
-| mở lưới 3×3 | 4 | đường đi ngắn nhất cơ bản | 
+| mở lưới 3×3 | 4 | đường đi cơ bản ngắn nhất | 
 | lưới bị chặn | -1 | không thể | 
 | liền kề S và D | 0 | trường hợp không di chuyển | 
 
 ## Vỏ cạnh 
 
-Một trường hợp quan trọng là khi ban đầu người chơi có thể đến đích nhưng lại di chuyển đi trước khi người chơi đến. Trong trường hợp như vậy, một BFS ngây thơ không có nhận thức về thời gian sẽ báo cáo thành công quá sớm. BFS tăng cường thời gian tránh được điều này vì việc đến đích yêu cầu phải khớp cả cấu hình lưới theo vị trí và thời gian. 
+Trường hợp nguy hiểm nhất là khi ban đầu người chơi có thể đến đích nhưng lại di chuyển đi trước khi người chơi đến. Trong trường hợp như vậy, một BFS ngây thơ không có nhận thức về thời gian sẽ báo cáo thành công quá sớm. BFS tăng cường thời gian tránh được điều này vì việc đến đích yêu cầu phải khớp cả cấu hình lưới theo vị trí và thời gian. 
 
 Một trường hợp cạnh khác phát sinh khi một viên gạch bão di chuyển vào và ra khỏi một vị trí. Một ô bị chặn ở thời điểm 0 có thể trở nên trống ở thời điểm 2, vì vậy việc xem lại là cần thiết. Cấu trúc được truy cập được khóa theo độ rộng modulo thời gian đảm bảo chúng tôi không loại bỏ sớm các trạng thái đó.

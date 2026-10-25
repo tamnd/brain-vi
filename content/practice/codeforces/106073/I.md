@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 59s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cho một chuỗi các điểm trong mặt phẳng, biểu diễn các ngôi sao được viếng thăm theo một thứ tự cố định. Các ngôi sao liên tiếp luôn được sắp xếp theo chiều ngang hoặc chiều dọc, do đó mỗi lần di chuyển giữa các ngôi sao$i$và ngôi sao$i+1$là đoạn thẳng song song với trục 
@@ -32,17 +32,17 @@ Phi thuyền chuyển tiếp từ ngôi sao$i$ngôi sao$i+1$tại điểm trên 
 
 Chúng ta được yêu cầu chọn một chuỗi bán kính hợp lệ thỏa mãn mọi ràng buộc và tối đa hóa$R_1$. Nếu không có phép gán nào tồn tại, chúng ta xuất ra -1. 
 
-Điểm tinh tế quan trọng là bán kính không độc lập: một lần$R_i$được chọn, nó ảnh hưởng đến những gì có thể xảy ra đối với các ngôi sao trước đó vì chúng ta muốn tối đa hóa$R_1$, không phải là tính khả thi tùy tiện. 
+Điểm tinh tế quan trọng là bán kính không độc lập: một khi$R_i$được chọn, nó ảnh hưởng đến những gì có thể xảy ra đối với các ngôi sao trước đó vì chúng ta muốn tối đa hóa$R_1$, không phải là tính khả thi tùy tiện. 
 
-Các ràng buộc rất lớn, có thể lên tới$10^5$điểm, do đó mọi giải pháp đều phải tuyến tính hoặc gần tuyến tính. Bất cứ điều gì bậc hai trên chuỗi ngay lập tức là quá chậm. 
+Các ràng buộc rất lớn, có thể lên tới$10^5$điểm, vì vậy mọi giải pháp đều phải tuyến tính hoặc gần tuyến tính. Bất cứ điều gì bậc hai trên chuỗi ngay lập tức là quá chậm. 
 
 Một vài trường hợp thất bại xuất hiện một cách tự nhiên. 
 
 Ví dụ, nếu hai ngôi sao liên tiếp cực kỳ gần nhau$(0,0)$Và$(0,1)$, khoảng cách là 1, vì vậy$R_1$phải bằng 0, điều này là không thể vì bán kính ít nhất phải bằng 1. Điều này làm cho toàn bộ cấu hình không thể thực hiện được. 
 
-Một lỗi tinh vi hơn xảy ra khi tất cả các cạnh đều dài ngoại trừ một cạnh đầu ngắn. Ví dụ: nếu cạnh đầu tiên có khoảng cách 2, nhưng các cạnh sau lớn, chúng ta có thể nghĩ rằng mình có thể chọn$R_1 = 1$, nhưng trên thực tế, các ràng buộc sau này có thể tạo ra mâu thuẫn tùy thuộc vào cách truyền bán kính, vì vậy chúng ta cần một cách xây dựng tổng thể nhất quán. 
+Một lỗi tinh tế hơn xảy ra khi tất cả các cạnh đều dài ngoại trừ một cạnh đầu ngắn. Ví dụ: nếu cạnh đầu tiên có khoảng cách 2, nhưng các cạnh sau lớn, chúng ta có thể nghĩ rằng mình có thể chọn$R_1 = 1$, nhưng trên thực tế, các ràng buộc sau này có thể tạo ra mâu thuẫn tùy thuộc vào cách truyền bán kính, vì vậy chúng ta cần một cách xây dựng tổng thể nhất quán. 
 
-Khó khăn chính là hiểu cách thức các ràng buộc lan truyền ngược từ đầu đến cuối. 
+Khó khăn chính là hiểu được các ràng buộc lan truyền ngược từ đầu đến cuối như thế nào. 
 
 ## Phương pháp tiếp cận 
 
@@ -50,15 +50,15 @@ Một cách giải thích ngây thơ là thử gán bán kính từ trái sang p
 
 Một cách tiếp cận bạo lực khác là điều trị$R_1$như đã sửa và kiểm tra tính khả thi: nếu chúng tôi sửa$R_1 = x$, chúng ta có thể xây dựng được không$R_2, \dots, R_N$? Sau đó chúng ta có thể tìm kiếm nhị phân$x$. Tuy nhiên, ngay cả việc kiểm tra tính khả thi một cách đơn giản cũng sẽ yêu cầu khám phá nhiều lựa chọn về bán kính tiếp theo, có khả năng theo cấp số nhân, vì mỗi bán kính có một phạm vi$[1, d(i,i+1)-1]$. 
 
-Quan sát chính là hạn chế duy nhất là giới hạn trên cục bộ và không có sự phụ thuộc trực tiếp vào giới hạn dưới giữa các bán kính khác nhau ngoại trừ mức tối thiểu toàn cục$R_i \ge 1$. Điều này có nghĩa là mỗi$R_i$luôn có thể được chọn một cách độc lập một khi chúng ta đảm bảo rằng nó tôn trọng ràng buộc cạnh của chính nó. Không có hạn chế về lan truyền giữa$R_i$Và$R_{i+1}$. 
+Quan sát chính là hạn chế duy nhất là giới hạn trên cục bộ và không có sự phụ thuộc trực tiếp vào giới hạn dưới giữa các bán kính khác nhau ngoại trừ mức tối thiểu toàn cục$R_i \ge 1$. Điều này có nghĩa là mỗi$R_i$luôn có thể được chọn độc lập một khi chúng ta đảm bảo nó tôn trọng ràng buộc cạnh của chính nó. Không có hạn chế về lan truyền giữa$R_i$Và$R_{i+1}$. 
 
-Do đó tính khả thi giảm xuống một điều kiện đơn giản: mọi cạnh phải có khoảng cách ít nhất là 2, vì chúng ta cần$R_i \ge 1$Và$R_i < d(i,i+1)$, Vì thế$d(i,i+1) \ge 2$. Khi điều này được giữ, chúng ta luôn có thể thiết lập$R_i = 1$cho tất cả$i$, và bất kỳ lớn hơn$R_1$chỉ bị hạn chế bởi cạnh đi ra của nó. 
+Do đó tính khả thi giảm xuống một điều kiện đơn giản: mọi cạnh phải có khoảng cách ít nhất là 2, vì chúng ta cần$R_i \ge 1$Và$R_i < d(i,i+1)$, Vì thế$d(i,i+1) \ge 2$. Khi điều này được giữ, chúng ta luôn có thể thiết lập$R_i = 1$cho tất cả$i$, và bất kỳ lớn hơn$R_1$chỉ bị ràng buộc bởi cạnh đi ra của nó. 
 
 Vì vậy, hạn chế thực sự duy nhất ảnh hưởng đến$R_1$là cạnh đầu tiên:$R_1 < d(1,2)$. Từ$R_1$là số nguyên, lớn nhất là$d(1,2) - 1$, miễn là tất cả các cạnh đều hợp lệ (khoảng cách ít nhất là 2). Nếu bất kỳ cạnh nào có khoảng cách 1 thì câu trả lời là -1. 
 
 Điều này làm giảm toàn bộ vấn đề trong việc tính toán khoảng cách Euclide giữa các điểm liên tiếp và kiểm tra tính hợp lệ. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Kiểm tra tính khả thi của Brute Force mỗi$R_1$|$O(N \cdot \text{search})$|$O(N)$| Quá chậm | 
 | Phân tích cạnh trực tiếp |$O(N)$|$O(1)$| Đã chấp nhận | 
@@ -169,7 +169,7 @@ Việc xây dựng xác nhận tính khả thi ở mọi nơi và tất cả bá
 | 3 | (4,2)-(4,6) | 16 | vâng | 
 | 4 | (4,6)-(6,6) | 4 | vâng | 
 
-Tất cả các cạnh đều hợp lệ, vì vậy hạn chế duy nhất đến từ cạnh đầu tiên. Khoảng cách cạnh đầu tiên là 4, vì vậy$R_1 = 3$. 
+Tất cả các cạnh đều hợp lệ nên hạn chế duy nhất đến từ cạnh đầu tiên. Khoảng cách cạnh đầu tiên là 4, vì vậy$R_1 = 3$. 
 
 Nếu bất kỳ cạnh nào cách nhau 1, quá trình sẽ kết thúc với -1 ngay lập tức vì không có bán kính nguyên nào thỏa mãn$R_i < 1$Và$R_i \ge 1$. 
 

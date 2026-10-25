@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 28s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Chắc chắn-vui lòng gửi báo cáo vấn đề của Codeforces (hoặc ít nhất là tên liên kết/vấn đề). 
 
 Nếu bạn muốn, hãy nói với tôi: 

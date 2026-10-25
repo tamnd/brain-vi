@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 45s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp ba thành phần: một từ điển các từ trong đó mỗi từ có một vectơ số nguyên 2D cố định, một văn bản dài đóng vai trò như một kho tài liệu tham chiếu và một tập hợp các truy vấn. Mỗi truy vấn kết thúc bằng một chuỗi từ ngắn và chúng ta phải dự đoán từ tiếp theo theo quy tắc bắt chước mô hình ngôn ngữ đơn giản hóa. 
@@ -46,7 +46,7 @@ Cách tiếp cận bạo lực này đã đủ vì cấu trúc phẳng: cơ sở
 
 Quan sát chính là không cần xử lý trước. Vấn đề được thiết kế sao cho việc quét tuyến tính lặp lại sẽ rẻ hơn so với việc xây dựng các cấu trúc hậu tố và bước tính điểm là đại số tuyến tính trên một chiều cố định rất nhỏ (vectơ 2D), giữ các hằng số ở mức thấp. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Mô phỏng Brute Force | O(Q · K · M · K + Q · N · K) | O(N + M) | Đã chấp nhận | 
 | Lập chỉ mục được tối ưu hóa | Không cần thiết | Không cần thiết | Quá mức cần thiết | 
@@ -151,7 +151,7 @@ Hãy xem xét một tình huống nhỏ với các từ trong từ điển có v
 | --- | --- | --- | 
 | L = K | quét toàn bộ bối cảnh | không | 
 | L = K-1 | quét bối cảnh giảm | ["wordA", "wordB"] | 
-| ghi bàn | sản phẩm chấm tổng hợp | chọn tốt nhất | 
+| ghi điểm | tổng chấm sản phẩm | chọn tốt nhất | 
 
 Dấu vết này hiển thị cơ chế dự phòng khi ngữ cảnh chính xác không thành công nhưng ngữ cảnh ngắn hơn lại thành công. 
 
@@ -160,7 +160,7 @@ Trong một trường hợp khác khi bối cảnh chính xác tồn tại, chú
 | Bước | Hành động | Ứng viên | 
 | --- | --- | --- | 
 | L = K | tìm thấy trận đấu | ["x", "y", "z"] | 
-| ghi bàn | tính điểm ngay | dự đoán cuối cùng | 
+| ghi điểm | tính điểm ngay | dự đoán cuối cùng | 
 
 Điều này xác nhận rằng thuật toán luôn ưu tiên ngữ cảnh khớp dài nhất. 
 

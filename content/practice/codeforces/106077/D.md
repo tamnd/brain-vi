@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 28s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Hiểu rồi. Vui lòng gửi báo cáo vấn đề đầy đủ của Codeforces (hoặc ít nhất là liên kết / cuộc thi + thư vấn đề) và tôi sẽ viết một bài xã luận lập trình cạnh tranh phù hợp với: 
 
 - trực giác rõ ràng 

@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 51s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta có một bức tường một chiều được tạo thành từ các đoạn liên tiếp, mỗi đoạn có chiều cao ban đầu. Chúng ta được phép thực hiện chính xác một thao tác gia cố. Trong thao tác đó, chúng tôi chọn đoạn bắt đầu và thêm các khối theo kiểu giảm dần khi chúng tôi di chuyển sang trái: đoạn đã chọn sẽ nhận được$K$các khối bổ sung, đoạn ngay bên trái của nó sẽ được$K-1$, v.v. cho đến khi mức tăng giảm xuống 0 hoặc chúng tôi hết phân đoạn. 
@@ -32,7 +32,7 @@ Khó khăn chính là việc gia cố ảnh hưởng đến hậu tố liền k�
 
 Các ràng buộc cho phép lên đến$10^5$các đoạn có chiều cao lên tới$10^9$. Một mô phỏng đơn giản về phần gia cố cho từng vị trí bắt đầu có thể sẽ quá chậm nếu nó tính toán lại toàn bộ mảng mỗi lần. Một giải pháp cần đánh giá tất cả các vị trí bắt đầu trong thời gian gần tuyến tính hoặc gần tuyến tính. 
 
-Trường hợp khó nhận thấy xuất phát từ thực tế là việc gia cố không nhất thiết phải cải thiện mức tối thiểu. Nếu mức tối thiểu ban đầu nằm xa ngoài phạm vi được tăng cường thì nó sẽ không thay đổi. Ngược lại, nếu mức tối thiểu nằm bên trong vùng bị ảnh hưởng thì mức tăng tuyến tính có thể đủ hoặc không đủ để nâng nó lên trên các phân đoạn chưa được chạm tới khác. 
+Trường hợp khó nhận thấy xuất phát từ thực tế là việc gia cố không nhất thiết phải cải thiện ở mức tối thiểu. Nếu mức tối thiểu ban đầu nằm xa ngoài phạm vi được tăng cường thì nó sẽ không thay đổi. Ngược lại, nếu mức tối thiểu nằm bên trong vùng bị ảnh hưởng thì mức tăng tuyến tính có thể đủ hoặc không đủ để nâng nó lên trên các phân đoạn chưa được chạm tới khác. 
 
 ## Phương pháp tiếp cận 
 
@@ -44,9 +44,9 @@ Quan sát quan trọng là sửa câu trả lời của ứng viên$H$, chiều 
 
 Đối với một cố định$H$, chúng tôi xem xét từng chỉ số bắt đầu có thể$i$. Việc gia cố đóng góp một lượng đã biết cho mỗi$j \le i$, vì vậy chúng tôi kiểm tra xem tất cả các vị trí có ở trên$H$. Thay vì áp dụng các bản cập nhật một cách rõ ràng, chúng tôi tính toán mức độ tăng cường cần thiết ở mỗi vị trí và đảm bảo rằng điểm khởi đầu đã chọn sẽ bù đắp được mọi thiếu sót. 
 
-Cấu trúc khả thi này đơn điệu: nếu một độ cao nhất định$H$có thể đạt được thì bất kỳ chiều cao nhỏ hơn nào cũng có thể đạt được. Điều này cho phép tìm kiếm nhị phân trong phạm vi câu trả lời. 
+Cấu trúc khả thi này đơn điệu: nếu một độ cao nhất định$H$có thể đạt được thì mọi chiều cao nhỏ hơn cũng có thể đạt được. Điều này cho phép tìm kiếm nhị phân trong phạm vi câu trả lời. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Mô phỏng lực lượng vũ phu |$O(NK)$hoặc tệ hơn |$O(1)$thêm | Quá chậm | 
 | Tìm kiếm nhị phân + Kiểm tra tính khả thi |$O(N \log A)$|$O(1)$thêm | Đã chấp nhận | 
@@ -55,10 +55,10 @@ Cấu trúc khả thi này đơn điệu: nếu một độ cao nhất định$H
 
 ## Hướng dẫn thuật toán 
 
-Chúng tôi chuyển vấn đề thành việc quyết định xem chiều cao tối thiểu của mục tiêu nhất định có$H$có thể đạt được bằng một sự gia cố duy nhất. 
+Chúng tôi chuyển vấn đề thành việc quyết định liệu chiều cao tối thiểu của mục tiêu nhất định có$H$có thể đạt được bằng một sự gia cố duy nhất. 
 
 1. Chúng tôi tìm kiếm nhị phân trên câu trả lời$H$, bắt đầu từ chiều cao tối thiểu có thể có cho đến chiều cao cuối cùng tối đa có thể có trong mảng. Điều này đúng vì tính khả thi là đơn điệu: tăng$H$chỉ làm cho tình trạng trở nên khó khăn hơn. 
-2. Đối với cố định$H$, chúng tôi tính toán cho từng vị trí$i$nó thâm hụt bao nhiêu, nghĩa là nó cần đạt được ít nhất bao nhiêu khối$H$. Nếu như$x_i \ge H$, nó cần bằng không; nếu không thì nó cần$H - x_i$. 
+2. Đối với cố định$H$, chúng tôi tính toán cho từng vị trí$i$nó thâm hụt bao nhiêu, nghĩa là nó cần đạt ít nhất bao nhiêu khối$H$. Nếu như$x_i \ge H$, nó cần bằng không; nếu không thì nó cần$H - x_i$. 
 3. Chúng tôi giải thích sự gia cố bắt đầu từ vị trí$i$như vị trí bao phủ$j \le i$, và đóng góp$K - (i - j)$nếu tích cực. Đây là một cửa sổ bao phủ hình tam giác. 
 4. Đối với mỗi lần khởi đầu có thể$i$, chúng tôi kiểm tra xem phép cộng tam giác này có đủ để bù đắp tất cả những thiếu hụt trong phạm vi bị ảnh hưởng của nó hay không. Điểm quan trọng là chúng ta chỉ cần kiểm tra điều kiện bao phủ tối thiểu trong cửa sổ$[i-K+1, i]$, vì ngoài phạm vi này không có tác dụng. 
 5. Để thực hiện điều này một cách hiệu quả, chúng tôi duy trì cơ cấu trượt trên các vị trí bắt đầu có thể và theo dõi xem liệu tất cả các khoản thâm hụt bắt buộc có thể được bù đắp hay không. Mỗi lần kiểm tra được thực hiện trong$O(N)$, vì vậy tính khả thi là tuyến tính. 
@@ -67,7 +67,7 @@ Chúng tôi chuyển vấn đề thành việc quyết định xem chiều cao t
 
 ### Tại sao nó hoạt động 
 
-Thuật toán dựa trên hai bất biến. Thứ nhất, tính khả thi còn đơn điệu trong$H$: nếu chúng ta có thể tăng mức tối thiểu lên$H$, thì bất kỳ ngưỡng nhỏ hơn nào cũng có thể đạt được một cách tầm thường bằng cùng một mức tăng cường. Thứ hai, đối với vị trí bắt đầu cố định, chức năng gia cố hoàn toàn mang tính xác định và chỉ phụ thuộc vào khoảng cách tương đối, do đó việc kiểm tra xem liệu nó có bù đắp được những thiếu hụt hay không là đủ để đảm bảo tính chính xác. Vì chúng tôi kiểm tra toàn diện tất cả các vị trí bắt đầu cho từng$H$, chúng tôi không bỏ lỡ bất kỳ lựa chọn gia cố hợp lệ nào. 
+Thuật toán dựa trên hai bất biến. Thứ nhất, tính khả thi còn đơn điệu trong$H$: nếu chúng ta có thể tăng mức tối thiểu lên$H$, thì bất kỳ ngưỡng nhỏ hơn nào cũng có thể đạt được một cách tầm thường bằng cùng một mức tăng cường. Thứ hai, đối với vị trí bắt đầu cố định, chức năng gia cố hoàn toàn mang tính quyết định và chỉ phụ thuộc vào khoảng cách tương đối, do đó việc kiểm tra xem liệu nó có bù đắp được những thiếu hụt hay không là đủ để đảm bảo tính chính xác. Vì chúng tôi kiểm tra toàn diện tất cả các vị trí bắt đầu cho từng$H$, chúng tôi không bỏ lỡ bất kỳ lựa chọn gia cố hợp lệ nào. 
 
 ## Giải pháp Python```python
 import sys
@@ -161,7 +161,7 @@ Vì$H = 4$, bắt đầu từ vị trí 2 tạo ra phạm vi bao phủ đầy đ
 | 3 | vâng | chọn bất kỳ vị trí 3 giá trị nào | 
 | 4 | không | không thể sửa được số 1 trung tâm với K=1 | 
 
-Thao tác hữu ích duy nhất là cục bộ nên chúng ta chỉ có thể điều chỉnh một chút ở một vị trí. Nút cổ chai là mức tối thiểu trung tâm. 
+Thao tác hữu ích duy nhất là cục bộ, vì vậy chúng ta chỉ có thể điều chỉnh một chút một vị trí. Nút cổ chai là mức tối thiểu trung tâm. 
 
 ## Phân tích độ phức tạp 
 
@@ -224,7 +224,7 @@ assert run("4 3\n4 1 1 4\n") == "4", "center dip"
 
 ## Vỏ cạnh 
 
-Đầu vào phân đoạn đơn tối thiểu như`1 1 / 10`chứng minh rằng sự gia cố luôn làm tăng phần tử đơn lẻ đó một cách chính xác$K$, vì vậy câu trả lời mang tính quyết định và nên$11$. Thuật toán xử lý chính xác điều này vì việc kiểm tra tính khả thi luôn thành công đối với$H \le 11$và thất bại ngoài nó. 
+Đầu vào phân đoạn đơn tối thiểu như`1 1 / 10`chứng tỏ rằng sự gia cố luôn làm tăng phần tử đơn lẻ đó một cách chính xác$K$, vì vậy câu trả lời mang tính quyết định và nên$11$. Thuật toán xử lý chính xác điều này vì việc kiểm tra tính khả thi luôn thành công đối với$H \le 11$và thất bại ngoài nó. 
 
 Một mảng thống nhất như`5 2 / 1 1 1 1 1`cho thấy rằng ngay cả với nhỏ$K$, việc chọn tâm sẽ cho phép lực nâng hình tam giác trải rộng đủ để nâng tất cả các phần tử lại với nhau. Vòng lặp khả thi tìm thấy một khởi đầu hợp lệ vì phạm vi bao phủ trung tâm chồng lên tất cả các điểm yếu. 
 

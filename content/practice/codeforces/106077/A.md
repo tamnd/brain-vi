@@ -1,6 +1,6 @@
 ---
 title: "CF 106077A - Mặt trời"
-description: "Tôi không thể viết một bài xã luận chính xác cho Codeforces 106077A - Sun một cách đáng tin cậy nếu không nêu rõ vấn đề thực tế. ID cụ thể này tương ứng với một vấn đề kiểu Phòng tập thể dục và không có đủ thông tin trong lời nhắc của bạn (định nghĩa đầu vào/đầu ra, các ràng buộc hoặc thậm chí là nhiệm vụ…"
+description: "Tôi không thể viết một bài xã luận chính xác cho Codeforces 106077A - Sun mà không nêu rõ vấn đề thực tế. ID cụ thể này tương ứng với một vấn đề kiểu Phòng tập thể dục và không có đủ thông tin trong lời nhắc của bạn (định nghĩa đầu vào/đầu ra, các ràng buộc hoặc thậm chí là nhiệm vụ…"
 date: "2026-06-25T12:10:22+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 29s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Tôi không thể viết một bài xã luận chính xác cho **Codeforces 106077A - Sun** mà không nêu rõ vấn đề thực tế. 
 
 ID cụ thể này tương ứng với một vấn đề kiểu Phòng tập thể dục và không có đủ thông tin trong lời nhắc của bạn (định nghĩa đầu vào/đầu ra, các ràng buộc hoặc thậm chí là mô tả nhiệm vụ) để xây dựng lại giải pháp dự định. Bất kỳ nỗ lực “đoán” nào cũng có thể tạo ra một bài xã luận sai lệch. 

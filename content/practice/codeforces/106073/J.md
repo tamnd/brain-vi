@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 41s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một tập hợp cố định gồm 10 nhiệm vụ, mỗi nhiệm vụ được gắn nhãn với giá trị độ khó từ tập hợp {1, 2, 3, 4}. Người tổ chức muốn cuối cùng có thể chọn một bộ bốn nhiệm vụ, mỗi nhiệm vụ có độ khó khác nhau. Hiện tại, một số khó khăn có thể đã xuất hiện trong số 10 nhiệm vụ và một số có thể bị thiếu hoàn toàn. 
@@ -40,13 +40,13 @@ Trường hợp khó khăn thứ hai phát sinh khi cả bốn khó khăn đều
 
 Cách giải thích bạo lực sẽ cố gắng mô phỏng việc xây dựng nhóm khó khăn còn thiếu bằng cách liên tục thêm các nhiệm vụ cho đến khi tất cả bốn loại khó khăn đều xuất hiện. Vì mỗi phần bổ sung chỉ có thể giới thiệu một danh mục còn thiếu, nên người ta có thể liên tục kiểm tra xem những khó khăn nào còn thiếu và thêm từng khó khăn đó về mặt khái niệm. 
 
-Điều này hoạt động nhưng là gián tiếp không cần thiết. Trong trường hợp xấu nhất, người ta sẽ quét tập hiện tại sau mỗi phép cộng giả định, dẫn đến công việc lặp đi lặp lại mặc dù không gian trạng thái cực kỳ nhỏ và tĩnh. 
+Điều này hoạt động nhưng là gián tiếp không cần thiết. Trong trường hợp xấu nhất, người ta sẽ quét tập hiện tại sau mỗi phép cộng giả định, dẫn đến công việc lặp lại mặc dù không gian trạng thái cực kỳ nhỏ và tĩnh. 
 
 Quan sát quan trọng là yêu cầu cuối cùng chỉ phụ thuộc vào giá trị nào trong bốn giá trị xuất hiện ít nhất một lần. Mỗi loại độ khó là độc lập, vì vậy chúng ta có thể nén toàn bộ dữ liệu đầu vào thành một mảng hiện diện boolean có kích thước 4. Khi đã biết điều này, câu trả lời chỉ đơn giản là số lượng danh mục còn thiếu. 
 
 Điều này làm giảm vấn đề từ quá trình “xây dựng” động sang vấn đề đếm tĩnh. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Mô phỏng lực lượng vũ phu | O(10 * 4) khái niệm | O(4) | Được chấp nhận nhưng không cần thiết | 
 | Đếm sự hiện diện | O(10) | O(4) | Đã chấp nhận | 

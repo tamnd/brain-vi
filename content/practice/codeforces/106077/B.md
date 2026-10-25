@@ -21,14 +21,14 @@ draft: false
 **Thời gian giải:** 41s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta có một chuỗi văn bản mã hóa được tạo thành từ các chữ cái viết thường. Mọi ký tự trong chuỗi đã được dịch chuyển bằng cùng một độ lệch mật mã Caesar, nhưng không xác định được độ lệch. Chúng tôi cũng được cung cấp một số cụm từ mục tiêu. Sau khi áp dụng phép dịch ngược chính xác cho văn bản mã hóa, mỗi cụm từ trong số này phải xuất hiện ở đâu đó dưới dạng chuỗi con liền kề. 
 
 Nhiệm vụ là tìm bất kỳ giá trị dịch chuyển nào có thể chuyển đổi bản mã thành một chuỗi chứa tất cả các cụm từ đã cho. Đầu ra là chuỗi được giải mã, vì vậy chúng ta cần áp dụng dịch chuyển được phát hiện và in kết quả. 
 
-Độ dài bản mã tối đa là 1000 và có thể có tối đa 1000 cụm từ. Mỗi cụm từ đều ngắn, có độ dài tối đa là 30. Những giới hạn này đủ nhỏ để chúng ta có thể thử tất cả các phép dịch chuyển Caesar có thể có. Mật mã Caesar chỉ có 26 độ lệch có thể có, vì vậy công việc chính là kiểm tra 26 chuỗi được giải mã ứng viên. Với độ dài chuỗi khoảng 1000 và 1000 cụm từ, ngay cả kiểm tra kiểu bậc hai vẫn thấp hơn nhiều so với giới hạn. Các thuật toán dựa trên không gian tìm kiếm lớn hơn nhiều, chẳng hạn như thử thay thế tùy ý, sẽ không phù hợp với cấu trúc của bài toán. 
+Độ dài bản mã tối đa là 1000 và có thể có tối đa 1000 cụm từ. Mỗi cụm từ đều ngắn, có độ dài tối đa là 30. Những giới hạn này đủ nhỏ để chúng ta có thể thử tất cả các phép dịch chuyển Caesar có thể có. Mật mã Caesar chỉ có 26 độ lệch có thể có, vì vậy công việc chính là kiểm tra 26 chuỗi được giải mã ứng viên. Với độ dài chuỗi khoảng 1000 và 1000 cụm từ, ngay cả kiểm tra kiểu bậc hai vẫn còn thấp hơn nhiều so với giới hạn. Các thuật toán dựa trên không gian tìm kiếm lớn hơn nhiều, chẳng hạn như thử thay thế tùy ý, sẽ không phù hợp với cấu trúc của bài toán. 
 
 Các trường hợp chính xuất phát từ việc xử lý hướng dịch chuyển không chính xác hoặc cho rằng chỉ kiểm tra một cụm từ là đủ. Ví dụ, hãy xem xét:```
 abc
@@ -66,7 +66,7 @@ Sự kém hiệu quả duy nhất có thể xảy ra là do việc kiểm tra ch
 
 Quan sát quan trọng là không gian mật mã rất nhỏ. Chúng tôi không cần khôi phục sự dịch chuyển về mặt toán học hoặc xây dựng các cấu trúc khớp chuỗi nâng cao. Giá trị chưa biết là một số từ 0 đến 25, vì vậy phép liệt kê là giải pháp tự nhiên. Vấn đề trông giống như một vấn đề về chuỗi nhưng không gian tìm kiếm nhỏ lại chiếm ưu thế về độ phức tạp. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(26 * n * m * l) | O(n) | Đã chấp nhận | 
 | Tối ưu | O(26 * n * m * l) | O(n) | Đã chấp nhận | 
@@ -80,7 +80,7 @@ Quan sát quan trọng là không gian mật mã rất nhỏ. Chúng tôi không
 3. Kiểm tra từng cụm từ với chuỗi ứng cử viên. Nếu thiếu một cụm từ, hãy loại bỏ sự thay đổi này và tiếp tục. 
 4. Khi một ca làm cho tất cả các cụm từ xuất hiện, hãy in ngay chuỗi đã giải mã. Vì câu trả lời được đảm bảo tồn tại nên một số thay đổi sẽ thành công. 
 
-Lý do điều này có hiệu quả là vì chỉ có 26 phiên bản được giải mã của bản mã. Người đúng được đảm bảo nằm trong số đó, vì vậy ứng cử viên hợp lệ đầu tiên mà chúng tôi tìm thấy là đủ. 
+Lý do điều này có tác dụng là vì chỉ có 26 phiên bản được giải mã của văn bản mật mã. Người đúng được đảm bảo nằm trong số đó, vì vậy ứng cử viên hợp lệ đầu tiên mà chúng tôi tìm thấy là đủ. 
 
 ### Tại sao nó hoạt động 
 
@@ -232,7 +232,7 @@ hell
 llo
 ```Thuật toán bắt đầu với shift 0, xây dựng`hello`và kiểm tra cả hai cụm từ. Vì cả hai đều có mặt nên nó quay trở lại ngay lập tức. Một giải pháp bắt đầu tìm kiếm từ ca 1 cuối cùng vẫn có hiệu quả, nhưng việc kiểm tra số 0 giúp lý luận đơn giản và tránh các giả định không cần thiết. 
 
-Đối với trường hợp bao bọc:```
+Đối với trường hợp bao quanh:```
 z
 1
 a

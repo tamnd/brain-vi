@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 51s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi được yêu cầu thiết kế một nhóm giải đấu để một hệ thống loại trừ rất cụ thể có thể chạy mà không bao giờ gặp khó khăn. 
@@ -52,7 +52,7 @@ Thông tin chi tiết quan trọng là giải đấu hoàn toàn đối xứng g
 
 Điều này dẫn đến một đặc tính đơn giản: câu trả lời là bội số chung nhỏ nhất của tất cả các hệ số nhị thức dọc theo lớp biên của cấu trúc ẩn giống Pascal, đơn giản hóa thành dạng đóng chỉ phụ thuộc vào A và B. Biểu thức cuối cùng rút gọn thành hệ số nhị thức C(A+B-2, A-1), được tính theo modulo 1e9+7. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Mô phỏng lực lượng vũ phu | Hàm mũ | Hàm mũ | Quá chậm | 
 | Xây dựng tổ hợp | O(A + B) | O(1) | Đã chấp nhận | 
