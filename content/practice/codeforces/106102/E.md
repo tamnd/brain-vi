@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1m 5s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chiếc hộp là một`M × N`lưới. Ô ở hàng`i`và cột`j`chứa một cây bút chì có chiều dài là`i · N + j`. Các hàng và cột không được lập chỉ mục, vì vậy ô trên cùng bên trái chứa độ dài`0`. 
@@ -46,13 +46,13 @@ M = 3, N = 3
 
 Chỉ riêng kích thước không xác định được tổng. 
 
-Một trường hợp tinh vi khác xuất hiện khi vị trí bắt đầu được tính toán nằm ngoài lưới.```
+Một trường hợp tinh tế khác xuất hiện khi vị trí bắt đầu được tính toán nằm ngoài lưới.```
 M = 2, N = 3, L = 8
 ```Hình chữ nhật có diện tích`4`tồn tại và hoạt động, nhưng một số nghiệm hợp lệ về mặt đại số tương ứng với góc trên bên trái vượt quá phạm vi cho phép. Các giới hạn hình học vẫn phải được kiểm tra. 
 
 ## Phương pháp tiếp cận 
 
-Một giải pháp brute-force sẽ liệt kê mọi hình chữ nhật con và tính tổng của nó. 
+Một giải pháp vũ phu sẽ liệt kê mọi hình chữ nhật con và tính tổng của nó. 
 
 có`O(M²N²)`hình chữ nhật phụ. Với kích thước lên tới`10^6`, điều đó thật vô vọng. Ngay cả việc lưu trữ lưới cũng không thể. 
 
@@ -73,7 +73,7 @@ sum = A(2x + B)/2
 2L = A(2x + B)
 ```Điều này ngay lập tức ngụ ý rằng khu vực`A`phải chia`2L`. 
 
-Điều đó thay đổi hoàn toàn vấn đề. Thay vì tìm kiếm các vị trí trong một mạng lưới khổng lồ, chúng ta liệt kê các ước của`2L`. Số ước của một số lên tới`2 · 10^12`chỉ có vài nghìn. 
+Điều đó thay đổi hoàn toàn vấn đề. Thay vì tìm kiếm các vị trí trong một mạng lưới khổng lồ, chúng ta liệt kê các ước của`2L`. Số ước của một số lên đến`2 · 10^12`chỉ có vài nghìn. 
 
 Đối với khu vực ứng cử viên`A`, chúng tôi thử mọi nhân tử```
 A = h · w
@@ -227,7 +227,7 @@ for _ in range(t):
     print(answer)
 ```Phần đầu tiên phân tích thành nhân tử`2L`. Từ việc phân tích nhân tử đó chúng ta tạo ra tất cả các ước số. 
 
-Vòng lặp bên ngoài kiểm tra các vùng ứng viên theo thứ tự tăng dần. Vì chúng ta chỉ quan tâm đến diện tích khả thi nhỏ nhất nên việc tìm kiếm có thể dừng ngay lập tức khi tìm thấy hình chữ nhật hợp lệ. 
+Vòng lặp bên ngoài kiểm tra các vùng ứng viên theo thứ tự tăng dần. Vì chúng ta chỉ quan tâm đến vùng khả thi nhỏ nhất nên việc tìm kiếm có thể dừng ngay lập tức khi tìm thấy hình chữ nhật hợp lệ. 
 
 Đối với mỗi khu vực, chúng tôi liệt kê tất cả các cặp yếu tố`(h, w)`. Đại số đưa ra chỉ số bắt đầu duy nhất có thể`x`. Chuyển đổi```
 x = Nr + c

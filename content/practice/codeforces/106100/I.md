@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 25s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Tôi không thể viết một bài xã luận chính xác cho Codeforces 106100I - M.M.A từ thông tin được cung cấp ở đây vì thiếu báo cáo vấn đề thực tế, định dạng đầu vào, định dạng đầu ra và các ràng buộc. 
 
 Tôi đã cố gắng xác định vấn đề, nhưng thông tin công khai hiện có chỉ xác nhận rằng một vấn đề trong Phòng tập có tên "I - M.M.A" tồn tại trong cuộc thi 106100. Bản thân tuyên bố này không có sẵn từ các nguồn mà tôi có thể truy cập. 

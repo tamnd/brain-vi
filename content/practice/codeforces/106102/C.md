@@ -1,5 +1,5 @@
 ---
-title: "CF 106102C - Phép thuật"
+title: "CF 106102C - Phép Thuật"
 description: "Tôi không thể viết một bài xã luận chính xác cho vấn đề này vì thiếu tuyên bố thực tế. Đối với bài toán Codeforces Gym 106102C, trang hiện chỉ hiển thị mẫu trong khi bản mô tả bài toán bị ẩn đằng sau một hình ảnh trong nguồn có sẵn, vì vậy nhiệm vụ…"
 date: "2026-06-25T11:48:34+07:00"
 tags: ["codeforces", "competitive-programming"]
@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 42s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Tôi không thể viết một bài xã luận chính xác cho vấn đề này vì thiếu tuyên bố thực tế. 
 
 Đối với bài toán Codeforces Gym 106102C, trang hiện chỉ hiển thị mẫu```

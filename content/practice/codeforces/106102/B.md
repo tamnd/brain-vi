@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 25s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Tôi không thể viết một bài xã luận chính xác cho vấn đề này vì tuyên bố thực tế về **Codeforces 106102B - Move-a-coin-2** không có trong tin nhắn của bạn. 
 
 Lời nhắc hiện chỉ chứa:```

@@ -21,14 +21,14 @@ draft: false
 **Thời gian giải:** 44s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Hành khách lần lượt lên máy bay. Mỗi hành khách có một hàng cố định và một chỗ ngồi cố định ở hàng đó. 
 
 Trong một hàng, chỗ ngồi`1`ở cạnh cửa sổ và chỗ ngồi`m`nằm cạnh lối đi. Hành khách luôn đi vào từ phía lối đi và đi về phía chỗ ngồi được chỉ định của họ. 
 
-Giả sử một hành khách muốn có chỗ ngồi`s`. Trong khi đi từ lối đi về phía chỗ ngồi đó, họ vượt qua tất cả những chỗ ngồi có số lượng lớn hơn`s`. Nếu một số ghế đã có người ngồi thì hành khách ngồi phải đứng dậy để người mới đi qua. Mỗi hành động thường trực đều góp phần`1`để trả lời. 
+Giả sử một hành khách muốn có chỗ ngồi`s`. Trong khi đi từ lối đi về phía chỗ ngồi đó, họ vượt qua tất cả những chỗ ngồi có số lượng lớn hơn`s`. Nếu một số ghế đã có người ngồi, hành khách ngồi phải đứng dậy để người mới đi qua. Mỗi hành động thường trực đều góp phần`1`để trả lời. 
 
 Nhiệm vụ là tính tổng số lần hành khách đứng lên trong toàn bộ quá trình lên máy bay. 
 
@@ -44,7 +44,7 @@ seat 2
 Bây giờ hãy xem xét:```
 seat 2
 seat 5
-```Hành khách thứ hai chỉ bước tới chỗ ngồi`5`, nằm cạnh lối đi. Không ai cản đường. Sự đóng góp là`0`. 
+```Hành khách thứ hai chỉ đi tới chỗ ngồi`5`, nằm cạnh lối đi. Không ai cản đường. Sự đóng góp là`0`. 
 
 Việc thực hiện bất cẩn có thể tính số ghế đã sử dụng có số ghế nhỏ hơn thay vì số ghế lớn hơn và thu được kết quả ngược lại. 
 
@@ -72,7 +72,7 @@ Vấn đề là thời gian chạy. Với`k = 100000`, việc kiểm tra tất c
 
 Quan sát quan trọng là, trong một hàng cố định, chúng ta đang đếm các nghịch đảo. 
 
-Giả sử thứ tự xuất hiện của các ghế trong một hàng là```
+Giả sử thứ tự đến của các ghế trong một hàng là```
 a1, a2, a3, ...
 ```Khi hành khách`ai`đến, mỗi chỗ ngồi trước đó lớn hơn`ai`gây ra một sự kiện đứng lên. 
 
@@ -99,7 +99,7 @@ Tổng số hành khách trên tất cả các hàng nhiều nhất là`100000`,
 6. Đối với chỗ ngồi hiện tại`s`, tìm vị trí nén của nó`p`. 
 7. Hãy để`seen`là số lượng hành khách đã được xử lý ở hàng này. 
 8. Truy vấn cây Fenwick xem có bao nhiêu chỗ ngồi được xử lý có chỉ số nén`≤ p`. 
-9. Số ghế trước đó lớn hơn rất nhiều so với`s`là```
+9. Số ghế trước đó lớn hơn nhiều so với`s`là```
 seen - count(≤ s)
 ```Thêm giá trị này vào câu trả lời. 
 10. Chèn chỗ ngồi`s`vào cây Fenwick và tiếp tục. 
@@ -109,7 +109,7 @@ seen - count(≤ s)
 
 Đối với hành khách được chỉ định chỗ ngồi`s`, những người duy nhất phải đứng là những hành khách đã ngồi ở ghế có số lượng lớn hơn trong cùng một hàng. Đó chính xác là những chỗ ngồi nằm giữa lối đi và`s`. 
 
-Khi xử lý một hàng theo thứ tự đến, mỗi sự kiện đứng lên tương ứng với một cặp hành khách trong đó hành khách trước ngồi ở số ghế lớn hơn hành khách sau. Những cặp như vậy chính xác là sự đảo ngược của dãy số ghế cho hàng đó. 
+Khi xử lý một hàng theo thứ tự đến, mỗi sự kiện đứng lên tương ứng với một cặp hành khách trong đó hành khách trước ngồi ở số ghế lớn hơn hành khách sau. Những cặp như vậy chính xác là sự đảo ngược của dãy số ghế của hàng đó. 
 
 Cây Fenwick duy trì tất cả các chỗ ngồi đã được xử lý trước đó. Ở mỗi bước, nó sẽ đếm xem có bao nhiêu ghế trước đó lớn hơn ghế hiện tại, chính xác là số lần đứng chờ do hành khách này gây ra. Tổng các giá trị này trên tất cả các hàng sẽ cho ra tổng số cần thiết. 
 
@@ -240,7 +240,7 @@ Câu trả lời cuối cùng:```
 | Thời gian | O(k log k) | Mỗi hành khách tham gia vào một bản cập nhật Fenwick và một truy vấn | 
 | Không gian | O(k) | Dữ liệu hành khách được lưu trữ, mảng nén và cây Fenwick | 
 
-Từ`k ≤ 100000`,`O(k log k)`đủ nhanh một cách dễ dàng. Việc sử dụng bộ nhớ là tuyến tính theo số lượng hành khách và vẫn thoải mái trong giới hạn. 
+Từ`k ≤ 100000`,`O(k log k)`đủ nhanh một cách dễ dàng. Việc sử dụng bộ nhớ là tuyến tính theo số lượng hành khách và vẫn ở mức thoải mái trong giới hạn. 
 
 ## Trường hợp thử nghiệm```python
 # helper: run solution on input string, return output string

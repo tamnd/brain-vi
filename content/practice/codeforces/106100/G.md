@@ -18,10 +18,10 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 1 phút 30s 
+**Thời gian giải:** 1 phút 30 giây 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi được cung cấp một mảng dài`A`và một mảng mục tiêu`B`. 
@@ -81,9 +81,9 @@ Quan sát quan trọng là mô tả đặc điểm của tất cả các mảng 
 
 Lấy bất kỳ phân đoạn nào và xem lần chạy cuối cùng có giá trị bằng nhau.```
 x x x x
-```Mọi yếu tố của cuộc chạy đua đó buộc phải tồn tại. 
+```Mọi yếu tố của cuộc chạy đua đó đều buộc phải tồn tại. 
 
-Mọi vị trí trước lần chạy cuối cùng đó đều là tùy chọn. Chúng ta có thể giữ nó hoặc cuối cùng xóa nó. 
+Mọi vị trí trước lần chạy cuối cùng đều là tùy chọn. Chúng ta có thể giữ nó hoặc cuối cùng xóa nó. 
 
 Kết quả là một phân khúc có thể tạo ra`B`nếu và chỉ khi: 
 
@@ -105,7 +105,7 @@ before the run starts?
 
 ## Hướng dẫn thuật toán 
 
-1. Tính vị trí bắt đầu của lần chạy có giá trị bằng nhau kết thúc ở mọi chỉ số. 
+1. Tính toán vị trí bắt đầu của lần chạy có giá trị bằng nhau kết thúc ở mọi chỉ số. 
 
 Nếu chỉ mục`R`thuộc về một cuộc chạy bắt đầu lúc`s`, thì độ dài hậu tố bắt buộc là:```
 k = R - s + 1
@@ -149,7 +149,7 @@ Lần chạy cuối cùng của một phân đoạn là không thay đổi. Mọ
 
 Mọi vị trí trước lần chạy cuối cùng đều có thể tháo rời. Bằng cách xóa các phần tử không mong muốn, chúng tôi có thể giữ chính xác bất kỳ chuỗi con nào của tiền tố trước lần chạy. 
 
-Do đó, một phép biến đổi hợp lệ được xác định hoàn toàn bằng cách chọn một dãy con bằng tiền tố của`B`trước khi chạy và khớp lệnh chạy bắt buộc với hậu tố của`B`. 
+Do đó, một phép biến đổi hợp lệ được xác định hoàn toàn bằng cách chọn một dãy con bằng tiền tố của`B`trước khi chạy và khớp lần chạy bắt buộc với hậu tố của`B`. 
 
 DP lưu trữ vị trí bắt đầu mới nhất có thể của mỗi tiền tố phù hợp của`B`. Nếu trận đấu có thể bắt đầu ở vị trí`x`, sau đó mọi phân đoạn bắt đầu`L ≤ x`chứa trận đấu đó. Việc đếm số lần bắt đầu như vậy sẽ cho chính xác số lượng phân đoạn hợp lệ. 
 
@@ -290,7 +290,7 @@ Vì vậy, chính xác một phân khúc hoạt động.
 
 | Số lượng | Giá trị | 
 | --- | --- | 
-| Bắt đầu trận đấu tiền tố mới nhất | 1 | 
+| Trận đấu tiền tố bắt đầu muộn nhất | 1 | 
 | Đã thêm vào câu trả lời | 1 | 
 
 Trả lời:```
@@ -382,4 +382,4 @@ A = [7, 7, 7]
 B = [7, 7]
 ```độ dài chạy cuối đã`3`. 
 
-Vì cả ba phần tử đều bắt buộc phải tồn tại nên không có đoạn nào kết thúc ở vị trí cuối cùng có thể thu nhỏ lại về độ dài`2`. Thuật toán tự động từ chối nó vì độ dài hậu tố yêu cầu không thể được thỏa mãn.
+Vì cả ba phần tử đều bắt buộc phải tồn tại nên không có đoạn nào kết thúc ở vị trí cuối cùng có thể co lại thành chiều dài`2`. Thuật toán tự động từ chối nó vì độ dài hậu tố yêu cầu không thể được thỏa mãn.

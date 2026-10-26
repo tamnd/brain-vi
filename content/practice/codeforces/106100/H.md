@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 19s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Tôi chưa thể viết một bài xã luận chính xác cho vấn đề này một cách đáng tin cậy vì thiếu phần tuyên bố. Hiện tại, không có mô tả nào về những gì “Sự kỳ diệu của hình vuông” thực sự yêu cầu, đầu vào trông như thế nào hoặc cần phải tính toán những gì, vì vậy mọi giải pháp tôi viết đều chỉ là phỏng đoán. 
 
 Nếu bạn dán báo cáo vấn đề đầy đủ (hoặc thậm chí là ảnh chụp màn hình / diễn giải thô), tôi sẽ tạo một bài xã luận hoàn chỉnh theo phong cách Codeforces theo đúng định dạng mà bạn yêu cầu, bao gồm trực giác, đạo hàm, độ phức tạp, các trường hợp đặc biệt và giải pháp Python đầy đủ. 

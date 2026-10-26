@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 24s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Thiếu tuyên bố vấn đề nên tôi không thể xây dựng lại giải pháp dự định hoặc viết một bài xã luận chính xác. 
 
 Chỉ riêng “Cổng thông tin ở Narxoz” là không đủ để suy ra cấu trúc biểu đồ, các ràng buộc hoặc đầu ra cần thiết một cách đáng tin cậy và việc đoán sẽ dẫn đến một bài xã luận bịa đặt. 
