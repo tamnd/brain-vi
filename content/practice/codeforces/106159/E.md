@@ -1,6 +1,6 @@
 ---
 title: "CF 106159E - Vấn đề cấu trúc dữ liệu cơ bản"
-description: "Chúng tôi đang duy trì một bộ sưu tập ngăn xếp ngày càng tăng, trong đó cả số lượng ngăn xếp và nội dung của chúng đều tăng theo thời gian. Ban đầu không có ngăn xếp. Hệ thống xử lý một chuỗi các thao tác theo thứ tự. Một thao tác tạo ra một ngăn xếp trống mới và thêm nó vào cuối."
+description: "Chúng tôi đang duy trì một bộ sưu tập ngăn xếp ngày càng tăng, trong đó cả số lượng ngăn xếp và nội dung của chúng đều phát triển theo thời gian. Ban đầu không có ngăn xếp. Hệ thống xử lý một chuỗi các thao tác theo thứ tự. Một thao tác tạo ra một ngăn xếp trống mới và thêm nó vào cuối."
 date: "2026-06-19T19:14:48+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
@@ -21,10 +21,10 @@ draft: false
 **Thời gian giải:** 46s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi đang duy trì một bộ sưu tập ngăn xếp ngày càng tăng, trong đó cả số lượng ngăn xếp và nội dung của chúng đều tăng theo thời gian. Ban đầu không có ngăn xếp. Hệ thống xử lý một chuỗi các thao tác theo thứ tự. 
+Chúng tôi đang duy trì một bộ sưu tập ngăn xếp ngày càng tăng, trong đó cả số lượng ngăn xếp và nội dung của chúng đều phát triển theo thời gian. Ban đầu không có ngăn xếp. Hệ thống xử lý một chuỗi các thao tác theo thứ tự. 
 
 Một thao tác tạo ra một ngăn xếp trống mới và thêm nó vào cuối. Một thao tác khác sẽ đẩy một giá trị vào ngăn xếp đã chọn. Thao tác thứ ba yêu cầu giá trị thứ j đã từng được đẩy vào một ngăn xếp cụ thể, tính từ cuối ngăn xếp đó theo thứ tự chèn. 
 
@@ -49,11 +49,11 @@ Quan sát quan trọng là các ngăn xếp độc lập và lịch sử tăng t
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
 | Brute Force (mô phỏng trực tiếp) | O(Q) | O(Q) | Đã chấp nhận | 
-| Tối ưu (giống mô phỏng) | O(Q) | O(Q) | Đã chấp nhận | 
+| Tối ưu (cùng mô phỏng) | O(Q) | O(Q) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Bắt đầu với một danh sách trống`stacks`. Điều này thể hiện tập hợp các ngăn xếp hiện tại theo thứ tự tạo. Mỗi ngăn xếp bản thân nó là một danh sách lưu trữ các giá trị được đẩy theo thứ tự đến. 
+1. Bắt đầu với một danh sách trống`stacks`. Điều này thể hiện tập hợp các ngăn xếp hiện tại theo thứ tự tạo. Bản thân mỗi ngăn xếp là một danh sách lưu trữ các giá trị được đẩy theo thứ tự đến. 
 2. Khi thao tác loại 1 xảy ra, hãy thêm một danh sách trống mới vào`stacks`. Danh sách mới này đại diện cho một ngăn xếp mới không có phần tử nào. 
 3. Khi thực hiện thao tác loại 2`(i, x)`xảy ra, nối thêm`x`ĐẾN`stacks[i-1]`. Điều này mô phỏng việc đẩy lên ngăn xếp i, giữ nguyên thứ tự chèn. 
 4. Khi thực hiện thao tác loại 3`(i, j)`xảy ra, đầu ra`stacks[i-1][j-1]`. Điều này trực tiếp lấy phần tử được chèn thứ j trong ngăn xếp đó. 

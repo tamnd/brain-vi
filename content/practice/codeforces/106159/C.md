@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 41s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một chuỗi các bài hát, mỗi bài hát gắn liền với một giá trị có thể dương hoặc âm. Chúng tôi muốn chọn một tập hợp con của các bài hát này để tối đa hóa tổng giá trị đã chọn, nhưng có một hạn chế về khoảng cách: nếu chúng tôi chọn một bài hát ở vị trí`i`, sau đó chúng tôi bị cấm chọn bất kỳ bài hát nào tiếp theo`K - 1`vị trí, nghĩa là chỉ số nghiêm ngặt giữa`i`Và`i + K`không thể được chọn. 
@@ -52,7 +52,7 @@ Chúng tôi xác định`dp[i]`là số tiền tối đa chúng ta có thể nh�
 Ta xử lý mảng từ phải qua trái sao cho khi ở vị trí`i`, chúng tôi đã biết câu trả lời tốt nhất cho các vị trí ngoài nó. 
 
 1. Xác định mảng DP`dp`kích thước`N + K + 5`, được khởi tạo bằng số không. Khoảng trống thừa sẽ tránh được việc kiểm tra giới hạn khi nhảy về phía trước. 
-2. Lặp lại`i`từ`N`xuống tới`1`. Tại mỗi vị trí, chúng tôi tính toán hai khả năng. 
+2. Lặp lại`i`từ`N`xuống`1`. Tại mỗi vị trí, chúng tôi tính toán hai khả năng. 
 3. Tùy chọn đầu tiên là bỏ qua bài hát hiện tại, điều này mang lại giá trị`dp[i + 1]`. Điều này thể hiện việc không sử dụng bài hát`i`không hề. 
 4. Lựa chọn thứ hai là lấy bài hát`i`, mang lại giá trị`A[i] + dp[i + K]`. Điều này hoạt động vì sau khi chọn`i`, vị trí hợp lệ tiếp theo là`i + K`. 
 5. Đặt`dp[i]`đạt giá trị lớn nhất của hai giá trị này. 
@@ -92,7 +92,7 @@ trận chung kết`max(0, dp[1])`là cần thiết vì phép truy toán giả đ
 
 ### Ví dụ 1 
 
-đầu vào:`N = 3, K = 1, A = [1, 2, 3]`Đây`K = 1`có nghĩa là thực sự không có hạn chế nào giữa các lần chọn. 
+đầu vào:`N = 3, K = 1, A = [1, 2, 3]`Đây`K = 1`có nghĩa là thực tế không có hạn chế nào giữa các lần chọn. 
 
 | tôi | A[i] | dp[i+1] | A[i] + dp[i+K] | dp[i] | 
 | --- | --- | --- | --- | --- | 
@@ -115,7 +115,7 @@ Kết quả cuối cùng là`6`, xác nhận rằng tất cả các yếu tố c
 
 Câu trả lời tối ưu là`3`, tương ứng với việc chọn bài hát thứ hai. 
 
-Những dấu vết này cho thấy DP cân bằng một cách tự nhiên lợi ích địa phương với khả năng sẵn có trong tương lai như thế nào. 
+Những dấu vết này cho thấy cách DP cân bằng một cách tự nhiên lợi ích cục bộ với khả năng sẵn có trong tương lai. 
 
 ## Phân tích độ phức tạp 
 

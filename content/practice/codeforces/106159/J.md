@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 41s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cho một lưới hình chữ nhật có$N$hàng và$M$cột, ban đầu hoàn toàn trống rỗng. Hai người chơi luân phiên nhau. Wilson luôn chơi trước và khi đi nước đi, anh ta đánh dấu bất kỳ ô nào hiện đang trống bằng chữ W. Pedro phản ứng khi di chuyển bằng cách đánh dấu bất kỳ ô trống nào bằng chữ P. Trò chơi tiếp tục cho đến khi mọi ô được lấp đầy và người chơi không có nước đi hợp pháp trong lượt của họ sẽ thua. 
@@ -53,8 +53,8 @@ Vì vậy, vấn đề giảm xuống còn việc kiểm tra tính chẵn lẻ c
 
 1. Đọc số nguyên$N$Và$M$. Chúng xác định tổng số nước đi độc lập có sẵn trong trò chơi. 
 2. Tính tổng số lần di chuyển là$T = N \cdot M$. Điều này thể hiện số lượt sẽ xảy ra trước khi lưới được lấp đầy hoàn toàn. 
-3. Xác định xem$T$là số lẻ hoặc số chẵn. Điều này trực tiếp xác định người chơi nào thực hiện nước đi cuối cùng. 
-4. Nếu$T$Thật kỳ lạ, Wilson thực hiện nước đi cuối cùng nên Wilson thắng. Nếu không, Pedro sẽ thực hiện nước đi cuối cùng và giành chiến thắng. 
+3. Xác định xem$T$là số lẻ hoặc số chẵn. This directly determines which player performs the final move.
+ 4. Nếu$T$Thật kỳ lạ, Wilson thực hiện nước đi cuối cùng nên Wilson thắng. Nếu không, Pedro sẽ thực hiện nước đi cuối cùng và giành chiến thắng. 
 
 ### Tại sao nó hoạt động 
 
@@ -140,4 +140,4 @@ Trường hợp cạnh quan trọng nhất là lưới nhỏ nhất$1 \times 1$.
 
 Đối với một$1 \times M$lưới, thuật toán giảm bài toán về tính chẵn lẻ của$M$. Ví dụ, với đầu vào$1 \ 4$, tích là 4, chẵn nên Pedro thắng. Trình tự các nước đi luân phiên W, P, W, P và Pedro chiếm vị trí cuối cùng. 
 
-Đối với một lưới lớn hơn như$100 \times 100$, sản phẩm là$10000$, vẫn chẵn nên Pedro thắng. Thuật toán không quan tâm đến hình dạng, chỉ quan tâm đến tổng số và điều này vẫn nhất quán vì mọi bước di chuyển đều độc lập và chỉ loại bỏ một ô có sẵn.
+Đối với một lưới lớn hơn như$100 \times 100$, sản phẩm là$10000$, vẫn chẵn nên Pedro thắng. Thuật toán không quan tâm đến hình dạng, chỉ tổng số và điều này vẫn nhất quán vì mọi bước di chuyển đều độc lập và chỉ loại bỏ một ô có sẵn.

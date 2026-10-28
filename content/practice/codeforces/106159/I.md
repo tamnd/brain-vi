@@ -18,10 +18,10 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 40s 
+**Thời gian giải quyết:** 40s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một lưới hình chữ nhật gồm các ký tự đại diện cho một bảng chữ cái. Mỗi ô chứa một ký tự viết hoa duy nhất. Nhiệm vụ là đếm số lần mẫu “UVA” xuất hiện trên lưới khi đọc dọc theo đường thẳng. 
@@ -74,7 +74,7 @@ sau đó chuyển bước nữa tới (i + 2dx, j + 2dy) và kiểm tra xem đó
 
 ### Tại sao nó hoạt động 
 
-Mỗi lần xuất hiện hợp lệ của “UVA” được xác định duy nhất bởi vị trí bắt đầu (chữ ‘U’) và hướng của nó. Thuật toán liệt kê tất cả các vị trí bắt đầu có thể và tất cả các hướng có thể có chính xác một lần. Vì độ dài mẫu được cố định ở mức 3 nên không có sự mơ hồ hoặc chồng chéo trong cách hình thành chuỗi. Bất kỳ kết quả trùng khớp hợp lệ nào đều phải được phát hiện khi vòng lặp đạt đến 'U' bắt đầu và kiểm tra vectơ chỉ hướng chính xác và không có kết quả khớp không hợp lệ nào có thể vượt qua quá trình kiểm tra ký tự. 
+Mỗi lần xuất hiện hợp lệ của “UVA” được xác định duy nhất bởi vị trí bắt đầu (chữ ‘U’) và hướng của nó. Thuật toán liệt kê tất cả các vị trí bắt đầu có thể và tất cả các hướng có thể có chính xác một lần. Vì độ dài mẫu được cố định ở mức 3 nên không có sự mơ hồ hoặc chồng chéo trong cách hình thành chuỗi. Bất kỳ kết quả trùng khớp hợp lệ nào đều phải được phát hiện khi vòng lặp đạt đến điểm bắt đầu 'U' và kiểm tra vectơ chỉ hướng chính xác và không có kết quả khớp không hợp lệ nào có thể vượt qua quá trình kiểm tra ký tự. 
 
 ## Giải pháp Python```python
 import sys
@@ -129,7 +129,7 @@ UVA
 
 Đầu ra là 1. 
 
-Điều này xác nhận rằng việc kiểm tra đường chéo và chiều ngang được xử lý thống nhất và chỉ các chuỗi chuyển tiếp hợp lệ mới được tính. 
+Điều này xác nhận rằng việc kiểm tra theo đường chéo và ngang được xử lý thống nhất và chỉ các chuỗi chuyển tiếp hợp lệ mới được tính. 
 
 ### Ví dụ 2 
 

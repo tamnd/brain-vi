@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 46s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một chuỗi số dài và một chuỗi mẫu ngắn hơn. Chúng tôi được phép chọn một giá trị dịch chuyển duy nhất trong khoảng từ 0 đến 9999. Áp dụng dịch chuyển này có nghĩa là thêm nó vào mọi phần tử của chuỗi dài và lấy mọi thứ theo modulo 10000. Sau phép chuyển đổi này, chúng tôi muốn đếm xem mảng đã dịch chuyển chứa mẫu bao nhiêu lần dưới dạng một mảng con liền kề. Nhiệm vụ của chúng ta là chọn ca làm tối đa hóa số lần xuất hiện này và nếu nhiều ca đạt được cùng mức tối đa thì chúng ta phải xuất ra ca dịch chuyển nhỏ nhất như vậy. 
@@ -56,7 +56,7 @@ Do đó, chúng ta có thể tính toán một ứng cử viên thay đổi cho 
 
 Chúng tôi điều chỉnh lại từng căn chỉnh như một hạn chế đối với sự thay đổi.
 
-1. Đối với mỗi chỉ mục i trong A trong đó cửa sổ đầy đủ có độ dài M phù hợp, chúng tôi cố gắng xác định xem có tồn tại một dịch chuyển s sao cho việc dịch chuyển A[i..i+M-1] làm cho nó bằng B. Chúng tôi tính toán dịch chuyển ứng cử viên từ cặp đầu tiên, s = (B[0] - A[i]) mod 10000. Điều này xác định dịch chuyển phải là gì nếu cửa sổ này hợp lệ. 
+1. Đối với mỗi chỉ mục i trong A nơi có cửa sổ đầy đủ có độ dài M phù hợp, chúng tôi cố gắng xác định xem có tồn tại một dịch chuyển s sao cho việc dịch chuyển A[i..i+M-1] làm cho nó bằng B. Chúng tôi tính toán độ dịch chuyển ứng cử viên từ cặp đầu tiên, s = (B[0] - A[i]) mod 10000. Điều này xác định sự dịch chuyển phải là gì nếu cửa sổ này hợp lệ. 
 2. Chúng tôi xác minh toàn bộ cửa sổ đối với sự dịch chuyển ứng cử viên này bằng cách kiểm tra mọi j sao cho (A[i+j] + s) mod 10000 bằng B[j]. Nếu bất kỳ vị trí nào bị lỗi, cửa sổ này sẽ không đóng góp bất kỳ ca hợp lệ nào. Điều này là cần thiết vì một sự không phù hợp duy nhất hàm ý những khác biệt là không nhất quán, do đó không có sự thay đổi toàn cầu nào có thể thỏa mãn mô hình. 
 3. Nếu cửa sổ hợp lệ, chúng tôi sẽ tăng bộ đếm tần số cho shift s. Điều này tổng hợp số lần xuất hiện của mẫu trong sự thay đổi đó. 
 4. Sau khi xử lý tất cả các cửa sổ, chúng tôi quét tất cả các ca từ 0 đến 9999 và chọn ca có tần số tối đa. Nếu có nhiều ca bằng nhau, chúng ta chọn ca nhỏ nhất bằng cách lặp lên trên. 

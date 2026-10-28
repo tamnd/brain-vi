@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1 phút 7s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi được cung cấp một bộ sưu tập các thành phần, mỗi thành phần có điểm chất lượng bằng số. Chúng tôi muốn chọn một tập hợp con của các thành phần này để tối đa hóa hàm điểm cụ thể. Đối với bất kỳ tập hợp con nào được chọn, giá trị của nó được xác định bằng giá trị thành phần nhỏ nhất bên trong tập hợp con nhân với số thành phần trong tập hợp con đó. 
@@ -32,15 +32,15 @@ Nhiệm vụ là chọn một tập hợp con hợp lệ tuân theo các cặp b
 
 Kích thước đầu vào đạt tới`N = 100000`, do đó, bất kỳ giải pháp nào thử tất cả các tập hợp con hoặc thậm chí tất cả các cặp tập hợp con đều không thể thực hiện được ngay lập tức. Cách tiếp cận bậc hai hoặc tệ hơn sẽ tạo ra thứ tự các phép toán 10¹⁰ trong trường hợp xấu nhất, vượt xa mọi giới hạn khả thi. Ngay cả các phương pháp liệt kê khối hoặc tập hợp con cũng bị loại trừ hoàn toàn. 
 
-Cấu trúc của ràng buộc là khó khăn chính. Mỗi phần tử có đúng một phần tử bị cấm, do đó đồ thị tạo bởi các cạnh`i -> P[i]`phân hủy thành các chu kỳ có hướng. Điều này có nghĩa là xung đột không phải là tùy tiện mà có cấu trúc. 
+Cấu trúc của ràng buộc là khó khăn chính. Mỗi phần tử có chính xác một phần tử bị cấm, do đó đồ thị tạo bởi các cạnh`i -> P[i]`phân hủy thành các chu kỳ có hướng. Điều này có nghĩa là xung đột không phải là tùy tiện mà có cấu trúc. 
 
-Một cách tiếp cận đơn giản là sắp xếp các giá trị và cố gắng bao gồm các phần tử một cách tham lam, nhưng điều này không thành công vì việc thêm phần tử có giá trị thấp sau đó có thể làm mất hiệu lực tập hợp con đã chọn trước đó trông tối ưu. 
+Một cách tiếp cận đơn giản là sắp xếp các giá trị và cố gắng bao gồm các phần tử một cách tham lam, nhưng điều này không thành công vì việc thêm phần tử có giá trị thấp sau này có thể làm mất hiệu lực tập hợp con đã chọn trước đó trông tối ưu. 
 
 Một trường hợp thất bại tinh vi hơn phát sinh khi một phần tử có giá trị cao cấm một phần tử có giá trị cao khác, buộc chúng ta phải lựa chọn giữa việc giữ mức tối thiểu lớn hoặc giữ kích thước tập hợp con lớn. Ví dụ: nếu hai giá trị lớn được ghép nối và xuất hiện ở các phần khác nhau của quá trình quét được sắp xếp, thì việc bao gồm tham lam sẽ lấy cả hai giá trị không chính xác trừ khi được kiểm tra rõ ràng. 
 
 ## Phương pháp tiếp cận 
 
-Phương pháp brute-force là liệt kê từng tập hợp con của các thành phần, kiểm tra xem nó có tôn trọng tất cả các cặp bị cấm hay không, tính toán thành phần và kích thước tối thiểu của nó, đồng thời theo dõi sản phẩm tốt nhất. Điều này đúng vì nó đánh giá định nghĩa một cách trực tiếp. Vấn đề là số lượng tập hợp con là 2^N và thậm chí việc xác thực một tập hợp con cũng yêu cầu kiểm tra xung đột, dẫn đến thời gian theo cấp số nhân vượt xa tính khả thi. 
+Phương pháp brute-force là liệt kê từng tập hợp con của các thành phần, kiểm tra xem nó có tôn trọng tất cả các cặp bị cấm hay không, tính toán thành phần và kích thước tối thiểu của nó, đồng thời theo dõi sản phẩm tốt nhất. Điều này đúng vì nó đánh giá định nghĩa một cách trực tiếp. Vấn đề là số lượng tập hợp con là 2^N và thậm chí việc xác thực một tập hợp con duy nhất cũng yêu cầu kiểm tra xung đột, dẫn đến thời gian theo cấp số nhân vượt xa tính khả thi. 
 
 Quan sát quan trọng là mục tiêu chỉ phụ thuộc vào phần tử tối thiểu trong tập hợp con đã chọn. Nếu chúng ta cố định giá trị tối thiểu`x`, thì tất cả các phần tử được chọn phải có giá trị ít nhất`x`. Trong số các phần tử đó, chúng ta muốn chọn tập con lớn nhất có thể tránh được các cặp bị cấm. Điều này biến vấn đề thành vấn đề lựa chọn bị ràng buộc đối với tiền tố được lọc của các phần tử. 
 
@@ -61,7 +61,7 @@ Trong thực tế, điều này làm giảm việc lặp lại các giá trị t
 
 Chúng tôi sắp xếp các chỉ số theo giá trị giảm dần để luôn xem xét các thành phần mạnh hơn trước tiên. Điều này đảm bảo rằng khi chúng tôi quyết định lấy một phần tử, nó sẽ xác định ngưỡng tối thiểu hiện tại cho bất kỳ tập hợp con nào có chứa phần tử đó. 
 
-Chúng tôi duy trì một mảng boolean`used`, ban đầu tất cả đều sai và chúng tôi cũng theo dõi xem mỗi phần tử đã bị đối tác bị cấm của nó chặn hay chưa. 
+Chúng tôi duy trì một mảng boolean`used`, ban đầu tất cả đều sai và chúng tôi cũng theo dõi xem mỗi phần tử đã bị đối tác cấm của nó chặn hay chưa. 
 
 1. Sắp xếp tất cả các chỉ số theo`a[i]`theo thứ tự giảm dần. 
 2. Lặp lại các chỉ số theo thứ tự đó. 
@@ -130,7 +130,7 @@ P = [2, 1, 4, 3]
 | 3 | 3 | 3 | 4 | lấy cặp (3,4) | 4 | 12 | 
 | 4 | 4 | 2 | 3 | bị chặn | 4 | 12 | 
 
-Điều này cho thấy thuật toán tham lam tạo thành các cặp theo thứ tự giá trị giảm dần như thế nào, cập nhật sản phẩm tốt nhất khi tập hợp con mở rộng. 
+Điều này cho thấy cách thuật toán tham lam tạo thành các cặp theo thứ tự giá trị giảm dần, cập nhật sản phẩm tốt nhất khi tập hợp con mở rộng. 
 
 ### Ví dụ 2 
 
@@ -153,7 +153,7 @@ P = [3, 1, 2]
 | Thời gian | O(N log N) | Sắp xếp chiếm ưu thế; mỗi phần tử được xử lý một lần | 
 | Không gian | O(N) | Mảng hoán vị và theo dõi trạng thái | 
 
-Giải pháp phù hợp thoải mái trong giới hạn cho`N = 10^5`. Việc sắp xếp theo tỷ lệ này rất hiệu quả và tất cả các hoạt động tiếp theo đều là quét tuyến tính. 
+Giải pháp phù hợp thoải mái trong giới hạn cho`N = 10^5`. Việc sắp xếp ở tỷ lệ này rất hiệu quả và tất cả các hoạt động tiếp theo đều là quét tuyến tính. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io

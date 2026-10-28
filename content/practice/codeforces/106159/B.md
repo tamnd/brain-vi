@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 48s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cấp một chuỗi số duy nhất đại diện cho hai số nguyên nối nhau A và B. Hai số này ban đầu đến từ một định dạng địa chỉ trong đó A và B là các thành phần riêng biệt, nhưng trong thông báo chúng được dán lại với nhau mà không có bất kỳ dấu phân cách nào. Nhiệm vụ của chúng tôi là khôi phục cặp ban đầu. 
@@ -112,7 +112,7 @@ Một chi tiết tinh tế là chúng tôi không quay lại sớm khi tìm đư
 | 2 | 10 | 20 | vâng | vâng | hợp lệ | 
 | 3 | 102 | 0 | không (>99 hoặc 0) | không | không hợp lệ | 
 
-Chỉ có một sự phân chia hợp lệ tồn tại, vì vậy chúng tôi xuất ra`10 20`. Điều này chứng tỏ các số 0 ở đầu và các giới hạn phạm vi loại bỏ những diễn giải mơ hồ như thế nào. 
+Chỉ tồn tại một phép chia hợp lệ, vì vậy chúng ta xuất ra`10 20`. Điều này chứng tỏ các số 0 ở đầu và các giới hạn phạm vi loại bỏ những diễn giải mơ hồ như thế nào. 
 
 ## Phân tích độ phức tạp 
 

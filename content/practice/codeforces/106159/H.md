@@ -21,10 +21,10 @@ draft: false
 **Thời gian giải:** 1 phút 14s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi được cấp một cây có kích thước$N$, trong đó mỗi nút đại diện cho một trò chơi. Mỗi trò chơi$j$đi kèm với một loạt người theo dõi$[L_j, R_j]$và một giá trị$K_j$. Nếu là người theo dõi$k$chơi trò chơi$j$, họ đạt được$K_j$hào quang. 
+Chúng tôi được cấp một cái cây có kích thước$N$, trong đó mỗi nút đại diện cho một trò chơi. Mỗi trò chơi$j$đi kèm với một loạt người theo dõi$[L_j, R_j]$và một giá trị$K_j$. Nếu là người theo dõi$k$chơi trò chơi$j$, họ đạt được$K_j$hào quang. 
 
 Đối với một mô phỏng đơn lẻ, chúng ta được cung cấp một đường dẫn trong cây giữa hai nút$S_i$Và$F_i$. Mọi nút trên đường dẫn này đều được “kích hoạt”, nghĩa là đóng góp hào quang của nó được áp dụng. Đối với mô phỏng đó, mỗi người theo dõi$k$tích lũy hào quang bằng tổng của$K_j$trên tất cả các nút$j$trên đường đi sao cho$k \in [L_j, R_j]$. Cuối cùng, chúng tôi không được yêu cầu cung cấp giá trị riêng lẻ cho từng người theo dõi mà cho tổng phạm vi: chúng tôi muốn tổng thể hào quang trên tất cả những người theo dõi trong$[X_i, Y_i]$. 
 
@@ -50,7 +50,7 @@ Chúng tôi tách vấn đề thành hai cấu trúc độc lập:
 
 Thứ hai, chúng tôi coi những đóng góp của người theo dõi là những cập nhật phạm vi trên một trục tọa độ khổng lồ. Từ$M$tùy thuộc vào$10^9$, chúng tôi không thể xây dựng một mảng, vì vậy thay vào đó chúng tôi chỉ nén các điểm cuối của tất cả$[L_j, R_j]$Và$[X_i, Y_i]$. Điều này làm giảm kích thước tọa độ hiệu quả xuống tối đa$2N + 2Q$, có thể quản lý được. 
 
-Sau đó, chúng tôi xử lý các đóng góp bằng cách quét trên trục nén này, nhưng mỗi “sự kiện” bản thân nó là một giá trị được liên kết với một nút cây. Vì vậy, chúng tôi duy trì cấu trúc dữ liệu trên cây hỗ trợ kích hoạt đóng góp của nút và truy vấn tổng dọc theo đường dẫn từ gốc đến nút một cách hiệu quả. Điều này được thực hiện bằng cách sử dụng cây Fenwick hoặc cây phân đoạn trên chuyến tham quan cây Euler, kết hợp với việc đánh dấu sự khác biệt để kích hoạt phạm vi trên trục theo dõi được nén. 
+Sau đó, chúng tôi xử lý các đóng góp bằng cách quét trên trục nén này, nhưng bản thân mỗi “sự kiện” là một giá trị được liên kết với một nút cây. Vì vậy, chúng tôi duy trì cấu trúc dữ liệu trên cây hỗ trợ kích hoạt đóng góp của nút và truy vấn tổng dọc theo đường dẫn từ gốc đến nút một cách hiệu quả. Điều này được thực hiện bằng cách sử dụng cây Fenwick hoặc cây phân đoạn trên chuyến tham quan cây Euler, kết hợp với việc đánh dấu sự khác biệt để kích hoạt phạm vi trên trục theo dõi được nén. 
 
 Cấu trúc cuối cùng trở thành một hệ thống ngoại tuyến hai lớp: một lớp xử lý các khoảng thời gian theo dõi, lớp còn lại xử lý việc tích lũy đường dẫn cây. 
 
@@ -71,7 +71,7 @@ Tiếp theo, chúng ta quét trục nén từ trái sang phải. Trong khi quét
 
 Để hỗ trợ điều này một cách hiệu quả, chúng tôi duy trì một cây Fenwick trong chuyến tham quan cây Euler. Khi một nút bắt đầu hoạt động tại tọa độ$L_j$, chúng tôi thêm$K_j$vào vị trí của nó trong cấu trúc Euler. Khi nó trở nên không hoạt động tại$R_j + 1$, chúng tôi loại bỏ nó. 
 
-Tại bất kỳ thời điểm nào, tổng trên đường đi từ gốc tới nút$v$bằng tổng tiền tố trên các đóng góp tích cực trong cấu trúc cây con của nó. Chúng ta có thể truy xuất nó bằng thủ thuật tiền tố Euler + BIT tiêu chuẩn. 
+Tại bất kỳ thời điểm nào, tổng trên đường đi từ gốc đến nút$v$bằng tổng tiền tố trên các đóng góp tích cực trong cấu trúc cây con của nó. Chúng ta có thể truy xuất nó bằng thủ thuật tiền tố Euler + BIT tiêu chuẩn. 
 
 Cuối cùng, mỗi truy vấn$[S_i, F_i, X_i, Y_i]$trở thành một yêu cầu: tính tổng đóng góp trên đường dẫn$S_i \to F_i$tại tất cả các nút hoạt động trong quá trình quét qua$[X_i, Y_i]$. Bằng cách sử dụng loại trừ bao gồm trên các điểm cuối quét, chúng tôi tích lũy các khoản đóng góp một cách hiệu quả. 
 

@@ -21,14 +21,14 @@ draft: false
 **Thời gian giải:** 50s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một tập hợp các dấu thời gian biểu thị thời điểm tin nhắn đến từ tương lai. Mỗi dấu thời gian chỉ là một số nguyên duy nhất trên một dòng số rất lớn. Sau khi đọc tất cả tin nhắn, chúng tôi được yêu cầu trả lời nhiều truy vấn, trong đó mỗi truy vấn đưa ra một khoảng thời gian đóng$[L, R]$và chúng ta phải đếm xem có bao nhiêu dấu thời gian được lưu trữ nằm trong khoảng thời gian đó. 
 
-Do đó, đầu vào là tĩnh: đầu tiên là một danh sách giá trị cố định, sau đó là một loạt truy vấn đếm phạm vi trên cùng danh sách đó. Không có cập nhật nào xảy ra và mọi truy vấn đều độc lập. Mỗi truy vấn sẽ hỏi một câu hỏi tần số trên một phạm vi con của dòng số nguyên. 
+Do đó, đầu vào là tĩnh: đầu tiên là một danh sách giá trị cố định, sau đó là một loạt truy vấn đếm phạm vi trên cùng danh sách đó. Không có cập nhật nào xảy ra và mọi truy vấn đều độc lập. Mỗi truy vấn sẽ hỏi một câu hỏi tần suất trên một phạm vi con của dòng số nguyên. 
 
-Các ràng buộc đủ lớn để bất kỳ phương pháp nào quét toàn bộ danh sách cho mỗi truy vấn đều ngay lập tức quá chậm. Với$N, Q \le 2 \cdot 10^5$, ngây thơ$O(NQ)$giải pháp sẽ thực hiện lên đến$4 \cdot 10^{10}$so sánh trong trường hợp xấu nhất, vượt xa những gì có thể chạy trong 4 giây bằng Python hoặc thậm chí C++ trong giới hạn thông thường. Điều này thúc đẩy chúng ta tiến tới xử lý tiền xử lý và truy vấn logarit. 
+Các ràng buộc đủ lớn để bất kỳ phương pháp nào quét toàn bộ danh sách cho mỗi truy vấn đều ngay lập tức quá chậm. Với$N, Q \le 2 \cdot 10^5$, ngây thơ$O(NQ)$giải pháp sẽ thực hiện lên đến$4 \cdot 10^{10}$so sánh trong trường hợp xấu nhất, vượt xa những gì có thể chạy trong 4 giây bằng Python hoặc thậm chí C++ trong giới hạn thông thường. Điều này thúc đẩy chúng ta hướng tới việc xử lý tiền xử lý và truy vấn logarit. 
 
 Một điểm tinh tế là dấu thời gian là tùy ý trong$[1, 10^9]$, vì vậy chúng tôi không thể dựa vào chỉ mục trực tiếp hoặc mảng tần số. Miền quá lớn để xây dựng biểu đồ trực tiếp. 
 
