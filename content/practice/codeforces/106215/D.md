@@ -107,9 +107,9 @@ Các vị trí trong tương lai có thể sử dụng chỉ mục này làm đi
 
 Bản đồ tần số luôn chứa các giá trị`i + a_i`đối với các chỉ số nhỏ hơn hoàn toàn so với vị trí hiện tại. 
 
-Khi xử lý chỉ số`j`, cặp nào đẹp cũng phải ưng ý$$i+a_i=j-a_j$$và mọi chỉ mục trên bản đồ đều đã có`i < j`. Như vậy tần số của`j-a_j`is exactly the number of valid earlier indices. Mỗi cặp đẹp được tính một lần khi điểm cuối bên phải của nó được xử lý và không có cặp không hợp lệ nào có thể thỏa mãn đẳng thức được chuyển đổi. This establishes correctness.
+Khi xử lý chỉ số`j`, cặp nào đẹp cũng phải ưng ý$$i+a_i=j-a_j$$và mọi chỉ mục trên bản đồ đều đã có`i < j`. Như vậy tần số của`j-a_j`chính xác là số chỉ số hợp lệ trước đó. Mỗi cặp đẹp được tính một lần khi điểm cuối bên phải của nó được xử lý và không có cặp không hợp lệ nào có thể thỏa mãn đẳng thức được chuyển đổi. Điều này thiết lập tính đúng đắn. 
 
- ## Giải pháp Python```python
+## Giải pháp Python```python
 import sys
 from collections import defaultdict
 
