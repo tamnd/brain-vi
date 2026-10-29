@@ -3,7 +3,7 @@
   "lang": "vi",
   "source_repo": "/tmp/brain",
   "target_repo": "/tmp/bs/vi/repo",
-  "last_run": "2026-10-29T12:23:36.449086Z",
+  "last_run": "2026-10-29T12:48:29.276134Z",
   "batch": 0,
   "translator": {
     "provider": "google",
@@ -138486,6 +138486,86 @@
       "source_hash": "sha256:6b60281329c6870232e452014432455d7bbc3f63a51cd03df07dd51141554a5b",
       "translated_at": "2026-10-29T12:23:36.449061Z",
       "dest_path": "content/practice/codeforces/106197/M.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/106197/N.md": {
+      "source_hash": "sha256:39268b65f71a35278a81ec683cc358f5a62ddc14c6d137045e948d1b5dfc64a0",
+      "translated_at": "2026-10-29T12:42:58.586892Z",
+      "dest_path": "content/practice/codeforces/106197/N.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/106197/O.md": {
+      "source_hash": "sha256:423fc23340c04cd6e3b1ca21e4d45aea7fb72301587d078c7c748ddc296a22a8",
+      "translated_at": "2026-10-29T12:43:17.225610Z",
+      "dest_path": "content/practice/codeforces/106197/O.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/106199/A.md": {
+      "source_hash": "sha256:21d77694a26bd382851869bd0bc944de7643c1e97fb053d4e33638c41f2e93a8",
+      "translated_at": "2026-10-29T12:43:29.624629Z",
+      "dest_path": "content/practice/codeforces/106199/A.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/106199/B.md": {
+      "source_hash": "sha256:6443cf7b4c90c917ba5ce2f520da62dae2ed3751776b34246fba15d37722cbba",
+      "translated_at": "2026-10-29T12:45:53.144802Z",
+      "dest_path": "content/practice/codeforces/106199/B.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/106199/C.md": {
+      "source_hash": "sha256:20cfe587fb6a855ac8e0f0cb845b86b9efa7c66d2114dd3303c7e9738a4bbefd",
+      "translated_at": "2026-10-29T12:46:25.349980Z",
+      "dest_path": "content/practice/codeforces/106199/C.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/106199/D.md": {
+      "source_hash": "sha256:2dfc856852f74b62fb4cfd5177d52e3f4b8b3f5181b605e747b8e7b85b49678a",
+      "translated_at": "2026-10-29T12:47:30.070435Z",
+      "dest_path": "content/practice/codeforces/106199/D.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/1062/A.md": {
+      "source_hash": "sha256:5340578094cdfdd2add9a32804703312a5dc14292e9d2723f24da6f119d0da4d",
+      "translated_at": "2026-10-29T12:47:50.110219Z",
+      "dest_path": "content/practice/codeforces/1062/A.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/1062/B.md": {
+      "source_hash": "sha256:97f0e1ceacf731390b6062c411f9705c2a0c6d5c5cddfdabae469921f1c73532",
+      "translated_at": "2026-10-29T12:48:07.099968Z",
+      "dest_path": "content/practice/codeforces/1062/B.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/1062/C.md": {
+      "source_hash": "sha256:c87cbe5445a969394b0544e86154a38d056db574d8f98453bb1ad279cf0de3d2",
+      "translated_at": "2026-10-29T12:48:20.476389Z",
+      "dest_path": "content/practice/codeforces/1062/C.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/codeforces/1062/D.md": {
+      "source_hash": "sha256:8cde0fb05596e6bccfc70f7512afba3e642e1d2435d845d0bac9fccfc14828cc",
+      "translated_at": "2026-10-29T12:48:29.276112Z",
+      "dest_path": "content/practice/codeforces/1062/D.md",
       "status": "done",
       "tokens_used": 0,
       "provider": "google"
