@@ -131,4 +131,4 @@ assert run("\n\n") == "cat"
 
 Trường hợp đặc biệt có ý nghĩa duy nhất là quan niệm sai lầm rằng đầu vào phải được xử lý. Nếu người ta cho rằng cần có một bộ giải nonogram tiêu chuẩn, họ sẽ cố gắng diễn giải dữ liệu lưới bị thiếu, dẫn đến hành vi không xác định hoặc giải pháp quay lui được thiết kế quá mức. 
 
-Trong thực tế, vì câu đố đã được giải trong câu lệnh nên thuật toán ngay lập tức kết thúc với đầu ra không đổi. Việc không có đầu vào đảm bảo không có điều kiện biên, vấn đề lập chỉ mục hoặc lỗi phân tích cú pháp cần xử lý.
+Trong thực tế, vì câu đố đã được giải trong câu lệnh nên thuật toán kết thúc ngay lập tức với đầu ra không đổi. Việc không có đầu vào đảm bảo không có điều kiện biên, vấn đề lập chỉ mục hoặc lỗi phân tích cú pháp cần xử lý.

@@ -32,11 +32,11 @@ Có những phòng đặc biệt chứa pho mát. Ngay khi bất kỳ bản sao 
 
 Nhiệm vụ được lặp lại cho nhiều phòng bắt đầu. Đối với mỗi lần bắt đầu, chúng ta cần xác định có bao nhiêu phòng pho mát được tiếp cận vào thời điểm pho mát đầu tiên được phát hiện trong quá trình khám phá từ đầu đó. 
 
-Sự thay đổi giải thích chính là “quy trình phân tách” không thực sự yêu cầu mô phỏng nhiều bản sao theo cấp số nhân. Mỗi bản sao đang khám phá một cách hiệu quả một đường dẫn đơn giản duy nhất từ ​​gốc ra ngoài cho đến lần đầu tiên gặp bất kỳ nút phô mai nào. Do đó, câu trả lời cho nút bắt đầu là số lượng nút pho mát trong cây con của tổ tiên pho mát đầu tiên gặp phải theo nghĩa khám phá định hướng nhất định, có thể giảm xuống khoảng cách cây và cấu trúc tổ tiên chung thấp nhất. 
+Sự thay đổi giải thích quan trọng là “quá trình phân chia” không thực sự yêu cầu mô phỏng nhiều bản sao theo cấp số nhân. Mỗi bản sao đang khám phá một cách hiệu quả một đường dẫn đơn giản duy nhất từ ​​gốc ra ngoài cho đến lần đầu tiên gặp bất kỳ nút phô mai nào. Do đó, câu trả lời cho nút bắt đầu là số lượng nút pho mát trong cây con của tổ tiên pho mát đầu tiên gặp phải theo nghĩa khám phá định hướng nhất định, có thể giảm xuống khoảng cách cây và cấu trúc tổ tiên chung thấp nhất. 
 
 Các ràng buộc lên tới 200000 nút, do đó, mọi giải pháp mô phỏng phân nhánh hoặc khám phá từ mỗi truy vấn một cách độc lập với BFS hoặc DFS sẽ hết thời gian chờ. Ngay cả việc truyền tải tuyến tính cho mỗi truy vấn cũng sẽ dẫn đến hành vi bình phương 2e5, quá chậm. 
 
-Một cách tiếp cận ngây thơ cũng thất bại theo cách tinh tế hơn: nếu người ta cố gắng mô phỏng quá trình phân tách theo nghĩa đen, số lượng bản sao sẽ tăng theo cấp số nhân và ngay cả những cây nhỏ có phân nhánh cao cũng sẽ ngay lập tức làm tiêu tốn bộ nhớ và thời gian. 
+Một cách tiếp cận ngây thơ cũng thất bại theo cách tinh tế hơn: nếu người ta cố gắng mô phỏng quá trình phân tách theo nghĩa đen, số lượng bản sao sẽ tăng theo cấp số nhân theo cấp độ, và ngay cả những cây nhỏ có phân nhánh cao cũng sẽ ngay lập tức làm tiêu tốn bộ nhớ và thời gian. 
 
 Các trường hợp cạnh phát sinh khi phô mai nằm ở nút bắt đầu. Trong trường hợp đó, quá trình dừng ngay lập tức và câu trả lời chỉ đơn giản là 1. Một trường hợp góc khác là khi nhiều nút pho mát nằm dọc theo các nhánh khác nhau, trong đó trực giác về đường đi ngắn nhất ngây thơ không thành công do điều kiện dừng được kích hoạt bởi pho mát được phát hiện đầu tiên trong quá trình khám phá toàn cầu chứ không phải hoàn thành trên mỗi đường dẫn. 
 
@@ -65,7 +65,7 @@ Chúng tôi chuyển đổi vấn đề thành vấn đề phân vùng khoảng 
 2. Chúng tôi khởi tạo hàng đợi BFS đa nguồn với tất cả các nút phô mai, mỗi nút được đánh dấu là nguồn riêng. Chúng tôi cũng chỉ định mỗi nút phô mai một khoảng cách bằng 0 với chính nó. 
 3. Chúng tôi chạy BFS từ tất cả các nút phô mai cùng một lúc. Mỗi nút được chỉ định nút pho mát gần nhất và khoảng cách của nó với pho mát đó. Khi nhiều nguồn phô mai cạnh tranh, mối quan hệ liên tục bị phá vỡ vì chúng ta chỉ quan tâm đến khoảng cách chứ không quan tâm đến danh tính. 
 4. Trong quá trình truyền bá BFS, mỗi nút được gắn nhãn nguồn pho mát tiếp cận nó đầu tiên. Điều này phân chia cây thành các vùng trong đó mỗi vùng tương ứng với nút pho mát gần nhất. 
-5. Chúng tôi cũng duy trì một mảng đếm cho mỗi nút pho mát, tăng dần cho mỗi nút được gán cho nó. Số lượng này thể hiện mức độ lớn của vùng Voronoi trên cây. 
+5. Chúng tôi cũng duy trì một mảng đếm cho mỗi nút pho mát, tăng dần cho mỗi nút được gán cho nó. Số lượng này thể hiện vùng Voronoi của nó lớn như thế nào trên cây. 
 6. Đối với mỗi nút bắt đầu truy vấn, chúng tôi trực tiếp xuất ra số lượng vùng phô mai gần nhất được chỉ định. Điều này tương ứng với số lượng nút phô mai được “kích hoạt” một cách hiệu quả bởi sự kiện dừng đầu tiên kể từ lần bắt đầu đó. 
 
 ### Tại sao nó hoạt động 
@@ -155,7 +155,7 @@ Bây giờ hãy xem xét một cây hình ngôi sao:```
 
 | Bước | Giải thích | 
 | --- | --- | 
-| BFS từ phô mai | nút 1 cách đều nút 2 và 4, nhưng được gán cho pho mát đạt được đầu tiên theo thứ tự BFS | 
+| BFS từ phô mai | nút 1 cách đều nút 2 và 4, nhưng được gán cho loại phô mai đạt được đầu tiên theo thứ tự BFS | 
 | kết quả truy vấn | kích thước của vùng đó được trả về | 
 
 Điều này thể hiện hành vi xử lý ràng buộc tùy thuộc vào thứ tự BFS, phù hợp với việc mở rộng đồng thời. 
@@ -184,7 +184,7 @@ def run(inp: str) -> str:
 # custom cases would be placed here in full environment
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-| nút đơn với phô mai | 1 | trường hợp cơ sở đúng đắn | 
+| nút đơn với phô mai | 1 | tính đúng đắn của trường hợp cơ sở | 
 | cây xích | truyền bá vùng chính xác | tính đúng đắn của cấu trúc tuyến tính | 
 | cây sao | phân vùng BFS đúng | trường hợp cạnh phân nhánh cao | 
 | nhiều truy vấn cùng một nút | câu trả lời giống hệt nhau | truy vấn độc lập | 

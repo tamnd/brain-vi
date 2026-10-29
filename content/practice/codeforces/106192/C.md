@@ -40,7 +40,7 @@ Các trường hợp khó khăn không hề nhỏ đến từ việc xử lý th
 
 ## Phương pháp tiếp cận 
 
-Cách giải thích mạnh mẽ sẽ là xây dựng biểu đồ mở rộng một cách rõ ràng và đếm các màu thích hợp bằng cách sử dụng DP trên mỗi thành phần được kết nối. Về nguyên tắc, điều này đúng vì đồ thị chỉ là một tập hợp các chu trình có gắn cây và tô màu cây và chu trình riêng biệt là tiêu chuẩn. Tuy nhiên, bước mở rộng khiến nó không khả thi: số lượng nút trở nên tỷ lệ thuận với tổng của tất cả các độ dài cạnh và mỗi chuyển đổi DP sẽ tuyến tính ở kích thước đó. 
+Cách giải thích mạnh mẽ sẽ là xây dựng biểu đồ mở rộng một cách rõ ràng và đếm các màu thích hợp bằng cách sử dụng DP trên mỗi thành phần được kết nối. Về nguyên tắc, điều này đúng vì đồ thị chỉ là một tập hợp các chu trình có gắn cây và tô màu cây và chu trình riêng biệt là tiêu chuẩn. Tuy nhiên, bước mở rộng khiến nó không khả thi: số lượng nút trở nên tỷ lệ thuận với tổng của tất cả các độ dài cạnh và mỗi lần chuyển đổi DP sẽ tuyến tính ở kích thước đó. 
 
 Quan sát quan trọng là việc mở rộng là không cần thiết. Một con đường dài`l`giữa hai nút đóng góp chính xác cùng một ràng buộc giống như một chuỗi`l`các cạnh. Thay vì chèn các nút trung gian, chúng ta chỉ cần biết các ràng buộc lan truyền dọc theo một đường dẫn như thế nào. Đối với cây xanh, sự đóng góp luôn là`(K-1)`trên mỗi cạnh, bất kể cạnh đó là cạnh gốc hay cạnh được mở rộng. Đối với các chu kỳ, điều duy nhất quan trọng là tổng chiều dài của chu kỳ sau khi mở rộng. 
 
@@ -67,7 +67,7 @@ Chúng tôi làm việc trực tiếp trên đồ thị hàm số trong đó m�
 2. Chúng tôi duyệt qua các nút để xác định chu kỳ. Đối với mỗi nút chưa được thăm, chúng tôi đi theo các cạnh đi ra cho đến khi chúng tôi đến được nút đã truy cập trong quá trình truyền tải hiện tại hoặc nhập thành phần đã được xử lý trước đó. Thời điểm chúng tôi phát hiện lượt truy cập lại bên trong đường dẫn hiện tại, chúng tôi trích xuất chu trình và tính toán tổng chiều dài của nó bằng cách tính tổng các trọng số cạnh dọc theo chu trình. 
 3. Sau khi xác định được một chu trình, chúng tôi đánh dấu tất cả các nút trong chu trình đó là thuộc về chu trình đó và ghi lại tổng chiều dài có trọng số của chu trình đó`L`. 
 4. Từ mỗi nút chu kỳ, chúng tôi coi tất cả các cạnh đến không phải là một phần của chu trình là gốc của cây. Chúng tôi tính toán kích thước của những cây này bằng DFS hoặc bằng cách tích lũy các nút đã truy cập, nhưng chúng tôi không bao giờ mở rộng các cạnh; chúng tôi chỉ đếm các nút có thể truy cập mà không cần nhập lại chu trình. 
-5. Mọi nút không nằm trong một chu trình đều thuộc về một số cây gắn liền với một chu trình. Mỗi nút như vậy đóng góp một yếu tố`(K-1)`một cách độc lập, bởi vì khi màu của nút chu kỳ được cố định, mỗi cạnh của cây sẽ thực thi lựa chọn một màu khác, đưa ra`(K-1)`mỗi nút. 
+5. Mỗi nút không nằm trong một chu trình đều thuộc về một số cây gắn liền với một chu trình. Mỗi nút như vậy đóng góp một yếu tố`(K-1)`một cách độc lập, bởi vì khi màu của nút chu kỳ được cố định, mỗi cạnh của cây sẽ thực thi lựa chọn một màu khác, đưa ra`(K-1)`mỗi nút. 
 6. Đối với mỗi chu kỳ có độ dài`L`, chúng tôi nhân câu trả lời với giá trị tô màu chu kỳ:$$(K-1)^L + (-1)^L (K-1)$$7. Chúng tôi nhân tất cả các khoản đóng góp của chu kỳ với nhau và nhân với`(K-1)`tăng lên số lượng nút không chu kỳ trong toàn bộ biểu đồ. 
 
 ### Tại sao nó hoạt động 
@@ -225,7 +225,7 @@ Một điểm tinh tế là xử lý chính xác việc phát hiện chu trình 
 
 Có hai chu kỳ rời nhau. Mỗi cái được đánh giá độc lập bằng cách sử dụng tổng chiều dài của nó. Phép nhân phản ánh tính độc lập của các thành phần. 
 
-Điều này chứng tỏ rằng việc phân rã chu trình là đủ ngay cả khi tồn tại nhiều thành phần. 
+Điều này chứng tỏ rằng việc phân tách chu trình là đủ ngay cả khi tồn tại nhiều thành phần. 
 
 ## Phân tích độ phức tạp 
 
@@ -263,4 +263,4 @@ Vòng tự lặp là chu kỳ nhỏ nhất có thể xảy ra khi một thành p
 
 Một trường hợp cạnh khác là khi tất cả các nút tạo thành một chu kỳ duy nhất. Việc truyền tải không bao giờ gặp các nút cây, do đó toàn bộ câu trả lời rút gọn thành một ứng dụng duy nhất của đa thức chu trình. Thuật toán tích lũy chính xác tất cả các trọng số xung quanh chu trình và không nhân các yếu tố cây một cách không chính xác. 
 
-Trường hợp cạnh cuối cùng là nhiều chu trình độc lập. Vì mỗi thành phần được xử lý riêng biệt nên mỗi chu trình đóng góp độc lập cho sản phẩm cuối cùng và thứ tự nhân không ảnh hưởng đến độ chính xác do số học mô-đun.
+Trường hợp cạnh cuối cùng là nhiều chu kỳ độc lập. Vì mỗi thành phần được xử lý riêng biệt nên mỗi chu trình đóng góp độc lập cho sản phẩm cuối cùng và thứ tự nhân không ảnh hưởng đến độ chính xác do số học mô-đun.

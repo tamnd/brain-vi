@@ -48,7 +48,7 @@ Quan sát quan trọng là trong mỗi thành phần được kết nối của 
 
 Do đó, đối với mỗi bit, đóng góp cuối cùng vào tổng chính xác là số phân đoạn của các bit liên tiếp modulo 2, điều này làm giảm tổng số đơn vị trong mỗi cấu trúc được kết nối là lẻ hay chẵn. Việc tổng hợp trên tất cả các bit dẫn đến quét tuyến tính tham lam: chúng tôi xử lý từng bit một cách độc lập và theo dõi xem có bao nhiêu phần tử trong mỗi phân đoạn tối đa chứa bit đó. 
 
-Cuối cùng, vì các bit không tương tác nên chúng ta tính tổng đóng góp của tất cả các bit trên mảng. Việc triển khai giảm xuống việc quét mảng và duy trì thông tin chẵn lẻ trên mỗi bit trên cấu trúc lân cận, cuối cùng tính toán tổng tối thiểu có thể. 
+Cuối cùng, vì các bit không tương tác nên chúng ta tính tổng đóng góp của tất cả các bit trên mảng. Việc triển khai giảm xuống còn quét mảng và duy trì thông tin chẵn lẻ trên mỗi bit trên cấu trúc lân cận, cuối cùng tính toán tổng tối thiểu có thể. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -101,7 +101,7 @@ if __name__ == "__main__":
     solve()
 ```Mã lặp lại từng bit và quét mảng một lần mỗi bit. Đối với mỗi khối liền kề có bit trong tất cả các phần tử, nó theo dõi tính chẵn lẻ bằng cách sử dụng tích lũy XOR. Nếu khối đóng góp số lần xuất hiện lẻ thì bit sẽ đóng góp giá trị của nó cho câu trả lời. 
 
-Cấu trúc vòng lặp bên trong đảm bảo chúng ta không bao giờ phải xem lại các vị trí, do đó độ phức tạp vẫn tuyến tính trên mỗi bit. Việc kiểm tra bit được thực hiện thông qua các ca, tức là thời gian không đổi. 
+Cấu trúc vòng lặp bên trong đảm bảo chúng ta không bao giờ phải xem lại các vị trí, do đó độ phức tạp vẫn giữ nguyên tuyến tính trên mỗi bit. Việc kiểm tra bit được thực hiện thông qua các ca, tức là thời gian không đổi. 
 
 ## Ví dụ đã hoạt động 
 
@@ -198,7 +198,7 @@ assert run("3\n1 1 1\n") == "1"
 | --- | --- | --- | 
 | 1 phần tử | cùng giá trị | trường hợp cơ sở | 
 | tất cả số không | 0 | không có đóng góp | 
-| xen kẽ | 0 | hủy bỏ trên các phân khúc | 
+| xen kẽ | 0 | hủy bỏ trên các phân đoạn | 
 | tất cả những cái | 1 | hủy bỏ chẵn lẻ trong toàn bộ phân đoạn | 
 
 ## Vỏ cạnh 

@@ -1,6 +1,6 @@
 ---
 title: "CF 106192E - \u041f\u0443\u0442\u0435\u0448\u0435\u0441\u0442\u0432\u0438\u0435 \u043f\u043e \u0431\u0430\u043c\u0431\u0443\u043a\u0443"
-description: "Chúng ta có một đồ thị đường đi trên các đỉnh $n$, trong đó mọi đỉnh $i$ được kết nối với $i+1$. Bên trên cấu trúc này, một cạnh ẩn bổ sung $(a, b)$ đã được thêm vào, với hứa hẹn rằng có ít nhất một đỉnh nằm giữa chúng, nghĩa là $a + 2 le b$."
+description: "Chúng ta có một đồ thị đường đi trên các đỉnh $n$, trong đó mỗi đỉnh $i$ được kết nối với $i+1$. Bên trên cấu trúc này, một cạnh ẩn bổ sung $(a, b)$ đã được thêm vào, với hứa hẹn rằng có ít nhất một đỉnh nằm giữa chúng, nghĩa là $a + 2 le b$."
 date: "2026-06-19T18:44:49+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
@@ -63,7 +63,7 @@ Do đó, bài toán giảm từ việc tìm hai giá trị chưa biết trong m�
 
 Chúng tôi dựa vào thực tế là nếu chúng tôi sửa một điểm cuối của khoảng thời gian truy vấn thì phản hồi sẽ trở nên đơn điệu ở điểm cuối còn lại. 
 
-1. Cố định điểm cuối bên trái là 1 và tìm kiếm nhị phân nhỏ nhất$r$sao cho truy vấn$(1, r)$trả về 1. Điều này xác định điểm cuối xa$b$. Sự đơn điệu xuất phát từ thực tế là khi chúng ta mở rộng$r$, chúng tôi chỉ có thể bao gồm nhiều đỉnh hơn có thể được hưởng lợi từ phím tắt. 
+1. Cố định điểm cuối bên trái ở mức 1 và tìm kiếm nhị phân nhỏ nhất$r$sao cho truy vấn$(1, r)$trả về 1. Điều này xác định điểm cuối xa$b$. Sự đơn điệu xuất phát từ thực tế là khi chúng ta mở rộng$r$, chúng tôi chỉ có thể bao gồm nhiều đỉnh hơn có thể được hưởng lợi từ phím tắt. 
 2. Một lần$b$đã biết, chúng ta cần tìm$a$. Bây giờ chúng tôi tìm kiếm trên$l$trong phạm vi$[1, b-2]$vì sự hạn chế$a + 2 \le b$. 
 3. Đối với ứng viên$l$, truy vấn$(l, b)$. Nếu câu trả lời là 1, điều đó có nghĩa là$l$vẫn ở phía đối diện của phím tắt theo cách mà đường dẫn sử dụng cạnh được thêm vào, vì vậy chúng tôi di chuyển tìm kiếm sang trái. Nếu không, chúng ta di chuyển sang phải. 
 4. Tìm kiếm nhị phân hội tụ về giá trị hợp lệ nhỏ nhất hoặc lớn nhất$l$tùy thuộc vào cách chúng ta xác định vị ngữ; sau đó chúng tôi xác minh điều kiện đối xứng để xác định chính xác$a$. 

@@ -1,6 +1,6 @@
 ---
 title: "CF 106191G - Chuỗi Chiến Thắng"
-description: "Ý tưởng mạnh mẽ là thử xây dựng một cái cây và sau đó mô phỏng trò chơi cho mọi cặp (nút gốc, nút bắt đầu). Đối với một cây cố định, chúng ta có thể tính toán cho mỗi gốc một DP trên cây để xác định trạng thái chiến thắng từ mọi vị trí bắt đầu."
+description: "Ý tưởng mạnh mẽ là thử xây dựng một cây và sau đó mô phỏng trò chơi cho mọi cặp (nút gốc, nút bắt đầu). Đối với một cây cố định, chúng ta có thể tính toán cho mỗi gốc một DP trên cây để xác định trạng thái chiến thắng từ mọi vị trí bắt đầu."
 date: "2026-06-25T10:43:59+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
@@ -24,13 +24,13 @@ draft: false
 ## Giải pháp 
 ## Phương pháp tiếp cận 
 
-Ý tưởng mạnh mẽ là thử xây dựng một cái cây và sau đó mô phỏng trò chơi cho mọi cặp (nút gốc, nút bắt đầu). Đối với một cây cố định, chúng ta có thể tính toán cho mỗi gốc một DP trên cây để xác định trạng thái chiến thắng từ mọi vị trí bắt đầu. DP đó là tuyến tính trên mỗi gốc, do đó tổng số O(n2) để xác minh. Tuy nhiên, vì bài toán yêu cầu xây dựng lại cây nên việc thử nghiệm nhiều cây theo cấp số nhân là không thể, điều này là không thể ngay cả với n = 20. 
+Ý tưởng mạnh mẽ là thử xây dựng một cây và sau đó mô phỏng trò chơi cho mọi cặp (nút gốc, nút bắt đầu). Đối với một cây cố định, chúng ta có thể tính toán cho mỗi gốc một DP trên cây để xác định trạng thái chiến thắng từ mọi vị trí bắt đầu. DP đó là tuyến tính trên mỗi gốc, do đó tổng số O(n2) để xác minh. Tuy nhiên, vì bài toán yêu cầu xây dựng lại cây nên việc thử nghiệm nhiều cây theo cấp số nhân là không thể, điều này là không thể ngay cả với n = 20. 
 
 Quan sát quan trọng là mỗi hàng của ma trận hoạt động giống như một phân vùng được tạo ra bởi trò chơi cây có gốc. Trong những trò chơi như vậy, một nút sẽ thắng khi và chỉ khi nó có ít nhất một nút con thua. Đây chính xác là trò chơi DP tiêu chuẩn trên cây. Do đó, ma trận được mã hóa, đối với mọi gốc có thể, các trạng thái DP cảm ứng của cùng một cây cơ bản. 
 
 Thay vì xây dựng cây một cách trực tiếp, chúng ta đảo ngược logic DP này. Nếu một nút u bị thua khi gốc là r thì tất cả các nút con của nó phải thắng theo hướng gốc đó. Điều đó mang lại cho chúng tôi những hạn chế về hướng cha-con. Việc so sánh các ràng buộc này trên tất cả các gốc sẽ tạo ra một điều kiện nhất quán định hướng duy nhất có thể được chuyển thành quy tắc kề: hai nút phải được kết nối khi và chỉ khi “vai trò” của chúng khác nhau trong chính xác một cấu hình gốc theo cách phù hợp với việc lật cha-con. 
 
-Điều này làm giảm vấn đề xác định các cạnh bằng cách so sánh các hàng của ma trận và đảm bảo tính nhất quán của các chuyển tiếp DP. Khi tính kề được rút ra, chúng tôi xác minh rằng nó tạo thành một cây và khớp với tất cả các ràng buộc. 
+Điều này làm giảm vấn đề xác định các cạnh bằng cách so sánh các hàng của ma trận và đảm bảo tính nhất quán của các chuyển đổi DP. Khi tính kề được rút ra, chúng tôi xác minh rằng nó tạo thành một cây và khớp với tất cả các ràng buộc. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -43,7 +43,7 @@ Thay vì xây dựng cây một cách trực tiếp, chúng ta đảo ngược l
 2. So sánh từng cặp đỉnh u và v bằng cách sử dụng các cột của chúng trên tất cả các nghiệm. Chúng tôi tính toán tần suất bạn và v không đồng ý về trạng thái thắng/thua của họ. Mô hình bất đồng này mã hóa liệu một người có phải giống tổ tiên của người kia hay không. 
 3. Xác định mối quan hệ ứng cử viên cạnh giữa u và v nếu mẫu không đồng nhất của chúng khớp với cấu trúc chính xác dự kiến ​​​​cho các nút lân cận trong cây DP gốc. Về mặt trực quan, các nút liền kề khác nhau một cách tối thiểu và nhất quán trên tất cả các lựa chọn gốc, trong khi các nút không liền kề khác nhau ở nhiều cấu hình gốc độc lập. 
 4. Xây dựng biểu đồ bằng cách sử dụng các cạnh được suy ra này. 
-5. Xác minh rằng đồ thị thu được có chính xác n − 1 cạnh và được kết nối. Nếu không, ma trận không nhất quán với bất kỳ cây nào. 
+5. Xác minh rằng đồ thị thu được có chính xác n − 1 cạnh và được kết nối. Nếu không, ma trận không phù hợp với bất kỳ cây nào. 
 6. Xuất các cạnh của biểu đồ được xây dựng lại này. 
 
 Phần tinh tế là bước 2-3: tính kề cận không dựa trên đẳng thức trực tiếp hoặc khoảng cách Hamming đơn giản, mà dựa trên thực tế là việc loại bỏ một nút trong cây chỉ làm thay đổi trạng thái DP dọc theo một đường dẫn duy nhất, điều này hạn chế các mô hình bất đồng hành xử giống như các khoảng giữa các gốc. 
@@ -175,7 +175,7 @@ Dấu vết này cho thấy các cạnh tương ứng với sự phân tách c�
 
 Tất cả các cặp đều có sự bất đồng 2, do đó không có ứng cử viên cạnh nào thỏa mãn điều kiện tối thiểu. Thuật toán kết luận chính xác điều không thể. 
 
-Điều này xác nhận rằng các ma trận không nhất quán không tạo ra được cây khung có những bất đồng tối thiểu. 
+Điều này xác nhận rằng các ma trận không nhất quán không tạo ra được cây bao trùm có những bất đồng tối thiểu. 
 
 ## Phân tích độ phức tạp 
 

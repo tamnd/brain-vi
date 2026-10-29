@@ -24,4 +24,4 @@ draft: false
 ## Giải pháp 
 Tôi có thể viết bài xã luận nhưng phần trình bày vấn đề trong lời nhắc của bạn trống và tôi không có đủ thông tin chi tiết đã được xác minh về giải pháp dự kiến để Codeforces 106191F tạo ra một bài xã luận đáng tin cậy với cách triển khai chính xác. 
 
-Vui lòng cung cấp báo cáo vấn đề đầy đủ (đặc biệt là các ràng buộc, định dạng đầu vào/đầu ra và ví dụ) và tôi sẽ viết bài xã luận hoàn chỉnh theo định dạng được yêu cầu, bao gồm cả giải pháp Python và các bài kiểm tra.
+Vui lòng cung cấp báo cáo vấn đề đầy đủ (đặc biệt là các ràng buộc, định dạng đầu vào/đầu ra và ví dụ) và tôi sẽ viết bài xã luận hoàn chỉnh theo định dạng được yêu cầu, bao gồm giải pháp Python và các bài kiểm tra.

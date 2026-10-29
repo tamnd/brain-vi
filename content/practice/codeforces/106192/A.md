@@ -42,7 +42,7 @@ Một cách tiếp cận đơn giản sẽ hiểu mỗi truy vấn là một b�
 
 Sự đơn giản hóa thực sự đến từ việc nhận ra rằng bố cục là tĩnh. Mỗi nơi sinh sống có thể được liệt kê một lần khi bắt đầu. Chúng ta có thể xây dựng một danh sách toàn cầu về tất cả các địa điểm sinh sống, nhóm chúng theo tầng và gán cho mỗi địa điểm một mã định danh duy nhất. Sau đó, vấn đề giảm xuống còn việc đánh dấu một số số nhận dạng là xấu và duy trì số lượng số nhận dạng tốt còn lại trên mỗi tầng. 
 
-Thay vì phân tích cú pháp chuỗi phòng nhiều lần, chúng tôi chuyển đổi từng phòng đầu vào thành một mã định danh chuẩn một lần. Sau đó, các bản cập nhật chỉ đánh dấu một mảng boolean. Mỗi truy vấn sẽ trở thành một tra cứu trực tiếp vào bộ đếm được tính toán trước trên mỗi tầng. 
+Thay vì phân tích chuỗi phòng nhiều lần, chúng tôi chuyển đổi từng phòng đầu vào thành một mã định danh chuẩn một lần. Sau đó, các bản cập nhật chỉ đánh dấu một mảng boolean. Mỗi truy vấn sẽ trở thành một tra cứu trực tiếp vào bộ đếm được tính toán trước trên mỗi tầng. 
 
 Điều này biến nhiệm vụ thành một vấn đề tiền xử lý: xây dựng toàn bộ ánh xạ từ mô tả phòng văn bản đến các thực thể có cấu trúc, sau đó duy trì các tập hợp đơn giản. 
 
@@ -59,9 +59,9 @@ Chúng tôi liệt kê mọi nơi sinh sống có thể có trong tòa nhà đú
 
 Bước này là cần thiết vì định dạng đầu vào không trực tiếp cung cấp cho chúng ta danh sách rõ ràng các thực thể sống mà chỉ các chuỗi được mã hóa. Việc tính toán trước sẽ loại bỏ việc phân tích cú pháp lặp lại sau này. 
 
-### 2. Gán một mã định danh cho từng nơi sinh sống 
+### 2. Gán mã định danh cho từng nơi sinh sống 
 
-Chúng tôi ánh xạ mọi nơi ở hợp lệ tới một chỉ số nguyên. Chúng tôi cũng lưu trữ nó thuộc tầng nào để có thể tổng hợp sau này. 
+Chúng tôi ánh xạ mọi nơi sinh sống hợp lệ tới một chỉ mục số nguyên. Chúng tôi cũng lưu trữ nó thuộc tầng nào để có thể tổng hợp sau này. 
 
 Điều này cho phép đánh dấu và tra cứu theo thời gian liên tục thay vì giải mã chuỗi nhiều lần. 
 
@@ -87,7 +87,7 @@ Các báo cáo lặp lại sẽ bị bỏ qua sau báo cáo đầu tiên vì ch�
 
 ### Tại sao nó hoạt động 
 
-Bất biến chính là sau khi xử lý tất cả các báo cáo, mỗi nơi sinh sống được đánh dấu chính xác một lần là hợp lệ hoặc không hợp lệ và mỗi bộ đếm tầng luôn bằng số lượng nơi sinh sống không được đánh dấu thuộc tầng đó. Vì các bản cập nhật chỉ chuyển trạng thái từ hợp lệ sang không hợp lệ một lần và bộ đếm được cập nhật chính xác một lần trong mỗi lần lật, nên không thể xảy ra việc đếm thừa hoặc đếm thiếu. 
+Bất biến chính là sau khi xử lý tất cả các báo cáo, mỗi nơi sinh sống được đánh dấu chính xác một lần là hợp lệ hoặc không hợp lệ và mỗi bộ đếm tầng luôn bằng số lượng nơi sinh sống chưa được đánh dấu thuộc tầng đó. Vì các bản cập nhật chỉ chuyển trạng thái từ hợp lệ sang không hợp lệ một lần và bộ đếm được cập nhật chính xác một lần trong mỗi lần lật, nên không thể xảy ra việc đếm thừa hoặc đếm thiếu. 
 
 ## Giải pháp Python```python
 import sys
@@ -219,7 +219,7 @@ assert run("2\nB-1020\nB-1130\n2\nB-10\nB-11\n") == "1\n1\n", "separate floors"
 | không có phòng xấu | tất cả các phòng đều có sẵn | trường hợp cơ sở | 
 | báo cáo trùng lặp | loại bỏ duy nhất | cập nhật bình thường | 
 | sàn hỗn hợp | cách ly sàn đúng cách | độ chính xác trên mỗi tầng | 
-| nhiều tầng | quầy độc lập | không rò rỉ xuyên sàn | 
+| nhiều tầng | quầy độc lập | không rò rỉ qua sàn | 
 
 ## Vỏ cạnh 
 

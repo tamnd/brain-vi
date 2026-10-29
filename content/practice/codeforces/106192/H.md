@@ -46,7 +46,7 @@ Phương pháp tiếp cận mạnh mẽ sẽ đoán góc ban đầu và mô ph�
 
 Một quan điểm mạnh mẽ hơn là đảo ngược vấn đề. Thay vì coi chuyển vị ngang là hàm của góc ban đầu, chúng ta theo dõi trực tiếp tia như hàm của chiều cao. Bên trong mỗi lớp, bất biến theo định luật Snell có thể được viết lại dưới dạng một đại lượng bảo toàn: thành phần nằm ngang của vận tốc được chia tỷ lệ thích hợp vẫn không đổi thông qua khúc xạ. Điều này cho phép chúng ta biểu thị độ dốc của tia bên trong mỗi lớp hoàn toàn theo một hằng số duy nhất được xác định tại gốc tọa độ.
 
-Quan sát quan trọng là nếu chúng ta tham số hóa chuyển động theo tọa độ dọc, chúng ta có thể tính toán chuyển vị ngang và đóng góp thời gian trên mỗi lớp dưới dạng biểu thức dạng đóng chỉ phụ thuộc vào góc ở điểm bắt đầu của lớp đó. Do góc trong mỗi lớp được rút ra một cách xác định từ góc ban đầu, nên chúng ta có thể đánh giá tổng độ dịch chuyển và thời gian theo O(N), sau đó giải quyết góc ban đầu bằng cách sử dụng tìm kiếm nhị phân trên hàm đơn điệu. 
+Quan sát quan trọng là nếu chúng ta tham số hóa chuyển động theo tọa độ dọc, chúng ta có thể tính toán chuyển vị ngang và đóng góp thời gian trên mỗi lớp dưới dạng biểu thức dạng đóng chỉ phụ thuộc vào góc ở điểm bắt đầu của lớp đó. Do góc trong mỗi lớp được xác định từ góc ban đầu, nên chúng ta có thể đánh giá tổng độ dịch chuyển và thời gian theo O(N), sau đó giải quyết góc ban đầu bằng cách sử dụng tìm kiếm nhị phân trên hàm đơn điệu. 
 
 Điều này làm giảm bài toán thành bài toán tìm nghiệm đơn điệu một chiều. 
 
@@ -60,14 +60,14 @@ Quan sát quan trọng là nếu chúng ta tham số hóa chuyển động theo 
 Chúng tôi xác định góc ban đầu chưa biết θ được đo từ trục thẳng đứng. Với mọi θ cố định, đường đi của chùm tia được xác định đầy đủ. 
 
 1. Chuyển đổi θ thành các thành phần hướng ban đầu trong lớp đầu tiên. Chúng tôi giải thích θ là xác định tỷ số giữa các thành phần vận tốc ngang và dọc. Điều này tạo ra độ dốc ban đầu cho tia. 
-2. Đối với mỗi lớp i, hãy tính góc cục bộ trong lớp đó bằng cách sử dụng quan hệ Snell được bảo toàn. Vì v sin(α) là bất biến qua các ranh giới, nên chúng ta có thể cập nhật sin của góc khi di chuyển từ lớp i sang i+1. Điều này cho phép chúng ta khôi phục góc thực tế trong mỗi lớp bằng cách sử dụng sin nghịch đảo. 
+2. Đối với mỗi lớp i, hãy tính góc cục bộ trong lớp đó bằng cách sử dụng quan hệ Snell được bảo toàn. Vì v sin(α) bất biến qua các ranh giới, nên chúng ta có thể cập nhật sin của góc khi di chuyển từ lớp i sang i+1. Điều này cho phép chúng ta khôi phục góc thực tế trong mỗi lớp bằng cách sử dụng sin nghịch đảo. 
 3. Trong một lớp, hãy tính xem tia đi được bao xa theo chiều dọc trước khi đến ranh giới tiếp theo hoặc độ cao mục tiêu. Từ khoảng cách thẳng đứng này, hãy tính chuyển vị ngang bằng tan(góc) và tính thời gian bằng khoảng cách chia cho tốc độ. 
 4. Tích lũy tổng chuyển vị ngang và tổng thời gian khi đi ngang qua các lớp theo thứ tự. 
 5. Nếu tia đi qua một ranh giới chính xác ở độ cao mục tiêu, hãy dừng sớm và trả về các giá trị tích lũy. 
 6. Xác định hàm F(θ) = chuyển vị ngang cuối cùng ở độ cao Y trừ X. Hàm này đơn điệu trong θ vì tăng θ làm tăng độ lệch ngang của tia trong tất cả các lớp. 
 7. Thực hiện tìm kiếm nhị phân trên θ trong một khoảng hợp lệ về mặt vật lý, thường là (0, π/2), đánh giá F(θ) cho đến khi nó hội tụ về 0 với độ chính xác yêu cầu. 
 
-Sau khi hội tụ, chuyển đổi θ sang độ theo phương thẳng đứng và xuất ra tổng thời gian tính bằng mili giây. 
+Sau khi hội tụ, chuyển đổi θ sang độ theo chiều dọc và xuất ra tổng thời gian tính bằng mili giây. 
 
 ### Tại sao nó hoạt động 
 
@@ -148,11 +148,11 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Hàm mô phỏng tính toán quỹ đạo của tia theo từng lớp bằng cách tiến lên theo chiều dọc cho đến khi đạt được chiều cao mục tiêu hoặc ranh giới lớp. Chuyển vị ngang được lấy từ tỷ lệ hướng cố định bên trong mỗi lớp và thời gian được tính bằng khoảng cách Euclide chia cho tốc độ cục bộ. 
+```Chức năng mô phỏng tính toán quỹ đạo của tia theo từng lớp bằng cách tiến lên theo chiều dọc cho đến khi đạt được chiều cao mục tiêu hoặc ranh giới lớp. Chuyển vị ngang được lấy từ tỷ lệ hướng cố định bên trong mỗi lớp và thời gian được tính bằng khoảng cách Euclide chia cho tốc độ cục bộ. 
 
 Tìm kiếm nhị phân sử dụng tính đơn điệu của chuyển vị ngang ở góc ban đầu. Vòng lặp chính xác đảm bảo góc hội tụ đủ chặt để đáp ứng yêu cầu về lỗi 1e-6. 
 
-Một vấn đề triển khai tinh vi là xử lý các góc gần thẳng đứng. Khi vx trở nên cực kỳ nhỏ, tia sẽ gần như thẳng đứng, do đó, mô phỏng sẽ bảo vệ chống lại sự mất ổn định của phép chia bằng cách trả về các giá trị lớn đẩy tìm kiếm nhị phân ra khỏi các vùng không hợp lệ. 
+Một vấn đề triển khai tinh vi là xử lý các góc gần thẳng đứng. Khi vx trở nên cực kỳ nhỏ, tia sẽ trở nên gần như thẳng đứng, do đó, mô phỏng sẽ bảo vệ chống lại sự mất ổn định của phép chia bằng cách trả về các giá trị lớn đẩy tìm kiếm nhị phân ra khỏi các vùng không hợp lệ. 
 
 ## Ví dụ đã hoạt động 
 

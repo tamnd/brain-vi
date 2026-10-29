@@ -28,13 +28,13 @@ Chúng tôi được cung cấp một giá trị mục tiêu$n$và chúng tôi m
 
 Vì vậy, các thành phần có sẵn là$1, 2, 3, 5, 7, 11, \dots$, và chúng ta có thể chọn bất kỳ tập hợp số nào trong số này. Chi phí của việc biểu diễn là số lượng các thành phần được chọn và tổng của chúng phải chính xác$n$. Nhiệm vụ là giảm thiểu số lượng thành phần cần thiết. 
 
-Đầu vào là một số nguyên duy nhất$n$, lên đến$10^9$, do đó, bất kỳ giải pháp nào cố gắng liệt kê tất cả các số nguyên tố lên đến$n$, hoặc thực hiện DP trên toàn bộ phạm vi lên tới$n$, sẽ thất bại. Tuyến tính hoặc thậm chí$O(n)$cách tiếp cận ngay lập tức là không thể, và thậm chí$O(n \log n)$đã vượt quá giới hạn. 
+Đầu vào là một số nguyên duy nhất$n$, lên đến$10^9$, do đó, bất kỳ giải pháp nào cố gắng liệt kê tất cả các số nguyên tố lên đến$n$, hoặc thực hiện DP trên toàn bộ phạm vi lên tới$n$, sẽ thất bại. Tuyến tính hoặc thậm chí$O(n)$cách tiếp cận này ngay lập tức là không thể, và thậm chí$O(n \log n)$đã vượt quá giới hạn. 
 
 Các phép toán có ý nghĩa duy nhất phải phụ thuộc vào cấu trúc của các số thay vì phạm vi giá trị của chúng. 
 
 Trường hợp cạnh tinh tế xuất hiện khi$n = 1$. Vì bản thân 1 là một thành phần hợp lệ nên câu trả lời là 1. Một trường hợp thú vị khác là khi$n$là số nguyên tố lớn. Trong trường hợp đó, câu trả lời tối ưu vẫn là 1 vì chúng ta có thể lấy chính số đó làm thành phần duy nhất. 
 
-Một cách tiếp cận ngây thơ có thể cho rằng chúng ta luôn muốn chia các số thành các số nguyên tố nhỏ hơn, nhưng điều đó không phải lúc nào cũng có lợi vì sử dụng$n$chính nó luôn được phép nếu nó là số nguyên tố hoặc 1. 
+Một cách tiếp cận ngây thơ có thể cho rằng chúng ta luôn muốn chia các số thành các số nguyên tố nhỏ hơn, nhưng điều đó không phải lúc nào cũng có lợi vì việc sử dụng$n$chính nó luôn được phép nếu nó là số nguyên tố hoặc 1. 
 
 ## Phương pháp tiếp cận 
 
@@ -46,7 +46,7 @@ Nhận xét quan trọng là cấu trúc của các số có sẵn làm cho bài
 
 Một cách chính xác hơn để xem nó là hỏi điều gì thực sự làm giảm số lượng thành phần. Sử dụng số nguyên tố lớn$p$thay thế$p$đơn vị giá 1 hoặc 2 với một phần tử duy nhất. Vì vậy, mỗi khi chúng ta sử dụng số nguyên tố$p$, chúng tôi giảm số lượng thành phần so với việc sử dụng các đơn vị nhỏ hơn. Cách giảm tốt nhất có thể cho mỗi phần tử đến từ việc sử dụng đoạn đơn lớn nhất có thể, đó là$n$chính nó khi$n$là nguyên tố. 
 
-Do đó, chiến lược tối ưu luôn mang tính tham lam theo nghĩa mạnh nhất: hoặc toàn bộ số đã là số nguyên tố hoặc 1, hoặc nếu không thì chúng ta chia nó thành 2 và có thể là 1 nếu cần. Điều này dẫn đến một đặc tính đơn giản: bất kỳ số chẵn nào cũng có thể được hình thành dưới dạng$n/2$bản sao của 2, trong khi bất kỳ số tổng hợp lẻ nào cũng có lợi khi thay thế số 2 bằng số 3 (hoặc tương đương bằng cách sử dụng một số 1 và số 2 còn lại), mang lại$(n-3)/2 + 1$. Điều này đơn giản hóa để$\lfloor n/2 \rfloor + 1$cho tất cả$n > 1$, nhưng trường hợp đặc biệt$n = 2$và số nguyên tố phải được xử lý cẩn thận. 
+Do đó, chiến lược tối ưu luôn mang tính tham lam theo nghĩa mạnh nhất: hoặc toàn bộ số đã là số nguyên tố hoặc 1, hoặc nếu không thì chúng ta chia nó thành 2 giây và có thể là một số 1 nếu cần. Điều này dẫn đến một đặc tính đơn giản: bất kỳ số chẵn nào cũng có thể được hình thành dưới dạng$n/2$bản sao của 2, trong khi bất kỳ số tổng hợp lẻ nào cũng có lợi khi thay thế số 2 bằng số 3 (hoặc tương đương bằng cách sử dụng một số 1 và số 2 còn lại), mang lại$(n-3)/2 + 1$. Điều này đơn giản hóa để$\lfloor n/2 \rfloor + 1$cho tất cả$n > 1$, nhưng trường hợp đặc biệt$n = 2$và số nguyên tố phải được xử lý cẩn thận. 
 
 Sự đơn giản hóa cuối cùng là câu trả lời chỉ phụ thuộc vào việc liệu$n$là 1 hay không. 
 
@@ -93,7 +93,7 @@ elif is_prime(n):
     print(1)
 else:
     print(2)
-```Giải pháp mã hóa trực tiếp quan sát cấu trúc. Việc kiểm tra tính nguyên tố là cần thiết vì chỉ các số nguyên tố mới có thể được biểu diễn bằng một thành phần duy nhất (chính nó), trong khi tất cả các số tổng hợp đều yêu cầu ít nhất hai thành phần vì không có phần tử nào được phép đơn lẻ bằng chúng. Trường hợp đặc biệt$n = 1$được xử lý riêng vì 1 rõ ràng là một thành phần hợp lệ. 
+```Giải pháp mã hóa trực tiếp quan sát cấu trúc. Việc kiểm tra tính nguyên tố là cần thiết vì chỉ các số nguyên tố mới có thể được biểu diễn bằng một thành phần duy nhất (chính nó), trong khi tất cả các số tổng hợp đều yêu cầu ít nhất hai thành phần vì không có phần tử đơn lẻ nào được phép bằng chúng. Trường hợp đặc biệt$n = 1$được xử lý riêng vì 1 rõ ràng là một thành phần hợp lệ. 
 
 Kiểm tra tính nguyên thủy được tối ưu hóa đủ cho$10^9$sử dụng phép chia thử lên đến$\sqrt{n}$, nhanh chưa đầy 1 giây. 
 
@@ -101,30 +101,30 @@ Kiểm tra tính nguyên thủy được tối ưu hóa đủ cho$10^9$sử dụ
 
 ### Ví dụ 1:$n = 8$| Bước | n | Kiểm tra chính | Quyết định | 
 | --- | --- | --- | --- | 
-| 1 | 8 | chia hết cho 2 | tổng hợp |
- | 2 | 8 | trường hợp không đặc biệt | sử dụng 2 thành phần | 
+| 1 | 8 | chia hết cho 2 | tổng hợp | 
+| 2 | 8 | trường hợp không đặc biệt | sử dụng 2 thành phần | 
 
-Chúng ta kết luận 8 không phải là số nguyên tố nên không thể sử dụng một thành phần đơn lẻ. Một cách xây dựng hợp lệ là$3 + 5$, vậy đáp án là 2 
+Chúng ta kết luận 8 không phải là số nguyên tố nên không thể sử dụng một thành phần đơn lẻ. Một cách xây dựng hợp lệ là$3 + 5$, vậy đáp án là 2. 
 
 Điều này cho thấy hợp số không bao giờ yêu cầu nhiều hơn hai thành phần trong hệ thống này. 
 
 ### Ví dụ 2:$n = 7$| Bước | n | Kiểm tra chính | Quyết định | 
 | --- | --- | --- | --- | 
 | 1 | 7 | không có ước số | nguyên tố | 
-| 2 | 7 | hợp lệ như một khối duy nhất | câu trả lời = 1 | 
+| 2 | 7 | hợp lệ như một khối | câu trả lời = 1 | 
 
-Điều này xác nhận rằng các số nguyên tố là tối ưu trong một bước duy nhất vì chính số đó được phép sử dụng làm thành phần.
+Điều này xác nhận rằng các số nguyên tố là tối ưu trong một bước duy nhất vì chính số đó được phép sử dụng làm thành phần. 
 
- ## Phân tích độ phức tạp 
+## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
 | Thời gian |$O(\sqrt{n})$| kiểm tra tính nguyên tố thông qua phép chia thử | 
 | Không gian |$O(1)$| chỉ có một vài biến được sử dụng | 
 
-Ràng buộc$n \le 10^9$giúp việc kiểm tra tính nguyên tố căn bậc hai trở nên dễ dàng và đủ nhanh, vì nó thực hiện tối đa khoảng$31623$lần lặp lại.
+Ràng buộc$n \le 10^9$giúp việc kiểm tra tính nguyên tố căn bậc hai trở nên dễ dàng và đủ nhanh, vì nó thực hiện tối đa khoảng$31623$lần lặp lại. 
 
- ## Trường hợp thử nghiệm```python
+## Trường hợp thử nghiệm```python
 import sys, io
 
 def run(inp: str) -> str:
