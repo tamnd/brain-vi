@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 34s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi được cung cấp một số chuỗi. Đối với mỗi chuỗi, chúng ta có thể hoán đổi nhiều lần hai ký tự lân cận. Câu hỏi đặt ra là liệu những hoán đổi này có thể biến chuỗi thành hai phần liên tiếp giống hệt nhau hay không. Nói cách khác, sau khi sắp xếp lại các ký tự theo thứ tự bất kỳ, chuỗi cuối cùng có thể trông như thế nào`t + t`cho một số chuỗi`t`? 
@@ -38,7 +38,7 @@ aabbc
 ```Độ dài là 5 nên ngay lập tức bị lỗi, nhưng lỗi thú vị hơn xuất hiện khi độ dài chẵn:```
 1
 aabbcdef
-```Một giải pháp bất cẩn có thể chỉ chia chuỗi làm đôi và so sánh hai nửa sau khi sắp xếp. Tuy nhiên, các ký tự có sẵn là`a, a, b, b, c, d, e, f`. các chữ cái`c`,`d`,`e`, Và`f`xuất hiện một lần nên chúng không thể thuộc cùng một vị trí ở cả hai nửa. Đầu ra đúng là:```
+```Một giải pháp bất cẩn chỉ có thể chia chuỗi làm đôi và so sánh hai nửa sau khi sắp xếp. Tuy nhiên, các ký tự có sẵn là`a, a, b, b, c, d, e, f`. các chữ cái`c`,`d`,`e`, Và`f`xuất hiện một lần nên chúng không thể thuộc cùng một vị trí ở cả hai nửa. Đầu ra đúng là:```
 NO
 ```Một trường hợp cạnh khác là một ký tự đơn:```
 1
@@ -60,7 +60,7 @@ Hướng ngược lại cũng đúng. Nếu mỗi nhân vật xuất hiện vớ
 
 Vấn đề được giảm bớt từ việc tìm kiếm thông qua hoán vị đến đếm tần số. Chúng ta chỉ cần xác minh xem mọi tần số có chia hết cho hai hay không. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | Ồ (n!) | O(n) | Quá chậm | 
 | Tối ưu | O(n) | O(1) | Đã chấp nhận | 

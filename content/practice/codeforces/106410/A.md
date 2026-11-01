@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 27s 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 Tôi chưa thể viết một bài xã luận chính xác cho vấn đề này vì thiếu tuyên bố vấn đề thực tế. 
 
 Hiện tại chỉ có tiêu đề “Codeforces 106410A - Harker!!” được cung cấp, nhưng không có mô tả về nội dung đầu vào thể hiện, nội dung cần tính toán hoặc bất kỳ ràng buộc nào. Nếu không có điều đó, bất kỳ giải pháp hoặc thuật toán nào cũng sẽ chỉ là phỏng đoán thuần túy và đối với một bài xã luận lập trình cạnh tranh sẽ không đạt được mục đích. 

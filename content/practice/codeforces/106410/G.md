@@ -1,6 +1,6 @@
 ---
 title: "CF 106410G - Nhiệm vụ của Regina"
-description: "Chúng ta có một đồ thị vô hướng trong đó mỗi cạnh nối hai đỉnh riêng biệt và không có cạnh nào lặp lại. Nhiệm vụ là tìm bốn đỉnh khác nhau sao cho các cặp đỉnh liên tiếp tạo thành các cạnh: đỉnh thứ nhất nối với đỉnh thứ hai, đỉnh thứ hai với đỉnh thứ ba và đỉnh thứ ba với…"
+description: "Chúng ta được cho một đồ thị vô hướng trong đó mỗi cạnh nối hai đỉnh riêng biệt và không có cạnh nào lặp lại. Nhiệm vụ là tìm bốn đỉnh khác nhau sao cho các cặp đỉnh liên tiếp tạo thành các cạnh: đỉnh thứ nhất nối với đỉnh thứ hai, đỉnh thứ hai với đỉnh thứ ba và đỉnh thứ ba với…"
 date: "2026-06-25T09:56:00+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
@@ -21,10 +21,10 @@ draft: false
 **Thời gian giải:** 44s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta có một đồ thị vô hướng trong đó mỗi cạnh nối hai đỉnh riêng biệt và không có cạnh nào lặp lại. Nhiệm vụ là tìm bốn đỉnh khác nhau sao cho các cặp đỉnh liên tiếp tạo thành các cạnh: đỉnh thứ nhất nối với đỉnh thứ hai, đỉnh thứ hai nối với đỉnh thứ ba và đỉnh thứ ba nối với đỉnh thứ tư. Nói cách khác, chúng ta đang tìm kiếm bất kỳ đường đi đơn giản nào có đúng ba cạnh. 
+Chúng ta được cho một đồ thị vô hướng trong đó mỗi cạnh nối hai đỉnh riêng biệt và không có cạnh nào lặp lại. Nhiệm vụ là tìm bốn đỉnh khác nhau sao cho các cặp đỉnh liên tiếp tạo thành các cạnh: đỉnh thứ nhất nối với đỉnh thứ hai, đỉnh thứ hai với đỉnh thứ ba và đỉnh thứ ba với đỉnh thứ tư. Nói cách khác, chúng ta đang tìm kiếm bất kỳ đường đi đơn giản nào có đúng ba cạnh. 
 
 Đầu ra là một trong bốn đỉnh như vậy theo thứ tự dọc theo đường đi hoặc một tuyên bố rằng không tồn tại cấu trúc như vậy. 
 
@@ -39,9 +39,9 @@ Nếu đồ thị có ít hơn ba cạnh, câu trả lời luôn là -1 vì đư
 1 2
 ```đầu ra đúng là -1. 
 
-Trường hợp tinh tế hơn là khi đồ thị có nhiều cạnh nhưng có cấu trúc giống như một ngôi sao. Ví dụ: một nút trung tâm được kết nối với nhiều lá. Ngay cả khi có hàng trăm cạnh, không tồn tại kết nối giữa các lá, do đó không tồn tại đường đi có độ dài 3. Bất kỳ cách tiếp cận nào giả định “nhiều cạnh ngụ ý đường đi dài” sẽ thất bại ở đây. 
+Trường hợp tinh vi hơn là khi đồ thị có nhiều cạnh nhưng có cấu trúc giống như một ngôi sao. Ví dụ: một nút trung tâm được kết nối với nhiều lá. Ngay cả khi có hàng trăm cạnh, không tồn tại kết nối giữa các lá, do đó không tồn tại đường đi có độ dài 3. Bất kỳ cách tiếp cận nào giả định “nhiều cạnh ngụ ý đường đi dài” sẽ thất bại ở đây. 
 
-Một trường hợp cạnh khác là khi có một đường đi nhưng việc truyền tải đơn giản sẽ xem lại các đỉnh, vô tình tạo ra một đường đi thay vì một đường đi đơn giản. Ví dụ: trong một tam giác cộng với một nút bổ sung được đính kèm, DFS có thể lặp qua tam giác và trả về không chính xác các đỉnh lặp lại trừ khi chúng tôi thực thi rõ ràng tính khác biệt. 
+Một trường hợp cạnh khác là khi một đường đi tồn tại nhưng việc truyền tải đơn giản sẽ xem lại các đỉnh, vô tình tạo ra một đường đi thay vì một đường đi đơn giản. Ví dụ: trong một tam giác cộng với một nút bổ sung được đính kèm, DFS có thể lặp qua tam giác và trả về không chính xác các đỉnh lặp lại trừ khi chúng tôi thực thi rõ ràng tính khác biệt. 
 
 ## Phương pháp tiếp cận 
 
@@ -49,11 +49,11 @@ Một ý tưởng mạnh mẽ trực tiếp là xử lý mọi bộ ba cạnh c�
 
 Quan sát quan trọng là cấu trúc chúng ta cần có tính chất cực kỳ cục bộ: chúng ta chỉ quan tâm đến đường đi có độ dài-2 có tâm ở một cạnh nào đó$b-c$, rồi thêm một phần mở rộng nữa từ hai bên. Thay vì khám phá các bộ ba tùy ý, chúng ta có thể cố định cạnh giữa và cố gắng mở rộng ra bên ngoài. Điều này làm giảm vấn đề kiểm tra các lân cận cục bộ của các cạnh. 
 
-Một sự đơn giản hóa hơn nữa đến từ việc nhận ra rằng chúng ta không cần phải thử tất cả các tổ hợp hàng xóm. Nếu chúng ta sửa một cạnh$b-c$, thì bất kỳ giải pháp hợp lệ nào mở rộng nó đều phải chọn$a$từ hàng xóm của$b$loại trừ$c$, Và$d$từ hàng xóm của$c$loại trừ$b$. Việc kiểm tra sự tồn tại trở thành vấn đề phát hiện xem một trong hai điểm cuối có ít nhất một điểm lân cận “mới” chưa được sử dụng trong đường dẫn hay không. Nếu cả hai bên có thể mở rộng, chúng ta sẽ có ngay một đường dẫn hợp lệ. 
+Một sự đơn giản hóa hơn nữa xuất phát từ việc nhận ra rằng chúng ta không cần phải thử tất cả các tổ hợp lân cận. Nếu chúng ta sửa một cạnh$b-c$, thì bất kỳ giải pháp hợp lệ nào mở rộng nó đều phải chọn$a$từ hàng xóm của$b$loại trừ$c$, Và$d$từ hàng xóm của$c$loại trừ$b$. Việc kiểm tra sự tồn tại trở thành vấn đề phát hiện xem một trong hai điểm cuối có ít nhất một điểm lân cận “mới” chưa được sử dụng trong đường dẫn hay không. Nếu cả hai bên có thể mở rộng, chúng ta sẽ có ngay một đường dẫn hợp lệ. 
 
 Điều này gợi ý một chiến lược thời gian tuyến tính: lặp qua các cạnh và kiểm tra xem chúng có thể đóng vai trò là điểm giữa của đường dẫn hay không. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu tăng gấp ba |$O(n^3)$|$O(n + m)$| Quá chậm | 
 | Kiểm tra phần mở rộng tập trung vào cạnh |$O(n + m)$|$O(n + m)$| Đã chấp nhận | 
@@ -61,13 +61,13 @@ Một sự đơn giản hóa hơn nữa đến từ việc nhận ra rằng chú
 ## Hướng dẫn thuật toán 
 
 1. Xây dựng danh sách kề cho đồ thị. Điều này cho phép tra cứu hàng xóm nhanh chóng cho mọi đỉnh, điều này cần thiết vì chúng tôi sẽ liên tục kiểm tra các vùng lân cận địa phương. 
-2. Lặp lại mọi cạnh$(b, c)$. Coi cạnh này như một đoạn giữa tiềm năng của đường đi mong muốn. 
+2. Lặp lại mọi cạnh$(b, c)$. Hãy coi cạnh này như một đoạn giữa tiềm năng của đường dẫn mong muốn. 
 3. Với mỗi cạnh như vậy, hãy quét các cạnh của$b$và chọn bất kỳ đỉnh nào$a$cái đó không bằng$c$. Điều này đảm bảo$a \neq c$và duy trì sự khác biệt ở giai đoạn này. 
 4. Tương tự, quét các hàng xóm của$c$và chọn bất kỳ đỉnh nào$d$cái đó không bằng$b$. 
 5. Nếu cả hai đỉnh như vậy tồn tại, chúng ta đã tìm được cấu trúc hợp lệ$a-b-c-d$. Đầu ra ngay lập tức. 
 6. Nếu không có cạnh nào tạo ra phần mở rộng như vậy, ghi -1. 
 
-Lý do quy trình này là đủ là vì mọi đường dẫn đơn giản có độ dài 3 hợp lệ đều phải có cạnh giữa$b-c$. Khi cạnh đó được xác định, các điểm cuối của đường đi phải nằm trong các vùng lân cận của$b$Và$c$, ngoại trừ đỉnh trong ở phía đối diện. Do đó, việc kiểm tra tất cả các cạnh đảm bảo rằng chúng ta không bỏ sót bất kỳ cấu hình hợp lệ nào. 
+Lý do quy trình này là đủ là vì mọi đường dẫn đơn giản có độ dài 3 hợp lệ đều phải có cạnh giữa$b-c$. Khi cạnh đó được xác định, các điểm cuối của đường đi phải nằm trong các vùng lân cận của$b$Và$c$, không bao gồm đỉnh trong ở phía đối diện. Do đó, việc kiểm tra tất cả các cạnh đảm bảo rằng chúng ta không bỏ sót bất kỳ cấu hình hợp lệ nào. 
 
 Tính chính xác phụ thuộc vào thực tế là bất kỳ đường đi đơn giản nào có độ dài 3 đều có một cạnh giữa duy nhất và cạnh đó hoàn toàn xác định sự tồn tại của các điểm cuối. 
 

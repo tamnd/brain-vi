@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 35s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 #Hiểu vấn đề 
 
 Sự cố yêu cầu nhiều truy vấn phạm vi trên cây. Các đỉnh của cây có nhãn cố định từ`1`ĐẾN`n`. Một truy vấn đưa ra một khoảng thời gian liên tục của các nhãn`[l, r]`, nghĩa là chúng ta chọn mọi đỉnh có nhãn nằm trong khoảng này. Câu trả lời là số cạnh trong sơ đồ con liên thông nhỏ nhất của cây chứa tất cả các đỉnh được chọn. Đây là kích thước của cây con tối thiểu bao trùm các đỉnh đó. Câu lệnh ban đầu định nghĩa đây là tập hợp các cạnh nhỏ nhất kết nối mọi cặp đỉnh được chọn. 
@@ -37,7 +37,7 @@ Input:
 1 1
 ```Tập được chọn là`{1}`, do đó đầu ra là:```
 0
-```Một giải pháp luôn tính toán khoảng cách giữa các đỉnh được chọn liên tiếp sẽ tạo ra phần đóng góp khác 0 một cách không chính xác nếu nó không xử lý được trường hợp một phần tử. 
+```Một giải pháp luôn tính toán khoảng cách giữa các đỉnh được chọn liên tiếp sẽ tạo ra phần đóng góp khác 0 không chính xác nếu nó không xử lý được trường hợp một phần tử. 
 
 Truy vấn chứa toàn bộ cây là một trường hợp biên quan trọng khác.```
 Input:
@@ -49,9 +49,9 @@ Input:
 1 4
 ```Tất cả các đỉnh được chọn. Câu trả lời là cả ba cạnh:```
 3
-```Bất kỳ phương pháp nào chỉ xét đường đi trực tiếp giữa các đỉnh được chọn đều có thể bỏ sót các nhánh như cạnh`2-4`. 
+```Bất kỳ phương pháp nào chỉ xem xét đường đi trực tiếp giữa các đỉnh được chọn đều có thể bỏ lỡ các nhánh như cạnh`2-4`. 
 
-Lỗi phổ biến thứ ba là quên rằng các đỉnh được chọn được sắp xếp theo vị trí DFS của chúng chứ không phải theo nhãn của chúng. Các nhãn chỉ xác định khoảng thời gian truy vấn. Cấu trúc cây xác định cạnh nào được yêu cầu. 
+Sai lầm phổ biến thứ ba là quên rằng các đỉnh được chọn được sắp xếp theo vị trí DFS của chúng chứ không phải theo nhãn của chúng. Các nhãn chỉ xác định khoảng thời gian truy vấn. Cấu trúc cây xác định cạnh nào được yêu cầu. 
 
 ## Phương pháp tiếp cận 
 
@@ -59,11 +59,11 @@ Giải pháp vũ phu bắt đầu từ định nghĩa. Đối với mỗi truy v
 
 Quan sát chính là chúng ta không cần xây dựng cây con một cách rõ ràng cho mọi truy vấn. Đối với bất kỳ tập hợp đỉnh nào, hãy sắp xếp chúng theo thời gian nhập DFS của chúng. Nếu các đỉnh theo thứ tự này là`v1, v2, ..., vk`, chiều dài của cây bao trùm là:$$\frac{dist(v_1,v_2)+dist(v_2,v_3)+...+dist(v_k,v_1)}{2}$$Tổng tuần hoàn tính mỗi cạnh chính xác hai lần, một lần từ mỗi phía của vết cắt do cạnh đó tạo ra. 
 
-Công thức này thay đổi hoàn toàn vấn đề. Bây giờ, một truy vấn yêu cầu chúng tôi duy trì một tập hợp các đỉnh động và tổng khoảng cách theo chu kỳ giữa các đỉnh liền kề theo thứ tự DFS. Vì các truy vấn là các khoảng trên nhãn đỉnh nên chúng ta có thể xử lý chúng bằng thuật toán Mo. Di chuyển từ khoảng này sang khoảng khác chỉ thêm hoặc bớt đi một số lượng nhỏ các đỉnh. 
+Công thức này thay đổi hoàn toàn vấn đề. Bây giờ, một truy vấn yêu cầu chúng tôi duy trì một tập hợp các đỉnh động và tổng khoảng cách theo chu kỳ giữa các đỉnh liền kề theo thứ tự DFS. Vì các truy vấn là các khoảng trên nhãn đỉnh nên chúng ta có thể xử lý chúng bằng thuật toán Mo. Di chuyển từ khoảng này sang khoảng tiếp theo chỉ thêm hoặc bớt một số lượng nhỏ các đỉnh. 
 
-Khi một đỉnh được chèn vào tập thứ tự DFS, chỉ có hai cặp lân cận thay đổi. Nếu người tiền nhiệm của nó là`a`và người kế nhiệm là`b`, tổng khoảng cách tăng thêm:$$dist(a,x)+dist(x,b)-dist(a,b)$$Việc loại bỏ một đỉnh sẽ đảo ngược thao tác này. 
+Khi một đỉnh được chèn vào tập thứ tự DFS, chỉ có hai cặp lân cận thay đổi. Nếu người tiền nhiệm của nó là`a`và người kế vị là`b`, tổng khoảng cách tăng thêm:$$dist(a,x)+dist(x,b)-dist(a,b)$$Việc loại bỏ một đỉnh sẽ đảo ngược thao tác này. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu |`O(nq)`|`O(n)`| Quá chậm | 
 | Tối ưu |`O((n+q)√n log n)`|`O(n log n)`| Đã chấp nhận | 
@@ -255,11 +255,11 @@ if __name__ == "__main__":
     solve()
 ```Quá trình tiền xử lý xây dựng thứ tự DFS và bảng nâng nhị phân. Cấu trúc LCA chỉ được sử dụng để đánh giá khoảng cách một cách nhanh chóng vì mỗi lần cập nhật chu trình được duy trì đều yêu cầu một vài phép tính khoảng cách. 
 
-Thứ tự Mo là thứ giữ cho số lượng thao tác thêm và xóa có thể quản lý được. Mảng hoạt động được lập chỉ mục theo vị trí DFS, không phải theo nhãn đỉnh, vì công thức tuần hoàn phụ thuộc vào thứ tự DFS. 
+Thứ tự Mo là thứ giữ cho số lượng thao tác thêm và xóa có thể quản lý được. Mảng hoạt động được lập chỉ mục theo vị trí DFS chứ không phải theo nhãn đỉnh vì công thức tuần hoàn phụ thuộc vào thứ tự DFS. 
 
 Việc phân rã căn bậc hai trên các vị trí DFS sẽ thay thế cây tìm kiếm nhị phân cân bằng. Python không cung cấp trực tiếp nên các tìm kiếm trước và sau được xử lý theo khối. Kích thước khối được chọn sao cho số lượng vị trí được kiểm tra vẫn nhỏ. 
 
-Việc chia cho hai chỉ được thực hiện khi trả lời một truy vấn. Giá trị duy trì được cố ý giữ ở dạng kích thước cây con nhân đôi, giúp tránh các giá trị trung gian phân đoạn. 
+Việc chia cho hai chỉ được thực hiện khi trả lời một truy vấn. Giá trị duy trì được cố ý giữ ở kích thước cây con nhân đôi, giúp tránh các giá trị trung gian phân đoạn. 
 
 ## Ví dụ đã hoạt động 
 

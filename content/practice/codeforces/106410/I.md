@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 43s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi có một bộ đèn hiệu được đặt trên một đường. Mỗi đèn hiệu có một vị trí và công suất hiện tại. Một ngọn hải đăng có sức mạnh`p`bao gồm khoảng bao gồm`[x - p, x + p]`. Trong mỗi vòng, mỗi cặp khoảng thời gian chồng chéo với sức mạnh khác nhau sẽ khiến đèn hiệu yếu hơn nhận được một sức mạnh. Tất cả lợi ích xảy ra đồng thời. Nhiệm vụ là xác định tổng số vị trí số nguyên được bao phủ sau khi quá trình đạt đến trạng thái ổn định. 
@@ -49,13 +49,13 @@ Trường hợp cạnh cuối cùng là đèn hiệu có công suất tối đa 
 
 Cách tiếp cận trực tiếp là mô phỏng quá trình. Đối với mỗi vòng, chúng tôi có thể kiểm tra từng cặp đèn hiệu, tìm tất cả các cặp chồng chéo và tăng sức mạnh yếu hơn. Điều này đúng vì nó tuân theo các quy tắc một cách chính xác. Tuy nhiên, kiểm tra tất cả các cặp chi phí`O(n^2)`mỗi vòng. Với`n = 2 * 10^5`, ngay cả một lần quét toàn bộ cũng đã quá đắt và số vòng không bị giới hạn bởi một hằng số nhỏ. 
 
-Quan sát quan trọng là quá trình này chỉ phụ thuộc vào các nhóm được kết nối. Bên trong bất kỳ nhóm khoảng chồng chéo nào được kết nối, công suất tối đa không bao giờ thay đổi vì không có đèn hiệu nào mạnh hơn để tăng công suất tối đa. Mọi đèn hiệu khác đều có một đường dẫn chồng chéo dẫn đến đèn hiệu có công suất tối đa, do đó mức tăng sẽ lan truyền dọc theo đường dẫn này cho đến khi mọi đèn hiệu đều đạt cùng công suất tối đa. 
+Quan sát quan trọng là quá trình này chỉ phụ thuộc vào các nhóm được kết nối. Bên trong bất kỳ nhóm khoảng chồng chéo nào được kết nối, công suất tối đa không bao giờ thay đổi vì không có đèn hiệu nào mạnh hơn để tăng công suất tối đa. Mọi đèn hiệu khác đều có một đường dẫn chồng chéo dẫn đến đèn hiệu có công suất tối đa, do đó mức tăng sẽ lan truyền dọc theo đường dẫn này cho đến khi mọi đèn hiệu đạt cùng công suất tối đa. 
 
 Điều này có nghĩa là quy trình động có thể được thay thế bằng quy trình hợp nhất tĩnh. Chúng tôi xử lý đèn hiệu từ trái sang phải. Mỗi nhóm được xử lý được biểu thị bằng vị trí ngoài cùng bên trái, vị trí ngoài cùng bên phải và công suất tối đa bên trong nó. Nếu một nhóm mới chồng lên nhóm trước đó sau khi cả hai đều được mở rộng đến lũy thừa cuối cùng thì chúng thực sự phải thuộc về cùng một thành phần cuối cùng. Chúng tôi hợp nhất chúng và giữ công suất tối đa lớn hơn. 
 
 Một ngăn xếp là đủ vì chỉ thành phần được xử lý cuối cùng mới có thể bị ảnh hưởng bởi đèn hiệu mới. Sau khi hợp nhất hai thành phần, thành phần mới cũng có thể tiếp cận thành phần trước chúng, vì vậy chúng tôi liên tục hợp nhất trong khi hai mục ngăn xếp cuối cùng chồng lên nhau. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu |`O(r * n^2)`|`O(n)`| Quá chậm | 
 | Tối ưu |`O(n log n)`|`O(n)`| Đã chấp nhận | 
@@ -68,7 +68,7 @@ Một ngăn xếp là đủ vì chỉ thành phần được xử lý cuối cù
 4. Tiếp tục hợp nhất ngược trong khi thành phần được hợp nhất mới vẫn chồng lên phần tử ngăn xếp trước đó. Điều này xử lý một thành phần mạnh mẽ có thể mở rộng đủ xa để hấp thụ một số thành phần cũ hơn. 
 5. Sau khi tất cả các đèn hiệu được xử lý, mỗi mục nhập ngăn xếp là một thành phần ổn định cuối cùng. Tổng độ dài các khoảng của chúng. 
 
-Tại sao nó hoạt động: bất biến là sau khi xử lý lần đầu tiên`i`đèn hiệu, ngăn xếp chứa chính xác các thành phần cuối cùng có thể được hình thành chỉ bằng cách sử dụng các đèn hiệu đó. Một thành phần lưu trữ công suất tối đa cuối cùng của nó, bởi vì mọi đèn hiệu yếu hơn bên trong nó cuối cùng sẽ đạt đến giá trị đó. Khi hai thành phần được lưu trữ liền kề chồng lên nhau, đèn hiệu của chúng sẽ ảnh hưởng lẫn nhau sau khi ổn định, do đó việc giữ chúng tách biệt sẽ vi phạm định nghĩa về thành phần cuối cùng. Việc hợp nhất lặp đi lặp lại sẽ khôi phục bất biến sau mỗi lần chèn. 
+Tại sao nó hoạt động: bất biến là sau khi xử lý lần đầu tiên`i`đèn hiệu, ngăn xếp chứa chính xác các thành phần cuối cùng có thể được hình thành chỉ bằng cách sử dụng các đèn hiệu đó. Một thành phần lưu trữ công suất tối đa cuối cùng của nó, bởi vì mọi đèn hiệu yếu hơn bên trong nó cuối cùng sẽ đạt đến giá trị đó. Khi hai thành phần được lưu trữ liền kề chồng lên nhau, đèn hiệu của chúng sẽ ảnh hưởng lẫn nhau sau khi ổn định, do đó, việc giữ chúng tách biệt sẽ vi phạm định nghĩa về thành phần cuối cùng. Việc hợp nhất lặp đi lặp lại sẽ khôi phục bất biến sau mỗi lần chèn. 
 
 ## Giải pháp Python```python
 import sys

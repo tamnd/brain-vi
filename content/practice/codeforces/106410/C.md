@@ -21,14 +21,14 @@ draft: false
 **Thời gian giải:** 35s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Bài toán yêu cầu chúng ta đếm xem có bao nhiêu dãy con của một mảng là hợp lệ. Một dãy con được tạo bằng cách chọn một số chỉ mục và giữ nguyên thứ tự ban đầu của chúng. Một chuỗi độ dài được chọn`k`hợp lệ nếu giá trị được chọn đầu tiên chia hết cho`1`, giá trị được chọn thứ hai có thể chia hết cho`2`, thứ ba bởi`3`, vân vân. Chúng tôi chỉ quan tâm đến chỉ số nào được chọn, vì vậy hai chuỗi con có cùng giá trị nhưng vị trí khác nhau sẽ được tính riêng. Câu trả lời phải được in modulo`1e9 + 7`. 
 
-Đầu vào là một mảng có độ dài`n`, Ở đâu`n`có thể đạt được`100000`và giá trị có thể lớn như`10^6`. Một giải pháp quy hoạch động bậc hai sẽ yêu cầu khoảng`10^10`hoạt động trong trường hợp xấu nhất là quá chậm. Giới hạn giá trị gợi ý rằng cấu trúc chia hết của các số là chìa khóa, bởi vì số lượng ước số có thể có của một giá trị lên đến`10^6`đủ nhỏ để xử lý hiệu quả. 
+Đầu vào là một mảng có độ dài`n`, Ở đâu`n`có thể đạt được`100000`và giá trị có thể lớn bằng`10^6`. Một giải pháp quy hoạch động bậc hai sẽ yêu cầu khoảng`10^10`hoạt động trong trường hợp xấu nhất là quá chậm. Giới hạn giá trị gợi ý rằng cấu trúc chia hết của các số là chìa khóa, bởi vì số lượng ước số có thể có của một giá trị lên đến`10^6`đủ nhỏ để xử lý hiệu quả. 
 
-Một lỗi phổ biến là theo dõi các chuỗi con theo giá trị thay vì chỉ số của chúng. Ví dụ, với đầu vào`3`và mảng`1 1 1`, mỗi phần tử tạo thành một dãy con khác nhau, vì vậy câu trả lời là`3`, không`1`. Một trường hợp phức tạp khác là khi một giá trị không thể mở rộng một dãy con vì vị trí bắt buộc của nó. Đối với đầu vào`2`và mảng`2 1`, dãy số`[2,1]`không hợp lệ vì phần tử thứ hai phải chia hết cho`2`, Và`1`thì không. Câu trả lời đúng là`2`, đến từ`[2]`Và`[1]`. Một giải pháp bất cẩn chỉ kiểm tra các giá trị mà không xem xét độ dài hiện tại sẽ bị tính quá mức. 
+Một lỗi phổ biến là theo dõi các chuỗi con theo giá trị thay vì chỉ số của chúng. Ví dụ, với đầu vào`3`và mảng`1 1 1`, mỗi phần tử tạo thành một dãy con khác nhau, vì vậy câu trả lời là`3`, không`1`. Một trường hợp phức tạp khác là khi một giá trị không thể mở rộng một dãy con do vị trí bắt buộc của nó. Đối với đầu vào`2`và mảng`2 1`, dãy số`[2,1]`không hợp lệ vì phần tử thứ hai phải chia hết cho`2`, Và`1`thì không. Câu trả lời đúng là`2`, đến từ`[2]`Và`[1]`. Một giải pháp bất cẩn chỉ kiểm tra các giá trị mà không xem xét độ dài hiện tại sẽ bị tính quá mức. 
 
 Một trường hợp biên khác là giá trị của`1`. Từ`1`chia hết cho mọi số nguyên dương, nó có thể được đặt ở bất kỳ vị trí nào trong một dãy con hợp lệ. Với đầu vào`3`và mảng`1 1 1`, câu trả lời là mọi dãy con không trống, tức là`7`. 
 
@@ -42,9 +42,9 @@ Quan sát quan trọng là chúng ta không bao giờ cần phân phối độ d
 
 Cho phép`dp[i]`biểu thị số dãy con hợp lệ có độ dài`i`được hình thành từ các phần tử được xử lý cho đến nay. Khi chúng tôi xử lý một giá trị`x`, mọi ước số`d`của`x`có nghĩa là một dãy con có độ dài`d - 1`có thể được mở rộng theo chiều dài`d`bằng cách thêm`x`. Chúng tôi cập nhật`dp[d] += dp[d-1]`. chiều dài`1`luôn luôn có thể xảy ra vì mọi số đều chia hết cho`1`, Vì thế`dp[1]`tăng thêm một cho mỗi phần tử. 
 
-Thứ tự cập nhật quan trọng. Chúng ta phải xử lý các ước số theo thứ tự giảm dần để giá trị hiện tại không được sử dụng lại nhiều lần trong cùng một chuỗi con. Nếu chúng tôi cập nhật từ độ dài nhỏ đến độ dài lớn, một chuỗi con mới được tạo có thể ngay lập tức được mở rộng lại bằng cách sử dụng cùng một phần tử mảng, điều này sẽ không hợp lệ. 
+Thứ tự cập nhật quan trọng. Chúng ta phải xử lý các ước số theo thứ tự giảm dần để giá trị hiện tại không được sử dụng lại nhiều lần trong cùng một chuỗi con. Nếu chúng tôi cập nhật từ độ dài nhỏ lên độ dài lớn, một chuỗi con mới được tạo có thể ngay lập tức được mở rộng lại bằng cách sử dụng cùng một phần tử mảng, điều này sẽ không hợp lệ. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(2^n * n) | O(n) | Quá chậm | 
 | Tối ưu | O(n * sqrt(max(a))) | O(max(a)) | Đã chấp nhận | 
@@ -52,14 +52,14 @@ Thứ tự cập nhật quan trọng. Chúng ta phải xử lý các ước số
 ## Hướng dẫn thuật toán 
 
 1. Tạo mảng lập trình động trong đó`dp[i]`lưu trữ số lượng các chuỗi con hợp lệ có độ dài`i`sau khi xử lý tiền tố hiện tại của mảng. Ban đầu tất cả các giá trị đều bằng 0 vì không có phần tử nào được sử dụng. 
-2. Lặp lại qua từng giá trị mảng`x`từ trái sang phải. Giá trị hiện tại có thể bắt đầu một chuỗi mới có độ dài`1`, do đó tăng`dp[1]`bởi một. 
+2. Lặp qua từng giá trị mảng`x`từ trái sang phải. Giá trị hiện tại có thể bắt đầu một chuỗi mới có độ dài`1`, do đó tăng`dp[1]`bởi một. 
 3. Tìm tất cả các ước của`x`. Với mỗi số chia`d`lớn hơn`1`, cập nhật`dp[d]`bằng cách thêm`dp[d-1]`. Lý do là mọi dãy con có độ dài hợp lệ`d-1`có thể nối thêm`x`và trở nên hợp lệ về độ dài`d`. 
 4. Xử lý các ước số theo thứ tự giảm dần. Điều này giữ cho quá trình chuyển đổi chỉ dựa trên các chuỗi con từ các phần tử mảng trước đó, ngăn phần tử hiện tại được tính nhiều lần. 
 5. Sau khi xử lý xong toàn bộ mảng, tính tổng tất cả`dp[i]`các giá trị. Mọi dãy con hợp lệ không trống đều có độ dài nào đó, vì vậy tổng này là câu trả lời. 
 
 Tại sao nó hoạt động: 
 
-Điều bất biến là sau khi xử lý lần đầu tiên`j`các yếu tố,`dp[i]`chính xác bằng số dãy con có độ dài hợp lệ`i`chỉ sử dụng những`j`các phần tử. Khi có một phần tử mới`x`được xem xét, các dãy con mới duy nhất có thể có là các dãy kết thúc tại`x`. Phần trước của chúng phải là một dãy con có độ dài hợp lệ`d-1`, Ở đâu`d`chia rẽ`x`, vì phần tử mới sẽ chiếm vị trí`d`. Bản cập nhật tính chính xác các tiện ích mở rộng này và không có gì khác. Các bản cập nhật giảm dần đảm bảo phần trước không bao giờ bao gồm phần tử hiện tại, do đó, mỗi chuỗi con được tính sẽ tương ứng với một tập hợp chỉ mục duy nhất. 
+Điều bất biến là sau khi xử lý lần đầu tiên`j`các yếu tố,`dp[i]`chính xác bằng số dãy con có độ dài hợp lệ`i`chỉ sử dụng những`j`các phần tử. Khi có một phần tử mới`x`được xem xét, các dãy con mới duy nhất có thể có là các dãy kết thúc tại`x`. Their previous part must already be a valid subsequence of length`d-1`, Ở đâu`d`chia rẽ`x`, vì phần tử mới sẽ chiếm vị trí`d`. Bản cập nhật tính chính xác các tiện ích mở rộng này và không có gì khác. Các bản cập nhật giảm dần đảm bảo phần trước không bao giờ bao gồm phần tử hiện tại, do đó, mỗi chuỗi con được tính sẽ tương ứng với một tập hợp chỉ mục duy nhất. 
 
 ## Giải pháp Python```python
 import sys
@@ -139,7 +139,7 @@ Dấu vết thứ hai chứng minh tại sao việc xử lý các ước số l�
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | O(n * sqrt(max(a))) | Mỗi giá trị được tính bằng cách kiểm tra căn bậc hai của nó và chỉ các ước số của nó mới được cập nhật | 
+| Thời gian | O(n * sqrt(max(a))) | Mỗi giá trị được phân tích bằng cách kiểm tra đến căn bậc hai của nó và chỉ các ước số của nó mới được cập nhật | 
 | Không gian | O(n) | Mảng lập trình động lưu trữ số đếm cho mỗi độ dài chuỗi con có thể có | 
 
 Giá trị tối đa là`10^6`, do đó việc phân tích căn bậc hai là về`1000`kiểm tra từng phần tử. Vì`100000`các yếu tố xung quanh đây`10^8`các thao tác đơn giản, phù hợp với giới hạn dự định khi triển khai Python hiệu quả. 
@@ -193,7 +193,7 @@ assert solution("4\n2 3 4 6\n") == "7"
 
 ## Vỏ cạnh 
 
-Đối với đầu vào`2`với mảng`2 1`, các quá trình thuật toán`2`đầu tiên và tạo ra một chuỗi con có độ dài`1`. giá trị`1`cũng có thể tạo ra một chiều dài`1`dãy sau, nhưng nó không thể kéo dài độ dài hiện có`1`dãy số bởi vì`2`không chia`1`. Câu trả lời cuối cùng là`2`. 
+Đối với đầu vào`2`với mảng`2 1`, các quá trình thuật toán`2`đầu tiên và tạo ra một chuỗi con có độ dài`1`. giá trị`1`cũng có thể tạo ra một chiều dài`1`dãy sau, nhưng nó không thể kéo dài độ dài hiện tại`1`dãy số bởi vì`2`không chia`1`. Câu trả lời cuối cùng là`2`. 
 
 Đối với đầu vào`3`với mảng`1 1 1`, mỗi giá trị được xử lý sẽ thêm một độ dài mới`1`tiếp theo. đầu tiên`1`tạo một chuỗi con, chuỗi thứ hai tạo độ dài mới`1`và có thể kéo dài cái trước đó thành chiều dài`2`, và thứ ba tạo ra tất cả các khả năng còn lại. Số đếm trở thành`3`,`3`, Và`1`cho độ dài`1`,`2`, Và`3`, đưa ra câu trả lời`7`. 
 

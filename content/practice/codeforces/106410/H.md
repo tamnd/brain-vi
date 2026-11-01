@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 43s 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 Tôi có thể viết toàn bộ bài xã luận ở định dạng đó, nhưng tôi không có đủ thông tin để xác định vấn đề thực sự. 
 
 Tiêu đề và mã nhận dạng bạn đã cung cấp, **Codeforces 106410H - Tung Tung String**, không khớp với vấn đề Codeforces được lập chỉ mục công khai mà tôi có thể truy xuất một cách đáng tin cậy. Tôi tìm thấy một vấn đề khác của Codeforce có tên **“Tung Tung Sahur”** (2094D), nhưng đó là một nhiệm vụ khác về việc mở rộng`L`/`R`trống đánh, do đó việc sử dụng nó sẽ tạo ra một bài xã luận không chính xác. 

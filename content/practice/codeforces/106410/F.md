@@ -1,5 +1,5 @@
 ---
-title: "CF 106410F - Sự xáo trộn chim cánh cụt-Gopher"
+title: "CF 106410F - Sự xáo trộn giữa chim cánh cụt và chuột túi"
 description: "Cho hai chuỗi a và b có cùng độ dài. Hoạt động được phép là không bình thường: thay vì hoán đổi hai ký tự hoặc thay đổi một vị trí, chúng tôi chọn chỉ mục i và đảo ngược mọi thứ từ i đến cuối chuỗi hiện tại."
 date: "2026-06-25T09:55:29+07:00"
 tags: ["codeforces", "competitive-programming"]
@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 31s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cho hai chuỗi,`a`Và`b`, có cùng độ dài. Hoạt động được phép là không bình thường: thay vì hoán đổi hai ký tự hoặc thay đổi một vị trí, chúng tôi chọn một chỉ mục`i`và đảo ngược mọi thứ từ`i`đến cuối chuỗi hiện tại. Nhiệm vụ là tìm một chuỗi các đảo ngược hậu tố để biến đổi`a`vào trong`b`hoặc chứng minh rằng điều đó không thể thực hiện được. Trình tự phải chứa tối đa 2000 thao tác. Tuyên bố chính thức mô tả vấn đề chuyển đổi này trên các chuỗi có độ dài lên tới 1000. 
@@ -71,7 +71,7 @@ Khi một nhân vật được đặt ở cuối, chúng ta không bao giờ c�
 
 Điều này làm giảm vấn đề thành một công trình tham lam. Mỗi vị trí cần tối đa hai thao tác, vì vậy đối với$n=1000$tổng số hoạt động tối đa là 2000. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | Hàm mũ | Hàm mũ | Quá chậm | 
 | Tối ưu | O(n²) | O(n) | Đã chấp nhận | 
@@ -130,7 +130,7 @@ if __name__ == "__main__":
     solve()
 ```Việc triển khai giữ chuỗi hiện tại dưới dạng danh sách có thể thay đổi vì việc đảo ngược hậu tố sẽ thay đổi nhiều ký tự. Việc cắt Python bằng phép gán cho phép chúng ta đảo ngược chính xác phần được yêu cầu mà không cần tạo một chuỗi hoàn toàn riêng biệt. 
 
-Các quá trình vòng lặp`end`từ phải sang trái. chỉ mục`end`đại diện cho vị trí cuối cùng vẫn được phép thay đổi. Mọi thứ sau đó đã bằng mục tiêu. 
+Các quá trình vòng lặp`end`từ phải sang trái. chỉ số`end`đại diện cho vị trí cuối cùng vẫn được phép thay đổi. Mọi thứ sau đó đã bằng mục tiêu. 
 
 Khi tìm thấy ký tự cần thiết, thao tác được lưu trữ sử dụng lập chỉ mục dựa trên một vì câu lệnh vấn đề sử dụng các vị trí bắt đầu từ một. Các chỉ số Python thực tế đều dựa trên số 0, vì vậy`pos + 1`được in. 
 
