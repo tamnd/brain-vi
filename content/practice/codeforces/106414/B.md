@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 26s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Tôi có thể làm điều đó, nhưng trước tiên tôi cần vấn đề thực tế. 
 
 Vui lòng dán báo cáo vấn đề của Codeforces (hoặc ít nhất là liên kết + tên vấn đề). Nếu nó dài, bạn cũng có thể chỉ cần bao gồm: 

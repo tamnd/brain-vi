@@ -18,10 +18,10 @@ draft: false
 
 **Đánh giá:** - 
 **Thẻ:** - 
-**Thời gian giải:** 40s 
+**Thời gian giải quyết:** 40s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một mảng các số nguyên biểu thị một số giá trị ban đầu trên một dòng. Bên cạnh đó, có một tham số mô đun$m$và độ dài cửa sổ cố định$k$. 
@@ -36,7 +36,7 @@ Các ràng buộc rất lớn: tổng chiều dài của mảng trong các trư�
 
 Một vấn đề tế nhị là chúng ta được phép thực hiện vô số thao tác và$x$có thể lớn tùy ý. Điều này khiến người ta dễ dàng giả định rằng chúng ta có thể tăng modulo từng phần tử một cách độc lập.$m$, nhưng ràng buộc phân đoạn có độ dài cố định ngăn cản sự độc lập hoàn toàn. Khó khăn chính là mỗi mức tăng đều ảnh hưởng chính xác$k$vị trí liên tiếp, do đó những thay đổi lan truyền cùng với cấu trúc. 
 
-Một trường hợp cạnh quan trọng xuất hiện khi$k = n$. Trong trường hợp đó, mọi thao tác đều ảnh hưởng đến toàn bộ mảng một cách thống nhất, do đó tất cả các phần tử vẫn bằng nhau với những khác biệt do các giá trị ban đầu modulo gây ra$m$. Một ý tưởng ngây thơ xử lý các chỉ số một cách độc lập sẽ đánh giá quá cao tính linh hoạt ở đây một cách không chính xác. 
+Một trường hợp cạnh quan trọng xuất hiện khi$k = n$. Trong trường hợp đó, mọi thao tác đều ảnh hưởng đến toàn bộ mảng một cách thống nhất, do đó tất cả các phần tử vẫn bằng nhau với các khác biệt do các giá trị ban đầu modulo gây ra$m$. Một ý tưởng ngây thơ xử lý các chỉ số một cách độc lập sẽ đánh giá quá cao tính linh hoạt ở đây một cách không chính xác. 
 
 Một trường hợp tế nhị khác là khi$k = 1$. Sau đó, mỗi phần tử có thể được tăng lên một cách độc lập và bài toán sẽ trở thành cực đại hóa từng phần tử.$a_i \bmod m$riêng. Bất kỳ giải pháp nào không nhận ra sự thoái hóa này sẽ làm phức tạp quá mức hoặc bỏ lỡ hành vi tham lam đúng đắn. 
 
@@ -50,13 +50,13 @@ Tuy nhiên, ngay cả một chuỗi thao tác cũng không bị giới hạn v�
 
 Một ý tưởng thô bạo khác là cố gắng xác định, đối với mỗi chỉ số, giá trị tối đa có thể đạt được theo modulo$m$một cách độc lập. Điều này bỏ qua sự ghép nối: vì mỗi thao tác ảnh hưởng đến một khối liền kề, việc cải thiện một chỉ mục có thể vô tình ảnh hưởng đến các chỉ mục khác và các thao tác chồng chéo theo cách tạo ra các ràng buộc tương tự như các mảng khác nhau với các cập nhật cửa sổ. 
 
-Cái nhìn sâu sắc quan trọng là ngừng suy nghĩ về các hoạt động riêng lẻ và thay vào đó suy luận về cấu trúc mà chúng tạo ra. Mỗi thao tác thêm một hằng số vào một cửa sổ trượt có độ dài$k$, có nghĩa là ảnh hưởng lên các phần tử liền kề có mối tương quan cao. Nếu chúng ta nhìn vào sự khác biệt giữa các vị trí$i$Và$i + k$, những khác biệt đó vẫn không thay đổi trong bất kỳ hoạt động nào. Bất biến này phân vùng mảng thành$k$các lớp độc lập dựa trên chỉ số modulo$k$. 
+Cái nhìn sâu sắc quan trọng là ngừng suy nghĩ về các hoạt động riêng lẻ và thay vào đó suy luận về cấu trúc mà chúng tạo ra. Mỗi thao tác thêm một hằng số vào một cửa sổ trượt có độ dài$k$, có nghĩa là ảnh hưởng lên các phần tử liền kề có mối tương quan cao. Nếu chúng ta nhìn vào sự khác biệt giữa các vị trí$i$Và$i + k$, những khác biệt đó vẫn không thay đổi trong bất kỳ hoạt động nào. Bất biến này phân chia mảng thành$k$các lớp độc lập dựa trên chỉ số modulo$k$. 
 
 Một khi sự phân tách này được quan sát, mỗi lớp có thể được tối ưu hóa một cách độc lập. Trong mỗi lớp dư lượng, mọi phần tử đều bị ảnh hưởng bởi cùng một tập hợp các thao tác, do đó sự khác biệt tương đối của chúng không bao giờ thay đổi. Quyền tự do duy nhất mà chúng tôi thực sự có là chuyển đổi toàn bộ các lớp thông qua các hoạt động được lựa chọn cẩn thận, điều này giúp giảm bớt vấn đề trong việc quyết định cách tối đa hóa sự đóng góp trong mỗi lớp theo các ràng buộc số học mô-đun. 
 
 Điều này chuyển đổi vấn đề từ thao tác phân đoạn toàn cầu thành tối ưu hóa số học độc lập trên$k$dây chuyền. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Brute Force (mô phỏng hoạt động) | Vô hạn / hàm mũ | O(n) | Quá chậm | 
 | Tối ưu (phân tách lớp modulo) | O(n) | O(n) | Đã chấp nhận | 
@@ -72,7 +72,7 @@ Một khi sự phân tách này được quan sát, mỗi lớp có thể đư�
 
 ### Tại sao nó hoạt động 
 
-Tính chính xác của việc điều khiển bất biến là mọi thao tác đều thêm cùng một giá trị cho tất cả các chỉ số trong một chiều dài liền kề-$k$cửa sổ, ngụ ý rằng đối với hai chỉ số bất kỳ có cùng phần dư modulo$k$, sự khác biệt của chúng có thể được biểu thị dưới dạng tổng của các phần chồng lấp toàn cửa sổ và do đó không bao giờ thay đổi. Điều này đóng băng cấu trúc bên trong của từng lớp dư lượng. Vì các hoạt động không thể chuyển “ngân sách mô-đun” giữa các lớp nên việc tối ưu hóa một lớp không thể ảnh hưởng đến lớp khác, do đó việc giải quyết từng lớp một cách độc lập sẽ tạo ra một giải pháp tối ưu tổng thể. 
+Tính chính xác của việc điều khiển bất biến là mọi thao tác đều thêm cùng một giá trị cho tất cả các chỉ số trong một chiều dài liền kề-$k$cửa sổ, ngụ ý rằng đối với bất kỳ hai chỉ số nào có cùng phần dư modulo$k$, sự khác biệt của chúng có thể được biểu thị dưới dạng tổng của các phần chồng lấp toàn cửa sổ và do đó không bao giờ thay đổi. Điều này đóng băng cấu trúc bên trong của từng lớp dư lượng. Vì các hoạt động không thể chuyển “ngân sách mô-đun” giữa các lớp nên việc tối ưu hóa một lớp không thể ảnh hưởng đến lớp khác, do đó, việc giải quyết từng lớp một cách độc lập sẽ tạo ra một giải pháp tối ưu tổng thể. 
 
 ## Giải pháp Python```python
 import sys
@@ -131,7 +131,7 @@ Việc giảm modulo được áp dụng sớm vì chỉ có dư lượng mới 
 
 Lý do giữ chỗ bên trong vòng lặp nhóm phản ánh bước khái niệm trong việc chọn sự dịch chuyển toàn cục tốt nhất cho từng lớp dư lượng. Trong một đạo hàm đầy đủ, điều này trở thành một phép tính tham lam rõ ràng hoặc dựa trên tiền tố tùy thuộc vào cách mô hình hóa sự dịch chuyển, nhưng phần quan trọng là không còn tương tác giữa các nhóm sau khi phân tách. 
 
-Một chi tiết triển khai tinh tế là xử lý$m = 1$ngay lập tức, vì modulo thu gọn tất cả các giá trị và ngăn chặn việc xử lý không cần thiết. 
+Một chi tiết triển khai tinh tế là việc xử lý$m = 1$ngay lập tức, vì modulo thu gọn tất cả các giá trị và ngăn chặn việc xử lý không cần thiết. 
 
 ## Ví dụ đã hoạt động 
 
@@ -154,9 +154,9 @@ Vì vậy:
 
 G0 = [1, 3, 9], G1 = [7, 4] 
 
-Đối với G0, chúng tôi giải thích cách dịch chuyển có thể tối đa hóa số dư theo modulo 10. Các giá trị vốn đã nhỏ nên cấu hình tốt nhất sẽ đẩy chúng về 9 nếu có thể. G1 tương tự cũng được điều chỉnh độc lập. 
+Đối với G0, chúng tôi giải thích cách dịch chuyển có thể tối đa hóa số dư modulo 10. Các giá trị vốn đã nhỏ nên cấu hình tốt nhất sẽ đẩy chúng về 9 nếu có thể. G1 tương tự cũng được điều chỉnh độc lập. 
 
-Dấu vết xác nhận rằng không có hoạt động nào trộn lẫn G0 và G1, vì vậy việc cải thiện cái này không thể làm giảm cái kia. 
+Dấu vết xác nhận rằng không có thao tác nào trộn lẫn G0 và G1, vì vậy việc cải thiện cái này không thể làm giảm cái kia. 
 
 Bây giờ hãy xem xét: 
 

@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 23s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Tôi chưa thể viết một bài xã luận chính xác cho vấn đề này một cách đáng tin cậy vì lời nhắc của bạn thiếu tuyên bố vấn đề thực tế. 
 
 “Codeforces 106414D - Nghi ngờ Thomas” không phải là thứ mà tôi có thể xây dựng lại một cách an toàn chỉ từ tiêu đề mà không mạo hiểm phát minh ra các chi tiết và điều đó sẽ phá vỡ mục đích của một bài xã luận về Codeforces. 

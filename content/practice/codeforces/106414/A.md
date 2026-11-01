@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 45s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Tôi có thể viết toàn bộ bài xã luận ở định dạng đó, nhưng thiếu phần trình bày vấn đề. Các phần trong “Tuyên bố sự cố”, “Đầu vào” và “Đầu ra” trống và tôi không có đủ thông tin để xác định “Khoảng cách gấp” yêu cầu những gì, các ràng buộc, mẫu hoặc thuật toán được yêu cầu. 
 
 Vui lòng dán báo cáo vấn đề đầy đủ (hoặc mô tả đầu vào/đầu ra và các mẫu) và tôi sẽ tạo bài xã luận hoàn chỉnh với các phần được yêu cầu, hướng dẫn chi tiết, giải pháp Python, bài kiểm tra và phân tích trường hợp cụ thể.

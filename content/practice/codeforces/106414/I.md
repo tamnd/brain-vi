@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 23s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Tôi chưa thể viết một bài xã luận đầy đủ và chính xác một cách có trách nhiệm vì tuyên bố chính xác về **Codeforces 106414I - Ultimate Nim** không có trong dữ liệu chúng tôi truy xuất và trang cuộc thi chỉ hiển thị mô tả tương tác mà không có quy tắc thực tế ở dạng ổn định, hoàn chỉnh. Các đoạn mã mà chúng tôi phát hiện xung đột với các biến thể “Nim” khác và thậm chí bao gồm các định dạng tương tác không liên quan, vì vậy việc xây dựng lại trò chơi dự định sẽ chỉ là phỏng đoán. 
 
 Đối với vấn đề thuộc loại này, ngay cả một sự hiểu lầm nhỏ cũng có thể thay đổi toàn bộ giải pháp: Các biến thể Nim cực kỳ nhạy cảm với việc di chuyển là trên cọc, hàng, chuyển tiếp bắt buộc, cấu trúc XOR hay ràng buộc tương tác. Nếu tôi tiếp tục bây giờ, tôi có thể sẽ cung cấp cho bạn một bài xã luận rõ ràng nhưng không chính xác về một trò chơi khác. 

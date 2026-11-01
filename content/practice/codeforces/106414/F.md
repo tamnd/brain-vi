@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1m 3s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một danh sách các số nguyên và một giá trị đích. Nhiệm vụ là chọn bất kỳ ba phần tử riêng biệt nào từ danh sách sao cho tổng của ba số đó càng gần mục tiêu càng tốt. “Càng gần càng tốt” có nghĩa là giảm thiểu sự khác biệt tuyệt đối giữa tổng ba được chọn và giá trị mục tiêu và chúng tôi chỉ quan tâm đến độ lệch tối thiểu đó chứ không quan tâm đến chỉ số của các phần tử. 
@@ -38,11 +38,11 @@ Một trường hợp cạnh khác là khi mảng chứa các giá trị âm và
 
 Cách tiếp cận vũ phu rất đơn giản. Chúng tôi lặp lại mọi bộ ba chỉ số có thể có$i, j, k$, tính tổng, so sánh với mục tiêu và theo dõi sự khác biệt tuyệt đối nhỏ nhất được thấy cho đến nay. Điều này hiệu quả vì nó khám phá toàn bộ không gian tìm kiếm mà không bỏ sót. Vấn đề của nó hoàn toàn là tính toán: số bộ ba là$\binom{n}{3}$, mở rộng như$O(n^3)$. Với$n = 5000$, điều này đã đạt tới khoảng$2 \times 10^{10}$hoạt động, vượt xa giới hạn thực tế trong một môi trường hạn chế về thời gian. 
 
-Quan sát cấu trúc quan trọng là khi chúng ta sửa một phần tử của bộ ba, bài toán còn lại sẽ trở thành bài toán tổng hai với mục tiêu xuất phát từ giá trị cố định. Sau khi sắp xếp mảng, chúng ta có thể khai thác thứ tự để di chuyển hai con trỏ vào trong và đánh giá tất cả các cặp khả thi theo thời gian tuyến tính cho từng vị trí cố định. Điều này làm giảm sự dư thừa vì mỗi cặp được xem xét trong quá trình quét có kiểm soát thay vì được tính toán lại cho từng phần tử thứ ba một cách độc lập. 
+Quan sát cấu trúc quan trọng là khi chúng ta sửa một phần tử của bộ ba, bài toán còn lại sẽ trở thành bài toán tổng hai với mục tiêu xuất phát từ giá trị cố định. Sau khi sắp xếp mảng, chúng ta có thể khai thác thứ tự để di chuyển hai con trỏ vào trong và đánh giá tất cả các cặp khả thi theo thời gian tuyến tính cho từng vị trí cố định. Điều này làm giảm sự dư thừa vì mỗi cặp được xem xét trong một quá trình quét có kiểm soát thay vì được tính toán lại cho từng phần tử thứ ba một cách độc lập. 
 
 Phương pháp vũ lực có hiệu quả vì nó liệt kê rõ ràng tất cả các khả năng. Nó thất bại vì nó xử lý từng bộ ba một cách độc lập. Sự cải tiến này xuất phát từ việc nhận ra rằng đối với phần tử đầu tiên cố định, cặp bổ sung tốt nhất có thể được tìm kiếm một cách hiệu quả trong một mảng được sắp xếp bằng cách sử dụng chuyển động có hướng thay vì liệt kê lồng nhau. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu |$O(n^3)$|$O(1)$| Quá chậm | 
 | Sắp xếp + Hai con trỏ |$O(n^2)$|$O(1)$| Đã chấp nhận | 
@@ -61,7 +61,7 @@ Chuyển động của con trỏ là cơ chế quan trọng. Nó đảm bảo r�
 
 ### Tại sao nó hoạt động 
 
-Đối với một cố định`i`, đoạn mảng bên phải được sắp xếp. Bất kỳ cặp nào`(j, k)`tạo thành một cảnh quan đơn điệu của các tổng: tăng dần`j`tổng tăng, giảm`k`làm giảm nó. Quy trình hai con trỏ khám phá không gian này một cách có hệ thống mà không bỏ qua bất kỳ khu vực nào có thể tồn tại sự cải tiến. Ở mỗi bước, hướng di chuyển chỉ loại bỏ những cặp không thể cải thiện tình hình hiện tại theo thứ tự, trong khi vẫn duy trì tất cả các cấu hình có khả năng tối ưu. Điều này đảm bảo rằng độ lệch tuyệt đối tối thiểu gặp phải trong quá trình quét là tối ưu thực sự trên tất cả các bộ ba. 
+Đối với một cố định`i`, đoạn mảng bên phải được sắp xếp. Bất kỳ cặp nào`(j, k)`tạo thành một cảnh quan đơn điệu của các tổng: tăng dần`j`tổng tăng, giảm`k`làm giảm nó. Quá trình hai con trỏ khám phá không gian này một cách có hệ thống mà không bỏ qua bất kỳ khu vực nào có thể tồn tại sự cải tiến. Ở mỗi bước, hướng di chuyển chỉ loại bỏ những cặp không thể cải thiện tình hình hiện tại theo thứ tự, trong khi vẫn duy trì tất cả các cấu hình có khả năng tối ưu. Điều này đảm bảo rằng độ lệch tuyệt đối tối thiểu gặp phải trong quá trình quét là tối ưu thực sự trên tất cả các bộ ba. 
 
 ## Giải pháp Python```python
 import sys
@@ -130,7 +130,7 @@ Dấu vết này cho thấy rằng khi không có bộ ba nào đến gần mụ
 | Thời gian |$O(n^2)$| Đối với mỗi chỉ mục cố định, quá trình quét hai con trỏ chạy theo thời gian tuyến tính trên hậu tố còn lại | 
 | Không gian |$O(1)$| Chỉ một số lượng biến không đổi được sử dụng bên cạnh mảng đầu vào | 
 
-Thời gian chạy bậc hai có thể chấp nhận được đối với các ràng buộc điển hình trong họ bài toán này, đặc biệt khi$n$có thể lên tới vài nghìn cho tới vài chục nghìn. Việc sắp xếp góp phần bổ sung$O(n \log n)$, bị chi phối bởi thành phần bậc hai. 
+Thời gian chạy bậc hai có thể chấp nhận được đối với các ràng buộc điển hình trong họ bài toán này, đặc biệt khi$n$có thể lên tới vài nghìn đến thấp vài chục nghìn. Việc sắp xếp góp phần bổ sung$O(n \log n)$, bị chi phối bởi thành phần bậc hai. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io

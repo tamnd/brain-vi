@@ -21,14 +21,14 @@ draft: false
 **Thời gian giải:** 46s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi có một`n`qua`m`lưới. Đường dẫn bắt đầu ở ô dưới cùng bên trái và phải kết thúc ở ô trên cùng bên phải. Ở mỗi lần di chuyển, đường đi có thể đi lên một ô, sang trái một ô hoặc sang phải một ô. Nó không bao giờ có thể đi xuống và không bao giờ có thể dẫm lên một tế bào hai lần. Nhiệm vụ là đếm xem có bao nhiêu đường dẫn hợp lệ khác nhau tồn tại, với câu trả lời được lấy modulo`998244353`. 
+Chúng tôi có một`n`qua`m`lưới. Đường dẫn bắt đầu ở ô dưới cùng bên trái và phải kết thúc ở ô trên cùng bên phải. Ở mỗi lần di chuyển, đường đi có thể đi lên một ô, sang trái một ô hoặc sang phải một ô. Nó không bao giờ có thể đi xuống và không bao giờ có thể dẫm lên một tế bào hai lần. Nhiệm vụ là đếm có bao nhiêu đường dẫn hợp lệ khác nhau tồn tại, với câu trả lời được lấy modulo`998244353`. 
 
-Phần quan trọng của quy tắc di chuyển là số hàng chỉ có thể giảm. Khi một đường đi rời khỏi một hàng bằng cách di chuyển lên trên, nó sẽ không bao giờ quay trở lại hàng đó. Điều này có nghĩa là mỗi hàng có thể được xem xét độc lập và thông tin duy nhất được truyền từ hàng này sang hàng tiếp theo là cột nơi đường đi đi lên. 
+Phần quan trọng của quy tắc di chuyển là số hàng chỉ có thể giảm. Khi một đường đi rời khỏi một hàng bằng cách di chuyển lên trên, nó sẽ không bao giờ quay trở lại hàng đó. Điều này có nghĩa là mỗi hàng có thể được xem xét độc lập và thông tin duy nhất được truyền từ hàng này sang hàng tiếp theo là cột nơi đường dẫn di chuyển lên trên. 
 
-Những ràng buộc cho phép`n`Và`m`lớn tới 100, với nhiều trường hợp thử nghiệm. Một giải pháp khám phá mọi con đường là không thể vì số lượng con đường tăng theo cấp số nhân. Chúng ta cần tìm một mô hình toán học và tính toán nó một cách trực tiếp. Vì câu trả lời chỉ liên quan đến lũy thừa và số học môđun, nên`O(n)`hoặc`O(log n)`giải pháp là đủ. 
+Những ràng buộc cho phép`n`Và`m`lớn tới 100, với nhiều trường hợp thử nghiệm. Một giải pháp khám phá mọi con đường là không thể vì số lượng con đường tăng theo cấp số nhân. Chúng ta cần tìm một mô hình toán học và tính toán nó một cách trực tiếp. Vì câu trả lời chỉ liên quan đến lũy thừa và số học mô-đun, nên`O(n)`hoặc`O(log n)`giải pháp là đủ. 
 
 Một sai lầm phổ biến là nghĩ rằng đường đi buộc phải di chuyển thẳng lên trên sau khi đến một cột. Ví dụ, trong một`2 x 3`lưới, câu trả lời không phải là 1. Hàng dưới cùng có thể di chuyển từ cột bắt đầu 0 đến cột 0, 1 hoặc 2 trước khi đi lên, tạo ra 3 đường dẫn. 
 
@@ -40,13 +40,13 @@ Một sai lầm khác là cho phép đường dẫn đảo ngược trong một 
 
 Vấn đề là số lượng lựa chọn bùng nổ. Một đường dẫn có thể thực hiện nhiều lựa chọn theo chiều ngang trong mỗi hàng và số lượng đường dẫn có thể tăng theo cấp số nhân theo kích thước lưới. Ngay cả các lưới nhỏ cũng nhanh chóng tạo ra quá nhiều nhánh đệ quy. 
 
-Quan sát quan trọng là hành vi của đường dẫn bên trong một hàng rất đơn giản. Khi một đường đi vào một hàng, nó sẽ ở một cột nào đó`x`. Trước khi di chuyển lên trên có thể chọn bất kỳ cột nào`y`ở hàng đó là nơi nó rời đi. Các tế bào giữa`x`Và`y`được truy cập dưới dạng một đoạn ngang liên tục. Không thể thực hiện được hình dạng nào khác vì việc thay đổi hướng ngang sẽ yêu cầu phải xem lại một ô. 
+Quan sát quan trọng là hành vi của đường dẫn bên trong một hàng rất đơn giản. Khi một đường đi vào một hàng, nó sẽ ở một cột nào đó`x`. Trước khi di chuyển lên trên có thể chọn cột bất kỳ`y`ở hàng đó là nơi nó rời đi. Các tế bào giữa`x`Và`y`được truy cập dưới dạng một đoạn ngang liên tục. Không thể thực hiện được hình dạng nào khác vì việc thay đổi hướng ngang sẽ yêu cầu phải xem lại một ô. 
 
 Đối với mỗi hàng ngoại trừ hàng trên cùng, cột rời đi có thể là bất kỳ`m`cột. Hàng dưới cùng bắt đầu ở cột 0, nhưng vẫn có`m`các cột có thể nơi nó có thể để lại. Các hàng tiếp theo hoạt động theo cách tương tự. Hàng trên cùng không cần lựa chọn vì khi nhập vào, đường dẫn chỉ di chuyển theo chiều ngang cho đến khi đến ô trên cùng bên phải. 
 
 có`n - 1`các hàng nơi chúng tôi chọn một cột thoát và mỗi lựa chọn có`m`khả năng. Do đó tổng số đường đi là`m^(n-1)`. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | Hàm mũ | Ngăn xếp đệ quy O(nm) | Quá chậm | 
 | Tối ưu | O(log n) | O(1) | Đã chấp nhận | 
@@ -59,7 +59,7 @@ có`n - 1`các hàng nơi chúng tôi chọn một cột thoát và mỗi lựa 
 
 Tại sao nó hoạt động: 
 
-Mỗi quá trình chuyển đổi hàng được mô tả hoàn toàn bằng cột nơi đường dẫn đi lên. Sau khi nhập một hàng, việc chọn bất kỳ cột thoát nào sẽ tạo ra chính xác một đoạn ngang hợp lệ và mỗi đoạn hợp lệ tương ứng với chính xác một cột thoát. Vì các hàng độc lập và hàng trên cùng không có lựa chọn chuyển tiếp nên số đường dẫn có thể là tích của`m`lựa chọn hơn`n - 1`hàng. 
+Mỗi quá trình chuyển đổi hàng được mô tả hoàn toàn bằng cột nơi đường dẫn đi lên. Sau khi nhập một hàng, việc chọn bất kỳ cột thoát nào sẽ tạo ra chính xác một đoạn ngang hợp lệ và mỗi đoạn hợp lệ tương ứng với chính xác một cột thoát. Vì các hàng độc lập và hàng trên cùng không có lựa chọn chuyển tiếp nên số đường đi có thể là tích của`m`lựa chọn hơn`n - 1`hàng. 
 
 ## Giải pháp Python```python
 import sys
@@ -83,11 +83,11 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Việc triển khai sử dụng phép lũy thừa mô-đun tích hợp của Python. các`pow(base, exponent, mod)`biểu mẫu thực hiện lũy thừa nhị phân nên chỉ cần nhiều phép tính logarit. 
+```Việc triển khai sử dụng phép lũy thừa mô-đun tích hợp của Python. các`pow(base, exponent, mod)`biểu mẫu thực hiện lũy thừa nhị phân nên chỉ cần thực hiện nhiều phép tính logarit. 
 
-Số mũ là`n - 1`bởi vì hàng dưới cùng và mọi hàng phía trên nó cho đến hàng trên cùng yêu cầu quyết định về vị trí di chuyển lên trên. Hàng trên cùng chỉ kết thúc đường dẫn và không phân nhánh thêm. 
+Số mũ là`n - 1`bởi vì hàng dưới cùng và mọi hàng phía trên nó cho đến hàng trên cùng đều yêu cầu quyết định về vị trí di chuyển lên trên. Hàng trên cùng chỉ kết thúc đường dẫn và không phân nhánh thêm. 
 
-Không có kiểm tra ranh giới hoặc mô phỏng vì bằng chứng đã giảm vấn đề xuống việc đếm các lựa chọn. Modulo được áp dụng trong quá trình lũy thừa để tránh các giá trị trung gian lớn. 
+Không có kiểm tra ranh giới hoặc mô phỏng vì bằng chứng đã giảm vấn đề thành việc đếm các lựa chọn. Modulo được áp dụng trong quá trình lũy thừa để tránh các giá trị trung gian lớn. 
 
 ## Ví dụ đã hoạt động 
 
@@ -161,7 +161,7 @@ assert solution("""3
 |`2 3`,`3 4`|`3`,`16`| Khẳng định công thức cơ bản | 
 |`2 2`|`2`| Kiểm tra lưới nhỏ nhất có thể | 
 |`100 100`|`100^99 mod MOD`| Kiểm tra việc xử lý số mũ lớn | 
-|`m = 1`trường hợp | Đúng quyền hạn của một | Kiểm tra ranh giới cột đơn | 
+|`m = 1`trường hợp | Quyền hạn đúng của một | Kiểm tra ranh giới cột đơn | 
 
 ## Vỏ cạnh 
 

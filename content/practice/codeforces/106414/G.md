@@ -1,6 +1,6 @@
 ---
 title: "CF 106414G - Chuỗi con hàm bước dài nhất"
-description: "Nhiệm vụ là tìm dãy con dài nhất của mảng có đúng một giá trị thay đổi. Các phần tử được chọn trước tiên phải chứa một giá trị A được lặp lại một hoặc nhiều lần, sau đó giá trị riêng biệt B khác được lặp lại một hoặc nhiều lần."
+description: "Nhiệm vụ là tìm dãy con dài nhất của mảng có đúng một giá trị thay đổi. Các phần tử được chọn trước tiên phải chứa một giá trị A được lặp lại một hoặc nhiều lần, sau đó một giá trị khác biệt B được lặp lại một hoặc nhiều lần."
 date: "2026-06-25T09:48:13+07:00"
 tags: ["codeforces", "competitive-programming"]
 categories: ["algorithms"]
@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 37s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Nhiệm vụ là tìm dãy con dài nhất của mảng có đúng một giá trị thay đổi. Các phần tử được chọn trước tiên phải chứa một giá trị`A`lặp lại một hoặc nhiều lần, sau đó là một giá trị khác biệt`B`lặp đi lặp lại một hoặc nhiều lần. Vị trí của các phần tử được chọn phải giữ nguyên thứ tự ban đầu nhưng các phần tử ở giữa chúng có thể bị bỏ qua. Nếu không tồn tại dãy con như vậy thì câu trả lời là`0`. 
@@ -30,7 +30,7 @@ Ví dụ, từ`2 1 3 1 2 1 0 2 0 3 0`, chúng ta có thể chọn`1 1 1 0 0 0`, 
 
 Tổng số phần tử trong tất cả các trường hợp thử nghiệm nhiều nhất là`100000`, vì vậy lời giải cần phải gần tuyến tính. Một cách tiếp cận xung quanh`O(n log n)`là an toàn, trong khi các giải pháp so sánh từng cặp giá trị hoặc mọi phân tách có thể có bằng cách quét tất cả các giá trị sẽ trở nên quá chậm. 
 
-Trường hợp tinh tế là một mảng trong đó một giá trị chiếm ưu thế nhưng không tồn tại giá trị thứ hai. Đối với đầu vào:```
+Trường hợp tinh vi là một mảng trong đó một giá trị chiếm ưu thế nhưng không tồn tại giá trị thứ hai. Đối với đầu vào:```
 1
 4
 5 5 5 5
@@ -54,9 +54,9 @@ Trường hợp ranh giới cuối cùng là khi phép chia phải để lại c
 
 ## Phương pháp tiếp cận 
 
-Cách trực tiếp để giải quyết vấn đề là thử mọi nơi có thể xảy ra bước đó. Giả sử sự phân chia là giữa các vị trí`i-1`Và`i`. Mỗi người được chọn`A`phải đến từ tiền tố kết thúc trước`i`, và mọi lựa chọn`B`phải đến từ hậu tố bắt đầu từ`i`. Chúng ta có thể đếm tần số ở cả hai phần và thử từng cặp giá trị khác nhau. 
+Cách trực tiếp để giải quyết vấn đề là thử mọi nơi có thể xảy ra bước đó. Giả sử sự phân chia là giữa các vị trí`i-1`Và`i`. Mỗi người được chọn`A`phải đến từ tiền tố kết thúc trước`i`, và mọi người được chọn`B`phải đến từ hậu tố bắt đầu từ`i`. Chúng ta có thể đếm tần số ở cả hai phần và thử từng cặp giá trị khác nhau. 
 
-Ý tưởng này đúng, nhưng thực hiện theo đúng nghĩa đen thì quá chậm. có`n-1`sự chia rẽ có thể xảy ra. Tính toán lại tần số ở mọi chi phí phân chia`O(n)`mỗi lần và so sánh tất cả các cặp giá trị có thể thêm một yếu tố khác. Trong trường hợp xấu nhất, điều này trở thành bậc hai hoặc tệ hơn, xung quanh`10^10`hoạt động cho`n = 100000`. 
+Ý tưởng này đúng nhưng thực hiện theo đúng nghĩa đen thì quá chậm. có`n-1`sự chia rẽ có thể xảy ra. Tính toán lại tần số ở mọi chi phí phân chia`O(n)`mỗi lần và so sánh tất cả các cặp giá trị có thể thêm một yếu tố khác. Trong trường hợp xấu nhất, điều này trở thành bậc hai hoặc tệ hơn, xung quanh`10^10`hoạt động cho`n = 100000`. 
 
 Quan sát quan trọng là đối với sự phân chia cố định, chúng ta chỉ cần tần số tốt nhất ở bên trái và tần số tốt nhất ở bên phải, với hạn chế là các giá trị phải khác nhau. Chúng ta không quan tâm đến các vị trí bên trong mỗi bên nữa vì sự phân chia đã đảm bảo trật tự rồi. 
 
@@ -64,7 +64,7 @@ Quan sát quan trọng là đối với sự phân chia cố định, chúng ta 
 
 Trong quá trình quét từ trái sang phải, các phần tử lần lượt được di chuyển từ bảng tần số bên phải sang bảng tần số bên trái. Một đống với tính năng xóa lười cho phép chúng tôi truy xuất hai tần số cao nhất một cách hiệu quả sau mỗi lần cập nhật. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(n²) | O(n) | Quá chậm | 
 | Tối ưu | O(n log n) | O(n) | Đã chấp nhận | 
@@ -147,11 +147,11 @@ def main():
 
 if __name__ == "__main__":
     main()
-```Từ điển tần số đại diện cho sự phân chia hiện tại. Khi một giá trị vượt qua phần chia, số lượng của nó giảm ở bên phải và tăng ở bên trái. 
+```Từ điển tần số đại diện cho sự phân chia hiện tại. Khi một giá trị vượt qua phần phân chia, số lượng của nó sẽ giảm ở bên phải và tăng ở bên trái. 
 
-Đống chứa các ảnh chụp nhanh về tần số. Bởi vì một giá trị có thể được cập nhật nhiều lần nên các mục heap cũ vẫn còn. các`get_top_two`hàm chỉ xóa các mục có tần số được lưu trữ không còn khớp với từ điển, điều này tránh việc xây dựng lại vùng nhớ heap tốn kém. 
+Các đống chứa các ảnh chụp nhanh về tần số. Bởi vì một giá trị có thể được cập nhật nhiều lần nên các mục heap cũ vẫn được giữ lại. các`get_top_two`hàm chỉ xóa các mục có tần số được lưu trữ không còn khớp với từ điển, điều này tránh việc xây dựng lại vùng nhớ heap tốn kém. 
 
-Vòng lặp phân chia bắt đầu từ`1`và kết thúc tại`n-1`vì cả hai vế của hàm bước phải chứa ít nhất một phần tử. Phép so sánh 2 x 2 giữa các ứng cử viên hàng đầu xử lý hạn chế giá trị bằng nhau mà không cần kiểm tra mọi giá trị riêng biệt. 
+Vòng lặp phân chia bắt đầu từ`1`và kết thúc tại`n-1`vì cả hai vế của hàm bước phải chứa ít nhất một phần tử. Phép so sánh 2 x 2 giữa các ứng cử viên hàng đầu xử lý hạn chế giá trị bằng nhau mà không cần kiểm tra từng giá trị riêng biệt. 
 
 ## Ví dụ đã hoạt động 
 
