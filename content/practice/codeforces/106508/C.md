@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1 phút 14s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một cây có gốc trong đó mọi nút đều đã có “mức mong muốn” có giá trị thực được ghi trên đó. Chúng tôi được phép gán một giá trị thực mới cho mọi nút và phép gán này là thứ chúng tôi đang tối ưu hóa. 
@@ -38,9 +38,9 @@ Các ràng buộc ngụ ý rằng chúng ta cần một cái gì đó gần tuy�
 
 Một số tình huống tế nhị đáng lưu ý. 
 
-Nếu tất cả các giá trị nút giống hệt nhau nhưng trọng số cạnh lớn, một cách tiếp cận đơn giản có thể cố gắng “trải rộng” các giá trị một cách tùy ý để tránh bị phạt, nhưng điều đó bỏ qua rằng chi phí sai lệch tại các nút nhanh chóng trở nên chiếm ưu thế. Ví dụ, trong một chuỗi$1 \to 2$, với$a_1 = a_2 = 0$và trọng lượng lớn, giải pháp tối ưu không đẩy các giá trị ra xa nhau; thay vào đó, nó giữ chúng bằng nhau vì bất kỳ sự phân tách nào đều có giá tuyến tính gấp đôi và không hủy bỏ hình phạt biên một cách hiệu quả. 
+Nếu tất cả các giá trị nút giống hệt nhau nhưng trọng số cạnh lớn, một cách tiếp cận đơn giản có thể cố gắng “trải rộng” các giá trị một cách tùy ý để tránh bị phạt, nhưng điều đó bỏ qua chi phí sai lệch tại các nút nhanh chóng trở nên chiếm ưu thế. Ví dụ, trong một chuỗi$1 \to 2$, với$a_1 = a_2 = 0$và trọng lượng lớn, giải pháp tối ưu không đẩy các giá trị ra xa nhau; thay vào đó, nó giữ chúng bằng nhau vì bất kỳ sự phân tách nào đều có giá tuyến tính gấp đôi và không hủy bỏ hình phạt cạnh một cách hiệu quả. 
 
-Một trường hợp góc khác là khi trọng số bằng 0. Nếu mọi trọng số của cạnh đều bằng 0, vấn đề sẽ chuyển thành việc thiết lập độc lập mỗi nút thành giá trị riêng của nó.$a_i$, vì không có sự ghép nối nào cả. Bất kỳ giải pháp nào vẫn truyền bá các ràng buộc lên trên sẽ quá phức tạp và có thể gây ra sự ghép nối không chính xác. 
+Một trường hợp góc khác là khi trọng số bằng 0. Nếu mọi trọng số của cạnh đều bằng 0, vấn đề sẽ rơi vào việc thiết lập độc lập mỗi nút thành giá trị riêng của nó.$a_i$, vì không có sự ghép nối nào cả. Bất kỳ giải pháp nào vẫn truyền bá các ràng buộc lên trên sẽ quá phức tạp và có thể gây ra sự ghép nối không chính xác. 
 
 Cuối cùng, một cái cây hình ngôi sao rất nguy hiểm đối với DP ngây thơ. Nếu một gốc có nhiều con, mỗi con đóng góp một hàm trên giá trị gốc và việc tính toán lại các hàm này một cách độc lập theo giá trị gốc sẽ dẫn đến$O(n^2)$hành vi. 
 
@@ -50,13 +50,13 @@ Một ý tưởng mạnh mẽ là coi mọi giá trị nút là một biến li�
 
 Cấu trúc thực tế xuất phát từ việc viết lại bài toán dưới dạng chương trình động cây trên các hàm chi phí lồi. Mỗi cây con có thể được tóm tắt không phải dưới dạng một số duy nhất mà dưới dạng hàm tuyến tính lồi từng phần mô tả phần đóng góp chi phí tùy thuộc vào giá trị được chọn của cây cha. 
 
-Quan sát quan trọng là mọi cây con tương tác với cây mẹ của nó chỉ thông qua một biến vô hướng duy nhất, giá trị gốc. Sau khi giá trị gốc được cố định, mỗi giá trị con sẽ độc lập chọn giá trị tối ưu của riêng mình, trả chi phí sai lệch hoặc phạt cạnh tùy thuộc vào việc nó có nằm dưới giá trị gốc hay không. Sự độc lập này là điều khiến DP có thể thực hiện được các chức năng. 
+Quan sát quan trọng là mọi cây con tương tác với cây mẹ của nó chỉ thông qua một biến vô hướng duy nhất, giá trị gốc. Sau khi giá trị gốc được cố định, mỗi giá trị con sẽ chọn giá trị tối ưu của riêng mình một cách độc lập, trả chi phí sai lệch hoặc phạt cạnh tùy thuộc vào việc nó có nằm dưới giá trị gốc hay không. Sự độc lập này là điều khiến DP có thể thực hiện được các chức năng. 
 
-Vì vậy, thay vì lưu trữ “chi phí tốt nhất”, mỗi nút lưu trữ một hàm lồi$F_u(x)$, biểu thị chi phí tối thiểu của cây con có gốc tại$u$nếu cha mẹ ép buộc$u$tương tác với giá trị$x$. Việc kết hợp các hàm con sẽ trở thành phép cộng của các hàm lồi và việc đưa ra hình phạt cạnh trở thành một phép biến đổi của các hàm này để bảo toàn tính tuyến tính lồi từng đoạn. 
+Vì vậy, thay vì lưu trữ “chi phí tốt nhất”, mỗi nút lưu trữ một hàm lồi$F_u(x)$, biểu thị chi phí tối thiểu của cây con có gốc tại$u$nếu cha mẹ ép buộc$u$tương tác với giá trị$x$. Việc kết hợp các hàm con sẽ trở thành phép cộng của các hàm lồi và việc đưa ra hình phạt cạnh trở thành một phép biến đổi của các hàm này để bảo toàn tính tuyến tính lồi từng phần. 
 
 Toàn bộ giải pháp giúp duy trì và hợp nhất các hàm tuyến tính từng phần lồi một cách hiệu quả, thường sử dụng chiến lược hợp nhất từ ​​nhỏ đến lớn trên cây, đảm bảo mỗi điểm dừng được xử lý theo số lần logarit. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Brute Force vượt quá giá trị |$O(n^2)$|$O(n)$| Quá chậm | 
 | DP lồi trên cây có chức năng hợp nhất |$O(n \log n)$|$O(n)$| Đã chấp nhận | 
@@ -83,7 +83,7 @@ Vì vậy, sau khi xử lý các nút con và chi phí cục bộ, mỗi nút v�
 
 1. Bước cuối cùng là giải thích cách thức$u$tương tác với cha mẹ của nó. Hình phạt cạnh$w \cdot \max(0, x_{\text{parent}} - x_u)$chuyển đổi hàm từ dưới dạng$x_u$đối với một chức năng về mặt$x_{\text{parent}}$. 
 
-Sự chuyển đổi này có thể được hiểu là lấy, đối với mỗi giá trị gốc có thể có$x$, sự lựa chọn tốt nhất của$x_u$, nhưng chỉ bị phạt khi$x_u$rơi xuống dưới$x$. Kết quả là một hàm tuyến tính từng đoạn lồi khác mà chúng ta ký hiệu là$G_u(x_{\text{parent}})$. 
+Sự chuyển đổi này có thể được hiểu là lấy, đối với mỗi giá trị gốc có thể$x$, sự lựa chọn tốt nhất của$x_u$, nhưng chỉ bị phạt khi$x_u$rơi xuống dưới$x$. Kết quả là một hàm tuyến tính từng đoạn lồi khác mà chúng ta ký hiệu là$G_u(x_{\text{parent}})$. 
 
 1. Chúng tôi tuyên truyền$G_u$trở lên. Tại mỗi nút, chúng tôi tính tổng tất cả các hàm được chuyển đổi con, sau đó áp dụng chi phí giá trị tuyệt đối cục bộ và cuối cùng chuyển đổi một lần nữa thành hàm hướng về phía cha mẹ. 
 
@@ -178,7 +178,7 @@ Một ngôi sao có gốc từ 1 với các con 2, 3, 4, tất cả đều có$a
 | 2,3,4 | lá | lồi ở 5 | độc lập | 
 | hợp nhất 1 | tổng số con | lồi nhọn | tổng hợp | 
 
-Mỗi đứa trẻ thích giá trị 5 hơn, do đó gốc cũng căn chỉnh ở mức 5 vì bất kỳ độ lệch nào cũng làm tăng đóng góp của cả ba đứa trẻ cùng một lúc. Điều này chứng tỏ việc hợp nhất các hàm lồi sẽ khuếch đại các hình phạt và ổn định lời giải như thế nào. 
+Mỗi đứa trẻ thích giá trị 5 hơn, vì vậy gốc cũng căn chỉnh ở mức 5 vì bất kỳ độ lệch nào cũng làm tăng sự đóng góp của cả ba đứa trẻ cùng một lúc. Điều này chứng tỏ việc hợp nhất các hàm lồi sẽ khuếch đại các hậu quả và ổn định lời giải như thế nào. 
 
 ## Phân tích độ phức tạp 
 
@@ -187,7 +187,7 @@ Mỗi đứa trẻ thích giá trị 5 hơn, do đó gốc cũng căn chỉnh �
 | Thời gian |$O(n \log n)$| Mỗi hàm cây con được hợp nhất bằng chiến lược từ nhỏ đến lớn; mỗi điểm dừng tham gia vào nhiều lần hợp nhất logarit | 
 | Không gian |$O(n)$| Mỗi nút đóng góp một số lượng điểm dừng không đổi ở dạng khấu hao | 
 
-Độ phức tạp phù hợp với giới hạn của tổng$2 \cdot 10^5$các nút trên các trường hợp thử nghiệm. Hành vi tuyến tính hoặc gần tuyến tính trên mỗi nút là bắt buộc và chi phí logarit từ việc hợp nhất các cấu trúc lồi có thể chấp nhận được trong giới hạn thời gian. 
+Độ phức tạp phù hợp với giới hạn của tổng$2 \cdot 10^5$các nút trên các trường hợp thử nghiệm. Cần phải có hành vi tuyến tính hoặc gần tuyến tính trên mỗi nút và chi phí logarit từ việc hợp nhất các cấu trúc lồi có thể chấp nhận được trong giới hạn thời gian. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io

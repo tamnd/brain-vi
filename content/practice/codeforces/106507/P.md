@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 42s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi được cung cấp một loạt các chiều cao tháp. Hãy tưởng tượng quét nó từ bên trái và ghi lại mỗi khi chúng ta gặp một mức tối đa mới lớn hơn tất cả các giá trị trước đó. Những giá trị được ghi lại tạo thành một chuỗi`L(h)`. Nếu chúng ta thực hiện quét tương tự từ bên phải, chúng ta sẽ nhận được một chuỗi khác`R(h)`bao gồm các giá trị là cực đại mới khi đi ngang từ phải sang trái. 
@@ -40,7 +40,7 @@ Khó khăn tiềm ẩn là tình trạng này không mang tính cục bộ. Vi�
 
 Một vài mô hình thất bại cụ thể giúp minh họa điều này. 
 
-Nếu chúng ta lấy`[1, 3, 2]`, đường chân trời bên trái là`{1, 3}`. Đang xóa`2`giữ cho đường chân trời không thay đổi. Nhưng trong`[1, 2, 3]`, loại bỏ`2`không có gì thay đổi Tuy nhiên ở`[3, 1, 2]`, loại bỏ`1`thay đổi phần tử nào trở thành cực đại hiển thị từ bên phải. Một quy tắc ngây thơ như “bạn có thể loại bỏ các phần tử không tối đa” không thành công vì “không tối đa” phụ thuộc vào hướng. 
+Nếu chúng ta lấy`[1, 3, 2]`, đường chân trời bên trái là`{1, 3}`. Đang xóa`2`giữ cho đường chân trời không thay đổi. Nhưng ở`[1, 2, 3]`, loại bỏ`2`không có gì thay đổi Tuy nhiên ở`[3, 1, 2]`, loại bỏ`1`thay đổi phần tử nào trở thành cực đại hiển thị từ bên phải. Một quy tắc ngây thơ như “bạn có thể loại bỏ các phần tử không tối đa” không thành công vì “không tối đa” phụ thuộc vào hướng. 
 
 Một trường hợp tế nhị khác là các giá trị lặp lại. TRONG`[2, 2, 2]`, chỉ là cái đầu tiên`2`góp phần vào`L`, nhưng các chuỗi con loại bỏ hoặc giữ lại các bản sao có thể hoặc không thể bảo toàn các điều kiện đẳng thức tùy thuộc vào cách diễn giải các ràng buộc trong so sánh cực đại nghiêm ngặt. Một giải pháp bất cẩn coi các giá trị bằng nhau là có thể hoán đổi cho nhau sẽ phá vỡ tính chính xác. 
 
@@ -48,7 +48,7 @@ Một trường hợp tế nhị khác là các giá trị lặp lại. TRONG`[2
 
 Ý tưởng về lực lượng vũ phu rất đơn giản: liệt kê mọi dãy con, tính toán các tập hợp cực đại hiển thị bên trái và bên phải của nó, so sánh chúng với mảng ban đầu và đếm các kết quả trùng khớp. 
 
-Đối với một mảng có độ dài`n`, có`2^n`các chuỗi tiếp theo. Với mỗi dãy con, tính toán`L`Và`R`chi phí`O(n)`trong trường hợp xấu nhất. Điều đó dẫn đến`O(n·2^n)`hoạt động, điều này là không thể ngay cả đối với`n = 30`. 
+Đối với một mảng có chiều dài`n`, có`2^n`các chuỗi tiếp theo. Với mỗi dãy con, tính toán`L`Và`R`chi phí`O(n)`trong trường hợp xấu nhất. Điều đó dẫn đến`O(n·2^n)`hoạt động, điều này là không thể ngay cả đối với`n = 30`. 
 
 Quan sát quan trọng là`L(h)`Và`R(h)`chỉ phụ thuộc vào vị trí của các cực đại phá kỷ lục chứ không phụ thuộc vào các giá trị trung gian. Sau khi chúng tôi sửa cấu trúc tối đa toàn cục của mảng ban đầu, mọi chuỗi con hợp lệ đều phải giữ nguyên vị trí chính xác nơi cực đại mới xuất hiện khi quét từ cả hai đầu. 
 
@@ -58,7 +58,7 @@ Cấu trúc này dẫn đến sự phân rã trong đó mỗi phần tử không
 
 Kết quả cuối cùng trở thành tích của số lượng phân đoạn theo khung tối đa toàn cầu, đó là lý do tại sao giải pháp có thể được đánh giá theo thời gian tuyến tính cho mỗi trường hợp thử nghiệm. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(n·2^n) | O(n) | Quá chậm | 
 | Tối ưu | O(n) | O(n) | Đã chấp nhận | 
@@ -67,7 +67,7 @@ Kết quả cuối cùng trở thành tích của số lượng phân đoạn th
 
 Chúng tôi xây dựng lại cấu trúc của mảng ban đầu theo cực đại bản ghi bên trái và bên phải của nó. 
 
-1. Tính toán`Lmax`là chuỗi các giá trị xuất hiện dưới dạng cực đại mới khi quét từ trái sang phải. Đây là những “điểm neo có thể nhìn thấy bên trái” của mảng. 
+1. Tính toán`Lmax`là chuỗi các giá trị xuất hiện dưới dạng cực đại mới khi quét từ trái sang phải. Đây là những “mỏ neo có thể nhìn thấy bên trái” của mảng. 
 
 Các phần tử này buộc phải xuất hiện trong bất kỳ dãy con hợp lệ nào vì việc loại bỏ chúng sẽ ngay lập tức thay đổi`L`. 
 2. Tính toán`Rmax`tương tự bằng cách quét từ phải sang trái. Đây là những “mỏ neo có thể nhìn thấy được bên phải”. 
@@ -78,7 +78,7 @@ Các phần tử này buộc phải xuất hiện trong bất kỳ dãy con hợ
 
 ### Tại sao nó hoạt động 
 
-Bất biến là tập hợp các cực đại tiền tố và cực đại hậu tố của bất kỳ dãy con hợp lệ nào phải khớp chính xác với các giá trị của mảng ban đầu. Điều này buộc tất cả các yếu tố phá kỷ lục vẫn tồn tại, vì việc loại bỏ bất kỳ yếu tố nào trong số chúng sẽ làm thay đổi mức tối đa được thấy tại thời điểm nó được giới thiệu. 
+Điều bất biến là tập hợp cực đại tiền tố và cực đại hậu tố của bất kỳ dãy con hợp lệ nào phải khớp chính xác với tập hợp cực đại của mảng ban đầu. Điều này buộc tất cả các yếu tố phá kỷ lục vẫn tồn tại, vì việc loại bỏ bất kỳ yếu tố nào trong số chúng sẽ làm thay đổi mức tối đa được thấy tại thời điểm nó được giới thiệu. 
 
 Khi các điểm neo này được cố định, mọi phần tử khác sẽ nằm hoàn toàn bên dưới ít nhất một mức tối đa ranh giới liền kề, có nghĩa là nó không thể đưa ra bản ghi mới theo một trong hai hướng bất kể có bao gồm hay không. Do đó, sự bao gồm của nó chỉ ảnh hưởng đến tính đa dạng chứ không ảnh hưởng đến cấu trúc khả năng hiển thị. 
 
@@ -135,7 +135,7 @@ if __name__ == "__main__":
     solve()
 ```Việc triển khai tách mảng thành các vùng quan trọng và không quan trọng. Lần đầu tiên tính toán vị trí nào được yêu cầu bởi các ràng buộc về đường chân trời bên trái và bên phải. Bước thứ hai nhóm các phần tử không quan trọng thành các khối liền kề và nhân lũy thừa của hai cho mỗi khối. 
 
-Điểm tinh tế duy nhất là sử dụng so sánh chặt chẽ khi xây dựng cực đại. Sự bình đẳng không tạo ra một tòa tháp mới có thể nhìn thấy được, vì vậy chỉ những giá trị lớn hơn mới cập nhật được đường chân trời. 
+Điểm tinh tế duy nhất là sử dụng so sánh chặt chẽ khi xây dựng cực đại. Sự bình đẳng không tạo ra một tòa tháp mới có thể nhìn thấy được, vì vậy chỉ có những giá trị lớn hơn mới cập nhật được đường chân trời. 
 
 ## Ví dụ đã hoạt động 
 

@@ -21,10 +21,10 @@ draft: false
 **Thời gian giải:** 29s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Chắc chắn rồi. Vui lòng cung cấp báo cáo vấn đề của Codeforces (hoặc liên kết/tên) và tôi sẽ viết một bài xã luận chi tiết theo phong cách lập trình cạnh tranh, bao gồm: 
 
-- Trình bày lại vấn đề/trực giác 
+- Phát biểu lại vấn đề/trực giác 
 - Những quan sát chính 
 - Dẫn xuất từng bước của thuật toán 
 - Bằng chứng về tính đúng đắn 

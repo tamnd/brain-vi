@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 44s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi có một`n x n`bảng tế bào. Mỗi ô đều đang hoạt động (`1`) hoặc bị chặn (`0`). Được phép di chuyển giữa các ô liền kề và chỉ các ô đang hoạt động mới có thể được truy cập. Sau mỗi lần cập nhật, một ô sẽ thay đổi trạng thái và chúng ta phải quyết định xem ô trên cùng bên trái có còn đến được ô dưới cùng bên phải hay không. 
@@ -43,7 +43,7 @@ Một trường hợp khác là:```
 10
 1 1
 0 0
-```Ô dưới cùng bên phải ban đầu bị chặn, vì vậy sau bất kỳ lần lật không liên quan nào, câu trả lời phải được giữ nguyên`NO`cho đến khi ô đó hoạt động. Mã chỉ theo dõi xem vùng bắt đầu có mở rộng hay không có thể vô tình báo cáo thành công mà không kiểm tra đích. 
+```Ô dưới cùng bên phải ban đầu bị chặn, vì vậy sau bất kỳ lần lật không liên quan nào, câu trả lời vẫn phải được giữ nguyên`NO`cho đến khi ô đó hoạt động. Mã chỉ theo dõi xem vùng bắt đầu có mở rộng hay không có thể vô tình báo cáo thành công mà không kiểm tra đích. 
 
 ## Phương pháp tiếp cận 
 
@@ -53,7 +53,7 @@ Quan sát làm thay đổi vấn đề là lưới có kích thước cố đị
 
 Phương pháp tối ưu hóa vẫn thực hiện truyền tải đồ thị, nhưng hệ số hằng số nhỏ hơn nhiều. Một hàng gồm 2000 ô được biểu thị bằng một số nguyên và toàn bộ quá trình lấp lũ hoạt động với khoảng`n`các phép toán số nguyên trên mỗi lớp. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | BFS vũ phu |`O(q * n^2)`|`O(n^2)`| Quá chậm | 
 | Bitset BFS |`O(q * n * d)`Ở đâu`d`là số vòng mở rộng |`O(n)`| Được chấp nhận cho các giới hạn nhất định | 
@@ -66,7 +66,7 @@ Phương pháp tối ưu hóa vẫn thực hiện truyền tải đồ thị, nh
 4. Chạy lũ lụt bằng cách sử dụng Bitset. Giữ một mảng`reach`, Ở đâu`reach[i]`chứa tất cả các cột có thể truy cập trong hàng`i`. 
 5. Chỉ bắt đầu với`(0, 0)`có thể truy cập nếu ô đó đang hoạt động. 
 6. Mở rộng liên tục mỗi hàng. Các ô mới có thể đến từ hàng trước, hàng tiếp theo và cùng một hàng được dịch chuyển sang trái và phải. Giao kết quả với các ô hiện hoạt của hàng đó. 
-7. Dừng lại khi quá trình lặp không tạo ra ô mới nào có thể truy cập được. Có thể truy cập đích chính xác khi hàng cuối cùng chứa bit cuối cùng. 
+7. Dừng khi quá trình lặp không tạo ra ô mới nào có thể truy cập được. Có thể truy cập đích chính xác khi hàng cuối cùng chứa bit cuối cùng. 
 
 Tại sao nó hoạt động: 
 
@@ -169,7 +169,7 @@ if __name__ == "__main__":
     solve()
 ```Biểu diễn lưới là chi tiết triển khai quan trọng đầu tiên. Việc sử dụng chuỗi sẽ làm cho mỗi lần cập nhật và mỗi lần truyền tải trở nên đắt đỏ, trong khi mặt nạ bit số nguyên cho phép Python thực hiện nhiều phép tính ô trong số học số nguyên nguyên gốc. 
 
-Bước giải mã chỉ giữ lại phần cuối cùng`num`câu trả lời. Thao tác mặt nạ loại bỏ các bit cũ hơn, khớp với biểu diễn nhị phân cuộn của câu lệnh. 
+Bước giải mã chỉ giữ lại phần cuối cùng`num`câu trả lời. Thao tác mặt nạ sẽ loại bỏ các bit cũ hơn, khớp với biểu diễn nhị phân cuộn của câu lệnh. 
 
 Việc lấp lũ cố tình tạo ra một cái mới`n`mảng phần tử mỗi vòng. Điều này tránh việc trộn lẫn các ô được phát hiện trong vòng hiện tại với các ô tồn tại trước đó, điều này sẽ phá vỡ tính bất biến kiểu BFS. 
 
@@ -212,7 +212,7 @@ Dấu vết cho thấy tại sao việc giải mã trực tuyến lại quan tr�
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian |`O(q * n * d)`| Mỗi vòng mở rộng xử lý từng hàng bằng cách sử dụng các phép toán bit | 
+| Thời gian |`O(q * n * d)`| Mỗi vòng mở rộng xử lý từng hàng bằng các thao tác bit | 
 | Không gian |`O(n)`| Chỉ có mặt nạ bit hàng và trạng thái có thể truy cập hiện tại được lưu trữ | 
 
 Các ràng buộc chỉ cung cấp 2000 bản cập nhật, vì vậy giải pháp dựa vào việc giảm bớt công việc bên trong mỗi lần kiểm tra kết nối. Việc biểu diễn bitset giữ cho mức sử dụng bộ nhớ ở mức nhỏ trong khi thực hiện mỗi lần mở rộng nhanh hơn nhiều so với việc truy cập các ô riêng lẻ. 

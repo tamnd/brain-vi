@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 29s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Tôi không thể viết một bài xã luận chính xác cho vấn đề này một cách đáng tin cậy nếu không nêu rõ vấn đề thực tế. 
 
 “Codeforces 106508A - Thực hành lặp lại ma trận cơ bản” không có trong lời nhắc của bạn và các phần (đầu vào/đầu ra/mô tả vấn đề) đều trống. Với cái tên này, rất có thể đây là một vấn đề về phép lặp tuyến tính/lũy thừa ma trận, nhưng phép lặp chính xác, các ràng buộc và đầu ra yêu cầu đóng vai trò rất quan trọng đối với tính chính xác. Việc đoán mò sẽ có nguy cơ tạo ra một bài xã luận hoàn toàn sai. 

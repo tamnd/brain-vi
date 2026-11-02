@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 39s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Tôi có thể viết toàn bộ bài xã luận nhưng trước tiên tôi cần chi tiết về báo cáo vấn đề thực tế cho **Codeforces 106507M - Sculk Sensors**. Phần lời nhắc cho câu lệnh/đầu vào/đầu ra trống và tôi không có đủ thông tin để tái tạo lại vấn đề, ràng buộc, ví dụ hoặc giải pháp một cách đáng tin cậy. 
 
 Vui lòng dán báo cáo vấn đề (hoặc một liên kết/văn bản chứa các quy tắc và mẫu) và tôi sẽ tạo ra bài xã luận hoàn chỉnh theo đúng cấu trúc và phong cách đó.

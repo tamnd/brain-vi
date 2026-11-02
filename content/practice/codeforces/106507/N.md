@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 23s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Trước tiên, chúng tôi cần khắc phục sự cố không khớp: câu lệnh “Codeforces 106507N - Paths” không phải là ID sự cố Codeforces tiêu chuẩn và nó không tương ứng với một vấn đề chuẩn duy nhất trong kho lưu trữ công cộng. Nếu không có tuyên bố thực tế, bất kỳ bài xã luận nào cũng sẽ là bịa đặt. 
 
 Nếu bạn dán báo cáo vấn đề đầy đủ (hoặc thậm chí chỉ đầu vào/đầu ra + các ràng buộc), tôi có thể tạo ra bài xã luận đầy đủ theo phong cách Codeforces mà bạn yêu cầu. 

@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 29s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Tôi chưa thể viết một bài xã luận chính xác một cách đáng tin cậy vì báo cáo vấn đề cho **Codeforces 106508D - SCUT Classroom Relocation** không có sẵn trong ngữ cảnh và nó không xuất hiện trong các nguồn được truy xuất. Các trang tôi có thể thấy không bao gồm định nghĩa nhiệm vụ thực tế, chỉ có nội dung Codeforces không liên quan và các kết quả tìm kiếm chung. 
 
 Một bài xã luận phù hợp hoàn toàn phụ thuộc vào các quy tắc chính xác của vấn đề (cái gì đang được sắp xếp lại, những ràng buộc nào xác định tính hợp lệ và cái gì phải được tối ưu hóa). Nếu không có điều đó, bất kỳ “giải pháp” nào cũng sẽ chỉ là phỏng đoán và có thể sẽ gây hiểu nhầm hơn là giúp hiểu rõ. 

@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1 phút 57s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 Hiểu rồi. 
 
 Vui lòng gửi báo cáo vấn đề đầy đủ (hoặc liên kết/văn bản, các ràng buộc và bất kỳ mẫu nào). Khi tôi đã có được điều đó, tôi sẽ viết một bài xã luận theo phong cách Codeforces phù hợp với: 
@@ -31,6 +31,6 @@ Vui lòng gửi báo cáo vấn đề đầy đủ (hoặc liên kết/văn bả
 - Luận cứ về tính đúng đắn 
 - Phân tích độ phức tạp 
 - Vỏ cạnh 
-- Đề cương triển khai rõ ràng (và mã nếu bạn muốn) 
+- Đề cương triển khai rõ ràng (và viết mã nếu bạn muốn) 
 
 Nếu nó có nhiều phần hoặc có tính tương tác, hãy bao gồm cả những chi tiết đó.
