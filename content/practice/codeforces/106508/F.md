@@ -26,9 +26,9 @@ draft: false
 
 Chúng ta được cấp một chuỗi nhị phân và chúng ta tưởng tượng việc chia nó thành nhiều phần liền kề nhau. Mỗi phần được hiểu là một số nhị phân sử dụng ý nghĩa từ trái sang phải thông thường, nghĩa là ký tự ngoài cùng bên trái trong phần đóng góp lũy thừa cao nhất của hai. 
 
-Đối với bất kỳ số phần cố định nào, giả sử chúng ta cắt chuỗi thành k đoạn, mỗi đoạn tạo ra k số nguyên. Giá trị của phân vùng đó là XOR theo bit của k số nguyên đó. Đối với mọi k có thể từ 1 đến n, chúng tôi muốn có hai điều: giá trị XOR tối đa có thể đạt được trên tất cả các cách chia thành k phân đoạn và có bao nhiêu phần tách khác nhau đạt được mức tối đa đó (modulo một hằng số cố định).
+Đối với bất kỳ số phần cố định nào, giả sử chúng ta cắt chuỗi thành k đoạn, mỗi đoạn tạo ra k số nguyên. Giá trị của phân vùng đó là XOR theo bit của k số nguyên đó. Đối với mọi k có thể từ 1 đến n, chúng tôi muốn có hai điều: giá trị XOR tối đa có thể đạt được trên tất cả các cách chia thành k phân đoạn và có bao nhiêu phần tách khác nhau đạt được mức tối đa đó (modulo một hằng số cố định). 
 
- Cuối cùng, thay vì xuất trực tiếp tất cả các kết quả, chúng tôi tổng hợp chúng thành bốn bản tóm tắt dựa trên XOR trên tất cả k. 
+Cuối cùng, thay vì xuất trực tiếp tất cả các kết quả, chúng tôi tổng hợp chúng thành bốn bản tóm tắt dựa trên XOR trên tất cả k. 
 
 Vì vậy, nhiệm vụ tính toán cốt lõi không chỉ là đánh giá một phân vùng mà còn hiểu được hành vi XOR tối ưu phát triển như thế nào khi chúng ta thay đổi số lần cắt. 
 
