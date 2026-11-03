@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 3 phút 57s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một chiếc khóa hình tròn hoạt động giống như một mặt số 360 độ. Bắt đầu từ số 0, chúng ta thực hiện một chuỗi các phép quay, mỗi phép quay có độ lớn cố định, nhưng chúng ta có thể tự do chọn hướng của nó: theo chiều kim đồng hồ hoặc ngược chiều kim đồng hồ. Theo chiều kim đồng hồ có thể được coi là thêm góc, trong khi ngược chiều kim đồng hồ sẽ trừ nó. 
@@ -91,7 +91,7 @@ if __name__ == "__main__":
     solve()
 ```Việc triển khai trực tiếp tuân theo phép liệt kê bitmask được mô tả trước đó. Mỗi mặt nạ thể hiện sự phân công đầy đủ các hướng theo chiều kim đồng hồ hoặc ngược chiều kim đồng hồ. Vòng lặp bên trong tính toán chuyển vị kết quả. Kiểm tra modulo bao quanh mặt số tròn. 
 
-Một sai lầm phổ biến là quên rằng phép trừ cũng có giá trị như phép cộng; cả hai phải được xem xét một cách đối xứng. Một cạm bẫy tiềm ẩn khác là cố gắng giảm các giá trị trung gian modulo 360 quá sớm, điều này an toàn về mặt toán học nhưng không cần thiết và có thể che khuất lý luận. 
+Một sai lầm phổ biến là quên rằng phép trừ cũng có giá trị như phép cộng; cả hai phải được xem xét một cách đối xứng. Một cạm bẫy tiềm tàng khác là cố gắng giảm các giá trị trung gian modulo 360 quá sớm, điều này an toàn về mặt toán học nhưng không cần thiết và có thể che khuất lý luận. 
 
 ## Ví dụ đã hoạt động 
 
@@ -138,7 +138,7 @@ Không có cấu hình nào mang lại bội số của 360, vì vậy câu tr�
 | Thời gian | O(n · 2^n) | Mỗi mặt nạ trong số 2^n đánh giá n phép quay | 
 | Không gian | O(1) | Chỉ sử dụng bộ lưu trữ và bộ đếm đầu vào | 
 
-Với n ≤ 15, số phép toán tối đa là khoảng 15 × 32768, tốc độ này khá nhanh trong Python. 
+Với n 15, số phép toán tối đa là khoảng 15 × 32768, tốc độ này khá nhanh trong Python. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io

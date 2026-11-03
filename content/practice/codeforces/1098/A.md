@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 9m 13s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta có một cây có gốc trong đó đỉnh 1 là gốc. Mỗi đỉnh ban đầu có một giá trị nguyên không âm được ghi trên đó, nhưng những giá trị đó hiện đã bị mất. Những gì còn lại là một phần thông tin về tổng tiền tố dọc theo đường dẫn gốc. 
@@ -42,13 +42,13 @@ Một ý tưởng mạnh mẽ có cấu trúc hơn là xử lý từng đường
 
 Quan sát quan trọng là$s_v$hoạt động giống như một tổng tiền tố trên cây. Nếu chúng ta chuyển từ cha mẹ$p$đến một đứa trẻ$v$, sau đó:$$s_v = s_p + a_v$$bất cứ khi nào cả hai giá trị được biết đến. Điều này mang lại sự truy hồi trực tiếp dọc theo các cạnh khi có sẵn các giá trị gốc. 
 
-Bây giờ hãy xem xét tính chẵn lẻ theo độ sâu. Tất cả đều có độ sâu đồng đều$s_v$đều chưa được biết, trong khi tất cả đều có độ sâu lẻ$s_v$được biết đến. Sự thay đổi này cho phép chúng ta truyền bá các giá trị một cách có kiểm soát: bất cứ khi nào chúng ta biết một cặp cha-con trong đó cha mẹ có một cặp cha-con đã biết.$s$, chúng ta có thể tính toán của đứa trẻ$a_v$nếu nó$s_v$đã biết, hoặc chúng ta có thể diễn đạt$s_v$nếu chưa biết. 
+Bây giờ hãy xem xét tính chẵn lẻ theo độ sâu. Tất cả đều có độ sâu đồng đều$s_v$đều chưa được biết, trong khi tất cả đều có độ sâu lẻ$s_v$được biết đến. Sự luân phiên này cho phép chúng ta truyền bá các giá trị một cách có kiểm soát: bất cứ khi nào chúng ta biết một cặp cha-con trong đó cha mẹ có một cặp cha-con đã biết.$s$, chúng ta có thể tính toán của đứa trẻ$a_v$nếu nó$s_v$đã biết, hoặc chúng ta có thể diễn đạt$s_v$nếu chưa biết. 
 
 Ý tưởng trung tâm là duyệt cây từ gốc trở xuống và duy trì các ràng buộc nhất quán. Đối với mỗi nút, chúng tôi duy trì một ứng cử viên$s_v$. Nếu nó được đưa ra, nó đã được sửa. Nếu thiếu nó, nó sẽ trở thành một biến chỉ bị ràng buộc bởi tính nhất quán và tính không tiêu cực của trẻ em.$a_v = s_v - s_{parent}$. 
 
-Mục tiêu giảm thiểu đơn giản hóa cấu trúc này: chúng tôi muốn giảm thiểu$\sum a_v$. Vì mỗi$a_v$là$s_v - s_{parent}$, điều này trở thành:$$\sum a_v = s_1 + \sum_{v \neq 1} (s_v - s_{parent(v)})$$kính thiên văn nào dọc theo đường đi và chỉ phụ thuộc vào việc chọn$s_v$các giá trị. Tối giản hóa mọi thứ miễn phí$s_v$càng thấp càng tốt trong khi vẫn duy trì các ràng buộc. 
+Mục tiêu giảm thiểu đơn giản hóa cấu trúc này: chúng tôi muốn giảm thiểu$\sum a_v$. Vì mỗi$a_v$là$s_v - s_{parent}$, điều này trở thành:$$\sum a_v = s_1 + \sum_{v \neq 1} (s_v - s_{parent(v)})$$kính thiên văn nào dọc theo đường đi và chỉ phụ thuộc vào việc chọn$s_v$các giá trị. Tối thiểu hóa đẩy mọi thứ miễn phí$s_v$càng thấp càng tốt trong khi vẫn duy trì các ràng buộc. 
 
-Điều này làm giảm vấn đề xuống DFS nơi chúng tôi cố gắng gán giá trị hợp lệ nhỏ nhất có thể$s_v$tới các nút chưa biết, đảm bảo không có sự khác biệt về cạnh âm và tính nhất quán với các giá trị cố định. 
+Điều này làm giảm vấn đề xuống DFS trong đó chúng tôi cố gắng gán giá trị hợp lệ nhỏ nhất có thể$s_v$tới các nút chưa biết, đảm bảo không có sự khác biệt về cạnh âm và tính nhất quán với các giá trị cố định. 
 
 Chúng tôi so sánh các phương pháp: 
 
@@ -59,14 +59,14 @@ Chúng tôi so sánh các phương pháp:
 
 ## Hướng dẫn thuật toán 
 
-1. Xây dựng cây từ mảng cha và lưu trữ danh sách con. Điều này là cần thiết vì các ràng buộc lan truyền từ gốc đến lá. 
+1. Xây dựng cây từ mảng cha và lưu trữ danh sách con. Điều này là cần thiết vì các ràng buộc lan truyền từ gốc tới lá. 
 2. Lưu trữ đã cho$s_v$giá trị, đánh dấu -1 là không xác định. Các giá trị cố định này hoạt động như các ràng buộc cứng trong quá trình truyền tải. 
 3. Root DFS tại nút 1 và gán$s_1$. Nếu như$s_1 = -1$, nó phải bằng 0, bởi vì bất kỳ giá trị dương nào cũng sẽ chỉ làm tăng tất cả con cháu và làm xấu đi mục tiêu mà không có ràng buộc nào khác. 
 4. Trong DFS từ một nút$u$, duy trì giá trị hiện tại của nó$s_u$. Giá trị này được cố định bằng đầu vào hoặc bằng cách truyền bá. 
 5. Đối với mỗi trẻ$v$, xác định nó$s_v$:
 
 - Nếu như$s_v$đã cho thì nó phải thỏa mãn$s_v \ge s_u$. Nếu không thì$a_v = s_v - s_u$sẽ là số âm, điều này không hợp lệ. 
-- Nếu như$s_v$chưa xác định, hãy gán cho nó giá trị tối thiểu có thể phù hợp với các ràng buộc từ cây con của chính nó. Ban đầu đây là$s_u$, bởi vì bất kỳ giá trị nào nhỏ hơn sẽ buộc đóng góp âm đi xuống. 
+- Nếu như$s_v$chưa xác định, hãy gán cho nó giá trị tối thiểu có thể phù hợp với các ràng buộc từ cây con của chính nó. Ban đầu đây là$s_u$, bởi vì bất kỳ giá trị nhỏ hơn nào cũng sẽ buộc đóng góp âm đi xuống. 
 6. Tính toán$a_v = s_v - s_u$. Thêm nó vào câu trả lời tổng thể. 
 7. Lặp lại vào$v$với sự giao phó của nó$s_v$. 
 8. Nếu tại bất kỳ thời điểm nào xuất hiện mâu thuẫn (một vấn đề cố định$s_v < s_u$), việc xây dựng là không thể và chúng tôi trả về -1. 
@@ -116,7 +116,7 @@ print(ans)
 
 Chi tiết triển khai quan trọng là xử lý thư mục gốc: khi$s_1$bị thiếu, việc đặt nó thành 0 sẽ giảm thiểu tổng số vì không có ràng buộc cha nào phải đáp ứng. Một điểm tinh tế khác là kiểm tra tính khả thi ngay lập tức`s[v] < s[u]`, đảm bảo không có âm$a_v$xuất hiện. 
 
-Các bản cập nhật DFS`s[v]`để các nút chưa biết khớp với nút cha, đây là phép gán hợp lệ nhỏ nhất có thể có trong tính đơn điệu. 
+Các bản cập nhật DFS`s[v]`để các nút không xác định khớp với nút cha, đây là phép gán hợp lệ nhỏ nhất có thể có trong tính đơn điệu. 
 
 ## Ví dụ đã hoạt động 
 

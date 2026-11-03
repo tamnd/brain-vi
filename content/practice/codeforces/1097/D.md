@@ -1,6 +1,6 @@
 ---
 title: "CF 1097D - Makoto và chiếc bảng đen"
-description: "Chúng ta bắt đầu với một số nguyên duy nhất được đặt trên bảng. Ở mỗi bước, số này được thay thế bằng một trong các ước số của nó, được chọn ngẫu nhiên thống nhất."
+description: "Chúng ta bắt đầu với một số nguyên duy nhất được đặt trên bảng. Ở mỗi bước, số này được thay thế bằng một trong các ước số của nó, được chọn thống nhất một cách ngẫu nhiên."
 date: "2026-06-13T05:55:33+07:00"
 tags: ["codeforces", "competitive-programming", "dp", "math", "number-theory", "probabilities"]
 categories: ["algorithms"]
@@ -17,18 +17,18 @@ draft: false
 [CF 1097D - Makoto và Bảng đen](https://codeforces.com/problemset/problem/1097/D) 
 
 **Đánh giá:** 2200 
-**Tags:** dp, toán, lý thuyết số, xác suất 
+**Tas:** dp, toán, lý thuyết số, xác suất 
 **Thời gian giải:** 3 phút 58s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta bắt đầu với một số nguyên duy nhất được đặt trên bảng. Ở mỗi bước, số này được thay thế bằng một trong các ước số của nó, được chọn ngẫu nhiên thống nhất. Sau khi lặp lại thao tác này đúng k lần, giá trị trên bảng sẽ trở thành một biến ngẫu nhiên trên các số nguyên và chúng ta được hỏi giá trị mong đợi của nó theo modulo một số nguyên tố. 
+Chúng ta bắt đầu với một số nguyên duy nhất được đặt trên bảng. Ở mỗi bước, số này được thay thế bằng một trong các ước số của nó, được chọn thống nhất một cách ngẫu nhiên. Sau khi lặp lại thao tác này đúng k lần, giá trị trên bảng sẽ trở thành một biến ngẫu nhiên trên các số nguyên và chúng ta được hỏi giá trị mong đợi của nó theo modulo một số nguyên tố. 
 
 Quá trình này là một chuỗi Markov trên các ước số có thể đạt được từ n. Mỗi trạng thái là một số v và từ v chúng ta chuyển sang bất kỳ ước số nào của nó với xác suất bằng 1 trên d(v), trong đó d(v) là số ước của v. Khó khăn là n có thể lớn bằng 10^15, vì vậy chúng ta không thể liệt kê tất cả các ước số của tất cả các trạng thái có thể tiếp cận một cách ngây thơ mà không có cấu trúc. Số bước k lên tới 10^4, điều này gợi ý lập trình động qua các bước, nhưng không gian trạng thái phải bị nén rất nhiều. 
 
-Một cách tiếp cận đơn giản sẽ mô phỏng rõ ràng tất cả các giá trị có thể có và xác suất của chúng sau mỗi bước. Ngay cả với n vừa phải, đồ thị ước số có thể phát triển nhanh chóng vì mỗi ước số lại phân nhánh thành các ước số riêng của nó. Đối với các số như 2 × 3 × 5 × 7 × 11, biểu đồ chia đã chứa hàng tá trạng thái và việc phân nhánh lặp đi lặp lại qua k bước sẽ dẫn đến sự bùng nổ theo cấp số nhân. 
+Một cách tiếp cận đơn giản sẽ mô phỏng rõ ràng tất cả các giá trị có thể có và xác suất của chúng sau mỗi bước. Ngay cả đối với n vừa phải, đồ thị ước số có thể phát triển nhanh chóng vì mỗi ước số lại phân nhánh thành các ước số riêng của nó. Đối với các số như 2 × 3 × 5 × 7 × 11, biểu đồ chia đã chứa hàng tá trạng thái và việc phân nhánh lặp đi lặp lại qua k bước sẽ dẫn đến sự bùng nổ theo cấp số nhân. 
 
 Một trường hợp cạnh tinh tế phát sinh khi n bằng 1. Quá trình này trở nên hấp thụ ngay lập tức, vì 1 chỉ có một ước số. Bất kỳ việc triển khai không chính xác nào giả sử có ít nhất hai ước số sẽ chia cho 0 hoặc đưa ra các chuyển đổi giả. Một trường hợp khác là lũy thừa nguyên tố như p^k, trong đó cấu trúc ước số là tuyến tính, nhưng việc triển khai bất cẩn vẫn có thể coi các ước số là tập hợp không có thứ tự mà không tính toán trước, dẫn đến việc tính toán lại danh sách ước số nhiều lần. 
 
@@ -40,7 +40,7 @@ Mô phỏng lực lượng vũ phu sẽ duy trì phân phối xác suất trên 
 
 Tính đúng đắn rất đơn giản vì nó trực tiếp mô hình hóa quá trình Markov. Điểm thất bại là vụ nổ trạng thái. Trong trường hợp xấu nhất, n có thể có thứ tự 10^4 ước số và mỗi ước số lại đóng góp các ước số riêng của nó, dẫn đến chuyển đổi khoảng O(d(n)^2) mỗi bước và nhân với k điều này trở nên hoàn toàn không khả thi. 
 
-Cái nhìn sâu sắc quan trọng là đảo ngược quan điểm. Thay vì theo dõi sự phân bổ xác suất thuận theo các giá trị, chúng tôi theo dõi xem mỗi ước số đóng góp bao nhiêu vào quá trình này. Mỗi bước chỉ phụ thuộc vào các mối quan hệ bao gồm số chia và các mối quan hệ đó tạo thành cấu trúc tuần hoàn có hướng khi được sắp xếp theo giá trị. Chúng tôi tính toán trước tất cả các ước của n, sau đó xây dựng các chuyển đổi giữa chúng. Vì k lớn nhưng tập chia cố định và nhỏ nên chúng ta chạy quy trình động qua các bước trên không gian trạng thái nén này. 
+Cái nhìn sâu sắc quan trọng là đảo ngược quan điểm. Thay vì theo dõi sự phân bổ xác suất thuận theo các giá trị, chúng tôi theo dõi xem mỗi ước số đóng góp bao nhiêu vào quá trình này. Mỗi bước chỉ phụ thuộc vào các mối quan hệ bao gồm số chia và các mối quan hệ đó tạo thành cấu trúc tuần hoàn có hướng khi được sắp xếp theo giá trị. Chúng tôi tính toán trước tất cả các ước của n, sau đó xây dựng các chuyển đổi giữa chúng. Vì k lớn nhưng tập chia cố định và nhỏ nên chúng ta chạy lập trình động qua các bước trên không gian trạng thái nén này. 
 
 Điều này biến bài toán thành DP k bước trên biểu đồ có kích thước d(n), trong đó các phép chuyển đổi phụ thuộc vào số chia của các nút trung gian. 
 
@@ -55,7 +55,7 @@ Chúng ta coi mỗi ước của n là một trạng thái.
 
 1. Phân tích n thành lũy thừa nguyên tố của nó. Điều này cho phép tạo ra tất cả các ước số một cách hiệu quả mà không cần lặp lại tới n. Bước này là cần thiết vì n có thể lớn tới 10^15. 
 2. Tạo tất cả các ước của n bằng cách sử dụng cấu trúc đệ quy từ số mũ nguyên tố. Chúng tôi lưu trữ chúng trong một danh sách và sắp xếp chúng. Điều này cho chúng ta một không gian trạng thái có kích thước m = d(n). 
-3. Với mỗi ước số v, hãy tính tất cả các ước số của v bằng cách lọc từ danh sách ước số đầy đủ. Điều này xác định khả năng chuyển tiếp. 
+3. Với mỗi ước số v, hãy tính tất cả các ước số của v bằng cách lọc từ danh sách ước số đầy đủ. Điều này xác định khả năng chuyển đổi. 
 4. Tính toán trước d(v), số ước của mỗi trạng thái v. Điều này được sử dụng vì các chuyển đổi đều giống nhau trên các ước. 
 5. Xác định dp[t][v] là giá trị đóng góp dự kiến ​​bắt đầu từ trạng thái v sau t bước. Thay vì lưu trữ toàn bộ 2D, chúng tôi cuộn các mảng theo thời gian. 
 6. Khởi tạo dp[0][n] = n và dp[0][v] = 0 với mọi v ≠ n. Điều này mã hóa phân phối bắt đầu. 

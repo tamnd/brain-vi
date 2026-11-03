@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 4m 4s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cho một hoán vị và chúng ta phải chia nó thành nhiều chuỗi con được lấy theo thứ tự từ mảng ban đầu. Mỗi phần tử phải thuộc đúng một dãy con. Mọi dãy con đều phải đơn điệu một cách chặt chẽ, có thể tăng chặt hoặc giảm chặt chẽ. 
@@ -32,13 +32,13 @@ Từ các ràng buộc, tổng độ dài của tất cả các trường hợp 
 
 Một kiểu thất bại phổ biến xuất hiện khi người ta cố gắng mở rộng một cách tham lam chỉ các chuỗi tăng dần. Ví dụ: trên hoán vị zig-zag như`3 1 4 2 5 7 6`, một chiến lược ngây thơ luôn gắn với dãy con hợp lệ đầu tiên có thể bị mắc kẹt sau đó với nhiều đoạn ngắn, mặc dù tồn tại một cấu trúc toàn cục tốt hơn. 
 
-Một vấn đề tế nhị khác là trộn lẫn các chuỗi tăng và giảm mà không có một quy tắc kỷ luật nào. Nếu chúng ta cho phép chuyển đổi tùy ý, thì rất dễ vi phạm các ràng buộc đơn điệu một cách âm thầm, ví dụ như thêm một phần tử nhỏ hơn vào một dãy con tăng dần vì nó không được sử dụng cục bộ ở nơi khác. 
+Một vấn đề tế nhị khác là trộn lẫn các dãy tăng và giảm mà không có một quy tắc kỷ luật nào. Nếu chúng ta cho phép chuyển đổi tùy ý, thì rất dễ vi phạm các ràng buộc đơn điệu một cách âm thầm, ví dụ như thêm một phần tử nhỏ hơn vào một dãy con tăng dần vì nó không được sử dụng cục bộ ở nơi khác. 
 
 Cấu trúc của bài toán gợi ý rằng chúng ta nên coi nó như một bài toán lập lịch trên các chuỗi đơn điệu tích cực hơn là tìm kiếm phân vùng tổ hợp. 
 
 ## Phương pháp tiếp cận 
 
-Một cách tiếp cận bạo lực sẽ cố gắng gán từng phần tử cho bất kỳ chuỗi con hiện có nào có thể chấp nhận nó trong khi vẫn giữ tính đơn điệu. Đối với mỗi phần tử, chúng tôi có thể quét tất cả các chuỗi con và kiểm tra xem nó có thể được thêm vào cuối hay không. Trong trường hợp xấu nhất, nếu chúng ta duy trì các chuỗi con O(n) và kiểm tra các ứng cử viên O(n) cho mỗi phần tử, điều này sẽ trở thành O(n²), điều này là không thể đối với 100000 phần tử. 
+Một cách tiếp cận bạo lực sẽ cố gắng gán từng phần tử cho bất kỳ chuỗi con hiện có nào có thể chấp nhận nó trong khi vẫn giữ tính đơn điệu. Đối với mỗi phần tử, chúng tôi có thể quét tất cả các chuỗi con và kiểm tra xem liệu nó có thể được thêm vào cuối hay không. Trong trường hợp xấu nhất, nếu chúng ta duy trì các chuỗi con O(n) và kiểm tra các ứng cử viên O(n) cho mỗi phần tử, điều này sẽ trở thành O(n²), điều này là không thể đối với 100000 phần tử. 
 
 Quan sát quan trọng là chúng ta thực sự không cần phải quyết định một cách tùy tiện. Thay vào đó, chúng ta luôn có thể duy trì tối đa hai "mặt trận tích cực" cho mỗi chuỗi con: một cho chuỗi tăng và một cho chuỗi giảm. Mỗi phần tử phải được chèn vào một chuỗi trong đó nó duy trì tính đơn điệu và trong số các lựa chọn hợp lệ, chúng ta nên luôn ưu tiên mở rộng chuỗi có giá trị cuối cùng gần nhất theo hướng giữ cho các tùy chọn luôn mở. 
 
@@ -151,7 +151,7 @@ Logic quyết định rất nghiêm ngặt: việc tăng vị trí luôn đượ
 | 5 | 3 | mở rộng | [4,5,6], [1,3] | 
 | 6 | 2 | mới hoặc sắp xếp lại | [4,5,6], [1,3], [2] | 
 
-Dấu vết cho thấy cấu trúc tăng dần lớn được giữ nguyên trong khi các phần tử nhỏ hơn tạo thành các chuỗi riêng biệt mà sau này trở thành các phân đoạn tăng dần. 
+Dấu vết cho thấy cấu trúc tăng dần lớn được bảo tồn trong khi các phần tử nhỏ hơn tạo thành các chuỗi riêng biệt mà sau này trở thành các phân đoạn tăng dần. 
 
 ## Phân tích độ phức tạp 
 
@@ -160,7 +160,7 @@ Dấu vết cho thấy cấu trúc tăng dần lớn được giữ nguyên tron
 | Thời gian | O(n log n) | Mỗi phần tử được chèn và xóa khỏi cấu trúc có thứ tự | 
 | Không gian | O(n) | Mỗi phần tử được lưu trữ một lần trong một chuỗi con | 
 
-Các ràng buộc cho phép tối đa 100000 phần tử, do đó, chi phí logarit cho mỗi thao tác có thể chấp nhận được trong giới hạn 2 giây. 
+Các ràng buộc cho phép tối đa 100000 phần tử, do đó chi phí logarit cho mỗi thao tác có thể chấp nhận được trong giới hạn 2 giây. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io

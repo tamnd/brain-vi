@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 7 phút 51 giây 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi đang làm việc với một chuỗi vô hạn không được viết rõ ràng mà được tạo đệ quy. Việc xây dựng bắt đầu từ một giá trị duy nhất bằng 0. Mỗi lần mở rộng chuỗi, chúng tôi thay thế mọi phần tử bằng nhiều bản sao của chuỗi trước đó, một bản sao cho mỗi giá trị trong một mảng cố định`gen`. Mỗi bản sao được dịch chuyển bằng cách thêm tương ứng`gen[i]`modulo`m`. 
@@ -44,7 +44,7 @@ Các trường hợp đặc biệt phá vỡ lối suy luận ngây thơ bao g�
 
 ## Phương pháp tiếp cận 
 
-Chiến lược brute-force sẽ là xây dựng lại từng giá trị của chuỗi vô hạn theo yêu cầu và sau đó quét mọi cửa sổ có độ dài`n`TRONG`[l, r]`. Mỗi truy vấn cho một vị trí yêu cầu đi xuống qua cây xây dựng đệ quy, áp dụng các dịch chuyển mô-đun dọc theo đường dẫn. Điều đó đưa O(độ sâu), gần như O(vị trí nhật ký) lên tới khoảng 60. Việc quét toàn bộ khoảng thời gian sẽ yêu cầu (r - l + 1) những đánh giá như vậy, rất lớn về mặt thiên văn và không thể thực hiện được. 
+Chiến lược brute-force sẽ là xây dựng lại từng giá trị của chuỗi vô hạn theo yêu cầu và sau đó quét mọi cửa sổ có độ dài`n`TRONG`[l, r]`. Mỗi truy vấn cho một vị trí yêu cầu đi xuống qua cây xây dựng đệ quy, áp dụng các dịch chuyển mô-đun dọc theo đường dẫn. Điều đó đưa O(độ sâu), gần như O(vị trí log) lên tới khoảng 60. Việc quét toàn bộ khoảng thời gian sẽ yêu cầu (r - l + 1) những đánh giá như vậy, rất lớn về mặt thiên văn và không thể thực hiện được. 
 
 Ngay cả khi chúng tôi chỉ cố gắng quét chính xác |A| - n + 1 cửa sổ, ta vẫn phải đối mặt với tối đa 10^18 vị trí. Sự kém hiệu quả cốt lõi là các vị trí liền kề có liên quan chặt chẽ với nhau, nhưng lực lượng vũ phu không sử dụng lại cấu trúc này. 
 
@@ -67,10 +67,10 @@ Chúng tôi xử lý vấn đề theo các trạng thái thể hiện sự khớ
 
 ### bước 
 
-1. Tính toán trước biểu diễn chuyển tiếp về cách thêm một đơn vị vào một vị trí trong cơ số`d`ảnh hưởng đến giá trị được tạo ra của chuỗi. 
+1. Precompute a transition representation of how adding one unit to a position in base`d`ảnh hưởng đến giá trị được tạo ra của chuỗi. 
 
 Mỗi mức tăng tương ứng với việc di chuyển trong cây xây dựng đệ quy và chúng tôi duy trì mức độ tích lũy`gen`sự thay đổi phát triển. 
-2. Biểu diễn mọi chỉ mục dưới dạng một đường dẫn trong cây mở rộng d-ary. Giá trị tại một chỉ mục là tổng đóng góp từ mỗi vị trí chữ số trong biểu diễn này, modulo`m`. 
+2. Biểu diễn mọi chỉ mục dưới dạng đường dẫn trong cây mở rộng d-ary. Giá trị tại một chỉ mục là tổng đóng góp từ mỗi vị trí chữ số trong biểu diễn này, modulo`m`. 
 3. Xây dựng DP trên các vị trí mẫu. Đối với mỗi vị trí`i`TRONG`B`, chúng tôi muốn theo dõi trạng thái trình tự nào có thể khớp với tiền tố này trong khi vẫn tôn trọng các ràng buộc bất đẳng thức. 
 4. Thay vì lặp lại các vị trí chuỗi thực tế, hãy mô phỏng quá trình chuyển đổi trên các khối chỉ số được nén có chung các đóng góp cấu trúc giống hệt nhau ở độ sâu đệ quy nhất định. 
 5. Đối với mỗi trạng thái DP, truyền các chuyển đổi hợp lệ sang khối chữ số tiếp theo, cập nhật các độ lệch tích lũy và đảm bảo rằng ràng buộc giá trị`B[i] ≥ current_value`vẫn hài lòng. 
@@ -78,7 +78,7 @@ Mỗi mức tăng tương ứng với việc di chuyển trong cây xây dựng 
 
 ### Tại sao nó hoạt động 
 
-Mọi vị trí trong chuỗi vô hạn được xác định duy nhất bằng biểu diễn cơ số d hữu hạn và giá trị là tổ hợp tuyến tính của các đóng góp chữ số độc lập theo modulo`m`. Khả năng phân tách này đảm bảo rằng các ràng buộc cục bộ trên windows chuyển thành các ràng buộc độc lập trong quá trình chuyển đổi chữ số. DP không bao giờ mất hiệu lực vì mọi chuyển đổi được nén đều tương ứng chính xác với một tập hợp các vị trí rời rạc trong chuỗi ban đầu và không có sự trùng lặp nào được tính hai lần. 
+Mọi vị trí trong chuỗi vô hạn được xác định duy nhất bằng biểu diễn cơ số d hữu hạn và giá trị là tổ hợp tuyến tính của các đóng góp chữ số độc lập modulo`m`. Khả năng phân tách này đảm bảo rằng các ràng buộc cục bộ trên windows chuyển thành các ràng buộc độc lập trong quá trình chuyển đổi chữ số. DP không bao giờ mất hiệu lực vì mọi chuyển đổi được nén đều tương ứng chính xác với một tập hợp các vị trí rời rạc trong chuỗi ban đầu và không có sự trùng lặp nào được tính hai lần. 
 
 ## Giải pháp Python```python
 import sys
@@ -126,7 +126,7 @@ if __name__ == "__main__":
     solve()
 ```Giải pháp này xây dựng một bảng chuyển tiếp ghi lại cách các giá trị thay đổi khi giảm xuống một cấp trong cấu trúc đệ quy. Mảng DP theo dõi có bao nhiêu cấu trúc từng phần có thể tạo ra sự liên kết tiền tố hợp lệ với mẫu`B`. Mỗi bước sẽ tinh chỉnh các trạng thái này bằng cách kết hợp phần tử mẫu tiếp theo và lọc các chuyển tiếp vi phạm điều kiện bất đẳng thức. 
 
-Một điểm tinh tế là chúng ta không bao giờ lặp lại một cách rõ ràng`[l, r]`. Phép nhân với`(r - l + 1 - n + 1)`phản ánh thực tế rằng khi tồn tại một căn chỉnh hợp lệ trong không gian trạng thái cấu trúc, nó sẽ áp dụng thống nhất trên tất cả các độ lệch bắt đầu hợp lệ bên trong phân đoạn đã chọn. Điều này phụ thuộc vào tính tự đồng nhất của việc xây dựng trình tự. 
+Một điểm tinh tế là chúng ta không bao giờ lặp lại một cách rõ ràng`[l, r]`. Phép nhân với`(r - l + 1 - n + 1)`phản ánh thực tế rằng khi tồn tại một căn chỉnh hợp lệ trong không gian trạng thái cấu trúc, nó sẽ áp dụng thống nhất trên tất cả các khoảng lệch bắt đầu hợp lệ bên trong phân đoạn đã chọn. Điều này phụ thuộc vào tính tự đồng nhất của việc xây dựng trình tự. 
 
 ## Ví dụ đã hoạt động 
 
@@ -148,7 +148,7 @@ Một điểm tinh tế là chúng ta không bao giờ lặp lại một cách r
 | 3 | 1 | được lọc thêm | 
 | 4 | 0 | tổng hợp các trạng thái hợp lệ cuối cùng | 
 
-DP dần dần loại bỏ các trạng thái trong đó giá trị được tạo vượt quá giới hạn mẫu. Phép nhân cuối cùng với số ca trong`[l, r]`đưa ra số lượng cuối cùng của các vị trí bắt đầu hợp lệ. 
+DP dần dần loại bỏ các trạng thái trong đó giá trị được tạo vượt quá ràng buộc mẫu. Phép nhân cuối cùng với số ca trong`[l, r]`đưa ra số lượng cuối cùng của các vị trí bắt đầu hợp lệ. 
 
 Điều này chứng tỏ cách các ràng buộc mẫu cắt bớt không gian trạng thái trong khi vẫn duy trì tính đa dạng của các phần nhúng cấu trúc hợp lệ. 
 

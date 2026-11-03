@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1 phút 21s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi được yêu cầu mô phỏng các hoạt động trên một tập hợp nhiều tập hợp, mỗi tập hợp ban đầu trống. Các thao tác bao gồm gán một giá trị duy nhất cho nhiều tập hợp, kết hợp hai tập hợp thông qua liên kết, kết hợp hai tập hợp thông qua một sản phẩm nhiều tập hợp bằng cách sử dụng ước số chung lớn nhất hoặc truy vấn tính chẵn lẻ của số lần xuất hiện của một giá trị. Các đầu vào chỉ định số lượng nhiều tập hợp và một chuỗi các thao tác, còn đầu ra là một chuỗi các`0`Và`1`tương ứng với kết quả của mỗi truy vấn modulo 2. 
@@ -39,9 +39,9 @@ Một ví dụ nhỏ làm rõ rủi ro. Coi như:```
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận brute-force là lưu trữ rõ ràng từng multiset dưới dạng danh sách các số. Việc chuyển nhượng một singleton là chuyện nhỏ. Sự kết hợp có thể được thực hiện bằng cách nối các danh sách. Hoạt động của sản phẩm được tính toán bằng cách lặp qua từng cặp`(a, b)`và nối thêm`gcd(a, b)`tới multiset mục tiêu. Sau đó, các truy vấn sẽ đếm số lần xuất hiện của số được yêu cầu theo modulo 2. Cách tiếp cận này đúng nhưng quá chậm: một tích duy nhất gồm hai tập hợp lớn có kích thước 1000, mỗi tập hợp sẽ yêu cầu một triệu phép tính GCD. Với 10^6 thao tác, tổng thời gian là rất lớn. 
+Cách tiếp cận brute-force là lưu trữ rõ ràng từng multiset dưới dạng danh sách các số. Việc chuyển nhượng một singleton là chuyện nhỏ. Sự kết hợp có thể được thực hiện bằng cách nối các danh sách. Hoạt động của sản phẩm được tính toán bằng cách lặp qua từng cặp`(a, b)`và nối thêm`gcd(a, b)`tới multiset mục tiêu. Sau đó, các truy vấn sẽ đếm số lần xuất hiện của số được yêu cầu modulo 2. Cách tiếp cận này đúng nhưng quá chậm: một tích duy nhất gồm hai tập hợp lớn có kích thước 1000, mỗi tập hợp sẽ yêu cầu một triệu phép tính GCD. Với 10^6 thao tác, tổng thời gian là rất lớn. 
 
-Quan sát quan trọng giúp đưa ra giải pháp hiệu quả là chúng ta chỉ cần đếm modulo 2. Điều này cho phép chúng ta biểu diễn từng nhiều tập hợp dưới dạng một tập bit trên các giá trị từ 1 đến 7000. Phép toán kết hợp trở thành XOR theo bit cho mục đích chẵn lẻ và phép gán chỉ là thiết lập một bit đơn. Phép tính tích số có thể được biểu diễn thông qua phép đảo ngược Möbius trên các ước số: cho mỗi số`v`, tính chẵn lẻ của sự xuất hiện của nó trong một sản phẩm là XOR của các số chẵn lẻ trên bội số của`v`từ mỗi toán hạng. Việc tính toán trước các mối quan hệ ước số cho phép chúng ta tính toán các tích số theo O(7000) cho mỗi phép toán thay vì O(|A||B|). Điều này làm giảm đáng kể tổng thời gian chạy. 
+Quan sát quan trọng giúp đưa ra giải pháp hiệu quả là chúng ta chỉ cần số lượng modulo 2. Điều này cho phép chúng ta biểu diễn từng nhiều tập hợp dưới dạng một tập hợp bit trên các giá trị từ 1 đến 7000. Phép toán kết hợp trở thành XOR theo bit cho mục đích chẵn lẻ và phép gán chỉ là thiết lập một bit duy nhất. Phép tính tích số có thể được biểu diễn bằng cách đảo ngược Möbius trên các ước số: cho mỗi số`v`, tính chẵn lẻ của sự xuất hiện của nó trong một sản phẩm là XOR của các số chẵn lẻ trên bội số của`v`từ mỗi toán hạng. Việc tính toán trước các mối quan hệ ước số cho phép chúng ta tính toán các tích số theo O(7000) cho mỗi phép toán thay vì O(|A||B|). Điều này làm giảm đáng kể tổng thời gian chạy. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 

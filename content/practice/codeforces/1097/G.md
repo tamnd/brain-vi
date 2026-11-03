@@ -21,14 +21,14 @@ draft: false
 **Thời gian giải:** 6 phút 10 giây 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi đang làm việc với một cây trong đó mỗi tập hợp con của các đỉnh xác định một “chi phí” tự nhiên dựa trên mức độ lớn của đồ thị con được kết nối tối thiểu khi chúng tôi buộc phải bao gồm tất cả các đỉnh trong tập hợp con đó. Đối với một tập hợp con đã chọn, bạn lấy cây con nhỏ nhất chứa tất cả các đỉnh được chọn và đo nó bằng số cạnh mà nó chứa. Giá trị đó sau đó được nâng lên lũy thừa$k$, và chúng ta phải tính tổng đại lượng này trên tất cả các tập con không rỗng. 
 
 Khó khăn chính là có$2^n - 1$tập hợp con, quá nhiều để đánh giá trực tiếp. Ngay cả việc tính toán kích thước cây Steiner cho một tập hợp con cũng đã phụ thuộc vào cấu trúc từng cặp bên trong cây, do đó, bất kỳ phương pháp liệt kê tập hợp con nào cũng ngay lập tức trở nên không khả thi đối với$n = 10^5$. 
 
-Các ràng buộc làm rõ rằng giải pháp phải gần tuyến tính hoặc$O(n \log n)$với một thừa số đa thức nhỏ trong$k$. Từ$k \le 200$, một tín hiệu điển hình là chúng ta dự kiến ​​sẽ duy trì việc mở rộng kích thước đa thức$k$, thường thông qua DP trên các cạnh hoặc tính toán tổ hợp các đóng góp trên mỗi cạnh. 
+Các ràng buộc làm rõ rằng giải pháp phải gần tuyến tính hoặc$O(n \log n)$với một thừa số đa thức nhỏ trong$k$. Từ$k \le 200$, một tín hiệu điển hình là chúng ta dự kiến ​​sẽ duy trì việc mở rộng đa thức kích thước$k$, thường thông qua DP trên các cạnh hoặc tính tổ hợp các đóng góp trên mỗi cạnh. 
 
 Một vấn đề tế nhị phát sinh từ các tập hợp con đơn lẻ. Đối với một đỉnh duy nhất, cây con được kết nối không có cạnh nào, do đó$f(X) = 0$. Điều đó có nghĩa là nhiều tập hợp con đóng góp bằng 0 trừ khi$k = 0$, nhưng ở đây$k \ge 1$, do đó tất cả các tập con đơn lẻ đều biến mất trong tổng cuối cùng. Bất kỳ giải pháp chính xác nào cũng phải xử lý việc này một cách tự nhiên mà không cần vỏ bọc đặc biệt. 
 
@@ -42,7 +42,7 @@ Quan sát quan trọng là chuyển phối cảnh từ tập hợp con của cá
 
 Điều này chuyển đổi vấn đề thành điều kiện nhị phân trên mỗi cạnh. Nếu chúng ta loại bỏ một cạnh, cây sẽ chia thành hai thành phần có kích thước$a$Và$b$. Bất kỳ tập hợp con nào cũng đóng góp cạnh đó vào cây Steiner của nó một cách chính xác khi nó chứa ít nhất một đỉnh từ cả hai phía, điều này xảy ra trong$2^n - 2^a - 2^b + 1$tập hợp con. 
 
-Tuy nhiên, chúng tôi không chỉ muốn số lượng cạnh được sử dụng. Chúng tôi cần$(\text{number of used edges})^k$, giới thiệu lũy thừa của tổng các chỉ số cạnh. Đây là nơi DP đa thức đi vào: chúng tôi coi mỗi cạnh là đóng góp một biến nhị phân và chúng tôi tính toán sự phân bổ số lượng cạnh hoạt động trên tất cả các tập hợp con. 
+Tuy nhiên, chúng tôi không chỉ muốn số cạnh được sử dụng. Chúng tôi cần$(\text{number of used edges})^k$, giới thiệu lũy thừa của tổng các chỉ số cạnh. Đây là nơi DP đa thức đi vào: chúng tôi coi mỗi cạnh là đóng góp một biến nhị phân và chúng tôi tính toán sự phân bổ số lượng cạnh hoạt động trên tất cả các tập hợp con. 
 
 Chúng ta root cây và xử lý nó bằng DP, trong đó mỗi cây con duy trì một đa thức$dp[x]$mô tả có bao nhiêu tập hợp con bên trong nó tạo ra một số "cạnh ranh giới được kích hoạt" nhất định kết nối với phần còn lại của cây. Khi hợp nhất các phân phối con, chúng ta kết hợp các phân phối bằng các chuyển đổi giống như tích chập, nhưng vì$k \le 200$, chúng ta có thể giới hạn bậc đa thức tại$k$. 
 
@@ -57,7 +57,7 @@ Mỗi cạnh giữa một nút và nút con của nó đóng góp chính xác kh
 
 ## Hướng dẫn thuật toán 
 
-Chúng tôi root cây tại nút 1 và xác định trạng thái DP trên mỗi nút biểu thị cách các tập hợp con bên trong cây con của nó tương tác với cạnh tới nút cha của nó. 
+Chúng tôi root cây tại nút 1 và xác định trạng thái DP trên mỗi nút biểu thị cách các tập hợp con bên trong cây con của nó tương tác với cạnh với cha của nó. 
 
 1. Xác định$dp[u][i]$là số cách chọn tập con các nút trong cây con của$u$chính xác như vậy$i$các cạnh nối các đỉnh đã chọn với bên ngoài cây con là “hoạt động”. Chúng tôi giới hạn$i$Tại$k$bởi vì giá trị cao hơn không liên quan đến$x^k$mở rộng. 
 2. Khởi tạo$dp[u][0] = 1$cho mỗi nút$u$, đại diện cho vùng chọn trống bên trong cây con. 
@@ -132,6 +132,6 @@ PythonRun
 
 Cây một cạnh cho thấy thực tế là chỉ các tập hợp con chứa cả hai điểm cuối mới đóng góp giá trị khác 0. DP nắm bắt chính xác điều này vì cách duy nhất để kích hoạt cạnh là chọn một tập hợp con không trống từ một phía và kết nối nó thông qua cấu trúc gốc. 
 
-Các cây có độ mất cân bằng cao, chẳng hạn như một chuỗi, kiểm tra xem liệu việc hợp nhất DP lặp đi lặp lại có tích lũy số cạnh mà không tính hai lần hay không. Việc xây dựng đảm bảo mỗi cạnh được giới thiệu chính xác một lần khi cây con của nó được hợp nhất, do đó không xảy ra hiện tượng lạm phát ngay cả trong chuỗi đệ quy sâu. 
+Các cây có độ mất cân bằng cao, chẳng hạn như một chuỗi, kiểm tra xem liệu việc hợp nhất DP lặp đi lặp lại có tích lũy số cạnh mà không cần tính hai lần hay không. Việc xây dựng đảm bảo mỗi cạnh được giới thiệu chính xác một lần khi cây con của nó được hợp nhất, do đó không xảy ra hiện tượng lạm phát ngay cả trong chuỗi đệ quy sâu. 
 
 Cây có nhiều lá kết nối với một trung tâm xác minh tính đúng đắn của thứ tự hợp nhất nhiều nhánh. Vì mỗi cây con được hợp nhất độc lập vào bảng DP hiện tại nên kết quả cuối cùng là bất biến theo thứ tự con, phản ánh tính giao hoán của việc lựa chọn tập hợp con trên các cây con rời rạc.

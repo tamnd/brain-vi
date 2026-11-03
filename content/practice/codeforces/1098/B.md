@@ -16,19 +16,19 @@ draft: false
 
 [CF 1098B - Bàn đẹp](https://codeforces.com/problemset/problem/1098/B) 
 
-**Xếp hạng:** 2100 
+**Đánh giá:** 2100 
 **Tags:** sức mạnh vũ phu, thuật toán xây dựng, lòng tham, toán học 
 **Thời gian giải:** 5 phút 15 giây 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi được cung cấp một lưới có kích thước$n \times m$, trong đó mỗi ô chứa một trong bốn ký tự: A, G, C hoặc T. Chúng ta cần xây dựng một lưới mới có cùng kích thước đáp ứng quy tắc cục bộ nghiêm ngặt: mỗi lưới con 2 x 2 phải chứa tất cả bốn ký tự khác nhau chính xác một lần. 
 
 Trạng thái này cực kỳ mạnh mẽ. Điều đó có nghĩa là bất cứ khi nào chúng ta lấy bất kỳ cặp hàng liền kề nào và bất kỳ cặp cột liền kề nào, bốn ô thu được phải tạo thành một hoán vị của A, G, C, T. Mục tiêu không chỉ là xây dựng bất kỳ lưới hợp lệ nào mà là chọn một lưới càng gần với lưới ban đầu càng tốt, giảm thiểu số lượng ô bị thay đổi. 
 
-Các ràng buộc cho phép lên đến$3 \cdot 10^5$tổng số tế bào. Điều đó ngay lập tức loại trừ bất kỳ cách tiếp cận nào cố gắng xem xét rõ ràng tất cả các lưới có thể hoặc thậm chí cố gắng tối ưu hóa từng ô bằng các kiểm tra cục bộ tốn kém đối với nhiều ứng cử viên. Bất kỳ giải pháp nào cũng phải gần tuyến tính về số lượng ô. 
+Các ràng buộc cho phép lên đến$3 \cdot 10^5$tổng số tế bào. Điều đó ngay lập tức loại trừ bất kỳ cách tiếp cận nào cố gắng xem xét tất cả các lưới có thể một cách rõ ràng hoặc thậm chí cố gắng tối ưu hóa từng ô bằng các kiểm tra cục bộ tốn kém đối với nhiều ứng cử viên. Bất kỳ giải pháp nào cũng phải gần tuyến tính về số lượng ô. 
 
 Một sai lầm ngây thơ nhưng tự nhiên là cố gắng xây dựng lưới theo từng hàng trong khi thực thi các ràng buộc cục bộ. Vấn đề là ràng buộc không chỉ cục bộ ở một hàng hoặc cột, nó kết hợp mọi ô với ba ô lân cận và những lựa chọn tham lam sớm có thể buộc phải sửa chữa tốn kém sau này. 
 
@@ -47,7 +47,7 @@ Nếu chúng ta xem xét một khối 2 x 2 hợp lệ, thì đó là một hoá
 
 Điều này ngụ ý rằng bất kỳ lưới hợp lệ nào cũng có thể được tạo từ mẫu 2 x 2 cố định và hai kích thước nhị phân. Cụ thể, chúng ta có thể nghĩ đến việc gán các ký tự dựa trên$(i \bmod 2, j \bmod 2)$, nhưng có một điểm khác biệt: có nhiều cách để gán A, G, C, T cho bốn vị trí chẵn lẻ. có$4!$hoán vị của bốn ký tự, nhưng chỉ một số vị trí có cấu trúc nhất định mới mang lại các ô xếp nhất quán trên lưới. Trên thực tế, hóa ra việc chọn hai hoán vị độc lập, một cho hàng chẵn và một cho hàng lẻ, rồi kết hợp chúng một cách nhất quán trên các cột sẽ mang lại một họ xây dựng hợp lệ. 
 
-Một cách chắc chắn hơn để nghĩ về điều này là: bất kỳ lưới hợp lệ nào cũng phải có tính chất 2 chu kỳ theo cả hai hướng, nghĩa là toàn bộ lưới bao gồm các ô lặp lại 2 x 2. Do đó, vấn đề giảm xuống còn việc chọn mẫu tốt nhất trong số lượng nhỏ các mẫu cơ sở 2 x 2 không đổi có thể và mở rộng nó trên toàn lưới. 
+Một cách chắc chắn hơn để nghĩ về điều này là: bất kỳ lưới hợp lệ nào cũng phải có tính chất 2 chu kỳ theo cả hai hướng, nghĩa là toàn bộ lưới bao gồm các ô lặp lại 2 x 2. Do đó, vấn đề giảm xuống còn việc chọn mẫu tốt nhất trong một số lượng nhỏ các mẫu cơ sở 2 x 2 không đổi có thể và mở rộng nó trên toàn lưới. 
 
 Chỉ có 12 mẫu hợp lệ 2 x 2 về cơ bản khác biệt (hoán đổi hàng và cột), nhưng chúng tôi thậm chí không cần liệt kê chúng một cách cẩn thận. Thay vào đó, chúng ta có thể sửa thứ tự cơ bản của các ký tự và xem xét một tập hợp nhỏ các hoán vị được tạo ra bằng cách hoán đổi và luân chuyển các phép gán giữa các lớp chẵn lẻ. 
 

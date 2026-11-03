@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 5 phút 19s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được yêu cầu xây dựng một cây có gốc trên các đỉnh được đánh nhãn từ 1 đến n, trong đó đỉnh 1 được cố định là gốc. Mỗi nút ngoại trừ nút gốc có chính xác một nút cha, do đó cấu trúc được xác định hoàn toàn bởi mảng cha. Từ mối quan hệ cha mẹ này, chúng ta có thể xác định kích thước cây con theo cách thông thường: cây con của nút chứa chính nó và tất cả các nút có thể tiếp cận nó bằng cách lặp đi lặp lại theo các con trỏ cha hướng lên trên về phía gốc. 
@@ -172,9 +172,9 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Việc xây dựng duy trì cấu trúc giống như hàng đợi của các nút vẫn còn các vị trí con có sẵn. Mỗi nút mới được gắn vào nút sớm nhất còn dung lượng còn lại, đảm bảo cây có hình dạng BFS. Điều này rất quan trọng vì nó đảm bảo cấu trúc nông nhất có thể cho một hệ số phân nhánh nhất định, điều này làm cho tính khả thi trong k trở nên đơn điệu. 
+```Việc xây dựng duy trì cấu trúc giống như hàng đợi của các nút vẫn còn các vị trí con có sẵn. Mỗi nút mới được gắn vào nút sớm nhất còn dung lượng còn lại, đảm bảo cây có hình dạng BFS. Điều này rất quan trọng vì nó đảm bảo cấu trúc nông nhất có thể cho một hệ số phân nhánh nhất định, điều này làm cho tính khả thi trở nên đơn điệu trong k. 
 
-Tính toán tổng cây con được thực hiện sau khi xây dựng bằng cách sử dụng DFS tiêu chuẩn cho độ sâu và DP thứ tự ngược cho kích thước cây con. Mặc dù đây không phải là cách tiếp cận được tối ưu hóa nhất nhưng nó vẫn nằm trong giới hạn vì mọi thứ đều chạy ở O(n) cho mỗi lần kiểm tra và chúng tôi chỉ thực hiện nhiều lần kiểm tra theo logarit. 
+Việc tính toán tổng cây con được thực hiện sau khi xây dựng bằng cách sử dụng DFS tiêu chuẩn cho độ sâu và DP thứ tự ngược cho kích thước cây con. Mặc dù đây không phải là cách tiếp cận được tối ưu hóa nhất nhưng nó vẫn nằm trong giới hạn vì mọi thứ đều chạy ở O(n) cho mỗi lần kiểm tra và chúng tôi chỉ thực hiện nhiều lần kiểm tra theo logarit. 
 
 Một điểm tinh tế là chúng tôi không bao giờ tối ưu hóa rõ ràng đối với cấu trúc bên trong. Thay vào đó, chúng tôi chỉ đảm bảo tìm được k nhỏ nhất cho phép cấu trúc đủ linh hoạt. Việc khớp thực tế với s được đảm bảo bởi thuộc tính khoảng khả thi. 
 
