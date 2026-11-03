@@ -21,12 +21,12 @@ draft: false
 **Thời gian giải:** 4 phút 20s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi duy trì một tập hợp nhiều số nguyên dương động, trong đó mỗi số biểu thị trọng lượng của một con lươn. Sau mỗi lần cập nhật, chúng tôi được yêu cầu tính toán một giá trị được gọi là "nguy hiểm", giá trị này phụ thuộc vào quy trình tối ưu liên tục hợp nhất tất cả các con lươn thành một con duy nhất. 
 
-Một bước hợp nhất có hai trọng số hiện tại$a \le b$. Con lươn nhỏ biến mất và con lươn lớn hơn trở thành$a+b$. Mỗi bước như vậy có thể được coi là nguy hiểm nếu$b \le 2a$. Câu trả lời cuối cùng cho một tập hợp nhất định là số bước hợp nhất nguy hiểm tối đa có thể có trên tất cả các lệnh hợp nhất nhị phân có thể có. 
+Một bước hợp nhất có hai trọng số hiện tại$a \le b$. Con lươn nhỏ hơn biến mất và con lươn lớn hơn trở thành$a+b$. Mỗi bước như vậy có thể được coi là nguy hiểm nếu$b \le 2a$. Câu trả lời cuối cùng cho một tập hợp nhất định là số bước hợp nhất nguy hiểm tối đa có thể có trên tất cả các lệnh hợp nhất nhị phân có thể có. 
 
 Khó khăn đến từ việc chúng tôi không mô phỏng một quy trình cố định. Chúng tôi được yêu cầu, sau mỗi lần chèn hoặc xóa, tính toán lại kết quả tốt nhất có thể có trên tất cả các chiến lược hợp nhất. Điều này biến vấn đề thành một vấn đề tối ưu hóa hoàn toàn động trên nhiều tập hợp lên tới$5 \cdot 10^5$hoạt động. 
 
@@ -42,7 +42,7 @@ Thách thức cốt lõi là duy trì cấu trúc của nhiều tập hợp và 
 
 ## Phương pháp tiếp cận 
 
-Ý tưởng mạnh mẽ là mô phỏng tất cả các lệnh hợp nhất nhị phân có thể có. Đối với một tập hợp nhiều tập hợp cố định, điều này tương ứng với việc xem xét tất cả các cây nhị phân đầy đủ có các lá là phần tử ban đầu và đánh giá xem có bao nhiêu phép hợp nhất bên trong thỏa mãn điều kiện$b \le 2a$. Điều này tương đương với việc tối ưu hóa tổ hợp trên tất cả các chuỗi ghép nối. 
+Ý tưởng mạnh mẽ là mô phỏng tất cả các lệnh hợp nhất nhị phân có thể có. Đối với một tập hợp cố định, điều này tương ứng với việc xem xét tất cả các cây nhị phân đầy đủ có các lá là phần tử ban đầu và đánh giá xem có bao nhiêu phép hợp nhất bên trong thỏa mãn điều kiện$b \le 2a$. Điều này tương đương với việc tối ưu hóa tổ hợp trên tất cả các chuỗi ghép nối. 
 
 Điều này ngay lập tức trở thành theo cấp số nhân trong tự nhiên. Ngay cả với một bộ kích thước cố định$n$, số lượng lệnh hợp nhất theo thứ tự số Catalan và mỗi lần đánh giá tốn ít nhất thời gian tuyến tính, khiến ngay cả đối với$n \approx 40$. 
 
@@ -50,7 +50,7 @@ Quan sát quan trọng là quy trình có thể được diễn giải lại the
 
 Điều này dẫn đến một cấu trúc tham lam: chúng ta có thể duy trì nhiều tập hợp theo thứ tự được sắp xếp và liên tục khớp phần tử nhỏ nhất không được sử dụng với phần tử nhỏ nhất có thể thỏa mãn điều kiện. Bản chất động đòi hỏi phải duy trì số liệu thống kê thứ tự một cách hiệu quả, nhưng bản thân logic ghép nối sẽ trở nên mang tính quyết định sau khi được sắp xếp. 
 
-Để hỗ trợ cập nhật nhanh và tính toán toàn cầu lặp đi lặp lại, chúng tôi duy trì nhiều tập hợp theo cấu trúc cân bằng (vùng chứa được sắp xếp thông qua`SortedList`-hành vi tương tự). Mỗi truy vấn tính toán lại việc ghép nối một cách tham lam bằng cách sử dụng hai con trỏ, nhưng được tối ưu hóa bằng cách khai thác cấu trúc đủ ổn định để hành vi khấu hao có thể chấp nhận được trong các ràng buộc. 
+Để hỗ trợ cập nhật nhanh và tính toán toàn cầu lặp lại, chúng tôi duy trì nhiều tập hợp theo cấu trúc cân bằng (được sắp xếp vùng chứa thông qua`SortedList`-hành vi tương tự). Mỗi truy vấn tính toán lại việc ghép nối một cách tham lam bằng cách sử dụng hai con trỏ, nhưng được tối ưu hóa bằng cách khai thác cấu trúc đủ ổn định để hành vi khấu hao có thể chấp nhận được trong các ràng buộc. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -80,7 +80,7 @@ Kết hợp tham lam hoạt động vì mỗi phần tử có được sử dụ
 
 ### Tại sao nó hoạt động 
 
-Điều bất biến là ở mỗi bước, chúng tôi xử lý phần tử nhỏ nhất còn lại và ghép nó với ứng cử viên khả thi nhỏ nhất thỏa mãn điều kiện nguy hiểm. Bất kỳ sự lựa chọn thay thế nào của một đối tác lớn hơn chỉ có thể làm giảm các cơ hội kết hợp trong tương lai, vì nó loại bỏ một giá trị trung gian hữu ích tiềm năng có thể đóng vai trò là đối tác cho một yếu tố nhỏ khác. Điều này bảo tồn số lượng tối đa hợp lệ$b \le 2a$ghép nối trong suốt quá trình, đảm bảo tối ưu toàn cầu. 
+Điều bất biến là ở mỗi bước, chúng tôi xử lý phần tử nhỏ nhất còn lại và ghép nó với ứng cử viên khả thi nhỏ nhất thỏa mãn điều kiện nguy hiểm. Bất kỳ sự lựa chọn thay thế nào của một đối tác lớn hơn chỉ có thể làm giảm các cơ hội phù hợp trong tương lai, vì nó loại bỏ một giá trị trung gian hữu ích tiềm năng có thể đóng vai trò là đối tác cho một yếu tố nhỏ khác. Điều này bảo tồn số lượng tối đa hợp lệ$b \le 2a$ghép nối trong suốt quá trình, đảm bảo tối ưu toàn cầu. 
 
 ## Giải pháp Python```
 PythonRun
@@ -115,7 +115,7 @@ Trạng thái đầu tiên chỉ có một phần tử nên không thể hợp n
 | 2 | {1,1} | [1,1] | (1,1) có giá trị vì 1 ≤ 2 | 1 | 
 | 3 | {1,1,4} | [1,1,4] | (1,1) nguy hiểm, rồi (2,4) nguy hiểm | 2 | 
 
-Sau khi hình thành (1,1), trọng số được hợp nhất trở thành 2, tạo ra một sự hợp nhất nguy hiểm khác với 4. Điều này chứng tỏ cách hợp nhất trung gian tạo ra các cơ hội mới và tại sao cần phải có lý luận ghép đôi toàn cầu thay vì các quyết định cục bộ độc lập. 
+Sau khi hình thành (1,1), trọng số được hợp nhất trở thành 2, tạo điều kiện cho một sự hợp nhất nguy hiểm khác với 4. Điều này chứng tỏ việc hợp nhất trung gian tạo ra các cơ hội mới như thế nào và tại sao cần phải có lý luận ghép đôi toàn cầu thay vì các quyết định cục bộ độc lập. 
 
 ## Phân tích độ phức tạp 
 
@@ -138,6 +138,6 @@ PythonRun
 
 Trường hợp cạnh tới hạn là khi tồn tại nhiều phần tử nhỏ giống hệt nhau. Ví dụ: việc chèn nhiều số 1 sẽ tạo ra các cơ hội ghép nối lặp lại và thuật toán không được sử dụng lại các phần tử một cách không chính xác. Quá trình quét tham lam được sắp xếp đảm bảo mỗi phần tử được sử dụng nhiều nhất một lần làm điểm cuối bên trái, ngăn chặn việc đếm quá mức. 
 
-Một trường hợp khác là một phần tử lớn có nhiều phần tử nhỏ. Quá trình quét sẽ bỏ qua các cặp không thể so sánh một cách chính xác vì khi con trỏ vượt qua ngưỡng của phần tử nhỏ, không có đối tác hợp lệ nào tồn tại và phần tử đó sẽ bị loại bỏ. 
+Một trường hợp khác là một phần tử lớn có nhiều phần tử nhỏ. Quá trình quét sẽ bỏ qua các cặp không thể so sánh một cách chính xác vì khi con trỏ vượt quá ngưỡng của phần tử nhỏ, không có đối tác hợp lệ nào tồn tại và phần tử đó sẽ bị loại bỏ. 
 
 Trường hợp tinh tế cuối cùng là việc xóa thường xuyên làm thay đổi cấu trúc. Vì mỗi truy vấn sẽ tính toán lại từ đầu trên mảng đã sắp xếp hiện tại nên việc xóa không thể để lại trạng thái ghép nối cũ và tính chính xác vẫn được duy trì ngay cả trong các bản cập nhật đối nghịch.

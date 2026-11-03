@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 6 phút 22s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Quá trình này mô tả một quả cầu tuyết trượt xuống từ độ cao ban đầu cho đến khi chạm đất. Ở mọi cấp độ cao nguyên, quả cầu tuyết liên tục thay đổi trọng lượng theo ba giai đoạn theo thứ tự: đầu tiên nó tăng thêm trọng lượng bằng chiều cao hiện tại, sau đó có thể giảm trọng lượng nếu có một hòn đá ở độ cao đó và cuối cùng di chuyển xuống một bậc. 
@@ -56,9 +56,9 @@ Chúng tôi mô phỏng quả cầu tuyết rơi xuống từng cấp một, lu�
 1. Khởi tạo trọng lượng và chiều cao của quả cầu tuyết từ đầu vào và lưu trữ hai viên đá trong cấu trúc cho phép tra cứu nhanh theo chiều cao. Điều này quan trọng vì chúng ta cần kiểm tra liên tục ở mỗi bước. 
 2. Khi chiều cao hiện tại lớn hơn 0, hãy thực hiện một chu trình cập nhật đầy đủ. 
 3. Đầu tiên hãy tăng trọng lượng quả cầu tuyết lên theo chiều cao hiện tại. Bước này rất quan trọng vì vấn đề xác định sự tăng cân trước khi có bất kỳ tương tác nào với sỏi. Thứ tự quyết định tính đúng đắn. 
-4. Kiểm tra xem hòn đá có tồn tại ở độ cao hiện tại hay không. Nếu có, hãy trừ đi trọng lượng của nó khỏi quả cầu tuyết. Nếu có nhiều viên đá ở cùng độ cao, cả hai hiệu ứng sẽ được áp dụng tuần tự, mặc dù dữ liệu đầu vào đảm bảo độ cao khác biệt ở đây. 
+4. Kiểm tra xem hòn đá có tồn tại ở độ cao hiện tại hay không. Nếu vậy, hãy trừ đi trọng lượng của nó khỏi quả cầu tuyết. Nếu có nhiều viên đá ở cùng một độ cao, cả hai hiệu ứng sẽ được áp dụng tuần tự, mặc dù dữ liệu đầu vào đảm bảo độ cao khác biệt ở đây. 
 5. Nếu trọng lượng thu được trở nên âm, hãy kẹp nó về 0. Quả cầu tuyết không dừng lại hoặc thay đổi hành vi; chỉ có trọng lượng được lưu trữ được điều chỉnh. 
-6. Giảm chiều cao xuống một đơn vị để mô phỏng chuyển động đi xuống. 
+6. Giảm chiều cao xuống một để mô phỏng chuyển động đi xuống. 
 7. Lặp lại cho đến khi chiều cao bằng 0, sau đó xuất ra trọng lượng cuối cùng. 
 
 ### Tại sao nó hoạt động 
@@ -113,7 +113,7 @@ Bước kẹp sau khi trừ là cần thiết vì các trọng số âm không �
 | 2 | 7 | 9 | 1 | 8 | 1 | 
 | 1 | 8 | 9 | 1 | 8 | 0 | 
 
-Dấu vết này cho thấy mỗi chiều cao góp phần chính xác một lần vào việc tăng cân và các tương tác đá chỉ được áp dụng ở mức độ được chỉ định. Trọng số cuối cùng phù hợp với sản lượng dự kiến là 8. 
+Dấu vết này cho thấy mỗi chiều cao góp phần chính xác một lần vào việc tăng cân và tương tác đá chỉ được áp dụng ở mức độ được chỉ định. Trọng số cuối cùng phù hợp với kết quả đầu ra dự kiến là 8. 
 
 ### Ví dụ 2 
 
@@ -134,7 +134,7 @@ Trường hợp này nhấn mạnh rằng các viên đá ở các độ cao kh�
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | O(h) | Mỗi cấp độ cao được xử lý chính xác một lần với các thao tác có thời gian không đổi | 
+| Thời gian | O(h) | Mỗi mức độ cao được xử lý chính xác một lần với các thao tác có thời gian không đổi | 
 | Không gian | O(1) | Chỉ có một số lượng biến không đổi và một bản đồ nhỏ cho hai viên đá | 
 
 Chiều cao tối đa là 100, do đó mô phỏng thực hiện tối đa 100 lần lặp, nằm trong giới hạn ngay cả dưới những ràng buộc nghiêm ngặt. 

@@ -20,7 +20,7 @@ draft: false
 **Thời gian giải:** 2m 42s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi được cung cấp một lưới nhị phân. Một đối tượng hợp lệ không phải là một hình vuông đầy, nó chỉ là đường viền của một hình vuông được vẽ bằng`1`S. Mọi ô không thuộc đường viền đều phải`0`. 
@@ -63,7 +63,7 @@ Các hình vuông xoay có thể gây ra một lỗi khác:```
 ```viên kim cương trở nên không hợp lệ vì các ô bên chạm vào hình dạng. 
 
 Một trường hợp tế nhị khác là các đường viền chồng chéo. Giả sử hai hình vuông có chung một số ô. Không cái nào hợp lệ, bởi vì mỗi ô biên giới khi đó sẽ có các ô lân cận nước ngoài`1`là`. 
-Cách an toàn nhất để nghĩ về điều kiện là: mọi thành phần được kết nối của`1`s phải chính xác là một đường viền hình vuông và không có gì khác. 
+Cách an toàn nhất để nghĩ về điều kiện là: mọi thành phần được kết nối của`1`Bản thân s phải chính xác là một đường viền hình vuông và không có gì khác. 
 
 ## Phương pháp tiếp cận 
 
@@ -71,7 +71,7 @@ Cách an toàn nhất để nghĩ về điều kiện là: mọi thành phần �
 
 Đối với các hình vuông thẳng hàng với trục, có`O(n^2 m^2)`hình chữ nhật có thể có và chúng tôi chỉ giữ những hình chữ nhật có độ dài cạnh bằng nhau. Xác minh chi phí một hình vuông một cách ngây thơ`O(k)`Ở đâu`k`là độ dài cạnh Trường hợp xấu nhất trở nên đại khái`O(n^5)`. 
 
-Các hình vuông xoay thậm chí còn tệ hơn vì hình học của chúng kém thuận tiện hơn. Việc liệt kê tất cả các tâm và bán kính vẫn dẫn đến việc quét nhiều ô viền liên tục. 
+Các hình vuông xoay thậm chí còn tệ hơn vì hình học của chúng kém thuận tiện hơn. Việc liệt kê tất cả các tâm và bán kính vẫn dẫn đến việc quét nhiều ô viền nhiều lần. 
 
 Phương pháp brute-force hoạt động hợp lý vì định nghĩa mang tính cục bộ và rõ ràng. Nếu chúng ta kiểm tra từng ô viền và mọi ô lân cận thì độ chính xác sẽ có ngay lập tức. Vấn đề là số lượng công việc lặp đi lặp lại. Các ô ứng viên gần đó sử dụng lại hầu hết các thông tin giống nhau. 
 
@@ -153,7 +153,7 @@ Tất cả các phân vùng BFS`1`các ô thành các thành phần được k�
 
 Đối với các hình vuông được căn chỉnh theo trục, hộp giới hạn sẽ xác định duy nhất đường viền ứng cử viên. Bất kỳ ô chu vi nào bị thiếu hoặc ô bên trong bổ sung sẽ phá vỡ định nghĩa ngay lập tức. 
 
-Đối với các hình vuông được xoay, phép biến đổi tọa độ sẽ chuyển đổi các cạnh chéo thành các cạnh thẳng hàng với trục. Hình dạng được biến đổi phải trở thành một đường viền vuông hoàn hảo trong`(u,v)`không gian. Vì phép biến đổi có tính chất phỏng đoán trên các ô lưới nên việc khớp chính xác đường viền được biến đổi tương đương với việc khớp hình thoi ban đầu. 
+Đối với các hình vuông được xoay, phép biến đổi tọa độ sẽ chuyển đổi các cạnh chéo thành các cạnh thẳng hàng với trục. Hình dạng được biến đổi phải trở thành một đường viền vuông hoàn hảo trong`(u,v)`không gian. Bởi vì phép biến đổi có tính chất phỏng đoán trên các ô lưới nên việc khớp chính xác đường viền được biến đổi tương đương với việc khớp hình thoi ban đầu. 
 
 Vì mọi thành phần đều được kiểm tra toàn diện theo cả hai dạng hình học hợp lệ nên mọi thành phần được đếm đều hợp lệ và mọi ô vuông hợp lệ đều được tính chính xác một lần. 
 
@@ -351,7 +351,7 @@ Hình vuông đã biến đổi có độ dài cạnh`2`TRONG`(u,v)`không gian.
 | Nội thất chứa 1 | Không | 
 | Kết quả | hợp lệ | 
 
-Điều này xác nhận tâm rỗng được cho phép. Chỉ có biên giới là quan trọng. 
+Điều này xác nhận trung tâm rỗng được cho phép. Chỉ có biên giới là quan trọng. 
 
 ## Phân tích độ phức tạp 
 

@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 5 phút 43 giây 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một mảng và được yêu cầu liên tục xây dựng các cấu trúc mới dựa trên thông tin phái sinh từ các mảng con của nó. Phép biến đổi đầu tiên lấy mọi phân đoạn liền kề và thay thế nó bằng số nguyên lớn nhất chia tất cả các phần tử bên trong phân đoạn đó. Điều này tạo ra nhiều tập hợp giá trị, mỗi tập hợp giá trị cho mỗi phân đoạn con, thể hiện mức độ “đồng nhất” của mỗi phân đoạn về khả năng phân chia. 
@@ -281,11 +281,11 @@ assert run("4\n2 3 5 7\n") == "2", "small primes"
 | 1 phần tử | giá trị của chính nó | trường hợp cơ sở đúng đắn | 
 | tất cả đều bình đẳng | sụp đổ ổn định | xử lý đa dạng | 
 | chuỗi chia hết | sự thống trị của gcd | cấu trúc lồng nhau | 
-| số nguyên tố phân biệt | gcd tối thiểu | phương sai cấu trúc tồi tệ nhất | 
+| số nguyên tố phân biệt | gcds tối thiểu | phương sai cấu trúc tồi tệ nhất | 
 
 ## Vỏ cạnh 
 
-Mảng một phần tử là bài kiểm tra căng thẳng rõ ràng nhất về tính chính xác. Với đầu vào`[x]`, cấu trúc gcd sụp đổ ngay lập tức và tổng mảng con duy nhất là`x`. Thuật toán tạo ra một trạng thái duy nhất`(x,1)`, làm phẳng đến`[x]`và tổng tiền tố chỉ mang lại một tổng phân đoạn khác 0. Trung vị là tầm thường`x`và không có phần nào của quá trình nén hoặc tìm kiếm nhị phân làm biến dạng điều này vì không có sự nhập nhằng khi hợp nhất. 
+Mảng một phần tử là bài kiểm tra căng thẳng rõ ràng nhất về tính chính xác. Với đầu vào`[x]`, cấu trúc gcd sụp đổ ngay lập tức và tổng mảng con duy nhất là`x`. Thuật toán tạo ra một trạng thái duy nhất`(x,1)`, làm phẳng đến`[x]`và tổng tiền tố chỉ mang lại một tổng phân đoạn khác 0. Trung vị là tầm thường`x`và không có phần nào của quá trình nén hoặc tìm kiếm nhị phân làm biến dạng điều này vì không có sự mơ hồ về việc hợp nhất. 
 
 Một mảng thống nhất như`[8,8,8]`bài tập xử lý đa dạng. Mỗi mảng con đóng góp cùng một gcd, do đó quá trình nén tạo ra số lượng tăng dần nhưng có giá trị giống hệt nhau. Việc làm phẳng duy trì các đóng góp lặp đi lặp lại và tổng tiền tố trở thành một cấp số cộng. Mỗi tổng của mảng con đều nhất quán với cấu trúc lặp lại và giá trị trung vị được giữ nguyên chính xác`8`vì mọi đóng góp đều có tính đối xứng. 
 

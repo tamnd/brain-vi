@@ -20,10 +20,10 @@ draft: false
 **Thời gian giải:** 1 phút 26s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Jack bắt đầu ở vị trí`0`trên trục số. Lần nhảy của anh ta có độ dài cố định: lần nhảy đầu tiên phải có độ dài`1`, độ dài bước nhảy thứ hai`2`, độ dài bước nhảy thứ ba`3`, vân vân. Đối với mỗi lần nhảy, anh ta có thể chọn một trong hai hướng. Nhiệm vụ là tìm số lần nhảy tối thiểu để tiếp đất chính xác tại vị trí`x`. 
+Jack bắt đầu ở vị trí`0`trên trục số. Lần nhảy của anh ta có độ dài cố định: lần nhảy đầu tiên phải có độ dài`1`, độ dài bước nhảy thứ hai`2`, độ dài bước nhảy thứ ba`3`, vân vân. Đối với mỗi lần nhảy, anh ta có thể chọn một trong hai hướng. Nhiệm vụ là tìm số lần nhảy tối thiểu cần thiết để tiếp đất chính xác tại vị trí`x`. 
 
 Sự lựa chọn hướng đi là phần thú vị. Sau đó`k`nhảy, tổng quãng đường di chuyển luôn là:$1+2+3+\dots+k=\frac{k(k+1)}{2}$Điều duy nhất chúng tôi kiểm soát là bước nhảy nào là dương và bước nhảy nào là âm. 
 
@@ -76,7 +76,7 @@ Thứ hai,`S - |x|`phải chẵn, vì nó bằng`2t`.
 4. Tăng liên tục`k`bằng một và thêm nó vào`total`. 
 5. Sau mỗi lần cập nhật, hãy kiểm tra hai điều kiện: 
 
-1.`total >= x`2.`(total - x) % 2 == 0`6. Dừng lại ngay khi cả hai điều kiện đều đúng. Tại thời điểm này, chúng tôi biết một số bước nhảy có thể được đảo ngược để tạo ra chính xác`x`. 
+1.`total >= x`2.`(total - x) % 2 == 0`6. Stop as soon as both conditions become true. Tại thời điểm này, chúng tôi biết một số bước nhảy có thể được đảo ngược để tạo ra chính xác`x`. 
 7. Đầu ra`k`. 
 
 Kiểm tra tính chẵn lẻ là cái nhìn sâu sắc cốt lõi. Lật một bước nhảy sẽ thay đổi tọa độ cuối cùng bằng một số chẵn, do đó sự khác biệt giữa`total`Và`x`phải chẵn. 
@@ -107,7 +107,7 @@ print(k)
 
 Dòng đầu tiên chuyển đổi mục tiêu thành giá trị tuyệt đối của nó. Điều này loại bỏ sự cần thiết phải suy nghĩ về trái và phải một cách riêng biệt. Câu trả lời cho`-17`giống hệt với câu trả lời cho`17`. 
 
-Các biến`k`Và`total`theo dõi số lần nhảy hiện tại và tổng tam giác sau những lần nhảy đó. Mỗi lần lặp lại mô phỏng việc thêm độ dài bước nhảy bắt buộc tiếp theo. 
+Các biến`k`Và`total`theo dõi số lần nhảy hiện tại và tổng tam giác sau những lần nhảy đó. Mỗi lần lặp mô phỏng việc thêm độ dài bước nhảy bắt buộc tiếp theo. 
 
 Điều kiện vòng lặp chứa cả hai thuộc tính bắt buộc. Phần đầu tiên kiểm tra xem chúng ta đã tích lũy đủ khoảng cách để đến được mục tiêu hay chưa. Phần thứ hai kiểm tra khả năng tương thích chẵn lẻ. 
 
@@ -227,11 +227,11 @@ Hãy xem xét đầu vào:```
 
 Bây giờ hãy xem xét:```
 -2
-```Thuật toán chuyển đổi điều này thành`2`. Các bước lặp trở nên giống hệt với ví dụ đã làm trước đó. Sau ba lần nhảy chúng ta có`total = 6`, Và`6 - 2 = 4`là số chẵn nên đáp án là`3`. Phản ánh chỉ đường biến đổi bất kỳ giải pháp nào cho`2`thành giải pháp cho`-2`. 
+```Thuật toán chuyển đổi điều này thành`2`. Các bước lặp trở nên giống hệt với ví dụ đã làm trước đó. Sau ba lần nhảy chúng ta có`total = 6`, Và`6 - 2 = 4`là số chẵn nên đáp án là`3`. Hướng phản ánh sẽ biến đổi bất kỳ giải pháp nào cho`2`thành giải pháp cho`-2`. 
 
 Bẫy chẵn lẻ xuất hiện rõ ràng với:```
 2
-```Sau hai lần nhảy tổng số là`3`. Từ`3 - 2 = 1`thật kỳ quặc, không có tập hợp con bước nhảy nào có thể điều chỉnh vị trí chính xác`2`. Thuật toán tiếp tục chính xác thêm một bước nữa. 
+```Sau hai lần nhảy tổng số là`3`. Từ`3 - 2 = 1`thật kỳ quặc, không có tập hợp con bước nhảy nào có thể điều chỉnh vị trí chính xác`2`. Thuật toán tiếp tục đúng một bước nữa. 
 
 Một trường hợp chẵn lẻ tinh tế hơn là:```
 5

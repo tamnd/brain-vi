@@ -21,12 +21,12 @@ draft: false
 **Thời gian giải:** 1 phút 10 giây 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được yêu cầu suy nghĩ về việc xây dựng một hình bao gồm các ô vuông đơn vị được vẽ trên một lưới, trong đó mỗi ô vuông được phác thảo bằng các đoạn đơn vị ngang và dọc. Mỗi đoạn có thể nằm ngang hoặc dọc và mỗi đoạn có độ dài chính xác là một. 
 
-Sofia vẽ từng hình vuông một, nhưng cô ấy lười biếng theo một cách đặc biệt: bất cứ khi nào cô ấy muốn vẽ một đoạn, trước tiên cô ấy sẽ kiểm tra xem đoạn đó chính xác đã tồn tại ở đâu đó trong bản vẽ hay chưa. Nếu nó tồn tại, cô ấy có thể tái sử dụng nó làm “hướng dẫn” và vẽ nó với giá rẻ. Nếu nó chưa tồn tại, cô ấy phải vẽ nó từ đầu bằng thước kẻ. 
+Sofia vẽ từng hình vuông một, nhưng cô ấy lười theo một cách đặc biệt: bất cứ khi nào cô ấy muốn vẽ một đoạn, trước tiên cô ấy kiểm tra xem đoạn đó chính xác đã tồn tại ở đâu đó trong bản vẽ hay chưa. Nếu nó tồn tại, cô ấy có thể tái sử dụng nó làm “hướng dẫn” và vẽ nó với giá rẻ. Nếu nó chưa tồn tại, cô ấy phải vẽ nó từ đầu bằng thước kẻ. 
 
 Đại lượng chính là số đoạn đơn vị riêng biệt phải được tạo từ đầu trong toàn bộ quá trình vẽ n hình vuông đơn vị. Chúng ta có thể tự do đặt các hình vuông theo bất kỳ cấu hình nào trên lưới để tối đa hóa các cạnh được chia sẻ giữa chúng, vì các cạnh được chia sẻ sẽ làm giảm số lượng phân đoạn mới. 
 
@@ -48,7 +48,7 @@ Quan sát quan trọng là cấu hình tối ưu tạo thành các khối hình 
 
 Nếu chúng ta xem xét một khối k x k, nó chứa k2 ô vuông và số đoạn đơn vị riêng biệt của nó tỷ lệ thuận với cấu trúc chu vi của nó, có tỷ lệ là O(k). Điều này cho thấy các khối vuông lớn cực kỳ hiệu quả. Tuy nhiên, vì không phải lúc nào chúng ta cũng có thể đạt được số lượng hình vuông hoàn hảo nên chúng ta có thể cần kết hợp nhiều khối gần như hình vuông hoặc mở rộng hình chữ nhật theo một chiều. 
 
-Việc xây dựng tối ưu hóa ra phụ thuộc vào việc phân tách n thành các lớp gồm đầy đủ các hàng hoặc cột, giảm thiểu các phân đoạn ranh giới lộ ra ở mỗi bước. Giải pháp giảm xuống việc trích xuất liên tục lớp hình vuông lớn nhất có thể và tích lũy các đóng góp.
+Việc xây dựng tối ưu hóa ra phụ thuộc vào việc phân tách n thành các lớp gồm đầy đủ hàng hoặc cột, giảm thiểu các phân đoạn ranh giới lộ ra ở mỗi bước. Giải pháp giảm xuống việc trích xuất liên tục lớp hình vuông lớn nhất có thể và tích lũy các đóng góp.
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -69,7 +69,7 @@ Mỗi lần lặp lại sẽ trích xuất cấu trúc “hiệu quả” nhất
 
 Tại sao nó hoạt động: 
 
-Bất biến chính là sau khi đặt khối k × k, mọi cấu hình tối ưu còn lại không thể được hưởng lợi từ việc thay thế khối đó bằng hình dạng không vuông có cùng diện tích mà không làm tăng mức hiển thị ranh giới. Trong số tất cả các hình có diện tích cố định, hình vuông giảm thiểu chu vi và trong cài đặt riêng biệt này, chu vi tương ứng trực tiếp với số đoạn mới phải được vẽ. Vì mỗi phân đoạn mới tương ứng với một cạnh lộ ra không được chia sẻ nên việc giảm thiểu ranh giới tương đương với việc giảm thiểu các phân đoạn mới được vẽ. Việc trích xuất tham lam hình vuông lớn nhất đảm bảo rằng ở mỗi bước, chúng tôi giảm thiểu chi phí cận biên trong khi vẫn duy trì sự tối ưu cho khu vực chưa được khám phá còn lại. 
+Bất biến chính là sau khi đặt khối k × k, mọi cấu hình tối ưu còn lại không thể được hưởng lợi từ việc thay thế khối đó bằng hình dạng không phải hình vuông có cùng diện tích mà không làm tăng mức hiển thị ranh giới. Trong số tất cả các hình có diện tích cố định, hình vuông giảm thiểu chu vi và trong cài đặt riêng biệt này, chu vi tương ứng trực tiếp với số đoạn mới phải được vẽ. Vì mỗi phân đoạn mới tương ứng với một cạnh lộ ra không được chia sẻ nên việc giảm thiểu ranh giới tương đương với việc giảm thiểu các phân đoạn mới được vẽ. Việc trích xuất tham lam hình vuông lớn nhất đảm bảo rằng ở mỗi bước, chúng tôi giảm thiểu chi phí cận biên trong khi vẫn duy trì sự tối ưu cho khu vực chưa được khám phá còn lại. 
 
 ## Giải pháp Python```python
 import sys
@@ -94,7 +94,7 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Việc thực hiện tuân theo ý tưởng phân rã trực tiếp. Chúng ta liên tục tính căn bậc hai số nguyên của n còn lại để xác định khối vuông lớn nhất mà chúng ta có thể tạo thành. chức năng`cost(k)`nắm bắt số lượng phân đoạn mới được giới thiệu bởi khối k by k, tỷ lệ này theo chiều dài biên của nó. 
+```Việc thực hiện tuân theo ý tưởng phân rã trực tiếp. Chúng ta liên tục tính căn bậc hai số nguyên của n còn lại để xác định khối vuông lớn nhất mà chúng ta có thể tạo thành. chức năng`cost(k)`nắm bắt số lượng phân đoạn mới được giới thiệu bởi khối k by k, tỷ lệ với độ dài biên của nó. 
 
 Vòng lặp tiếp tục cho đến khi tất cả các ô vuông được gán cho các khối. Việc sử dụng`isqrt`đảm bảo sự ổn định về số và tránh các lỗi dấu phẩy động. 
 
@@ -134,7 +134,7 @@ Dấu vết này cho thấy cách thuật toán phân tách các giá trị tùy
 | Thời gian | O(√n) | Mỗi lần lặp sẽ loại bỏ ít nhất k2 ô vuông và k giảm khi n co lại | 
 | Không gian | O(1) | Chỉ sử dụng một số lượng biến không đổi | 
 
-Số lần lặp được giới hạn bởi số kích thước hình vuông riêng biệt có thể xuất hiện trong quá trình phân tách, tỷ lệ tối đa với √n. Với n lên tới 10^9, điều này dễ dàng đủ nhanh. 
+Số lần lặp được giới hạn bởi số lượng kích thước hình vuông riêng biệt có thể xuất hiện trong quá trình phân rã, tỷ lệ này nhiều nhất là tỷ lệ với √n. Với n lên tới 10^9, điều này đủ nhanh. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io

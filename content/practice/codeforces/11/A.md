@@ -20,7 +20,7 @@ draft: false
 **Thời gian giải:** 1 phút 24s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi có một mảng các số nguyên và chúng tôi muốn mọi phần tử trở nên lớn hơn phần tử trước nó. Thao tác duy nhất được phép là chọn một phần tử duy nhất và tăng nó lên một cách chính xác`d`. Mỗi lần sử dụng thao tác này được tính là một lần di chuyển. 
@@ -76,14 +76,14 @@ Trình tự các giá trị có thể truy cập là:```
 
 Cách tiếp cận vũ phu rất đơn giản. Chúng tôi quét mảng từ trái sang phải. Bất cứ khi nào`a[i]`không thực sự lớn hơn`a[i-1]`, chúng tôi liên tục thêm`d`cho đến khi điều kiện trở thành đúng. Mỗi lần bổ sung được tính là một lần di chuyển. 
 
-Phương pháp này đúng vì mọi thao tác chỉ làm tăng phần tử hiện tại và việc làm cho nó lớn hơn sớm hơn không bao giờ có thể ảnh hưởng đến các vị trí trong tương lai. Vấn đề là hiệu quả. Nếu như`d = 1`và khoảng cách lớn, chúng ta có thể thực hiện nhiều phép cộng riêng lẻ. Trong trường hợp xấu nhất, các giá trị có thể tăng lên hàng triệu, khiến số lần lặp vòng lặp lớn một cách không cần thiết. 
+Phương pháp này đúng vì mọi thao tác chỉ làm tăng phần tử hiện tại và việc làm cho nó lớn hơn sớm hơn không bao giờ có thể ảnh hưởng đến các vị trí trong tương lai. Vấn đề là hiệu quả. Nếu như`d = 1`và khoảng cách lớn, chúng ta có thể thực hiện nhiều phép cộng riêng lẻ. Trong trường hợp xấu nhất, các giá trị có thể tăng lên hàng triệu, khiến số lần lặp vòng lặp trở nên lớn một cách không cần thiết. 
 
 Ví dụ:```
 2 1
 1000000 1
 ```Phần tử thứ hai sẽ yêu cầu 1.000.000 lần lặp của một vòng lặp. 
 
-Điểm mấu chốt là chúng ta không bao giờ cần phải mô phỏng từng phần bổ sung một. Đối với giá trị hiện tại`x`và yêu cầu tối thiểu`need`, chúng ta có thể tính toán trực tiếp số lần bổ sung cần thiết. 
+Điểm mấu chốt là chúng ta không bao giờ cần phải mô phỏng từng phần bổ sung một. Đối với một giá trị hiện tại`x`và yêu cầu tối thiểu`need`, chúng ta có thể tính toán trực tiếp số lần bổ sung cần thiết. 
 
 Chúng tôi muốn:```
 x + k*d > previous
@@ -125,7 +125,7 @@ a[i] += ops * d
 
 Thuật toán duy trì bất biến sau khi xử lý chỉ số`i`, tiền tố`a[0...i]`đang tăng lên một cách nghiêm ngặt với số lượng hoạt động tối thiểu có thể. 
 
-Khi xử lý`a[i]`, giá trị trước đó đã được cố định một cách tối ưu. Bất kỳ giá trị cuối cùng hợp lệ nào cho`a[i]`phải lớn hơn`a[i-1]`. Việc chọn giá trị nhỏ nhất có thể đạt tới như vậy luôn là tối ưu vì việc tạo`a[i]`lớn không cần thiết chỉ làm cho các yếu tố trong tương lai khó đáp ứng hơn. Vì mọi thao tác đều thay đổi giá trị một cách chính xác`d`, bộ phận trần tính toán chính xác số lượng hoạt động tối thiểu được yêu cầu. 
+Khi xử lý`a[i]`, giá trị trước đó đã được cố định một cách tối ưu. Bất kỳ giá trị cuối cùng hợp lệ nào cho`a[i]`phải lớn hơn`a[i-1]`. Việc chọn giá trị nhỏ nhất có thể đạt tới như vậy luôn là tối ưu vì việc tạo`a[i]`lớn không cần thiết chỉ làm cho các yếu tố trong tương lai khó đáp ứng hơn. Vì mọi thao tác đều thay đổi giá trị một cách chính xác`d`, bộ phận trần sẽ tính toán chính xác số lượng hoạt động tối thiểu được yêu cầu. 
 
 ## Giải pháp Python```python
 import sys
@@ -194,7 +194,7 @@ Mảng cuối cùng:```
 1 4 7 10 13
 ```Trả lời:```
 10
-```Ví dụ này thể hiện hiệu ứng xếp tầng. Mọi giá trị được cập nhật sẽ trở thành giới hạn dưới cho vị trí tiếp theo. 
+```Ví dụ này cho thấy hiệu ứng xếp tầng. Mọi giá trị được cập nhật sẽ trở thành giới hạn dưới cho vị trí tiếp theo. 
 
 ## Phân tích độ phức tạp 
 
@@ -299,7 +299,7 @@ Số tăng cần thiết là:```
 Cuối cùng, hãy xem xét một chuỗi đã hợp lệ:```
 4 10
 1 20 30 40
-```Mọi phần tử đều thỏa mãn bất đẳng thức chặt chẽ. Điều kiện:```
+```Mọi phần tử đều thỏa mãn bất đẳng thức nghiêm ngặt. Điều kiện:```
 if a[i] <= a[i - 1]:
 ```không bao giờ kích hoạt, vì vậy câu trả lời vẫn còn`0`. 
 

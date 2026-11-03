@@ -21,18 +21,18 @@ draft: false
 **Thời gian giải:** 10 phút 9 giây 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cấp một chuỗi trộn các chữ cái viết thường đơn giản với hai ký hiệu đặc biệt luôn xuất hiện ngay sau một chữ cái. Một ký hiệu hoạt động giống như một công cụ sửa đổi yếu cho phép giữ lại hoặc xóa ký tự trước đó. Cái còn lại là một công cụ sửa đổi mạnh hơn cho phép giữ lại, xóa hoặc lặp lại chữ cái trước đó nhiều lần. Nhiệm vụ của chúng ta là quyết định xem có thể diễn giải những lựa chọn này sao cho chuỗi mở rộng thu được có độ dài chính xác hay không.`k`và nếu có thể, hãy tạo bất kỳ chuỗi kết quả hợp lệ nào. 
 
-Một cách hữu ích để hình dung về chuỗi là một chuỗi các “khối chữ cái”. Mỗi khối đóng góp một chữ cái cộng với tính linh hoạt tùy chọn tùy thuộc vào việc nó có theo sau không có ký hiệu hay không, một`?`hoặc một`*`. Một chữ cái đơn giản không có tính linh hoạt và phải đóng góp chính xác một ký tự. MỘT`?`đưa ra lựa chọn giữa việc đóng góp 0 hoặc một bản sao bức thư của mình. MỘT`*`đưa ra lựa chọn giữa việc đóng góp số 0 hoặc bất kỳ số lượng bản sao dương nào của bức thư. 
+Một cách hữu ích để hình dung về chuỗi là một chuỗi các “khối chữ cái”. Mỗi khối đóng góp một chữ cái cộng với tính linh hoạt tùy chọn tùy thuộc vào việc nó có theo sau không có ký hiệu hay không, một`?`, hoặc một`*`. Một chữ cái đơn giản không có tính linh hoạt và phải đóng góp chính xác một ký tự. MỘT`?`đưa ra lựa chọn giữa việc đóng góp 0 hoặc một bản sao bức thư của mình. MỘT`*`đưa ra lựa chọn giữa việc đóng góp số 0 hoặc bất kỳ số lượng bản sao dương nào của bức thư. 
 
 Khó khăn chính không phải là quyết định liệu một giải pháp có tồn tại theo nghĩa tham lam hay không, mà là quản lý tổng chiều dài mà chúng ta có thể mở rộng hoặc thu nhỏ trên tất cả các khối trong khi vẫn tôn trọng những ràng buộc này. 
 
 Các ràng buộc nhỏ, với tổng độ dài tối đa là 200 và độ dài mục tiêu lên tới 200. Điều này loại bỏ mọi nhu cầu về cấu trúc dữ liệu nâng cao hoặc tìm kiếm theo cấp số nhân. Quét tuyến tính trực tiếp với việc đếm có kiểm soát là đủ. 
 
-Một chế độ thất bại ngây thơ xuất hiện khi ai đó tham lam mở rộng mọi`*`hoặc luôn loại bỏ các ký tự bên dưới`?`mà không theo dõi ràng buộc độ dài toàn cầu. Ví dụ, nếu chuỗi là`ab*`Và`k = 10`, luôn lấy các lựa chọn tối thiểu sẽ tạo ra độ dài 2 và kết luận không chính xác là không thể nếu nó không xem xét đến tiềm năng mở rộng. 
+Một chế độ thất bại ngây thơ xuất hiện khi ai đó tham lam mở rộng mọi`*`hoặc luôn loại bỏ các ký tự bên dưới`?`mà không theo dõi ràng buộc độ dài toàn cầu. Ví dụ, nếu chuỗi là`ab*`Và`k = 10`, luôn lấy các lựa chọn tối thiểu sẽ tạo ra độ dài 2 và kết luận không chính xác là không thể nếu nó không xem xét tiềm năng mở rộng. 
 
 Một vấn đề tế nhị khác là xử lý từng công cụ sửa đổi một cách độc lập. Hạn chế thực sự mang tính toàn cầu: chúng ta phải đạt được một con số chính xác, do đó các quyết định địa phương phải được phối hợp. 
 
@@ -69,7 +69,7 @@ Ngược lại, chúng ta xây dựng kết quả bằng cách bắt đầu từ
 1. Phân tích chuỗi thành một danh sách các khối chữ cái, trong đó mỗi khối lưu trữ ký tự và kiểu bổ nghĩa của nó (không có,`?`, hoặc`*`). Điều này cho phép chúng ta suy luận ở cấp khối thay vì cấp chuỗi thô. 
 2. Đếm độ dài cơ sở là số chữ cái. Đây là điểm khởi đầu trước khi xóa hoặc mở rộng. 
 3. Tính độ dài tối thiểu có thể đạt được bằng cách xử lý mọi`?`Và`*`dưới dạng xóa, nghĩa là mỗi khối như vậy có thể đóng góp bằng 0 thay vì một. Điều này mang lại kích thước đầu ra nhỏ nhất có thể. 
-4. Tính độ dài tối đa có thể đạt được bằng cách giả sử mọi`*`có thể mở rộng tùy ý. Vì chỉ có các ngôi sao mới cho phép tăng trưởng không giới hạn, hãy đếm xem có bao nhiêu ngôi sao tồn tại và coi chúng như những “nguồn tăng trưởng” tiềm năng đến mức giới hạn`k`. 
+4. Tính độ dài tối đa có thể đạt được bằng cách giả sử mọi`*`có thể mở rộng tùy ý. Vì chỉ các ngôi sao mới cho phép tăng trưởng không giới hạn, hãy đếm xem có bao nhiêu ngôi sao tồn tại và coi chúng như những “nguồn tăng trưởng” tiềm năng đến mức giới hạn`k`. 
 5. Nếu`k`nhỏ hơn mức tối thiểu hoặc lớn hơn mức tối đa, đầu ra`Impossible`bởi vì không có sự phân công lựa chọn nào có thể đạt đến kích thước chính xác đó. 
 6. Bắt đầu xây dựng câu trả lời một cách tham lam bằng cách lặp lại các khối và theo dõi xem còn bao nhiêu ký tự cần được loại bỏ hoặc thêm vào để đạt được`k`. 
 7. Đối với mỗi chữ cái thông thường (không có từ bổ nghĩa), hãy luôn đưa nó vào đầu ra vì đây là điều bắt buộc. 

@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 8m 7s 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một chuỗi cố định và nhiều truy vấn chuỗi con. Đối với mỗi truy vấn, chúng tôi lấy chuỗi con và tính tổng cụ thể trên tất cả các hậu tố của nó. 
@@ -34,7 +34,7 @@ Khó khăn đến từ việc cả số lượng truy vấn lẫn độ dài c�
 
 Một cách tiếp cận ngây thơ cũng che giấu một cái bẫy thứ hai: hàm Z chỉ phụ thuộc vào cấu trúc bên trong của chuỗi con. Nó không tương thích trực tiếp với việc cắt tùy ý trừ khi chúng tôi mô hình hóa cẩn thận cách hoạt động của các kết quả khớp giữa các vị trí trong chuỗi gốc. 
 
-Một số tình huống khó khăn minh họa cho việc các phương pháp tiếp cận bất cẩn đều thất bại. Nếu chuỗi con không đổi như`"aaaaa"`, mọi hậu tố đều khớp hoàn toàn và câu trả lời tăng dần theo phương trình bậc hai. Nếu tất cả các ký tự đều khác biệt thì mọi giá trị Z tối đa là 1 và câu trả lời sẽ trở thành tuyến tính. Bất kỳ giải pháp nào giả định các giá trị Z nhỏ “điển hình” sẽ thất bại trong trường hợp hoàn toàn bằng nhau, trong khi các giải pháp cố gắng tính toán lại việc so khớp bằng cách quét các cặp sẽ thất bại trên các khối lớn lặp lại. 
+Một số tình huống khó khăn minh họa cho việc các phương pháp tiếp cận bất cẩn đều thất bại. Nếu chuỗi con không đổi như`"aaaaa"`, mọi hậu tố đều khớp hoàn toàn và câu trả lời tăng dần theo phương trình bậc hai. Nếu tất cả các ký tự đều khác biệt thì mọi giá trị Z tối đa là 1 và câu trả lời sẽ trở thành tuyến tính. Bất kỳ giải pháp nào giả định các giá trị Z nhỏ “điển hình” sẽ thất bại trong trường hợp hoàn toàn bằng nhau, trong khi các giải pháp cố gắng tính toán lại sự so khớp bằng cách quét các cặp sẽ thất bại trên các khối lớn lặp lại. 
 
 ## Phương pháp tiếp cận 
 
@@ -65,7 +65,7 @@ Giải pháp tiêu chuẩn sử dụng thứ tự mảng quét qua hậu tố k�
 
 ## Hướng dẫn thuật toán 
 
-1. Xây dựng mảng hậu tố của chuỗi. Điều này sắp xếp tất cả các hậu tố theo từ điển, cho phép chúng ta suy luận về cấu trúc LCP cục bộ thay vì phải tính toán lại các phép so sánh nhiều lần. 
+1. Xây dựng mảng hậu tố của chuỗi. Điều này sắp xếp tất cả các hậu tố theo từ điển, cho phép chúng ta suy luận về cấu trúc LCP cục bộ thay vì phải tính toán lại các so sánh nhiều lần. 
 2. Tính mảng LCP cho các hậu tố liền kề theo thứ tự mảng hậu tố. Điều này cung cấp tiền tố chung dài nhất giữa các hậu tố lân cận và mã hóa ngầm tất cả thông tin LCP theo cặp thông qua RMQ. 
 3. Với mỗi hậu tố, ghi lại vị trí của nó trong mảng hậu tố. Điều này cho phép chúng ta dịch vị trí bắt đầu chuỗi con thành thứ hạng của nó theo thứ tự hậu tố. 
 4. Diễn giải lại truy vấn trên chuỗi con`[l, r]`khi hoạt động trên các hậu tố bắt đầu từ các vị trí`l..r`. Mỗi hậu tố đóng góp dựa trên mức độ phù hợp với hậu tố tại`l`. 
@@ -187,7 +187,7 @@ Một truy vấn`[2,3]`tương ứng với`"bb"`.
 
 Tổng là 3. 
 
-Điều này cho thấy rằng các ký tự lặp lại tạo ra các kết quả khớp xếp tầng, đó chính xác là những gì mà việc phân nhóm dựa trên LCP nắm bắt được. 
+Điều này cho thấy rằng các ký tự lặp lại tạo ra các kết quả trùng khớp xếp tầng, đó chính xác là những gì mà việc phân nhóm dựa trên LCP nắm bắt được. 
 
 Vì`[1,3]`→`"abb"`: 
 

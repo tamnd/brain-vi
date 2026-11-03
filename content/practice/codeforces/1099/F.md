@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 6m 43s 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta có một cây có gốc trong đó mỗi đỉnh chứa một đống bánh quy. Mỗi đỉnh cũng có chi phí để ăn một chiếc bánh quy ở đỉnh đó và mọi cạnh từ nút đến nút gốc của nó đều có chi phí để di chuyển lên dọc theo đỉnh đó. Một con chip bắt đầu từ gốc. 
@@ -57,14 +57,14 @@ Chúng ta phát biểu lại vấn đề bằng cách kiểm tra xem liệu số
 2. Chúng tôi xác định trạng thái DP tại mỗi nút biểu thị thời gian tối thiểu cần thiết để thu thập tối đa k cookie trong cây con của nó trong khi tôn trọng rằng chỉ một nhánh con có thể được khai thác triệt để do chặn đối thủ. DP tính đến cả chuyển động đi xuống và quay trở lại. 
 3. Chúng ta thực hiện duyệt cây theo thứ tự sau để các phần tử con được xử lý trước phần tử cha. Điều này đảm bảo rằng khi xử lý một nút, chúng tôi đã biết kết quả tốt nhất có thể đạt được từ tất cả các nút con. 
 4. Đối với mỗi nút, chúng tôi xem xét hai thành phần: thu thập cookie tại chính nút đó và có thể mở rộng thành một cây con được chọn. Vì chỉ có một đường dẫn tiếp tục khả thi khi xóa cạnh đối thủ, nên chúng tôi lấy những gì tốt nhất trong số các phần tử con thay vì tính tổng chúng. 
-5. Chúng tôi kết hợp chi phí di chuyển l_i khi chuyển đổi giữa cha mẹ và con và chúng tôi đảm bảo rằng việc quay trở lại gốc bao gồm chi phí biên đi lên tích lũy dọc theo đường dẫn đã chọn. 
+5. Chúng tôi kết hợp chi phí di chuyển l_i khi chuyển đổi giữa cha mẹ và con cái và chúng tôi đảm bảo rằng việc quay lại gốc bao gồm chi phí cạnh đi lên tích lũy dọc theo đường dẫn đã chọn. 
 6. Chúng tôi cũng tính đến chi phí ăn uống t_i trên mỗi chiếc bánh quy bằng cách coi việc thu thập bánh quy là thời gian tiêu tốn tỷ lệ thuận với số lượng bánh quy chúng tôi chọn ở mỗi nút, cho đến ngân sách còn lại cần thiết để đạt được k. 
 7. Sau khi tính toán tính khả thi của DP cho một k nhất định, chúng tôi kiểm tra xem tổng thời gian có nằm trong T hay không. Nếu khả thi, chúng tôi thử k lớn hơn, nếu không thì k nhỏ hơn, bằng cách sử dụng tìm kiếm nhị phân. 
 8. Câu trả lời cuối cùng là k lớn nhất vượt qua tính khả thi. 
 
 ### Tại sao nó hoạt động 
 
-Mô hình xóa đối thủ thu gọn tất cả các lựa chọn phân nhánh thành một đường dẫn được thực thi duy nhất, bởi vì Mitya chỉ có thể hưởng lợi từ một chuỗi con còn sống sót trên mỗi phân đoạn trò chơi. Mọi nỗ lực phân phối bộ sưu tập trên nhiều cây con đều có thể bị gián đoạn do Vasya loại bỏ các phần tiếp theo thay thế, do đó, cách chơi tối ưu luôn tập trung vào một đường dẫn tốt nhất từ ​​bất kỳ nút nào trở xuống. DP nắm bắt được điều này bằng cách luôn chọn phần tiếp theo con tốt nhất thay vì tổng hợp nhiều cây con. Tính đơn điệu trong k đảm bảo tính chính xác của tìm kiếm nhị phân: nếu k cookie có thể đạt được thì mọi số nhỏ hơn cũng có thể đạt được theo cùng cấu trúc chiến lược. 
+Mô hình xóa đối thủ thu gọn tất cả các lựa chọn phân nhánh thành một đường dẫn được thực thi duy nhất, bởi vì Mitya chỉ có thể hưởng lợi từ một chuỗi con còn sống sót trên mỗi phân đoạn trò chơi. Mọi nỗ lực phân phối bộ sưu tập trên nhiều cây con đều có thể bị gián đoạn do Vasya loại bỏ các phần tiếp theo thay thế, do đó cách chơi tối ưu luôn tập trung vào một đường dẫn tốt nhất từ ​​bất kỳ nút nào trở xuống. DP nắm bắt được điều này bằng cách luôn chọn phần tiếp theo con tốt nhất thay vì tổng hợp nhiều cây con. Tính đơn điệu trong k đảm bảo tính chính xác của tìm kiếm nhị phân: nếu k cookie có thể đạt được thì mọi số nhỏ hơn cũng có thể đạt được theo cùng cấu trúc chiến lược. 
 
 ## Giải pháp Python```python
 import sys
@@ -167,7 +167,7 @@ Dấu vết này cho thấy chỉ có một nhánh con đóng góp có ý nghĩa
 1 1 1
 1 1
 1 1
-```Ở đây mọi nút đều đối xứng. DP chọn một chuỗi đơn từ gốc đến một chuỗi con, vì việc kết hợp cả hai chuỗi con là không thể theo mô hình. Kiểm tra tính khả thi khẳng định k = 3 là có thể nhưng k = 4 thì không. 
+```Ở đây mọi nút đều đối xứng. DP chọn một chuỗi đơn từ gốc đến một chuỗi con, vì việc kết hợp cả hai chuỗi con là không thể theo mô hình. Việc kiểm tra tính khả thi khẳng định k = 3 là có thể nhưng k = 4 thì không. 
 
 ## Phân tích độ phức tạp 
 
@@ -176,7 +176,7 @@ Dấu vết này cho thấy chỉ có một nhánh con đóng góp có ý nghĩa
 | Thời gian | O(n log S) | tìm kiếm nhị phân trên tổng số cookie S, mỗi lần kiểm tra là O(n) DFS | 
 | Không gian | O(n) | danh sách kề và mảng DP | 
 
-Kích thước cây lên tới 100000 giúp cho việc chuyển tuyến tính trở nên khả thi và độ sâu tìm kiếm nhị phân khoảng 20 đảm bảo giải pháp vẫn hoạt động tốt trong giới hạn. 
+Kích thước cây lên tới 100000 giúp cho việc chuyển đổi tuyến tính trở nên khả thi và độ sâu tìm kiếm nhị phân khoảng 20 đảm bảo giải pháp vẫn hoạt động tốt trong giới hạn. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io
