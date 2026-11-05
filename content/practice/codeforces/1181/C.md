@@ -1,6 +1,6 @@
 ---
 title: "CF 1181C - Cờ"
-description: "Chúng ta có một lưới hình chữ nhật có n hàng và m cột, trong đó mỗi ô đã có một trong ba màu. Mục đích là sơn lại một số ô để lưới cuối cùng trông giống như một mẫu “cờ” gồm ba sọc ngang. Mỗi sọc phải trải dài toàn bộ chiều rộng của lưới."
+description: "Chúng ta có một lưới hình chữ nhật có n hàng và m cột, trong đó mỗi ô đã có một trong ba màu. Mục đích là sơn lại một số ô để lưới cuối cùng trông giống như mẫu “cờ” gồm ba sọc ngang. Mỗi sọc phải trải dài toàn bộ chiều rộng của lưới."
 date: "2026-06-13T11:10:25+07:00"
 tags: ["codeforces", "competitive-programming", "brute-force", "combinatorics", "dp", "implementation"]
 categories: ["algorithms"]
@@ -24,7 +24,7 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được cho một lưới hình chữ nhật có`n`hàng và`m`cột, trong đó mỗi ô đã có một trong ba màu. Mục đích là sơn lại một số ô để lưới cuối cùng trông giống như một mẫu “cờ” gồm ba sọc ngang. 
+Chúng ta được cho một lưới hình chữ nhật có`n`hàng và`m`cột, trong đó mỗi ô đã có một trong ba màu. Mục đích là sơn lại một số ô để lưới cuối cùng trông giống như mẫu “cờ” gồm ba sọc ngang. 
 
 Mỗi sọc phải trải dài toàn bộ chiều rộng của lưới. Sọc trên cùng có một màu đồng nhất, sọc giữa có màu đồng nhất khác và sọc dưới cùng có màu đồng nhất thứ ba. Các màu phải là hoán vị của ba màu có sẵn nên mỗi màu được sử dụng đúng một lần nhưng thứ tự dọc của chúng không cố định trước. 
 
@@ -32,9 +32,9 @@ Lưới rất tốn kém để sơn lại từng ô, vì vậy chúng tôi muố
 
 Đầu ra là số lượng ô được sơn lại tối thiểu cần thiết để chuyển đổi lưới đã cho thành bất kỳ cấu hình cờ ba sọc hợp lệ nào. 
 
-Các ràng buộc ngụ ý rằng một cách tiếp cận ngây thơ phải cực kỳ cẩn thận với sự phức tạp. Với tối đa vài nghìn hàng và cột, bất kỳ giải pháp nào cố gắng tính toán lại toàn bộ chi phí lưới cho mỗi lần phân chia có thể theo cách đơn giản sẽ không thành công, vì việc kiểm tra một cấu hình đã chạm đến tất cả.`n × m`các ô và số lượng ranh giới sọc là bậc hai trong`n`. Điều này thúc đẩy chúng tôi tiến tới việc tính toán trước và tái sử dụng các kết quả từng phần. 
+Các ràng buộc ngụ ý rằng một cách tiếp cận đơn giản phải cực kỳ cẩn thận với độ phức tạp. Với tối đa vài nghìn hàng và cột, bất kỳ giải pháp nào cố gắng tính toán lại toàn bộ chi phí lưới cho mọi phân chia có thể theo cách đơn giản sẽ không thành công, vì việc kiểm tra một cấu hình đã chạm đến tất cả.`n × m`các ô và số ranh giới sọc là bậc hai trong`n`. Điều này thúc đẩy chúng tôi hướng tới việc tính toán trước và sử dụng lại các kết quả từng phần. 
 
-Một vài trường hợp đặc biệt quan trọng trong thực tế. Nếu tất cả các ô đã tạo thành một lưới một màu hoàn hảo, câu trả lời không phải là 0 trừ khi màu đó có thể chiếm cả ba sọc một cách nhất quán, điều này là không thể vì các sọc phải có màu khác nhau. Một trường hợp phức tạp khác là khi một màu chiếm ưu thế trong một cột hoặc hàng; việc sơn lại tham lam ngây thơ trên mỗi cột có thể thất bại vì cấu trúc tối ưu mang tính toàn cục trên toàn bộ lưới chứ không phải độc lập trên mỗi cột. 
+Một số trường hợp đặc biệt quan trọng trong thực tế. Nếu tất cả các ô đã tạo thành một lưới một màu hoàn hảo, câu trả lời không phải là 0 trừ khi màu đó có thể chiếm cả ba sọc một cách nhất quán, điều này là không thể vì các sọc phải có màu khác nhau. Một trường hợp phức tạp khác là khi một màu chiếm ưu thế trong một cột hoặc hàng; việc sơn lại tham lam ngây thơ trên mỗi cột có thể thất bại vì cấu trúc tối ưu mang tính toàn cầu trên toàn bộ lưới, không độc lập trên mỗi cột. 
 
 Một trường hợp thất bại đặc biệt tinh tế xuất hiện khi các điểm phân chia tối ưu không “rõ ràng cục bộ”. Ví dụ: ngay cả khi nửa trên của hàng trông chủ yếu có một màu, ranh giới tối ưu có thể dịch chuyển một hàng nếu điều đó làm giảm chi phí sơn lại trên nhiều cột cùng một lúc. Đây chính xác là nơi mà lực lượng vũ phu trở nên đắt đỏ nhưng việc tính toán tiền tố có cấu trúc lại trở nên mạnh mẽ. 
 
@@ -74,7 +74,7 @@ Chi phí của mỗi phân đoạn được tính bằng cách sử dụng tổn
 
 ### Tại sao nó hoạt động 
 
-Đối với bất kỳ phân đoạn và màu hàng cố định nào, mỗi ô sẽ đóng góp độc lập vào chi phí: nó khớp với màu mục tiêu hoặc không. Vì các hàng độc lập và các đóng góp thêm tuyến tính nên chúng tôi có thể nén từng hàng thành số lượng cho mỗi màu một cách an toàn mà không làm mất thông tin. Tổng tiền tố đảm bảo chính xác các truy vấn phân đoạn, do đó, mọi cấu hình đề xuất đều được đánh giá chính xác mà không cần kiểm tra lại lưới. 
+Đối với bất kỳ phân đoạn và màu hàng cố định nào, mỗi ô sẽ đóng góp độc lập vào chi phí: nó khớp với màu mục tiêu hoặc không. Vì các hàng độc lập và các đóng góp thêm tuyến tính nên chúng ta có thể nén mỗi hàng thành số lượng cho mỗi màu một cách an toàn mà không làm mất thông tin. Tổng tiền tố đảm bảo chính xác các truy vấn phân đoạn, do đó, mọi cấu hình đề xuất đều được đánh giá chính xác mà không cần kiểm tra lại lưới. 
 
 ## Giải pháp Python```python
 import sys
@@ -132,7 +132,7 @@ if __name__ == "__main__":
     solve()
 ```Quá trình triển khai bắt đầu bằng cách nén mỗi hàng thành ba số đếm, mỗi số một màu. Điều này loại bỏ sự cần thiết phải xem lại từng ô riêng lẻ trong quá trình đánh giá. Sau đó, mảng tiền tố chuyển đổi số lượng theo hàng thành hỗ trợ truy vấn phạm vi để bất kỳ phân đoạn sọc nào cũng có thể được đánh giá trong thời gian không đổi. 
 
-chức năng`get`là sự trừu tượng hóa chính giúp biến một khoảng hàng thành số lượng ô đã chính xác cho màu đã chọn. Tính toán chi phí cuối cùng sử dụng tổng số ô trừ đi các ô được tô màu chính xác, giúp tránh logic trừ lặp lại. 
+chức năng`get`là sự trừu tượng hóa khóa biến một khoảng hàng thành số lượng ô đã chính xác cho màu đã chọn. Tính toán chi phí cuối cùng sử dụng tổng số ô trừ đi các ô được tô màu chính xác, giúp tránh logic trừ lặp đi lặp lại. 
 
 Ba vòng lặp lồng nhau`i`,`j`và các hoán vị đều an toàn vì mọi công việc nặng nhọc đã được tính toán trước. 
 
@@ -191,7 +191,7 @@ Tổng số trận đấu = 3, chi phí = 6.
 | Thời gian | O(n² · 6 + n·m) | tiền xử lý hàng cộng với tất cả các kiểm tra phân tách và hoán vị | 
 | Không gian | O(n · 3) | tổng tiền tố cho ba màu trên các hàng | 
 
-Giải pháp phù hợp thoải mái trong những hạn chế vì giá thành đắt`n × m`quét lưới chỉ được thực hiện một lần. Tất cả các đánh giá tiếp theo đều giảm xuống số học theo thời gian không đổi, khiến cho việc liệt kê bậc hai trên các phần tách hàng đều khả thi đối với các giới hạn điển hình lên tới vài nghìn hàng. 
+Giải pháp phù hợp thoải mái trong những hạn chế vì giá thành đắt`n × m`quét lưới chỉ được thực hiện một lần. Tất cả các đánh giá tiếp theo đều giảm xuống số học theo thời gian không đổi, khiến cho việc liệt kê bậc hai trên các phần tách hàng đều khả thi đối với các giới hạn thông thường lên tới vài nghìn hàng. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io
@@ -265,4 +265,4 @@ Trường hợp tất cả các hàng đều có điểm nổi bật giống h�
 
 Một trường hợp tế nhị khác xảy ra khi`n = 3`. Ở đây có chính xác một phép chia hợp lệ`(0,1)`và bất kỳ lỗi nào trong ranh giới phân đoạn sẽ ngay lập tức phá vỡ tính chính xác. Logic tổng tiền tố đảm bảo rằng mỗi phân đoạn được đánh giá với các giới hạn bao gồm được căn chỉnh chính xác, do đó không có hàng nào bị tính hai lần hoặc bị bỏ sót. 
 
-Trường hợp cạnh cuối cùng là khi giải pháp tốt nhất chỉ định thứ tự màu khác với phân phối đầu vào tự nhiên. Bởi vì tất cả sáu hoán vị đều được kiểm tra nên thuật toán không giả sử bất kỳ ánh xạ cố định nào, ngăn chặn sự thiên vị ẩn đối với thứ tự đầu vào.
+Trường hợp cạnh cuối cùng là khi giải pháp tốt nhất chỉ định thứ tự màu khác với phân phối đầu vào tự nhiên. Bởi vì tất cả sáu hoán vị đều được kiểm tra nên thuật toán không giả định bất kỳ ánh xạ cố định nào, ngăn chặn sự thiên vị ẩn đối với thứ tự đầu vào.

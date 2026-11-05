@@ -24,19 +24,19 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được yêu cầu đếm số cách sắp xếp binh lính của Caesar, bao gồm một số lính hầu và kỵ binh nhất định, sao cho không quá một số cố định cùng loại đứng liên tiếp. Cụ thể, nếu nhiều hơn`k1`người hầu xuất hiện liên tiếp hoặc nhiều hơn`k2`kỵ binh xuất hiện liên tiếp, đội hình đó không hợp lệ. Mỗi người lính cùng loại đều không thể phân biệt được nên chúng tôi chỉ quan tâm đến trình tự các loại chứ không quan tâm đến danh tính cá nhân. Mục tiêu là tính tổng số chuỗi hợp lệ theo modulo 100.000.000. 
+Chúng ta được yêu cầu đếm số cách sắp xếp binh lính của Caesar, bao gồm một số lính hầu và kỵ binh nhất định, sao cho không quá một số cố định cùng loại đứng liên tiếp. Cụ thể, nếu nhiều hơn`k1`người hầu xuất hiện liên tiếp hoặc nhiều hơn`k2`kỵ binh xuất hiện liên tiếp, đội hình đó không hợp lệ. Mỗi người lính cùng loại đều không thể phân biệt được nên chúng tôi chỉ quan tâm đến trình tự của các loại chứ không quan tâm đến danh tính cá nhân. Mục tiêu là tính tổng số chuỗi hợp lệ theo modulo 100.000.000. 
 
 Đầu vào bao gồm bốn số nguyên:`n1`Và`n2`(số lượng lính bộ binh và kỵ binh), và`k1`Và`k2`(tối đa cho phép người đi bộ và kỵ binh liên tiếp). Đầu ra là một số nguyên duy nhất biểu thị số lượng tất cả các dòng hợp lệ. 
 
 Các ràng buộc đủ nhỏ để cho phép giải pháp quy hoạch động. Với`n1`Và`n2`lên tới 100, bất kỳ thuật toán nào có độ phức tạp bậc ba đều tiềm ẩn rủi ro, nhưng độ phức tạp bậc hai thì an toàn. Từ`k1`Và`k2`tối đa là 10, chúng ta có thể theo dõi số đếm liên tiếp một cách hiệu quả mà không làm nổ tung không gian trạng thái. 
 
-Một trường hợp cạnh không rõ ràng xảy ra khi một trong hai`n1`hoặc`n2`nhỏ hơn tương ứng của nó`k`. Ví dụ, nếu`n1 = 1`,`n2 = 2`,`k1 = 10`,`k2 = 1`, logic ngây thơ luôn cố gắng mở rộng chuỗi lên đến`k1`có thể tạo ra các chuỗi vượt quá số lượng người hầu sẵn có. Một trường hợp cạnh khác là khi`k1 = k2 = 1`và quân lính luân phiên nghiêm ngặt; thiếu điều này dẫn đến lỗi từng cái một. 
+Một trường hợp cạnh không rõ ràng xảy ra khi một trong hai`n1`hoặc`n2`nhỏ hơn tương ứng của nó`k`. Ví dụ, nếu`n1 = 1`,`n2 = 2`,`k1 = 10`,`k2 = 1`, logic ngây thơ luôn cố gắng mở rộng chuỗi lên tới`k1`có thể tạo ra các chuỗi vượt quá số lượng người hầu sẵn có. Một trường hợp cạnh khác là khi`k1 = k2 = 1`và quân lính luân phiên nghiêm ngặt; thiếu điều này dẫn đến lỗi từng cái một. 
 
 ## Phương pháp tiếp cận 
 
 Một cách tiếp cận bạo lực sẽ tạo ra tất cả các chuỗi có độ dài`n1 + n2`với chính xác`n1`người hầu và`n2`kỵ binh, sau đó lọc ra các chuỗi vi phạm giới hạn liên tiếp. Điều này đúng nhưng không khả thi. Số dãy là hệ số nhị thức`C(n1 + n2, n1)`phát triển cực kỳ nhanh chóng; vì`n1 = n2 = 100`, con số này rất lớn về mặt thiên văn, khoảng 10^58, vượt xa mọi khả năng tính toán. 
 
-Điểm mấu chốt là vấn đề này có các bài toán con chồng chéo với cấu trúc đệ quy rõ ràng. Hãy xem xét việc xây dựng một chuỗi hợp lệ từ trái sang phải. Nếu nhóm cuối cùng là người đi bộ thì chúng ta biết có bao nhiêu người đi bộ liên tiếp đã được xếp vào. Người lính tiếp theo có thể tiếp tục nhóm này (nếu chúng tôi chưa đạt được`k1`) hoặc chuyển sang kỵ binh. This naturally lends itself to dynamic programming. Chúng tôi xác định`dp[f][h][last]`là số lượng trình tự hợp lệ bằng cách sử dụng`f`người hầu và`h`kỵ sĩ, kết thúc bằng một nhóm chiều dài liên tiếp`last`thuộc loại hiện tại. Chúng tôi chỉ cần theo dõi số lượng liên tiếp cho loại được mở rộng và chúng tôi luân phiên giữa người hầu và kỵ binh theo cách đệ quy. 
+Điểm mấu chốt là vấn đề này có các bài toán con chồng chéo với cấu trúc đệ quy rõ ràng. Hãy xem xét việc xây dựng một chuỗi hợp lệ từ trái sang phải. Nếu nhóm cuối cùng là người đi bộ thì chúng ta biết có bao nhiêu người đi bộ liên tiếp đã được xếp vào. Người lính tiếp theo có thể tiếp tục nhóm này (nếu chúng tôi chưa đạt được`k1`) hoặc chuyển sang kỵ binh. Điều này đương nhiên phù hợp với lập trình động. Chúng tôi xác định`dp[f][h][last]`là số lượng trình tự hợp lệ bằng cách sử dụng`f`người hầu và`h`kỵ sĩ, kết thúc bằng một nhóm chiều dài liên tiếp`last`thuộc loại hiện tại. Chúng tôi chỉ cần theo dõi số lượng liên tiếp cho loại được mở rộng và chúng tôi luân phiên giữa người hầu và người cưỡi ngựa theo cách đệ quy. 
 
 Bằng cách ghi nhớ các bài toán con này, chúng tôi giảm độ phức tạp theo cấp số nhân xuống mức DP khối có thể quản lý được là`O(n1 * n2 * max(k1, k2))`. 
 
@@ -47,8 +47,8 @@ Bằng cách ghi nhớ các bài toán con này, chúng tôi giảm độ phức
 
 ## Hướng dẫn thuật toán 
 
-1. Khởi tạo mảng DP 3D`dp[f][h][t]`, Ở đâu`f`là những người lính còn lại,`h`là những kỵ sĩ còn lại, và`t`cho biết người lính được thêm vào cuối cùng là bộ binh (0) hay kỵ sĩ (1). Mỗi mục lưu trữ số lượng chuỗi hợp lệ cho trạng thái đó. 
-2. Các trường hợp cơ bản là khi một trong hai`f = 0`hoặc`h = 0`. Nếu như`f = 0`, chúng ta chỉ có thể thêm các chuỗi kỵ binh có độ dài tối đa`k2`, và tương tự cho`h = 0`với người hầu. Chúng tôi khởi tạo các chuỗi có độ dài 1 cho từng loại lính. 
+1. Khởi tạo mảng DP 3D`dp[f][h][t]`, Ở đâu`f`là những người lính còn lại,`h`là những kỵ binh còn lại, và`t`cho biết người lính được thêm vào cuối cùng là bộ binh (0) hay kỵ sĩ (1). Mỗi mục lưu trữ số lượng chuỗi hợp lệ cho trạng thái đó. 
+2. Các trường hợp cơ bản là khi một trong hai`f = 0`hoặc`h = 0`. Nếu như`f = 0`, chúng ta chỉ có thể thêm tối đa các chuỗi kỵ binh có độ dài`k2`, và tương tự cho`h = 0`với người hầu. Chúng tôi khởi tạo các chuỗi có độ dài 1 cho từng loại lính. 
 3. Đối với mỗi trạng thái DP`(f, h, t)`, hãy xem xét mở rộng chuỗi với cùng loại nếu không vượt quá giới hạn liên tiếp hoặc chuyển sang loại khác. Tích lũy số lượng từ tất cả các tiện ích mở rộng hợp lệ. 
 4. Lặp lại tất cả số lượng lính liên tiếp có thể có cho đến`k1`cho người hầu và`k2`dành cho kỵ binh khi mở rộng chuỗi, để tính đến các chuỗi kết thúc với độ dài liên tiếp khác nhau. 
 5. Sau khi điền DP, tính tổng tất cả các trạng thái tương ứng với chính xác`n1`người hầu và`n2`kỵ binh, kết thúc bằng người hầu hoặc kỵ binh. 
@@ -108,7 +108,7 @@ Kết quả là 1. Chỉ có dãy 121 là hợp lệ. Bảng xác nhận trình 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | O(n1 * n2 * max(k1, k2)) | Vòng lặp ba: cho mỗi vòng`f`,`h`, lặp qua các độ dài liên tiếp lên tới`k1`hoặc`k2`| 
+| Thời gian | O(n1 * n2 * max(k1, k2)) | Vòng lặp ba: cho mỗi vòng`f`,`h`, lặp qua các độ dài liên tiếp lên đến`k1`hoặc`k2`| 
 | Không gian | O(n1 * n2 * 2) | Mảng 3D cho người hầu, kỵ binh, loại cuối | 
 
 Thuật toán phù hợp thoải mái trong giới hạn thời gian 2 giây và bộ nhớ 256 MB. Vì`n1 = n2 = 100`Và`k1 = k2 = 10`, số lượng hoạt động là khoảng 200.000, có thể chấp nhận được. 

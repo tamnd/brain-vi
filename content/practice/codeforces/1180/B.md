@@ -30,13 +30,13 @@ Nhiệm vụ là chọn, một cách độc lập cho mọi vị trí, kết th�
 
 Ràng buộc$n \le 10^5$buộc một giải pháp tuyến tính hoặc gần tuyến tính. Bất cứ điều gì liên quan đến tương tác theo cặp giữa các phần tử, chẳng hạn như kiểm tra sự kết hợp hoặc mô phỏng các lựa chọn trên toàn cầu, sẽ ngay lập tức trở nên quá chậm vì thậm chí$O(n^2)$đã rồi$10^{10}$hoạt động. 
 
-Một vài trường hợp tế nhị quan trọng ở đây. Nếu tất cả các số đều dương thì phép biến đổi có thể tạo ra các giá trị âm, điều này sẽ làm tổn hại đến kết quả, vì vậy chúng ta mong muốn tránh điều đó. Nếu các số âm, việc biến đổi chúng có thể làm cho chúng trở thành số dương, điều này giúp cải thiện đáng kể sản phẩm. Zero cư xử đặc biệt vì nó biến thành$-1$, điều này tệ hơn khi nhân, vì vậy nó thường không thay đổi. Khó khăn chính là việc tối ưu hóa sản phẩm thường yêu cầu các dấu hiệu cân bằng trên toàn cầu, điều này có thể gợi ý sự kết hợp giữa các quyết định, nhưng ở đây mỗi phần tử chỉ có hai trạng thái độc lập, giúp đơn giản hóa cấu trúc. 
+Một vài trường hợp tế nhị quan trọng ở đây. Nếu tất cả các số đều dương thì phép biến đổi có thể tạo ra các giá trị âm, điều này sẽ gây tổn hại cho kết quả, vì vậy chúng ta mong muốn tránh điều đó. Nếu số âm, việc chuyển đổi chúng có thể làm cho chúng dương, điều này cải thiện đáng kể sản phẩm. Zero cư xử đặc biệt vì nó biến thành$-1$, điều này tệ hơn khi nhân, vì vậy nó thường không thay đổi. Khó khăn chính là việc tối ưu hóa sản phẩm thường yêu cầu các dấu hiệu cân bằng trên toàn cầu, điều này có thể gợi ý sự kết hợp giữa các quyết định, nhưng ở đây mỗi phần tử chỉ có hai trạng thái độc lập, giúp đơn giản hóa cấu trúc. 
 
 ## Phương pháp tiếp cận 
 
 Cách tiếp cận bạo lực sẽ thử mọi sự kết hợp các lựa chọn, xử lý từng phần tử như một quyết định nhị phân giữa$a_i$Và$-a_i-1$. Điều này dẫn đến$2^n$mảng có thể. Ngay cả đối với$n = 30$, điều này trở nên không khả thi, và tại$n = 10^5$nó hoàn toàn không thể được. Tính đúng đắn là hiển nhiên vì nó liệt kê tất cả các khả năng, nhưng sự tăng trưởng theo cấp số nhân khiến nó không thể sử dụng được. 
 
-Quan sát quan trọng là mỗi phần tử có thể được tối ưu hóa cục bộ mà không tạo ra các tương tác toàn cầu có hại. Việc chuyển đổi mang tính liên quan, nghĩa là mỗi giá trị có chính xác hai tùy chọn và không có cấu trúc nào khác ngoài điều đó. Chúng tôi so sánh hai ứng cử viên cho mỗi chỉ số: giá trị ban đầu$a_i$, và giá trị được chuyển đổi$-a_i - 1$. Điều đáng ngạc nhiên là việc chọn giá trị lớn hơn trong hai giá trị này cho mỗi chỉ số một cách độc lập là đủ. 
+Quan sát quan trọng là mỗi phần tử có thể được tối ưu hóa cục bộ mà không tạo ra các tương tác toàn cầu có hại. Việc chuyển đổi có tính liên quan, nghĩa là mỗi giá trị có chính xác hai tùy chọn và không có cấu trúc nào khác ngoài tùy chọn đó. Chúng tôi so sánh hai ứng cử viên cho mỗi chỉ số: giá trị ban đầu$a_i$, và giá trị được chuyển đổi$-a_i - 1$. Điều đáng ngạc nhiên là việc chọn giá trị lớn hơn trong hai giá trị này cho mỗi chỉ số một cách độc lập là đủ. 
 
 Lý do điều này hoạt động là vì các giá trị được chọn luôn không âm hoặc tệ nhất là bằng 0, loại bỏ hoàn toàn xung đột dấu hiệu. Khi tất cả các số đều không âm, việc tối đa hóa tích sẽ giảm xuống mức tối đa hóa từng yếu tố một cách độc lập vì việc tăng bất kỳ yếu tố đơn lẻ nào cũng không thể làm giảm tích. 
 
@@ -165,6 +165,6 @@ assert run("4\n-1 -1 -1 -1\n") == "0 0 0 0"
 
 ## Vỏ cạnh 
 
-Trường hợp cạnh khóa là khi giá trị là$-1$. Trong trường hợp này, phép biến đổi mang lại$0$, điều này hoàn toàn tốt hơn cho sản phẩm vì số 0 không gây ra vấn đề về dấu hiệu và lớn hơn$-1$. Thuật toán chuyển đổi chính xác mọi$-1$vào trong$0$, phù hợp với việc tối đa hóa sản phẩm. 
+Trường hợp cạnh khóa là khi giá trị là$-1$. Trong trường hợp này, phép biến đổi mang lại$0$, điều này thực sự tốt hơn cho sản phẩm vì số 0 không gây ra vấn đề về dấu hiệu và lớn hơn$-1$. Thuật toán chuyển đổi chính xác mọi$-1$vào trong$0$, phù hợp với việc tối đa hóa sản phẩm. 
 
 Một trường hợp tế nhị khác chính là số 0. Zero biến thành$-1$, tệ hơn cả về giá trị và đóng góp của sản phẩm, vì vậy thuật toán giữ nó không thay đổi. Điều này đảm bảo số 0 đóng vai trò là yếu tố trung lập trong sản phẩm cuối cùng, thay vì tạo ra các yếu tố tiêu cực có thể làm giảm kết quả tổng thể.

@@ -1,5 +1,5 @@
 ---
-title: "CF 118B - Quà của Lena"
+title: "CF 118B - Quà từ Lena"
 description: "Chúng ta cần in một viên kim cương đối xứng được làm từ các con số. Hàng giữa chứa các số tăng dần từ 0 đến n, sau đó giảm dần về 0. Mọi hàng trên và dưới đều tuân theo cùng một mẫu với giá trị tối đa nhỏ hơn."
 date: "2026-05-28T00:00:00+07:00"
 tags: ["codeforces", "competitive-programming", "constructive-algorithms", "implementation"]
@@ -34,7 +34,7 @@ Ví dụ, khi`n = 3`, hàng giữa là:```
 
 Phần khó khăn là định dạng. Các hàng phải được căn chỉnh thành hình thoi bằng cách sử dụng khoảng trắng ở đầu. Các số liền kề trong một hàng cách nhau đúng một dấu cách và không bao giờ được có dấu cách ở cuối dòng. 
 
-Ràng buộc là rất nhỏ, vì`n ≤ 9`. Ngay cả một giải pháp rất kém hiệu quả cũng sẽ phù hợp một cách thoải mái trong thời gian giới hạn. Thách thức thực sự là độ chính xác của việc triển khai, đặc biệt là khoảng cách và tính đối xứng. 
+Ràng buộc là rất nhỏ, vì`n ≤ 9`. Ngay cả một giải pháp rất kém hiệu quả cũng sẽ phù hợp một cách thoải mái trong thời gian giới hạn. Thách thức thực sự là độ chính xác khi triển khai, đặc biệt là khoảng cách và tính đối xứng. 
 
 Một lỗi phổ biến là in thêm dấu cách ở cuối dòng. Ví dụ: với đầu vào:```
 2
@@ -99,14 +99,14 @@ Hàng càng xa trung tâm thì càng cần thụt lề. Mỗi cấp độ số b
 4. Xây dựng dãy tăng dần từ`0`ĐẾN`i`. 
 
 Điều này tạo thành nửa bên trái của hàng và bao gồm giá trị cao nhất. 
-5. Xây dựng dãy giảm dần từ`i - 1`xuống`0`. 
+5. Xây dựng dãy giảm dần từ`i - 1`xuống tới`0`. 
 
 Chúng tôi bắt đầu từ`i - 1`để tránh trùng lặp số đỉnh. 
 6. Nối cả hai chuỗi và nối chúng bằng dấu cách đơn. 
 
 sử dụng`" ".join(...)`đảm bảo khoảng cách chính xác và tự động tránh dấu cách. 
 7. In hàng với phần thụt lề của nó. 
-8. Lặp lại logic tương tự cho các hàng từ`n - 1`xuống`0`. 
+8. Lặp lại logic tương tự cho các hàng từ`n - 1`xuống tới`0`. 
 
 Điều này tạo ra nửa đối xứng phía dưới của hình thoi. 
 
@@ -145,7 +145,7 @@ Phần tăng có công dụng:```
 range(i + 1)
 ```vậy giá trị đỉnh`i`được bao gồm. 
 
-Phần giảm dần sử dụng:```
+Phần giảm có công dụng:```
 range(i - 1, -1, -1)
 ```bắt đầu một bước dưới mức đỉnh. Điều này ngăn ngừa sự trùng lặp giá trị trung tâm. 
 

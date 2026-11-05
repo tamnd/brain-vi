@@ -24,7 +24,7 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Hai người nắm giữ một số lượng tiền tệ và có thể tùy ý chuyển số tiền nguyên cho nhau trước khi chi tiêu. Mỗi đơn vị tiền tệ mua được một mặt hàng với số lượng lớn`z`, nghĩa là mỗi người độc lập chuyển đổi tiền của mình thành`floor(money / z)`mặt hàng. Mục tiêu là phân phối lại tổng số tiền giữa hai người sao cho tổng số phần chia sàn này là lớn nhất. Sau khi tìm ra cách phân phối lại tốt nhất có thể, chúng ta cũng cần giảm thiểu số tiền được chuyển giữa chúng trong khi vẫn đạt được số lượng mặt hàng tối đa đó. 
+Hai người nắm giữ một số lượng tiền tệ và có thể tùy ý chuyển số tiền nguyên cho nhau trước khi chi tiêu. Mỗi đơn vị tiền tệ mua được một mặt hàng với số lượng lớn`z`, nghĩa là mỗi người độc lập chuyển đổi tiền của mình thành`floor(money / z)`mặt hàng. Mục tiêu là phân phối lại tổng số tiền giữa hai người sao cho tổng số lần chia sàn này là lớn nhất. Sau khi tìm ra cách phân phối lại tốt nhất có thể, chúng ta cũng cần giảm thiểu số tiền được chuyển giữa chúng trong khi vẫn đạt được số lượng mặt hàng tối đa đó. 
 
 Đối tượng chính là chức năng`f(t) = floor(t / z)`. Tổng số điểm là`f(x') + f(y')`Ở đâu`x' + y' = x + y`. Việc chuyển đổi bảo toàn tổng số tiền, vì vậy vấn đề trở thành làm thế nào để chia một số tiền cố định thành hai phần để tối đa hóa tổng số tầng. 
 
@@ -32,15 +32,15 @@ Các ràng buộc đi lên đến`10^18`, điều này ngay lập tức loại t
 
 Trường hợp cạnh tinh tế xuất hiện khi cả hai`x`Và`y`đã là bội số của`z`. Trong trường hợp đó, không có giao dịch chuyển nhượng nào có thể cải thiện kết quả và bất kỳ giao dịch chuyển nhượng nào cũng chỉ có nguy cơ làm giảm tổng số tiền. Một trường hợp quan trọng khác là khi một người chỉ có ít hơn bội số của một chút.`z`, vì việc chuyển một số lượng nhỏ xu có thể đẩy chúng vượt quá giới hạn và tăng mức đóng góp của chúng lên 1. 
 
-Ví dụ, nếu`z = 5`,`x = 4`,`y = 1`, sau đó không cần chuyển nhượng cả hai đều đóng góp`0`. Nhưng di chuyển 1 đồng xu sẽ khiến`(5, 0)`, tăng tổng số lên`1`. Điều này cho thấy rằng chỉ có việc chuyển giao xuyên ranh giới mới quan trọng. 
+Ví dụ, nếu`z = 5`,`x = 4`,`y = 1`, sau đó không cần chuyển nhượng cả hai đều đóng góp`0`. Nhưng di chuyển 1 đồng xu sẽ khiến`(5, 0)`, tăng tổng số lên`1`. Điều này cho thấy chỉ có việc chuyển giao xuyên ranh giới mới quan trọng. 
 
 ## Phương pháp tiếp cận 
 
-Ý tưởng bạo lực là thử mọi cách có thể để di chuyển`k`tiền từ người này sang người khác, ở đâu`k`dao động từ`-x`ĐẾN`y`. Đối với mỗi lần chia`(x + k, y - k)`, tính toán`floor((x + k)/z) + floor((y - k)/z)`và theo dõi kết quả tốt nhất. Điều này đúng vì nó liệt kê tất cả các lần phân phối lại hợp lệ. Tuy nhiên, phạm vi của`k`có thể lên tới`10^18`, khiến điều này hoàn toàn không thể thực hiện được. 
+Ý tưởng bạo lực là thử mọi cách có thể để di chuyển`k`tiền từ người này sang người khác, ở đâu`k`dao động từ`-x`ĐẾN`y`. Đối với mỗi lần chia`(x + k, y - k)`, tính toán`floor((x + k)/z) + floor((y - k)/z)`và theo dõi kết quả tốt nhất. Điều này đúng vì nó liệt kê tất cả các lần phân phối lại hợp lệ. Tuy nhiên, phạm vi của`k`có thể lên đến`10^18`, khiến điều này hoàn toàn không thể thực hiện được. 
 
 Quan sát quan trọng là`floor(t / z)`chỉ thay đổi khi`t`vượt qua bội số của`z`. Điều này có nghĩa là những chuyển giao hữu ích duy nhất là những chuyển giao đẩy một trong hai`x`hoặc`y`qua bội số gần nhất của`z`. Bất kỳ khoản chuyển nhượng bổ sung nào ngoài việc đạt bội số đều không có tác dụng gì hoặc làm giảm giá trị sàn của bên kia. 
 
-Vì vậy, thay vì tìm kiếm tất cả các phần tách, chúng tôi chỉ kiểm tra một số lượng ứng viên không đổi: phần chia hiện tại và các điều chỉnh di chuyển từng giá trị lên hoặc xuống đến bội số gần nhất của`z`. Vì giá trị của mỗi người chỉ quan trọng theo modulo`z`, vấn đề trở thành lý luận về số dư và cách chúng có thể được trao đổi để tạo thành các khối có kích thước hoàn chỉnh`z`. 
+Vì vậy, thay vì tìm kiếm tất cả các phần tách, chúng tôi chỉ kiểm tra một số lượng ứng cử viên không đổi: phần chia hiện tại và các điều chỉnh di chuyển từng giá trị lên hoặc xuống đến bội số gần nhất của`z`. Vì giá trị của mỗi người chỉ quan trọng theo modulo`z`, vấn đề trở thành lý luận về số dư và cách chúng có thể được trao đổi để tạo thành các khối có kích thước hoàn chỉnh`z`. 
 
 Chúng tôi tính tổng số tiền`S = x + y`. Số lượng mục tối đa có thể luôn luôn là`S // z`, vì chuyển khoản không thể thay đổi tổng số tiền. Nhiệm vụ duy nhất còn lại là đảm bảo rằng giới hạn này có thể đạt được và xác định mức truyền tối thiểu cần thiết để đạt được cấu hình trong đó cả hai bên đều căn chỉnh tối ưu với bội số của`z`. 
 
@@ -62,7 +62,7 @@ Chiến lược tối ưu là cố gắng làm cho một bên càng gần bội 
 
 ### Tại sao nó hoạt động 
 
-Hàm sàn chỉ thay đổi khi một giá trị vượt qua bội số của`z`. Bất kỳ sự chuyển giao nào không làm thay đổi thương số của một trong hai bên đều không liên quan đến mục tiêu. Vì vậy, lời giải tối ưu phải nằm ở ranh giới có ít nhất một cạnh chia hết cho`z`. Trong số tất cả các động thái tiếp cận ranh giới như vậy, việc giảm thiểu số tiền được chuyển tương đương với việc giảm thiểu khoảng cách đến bội số gần nhất của`z`ở hai bên. Điều này làm giảm toàn bộ vấn đề tối ưu hóa đối với các điều chỉnh còn lại cục bộ. 
+Hàm sàn chỉ thay đổi khi một giá trị vượt qua bội số của`z`. Bất kỳ sự chuyển giao nào không làm thay đổi thương số của một trong hai bên đều không liên quan đến mục tiêu. Vì vậy, lời giải tối ưu phải nằm ở ranh giới có ít nhất một cạnh chia hết cho`z`. Trong số tất cả các động thái tiếp cận ranh giới như vậy, việc giảm thiểu số tiền được chuyển tương đương với việc giảm thiểu khoảng cách đến bội số gần nhất của`z`ở hai bên. Điều này làm giảm toàn bộ vấn đề tối ưu hóa đối với việc điều chỉnh phần dư cục bộ. 
 
 ## Giải pháp Python```python
 import sys
@@ -82,7 +82,7 @@ else:
     # minimal transfer to make one side reach a multiple of z
     ans_move = min(rx, ry)
     print(max_coconuts, ans_move)
-```Phần đầu tính toán tổng số dừa một cách chặt chẽ từ bất biến mà việc phân phối lại không làm thay đổi tổng số tiền. Phần còn lại`rx`Và`ry`ghi lại khoảng cách mỗi người có thể tạo thành một khối dừa đầy đủ bổ sung. Chuyển khoản tối thiểu tương ứng với việc cố định khoảng cách nhỏ hơn thành bội số của`z`. 
+```Phần thứ nhất tính toán tổng số dừa một cách chặt chẽ từ bất biến mà việc phân phối lại không làm thay đổi tổng số tiền. Phần còn lại`rx`Và`ry`ghi lại khoảng cách mỗi người có thể tạo thành một khối dừa đầy đủ bổ sung. Chuyển khoản tối thiểu tương ứng với việc cố định khoảng cách nhỏ hơn thành bội số của`z`. 
 
 ## Ví dụ đã hoạt động 
 
@@ -100,7 +100,7 @@ Ta tính số dư:`5 % 3 = 2`,`4 % 3 = 1`.
 
 Đầu ra cuối cùng là`3 1`. 
 
-Điều này cho thấy rằng việc chuyển một đồng xu là đủ để đẩy một bên sang nhiều ranh giới, cho phép đóng gói tối ưu. 
+Điều này cho thấy rằng việc chuyển một đồng xu là đủ để đẩy một bên đến nhiều ranh giới, cho phép đóng gói tối ưu. 
 
 ### Ví dụ 2 
 

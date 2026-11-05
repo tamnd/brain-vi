@@ -30,7 +30,7 @@ Nhiệm vụ có hai mục tiêu. Đầu tiên, giảm thiểu tổng chi phí s
 
 Kích thước đầu vào đủ nhỏ để chúng ta có thể đủ khả năng thử tất cả các chữ số mục tiêu từ`0`ĐẾN`9`. Độ dài chuỗi tối đa là`10^4`, vì vậy mọi giải pháp xung quanh`O(10 * n log n)`hoặc`O(10 * n)`là hoàn toàn an toàn. Cách tiếp cận bậc hai đối với tất cả các vị trí sẽ vẫn được áp dụng ở đây, nhưng chúng ta vẫn nên thiết kế logic một cách cẩn thận vì sự ràng buộc về mặt từ điển rất tinh tế. 
 
-Phần khó khăn là không tính toán chi phí tối thiểu. Phần khó khăn là đưa ra câu trả lời nhỏ nhất về mặt từ điển trong số tất cả các giải pháp có chi phí tối thiểu. 
+Phần khó khăn không phải là tính toán chi phí tối thiểu. Phần khó khăn là tạo ra câu trả lời nhỏ nhất về mặt từ điển trong số tất cả các giải pháp có chi phí tối thiểu. 
 
 Hãy xem xét ví dụ này:```
 4 3
@@ -137,7 +137,7 @@ Nếu như`d - dist >= 0`, quét chuỗi từ phải sang trái.
 Bất cứ khi nào chúng ta nhìn thấy chữ số`d - dist`và vẫn cần thêm bản sao, hãy thay thế bằng`d`. 
 
 Ở đây chúng tôi đang tăng chữ số. Trì hoãn những mức tăng này càng xa càng tốt sẽ giữ cho chuỗi nhỏ hơn về mặt từ điển. 
-7. Mỗi sự thay thế đều bổ sung thêm`dist`vào tổng chi phí và giảm`need`bởi một. 
+7. Mỗi lần thay thế đều bổ sung thêm`dist`vào tổng chi phí và giảm`need`bởi một. 
 
 Dừng lại một lần`need`trở thành số không. 
 8. So sánh ứng viên được xây dựng với ứng viên tốt nhất toàn cầu hiện tại. 
@@ -211,7 +211,7 @@ def solve():
 solve()
 ```Vòng lặp bên ngoài thử mọi chữ số có thể là chữ số lặp lại cuối cùng. Vì chỉ có mười chữ số nên phần này thực tế là không đổi. 
 
-Biến`need`theo dõi xem chúng tôi vẫn cần thêm bao nhiêu bản sao của chữ số mục tiêu. Khi nó đạt đến 0, ứng cử viên hiện tại đã hoàn thành. 
+Biến`need`theo dõi xem chúng tôi vẫn cần thêm bao nhiêu bản sao của chữ số mục tiêu. Khi nó đạt đến 0, ứng cử viên hiện tại đã hoàn tất. 
 
 Thứ tự sửa đổi là phần tế nhị nhất trong quá trình thực hiện. 
 
@@ -271,7 +271,7 @@ need = 3
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | O(10 · n) | Chúng tôi thử 10 chữ số đích và quét chuỗi một số lần không đổi | 
+| Thời gian | O(10 · n) | Chúng tôi thử 10 chữ số mục tiêu và quét chuỗi một số lần không đổi | 
 | Không gian | O(n) | Bản sao có thể thay đổi của chuỗi | 
 
 Thuật toán thoải mái phù hợp với các giới hạn. Ngay cả với`n = 10^4`, tổng khối lượng công việc chỉ khoảng vài trăm nghìn thao tác. 

@@ -167,4 +167,4 @@ assert run("4\n9000\n") == "900", "zeros at the end"
 
 ## Vỏ cạnh 
 
-Đối với đầu vào`10001`, trung điểm là chỉ số 2. Di chuyển sang trái sẽ có chỉ số 2 với phần thứ hai`001`, không hợp lệ. Di chuyển sang phải bỏ qua các số 0 đến chỉ số 3, chia thành`100`Và`1`, tổng là`101`, đó là tối thiểu. Vì`9000`, điểm giữa là 2, di chuyển sang trái mang lại kết quả`9`Và`00`, không hợp lệ; lợi suất di chuyển bên phải`90`Và`0`, tổng hợp lệ`90 + 0 = 90`. Thuật toán bỏ qua các phần tách một cách chính xác để tạo ra các số 0 đứng đầu và tìm tổng tối thiểu.
+Đối với đầu vào`10001`, trung điểm là chỉ số 2. Di chuyển sang trái sẽ có chỉ số 2 với phần thứ hai`001`, không hợp lệ. Di chuyển sang phải bỏ qua các số 0 đến chỉ số 3, chia thành`100`Và`1`, tổng là`101`, đó là tối thiểu. Vì`9000`, điểm giữa là 2, di chuyển sang trái mang lại kết quả`9`Và`00`, không hợp lệ; lợi suất di chuyển bên phải`90`Và`0`, tổng hợp lệ`90 + 0 = 90`. Thuật toán bỏ qua một cách chính xác các phần tách tạo ra các số 0 đứng đầu và tìm tổng tối thiểu.

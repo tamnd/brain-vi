@@ -18,13 +18,13 @@ draft: false
 
 **Xếp hạng:** 2000 
 **Thẻ:** dfs và các biểu đồ tương tự 
-**Thời gian giải:** 2m 16s 
+**Thời gian giải:** 2 phút 16s 
 **Đã xác minh:** không 
 
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được cung cấp một đồ thị vô hướng được kết nối đại diện cho mạng lưới đường bộ của Bertown, trong đó các điểm giao nhau là các nút và đường là các cạnh. Mỗi con đường hiện cho phép giao thông hai chiều nhưng chúng tôi có nhiệm vụ chỉ định hướng cho mỗi con đường sao cho đồ thị có hướng thu được vẫn được kết nối chặt chẽ. Khả năng kết nối mạnh mẽ có nghĩa là từ bất kỳ ngã ba nào, có thể đến mọi ngã ba khác theo đường một chiều. 
+Chúng ta được cung cấp một đồ thị vô hướng được kết nối đại diện cho mạng lưới đường bộ của Bertown, trong đó các điểm giao nhau là các nút và đường là các cạnh. Mỗi con đường hiện cho phép giao thông hai chiều nhưng chúng tôi có nhiệm vụ chỉ định hướng cho mỗi con đường sao cho đồ thị có hướng thu được vẫn được kết nối chặt chẽ. Khả năng kết nối mạnh mẽ có nghĩa là từ bất kỳ ngã ba nào cũng có thể đến mọi ngã ba khác theo đường một chiều. 
 
 Kích thước đầu vào rất đáng kể: có thể có tới 100.000 nút giao thông và 300.000 con đường. Điều này có nghĩa là bất kỳ giải pháp nào kém hơn O(n + m) có thể là quá chậm, vì n·m có thể đạt tới 10^10, vượt xa giới hạn thời gian 5 giây. Vì vậy, những cách tiếp cận ngây thơ để kiểm tra tất cả các hoán vị của hướng đường là không khả thi. 
 
@@ -131,7 +131,7 @@ if __name__ == "__main__":
 | DFS 5 | 5 | 4 | 3 | 5->6 | Sai | 
 | DFS hoàn thành | - | - | - | - | Sai | 
 
-Tất cả các cạnh được định hướng không có cầu nối, duy trì kết nối mạnh mẽ. 
+Tất cả các cạnh đều được định hướng mà không cần cầu nối, duy trì khả năng kết nối mạnh mẽ. 
 
 ### Ví dụ 2 
 
@@ -149,7 +149,7 @@ Tất cả các cạnh được định hướng không có cầu nối, duy tr�
 | Thời gian | O(n + m) | DFS truy cập mỗi nút một lần và kiểm tra tất cả các cạnh. | 
 | Không gian | O(n + m) | Danh sách kề, mảng định hướng cạnh và mảng phụ cho DFS. | 
 
-Độ phức tạp này rất phù hợp với các ràng buộc: 105 nút và 3·105 cạnh có thể được xử lý hiệu quả bằng DFS trong vòng chưa đầy một giây. 
+Độ phức tạp này rất phù hợp với các ràng buộc: 105 nút và 3·105 cạnh có thể được xử lý hiệu quả bằng DFS trong chưa đầy một giây. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io

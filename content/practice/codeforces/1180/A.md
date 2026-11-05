@@ -26,7 +26,7 @@ draft: false
 
 Chúng ta có một hình dạng phát triển trên một lưới bắt đầu từ một ô duy nhất. Ở giai đoạn đầu tiên có chính xác một ô. Ở mỗi giai đoạn tiếp theo, hình sẽ mở rộng bằng cách gắn mọi ô lưới có chung cạnh với bất kỳ ô nào đã có trong hình. Nói cách khác, mỗi bước sẽ thêm “đường viền dày một ô” đầy đủ xung quanh hình hiện tại theo bốn hướng chính. 
 
-Điều này tạo ra một mẫu giống như kim cương có tâm ở ô ban đầu. Nhiệm vụ là xác định có bao nhiêu ô lưới đơn vị sau khi hình được mở rộng chính xác.$n$lần theo quy luật này. 
+Điều này tạo ra một mô hình giống như kim cương tập trung vào ô ban đầu. Nhiệm vụ là xác định có bao nhiêu ô lưới đơn vị sau khi hình được mở rộng chính xác.$n$lần theo quy luật này. 
 
 Đầu vào là một số nguyên duy nhất$n$, Ở đâu$1 \le n \le 100$và đầu ra là tổng số ô bị chiếm trong hình dạng cuối cùng. 
 
@@ -64,7 +64,7 @@ Vì vậy, thay vì mô phỏng hình học, chúng tôi rút gọn bài toán t
 ## Hướng dẫn thuật toán 
 
 1. Đọc số nguyên$n$. Điều này thể hiện số lớp mở rộng mà chúng tôi áp dụng bắt đầu từ một ô. 
-2. Nếu$n = 1$, trả về 1 ngay lập tức vì không có sự mở rộng nào xảy ra và hình dạng vẫn là một ô đơn vị. 
+2. Nếu$n = 1$, trả về 1 ngay lập tức vì không xảy ra sự mở rộng và hình dạng vẫn là một ô đơn vị. 
 3. Tính số ô được thêm vào sau khi mở rộng như sau$2n(n-1)$. Điều này xuất phát từ việc tổng hợp kích thước của các lớp ranh giới liên tiếp. 
 4. Thêm 1 vào tài khoản cho ô trung tâm ban đầu. 
 5. Xuất kết quả cuối cùng. 
@@ -83,7 +83,7 @@ if n == 1:
     print(1)
 else:
     print(1 + 2 * n * (n - 1))
-```Giải pháp dựa hoàn toàn vào biểu thức dạng đóng. Trường hợp đặc biệt$n = 1$được xử lý rõ ràng, mặc dù công thức đã đánh giá chính xác cho$n = 1$cũng vậy. 
+```Giải pháp hoàn toàn dựa vào biểu thức dạng đóng. Trường hợp đặc biệt$n = 1$được xử lý rõ ràng, mặc dù công thức đã đánh giá chính xác cho$n = 1$cũng vậy. 
 
 biểu thức$2n(n-1)$được tính toán bằng cách sử dụng số nguyên Python, xử lý các giá trị vượt quá giới hạn một cách an toàn. Không tồn tại mối lo ngại tràn trung gian. 
 

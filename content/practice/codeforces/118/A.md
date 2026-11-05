@@ -101,7 +101,7 @@ Nếu là nguyên âm thì bỏ qua hoàn toàn.
 
 Ở mỗi bước, thuật toán duy trì tính bất biến rằng danh sách câu trả lời chứa phiên bản được chuyển đổi chính xác của tất cả các ký tự được xử lý. 
 
-Khi chúng ta gặp một nguyên âm, bài toán yêu cầu nó phải biến mất, vì vậy việc bỏ qua nó sẽ duy trì tính đúng đắn. 
+Khi chúng ta gặp một nguyên âm, bài toán yêu cầu nó phải biến mất, vì vậy việc bỏ qua nó sẽ duy trì tính chính xác. 
 
 Khi gặp một phụ âm, bài toán yêu cầu hai thao tác: chuyển nó thành chữ thường và đặt dấu chấm trước nó. Đang bổ sung`"." + lowercase_character`thực hiện chính xác các thao tác đó. 
 
@@ -131,7 +131,7 @@ các`result`danh sách lưu trữ các phụ âm được chuyển đổi. Sử 
 
 Bên trong vòng lặp, mỗi ký tự được chuẩn hóa bằng`lower()`. Nếu ký tự không phải là nguyên âm, mã sẽ thêm một dấu chấm theo sau là phụ âm viết thường. 
 
-Đầu ra cuối cùng được tạo ra với`"".join(result)`. 
+The final output is produced with`"".join(result)`. 
 
 Một chi tiết tinh tế là thứ tự thực hiện các thao tác. Chúng ta phải viết thường ký tự này trước khi kiểm tra tư cách thành viên trong bộ nguyên âm. Nếu không thì nguyên âm viết hoa như`E`hoặc`Y`sẽ sống sót một cách sai lầm. 
 
