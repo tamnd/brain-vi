@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1m 23s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi có một bảng có 3 hàng và$n$cột. Các mảnh duy nhất có sẵn là domino có kích thước$2 \times 1$, có thể được đặt theo chiều dọc hoặc chiều ngang. Nhiệm vụ là đếm xem có bao nhiêu cách khác nhau để toàn bộ$3 \times n$hình chữ nhật có thể được che phủ mà không bị chồng chéo và không để lại các ô trống. 
@@ -93,7 +93,7 @@ else:
     for _ in range(n // 2):
         ans *= 2
     print(ans)
-```Bước đầu tiên kiểm tra xem chiều rộng có phải là số lẻ hay không. Vì tổng số ô là số lẻ nên không thể che phủ hoàn toàn, nên câu trả lời ngay lập tức là 0. 
+```Bước đầu tiên kiểm tra xem chiều rộng có phải là số lẻ hay không. Vì tổng số ô là số lẻ nên không thể che phủ hoàn toàn nên câu trả lời ngay lập tức là 0. 
 
 Đối với chiều rộng chẵn, biến`ans`lưu trữ số lượng ô cho chiều rộng được xử lý hiện tại. Nó bắt đầu từ trường hợp cơ bản$f(0)=1$. Mỗi lần lặp tương ứng với việc thêm hai cột và mỗi phần mở rộng như vậy sẽ nhân đôi số lượng ô hợp lệ. 
 

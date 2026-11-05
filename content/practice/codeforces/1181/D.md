@@ -21,14 +21,14 @@ draft: false
 **Thời gian giải:** 3 phút 36 giây 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được giao một chuỗi các bài tập trước đây, trong đó mỗi bài tập$m$các thành phố đã tổ chức một sự kiện một số lần. Sau những điều này đầu tiên$n$mỗi năm, một quy tắc xác định sẽ được áp dụng: trong mỗi năm trong tương lai, thành phố tổ chức ít sự kiện nhất cho đến nay sẽ được chọn và nếu nhiều thành phố có cùng số lượng sự kiện tối thiểu thì thành phố được lập chỉ mục nhỏ nhất trong số đó sẽ được chọn. 
 
 Chúng tôi phải trả lời các truy vấn hỏi thành phố nào tổ chức sự kiện trong những năm rất lớn trong tương lai, nơi chỉ số năm có thể tăng lên$10^{18}$. Điều này ngay lập tức cho chúng ta biết rằng việc mô phỏng theo từng năm là không thể, vì ngay cả$10^5$các bước cho mỗi truy vấn sẽ vượt xa giới hạn thời gian. 
 
-Dữ liệu ban đầu xác định phân bố tần suất bắt đầu trên các thành phố. Từ thời điểm đó trở đi, quá trình này hoàn toàn mang tính quyết định và chỉ phụ thuộc vào việc duy trì mức tối thiểu động trên các tần số với sự ràng buộc theo chỉ số. 
+Dữ liệu ban đầu xác định phân bố tần suất bắt đầu trên các thành phố. Từ thời điểm đó trở đi, quá trình này hoàn toàn mang tính quyết định và chỉ phụ thuộc vào việc duy trì mức động tối thiểu trên các tần số với sự ràng buộc theo chỉ số. 
 
 Một cách tiếp cận đơn giản sẽ là mô phỏng tất cả các năm cho tới số truy vấn tối đa$k_i$. Điều này không thành công vì quá trình này có thể kéo dài tới$10^{18}$các bước và mỗi bước yêu cầu quét tối đa$m$các thành phố, dẫn tới trường hợp xấu nhất là$O(m \cdot k)$, điều đó là không thể thực hiện được. 
 
@@ -40,15 +40,15 @@ Một trường hợp thất bại minh họa nhỏ cho mô phỏng đơn giản
 n = 1, m = 3
 a = [1]
 k = 10^18
-```Ở đây, thành phố 1 bắt đầu bằng số 1, thành phố 2 và 3 bắt đầu từ 0. Trình tự bắt đầu bằng cách xen kẽ giữa 2 và 3, sau đó cuối cùng liên quan đến thành phố 1, v.v. Bất kỳ nỗ lực nào nhằm mô phỏng trực tiếp$10^{18}$là không thể. 
+```Ở đây, thành phố 1 bắt đầu bằng số 1, thành phố 2 và 3 bắt đầu từ 0. Trình tự bắt đầu bằng cách xen kẽ giữa 2 và 3, sau đó cuối cùng liên quan đến thành phố 1, v.v. Bất kỳ nỗ lực nào để mô phỏng trực tiếp$10^{18}$là không thể. 
 
 Khó khăn cốt lõi là chúng ta đang xử lý một quá trình lặp đi lặp lại để lựa chọn mức tối thiểu toàn cầu hiện tại, điều này gợi ý một quá trình tiến hóa “theo vòng” có cấu trúc thay vì mô phỏng từng bước. 
 
 ## Phương pháp tiếp cận 
 
-Ý tưởng bạo lực rất đơn giản: duy trì một loạt tần số cho mỗi thành phố. Cho mỗi năm sau$n$, quét tất cả$m$các thành phố, chọn một thành phố có tần suất tối thiểu (phá vỡ mối quan hệ theo chỉ số), tăng số lượng của nó và tiếp tục cho đến khi đạt được năm truy vấn tối đa. Điều này đúng nhưng quá chậm. Mỗi lần lựa chọn đều có giá$O(m)$và chúng tôi có thể cần tới$10^{18}$các lựa chọn, vì vậy ngay cả đối với giới hạn nhỏ hơn nhiều như$10^6$, điều này trở nên quá đắt. 
+Ý tưởng bạo lực rất đơn giản: duy trì một loạt tần số cho mỗi thành phố. Cho mỗi năm sau$n$, quét tất cả$m$thành phố, chọn một thành phố có tần suất tối thiểu (phá vỡ mối quan hệ theo chỉ số), tăng số lượng của nó và tiếp tục cho đến khi đạt được năm truy vấn tối đa. Điều này đúng nhưng quá chậm. Mỗi lần lựa chọn đều có giá$O(m)$và chúng tôi có thể cần tới$10^{18}$các lựa chọn, vì vậy ngay cả đối với giới hạn nhỏ hơn nhiều như$10^6$, điều này trở nên quá đắt. 
 
-Quan sát quan trọng là quá trình này không phải là tùy tiện. Các thành phố luôn được chọn theo thứ tự tần suất tăng dần và các mối quan hệ được giải quyết theo chỉ số. Điều này có nghĩa là hệ thống hoạt động giống như lặp đi lặp lại một chu kỳ thông qua cấu trúc được sắp xếp của các cặp (tần số, chỉ số). 
+Quan sát quan trọng là quá trình này không phải là tùy ý. Các thành phố luôn được chọn theo thứ tự tần suất tăng dần và các mối quan hệ được giải quyết theo chỉ số. Điều này có nghĩa là hệ thống hoạt động giống như lặp đi lặp lại một chu kỳ thông qua cấu trúc được sắp xếp của các cặp (tần số, chỉ số). 
 
 Thay vì suy nghĩ theo từng mức tăng riêng lẻ, chúng ta có thể nghĩ theo các lớp có tần số bằng nhau. Tại bất kỳ thời điểm nào, các thành phố có tần suất nhỏ nhất sẽ tạo thành một phân đoạn liền kề theo thứ tự sắp xếp theo (tần số, chỉ số). Những thành phố này sẽ được chọn đầu tiên trước khi bất kỳ thành phố nào có tần suất cao hơn được xem xét. Khi tất cả các thành phố ở tần suất tối thiểu hiện tại được tăng lên một lần, chúng sẽ chuyển sang lớp tiếp theo. 
 
@@ -75,11 +75,11 @@ Tiếp theo, chúng tôi tạo ra chuỗi các thành phố trong tương lai th
 
 Chúng tôi lặp lại quá trình này cho đến khi tạo đủ giá trị để trả lời tất cả các truy vấn. Vì các truy vấn có thể yêu cầu tối đa$10^{18}$, chúng tôi không thực sự đi xa đến thế; thay vào đó, chúng tôi chỉ tạo tối đa truy vấn tối đa mà thực tế có thể tiếp cận được trong thực tế sau khi quan sát tính chu kỳ hoặc dừng sớm khi tần số ổn định trên tất cả các thành phố. Về mặt triển khai, chúng tôi tạo ra cho đến khi hoàn thành tất cả các vị trí cần thiết. 
 
-Khi chuỗi được xây dựng, mỗi truy vấn sẽ được trả lời bằng cách lập chỉ mục cho nó tại vị trí$k_i - n - 1$, vì chuỗi biểu thị số năm sau lần đầu tiên$n$. 
+Khi chuỗi được xây dựng, mỗi truy vấn sẽ được trả lời bằng cách lập chỉ mục cho nó tại vị trí$k_i - n - 1$, vì chuỗi biểu thị số năm sau số đầu tiên$n$. 
 
 ### Tại sao nó hoạt động 
 
-Điều bất biến là ở mỗi bước, heap chứa chính xác tần số hiện tại của mỗi thành phố do áp dụng quy tắc lựa chọn cho đến thời điểm đó. Thứ tự đống đảm bảo rằng phần tử được trích xuất tiếp theo luôn là thành phố có tần số nhỏ nhất trên toàn cầu và trong số đó, chỉ số nhỏ nhất. Việc chèn lại với tần số tăng dần sẽ duy trì tính chính xác cho tất cả các bước trong tương lai vì tần số của thành phố khác không thay đổi ngoại trừ tần số đã chọn. Điều này phù hợp với định nghĩa chính xác của quy trình, đảm bảo rằng trình tự được tạo ra giống hệt với quá trình tiến hóa thực sự. 
+Điều bất biến là ở mỗi bước, heap chứa chính xác tần số hiện tại của mỗi thành phố do áp dụng quy tắc lựa chọn cho đến thời điểm đó. Thứ tự đống đảm bảo rằng phần tử được trích xuất tiếp theo luôn là thành phố có tần số nhỏ nhất trên toàn cầu và trong số đó, chỉ số nhỏ nhất. Việc chèn lại với tần số tăng dần sẽ duy trì tính chính xác cho tất cả các bước trong tương lai vì không có tần số nào của thành phố khác thay đổi ngoại trừ tần số đã chọn. Điều này phù hợp với định nghĩa chính xác của quy trình, đảm bảo rằng trình tự được tạo ra giống hệt với quá trình tiến hóa thực sự. 
 
 ## Giải pháp Python```python
 import sys
@@ -298,6 +298,6 @@ n = 3, m = 3
 a = [1, 2, 3]
 ```Tất cả tần số là 1. Vùng heap trở thành (1,1), (1,2), (1,3). Thuật toán luôn chọn thành phố 1, rồi 2, rồi 3 và quay vòng. Thứ tự dựa trên đống đảm bảo sự ràng buộc xác định, do đó không xuất hiện sự mơ hồ. 
 
-Một trường hợp khác là khi một thành phố thống trị số lượng ban đầu. Thành phố đó sẽ không được chọn lại cho đến khi tất cả các thành phố khác bắt kịp, vì thuật toán luôn ưu tiên tần suất tối thiểu. Vùng heap đảm bảo rằng các thành phố không được sử dụng sẽ cạn kiệt trước tiên và chỉ sau đó hệ thống mới quay trở lại các thành phố có tần số cao hơn. 
+Một trường hợp khác là khi một thành phố duy nhất thống trị số lượng ban đầu. Thành phố đó sẽ không được chọn lại cho đến khi tất cả các thành phố khác bắt kịp, vì thuật toán luôn ưu tiên tần suất tối thiểu. Vùng heap đảm bảo rằng các thành phố không được sử dụng sẽ cạn kiệt trước tiên và chỉ sau đó hệ thống mới quay trở lại các thành phố có tần số cao hơn. 
 
 Cuối cùng, khi$m = 1$, heap chứa một phần tử duy nhất. Mọi truy vấn đều trả về thành phố đó và việc chèn lại không thay đổi thứ tự. Thuật toán suy biến rõ ràng mà không cần xử lý đặc biệt ngoài các hoạt động heap tiêu chuẩn.

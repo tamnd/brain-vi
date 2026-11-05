@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 11m 19s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một lưới các ký tự đại diện cho một bức tranh, trong đó mỗi ô trống hoặc được điền. Nhiệm vụ là quyết định xem các ô đã điền có tạo thành chính xác một hình hình cộng hay không. 
@@ -32,7 +32,7 @@ Vì vậy, cấu trúc mà chúng tôi đang xác thực không chỉ “trông 
 
 Kích thước lưới có thể lớn tới 500 x 500, nghĩa là lên tới 250.000 ô. Bất kỳ giải pháp nào cố gắng quét hoặc mở rộng liên tục từ nhiều ứng cử viên theo phương pháp bậc hai hoặc tệ hơn đều có nguy cơ gây ra chi phí không cần thiết. Tuy nhiên, ngay cả việc quét tuyến tính toàn bộ trên tất cả các ô cũng hoàn toàn có thể chấp nhận được, vì 250.000 thao tác là không đáng kể. 
 
-Một số trường hợp đặc biệt sẽ phá vỡ lối suy luận ngây thơ một cách nhanh chóng. 
+Một số trường hợp đặc biệt phá vỡ lý luận ngây thơ một cách nhanh chóng. 
 
 Cạm bẫy đầu tiên là có nhiều trung tâm ứng viên. Ví dụ: nếu có hai đường sao thẳng đứng riêng biệt:```
 .*....
@@ -164,7 +164,7 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Lưới được đọc trực tiếp vào bộ nhớ và trước tiên chúng tôi đếm tất cả các ngôi sao. Điều này mang lại cho chúng ta một bất biến toàn cục được sử dụng sau này: bất kỳ sự tái tạo hợp lệ nào cũng phải khớp chính xác với tổng này. 
+```Lưới được đọc trực tiếp vào bộ nhớ và trước tiên chúng tôi đếm tất cả các ngôi sao. Điều này mang lại cho chúng ta một bất biến toàn cục được sử dụng sau này: mọi sự tái tạo hợp lệ đều phải khớp chính xác với tổng này. 
 
 các`valid`hàm giả định một ô nhất định là trung tâm và mở rộng theo cả bốn hướng cho đến khi hình dạng bị phá vỡ. Mỗi ngôi sao ghé thăm đều được ghi lại. Ý tưởng chính là một tâm đúng sẽ có thể chạm tới mọi ngôi sao chính xác một lần, vì cấu trúc là một điểm cộng duy nhất không có phân nhánh. 
 

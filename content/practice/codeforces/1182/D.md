@@ -1,6 +1,6 @@
 ---
 title: "CF 1182D - Gương hoàn chỉnh"
-description: "Chúng ta có một cây có $n$ đỉnh, được mô tả bởi các cạnh $n-1$. Cây là một đồ thị liên thông không có chu trình. Nhiệm vụ là chọn một đỉnh làm gốc sao cho tất cả các đỉnh ở cùng một khoảng cách tính từ gốc có cùng một bậc, trong đó bậc tính số cạnh được nối…"
+description: "Chúng ta có một cây có $n$ đỉnh, được mô tả bởi các cạnh $n-1$. Cây là một đồ thị liên thông không có chu trình. Nhiệm vụ là chọn một đỉnh làm gốc sao cho tất cả các đỉnh ở cùng một khoảng cách tính từ gốc đều có cùng bậc, trong đó bậc tính số cạnh được nối với nhau…"
 date: "2026-06-12T01:27:34+07:00"
 tags: ["codeforces", "competitive-programming", "constructive-algorithms", "dfs-and-similar", "dp", "hashing", "implementation", "trees"]
 categories: ["algorithms"]
@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1 phút 17s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi được tặng một cái cây với$n$đỉnh, được mô tả bởi$n-1$các cạnh. Cây là một đồ thị liên thông không có chu trình. Nhiệm vụ là chọn một đỉnh làm gốc sao cho tất cả các đỉnh ở cùng một khoảng cách tính từ gốc đều có cùng bậc, trong đó bậc tính số cạnh nối với một đỉnh. Mục tiêu của chúng ta là xác định liệu một gốc như vậy có tồn tại hay không và nếu có thì xuất ra bất kỳ đỉnh hợp lệ nào. 
@@ -54,7 +54,7 @@ Trước tiên, chúng ta tìm đỉnh xa nhất từ ​​bất kỳ điểm b
 5. Đối với mỗi gốc ứng cử viên, hãy thực hiện BFS để xếp lớp cây theo khoảng cách. Ở mỗi lớp, kiểm tra xem tất cả các đỉnh có độ giống nhau hay không. Nếu ứng viên thỏa mãn điều kiện này thì xuất ra. 
 6. Nếu không có ứng viên nào thỏa mãn điều kiện thì ghi -1. 
 
-Tại sao nó hoạt động: Điểm cuối đường kính xác định đường đi dài nhất. Chỉ các đỉnh ở hoặc gần giữa đường đi dài nhất mới có thể cân bằng các lớp khoảng cách một cách đối xứng sao cho tất cả các đỉnh ở cùng khoảng cách có cùng độ. Việc kiểm tra các lớp từ các trung tâm ứng viên này đảm bảo chúng tôi không bỏ lỡ các gốc hợp lệ đồng thời tránh được những công việc không cần thiết. 
+Tại sao nó hoạt động: Điểm cuối đường kính xác định đường đi dài nhất. Chỉ các đỉnh ở hoặc gần giữa đường đi dài nhất mới có thể cân bằng các lớp khoảng cách một cách đối xứng sao cho tất cả các đỉnh ở cùng khoảng cách có cùng độ. Việc kiểm tra các lớp từ các trung tâm ứng viên này đảm bảo chúng tôi không bỏ sót các gốc hợp lệ đồng thời tránh được những công việc không cần thiết. 
 
 ## Giải pháp Python```python
 import sys

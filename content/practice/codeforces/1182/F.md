@@ -16,15 +16,15 @@ draft: false
 
 [CF 1182F - Sin tối đa](https://codeforces.com/problemset/problem/1182/F) 
 
-**Đánh giá:** 2700 
+**Xếp hạng:** 2700 
 **Tas:** tìm kiếm nhị phân, cấu trúc dữ liệu, lý thuyết số 
 **Thời gian giải:** 7 phút 40 giây 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được cho một hàm trên các số nguyên phụ thuộc vào góc tỷ lệ của sóng hình sin. Đối với bất kỳ vị trí số nguyên nào$x$, chúng ta tính một góc tỉ lệ với$x$, cụ thể$\frac{p}{q}\pi x$và tính giá trị tuyệt đối của sin của nó. Nhiệm vụ không phải là tính giá trị lớn nhất mà là tìm số nguyên nhỏ nhất$x$bên trong một đoạn$[a, b]$nơi giá trị này trở nên lớn nhất có thể. 
+Chúng ta được cho một hàm trên các số nguyên phụ thuộc vào góc tỷ lệ của sóng hình sin. Đối với bất kỳ vị trí số nguyên nào$x$, chúng ta tính một góc tỉ lệ với$x$, cụ thể$\frac{p}{q}\pi x$, và tính giá trị tuyệt đối của sin của nó. Nhiệm vụ không phải là tính giá trị lớn nhất mà là tìm số nguyên nhỏ nhất$x$bên trong một đoạn$[a, b]$nơi giá trị này trở nên lớn nhất có thể. 
 
 Về mặt hình học, điều này tương đương với việc đi dọc theo các điểm nguyên trên dạng sóng tuần hoàn. Hàm sin dao động đều giữa$-1$Và$1$và lấy giá trị tuyệt đối sẽ gấp nửa âm lên phía dương, tạo ra các đỉnh giá trị lặp lại$1$. Thách thức chính là hàm này không đơn điệu và có vô số cực đại cục bộ trong không gian thực, nhưng chúng ta chỉ lấy mẫu các điểm nguyên trong một khoảng giới hạn. 
 
@@ -42,7 +42,7 @@ Cấu trúc của hàm được điều khiển bởi phép quay phân số$\fra
 
 Nhận xét quan trọng là giá trị của$|\sin(\theta)|$đạt cực đại khi$\theta$gần nhất với bội số lẻ của$\frac{\pi}{2}$, tức là khi$\frac{p}{q}x$gần nhất với$\frac{1}{2} + k$. Sau khi chia tỷ lệ, đây trở thành bài toán lý thuyết số tìm số nguyên$x$như vậy$px \bmod (2q)$gần nhất với$q/2$hoặc$3q/2$, là các mục tiêu đối xứng dưới sin tuyệt đối. 
 
-Thay vì quét tất cả$x$, chúng tôi giảm vấn đề xuống chỉ còn kiểm tra các điểm ứng cử viên được tạo bởi cấu trúc mô-đun. Những ứng cử viên này phát sinh từ việc giải các đồng đẳng tuyến tính có dạng$px \equiv t \pmod{2q}$, Ở đâu$t$đại diện cho vị trí đỉnh cao. Mỗi sự đồng đẳng tạo ra một cấp số cộng và chúng ta chỉ cần giá trị hợp lệ đầu tiên$x$trong phạm vi$[a, b]$. 
+Thay vì quét tất cả$x$, chúng tôi giảm vấn đề xuống chỉ còn kiểm tra các điểm ứng cử viên được tạo bởi cấu trúc mô-đun. Những ứng cử viên này phát sinh từ việc giải các đồng dư tuyến tính có dạng$px \equiv t \pmod{2q}$, Ở đâu$t$đại diện cho vị trí đỉnh cao. Mỗi sự đồng đẳng tạo ra một cấp số cộng và chúng ta chỉ cần giá trị hợp lệ đầu tiên$x$trong phạm vi$[a, b]$. 
 
 Vì chỉ có một số lượng dư lượng mục tiêu có ý nghĩa không đổi nên chúng tôi kiểm tra một tập nhỏ các ứng cử viên cho mỗi trường hợp thử nghiệm và chọn giá trị tốt nhất, phá vỡ các ràng buộc theo chỉ số nhỏ nhất. 
 

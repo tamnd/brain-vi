@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 3 phút 38 giây 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi được cung cấp một tập hợp các từ và chúng tôi muốn nhóm chúng thành nhiều “lời bài hát” hợp lệ nhất có thể. Mỗi lời bài hát sử dụng bốn từ được sắp xếp thành hai dòng, mỗi dòng hai từ. Lời bài hát chỉ hợp lệ nếu hai dòng khớp với nhau theo một cấu trúc rất cụ thể: từ đầu tiên của cả hai dòng phải có cùng số nguyên âm, từ thứ hai của cả hai dòng cũng phải có cùng số nguyên âm và nguyên âm cuối cùng xuất hiện ở mỗi dòng phải giống nhau. 
@@ -252,8 +252,8 @@ assert run("6\na\naa\naa\naa\naa\naa\n").split()[0] == "3"
 
 ## Vỏ cạnh 
 
-Trường hợp quan trọng là khi nhiều từ có cùng số nguyên âm nhưng khác nhau ở nguyên âm cuối. Thuật toán sẽ tách chúng ngay lập tức nên không xảy ra hiện tượng trộn không hợp lệ. Ví dụ: các từ kết thúc bằng các nguyên âm khác nhau không bao giờ được nhập vào cùng một nhóm, ngăn cản việc hình thành cặp không chính xác. 
+Trường hợp quan trọng là khi nhiều từ có cùng số nguyên âm nhưng khác nhau ở nguyên âm cuối. Thuật toán sẽ tách chúng ngay lập tức nên không xảy ra hiện tượng trộn không hợp lệ. Ví dụ: các từ kết thúc bằng các nguyên âm khác nhau không bao giờ được nhập vào cùng một nhóm, ngăn chặn việc hình thành cặp không chính xác. 
 
 Một trường hợp khác là các nhóm có kích thước lẻ bên trong nhóm chữ ký. Khi có số lượng từ lẻ có cấu trúc giống nhau thì có một từ không được sử dụng. Vòng lặp ghép nối tự nhiên bỏ qua nó bằng cách lặp lại theo hai bước, duy trì tính chính xác mà không cần xử lý đặc biệt. 
 
-Trường hợp thứ ba là khi tồn tại nhiều chiến lược ghép nối hợp lệ trên các nhóm. Vì tất cả các quyết định ghép nối đều mang tính cục bộ và độc lập trên mỗi chữ ký, nên mọi ghép nối tham lam đều mang lại giải pháp tối đa hợp lệ và không cần tối ưu hóa toàn cục.
+Trường hợp thứ ba là khi tồn tại nhiều chiến lược ghép nối hợp lệ trên các nhóm. Vì tất cả các quyết định ghép nối đều mang tính cục bộ và độc lập trên mỗi chữ ký, nên bất kỳ ghép nối tham lam nào cũng mang lại giải pháp tối đa hợp lệ và không cần tối ưu hóa toàn cục.

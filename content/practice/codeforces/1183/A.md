@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1 phút 17s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cho một số nguyên dương và chúng ta muốn tìm số nguyên nhỏ nhất không nhỏ hơn nó sao cho tổng các chữ số của nó chia hết cho 4. Nhiệm vụ không phải là tối ưu hóa các thuộc tính số học của chính số đó mà chỉ là điều chỉnh số đó đi lên cho đến khi điều kiện tổng chữ số này được thỏa mãn. 
@@ -30,15 +30,15 @@ Phạm vi đầu vào cực kỳ nhỏ, với giá trị lên tới 1000. Điề
 
 Hành vi của cạnh khóa xuất phát từ thực tế là việc thay đổi một số một chút có thể thay đổi đáng kể tổng chữ số của nó. Ở đây, giả định ngây thơ rằng “các số lân cận hoạt động trơn tru” là không đáng tin cậy. Ví dụ: 399 có tổng chữ số 21, trong khi 400 có tổng chữ số 4, do đó, một gia số duy nhất có thể thay đổi mạnh mẽ thuộc tính. Điều này có nghĩa là chúng ta không thể rút ra công thức trực tiếp và việc kiểm tra tăng dần là phương pháp an toàn nhất. 
 
-Một trường hợp cạnh tinh tế khác là khi số bắt đầu đã thỏa mãn điều kiện. Trong trường hợp đó, câu trả lời chính là số đó, do đó thuật toán không được bỏ qua việc kiểm tra đẳng thức. 
+Một trường hợp cạnh tinh tế khác là khi số bắt đầu đã thỏa mãn điều kiện. Trong trường hợp đó, câu trả lời chính là số đó nên thuật toán không được bỏ qua việc kiểm tra đẳng thức. 
 
 ## Phương pháp tiếp cận 
 
-Ý tưởng vũ phu rất đơn giản. Bắt đầu từ số đã cho và liên tục kiểm tra xem tổng các chữ số của nó có chia hết cho 4 hay không. Nếu không, hãy tăng số đó và thử lại. Vì mỗi lần tăng sẽ thay đổi ứng viên và giá trị tối đa chỉ là 1000 nên vòng lặp sẽ chạy tối đa vài nghìn lần lặp. 
+Ý tưởng vũ phu rất đơn giản. Bắt đầu từ số đã cho và liên tục kiểm tra xem tổng các chữ số của nó có chia hết cho 4 hay không. Nếu không, hãy tăng số đó lên và thử lại. Vì mỗi lần tăng sẽ thay đổi ứng viên và giá trị tối đa chỉ là 1000 nên vòng lặp sẽ chạy tối đa vài nghìn lần lặp. 
 
 Mỗi lần kiểm tra sẽ tính tổng các chữ số trong thời gian O(log n), đây là hằng số trong thực tế vì các số dài tối đa 4 chữ số. Ngay cả khi chúng ta bi quan giả định 1000 lần lặp thì tổng công việc cũng không đáng kể. 
 
-Không có cấu trúc có ý nghĩa nào cho phép chuyển trực tiếp sang số hợp lệ tiếp theo mà không cần kiểm tra số trung gian. Điều kiện tổng chữ số không phát triển theo cách đơn điệu hoặc có thể dự đoán được khi tăng số, do đó việc bỏ qua các giá trị có nguy cơ bỏ sót ứng cử viên hợp lệ gần nhất. 
+Không có cấu trúc có ý nghĩa nào cho phép nhảy trực tiếp tới số hợp lệ tiếp theo mà không cần kiểm tra số trung gian. Điều kiện tổng chữ số không phát triển theo cách đơn điệu hoặc có thể dự đoán được khi tăng số, do đó việc bỏ qua các giá trị có nguy cơ bỏ sót ứng cử viên hợp lệ gần nhất. 
 
 Quan sát chính chỉ đơn giản là không gian trạng thái rất nhỏ nên việc tìm kiếm toàn diện là tối ưu. 
 
@@ -51,9 +51,9 @@ Quan sát chính chỉ đơn giản là không gian trạng thái rất nhỏ n�
 
 1. Đọc số nguyên`a`. Đây là ứng cử viên khởi đầu của chúng tôi. 
 2. Xác định hàm trợ giúp tính tổng các chữ số của một số. Chúng tôi liên tục trích xuất chữ số cuối cùng bằng modulo 10 và giảm số đó bằng phép chia số nguyên cho 10. Điều này có tác dụng vì biểu diễn thập phân phân tách rõ ràng thành các phần đóng góp chữ số độc lập. 
-3. Bắt đầu vòng lặp với một biến`n`khởi tạo thành`a`. Biến này đại diện cho ứng cử viên hiện tại mà chúng tôi đang thử nghiệm. 
+3. Bắt đầu vòng lặp với một biến`n`khởi tạo để`a`. Biến này đại diện cho ứng cử viên hiện tại mà chúng tôi đang thử nghiệm. 
 4. Đối với mỗi ứng viên`n`, tính tổng các chữ số của nó. Nếu tổng chữ số modulo 4 bằng 0 thì chúng ta đã tìm được số hợp lệ nhỏ nhất vì chúng ta đang quét theo thứ tự tăng dần. 
-5. Nếu điều kiện không được thỏa mãn, hãy tăng`n`bằng 1 và lặp lại việc kiểm tra. 
+5. Nếu điều kiện không thỏa mãn thì tăng`n`bằng 1 và lặp lại việc kiểm tra. 
 6. Sau khi tìm thấy số hợp lệ, hãy xuất số đó ngay lập tức và kết thúc. 
 
 ### Tại sao nó hoạt động 
@@ -163,4 +163,4 @@ assert run("10\n") == "12", "small increment skipping invalids"
 
 Trường hợp một cạnh là khi đầu vào đã hợp lệ. Ví dụ: đầu vào 40 có tổng chữ số là 4 nên thuật toán kiểm tra 40 trước, thấy thỏa mãn điều kiện và trả về ngay mà không tăng. Điều này đảm bảo tính chính xác cho các trường hợp điều chỉnh tối thiểu. 
 
-Một trường hợp cạnh khác là chuyển tiếp mang chữ số. Đối với đầu vào 999, thuật toán sẽ kiểm tra 999 (tổng chữ số 27), sau đó là 1000 (tổng chữ số 1), sau đó tiếp tục cho đến khi đạt 1000 và cao hơn nếu cần. Điểm quan trọng là không có giả định nào được đưa ra về cách các tổng chữ số phát triển qua các lần mang, do đó việc quét thô vẫn chính xác bất kể sự gián đoạn về cấu trúc.
+Một trường hợp cạnh khác là chuyển tiếp mang chữ số. Đối với đầu vào 999, thuật toán sẽ kiểm tra 999 (tổng chữ số 27), sau đó là 1000 (tổng chữ số 1), sau đó tiếp tục cho đến khi đạt 1000 và cao hơn nếu cần. Điểm quan trọng là không có giả định nào được đưa ra về cách các tổng chữ số phát triển trên các số mang, do đó việc quét thô vẫn chính xác bất kể sự gián đoạn về cấu trúc.

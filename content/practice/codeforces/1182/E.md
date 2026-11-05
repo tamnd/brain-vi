@@ -21,12 +21,12 @@ draft: false
 **Thời gian giải:** 3 phút 41s 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cho một chuỗi được xác định bằng phép truy toán nhân. Ba giá trị đầu tiên đã được biết và mọi giá trị sau này được xây dựng từ ba giá trị trước đó bằng cách nhân chúng với nhau rồi chia tỷ lệ theo lũy thừa của một hằng số. Số mũ của hằng số đó tăng tuyến tính với chỉ số, vì vậy mỗi bước sẽ đưa vào một hệ số có cấu trúc nhưng tăng nhanh. 
 
-Nhiệm vụ là tính giá trị của số hạng thứ n theo quy tắc này, nhưng n có thể cực kỳ lớn, lên tới 10^18. Điều đó ngay lập tức loại trừ mọi mô phỏng lặp đi lặp lại của sự tái phát. Ngay cả DP tuyến tính trên n cũng không thể thực hiện được vì chỉ riêng số bước đã vượt quá bất kỳ ngân sách tính toán khả thi nào. 
+Nhiệm vụ là tính giá trị của số hạng thứ n theo quy tắc này, nhưng n có thể cực kỳ lớn, lên tới 10^18. Điều đó ngay lập tức loại trừ mọi mô phỏng lặp đi lặp lại của sự tái diễn. Ngay cả DP tuyến tính trên n cũng không thể thực hiện được vì chỉ riêng số bước đã vượt quá bất kỳ ngân sách tính toán khả thi nào. 
 
 Khó khăn cốt lõi không chỉ nằm ở kích thước của n mà còn ở thực tế là chuỗi nhân tăng cả về giá trị lẫn số mũ của c. Việc triển khai đơn giản sẽ nhanh chóng bị tràn ngay cả khi sử dụng số nguyên lớn và chỉ riêng số học mô-đun không khắc phục được vấn đề phức tạp vì chúng ta vẫn không thể lặp lại tới n. 
 
@@ -69,7 +69,7 @@ Chúng tôi viết lại bài toán theo không gian lũy thừa, theo dõi số
 
 ### Tại sao nó hoạt động 
 
-Phép biến đổi dựa trên thực tế là các vectơ số mũ chuyển đổi các phép truy toán nhân thành các hệ tuyến tính cộng. Mỗi ứng dụng của phép truy toán là sự kết hợp tuyến tính của các vectơ số mũ trước đó cộng với sự dịch chuyển phụ thuộc chỉ số xác định. Bằng cách nhúng sự phụ thuộc chỉ số vào trạng thái, hệ thống sẽ trở thành một phép truy hồi tuyến tính cố định. Phép lũy thừa ma trận duy trì tính chính xác vì việc áp dụng lặp đi lặp lại một phép biến đổi tuyến tính được biểu diễn chính xác bằng lũy ​​thừa của ma trận chuyển tiếp của nó. 
+Phép biến đổi dựa trên thực tế là các vectơ số mũ chuyển đổi các phép truy toán nhân thành các hệ tuyến tính cộng. Mỗi ứng dụng của phép truy hồi là sự kết hợp tuyến tính của các vectơ số mũ trước đó cộng với sự dịch chuyển phụ thuộc chỉ số xác định. Bằng cách nhúng sự phụ thuộc chỉ số vào trạng thái, hệ thống sẽ trở thành một phép truy hồi tuyến tính cố định. Phép lũy thừa ma trận duy trì tính chính xác vì việc áp dụng lặp đi lặp lại một phép biến đổi tuyến tính được biểu diễn chính xác bằng lũy ​​thừa của ma trận chuyển tiếp của nó. 
 
 ## Giải pháp Python```python
 import sys
@@ -157,7 +157,7 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Cấu trúc mã tuân theo ý tưởng biến phép truy toán thành một phép biến đổi tuyến tính trên đóng góp số mũ. Phép lũy thừa ma trận tính toán cách mỗi giá trị ban đầu lan truyền sang các chỉ số sau này. Phép tính số mũ được thực hiện theo modulo MOD-1 để đảm bảo tính chính xác theo định lý Fermat, vì chúng ta đang nâng các số modulo lên một số nguyên tố. 
+```Cấu trúc mã tuân theo ý tưởng biến phép truy toán thành một phép biến đổi tuyến tính trên đóng góp số mũ. Phép lũy thừa ma trận tính toán cách mỗi giá trị ban đầu lan truyền sang các chỉ số sau này. Phép tính số mũ được thực hiện theo modulo MOD-1 để đảm bảo tính đúng đắn theo định lý Fermat, vì chúng ta đang nâng các số modulo lên một số nguyên tố. 
 
 Cần phải xử lý đặc biệt n 3 vì phép biến đổi chỉ áp dụng từ số hạng thứ tư trở đi. Bất kỳ nỗ lực nào nhằm thống nhất các trường hợp này vào hệ thống ma trận mà không điều chỉnh sẽ làm lệch vectơ cơ sở. 
 
