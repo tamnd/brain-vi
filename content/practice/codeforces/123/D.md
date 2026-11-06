@@ -358,7 +358,9 @@ Hãy xem xét:```
 a
 ```Chỉ có một chuỗi con,`"a"`, xuất hiện một lần 
 
-Máy tự động tạo một trạng thái không root với:$$cnt = 1$$Sự đóng góp:$$1 \times \frac{1 \cdot 2}{2} = 1$$Đầu ra của thuật toán`1`. 
+Máy tự động tạo một trạng thái không root với:$$cnt = 1$$Sự đóng góp:$$1 \times \frac{1 \cdot 2}{2} = 1$$
+
+The algorithm outputs `1`. 
 
 Bây giờ hãy xem xét:```
 aaaa

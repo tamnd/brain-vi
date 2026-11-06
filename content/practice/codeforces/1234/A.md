@@ -38,7 +38,7 @@ Một trường hợp thất bại tinh vi khác xuất hiện khi các giá tr�
 
 ## Phương pháp tiếp cận 
 
-Cách mạnh mẽ nhất để suy nghĩ về vấn đề là thử mọi mức giá thống nhất có thể của ứng viên`x`. Đối với mỗi`x`, chúng tôi kiểm tra xem`n * x ≥ sum(a_i)`. Nhỏ nhất như vậy`x`là câu trả lời. Từ`x`có thể dao động lên tới tổng của tất cả các phần tử, điều này có thể yêu cầu lặp lại tối đa khoảng`10^9`trong trường hợp xấu nhất, điều này là không cần thiết mặc dù các ràng buộc là nhỏ. 
+Cách mạnh mẽ nhất để suy nghĩ về vấn đề là thử mọi mức giá thống nhất có thể của ứng viên`x`. Đối với mỗi`x`, chúng tôi kiểm tra xem`n * x ≥ sum(a_i)`. The smallest such `x`là câu trả lời. Từ`x`có thể dao động lên tới tổng của tất cả các phần tử, điều này có thể yêu cầu lặp lại tối đa khoảng`10^9`trong trường hợp xấu nhất, điều này là không cần thiết mặc dù các ràng buộc là nhỏ. 
 
 Quan sát quan trọng là điều kiện chỉ phụ thuộc vào tổng của mảng. Doanh thu ban đầu được cố định khi chúng tôi tính toán`S = sum(a_i)`. Doanh thu mới là`n * x`. Chúng ta cần số nguyên nhỏ nhất`x`như vậy:`n * x ≥ S`Đây là một bất đẳng thức đơn giản. Số nguyên nhỏ nhất thỏa mãn điều đó là trần của`S / n`. 
 
