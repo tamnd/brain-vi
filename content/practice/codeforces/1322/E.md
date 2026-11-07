@@ -31,7 +31,7 @@ share_url: https://chatgpt.com/share/6a2debd3-ee88-83ec-81ed-e884ff76ac48
 
 ## Hiểu vấn đề 
 
-Chúng ta được cho một mảng biểu thị độ cao được đặt dọc theo một đường thẳng. Mỗi ngày, mọi vị trí bên trong đều cập nhật đồng thời: một vị trí xem xét chính nó và hai vị trí lân cận, lấy trung vị của ba giá trị đó và trở thành trung vị đó trong cấu hình tiếp theo. Hai điểm cuối không bao giờ thay đổi trực tiếp vì chúng không có hàng xóm trái hoặc phải tương ứng. 
+Chúng ta được cho một mảng biểu thị độ cao được đặt dọc theo một đường thẳng. Mỗi ngày, mọi vị trí bên trong đều cập nhật đồng thời: một vị trí xem xét chính nó và hai vị trí lân cận, lấy trung vị của ba giá trị đó và trở thành trung vị đó trong cấu hình tiếp theo. Hai điểm cuối không bao giờ thay đổi trực tiếp vì chúng không có hàng xóm bên trái hoặc bên phải tương ứng. 
 
 Quá trình này được lặp lại theo từng vòng riêng biệt. Một số vòng thực sự thay đổi ít nhất một giá trị và cuối cùng hệ thống sẽ ổn định khi bản cập nhật không tạo ra thay đổi nào ở bất kỳ đâu. Nhiệm vụ là xác định có bao nhiêu vòng tạo ra ít nhất một sửa đổi và cũng để đưa ra cấu hình ổn định cuối cùng. 
 

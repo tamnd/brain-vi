@@ -131,7 +131,7 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```DP lặp lại các mức độ tích cực, chuyển tiếp số lượng người tham gia chưa được giải quyết còn lại sau khi hợp nhất. Trong mỗi cấp độ, các ứng viên được sắp xếp theo chi phí để việc lấy tiền tố mang lại các tập hợp con tối ưu cho kích thước cố định, vì đóng góp doanh thu cho mỗi người tham gia là thống nhất trong một cấp độ trong khi chi phí là điểm khác biệt duy nhất. 
+```DP lặp lại các mức độ tích cực, chuyển tiếp số lượng người tham gia chưa được giải quyết còn lại sau khi hợp nhất. Bên trong mỗi cấp độ, các ứng viên được sắp xếp theo chi phí sao cho việc lấy tiền tố sẽ mang lại các tập hợp con tối ưu cho kích thước cố định, vì đóng góp doanh thu cho mỗi người tham gia là thống nhất trong một cấp độ trong khi chi phí là điểm khác biệt duy nhất. 
 
 Đối với mỗi kích thước tiền tố t, chúng tôi tính mức tăng ròng là t·c[v] trừ đi tổng chi phí, sau đó mô phỏng cách hợp nhất nén t cộng với số mang vào thành một số mang mới cho cấp độ tiếp theo. Quá trình chuyển đổi cập nhật DP tương ứng. 
 
