@@ -1,0 +1,52 @@
+---
+title: "CF 1447B - Hộp số"
+description: "Chúng ta được cấp một vòng tròn các điểm, mỗi điểm đại diện cho một ống cuộn phải được ghép với chính xác một ống cuộn khác bằng cách sử dụng một hợp âm thẳng. Mỗi ống chỉ có một màu, đen hoặc trắng, và một số vị trí ban đầu không được tô màu và có thể được chỉ định một trong hai màu."
+date: "2026-06-11T03:51:01+07:00"
+tags: ["codeforces", "competitive-programming", "greedy", "math"]
+categories: ["algorithms"]
+codeforces_contest: 1447
+codeforces_index: "B"
+codeforces_contest_name: "Codeforces Round 683 (Div. 2, by Meet IT)"
+rating: 1000
+weight: 1447
+solve_time_s: 142
+verified: false
+draft: false
+---
+
+[CF 1447B - Hộp số](https://codeforces.com/problemset/problem/1447/B) 
+
+**Đánh giá:** 1000 
+**Tags:** tham lam, toán học 
+**Thời gian giải:** 2m 22s 
+**Đã xác minh:** không 
+
+##Giải pháp 
+## Hiểu vấn đề 
+
+Chúng ta được cấp một vòng tròn các điểm, mỗi điểm đại diện cho một ống cuộn phải được ghép với chính xác một ống cuộn khác bằng cách sử dụng một hợp âm thẳng. Mỗi ống chỉ có một màu, đen hoặc trắng, và một số vị trí ban đầu không được tô màu và có thể được chỉ định một trong hai màu. Một cấu hình chỉ hợp lệ nếu sau khi gán màu, cả số lượng màu đen và trắng đều bằng nhau để tồn tại sự kết hợp hoàn hảo bên trong mỗi lớp màu. 
+
+Đối với bất kỳ màu hợp lệ nào, chúng tôi xem xét tất cả các cách có thể để ghép các điểm có màu bằng nhau và đo số lần các dây có màu khác nhau giao nhau. Trong số tất cả các kết quả khớp có thể có, chúng ta lấy số lượng giao điểm tối thiểu như vậy, tạo ra giá trị f(c). Nhiệm vụ là tính toán giá trị kỳ vọng của mức tối thiểu này trên tất cả các lần hoàn thành hợp lệ của các vị trí chưa xác định, theo phân bố đồng đều và sau đó duy trì kỳ vọng này theo các cập nhật điểm. 
+
+Các ràng buộc rất lớn, lên tới 2×10^5 vị trí và cập nhật, điều này ngay lập tức loại trừ bất kỳ giải pháp nào liệt kê các chất tạo màu hoặc kết hợp một cách rõ ràng. Bất kỳ cách tiếp cận nào cũng phải nén trạng thái thành một số lượng nhỏ số liệu thống kê tổng hợp có thể được cập nhật theo thời gian logarit hoặc không đổi cho mỗi truy vấn. 
+
+Trường hợp cạnh tinh tế phát sinh khi hầu hết tất cả các ký tự đều cố định và chỉ một hoặc hai ký tự không xác định. Trong những trường hợp như vậy, không gian của các lần hoàn thành hợp lệ sẽ thu gọn thành một tập hợp cấu hình đơn lẻ hoặc rất nhỏ và lý luận xác suất ngây thơ đối với các lựa chọn độc lập không thành công vì các ràng buộc chẵn lẻ kết hợp tất cả các vị trí trên toàn cầu. 
+
+## Phương pháp tiếp cận 
+
+Một giải pháp bạo lực sẽ liệt kê tất cả các phép gán của '?' vị trí thành đen hoặc trắng, lọc những vị trí có số chẵn lẻ và đối với mỗi màu hợp lệ, hãy tính chi phí khớp chéo tối thiểu thông qua lập trình động trên một vòng tròn hoặc thông qua khớp không chéo tối ưu với các ràng buộc màu sắc. Điều này ngay lập tức trở thành cấp số nhân về số lượng ẩn số, và thậm chí tính toán f(c) cho một màu duy nhất là bậc ba hoặc bậc hai tùy thuộc vào việc triển khai, khiến cho cách tiếp cận đầy đủ không khả thi. 
+
+Cái nhìn sâu sắc về cấu trúc quan trọng là chi phí kết hợp tối ưu f(c) chỉ phụ thuộc vào cách các màu được xen kẽ dọc theo vòng tròn chứ không phụ thuộc vào đặc điểm nhận dạng cụ thể của các cặp. Đặc biệt, mỗi lần chúng tôi xen kẽ các màu xen kẽ xung quanh vòng tròn, chúng tôi đưa ra các giao cắt bắt buộc và số lượng giao cắt tối thiểu tương ứng với thước đo sự mất cân bằng giữa số lượng tiền tố đen và trắng theo chiến lược ghép nối tối ưu. Điều này làm giảm vấn đề trong việc theo dõi số liệu thống kê mất cân bằng dự kiến ​​qua các lần hoàn thành hợp lệ ngẫu nhiên. 
+
+Ràng buộc chẵn lẻ đưa ra một sự phụ thuộc toàn cục, nhưng nó có thể được xử lý bằng điều kiện: thay vì xử lý từng '?' một cách độc lập, chúng ta làm việc trong một không gian tuyến tính của các phép gán và chuẩn hóa theo số lượng các phép gán hợp lệ chẵn lẻ. Giá trị mong đợi giảm xuống theo tỷ lệ của hai đại lượng: tổng đóng góp và số lượng cấu hình hợp lệ. 
+
+Điều này biến vấn đề thành việc duy trì tổng trọng số của các đóng góp tổ hợp trong các cập nhật động, có thể được xử lý bằng cách sử dụng các cấu trúc tổng hợp phân đoạn lưu trữ thông tin đa thức trên mỗi phân đoạn. 
+
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| --- | --- | --- | --- | 
+| Liệt kê lực lượng vũ phu | O(2^k · n^2) | O(n) | Quá chậm | 
+| Phân đoạn DP với tập hợp tổ hợp | O((n + m) log n) | O(n) | Đã chấp nhận | 
+
+## Hướng dẫn thuật toán 
+
+Chúng ta mã hóa từng đoạn của chuỗi với một trạng thái nhỏ nắm bắt được bao nhiêu cách
