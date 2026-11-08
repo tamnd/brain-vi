@@ -32,14 +32,14 @@ Mục tiêu là từ điển học. Đầu tiên, tối đa hóa số lượng v
 
 Đầu vào cung cấp thời gian viết cho mọi vấn đề. Đầu ra phải chứa hai số nguyên: số lượng tối đa các vấn đề có thể giải được và tổng số tiền phạt tối thiểu có thể đạt được. 
 
-Những hạn chế là nhỏ. Có nhiều nhất là 100 bài toán và mỗi lần viết nhiều nhất là 720. Ngay cả tìm kiếm theo cấp số nhân cũng quá lớn vì$2^{100}$là không thể, nhưng$O(n^2)$hoặc$O(n \log n)$là hoàn toàn ổn. Vì tổng thời gian thi đấu chỉ có 710 phút nên nhiều phương pháp lập kế hoạch trở nên khả thi. 
+Những hạn chế là nhỏ. Có nhiều nhất là 100 bài toán và mỗi lần viết nhiều nhất là 720. Ngay cả tìm kiếm theo cấp số nhân cũng quá lớn vì$2^{100}$là không thể, nhưng$O(n^2)$hoặc$O(n \log n)$is completely fine. Vì tổng thời gian thi đấu chỉ có 710 phút nên nhiều phương pháp lập kế hoạch trở nên khả thi. 
 
 Phần khó khăn là hiểu lịch trình gửi tối ưu trông như thế nào. Việc triển khai bất cẩn có thể cho rằng mọi vấn đề phải được gửi ngay sau khi hoàn thành, điều này là sai. 
 
 Hãy xem xét đầu vào này:```
 2
 100 100
-```Nếu cả hai vấn đề được hoàn thành trước nửa đêm, việc nộp ngay sẽ bị phạt$250 + 150 = 400$. Nhưng Gennady có thể chỉ cần đợi và gửi cả hai vào đúng nửa đêm, tổng số tiền phạt là 0. Thứ tự viết rất quan trọng nhưng thời gian gửi có thể được chọn độc lập sau khi hoàn thành. 
+```Nếu cả hai vấn đề được hoàn thành trước nửa đêm, việc nộp ngay sẽ bị phạt$250 + 150 = 400$. Nhưng Gennady có thể chỉ cần đợi và gửi cả hai vào đúng nửa đêm, tổng số tiền phạt là 0. Thứ tự viết rất quan trọng, nhưng thời gian gửi có thể được chọn độc lập sau khi hoàn thành. 
 
 Một trường hợp tinh vi khác xuất hiện khi một vấn đề kết thúc trước nửa đêm nhưng một vấn đề khác lại kết thúc sau nửa đêm.```
 2
@@ -73,11 +73,11 @@ Mục tiêu đầu tiên là tối đa hóa các vấn đề đã được giả
 
 Sau khi đã khắc phục được số lượng vấn đề có thể giải quyết được tối đa, chúng ta vẫn cần mức phạt tối thiểu. Trong số các bài toán đã chọn, chúng ta nên giảm thiểu tổng khoảng cách từ thời điểm hoàn thành đến 350. 
 
-Lúc đầu, điều này có vẻ giống như một vấn đề tối ưu hóa lịch trình, nhưng một quan sát khác giúp đơn giản hóa nó hơn nữa. 
+Lúc đầu, điều này có vẻ giống như một vấn đề tối ưu hóa lịch trình, nhưng một quan sát khác giúp đơn giản hóa vấn đề hơn nữa. 
 
 Đối với thời gian hoàn thành trước nửa đêm, việc tăng thời gian hoàn thành sẽ giảm hình phạt. Đối với thời gian hoàn thành sau nửa đêm, việc tăng thời gian hoàn thành sẽ tăng hình phạt. Vì vậy, thời gian hoàn thành lý tưởng được tập hợp càng gần nửa đêm càng tốt. 
 
-Việc sắp xếp các vấn đề đã chọn theo thứ tự tăng dần sẽ đạt được chính xác điều này. Các công việc ngắn hạn kết thúc sớm, đẩy thời gian hoàn thành muộn hơn đến gần nửa đêm. Đây chính là đối số trao đổi được sử dụng trong các bài toán lập lịch cổ điển. 
+Việc sắp xếp các vấn đề đã chọn theo thứ tự tăng dần sẽ đạt được chính xác điều này. Những công việc ngắn hạn kết thúc sớm, đẩy thời gian hoàn thành muộn hơn đến gần nửa đêm. Đây chính là đối số trao đổi được sử dụng trong các bài toán lập lịch cổ điển. 
 
 Vậy chiến lược tối ưu là: 
 
@@ -146,11 +146,11 @@ def solve():
     print(solved, total_penalty)
 
 solve()
-```Giải pháp bắt đầu bằng cách sắp xếp thời gian vấn đề. Điều này đảm bảo rằng chúng tôi cố gắng giải quyết các vấn đề nhỏ nhất trước tiên, giúp tối đa hóa số lượng nhiệm vụ có thể giải quyết được.`total_time`lưu trữ thời gian hoàn thành bài toán hiện tại được đo từ 18:10. Vì nửa đêm diễn ra muộn hơn 350 phút nên khoản đóng góp hình phạt sẽ trở thành`abs(total_time - 350)`. 
+```Giải pháp bắt đầu bằng cách sắp xếp thời gian vấn đề. Điều này đảm bảo rằng chúng tôi cố gắng giải quyết các vấn đề nhỏ nhất trước tiên, giúp tối đa hóa số lượng nhiệm vụ có thể giải quyết được.`total_time`lưu trữ thời gian hoàn thành bài toán hiện tại được đo từ 18:10. Vì nửa đêm xảy ra muộn hơn 350 phút nên khoản đóng góp hình phạt sẽ trở thành`abs(total_time - 350)`. 
 
 Điều kiện dừng cực kỳ quan trọng:```
 if total_time + x > 710:
-```Cuộc thi cho phép viết đúng 710 phút sau giai đoạn đọc đầu tiên. Kết thúc ở đúng 710 là hợp lệ nên việc so sánh phải là`>`thay vì`>=`. 
+```Cuộc thi cho phép viết chính xác 710 phút sau giai đoạn đọc đầu tiên. Kết thúc ở đúng 710 là hợp lệ nên việc so sánh phải là`>`thay vì`>=`. 
 
 Một điểm tinh tế khác là chúng tôi không mô phỏng khoảnh khắc gửi một cách rõ ràng. Công thức giá trị tuyệt đối đã mã hóa chiến lược gửi tối ưu. 
 
@@ -202,7 +202,7 @@ Câu trả lời cuối cùng:```
 4 50
 ```Ba vấn đề đầu tiên kết thúc trước nửa đêm nên tất cả đều chờ nộp vào lúc nửa đêm. Chỉ có vấn đề cuối cùng mới đóng góp hình phạt tích cực. 
 
-Dấu vết này xác nhận rằng việc hoàn thành sớm không có hại nếu việc nộp đơn có thể bị trì hoãn. 
+Dấu vết này xác nhận rằng việc hoàn thành sớm không có hại miễn là việc nộp bài có thể bị trì hoãn. 
 
 ## Phân tích độ phức tạp 
 
@@ -306,7 +306,7 @@ Câu trả lời cuối cùng là:```
 ```Cuối cùng, kiểm tra:```
 3
 400 400 400
-```Sau khi sắp xếp, vấn đề đầu tiên được giải quyết và thời gian hoàn thành là 400. Cố gắng thêm một vấn đề khác sẽ vượt quá 710. 
+```Sau khi sắp xếp, vấn đề đầu tiên được thực hiện và thời gian hoàn thành là 400. Cố gắng thêm một vấn đề khác sẽ vượt quá 710. 
 
 Hình phạt:$$400 - 350 = 50$$Đầu ra:```
 1 50

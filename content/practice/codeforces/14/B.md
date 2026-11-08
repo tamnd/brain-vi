@@ -23,7 +23,7 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Bài toán yêu cầu chúng ta xác định xem Bob, một nhiếp ảnh gia, phải di chuyển bao xa dọc theo một đường đua thẳng để chụp ảnh mọi vận động viên. Mỗi vận động viên chạy tới chạy lui dọc theo một đoạn cố định của đường đua, được xác định bởi hai vị trí`ai`Và`bi`. Bob bắt đầu ở vị trí`x0`, và anh ta chỉ có thể chụp ảnh một vận động viên nếu anh ta đứng ở đâu đó trong khu vực của vận động viên đó. Chúng ta được yêu cầu tìm khoảng cách tối thiểu mà Bob phải đi để đến được vị trí cho phép anh ấy chụp ảnh tất cả các vận động viên thể thao. Nếu không có vị trí đó tồn tại, chúng ta phải trả về -1. 
+Bài toán yêu cầu chúng ta xác định xem Bob, một nhiếp ảnh gia, phải di chuyển bao xa dọc theo một đường đua thẳng để chụp ảnh mọi vận động viên. Mỗi vận động viên chạy tới chạy lui dọc theo một đoạn cố định của đường đua, được xác định bởi hai vị trí`ai`Và`bi`. Bob bắt đầu ở vị trí`x0`, và anh ta chỉ có thể chụp ảnh một vận động viên nếu anh ta đứng ở đâu đó trong khu vực của vận động viên đó. Chúng ta được yêu cầu tìm khoảng cách tối thiểu mà Bob phải di chuyển để đến được vị trí cho phép anh ấy chụp ảnh tất cả các vận động viên thể thao. Nếu không có vị trí đó tồn tại, chúng ta phải trả về -1. 
 
 Đầu vào bao gồm số lượng vận động viên`n`(tối đa 100), vị trí bắt đầu của Bob`x0`(0 đến 1000) và`n`các phân đoạn được xác định bởi các cặp số nguyên`ai`Và`bi`(0 đến 1000). Mỗi phân đoạn có thể được sắp xếp theo một trong hai thứ tự, do đó số nhỏ hơn không được đảm bảo sẽ đứng đầu. Đầu ra là một số nguyên duy nhất: khoảng cách tối thiểu Bob phải di chuyển. 
 
@@ -33,9 +33,9 @@ Với`n`tối đa là 100, chúng tôi có thể xử lý từng vận động v
 
 Cách tiếp cận đơn giản là kiểm tra mọi vị trí từ 0 đến 1000, kiểm tra từng vị trí xem nó có nằm trong tất cả các đoạn hay không và theo dõi khoảng cách tối thiểu từ điểm bắt đầu của Bob. Phương pháp bạo lực này hoạt động vì phạm vi vị trí nhỏ (tối đa 1001 vị trí) và`n`cũng nhỏ. Trong trường hợp xấu nhất, nó sẽ thực hiện khoảng 100.000 lượt kiểm tra, điều này có thể thực hiện được trong giới hạn 2 giây. Nhược điểm là nó chậm một cách không cần thiết và không tận dụng được cấu trúc của vấn đề. 
 
-Thông tin chi tiết quan trọng cần tối ưu hóa là Bob chỉ cần đứng trong giao điểm của tất cả các phân đoạn. Nếu chúng ta tính giao điểm bằng cách lấy giá trị lớn nhất của tất cả các điểm cuối bên trái và giá trị nhỏ nhất của tất cả các điểm cuối bên phải, chúng ta sẽ ngay lập tức tìm được phạm vi vị trí làm hài lòng tất cả các vận động viên. Nếu giao lộ này trống (điểm cuối bên trái tối đa lớn hơn điểm cuối bên phải tối thiểu), không có vị trí nào hoạt động và câu trả lời là -1. Ngược lại, khoảng cách tối thiểu Bob phải di chuyển là khoảng cách từ`x0`đến điểm gần nhất ở giao lộ này. 
+Thông tin chi tiết quan trọng cần tối ưu hóa là Bob chỉ cần đứng trong giao điểm của tất cả các phân đoạn. Nếu chúng ta tính giao điểm bằng cách lấy giá trị lớn nhất của tất cả các điểm cuối bên trái và giá trị nhỏ nhất của tất cả các điểm cuối bên phải, chúng ta sẽ ngay lập tức tìm được phạm vi vị trí làm hài lòng tất cả các vận động viên. Nếu giao lộ này trống (điểm cuối bên trái tối đa lớn hơn điểm cuối bên phải tối thiểu), không có vị trí nào hoạt động và câu trả lời là -1. Ngược lại, khoảng cách tối thiểu Bob phải di chuyển là khoảng cách từ`x0`đến điểm gần nhất trong giao lộ này. 
 
-Brute-force hoạt động vì việc kiểm tra mọi số nguyên đảm bảo tìm ra khoảng cách tối thiểu, nhưng nó không khai thác được thuộc tính đơn giản mà giao điểm của tất cả các đoạn xác định vùng khả thi. Quan sát rằng chỉ riêng giao điểm xác định các vị trí hợp lệ sẽ làm giảm bài toán từ O(n * 1000) xuống O(n) với số học tầm thường. 
+Brute-force hoạt động vì việc kiểm tra mọi số nguyên được đảm bảo tìm ra khoảng cách tối thiểu, nhưng nó không khai thác được thuộc tính đơn giản mà giao điểm của tất cả các phân đoạn xác định vùng khả thi. Quan sát rằng chỉ riêng giao điểm xác định các vị trí hợp lệ sẽ làm giảm bài toán từ O(n * 1000) xuống O(n) với số học tầm thường. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 

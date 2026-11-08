@@ -30,7 +30,7 @@ Khi Alexander gửi thiệp cho bạn bè`i`, áp dụng hai quy tắc. Anh ấy
 
 Mỗi người bạn cũng có thứ hạng thẻ riêng của mình. Chúng tôi muốn mọi người bạn nhận được tấm thẻ tốt nhất mà họ có thể nhận được dưới hành vi của Alexander. Nhiệm vụ của chúng ta không phải là trực tiếp chọn quân bài, vì sự lựa chọn của Alexander là bắt buộc. Thay vào đó, chúng tôi chọn thời điểm mỗi người bạn nhận được thẻ của mình. Đầu ra yêu cầu những khoảnh khắc này ở dạng nén: cho mọi người bạn`i`, in một số người bạn`k`đến nỗi Alexander gửi tấm thiệp tới`i`ngay sau khi nhận được thẻ`k`. 
 
-Các ràng buộc đủ nhỏ để cho phép mô phỏng khá trực tiếp.`n`nhiều nhất là`300`, vì vậy ngay cả các thuật toán bậc ba cũng được. MỘT`O(n^3)`giải pháp thực hiện xung quanh`27 million`hoạt động trong trường hợp xấu nhất, thoải mái trong Python dưới giới hạn 2 giây. Điều này có nghĩa là chúng ta không cần các thuật toán đồ thị hoặc kỹ thuật luồng nâng cao. Thách thức ở đây là hiểu được cấu trúc của quy trình và chứng minh rằng việc xây dựng tham lam là hợp lệ. 
+Các ràng buộc đủ nhỏ để cho phép mô phỏng khá trực tiếp.`n`nhiều nhất là`300`, vì vậy ngay cả các thuật toán bậc ba cũng được. MỘT`O(n^3)`giải pháp thực hiện xung quanh`27 million`trong trường hợp xấu nhất, có thể thoải mái trong Python dưới giới hạn 2 giây. Điều này có nghĩa là chúng ta không cần các thuật toán đồ thị hoặc kỹ thuật luồng nâng cao. Thách thức ở đây là hiểu được cấu trúc của quy trình và chứng minh rằng việc xây dựng tham lam là hợp lệ. 
 
 Có một số trường hợp tế nhị dễ dàng phá vỡ lối suy luận ngây thơ. 
 
@@ -370,7 +370,7 @@ Bây giờ hãy xem xét trường hợp có nhiều người bạn cần đư�
 4 1 2 3
 1 2 3 4
 4 3 2 1
-```Ngay khi có thẻ`4`xuất hiện, Alexander gửi nó cho mọi người bạn ngoại trừ người bạn`4`. Thuật toán cho phép điều này một cách tự nhiên vì mỗi người bạn sẽ ghi lại một tiền tố tối ưu giống nhau một cách độc lập`k=4`. 
+```Ngay khi có thẻ`4`xuất hiện, Alexander gửi nó cho mọi người bạn ngoại trừ người bạn`4`. Thuật toán cho phép điều này một cách tự nhiên vì mỗi người bạn sẽ ghi lại tiền tố tối ưu giống nhau một cách độc lập`k=4`. 
 
 Cuối cùng, hãy xem xét hạn chế tự thẻ.```
 2

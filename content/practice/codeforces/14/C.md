@@ -17,17 +17,17 @@ draft: false
 
 **Đánh giá:** 1700 
 **Tags:** sức mạnh vũ phu, thuật toán xây dựng, hình học, cách thực hiện, toán học 
-**Thời gian giải:** 1 phút 48 giây 
+**Thời gian giải:** 1 phút 48s 
 **Đã xác minh:** có 
 
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta có chính xác bốn đoạn thẳng trên mặt phẳng 2D. Mọi phân đoạn đều được căn chỉnh theo trục hoặc thậm chí có thể thoái hóa thành một điểm duy nhất. Nhiệm vụ là quyết định xem bốn đoạn này có cùng nhau tạo thành đường viền của một hình chữ nhật có diện tích dương hay không, trong đó tất cả các cạnh hình chữ nhật đều song song với các trục tọa độ. 
+Chúng ta có chính xác bốn đoạn thẳng trên mặt phẳng 2D. Mọi phân đoạn đều được căn chỉnh theo trục hoặc thậm chí có thể thoái hóa thành một điểm duy nhất. Nhiệm vụ là quyết định xem bốn đoạn này có cùng nhau tạo thành đường viền của một hình chữ nhật có diện tích dương hay không, trong đó tất cả các cạnh của hình chữ nhật đều song song với các trục tọa độ. 
 
 Một hình chữ nhật hợp lệ trong bài toán này có cấu trúc rất chặt chẽ. Phải có đúng hai cạnh ngang và đúng hai cạnh dọc. Các cạnh ngang phải có chung điểm cuối bên trái và bên phải, còn các cạnh dọc phải kết nối các điểm cuối đó. Hình chữ nhật cũng phải có chiều rộng khác 0 và chiều cao khác 0. 
 
-Giới hạn tọa độ rất lớn, lên tới$10^9$, nhưng chỉ có bốn phân đoạn. Điều đó làm thay đổi hoàn toàn bản chất của vấn đề. Chúng tôi không cần hình học hoặc tối ưu hóa phức tạp. Ngay cả việc kiểm tra mọi cách sắp xếp có thể có của bốn đoạn cũng là chuyện nhỏ vì$4! = 24$. Thách thức thực sự là tính chính xác chứ không phải hiệu suất. 
+Giới hạn tọa độ rất lớn, lên tới$10^9$, nhưng chỉ có bốn phân đoạn. Điều đó thay đổi hoàn toàn bản chất của vấn đề. Chúng tôi không cần hình học hoặc tối ưu hóa phức tạp. Ngay cả việc kiểm tra mọi cách sắp xếp có thể có của bốn phân đoạn cũng là chuyện nhỏ vì$4! = 24$. Thách thức thực sự là tính chính xác chứ không phải hiệu suất. 
 
 Một số trường hợp đặc biệt khiến việc triển khai đơn giản không thành công. 
 
@@ -126,7 +126,7 @@ Thuật toán xác minh mọi thuộc tính hình học cần thiết cho một 
 - điểm cuối được chia sẻ, 
 - khu vực tích cực. 
 
-Nếu bất kỳ điều kiện nào không thành công thì ít nhất một cạnh hình chữ nhật bị thiếu, bị trùng lặp, bị ngắt kết nối hoặc bị thoái hóa. Nếu tất cả các điều kiện đều đúng thì bốn đoạn này sẽ tạo thành đường viền hình chữ nhật duy nhất. 
+Nếu bất kỳ điều kiện nào không thành công thì ít nhất một cạnh hình chữ nhật bị thiếu, bị trùng lặp, bị ngắt kết nối hoặc bị thoái hóa. Nếu tất cả các điều kiện đều đúng thì bốn đoạn duy nhất tạo thành đường viền hình chữ nhật. 
 
 ## Giải pháp Python```python
 import sys
@@ -402,7 +402,7 @@ assert run(
 - cả hai đoạn thẳng đứng đều nằm trên$x = 0$, 
 - các đoạn ngang thực chất là các điểm. 
 
-Chiều rộng tính toán là:$$0 - 0 = 0$$Việc kiểm tra vùng tích cực không thành công nên câu trả lời là`NO`. 
+Chiều rộng tính toán là:$$0 - 0 = 0$$Việc kiểm tra vùng dương không thành công nên câu trả lời là`NO`. 
 
 ### Thứ tự điểm cuối bị đảo ngược 
 
@@ -415,7 +415,7 @@ Chiều rộng tính toán là:$$0 - 0 = 0$$Việc kiểm tra vùng tích cực 
 
 -`(0,0)-(3,0)`-`(0,2)-(3,2)`-`(0,0)-(0,2)`-`(3,0)-(3,2)`Tất cả các kiểm tra hình chữ nhật đều vượt qua, do đó thuật toán xuất ra chính xác`YES`. 
 
-Nếu không chuẩn hóa, việc so sánh tọa độ trực tiếp sẽ thất bại ngay cả khi hình học đúng. 
+Nếu không chuẩn hóa, việc so sánh tọa độ trực tiếp sẽ không thành công ngay cả khi hình học đúng. 
 
 ### Các mặt trùng lặp 
 
@@ -424,10 +424,10 @@ Nếu không chuẩn hóa, việc so sánh tọa độ trực tiếp sẽ thất
 0 0 2 0
 0 0 0 1
 2 0 2 1
-```Cả hai đoạn ngang đều chiếm cùng một vị trí. Giá trị y của chúng giống hệt nhau nên không có sự khác biệt về mặt trên và mặt dưới. 
+```Cả hai đoạn ngang đều chiếm cùng một vị trí. Giá trị y của chúng giống hệt nhau nên không có sự phân biệt mặt trên và mặt dưới. 
 
 Sau đó, thuật toán so sánh các giá trị y được thu thập từ các phân đoạn ngang với phạm vi y từ các phân đoạn dọc: 
 
-- giá trị y ngang:`[0, 0]`- phạm vi y dọc:`[0, 1]`Sự không phù hợp tạo ra`NO`. 
+- giá trị y theo chiều ngang:`[0, 0]`- phạm vi y dọc:`[0, 1]`Sự không phù hợp tạo ra`NO`. 
 
 Điều này nắm bắt các phân đoạn chồng chéo không thực sự bao quanh một khu vực.

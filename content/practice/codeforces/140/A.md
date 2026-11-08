@@ -66,7 +66,7 @@ NO
 
 ## Phương pháp tiếp cận 
 
-Một cách mạnh mẽ để suy nghĩ về vấn đề này là hãy tưởng tượng việc đặt tâm tấm trên đường tròn bán kính`R - r`, bởi vì mỗi tấm chạm vào ranh giới của bàn buộc tâm của nó phải ở cách xa tâm bàn một cách chính xác. 
+Một cách mạnh mẽ để suy nghĩ về vấn đề này là hãy tưởng tượng việc đặt tâm tấm lên đường tròn bán kính`R - r`, bởi vì mỗi tấm chạm vào ranh giới của bàn buộc tâm của nó phải ở cách xa tâm bàn một cách chính xác. 
 
 Nếu chúng ta thử mọi cách sắp xếp góc cạnh của`n`xung quanh vòng tròn này và kiểm tra khoảng cách từng cặp giữa các tấm, cuối cùng chúng ta sẽ tìm ra một sự sắp xếp hợp lệ khi tồn tại. Điều này đúng về mặt khái niệm vì hình học hoàn toàn được xác định bởi các vị trí trung tâm. 
 
@@ -151,11 +151,11 @@ solve()
 
 Lần kiểm tra tiếp theo sẽ sớm loại bỏ các cấu hình không thể thực hiện được. Nếu như`R < 2r`, thậm chí hai tấm đối diện cũng không thể vừa. 
 
-Vì`n >= 3`, việc triển khai sẽ đánh giá trực tiếp sự bất đẳng thức hình học xuất phát từ cách sắp xếp đa giác đều. Độ chính xác của dấu phẩy động quan trọng vì các trường hợp hợp lệ có thể liên quan đến đẳng thức chính xác. Epsilon tránh từ chối cấu hình do các lỗi làm tròn nhỏ. 
+Vì`n >= 3`, việc triển khai sẽ đánh giá trực tiếp sự bất đẳng thức hình học xuất phát từ sự sắp xếp đa giác đều. Độ chính xác của dấu phẩy động quan trọng vì các trường hợp hợp lệ có thể liên quan đến đẳng thức chính xác. Epsilon tránh từ chối cấu hình do các lỗi làm tròn nhỏ. 
 
 Biểu thức:```
 (R - r) * math.sin(math.pi / n)
-```xuất phát từ việc giảm một nửa sự bất bình đẳng về độ dài dây cung. Điều này giữ cho số học sạch hơn một chút và tránh phép nhân không cần thiết với 2. 
+```xuất phát từ việc giảm một nửa sự bất đẳng thức về độ dài dây cung. Điều này giữ cho số học sạch hơn một chút và tránh phép nhân không cần thiết với 2. 
 
 ## Ví dụ đã hoạt động 
 

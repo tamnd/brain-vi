@@ -181,4 +181,4 @@ assert run("4 3\n.*.\n.*.\n.*.\n.*.") == "*\n*\n*\n*", "column only"
 
 ## Vỏ cạnh 
 
-Nếu tất cả các ngôi sao nằm thành một hàng,`top`Và`bottom`đều bình đẳng. Vòng lặp của chúng tôi chỉ in chính xác hàng đó. Tương tự, nếu tất cả các ngôi sao nằm trong một cột,`left`Và`right`bằng nhau, tạo thành hình chữ nhật một cột. Nếu ngôi sao nằm ở góc lưới, chẳng hạn như`(0,0)`,`min`Và`max`logic vẫn tính toán hình chữ nhật giới hạn chính xác. Thuật toán này xử lý các đầu vào tối thiểu và tối đa một cách liền mạch.
+Nếu tất cả các ngôi sao nằm thành một hàng,`top`Và`bottom`đều bình đẳng. Our loop correctly prints just that row. Similarly, if all stars lie in a single column,`left`Và`right`bằng nhau, tạo thành hình chữ nhật một cột. Nếu ngôi sao nằm ở góc lưới, chẳng hạn như`(0,0)`,`min`Và`max`logic vẫn tính toán hình chữ nhật giới hạn chính xác. Thuật toán này xử lý các đầu vào tối thiểu và tối đa một cách liền mạch.

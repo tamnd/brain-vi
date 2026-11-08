@@ -1,5 +1,5 @@
 ---
-title: "CF 14E - Lạc đà"
+title: "CF 14E - Lạc Đà"
 description: "Chúng tôi đang đếm các chuỗi độ cao mô tả một đường đa tuyến. Tọa độ x được cố định là 1, 2, ..., n nên toàn bộ hình chỉ được xác định bởi dãy y1, y2, ..., yn."
 date: "2026-05-28T00:00:00+07:00"
 tags: ["codeforces", "competitive-programming", "dp"]
@@ -18,7 +18,7 @@ draft: false
 
 **Xếp hạng:** 1900 
 **Thẻ:** dp 
-**Thời gian giải:** 1 phút 59 giây 
+**Thời gian giải:** 1 phút 59s 
 **Đã xác minh:** có 
 
 ##Giải pháp 
@@ -34,9 +34,9 @@ Các ràng buộc là rất nhỏ ở một chiều và có vẻ lớn ở một
 
 Phạm vi chiều cao nhỏ bé là đầu mối thực sự. Vì mỗi giá trị thuộc về`{1,2,3,4}`, số lượng trạng thái riêng biệt liên quan đến các phần tử gần đây là cực kỳ nhỏ. Điều này gợi ý rõ ràng về quy trình động đối với một số giá trị cuối cùng và số lượng các bướu đã được hình thành. 
 
-Một điểm tinh tế là cực đại và cực tiểu cục bộ chỉ được xác định sau khi nhìn thấy ba giá trị liên tiếp. Khi chúng ta thêm một giá trị mới, phần tử ở giữa của ba vị trí cuối cùng sẽ được phân loại là đỉnh, đáy hoặc không loại nào cả. Việc thực hiện bất cẩn cố gắng phân loại vị trí quá sớm sẽ bị tính sai. 
+Một điểm tinh tế là cực đại và cực tiểu cục bộ chỉ được xác định sau khi nhìn thấy ba giá trị liên tiếp. Khi chúng tôi thêm một giá trị mới, phần tử ở giữa của ba vị trí cuối cùng sẽ được phân loại là đỉnh, đáy hoặc không loại nào cả. Việc thực hiện bất cẩn cố gắng phân loại vị trí quá sớm sẽ bị tính sai. 
 
-Một sai lầm dễ mắc phải khác là quên rằng các chiều cao bằng nhau liền kề đều bị cấm. Ví dụ:```
+Một sai lầm dễ mắc phải khác là quên rằng các độ cao bằng nhau liền kề đều bị cấm. Ví dụ:```
 n = 3, t = 1
 ```Trình tự`1 2 2`không hợp lệ mặc dù về mặt trực quan nó có vẻ tăng rồi lại bằng phẳng. Những người hàng xóm bằng nhau tạo ra một phân đoạn ngang, vì vậy chuỗi này không được tính. 
 
@@ -44,7 +44,7 @@ Ngoài ra còn có một thuộc tính xen kẽ giữa cực đại và cực ti
 
 Ví dụ:```
 1 3 2 4
-```Vị trí ở đây`2`là mức tối đa và vị trí`3`là tối thiểu. Mô hình xen kẽ một cách chính xác. 
+```Vị trí ở đây`2`là mức tối đa và vị trí`3`là tối thiểu. Các mô hình xen kẽ một cách chính xác. 
 
 Nhưng một dãy không thể chứa hai cực đại liên tiếp mà không có cực tiểu giữa chúng. Hình học cấm nó. 
 
@@ -141,7 +141,7 @@ Nếu không thì số lượng không thay đổi.
 
 Giá trị trung bình`b`bây giờ được xác định đầy đủ vì cả hai hàng xóm đều được biết. 
 
-1. Thêm kết quả chuyển tiếp sang trạng thái DP tiếp theo. 
+1. Thêm kết quả chuyển tiếp vào trạng thái DP tiếp theo. 
 
 Trạng thái mới trở thành:```
 (pos + 1, b, c, new_mx, new_mn)
@@ -289,7 +289,7 @@ Hãy xem xét trình tự:```
 
 Trình tự này được tính. 
 
-Dấu vết thể hiện cấu trúc xen kẽ giữa cực đại và cực tiểu. Mỗi bước ngoặt mới sẽ lật hướng chuyển động. 
+Dấu vết thể hiện cấu trúc xen kẽ giữa cực đại và cực tiểu. Mỗi bước ngoặt mới đều lật hướng chuyển động. 
 
 ## Phân tích độ phức tạp 
 
@@ -385,7 +385,7 @@ assert run("20 10\n") == "0", "cannot fit so many turns"
 |`3 1`|`4`| Chiều dài nhỏ nhất có thể có một bướu | 
 |`3 2`|`0`| Cấu hình không thể | 
 |`5 2`|`2`| Các đỉnh và thung lũng xen kẽ | 
-|`20 10`|`0`| Giới hạn hành vi giới hạn trên và số lượt đếm | 
+|`20 10`|`0`| Hành vi giới hạn trên và giới hạn lượt đếm | 
 
 ## Vỏ cạnh 
 

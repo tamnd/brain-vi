@@ -29,15 +29,15 @@ Chúng tôi được tặng một cây`n`thành phố, nghĩa là mỗi thành p
 
 Các hạn chế là nhỏ:`n ≤ 200`. Vì đây là một cái cây nên số đường đi có thể là`O(n^2)`. Một lực lượng vũ phu ngây thơ kiểm tra tất cả các cặp đường để tìm giao điểm sẽ liên quan đến`O(n^4)`hoạt động, rõ ràng là quá lớn đối với`n=200`. Chúng ta cần một cách tiếp cận thông minh hơn để tận dụng cấu trúc cây. 
 
-Các trường hợp biên cần xem xét bao gồm cây đường (như 1-2-3-4), cây sao (một nút trung tâm được kết nối với tất cả các nút khác) và các cây nhỏ nhất chỉ có 2 hoặc 3 nút. Trong cây đường, hai đường dẫn không chồng chéo dài nhất có thể chỉ là các cạnh đơn. Trong cây sao, đường đi dài nhất phải đi qua tâm, do đó, bất kỳ hai đường đi không chồng chéo nào cũng chỉ có thể sử dụng các cạnh lá riêng biệt. 
+Các trường hợp biên cần xem xét bao gồm cây đường (như 1-2-3-4), cây sao (một nút trung tâm được kết nối với tất cả các nút khác) và các cây nhỏ nhất chỉ có 2 hoặc 3 nút. Trong cây đường, hai đường dẫn không chồng chéo dài nhất có thể chỉ là các cạnh đơn. Trong cây sao, đường đi dài nhất phải đi qua tâm, do đó, hai đường đi không chồng nhau chỉ có thể sử dụng các cạnh lá riêng biệt. 
 
 ## Phương pháp tiếp cận 
 
 Phương pháp brute-force sẽ liệt kê tất cả các đường dẫn đơn giản có thể. Đối với mỗi đường dẫn, chúng ta có thể tính toán độ dài của nó. Sau đó, chúng tôi sẽ ghép mọi đường dẫn với mọi đường dẫn khác, kiểm tra xem chúng có chia sẻ bất kỳ nút nào không. Tổng số cặp đường dẫn là`O(n^4)`trong trường hợp xấu nhất vì có`O(n^2)`các đường dẫn và việc so sánh từng cặp đường dẫn có thể mất`O(n)`thời gian. Điều này có thể đúng nhưng quá chậm đối với`n=200`. 
 
-Thông tin chi tiết quan trọng đến từ việc quan sát rằng trong một cây, khoảng cách giữa hai nút bất kỳ là duy nhất. Chúng ta có thể tính toán trước khoảng cách giữa tất cả các cặp nút bằng BFS hoặc DFS đơn giản cho mỗi nút. Khi đã biết khoảng cách, bài toán có thể được trình bày lại: đối với mỗi cạnh trong cây, hãy coi đó là một "vết cắt" để chia cây thành hai cây con. Bất kỳ đường dẫn nào trong cây con thứ nhất không thể giao nhau với bất kỳ đường dẫn nào trong cây con thứ hai. Điều này làm giảm vấn đề phải tính toán các đường đi dài nhất bên trong cây con sau khi loại bỏ cạnh và sau đó kết hợp các kết quả cho tất cả các cạnh. 
+Thông tin chi tiết quan trọng đến từ việc quan sát rằng trong một cây, khoảng cách giữa hai nút bất kỳ là duy nhất. Chúng ta có thể tính toán trước khoảng cách giữa tất cả các cặp nút bằng BFS hoặc DFS đơn giản cho mỗi nút. Khi đã biết khoảng cách, bài toán có thể được trình bày lại: đối với mỗi cạnh trong cây, hãy coi đó là một "vết cắt" chia cây thành hai cây con. Bất kỳ đường dẫn nào trong cây con thứ nhất không thể giao nhau với bất kỳ đường dẫn nào trong cây con thứ hai. Điều này làm giảm vấn đề phải tính toán các đường đi dài nhất bên trong cây con sau khi loại bỏ cạnh và sau đó kết hợp các kết quả cho tất cả các cạnh. 
 
-Lập trình động có thể được sử dụng để tính toán trước các đường đi dài nhất bên trong tất cả các cây con một cách hiệu quả. Cụ thể, nếu`dp[u][v]`là con đường dài nhất bắt đầu từ`u`và bị ràng buộc vào cây con có gốc tại`v`, chúng ta có thể tính toán nó bằng DFS đệ quy, tránh việc tính toán lại dư thừa. Một lần`dp`được lấp đầy, chúng ta có thể lặp qua tất cả các cặp cây con không chồng chéo (chia theo các cạnh) và tính tích cực đại. 
+Lập trình động có thể được sử dụng để tính toán trước các đường đi dài nhất bên trong tất cả các cây con một cách hiệu quả. Cụ thể, nếu`dp[u][v]`là con đường dài nhất bắt đầu từ`u`và bị ràng buộc vào cây con có gốc tại`v`, chúng ta có thể tính toán nó bằng DFS đệ quy, tránh việc tính toán lại dư thừa. Một lần`dp`được lấp đầy, chúng ta có thể lặp lại tất cả các cặp cây con không chồng chéo (chia theo các cạnh) và tính tích cực đại. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -49,7 +49,7 @@ Lập trình động có thể được sử dụng để tính toán trước c
 1. Xây dựng danh sách kề của cây từ đầu vào. Mỗi thành phố lưu trữ hàng xóm của nó. 
 2. Khởi tạo mảng 2D`dist[u][v]`để lưu trữ khoảng cách giữa mỗi cặp nút. 
 3. Đối với mỗi nút`u`, chạy DFS hoặc BFS để lấp đầy khoảng cách đến tất cả các nút khác. Điều này đảm bảo`dist[u][v]`được tính vào`O(n^2)`tổng thời gian. 
-4. Khởi tạo mảng DP 3D`dp[u][v]`để biểu thị độ dài đường dẫn tối đa bắt đầu từ nút`u`và bị ràng buộc với cây con có gốc tại nút`v`(hoặc, tương đương, xét đường đi qua cạnh`(u, v)`theo hướng từ`u`ĐẾN`v`). 
+4. Khởi tạo mảng DP 3D`dp[u][v]`để biểu thị độ dài đường dẫn tối đa bắt đầu từ nút`u`và bị ràng buộc vào cây con có gốc tại nút`v`(hoặc, tương đương, xét đường đi qua cạnh`(u, v)`theo hướng từ`u`ĐẾN`v`). 
 5. Sử dụng DFS để điền`dp[u][v]`đệ quy. Đối với nút`v`và hàng xóm`u`,`dp[u][v]`là`1 + max(dp[v][w] for all w ≠ u)`. 
 6. Lặp lại tất cả các cặp cạnh`(u1, v1)`Và`(u2, v2)`. Hãy coi chúng như hai "cây con" riêng biệt được hình thành bằng cách loại bỏ từng cạnh. Tính độ dài đường dẫn tối đa trong mỗi cây con bằng cách sử dụng`dp`bàn. 
 7. Theo dõi tích cực đại của hai độ dài đường đi gặp phải. 

@@ -75,7 +75,7 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Phần đầu tiên đọc đầu vào và sắp xếp các phân đoạn. Việc sắp xếp theo điểm cuối bên trái đảm bảo hoạt động kiểm tra ngăn chặn hoạt động chính xác, trong khi điểm cuối bên phải giảm dần sẽ giải quyết các mối liên kết cho các phân đoạn lồng nhau. Các vòng lặp lồng nhau thực hiện DP, trong đó điều kiện`ri <= rj or rj < li`khớp chính xác với yêu cầu đưa vào: hoặc`i`ở bên trong`j`hoặc rời rạc. Đạt mức tối đa`dp`đưa ra câu trả lời cho từng trường hợp thử nghiệm. 
+```Phần đầu tiên đọc đầu vào và sắp xếp các phân đoạn. Việc sắp xếp theo điểm cuối bên trái đảm bảo việc kiểm tra ngăn chặn hoạt động chính xác, trong khi điểm cuối bên phải giảm dần sẽ giải quyết các mối liên kết cho các phân đoạn lồng nhau. Các vòng lặp lồng nhau thực hiện DP, trong đó điều kiện`ri <= rj or rj < li`khớp chính xác với yêu cầu đưa vào: hoặc`i`ở bên trong`j`hoặc rời rạc. Đạt mức tối đa`dp`đưa ra câu trả lời cho từng trường hợp thử nghiệm. 
 
 ## Ví dụ đã hoạt động 
 
@@ -171,4 +171,4 @@ assert run("1\n4\n1 3\n3 4\n2 2\n4 4\n") == "3", "touching endpoints handled cor
 | 1 đoạn | 1 | đầu vào tối thiểu | 
 | 2 đoạn rời rạc | 2 | bao gồm rời rạc cơ bản | 
 | 3 lồng nhau bên phải | 3 | xử lý các mối quan hệ ở điểm cuối bên phải | 
-| 4 điểm cuối chạm vào | 3 | đảm bảo giao nhau tại điểm cuối |
+| 4 điểm cuối chạm vào | 3 | đảm bảo giao nhau tại các điểm cuối |

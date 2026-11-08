@@ -17,7 +17,7 @@ draft: false
 [CF 140C - Người tuyết năm mới](https://codeforces.com/problemset/problem/140/C) 
 
 **Đánh giá:** 1800 
-**Tas:** tìm kiếm nhị phân, cấu trúc dữ liệu, tham lam 
+**Tags:** tìm kiếm nhị phân, cấu trúc dữ liệu, tham lam 
 **Thời gian giải:** 2 phút 
 **Đã xác minh:** không 
 
