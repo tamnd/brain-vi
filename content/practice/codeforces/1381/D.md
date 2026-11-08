@@ -33,7 +33,7 @@ share_url: https://chatgpt.com/share/6a2e6d43-3be8-83ec-91e7-75c0a4fc2a1d
 
 Chúng ta được cho một cái cây và một “con rắn” chiếm một đường đi đơn giản giữa hai đỉnh. Đầu ở một điểm cuối của đường dẫn này và đuôi ở điểm cuối kia. Con rắn không chỉ là một con đường tĩnh, nó có thể di chuyển: nó có thể vươn đầu đến một đỉnh trống liền kề trong khi đuôi co lại, hoặc duỗi đuôi khi đầu co lại. Một trong hai bước di chuyển sẽ bảo toàn độ dài của đường đi bị chiếm đóng. 
 
-Nhiệm vụ là xác định xem con rắn có thể đảo ngược hoàn toàn hướng của nó hay không, nghĩa là đầu kết thúc ở nơi đuôi bắt đầu và đuôi kết thúc ở nơi đầu bắt đầu, có thể sau nhiều thao tác trượt cục bộ như vậy. 
+Nhiệm vụ là xác định xem liệu con rắn có thể đảo ngược hoàn toàn hướng của nó hay không, nghĩa là đầu kết thúc ở nơi đuôi bắt đầu và đuôi kết thúc ở nơi đầu bắt đầu, có thể sau nhiều thao tác trượt cục bộ như vậy. 
 
 Hạn chế chính là con rắn luôn là một con đường đơn giản bên trong cây và mọi di chuyển đều bảo tồn cấu trúc đó. Vì vậy, không gian trạng thái không phải là tùy ý, nó là tập hợp tất cả các đường đi đơn giản có độ dài cố định có thể thu được bằng cách trượt từng điểm cuối tại một thời điểm mà không tự giao nhau. 
 
@@ -54,9 +54,9 @@ Về nguyên tắc thì điều này đúng nhưng hoàn toàn không khả thi.
 
 Quan sát quan trọng là chúng ta thực sự không cần phải theo dõi toàn bộ đường dẫn. Cơ thể bên trong của con rắn luôn là một sợi dây xích được kết nối với nhau, và “sự tự do” duy nhất đến từ việc các điểm cuối có thể “vượt qua” được cấu trúc phân nhánh hay không. Vấn đề nằm ở việc liệu con rắn có thể đi qua một cấu hình mà nó có thể hoán đổi hướng một cách hiệu quả trên một cấu trúc phân nhánh phù hợp hay không. 
 
-Một cách chính xác hơn để xem nó là: trong quá trình này, các điểm cuối của con rắn di chuyển giống như hai mã thông báo bị ràng buộc để tránh đường bị chiếm và khả năng đảo ngược phụ thuộc vào việc có tồn tại nút cho phép cả hai đầu định tuyến lại thành các nhánh khác nhau hay không, cung cấp một cách hiệu quả một nơi mà đường dẫn có thể “lật”. 
+Một cách chính xác hơn để xem nó là: trong quá trình này, các điểm cuối của con rắn di chuyển giống như hai mã thông báo bị ràng buộc để tránh đường bị chiếm và khả năng đảo ngược phụ thuộc vào việc có tồn tại nút cho phép cả hai đầu định tuyến lại thành các nhánh khác nhau hay không, cung cấp một cách hiệu quả một vị trí mà đường dẫn có thể “lật”. 
 
-Điều này dẫn đến một đặc điểm cấu trúc: nếu tồn tại một đỉnh trên đường đi ban đầu sao cho cả hai phía của cây phân nhánh từ đỉnh đó chứa đủ “khoảng trống” so với chiều dài của con rắn, thì có thể đảo ngược. Nếu cây về cơ bản là tuyến tính hoặc quá bị ràng buộc dọc theo mỗi đoạn của đường đi ban đầu thì việc đảo ngược là không thể. 
+Điều này dẫn đến một đặc điểm cấu trúc: nếu tồn tại một đỉnh trên đường đi ban đầu sao cho cả hai phía của nhánh cây từ đỉnh đó chứa đủ “khoảng trống” so với chiều dài của con rắn, thì có thể đảo ngược. Nếu cây về cơ bản là tuyến tính hoặc quá bị ràng buộc dọc theo mỗi đoạn của đường đi ban đầu thì việc đảo ngược là không thể. 
 
 Điều này có thể được kiểm tra bằng cách sử dụng tiền xử lý kích thước cây con và kiểm tra các ràng buộc dọc theo đường dẫn ban đầu giữa a và b. 
 
@@ -75,8 +75,8 @@ Chúng ta lấy gốc cây tùy ý ở mức 1 và tính toán các liên kết 
 2. Tính kích thước cây con cho mỗi nút. Điều này cho chúng ta biết có bao nhiêu nút nằm “bên dưới” bất kỳ điểm nào trong cây gốc, chúng ta sẽ sử dụng điểm này để ước tính lượng không gian trống tồn tại theo các hướng khác nhau. 
 3. Xây dựng lại đường dẫn duy nhất từ ​​a đến b bằng cách sử dụng con trỏ cha hoặc nâng LCA. Con đường này là cơ thể rắn ban đầu. 
 4. Với mỗi nút v trên đường đi, hãy xem xét hai hướng dọc theo đường đi: một phía hướng về a và một phía hướng tới b. Việc loại bỏ v sẽ chia cây thành nhiều thành phần và chính xác hai trong số đó có liên quan đến việc tiếp tục con đường rắn. 
-5. Tại nút v, hãy tính kích thước của “nhánh tự do” lớn nhất, nghĩa là thành phần được kết nối lớn nhất liền kề với v không phải là một phần của đoạn đường tiếp nối con rắn. Điều này thể hiện khoảng không gian mà con rắn có thể sử dụng để di chuyển nếu nó cố gắng lật ở v. 
-6. Kiểm tra xem có tồn tại nút v nào trên đường đi sao cho cả hai bên của đường đi đều có đủ chỗ cho con rắn đi qua mà không va chạm hay không. Cụ thể, điều này đòi hỏi không bên nào bị ràng buộc hoàn toàn vào một hành lang giống như một chuỗi duy nhất. 
+5. Tại nút v, hãy tính kích thước của “nhánh tự do” lớn nhất, nghĩa là thành phần được kết nối lớn nhất liền kề với v không phải là một phần của đoạn đường tiếp tục con rắn. Điều này thể hiện khoảng không gian mà con rắn có thể sử dụng để di chuyển nếu nó cố gắng lật ở v. 
+6. Kiểm tra xem có tồn tại nút v nào trên đường đi sao cho cả hai bên đường đi đều có đủ chỗ cho con rắn đi qua mà không va chạm hay không. Cụ thể, điều này đòi hỏi không bên nào bị ràng buộc hoàn toàn vào một hành lang giống như một chuỗi duy nhất. 
 7. Nếu có một trục xoay như vậy, hãy ghi CÓ, vì con rắn có thể dần dần đẩy cơ thể của nó qua vùng phân nhánh đó và đảo ngược hướng. 
 8. Nếu không thì xuất ra NO, vì mọi nút thắt tiềm ẩn sẽ buộc con rắn vào một hành lang cứng nhắc nơi không thể đảo ngược. 
 
@@ -207,7 +207,7 @@ Mỗi nút có nhiều nhất một nhánh hữu ích, vì vậy kích thước 
 
 Không có trục nào tồn tại nên đầu ra là KHÔNG. 
 
-Điều này phản ánh rằng biểu đồ đường dẫn không có cấu trúc linh hoạt để đảo ngược. 
+Điều này phản ánh rằng biểu đồ đường dẫn không có tính linh hoạt về cấu trúc để đảo ngược. 
 
 ## Phân tích độ phức tạp 
 

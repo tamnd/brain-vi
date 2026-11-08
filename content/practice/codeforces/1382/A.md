@@ -35,7 +35,7 @@ Các ràng buộc đủ nhỏ để cả hai mảng cùng chứa tối đa kho�
 Trường hợp cạnh tinh vi nhất phát sinh từ sự trùng lặp và thứ tự. Một cách tiếp cận ngây thơ chỉ đơn giản là thu thập tất cả các giá trị giao nhau mà không kiểm tra tính khả thi của chuỗi sau có thể dễ dàng thất bại. Ví dụ, hãy xem xét:```
 a = [1, 2]
 b = [2, 1]
-```Giao lộ là {1, 2}, nhưng không phải`[1, 2]`cũng không`[2, 1]`xuất hiện dưới dạng một chuỗi con trong cả hai mảng. Câu trả lời đúng phải có độ dài 1 và`[1]`hoặc`[2]`là hợp lệ. Điều này cho thấy chúng ta không thể coi vấn đề như một giao điểm đã định sẵn. 
+```Giao điểm là {1, 2}, nhưng không phải`[1, 2]`cũng không`[2, 1]`xuất hiện dưới dạng một chuỗi con trong cả hai mảng. Câu trả lời đúng phải có độ dài 1 và`[1]`hoặc`[2]`là hợp lệ. Điều này cho thấy chúng ta không thể coi vấn đề như một giao điểm đã định sẵn. 
 
 Một dạng lỗi khác là giả sử chúng ta cần xây dựng dãy con chung dài nhất. Điều đó là không cần thiết và phức tạp hơn nhiều; bài toán chỉ yêu cầu dãy con chung không trống ngắn nhất, làm thay đổi hoàn toàn cấu trúc. 
 
@@ -60,10 +60,10 @@ Chúng tôi tiến hành từng trường hợp kiểm thử.
 
 1. Xây dựng mảng tần số hoặc tập băm cho các phần tử trong mảng đầu tiên. Điều này cho phép kiểm tra tư cách thành viên liên tục sau này. 
 2. Quét qua mảng thứ hai và kiểm tra xem có phần tử nào tồn tại trong tập hợp của mảng đầu tiên hay không. Phần tử đầu tiên được tìm thấy ngay lập tức tạo thành câu trả lời hợp lệ có độ dài 1. 
-3. Nếu chúng tôi tìm thấy phần tử như vậy, chúng tôi sẽ xuất nó và ngừng xử lý trường hợp thử nghiệm đó. Lý do chúng ta có thể dừng ngay lập tức là độ dài 1 là độ dài tối thiểu có thể có đối với bất kỳ chuỗi không trống nào. 
+3. Nếu chúng tôi tìm thấy phần tử như vậy, chúng tôi sẽ xuất nó và ngừng xử lý trường hợp thử nghiệm đó. Lý do chúng ta có thể dừng ngay lập tức là vì độ dài 1 là độ dài tối thiểu có thể có đối với bất kỳ chuỗi không trống nào. 
 4. Nếu chúng tôi quét xong mà không tìm thấy bất kỳ phần tử chung nào, chúng tôi sẽ đưa ra rằng không có giải pháp nào tồn tại. 
 
-Tại sao nó hoạt động được đưa ra một lập luận tối thiểu. Bất kỳ dãy con chung hợp lệ nào cũng phải chứa ít nhất một giá trị xuất hiện trong cả hai mảng. Nếu một giá trị như vậy tồn tại thì chuỗi chỉ bao gồm giá trị đó đã là một chuỗi con hợp lệ của cả hai mảng. Do đó, bất kỳ chuỗi dài hơn nào cũng không thể cải thiện tính tối ưu. Nếu không có giá trị nào được chia sẻ thì không có dãy chung nào khác trống có thể tồn tại. 
+Tại sao nó hoạt động được đưa ra một lập luận tối thiểu. Bất kỳ dãy con chung hợp lệ nào cũng phải chứa ít nhất một giá trị xuất hiện trong cả hai mảng. Nếu một giá trị như vậy tồn tại thì chuỗi chỉ bao gồm giá trị đó đã là một chuỗi con hợp lệ của cả hai mảng. Vì vậy, bất kỳ chuỗi dài hơn nào cũng không thể cải thiện được tính tối ưu. Nếu không có giá trị nào được chia sẻ thì không có dãy chung nào khác trống có thể tồn tại. 
 
 ## Giải pháp Python```python
 import sys
@@ -104,7 +104,7 @@ b = [1, 2, 3, 4, 5]
 | 3 | 3 | Không | Không có | 
 | 4 | 4 | Có | 4 | 
 
-Chúng ta dừng ngay lập tức khi gặp số 4 ở mảng thứ hai vì nó có ở mảng đầu tiên. Điều này xác nhận rằng giải pháp có độ dài 1 luôn được ưu tiên khi có sẵn. 
+Chúng ta dừng ngay lập tức khi gặp số 4 ở mảng thứ hai vì nó có mặt ở mảng đầu tiên. Điều này xác nhận rằng giải pháp có độ dài 1 luôn được ưu tiên khi có sẵn. 
 
 ### Ví dụ 2```
 a = [3]
@@ -119,10 +119,10 @@ Chúng tôi kết thúc quá trình quét mà không tìm thấy bất kỳ kế
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian |$O(n + m)$| Mỗi mảng được xử lý một lần, với việc tra cứu theo thời gian không đổi | 
+| Thời gian |$O(n + m)$| Mỗi mảng được xử lý một lần, với việc tra cứu được thiết lập theo thời gian không đổi | 
 | Không gian |$O(n)$| Lưu trữ các phần tử của mảng đầu tiên trong tập băm | 
 
-Tổng kích thước của tất cả các trường hợp thử nghiệm đều nhỏ, do đó, giải pháp tuyến tính này dễ dàng phù hợp với cả giới hạn thời gian và bộ nhớ ngay cả trong trường hợp đầu vào xấu nhất. 
+Tổng kích thước của tất cả các trường hợp thử nghiệm đều nhỏ, do đó giải pháp tuyến tính này dễ dàng phù hợp với cả giới hạn thời gian và bộ nhớ ngay cả trong trường hợp đầu vào xấu nhất. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io

@@ -44,7 +44,7 @@ Một cạm bẫy phổ biến khác là cho rằng đây chỉ đơn giản là
 
 Quan sát quan trọng là các vị trí chỉ tương tác thông qua chữ cái hiện tại của chúng. Tất cả các vị trí hiện có cùng một chữ cái đều không thể phân biệt được từ góc độ hoạt động hợp lệ. Điều quan trọng không phải là vị trí riêng lẻ mà là mỗi chữ cái nguồn cuối cùng phải đạt được bao nhiêu chữ cái mục tiêu riêng biệt. 
 
-Cố định chữ x trong A. Xem xét tất cả các vị trí trong đó A[i] = x. Trong số các vị trí này, B chỉ định một số tập hợp chữ cái đích. Giả sử các mục tiêu này là, ví dụ: {b, c, d}. Cuối cùng chúng ta phải chia nhóm x thành các nhóm con có các chữ cái khác nhau. 
+Cố định chữ x trong A. Xem xét tất cả các vị trí trong đó A[i] = x. Trong số các vị trí này, B gán một số tập chữ cái đích. Giả sử các mục tiêu này là, ví dụ: {b, c, d}. Cuối cùng chúng ta phải chia nhóm x thành các nhóm con có các chữ cái khác nhau. 
 
 Mỗi lần chúng ta thực hiện một nước đi liên quan đến chữ cái x, chúng ta có thể gán một tập hợp con các vị trí x đã chọn cho một chữ cái mới. Tuy nhiên, khi chúng ta chia x thành các chữ cái khác nhau, các chữ cái thu được đó không còn thuộc nhóm của x nữa, do đó các thao tác trên x trong tương lai sẽ không ảnh hưởng đến chúng. Điều này có nghĩa là mỗi chữ cái mục tiêu riêng biệt đều tiêu tốn ít nhất một “hành động phân nhánh” từ x.
 
@@ -71,8 +71,8 @@ Chúng tôi xử lý từng trường hợp thử nghiệm một cách độc l�
 Điều này thể hiện có bao nhiêu trạng thái cuối cùng khác nhau mà nhóm bắt đầu từ x phải chia thành. 
 3. Nếu S trống, x không xuất hiện trong A và không đóng góp gì. 
 4. Ngược lại, nếu bản thân x nằm trong S thì một trong các mục tiêu đã là chữ cái gốc. Chúng ta có thể giữ tập hợp con đó mà không cần tốn thêm một động thái nào. Phần đóng góp là |S| − 1. 
-5. Nếu x không có trong S, mỗi mục tiêu yêu cầu một chuyển đổi riêng biệt từ x, do đó đóng góp là |S|. 
-6. Tính tổng các phần đóng góp của các chữ cái x để được đáp án. 
+5. Nếu x không có trong S, thì mọi mục tiêu đều yêu cầu một chuyển đổi riêng biệt từ x, do đó đóng góp là |S|. 
+6. Tính tổng các số đóng góp trên các chữ cái x để được đáp án. 
 
 ### Tại sao nó hoạt động 
 
@@ -133,7 +133,7 @@ Tổng cộng = 2.
 
 Điều này phù hợp với chiến lược tối ưu: trước tiên hãy chuyển đổi cả hai vị trí 'a' thành 'b', sau đó chuyển đổi cấu trúc còn lại để đạt đến 'c' khi cần. 
 
-Dấu vết cho thấy rằng việc nhóm theo chữ cái nguồn sẽ ngăn cản việc đếm quá mức các hoạt động trên mỗi vị trí. 
+Dấu vết cho thấy rằng việc nhóm theo chữ cái nguồn sẽ ngăn chặn việc đếm quá mức các hoạt động trên mỗi vị trí. 
 
 ### Ví dụ 2 
 

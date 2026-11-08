@@ -34,7 +34,7 @@ Các trường hợp cạnh không rõ ràng bao gồm các mảng trong đó t�
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận bạo lực sẽ mô phỏng mọi chuỗi di chuyển có thể có cho cả hai người chơi, tính điểm cho mỗi đường đi. Điều này đúng vì nó trực tiếp mô phỏng các quy tắc của trò chơi. Tuy nhiên, số chuỗi là n giai thừa, rất lớn về mặt thiên văn đối với n = 10^5, khiến phương pháp này không khả thi. 
+Cách tiếp cận bạo lực sẽ mô phỏng mọi chuỗi di chuyển có thể có cho cả hai người chơi, tính điểm cho mỗi đường đi. Điều này đúng vì nó mô phỏng trực tiếp các quy tắc của trò chơi. Tuy nhiên, số chuỗi là n giai thừa, rất lớn về mặt thiên văn đối với n = 10^5, khiến phương pháp này không khả thi. 
 
 Thông tin chi tiết quan trọng để tối ưu hóa đến từ việc quan sát rằng XOR có tính kết hợp và giao hoán, đồng thời thứ tự của các phần tử XOR chỉ ảnh hưởng đến điểm số cuối cùng của mỗi người chơi thông qua tính chẵn lẻ của các bước di chuyển ở từng vị trí bit. Điều này làm giảm vấn đề khi phân tích bit quan trọng nhất trong đó XOR của tất cả các số khác 0. Chúng ta hãy biểu thị vị trí bit này là k. Nếu tổng số phần tử có bộ bit này là số lẻ thì người chơi đi trước sẽ có lợi thế nếu số modulo 4 không phải là 1. Ngược lại, người chơi thứ hai có thể phản ánh các bước di chuyển của người chơi đầu tiên để đạt được kết quả hòa hoặc thắng. Quan sát này cho phép chúng tôi quyết định người chiến thắng bằng cách kiểm tra bit khác nhau cao nhất và tần số của nó trong mảng mà không cần mô phỏng các bước di chuyển. 
 
@@ -123,7 +123,7 @@ Dấu vết này hiển thị các trường hợp cạnh cho mảng một phầ
 | Thời gian | O(n) cho mỗi trường hợp thử nghiệm | Chúng tôi lặp lại mảng hai lần: một lần cho XOR và một lần để đếm bit quan trọng. | 
 | Không gian | O(1) thêm | Chỉ một số số nguyên được sử dụng; không có mảng bổ sung tỷ lệ thuận với n. | 
 
-Tổng số n trên tất cả các trường hợp thử nghiệm được giới hạn bởi 10^5, do đó thuật toán tuyến tính này phù hợp thoải mái trong giới hạn thời gian 1 giây và bộ nhớ 256 MB. 
+Tổng số n trên tất cả các trường hợp thử nghiệm được giới hạn bởi 10^5, do đó thuật toán tuyến tính này phù hợp một cách thoải mái trong giới hạn thời gian 1 giây và bộ nhớ 256 MB. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io

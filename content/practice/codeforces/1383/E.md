@@ -16,7 +16,7 @@ samples_total: 1
 share_url: https://chatgpt.com/share/6a2e708f-70d4-83ec-86f4-be23546a483f
 ---
 
-#CF 1383E - Hoạt Động Kỳ Lạ 
+#CF 1383E - Hoạt động kỳ lạ 
 
 **Đánh giá:** 2800 
 **Tags:** tổ hợp, cấu trúc dữ liệu, dp 
@@ -39,7 +39,7 @@ Vì vậy, vấn đề không phải là ở việc mô phỏng các hoạt đ�
 
 Độ dài đầu vào có thể lên tới 10^6, do đó, bất kỳ giải pháp nào xem xét rõ ràng tất cả các phân đoạn đều không thể thực hiện được. Cách tiếp cận bậc hai hoặc tệ hơn là thử tất cả các điểm cắt giữa các vị trí sẽ ngay lập tức thất bại vì có nhiều phân vùng theo cấp số nhân. 
 
-Một vấn đề tế nhị xuất hiện khi số 0 bao quanh những số 0. Một ý tưởng ngây thơ là xử lý từng vị trí một cách độc lập hoặc quyết định cắt giảm một cách tham lam, nhưng điều đó bỏ qua thực tế là phân đoạn chứa số 1 hoạt động rất khác so với phân đoạn chỉ bao gồm các số 0. Ví dụ: trong một chuỗi như 00101, phân đoạn bao gồm 01 không thể được coi giống như phân đoạn bao gồm 00, vì phân đoạn đầu tiên tạo ra 1 trong khi phân đoạn thứ hai tạo ra 0 và điều này thay đổi tất cả các phần tiếp theo hợp lệ tiếp theo. 
+Một vấn đề tế nhị xuất hiện khi các số 0 bao quanh các số 0. Một ý tưởng ngây thơ là xử lý từng vị trí một cách độc lập hoặc quyết định cắt giảm một cách tham lam, nhưng điều đó bỏ qua thực tế là phân đoạn chứa số 1 hoạt động rất khác so với phân đoạn chỉ bao gồm các số 0. Ví dụ: trong một chuỗi như 00101, phân đoạn bao gồm 01 không thể được coi giống như phân đoạn bao gồm 00, vì phân đoạn đầu tiên tạo ra 1 trong khi phân đoạn thứ hai tạo ra 0 và điều này thay đổi tất cả các phần tiếp theo hợp lệ tiếp theo. 
 
 Khó khăn thực sự là mỗi lần cắt không chỉ phân chia cấu trúc mà còn xác định xem các phân đoạn trong tương lai có bị ép buộc hay linh hoạt hay không tùy thuộc vào việc phân đoạn 1 đã được sử dụng hay chưa. 
 
@@ -68,7 +68,7 @@ Chúng tôi xử lý trước next1[i], vị trí đầu tiên tại hoặc sau 
 
 Chúng tôi cũng duy trì một mảng tổng hậu tố trên dp để trả lời các truy vấn phạm vi một cách nhanh chóng. 
 
-### Các bước 
+### bước 
 
 1. Tính mảng next1 bằng cách quét từ phải sang trái. Điều này cho chúng ta biết vị trí số 1 không thể tránh khỏi đầu tiên xuất hiện khi bắt đầu một đoạn tại i. Điều này rất quan trọng vì phân đoạn không đạt tới số 1 chỉ có thể bao gồm các số 0. 
 2. Xây dựng dp từ phải sang trái, bắt đầu từ vị trí n xuống đến 1. Điều này đảm bảo rằng tất cả các giá trị hậu tố cần thiết cho quá trình chuyển đổi đều đã được tính toán. 
@@ -121,7 +121,7 @@ for i in range(n, 0, -1):
 print(dp[1] % MOD)
 ```Việc triển khai xây dựng dp từ cuối để mọi câu trả lời hậu tố đều có sẵn khi cần. Điểm tinh tế quan trọng nhất là sự dịch chuyển chỉ mục: một phân đoạn kết thúc tại j đóng góp dp[j+1], do đó mọi phạm vi trên j phải được chuyển đổi thành phạm vi dịch chuyển trên các chỉ số dp. Mảng hậu tố xử lý việc này một cách rõ ràng, nhưng chỉ khi các ranh giới được dịch chuyển một cách nhất quán. 
 
-Phần phân chia tại next1[i] là nơi duy nhất mà hành vi của phân đoạn thay đổi, bởi vì trước thời điểm đó, chúng tôi đảm bảo chỉ nhìn thấy các số 0 và sau thời điểm đó, bất kỳ phân khúc nào cũng nhất thiết phải bao gồm ít nhất một số 1. 
+Phần phân chia tại next1[i] là nơi duy nhất mà hành vi của phân đoạn thay đổi, bởi vì trước thời điểm đó, chúng tôi đảm bảo chỉ nhìn thấy các số 0 và sau thời điểm đó, bất kỳ phân đoạn nào cũng nhất thiết phải bao gồm ít nhất một số 1. 
 
 ## Ví dụ đã hoạt động 
 

@@ -33,13 +33,13 @@ share_url: https://chatgpt.com/share/6a2e6ef5-142c-83ec-96d7-74def36b8cb3
 
 Trò chơi được chơi trên một hàng cọc. Trong mỗi lần di chuyển, chỉ có đống đá ngoài cùng bên trái còn chứa đá là quan trọng và người chơi có thể loại bỏ bất kỳ số lượng đá dương nào khỏi đống đó. Khi một cọc trống, việc chơi tiếp tục với cọc tiếp theo theo cách tương tự. Người chơi thay phiên nhau và người chơi không thể di chuyển vì tất cả cọc đều trống sẽ thua. 
 
-Mặc dù điều này trông giống như nhiều cọc độc lập, nhưng hạn chế ngoài cùng bên trái biến nó thành một chuỗi phát triển duy nhất trong đó các cọc lần lượt cạn kiệt và mỗi cọc cạn kiệt có thể hoặc không thể “lật đổ” tình huống chiến lược tùy thuộc vào số lần di chuyển đã được thực hiện bên trong cọc đó. 
+Mặc dù điều này trông giống như nhiều cọc độc lập, nhưng hạn chế ngoài cùng bên trái biến nó thành một chuỗi phát triển duy nhất trong đó các cọc lần lượt cạn kiệt và mỗi lần cạn kiệt có thể "lật đổ" tình huống chiến lược tùy thuộc vào số lần di chuyển đã được thực hiện bên trong cọc đó. 
 
 Đầu vào bao gồm một số trò chơi độc lập. Đối với mỗi trò chơi, chúng ta phải quyết định xem người chơi đầu tiên có bị buộc phải thắng trong lối chơi tối ưu hay không. 
 
 Các ràng buộc cho phép tổng cộng lên tới một trăm nghìn cọc trong tất cả các trường hợp thử nghiệm. Điều này ngay lập tức loại trừ mọi mô phỏng xử lý từng viên đá hoặc thậm chí từng chuyển động riêng lẻ. Bất kỳ giải pháp nào cũng phải quét từng trường hợp thử nghiệm trong thời gian tuyến tính, vì lý luận bậc hai hoặc mỗi bước di chuyển sẽ vượt quá giới hạn theo một số bậc độ lớn. 
 
-Trường hợp khó phát hiện khi tất cả các cọc đều chứa đúng một viên đá. Trong tình huống đó, mỗi nước đi sẽ làm trống hoàn toàn một cọc, vì vậy trò chơi chỉ còn là một sự luân phiên đơn giản giữa các cọc. Ví dụ, đối với`[1, 1, 1]`, người chơi đầu tiên thắng, trong khi đối với`[1, 1, 1, 1]`, người chơi thứ hai thắng. Một trực giác ngây thơ có thể tập trung không chính xác vào tổng số quân chẵn, nhưng đó không phải là điều chi phối trò chơi. 
+Trường hợp khó phát hiện khi tất cả các cọc đều chứa đúng một viên đá. Trong tình huống đó, mỗi nước đi sẽ làm trống hoàn toàn một cọc, vì vậy trò chơi chỉ còn là một sự luân phiên đơn giản giữa các cọc. Ví dụ, đối với`[1, 1, 1]`, người chơi đầu tiên thắng, trong khi đối với`[1, 1, 1, 1]`, người chơi thứ hai thắng. Một trực giác ngây thơ có thể tập trung không chính xác vào tổng số quân chẵn lẻ, nhưng đó không phải là điều chi phối trò chơi. 
 
 Một trường hợp cạnh quan trọng khác xuất hiện khi một đống lớn hơn một tồn tại sớm trong chuỗi. Ví dụ, trong`[2, 5, 4]`, người chơi đầu tiên sẽ thắng ngay lập tức bằng cách kiểm soát cách giảm cọc đầu tiên. Tuy nhiên, nếu đống lớn đầu tiên đó xuất hiện muộn hơn, chẳng hạn như`[1, 1, 2, ...]`, tính chẵn lẻ thay đổi tùy thuộc vào vị trí của nó chứ không phải chỉ giá trị của nó. 
 
@@ -96,7 +96,7 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Giải pháp đọc từng trường hợp kiểm thử và thực hiện một lần chuyển qua mảng. Vòng lặp tìm kiếm đống đầu tiên không bằng một, lưu trữ chỉ mục của nó. Nếu không có thì quyết định chỉ phụ thuộc vào số lượng cọc có phải là số lẻ hay không. Ngược lại, tính chẵn lẻ của chỉ số sẽ xác định người chiến thắng. 
+```Giải pháp đọc từng trường hợp kiểm thử và thực hiện một lần chuyển qua mảng. Vòng lặp tìm kiếm đống đầu tiên không bằng một, lưu trữ chỉ mục của nó. Nếu không có thì quyết định chỉ phụ thuộc vào việc số lượng cọc có phải là số lẻ hay không. Ngược lại, tính chẵn lẻ của chỉ số sẽ xác định người chiến thắng. 
 
 Chi tiết triển khai chính là lập chỉ mục dựa trên số không. Lý do sử dụng các vị trí dựa trên 1 về mặt khái niệm, do đó mã áp dụng trực tiếp các kiểm tra chẵn hoặc lẻ trên chỉ mục dựa trên 0 mà không cần điều chỉnh. 
 
@@ -130,7 +130,7 @@ Cọc không tầm thường đầu tiên xuất hiện ở chỉ số 1. Điề
 | Thời gian | O(n) cho mỗi trường hợp thử nghiệm | Mỗi cọc được kiểm tra một lần cho đến khi tìm thấy cọc đầu tiên | 
 | Không gian | O(1) | Chỉ một số biến được lưu trữ bất kể kích thước đầu vào | 
 
-Tổng công việc trong tất cả các trường hợp thử nghiệm là tuyến tính trong tổng số cọc, phù hợp thoải mái trong giới hạn của$10^5$. 
+Tổng công việc trong tất cả các trường hợp thử nghiệm là tuyến tính trong tổng số cọc, phù hợp thoải mái trong các ràng buộc của$10^5$. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io

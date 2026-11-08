@@ -32,13 +32,13 @@ Nhiệm vụ là xây dựng một lưới hoán vị mới$A'$có cùng kích t
 
 Những hạn chế$n, m \le 250$ngụ ý lên tới 62.500 tế bào. Bất kỳ giải pháp nào thử rõ ràng tất cả các hoán vị của vị trí hoặc kiểm tra cấu trúc cục bộ nhiều lần sẽ quá chậm. Việc xây dựng về cơ bản phải tuyến tính hoặc gần tuyến tính về số lượng ô. 
 
-Một khó khăn tinh tế xuất phát từ tính nhất quán giữa cực đại của hàng và cột. Một ô có giá trị lớn nhất trong hàng của nó buộc phải lớn hơn tất cả các phần tử khác trong hàng đó và tương tự đối với các cột. Nếu một số thuộc cả hai bộ, nó phải hoạt động như một đỉnh theo cả hai hướng, điều này đặt ra một ràng buộc vị trí cứng nhắc. 
+Một khó khăn nhỏ xuất phát từ tính nhất quán giữa cực đại của hàng và cột. Một ô có giá trị lớn nhất trong hàng của nó buộc phải lớn hơn tất cả các phần tử khác trong hàng đó và tương tự đối với các cột. Nếu một số thuộc cả hai tập hợp, thì nó phải hoạt động như một đỉnh theo cả hai hướng, điều này đặt ra một ràng buộc vị trí cứng nhắc. 
 
-Một nỗ lực ngây thơ sẽ là gán độc lập vị trí cực đại của hàng và vị trí cực đại của cột mà không cần phối hợp. Điều này không thành công vì một ô không thể đồng thời thỏa mãn hai ràng buộc đỉnh xung đột trừ khi các phép gán được căn chỉnh chính xác. 
+Một nỗ lực ngây thơ sẽ là gán độc lập vị trí cực đại của hàng và vị trí cực đại của cột mà không cần phối hợp. Điều này không thành công vì một ô không thể đồng thời đáp ứng hai ràng buộc đỉnh xung đột trừ khi các phép gán được căn chỉnh chính xác. 
 
 ## Phương pháp tiếp cận 
 
-Một ý tưởng mạnh mẽ sẽ là thử tất cả các hoán vị của ma trận và kiểm tra xem tập cực đại hàng và tập cực đại cột có khớp với mục tiêu hay không và liệu mỗi hàng và cột có phải là bitonic hay không. Thậm chí bỏ qua sự bùng nổ tổ hợp của$(nm)!$, thậm chí việc kiểm tra bitonicity nhiều lần cho tất cả các hàng và cột khiến phương pháp này không khả thi. Không gian tìm kiếm rất lớn về mặt thiên văn. 
+Một ý tưởng mạnh mẽ sẽ là thử tất cả các hoán vị của ma trận và kiểm tra xem tập cực đại hàng và tập cực đại cột có khớp với mục tiêu hay không và liệu mọi hàng và cột có phải là bitonic hay không. Thậm chí bỏ qua sự bùng nổ tổ hợp của$(nm)!$, thậm chí việc kiểm tra bitonicity nhiều lần cho tất cả các hàng và cột khiến phương pháp này không khả thi. Không gian tìm kiếm rất lớn về mặt thiên văn. 
 
 Quan sát quan trọng là tính bitonic áp đặt một cấu trúc cục bộ: mỗi hàng có chính xác một vị trí đỉnh và mỗi cột cũng có chính xác một vị trí đỉnh. Khi các vị trí đỉnh đã được cố định, các số còn lại buộc phải chuyển sang cấu trúc giảm dần khỏi các đỉnh này. 
 
@@ -200,7 +200,7 @@ Cả hàng và cột đều tăng lên đến một đỉnh duy nhất rồi gi�
 | Thời gian |$O(nm \log(nm))$| phân loại chiếm ưu thế trong xây dựng | 
 | Không gian |$O(nm)$| lưu trữ lưới | 
 
-Kích thước lưới tối đa là 62.500 và việc sắp xếp 62.500 số nguyên cũng nằm trong giới hạn. 
+Kích thước lưới tối đa là 62.500 và việc sắp xếp 62.500 số nguyên nằm trong giới hạn. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io
@@ -265,7 +265,7 @@ assert run("""3 3
 
 ## Vỏ cạnh 
 
-Đối với một$1 \times m$hoặc$n \times 1$lưới, mỗi hàng hoặc cột là toàn bộ mảng, vì vậy mức tối đa là toàn cục. Việc xây dựng thoái hóa thành phân loại và bất kỳ vị trí giảm dần nào đều thỏa mãn tính chất bit. 
+Đối với một$1 \times m$hoặc$n \times 1$lưới, mỗi hàng hoặc cột là toàn bộ mảng, vì vậy mức tối đa là toàn cục. Việc xây dựng thoái hóa thành phân loại và bất kỳ vị trí giảm dần nào cũng thỏa mãn tính chất bitonic một cách tầm thường. 
 
 Đối với các lưới có độ lệch cao như$1 \times 250$, thuật toán vẫn gán các giá trị giảm dần và điều kiện bitonic giảm xuống một đỉnh duy nhất ở vị trí đầu tiên. 
 

@@ -18,7 +18,7 @@ draft: false
 
 **Đánh giá:** 1700 
 **Tags:** dsu, đồ thị, tham lam, sắp xếp, chuỗi, cây, hai con trỏ 
-**Thời gian giải:** 1 phút 37 giây 
+**Thời gian giải:** 1 phút 37s 
 **Đã xác minh:** có 
 
 ##Giải pháp 
@@ -36,7 +36,7 @@ Các trường hợp cạnh không rõ ràng bao gồm các tình huống có nh
 
 Cách tiếp cận đơn giản nhất là quét liên tục`A`và cho mọi vị trí nơi`A[i] != B[i]`, cố gắng tìm một nước đi hợp lý để mang lại`A[i]`gần hơn với`B[i]`. Người ta có thể thử chọn từng vị trí không khớp và thay đổi nó một cách riêng lẻ hoặc theo nhóm tùy ý. Mặc dù về nguyên tắc điều này có hiệu quả nhưng nó không hiệu quả vì mỗi lần quét có thể mất`O(n)`và chúng tôi có thể biểu diễn tới`O(n)`di chuyển, cho`O(n^2)`thời gian, quá chậm. 
 
-Cái nhìn sâu sắc quan trọng là chúng ta chỉ cần tập trung vào chữ cái nhỏ nhất trong`A`nhỏ hơn mục tiêu tương ứng của nó trong`B`. Đối với mỗi chữ cái`x`, chúng ta có thể tìm được giá trị nhỏ nhất`y > x`xuất hiện trong`B`ở một vị trí nào đó`A`có`x`. Sau đó, tất cả các vị trí trong`A`chứa`x`và cần đạt được`y`hoặc cao hơn có thể nâng cấp lên`y`chỉ trong một lần di chuyển. Sau khi thực hiện động tác này, chúng ta xử lý đệ quy`y`như cái mới`x`trong lần lặp tiếp theo. Điều này đảm bảo mỗi bước di chuyển sẽ nâng cao tối đa các chữ cái mà không vi phạm ràng buộc về thứ tự và đảm bảo rằng chúng ta không bao giờ "vượt quá" mục tiêu hoặc tạo ra tình huống bất khả thi. 
+Cái nhìn sâu sắc quan trọng là chúng ta chỉ cần tập trung vào chữ cái nhỏ nhất trong`A`nhỏ hơn mục tiêu tương ứng của nó trong`B`. Đối với mỗi chữ cái`x`, chúng ta có thể tìm được giá trị nhỏ nhất`y > x`xuất hiện trong`B`ở một vị trí nào đó`A`có`x`. Sau đó, tất cả các vị trí trong`A`chứa`x`và cần đạt được`y`hoặc cao hơn có thể nâng cấp lên`y`chỉ trong một lần di chuyển. Sau khi thực hiện động tác này, chúng ta xử lý đệ quy`y`như mới`x`trong lần lặp tiếp theo. Điều này đảm bảo mỗi bước di chuyển sẽ nâng cao tối đa các chữ cái mà không vi phạm ràng buộc về thứ tự và đảm bảo rằng chúng ta không bao giờ "vượt quá" mục tiêu hoặc tạo ra tình huống bất khả thi. 
 
 Điều này làm giảm vấn đề phải quét từng chữ cái theo thứ tự từ`a`ĐẾN`t`và đối với mỗi chữ cái, tính toán tập hợp nâng cấp tối thiểu cần thiết để tiếp cận các chữ cái trong`B`. Vì chỉ có 20 chữ cái và với mỗi chữ cái chúng tôi xử lý mỗi vị trí nhiều nhất một lần nên thuật toán sẽ chạy trong`O(n)`thời gian. 
 
@@ -51,10 +51,10 @@ Cái nhìn sâu sắc quan trọng là chúng ta chỉ cần tập trung vào ch
 2. Đối với mỗi chữ cái`x`từ`a`ĐẾN`t`, xây dựng một tập hợp tất cả các chữ cái mục tiêu`y`TRONG`B`như vậy`y > x`Và`A[i] = x`. Điều này xác định các chữ cái`x`phải tiến tới. 
 3. Nếu bộ này trống, hãy chuyển sang chữ cái tiếp theo. Không cần thực hiện hành động nào đối với`x`. 
 4. Ngược lại, hãy tìm giá trị nhỏ nhất`y`trong bộ này. Tất cả các vị trí ở đó`A[i] = x`Và`B[i] >= y`có thể được nâng cấp lên`y`chỉ trong một lần di chuyển. Ghi lại động thái này. 
-5. Lặp lại bước 2-4 cho tất cả các chữ cái theo thứ tự tăng dần. Mỗi bước di chuyển sẽ tăng các chữ cái một cách nghiêm ngặt, giữ nguyên ràng buộc`y > x`. 
-6. Đếm tổng số lần di chuyển đã thực hiện. Điều này mang lại số lần di chuyển tối thiểu cần thiết để biến đổi`A`vào trong`B`. 
+5. Lặp lại bước 2-4 cho tất cả các chữ cái theo thứ tự tăng dần. Mỗi lần di chuyển sẽ tăng các chữ cái một cách nghiêm ngặt, giữ nguyên ràng buộc`y > x`. 
+6. Đếm tổng số lượt di chuyển đã thực hiện. Điều này mang lại số lần di chuyển tối thiểu cần thiết để biến đổi`A`vào trong`B`. 
 
-Tại sao nó hoạt động: Ở mỗi bước, chúng tôi chỉ tăng các chữ cái từ`x`đến mức tối thiểu cần thiết`y`. Bất kỳ mục tiêu lớn hơn nào sẽ được xử lý trong lần lặp tiếp theo vì chúng tôi xử lý các chữ cái theo thứ tự. Không có chữ cái nào bị giảm đi và mỗi lần di chuyển sẽ tối đa hóa tiến trình cho nhiều vị trí cùng một lúc, đảm bảo số lần di chuyển tối thiểu. Điều bất biến là sau khi xử lý tất cả các chữ cái nhỏ hơn`z`, tất cả các chữ cái`<= z`hoặc đã đúng hoặc được đặt thành một chữ cái có thể đạt được mục tiêu trong các bước di chuyển trong tương lai. 
+Tại sao nó hoạt động: Ở mỗi bước, chúng tôi chỉ tăng các chữ cái từ`x`đến mức tối thiểu cần thiết`y`. Bất kỳ mục tiêu lớn hơn nào sẽ được xử lý trong lần lặp tiếp theo vì chúng tôi xử lý các chữ cái theo thứ tự. Không có chữ cái nào bị giảm đi và mỗi lần di chuyển sẽ tối đa hóa tiến trình cho nhiều vị trí cùng một lúc, đảm bảo số lần di chuyển tối thiểu. Điều bất biến là sau khi xử lý tất cả các chữ cái nhỏ hơn`z`, tất cả các chữ cái`<= z`hoặc đã đúng hoặc được đặt thành một chữ cái có thể đạt được mục tiêu trong các bước đi trong tương lai. 
 
 ## Giải pháp Python```python
 import sys

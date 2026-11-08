@@ -100,7 +100,7 @@ Bất kỳ vị trí nào không phải là khớp chính xác bắt buộc cũn
 
 ### Tại sao nó hoạt động 
 
-Việc xây dựng duy trì hai bất biến xuyên suốt. Đầu tiên, chính xác`x`các chỉ số được gán giá trị bằng nhau cho`b`, bởi vì chúng tôi chọn chúng một cách rõ ràng. Thứ hai, tổng số vị trí trong đó các giá trị được gán đến từ nhiều tập hợp`b`chính xác là`y`, bởi vì tất cả các kết quả phù hợp tiềm năng khác đều được ghép nối cẩn thận hoặc bị loại bỏ bằng cách sử dụng màu giả. Màu dự phòng đảm bảo chúng ta luôn có cách bẻ những que diêm thừa mà không ảnh hưởng đến những que diêm cần thiết, ngăn ngừa tình trạng quá gò bó. 
+Việc xây dựng duy trì hai bất biến xuyên suốt. Đầu tiên, chính xác`x`các chỉ số được gán giá trị bằng nhau cho`b`, bởi vì chúng tôi chọn chúng một cách rõ ràng. Thứ hai, tổng số vị trí trong đó các giá trị được gán đến từ nhiều tập hợp`b`chính xác là`y`, bởi vì tất cả các kết quả phù hợp tiềm năng khác đều được ghép nối cẩn thận hoặc bị loại bỏ bằng cách sử dụng màu giả. Màu dự phòng đảm bảo chúng ta luôn có cách bẻ những que diêm thừa mà không ảnh hưởng đến những que diêm cần thiết, tránh tình trạng quá gò bó. 
 
 ## Giải pháp Python```python
 import sys
@@ -165,7 +165,7 @@ if __name__ == "__main__":
     solve()
 ```Mã đầu tiên thực thi`x`khớp chính xác một cách tham lam. Sau đó, nó chỉ hoạt động trên các vị trí còn lại, xây dựng các kết quả phù hợp tiềm năng thông qua dịch chuyển theo chu kỳ để chúng ta có thể tạo các lớp phủ có kiểm soát mà không vô tình tạo thêm các điểm cố định. Bất kỳ vị trí nào không cần thiết để đạt được sự chồng chéo nhiều phần cần thiết sẽ được lấp đầy bằng`n+1`, hoạt động như một phần tử trung lập không làm tăng giao lộ ngoài những gì chúng ta dự định. 
 
-Chi tiết triển khai quan trọng là sự thay đổi đảm bảo chúng ta có thể tránh các cặp tự khớp khi hình thành các phần chồng chéo. Dự phòng`n+1`ngăn chặn tình trạng lạm phát ngẫu nhiên của`y`. 
+Chi tiết triển khai quan trọng là sự thay đổi đảm bảo chúng ta có thể tránh các cặp tự khớp khi hình thành các phần chồng chéo. Dự phòng`n+1`ngăn chặn sự lạm phát ngẫu nhiên của`y`. 
 
 ## Ví dụ đã hoạt động 
 
