@@ -26,7 +26,7 @@ draft: false
 
 Chúng tôi duy trì nhiều đường dẫn trên cây. Đường dẫn có thể được chèn và xóa một cách linh hoạt. 
 
-Đối với truy vấn có tham số`d`, chúng ta phải quyết định xem có tồn tại ít nhất một đỉnh có khoảng cách đến mọi đường đi được lưu trữ nhiều nhất hay không`d`. 
+Đối với truy vấn có tham số`d`, chúng ta phải quyết định xem có tồn tại ít nhất một đỉnh có khoảng cách đến mọi đường đi được lưu trữ nhiều nhất không`d`. 
 
 Một cách khác để nói điều tương tự là thế này: 
 
@@ -50,7 +50,7 @@ Hãy xem xét một chuỗi:```
 
 Vì`d = 2`, đỉnh`3`nằm trong khoảng cách`2`của cả hai con đường, vì vậy câu trả lời là`Yes`mặc dù bản thân các con đường đều rời rạc. 
 
-Phần khó nhất là hiểu điều kiện nào trên tất cả các đường dẫn được lưu trữ đang thực sự được kiểm tra. 
+Phần khó nhất là hiểu điều kiện nào trên tất cả các đường dẫn được lưu trữ thực sự đang được kiểm tra. 
 
 ## Phương pháp tiếp cận 
 

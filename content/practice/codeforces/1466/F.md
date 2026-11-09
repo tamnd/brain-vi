@@ -16,7 +16,7 @@ draft: false
 
 [CF 1466F - Cơn ác mộng của Euclid](https://codeforces.com/problemset/problem/1466/F) 
 
-**Xếp hạng:** 2100 
+**Đánh giá:** 2100 
 **Thẻ:** bitmasks, dfs và tương tự, dsu, đồ thị, tham lam, toán học, sắp xếp 
 **Thời gian giải:** 1m 53s 
 **Đã xác minh:** có 
@@ -40,13 +40,13 @@ Một trường hợp lỗi điển hình xuất hiện khi có chu kỳ tồn t
 
 Cách tiếp cận bạo lực trực tiếp sẽ liệt kê tất cả các tập hợp con của vectơ và tính toán kết quả XOR, xây dựng tập hợp$T$. Điều này ngay lập tức mang lại sự đúng đắn nhưng theo cấp số nhân, đòi hỏi$2^n$hoạt động, điều này là không thể ngay cả đối với$n=30$. 
 
-Một cách tiếp cận đại số tuyến tính tiêu chuẩn hơn sẽ xây dựng cơ sở dần dần. Mỗi vectơ mới được rút gọn so với các vectơ cơ sở hiện có và nếu nó độc lập thì nó sẽ được thêm vào. Điều này tính toán chính xác$|T| = 2^{\text{rank}}$. Tuy nhiên, việc duy trì cơ sở$5 \cdot 10^5$các thứ nguyên là không khả thi nếu được triển khai một cách ngây thơ và quan trọng hơn là nó không trực tiếp giải quyết được yêu cầu tập hợp con tối thiểu về mặt từ điển. 
+Một cách tiếp cận đại số tuyến tính tiêu chuẩn hơn sẽ xây dựng cơ sở dần dần. Mỗi vectơ mới được rút gọn so với các vectơ cơ sở hiện có và nếu nó độc lập thì nó sẽ được thêm vào. Cái này tính toán chính xác$|T| = 2^{\text{rank}}$. Tuy nhiên, việc duy trì cơ sở$5 \cdot 10^5$các thứ nguyên là không khả thi nếu được triển khai một cách ngây thơ và quan trọng hơn là nó không giải quyết trực tiếp yêu cầu tập hợp con tối thiểu về mặt từ điển. 
 
 Quan sát quan trọng là mỗi vectơ có nhiều nhất hai vectơ, nên cấu trúc của một đồ thị trên$m$đỉnh. Một vectơ có một số 1 là một bộ tạo đơn nguyên giống vòng lặp, trong khi một vectơ có hai số 1 là một cạnh nối hai đỉnh. Không gian được tạo tương ứng với sự kết hợp XOR của các cạnh, hoạt động giống như không gian chu trình trong biểu đồ. 
 
-The rank structure simplifies dramatically: in each connected component, edges contribute degrees of freedom equal to the number of vertices minus number of components, except that unary vectors can pin vertices directly and reduce ambiguity. This allows us to replace Gaussian elimination with a DSU-based construction that tracks whether a component contains a basis cycle and whether we have already fixed a representative structure.
+Cấu trúc xếp hạng đơn giản hóa đáng kể: trong mỗi thành phần được kết nối, các cạnh đóng góp bậc tự do bằng số đỉnh trừ đi số thành phần, ngoại trừ các vectơ đơn nhất có thể ghim trực tiếp các đỉnh và giảm sự mơ hồ. Điều này cho phép chúng tôi thay thế việc loại bỏ Gaussian bằng cấu trúc dựa trên DSU để theo dõi xem một thành phần có chứa chu trình cơ sở hay không và liệu chúng tôi đã sửa cấu trúc đại diện hay chưa. 
 
- Chúng tôi xử lý các vectơ theo thứ tự tăng dần, quyết định một cách tham lam xem liệu một vectơ có cần thiết để duy trì khoảng không. Một vectơ được bao gồm nếu nó kết nối hai thành phần đã ngắt kết nối trước đó hoặc đưa ra một ràng buộc đơn nguyên độc lập mới. 
+Chúng tôi xử lý các vectơ theo thứ tự tăng dần, quyết định xem liệu vectơ có cần thiết để duy trì khoảng không. Một vectơ được bao gồm nếu nó kết nối hai thành phần đã ngắt kết nối trước đó hoặc đưa ra một ràng buộc đơn nguyên độc lập mới. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -72,7 +72,7 @@ Một vectơ có hai điểm cuối$u, v$hoạt động giống như một cạn
 
 ### 3. Đối với vectơ đơn 1 
 
-Nếu đỉnh$u$chưa được gán vai trò cơ bản, chúng tôi bao gồm vectơ này và đánh dấu$u$như được kích hoạt. Mặt khác, nó là dư thừa vì hiệu ứng của nó có thể được tái tạo thông qua cấu trúc hiện có. 
+Nếu đỉnh$u$chưa được gán vai trò cơ bản, chúng tôi bao gồm vectơ này và dấu$u$như được kích hoạt. Mặt khác, nó là dư thừa vì hiệu ứng của nó có thể được tái tạo thông qua cấu trúc hiện có. 
 
 Lý do là khi một đỉnh tham gia vào bất kỳ vectơ cơ sở nào hoặc được kết nối trong một thành phần có đủ thứ hạng, các ràng buộc đơn phân bổ sung sẽ không làm tăng khoảng cách. 
 
@@ -272,6 +272,6 @@ def run(inp: str) -> str:
 
 Trường hợp cạnh khóa là khi tất cả các vectơ tạo thành một chu trình đơn mà không có bất kỳ vectơ đơn nhất nào. Trong tình huống đó, việc triển khai cơ sở ngây thơ có thể kết luận không chính xác rằng tất cả các cạnh đều độc lập. Cách tiếp cận dựa trên DSU chỉ đảm bảo$n-1$các cạnh được tính là độc lập, với cạnh cuối cùng được coi là dư thừa trừ khi cần thiết rõ ràng cho cấu trúc chu trình. 
 
-Một trường hợp cạnh khác xảy ra khi vectơ đơn nguyên xuất hiện sau khi tọa độ của chúng đã được kết nối thông qua các vectơ khác. Thuật toán bỏ qua chúng một cách chính xác vì đỉnh đã được đánh dấu là đã kích hoạt, đảm bảo không tính quá mức thứ hạng. 
+Một trường hợp cạnh khác xảy ra khi các vectơ đơn nhất xuất hiện sau khi tọa độ của chúng đã được kết nối thông qua các vectơ khác. Thuật toán bỏ qua chúng một cách chính xác vì đỉnh đã được đánh dấu là đã kích hoạt, đảm bảo không tính quá mức thứ hạng. 
 
-Trường hợp tinh tế cuối cùng là sự tối giản về mặt từ điển. Bởi vì chúng tôi xử lý theo thứ tự đầu vào và chỉ chấp nhận vectơ khi chúng tăng tính độc lập, nên các vectơ trước đó luôn được ưu tiên, đảm bảo rằng trong số tất cả các tập hợp bao trùm tối thiểu, tập hợp được tạo ra là nhỏ nhất về mặt từ điển.
+Trường hợp tinh tế cuối cùng là tính tối giản về mặt từ điển. Bởi vì chúng tôi xử lý theo thứ tự đầu vào và chỉ chấp nhận vectơ khi chúng tăng tính độc lập nên các vectơ trước đó luôn được ưu tiên, đảm bảo rằng trong số tất cả các tập hợp bao trùm tối thiểu, vectơ được tạo ra là nhỏ nhất về mặt từ điển.

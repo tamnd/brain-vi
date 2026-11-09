@@ -143,7 +143,7 @@ assert run("1\n5\n1 1 2 2 3\n") == "5", "increment creates full diversity"
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 |---|---|---| 
 |`1\n1\n1\n`|`1`| đầu vào tối thiểu | 
-|`1\n3\n2 2 2\n`|`3`| các giá trị bằng nhau | 
+|`1\n3\n2 2 2\n`|`3`| tất cả các giá trị bằng nhau | 
 |`1\n4\n1 2 3 4\n`|`4`| không cần tăng thêm | 
 |`1\n5\n1 1 2 2 3\n`|`5`| tham lam gia tăng sử dụng | 
 
@@ -151,4 +151,4 @@ assert run("1\n5\n1 1 2 2 3\n") == "5", "increment creates full diversity"
 
 Đối với đầu vào`1\n3\n2 2 2\n`, thuật toán thử lần đầu tiên`2-1=1`cho ghi chú đầu tiên, sau đó gán`2`Và`3`vào các nốt còn lại. Bộ được sử dụng cuối cùng là`{1,2,3}`, mang lại sự đa dạng 3. Một cách tiếp cận ngây thơ chỉ tính các nốt gốc riêng biệt sẽ trả về 1, chứng tỏ tầm quan trọng của việc gán tham lam với số gia. 
 
-Đối với đầu vào tối thiểu`1\n1\n1\n`, chỉ có một ghi chú. Thuật toán cố gắng`1-1=0`nhưng loại bỏ nó vì nó không dương, gán`1`và độ đa dạng là 1. Điều này xác nhận thuật toán xử lý chính xác các ranh giới thấp hơn.
+Đối với đầu vào tối thiểu`1\n1\n1\n`, chỉ có một ghi chú. Thuật toán cố gắng`1-1=0`nhưng loại bỏ nó vì nó không dương, gán`1`và phân tập là 1. Điều này xác nhận thuật toán xử lý chính xác các ranh giới thấp hơn.

@@ -1,6 +1,6 @@
 ---
 title: "CF 1466D - Cuộc lao công thứ 13 của Heracles"
-description: "Chúng ta được cho một cây có các đỉnh mang trọng số. Với mọi giá trị của $k$ từ $1$ đến $n-1$, chúng ta có thể gán một trong các màu $k$ cho mỗi cạnh. Các cạnh có cùng màu tạo thành một sơ đồ con."
+description: "Chúng ta được cho một cây có các đỉnh mang trọng số. Với mọi giá trị của $k$ từ $1$ đến $n-1$, chúng ta có thể gán một trong các màu $k$ cho mỗi cạnh. Các cạnh có cùng màu tạo thành một đồ thị con."
 date: "2026-06-11T01:45:34+07:00"
 tags: ["codeforces", "competitive-programming", "data-structures", "greedy", "sortings", "trees"]
 categories: ["algorithms"]
@@ -24,9 +24,9 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được cho một cây có các đỉnh mang trọng số. Với mọi giá trị của$k$từ$1$ĐẾN$n-1$, chúng ta có thể chỉ định một trong$k$màu sắc cho từng cạnh. Các cạnh có cùng màu tạo thành một sơ đồ con. Giá trị của một màu là tổng trọng số tối đa giữa các thành phần được kết nối của nó và giá trị của toàn bộ màu là tổng của các giá trị mỗi màu này. 
+Chúng ta được cho một cây có các đỉnh mang trọng số. Với mọi giá trị của$k$từ$1$ĐẾN$n-1$, chúng ta có thể chỉ định một trong$k$màu sắc cho từng cạnh. Các cạnh có cùng màu tạo thành một đồ thị con. Giá trị của một màu là tổng trọng số tối đa giữa các thành phần được kết nối của nó và giá trị của toàn bộ màu là tổng của các giá trị mỗi màu này. 
 
-Nhiệm vụ là tính toán giá trị tô màu tối đa có thể cho mỗi$k$. 
+Nhiệm vụ là tính giá trị tô màu lớn nhất có thể cho mỗi$k$. 
 
 Điều đầu tiên cần chú ý là câu trả lời không thực sự nằm ở màu sắc. Màu sắc chỉ là một cơ chế cho phép chúng ta chia cây thành nhiều phần. Thách thức là hiểu được mức độ đóng góp của mỗi trọng lượng đỉnh khi chúng ta tăng số lượng màu. 
 
@@ -69,19 +69,19 @@ Cách tiếp cận bạo lực sẽ cố gắng lý luận trực tiếp về ch
 
 Bắt đầu với$k=1$. Mọi cạnh đều có cùng màu nên toàn bộ cây tạo thành một thành phần được kết nối. Câu trả lời đơn giản là tổng trọng số của tất cả các đỉnh. 
 
-Bây giờ hãy tưởng tượng chia cây xa hơn. Mỗi khi chúng ta tách một phần của cây, một số đỉnh có thể được tính lại trong thành phần tốt nhất của màu khác. Một đỉnh bậc$d$là sự cố với$d$các cạnh. Trên tất cả các phần chia có thể, trọng lượng của nó có thể xuất hiện nhiều nhất$d$tổng số lần. 
+Bây giờ hãy tưởng tượng chia cây xa hơn. Mỗi khi chúng ta tách một phần của cây, một số đỉnh có thể được tính lại trong thành phần tốt nhất của màu khác. Một đỉnh bậc$d$là sự cố với$d$các cạnh. Trên tất cả các phần phân chia có thể có, trọng lượng của nó có thể xuất hiện nhiều nhất$d$tổng số lần. 
 
 Lần xuất hiện đầu tiên đã được bao gồm trong số tiền ban đầu. Phần còn lại$d-1$sự xuất hiện là lợi nhuận bổ sung mà chúng tôi có thể thu thập sau này. 
 
-Điều này biến đổi vấn đề hoàn toàn. Thay vì nghĩ về chất tạo màu, hãy nghĩ đến những đóng góp bổ sung có sẵn. 
+Điều này biến đổi vấn đề hoàn toàn. Thay vì nghĩ về chất tạo màu, hãy nghĩ về những đóng góp bổ sung có sẵn. 
 
 Với mọi đỉnh$v$:$$w_v$$đã được tính một lần trong câu trả lời ban đầu. 
 
 Ngoài ra, chúng ta có thể thêm trọng lượng của nó vào$$\deg(v)-1$$lần. 
 
-Vì mỗi sự xuất hiện thêm đều góp phần chính xác$w_v$, chiến lược tốt nhất là hiển nhiên: trước tiên hãy thu thập những khoản đóng góp bổ sung lớn nhất hiện có. 
+Since every extra appearance contributes exactly$w_v$, the best strategy is obvious: collect the largest available extra contributions first.
 
-Chúng tôi tạo một danh sách chứa$w_v$lặp đi lặp lại$\deg(v)-1$lần cho mỗi đỉnh. Sau khi sắp xếp danh sách này theo thứ tự giảm dần, chúng tôi bắt đầu từ tổng trọng số và liên tục thêm phần đóng góp lớn nhất tiếp theo. Mỗi phép cộng tạo ra câu trả lời cho giá trị tiếp theo của$k$. 
+ Chúng tôi tạo một danh sách có chứa$w_v$lặp đi lặp lại$\deg(v)-1$lần cho mỗi đỉnh. Sau khi sắp xếp danh sách này theo thứ tự giảm dần, chúng tôi bắt đầu từ tổng trọng số và liên tục thêm phần đóng góp lớn nhất tiếp theo. Mỗi phép cộng tạo ra câu trả lời cho giá trị tiếp theo của$k$. 
 
 Quá trình tham lam này khớp chính xác với chuỗi câu trả lời tối ưu. 
 
@@ -107,7 +107,7 @@ Trọng số lớn hơn nên được sử dụng sớm hơn vì mỗi bước s
 
 Tại sao nó hoạt động: 
 
-Ban đầu mỗi đỉnh đóng góp một lần, tạo ra tổng trọng số. Một đỉnh có bậc$d$có thể thuộc thành phần cực đại của$d$các lớp màu khác nhau, vì vậy nó có thể đóng góp trọng lượng của nó$d$lần về tổng thể. Vì một bản sao đã được đưa vào nên có chính xác$d-1$bản sao bổ sung có sẵn. 
+Ban đầu mỗi đỉnh đóng góp một lần, tạo ra tổng trọng số. Một đỉnh có bậc$d$có thể thuộc thành phần cực đại của$d$các lớp màu khác nhau, vì vậy nó có thể đóng góp trọng lượng của nó$d$lần về tổng thể. Vì một bản sao đã được bao gồm nên có chính xác$d-1$bản sao bổ sung có sẵn. 
 
 Mỗi lần tăng số lượng màu sẽ tiêu tốn thêm đúng một đóng góp. Lợi nhuận từ việc lựa chọn đóng góp độc lập với tất cả những đóng góp khác và bằng trọng số đỉnh tương ứng. Bởi vì tất cả lợi nhuận đều không âm và độc lập nên việc lấy lợi nhuận còn lại lớn nhất ở mỗi bước sẽ tối đa hóa mọi tổng tiền tố. Sắp xếp tất cả các đóng góp bổ sung theo thứ tự giảm dần và cộng từng cái một sẽ tạo ra chuỗi câu trả lời tối ưu. 
 

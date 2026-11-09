@@ -32,7 +32,7 @@ Một điểm tinh tế phát sinh khi các palindrome liên tiếp chồng lên
 
 ## Phương pháp tiếp cận 
 
-Phương pháp brute-force là liệt kê tất cả các chuỗi con có độ dài từ hai trở lên và kiểm tra xem chúng có phải là chuỗi palindrome hay không. Bất cứ khi nào tìm thấy một bảng màu, người ta có thể tăng bộ đếm và thay thế một chữ cái. Cách tiếp cận này đúng vì mỗi palindrome phải bị phá vỡ bằng cách thay đổi ít nhất một ký tự. Tuy nhiên, việc kiểm tra tất cả các chuỗi con yêu cầu thao tác O(n²) trên mỗi chuỗi, điều này trở nên không thể chấp nhận được khi tổng số ký tự đạt tới 10⁵. 
+Phương pháp brute-force là liệt kê tất cả các chuỗi con có độ dài từ hai hoặc nhiều hơn và kiểm tra xem chúng có phải là chuỗi palindrome hay không. Bất cứ khi nào tìm thấy một bảng màu, người ta có thể tăng bộ đếm và thay thế một chữ cái. Cách tiếp cận này đúng vì mỗi palindrome phải bị phá vỡ bằng cách thay đổi ít nhất một ký tự. Tuy nhiên, việc kiểm tra tất cả các chuỗi con yêu cầu thao tác O(n²) trên mỗi chuỗi, điều này trở nên không thể chấp nhận được khi tổng số ký tự đạt tới 10⁵. 
 
 Cái nhìn sâu sắc quan trọng là chỉ có các palindrome có độ dài 2 hoặc 3 mới quan trọng đối với các cân nhắc chồng chéo. Bất kỳ palindrome nào có độ dài 4 trở lên đều chứa các palindrome nhỏ hơn có độ dài 2 hoặc 3, vì vậy nếu chúng ta loại bỏ tất cả các palindrome 2 và 3 ký tự thì các palindrome dài hơn sẽ tự động biến mất. Quan sát này làm giảm vấn đề quét chuỗi tuyến tính và kiểm tra các cặp và bộ ba. Bất cứ khi nào một palindrome có độ dài 2 (`s[i] == s[i-1]`) hoặc độ dài 3 (`s[i] == s[i-2]`) được tìm thấy, chúng tôi tăng bộ đếm và đánh dấu vị trí hiện tại là đã thay đổi để tránh ảnh hưởng đến việc kiểm tra trong tương lai. 
 
@@ -158,4 +158,4 @@ assert run("1\nabcde\n") == "0", "no palindromes"
 
 Đối với một chuỗi như`aaa`, việc kiểm tra từng cặp đơn giản có thể tính cả số thứ nhất và số thứ hai`aa`như yêu cầu thay đổi riêng biệt. Thuật toán của chúng tôi đánh dấu một ký tự là đã được sửa đổi bất cứ khi nào một bảng màu bị hỏng. Tại chỉ số 2,`s[2] == s[0]`, vì vậy chúng tôi tăng`changes`thành 1 và đánh dấu chỉ mục 2 là đã sửa đổi. Khi kiểm tra chỉ số 2 cho`aa`ở vị trí 1-2, ký tự trước đó không được sửa đổi, nhưng kiểm tra độ dài-3 sẽ thấy`s[2] == s[0]`đã xử lý rồi. Điều này đảm bảo đầu ra của thuật toán`1`, số lượng thay đổi tối thiểu. 
 
-Đối với các chuỗi ký tự đơn như`a`, vòng lặp không kích hoạt bất kỳ kiểm tra nào cho`i-1`hoặc`i-2`, vì vậy đầu ra là chính xác`0`. Điều này chứng tỏ rằng thuật toán xử lý chính xác tất cả các trường hợp nhỏ và biên.
+Đối với các chuỗi ký tự đơn như`a`, vòng lặp không kích hoạt bất kỳ kiểm tra nào cho`i-1`hoặc`i-2`, vì vậy đầu ra là chính xác`0`. Điều này chứng tỏ thuật toán xử lý chính xác tất cả các trường hợp nhỏ và biên.

@@ -45,11 +45,11 @@ Một cái nhìn sâu sắc hơn sẽ tiết lộ một mô hình thậm chí c�
 
 ## Hướng dẫn thuật toán 
 
-1. Xác định số đó$i$chỉ có thể bị chặn bởi số$i - x$Và$i - y$. Điều này cho phép chúng tôi chỉ theo dõi một cửa sổ nhỏ của các giá trị trước đó thay vì toàn bộ$n$. 
+1. Xác định một số$i$chỉ có thể bị chặn bởi số$i - x$Và$i - y$. Điều này cho phép chúng tôi chỉ theo dõi một cửa sổ nhỏ của các giá trị trước đó thay vì toàn bộ$n$. 
 2. Khởi tạo một mảng DP có độ dài$L = x + y$. Mỗi mục$dp[i]$sẽ lưu trữ kích thước cài đặt chính xác tối đa kết thúc bằng số$i$trong cửa sổ này. 
 3. Lặp lại tất cả$2^L$tập hợp con có thể có của cửa sổ này. Với mỗi tập hợp con, hãy kiểm tra xem không có hai số nào khác nhau một$x$hoặc$y$. Ghi lại số phần tử tối đa trong bất kỳ tập hợp con hợp lệ nào. Điều này mang lại mô hình cục bộ tối ưu. 
 4. Tính toán số lần mẫu phù hợp hoàn toàn$n$:$k = n // L$. Nhân kích thước của mẫu tối ưu với$k$. 
-5. Xử lý các số còn sót lại$r = n \% L$bằng cách giải một trường hợp có độ dài nhỏ hơn$r$có cùng DP. Thêm phần này vào tổng kích thước. 
+5. Xử lý các số còn sót lại$r = n \% L$bằng cách giải quyết một trường hợp có độ dài nhỏ hơn$r$có cùng DP. Thêm phần này vào tổng kích thước. 
 6. Trả về kích thước tổng là kích thước tối đa của một bộ đúng. 
 
 Tại sao nó hoạt động: tập hợp tối ưu trong bất kỳ$L = x + y$các số độc lập với các khối trước đó và tương lai vì xung đột chỉ xảy ra ở khoảng cách$x$Và$y$, cả hai đều nhỏ hơn$L$. Việc lặp lại mẫu đảm bảo không có xung đột mới giữa các khối và việc xử lý phần còn lại một cách riêng biệt đảm bảo chúng tôi không vượt quá$n$. Đối số ốp lát này chứng tỏ giải pháp là tối đa. 
@@ -125,7 +125,7 @@ print(max_correct_set(n, x, y))
 | Thời gian | O(2^(x+y)) | Tất cả các tập con của một khối có độ dài L=x+y đều được liệt kê; x+y ≤ 44, khả thi | 
 | Không gian | O(1) | Chỉ có một số biến và bộ đếm được sử dụng; không có mảng tỷ lệ với n | 
 
-Bởi vì x và y là các hằng số rất nhỏ nên việc liệt kê các tập hợp con có thể thực hiện được. Thuật toán chạy trong một phần giây ngay cả với n=10^9 tối đa. 
+Vì x và y là các hằng số rất nhỏ nên việc liệt kê các tập hợp con có thể thực hiện được. Thuật toán chạy trong một phần giây ngay cả với n=10^9 tối đa. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io
