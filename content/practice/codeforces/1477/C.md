@@ -34,7 +34,7 @@ Các trường hợp cạnh phát sinh khi các điểm tạo thành các đư�
 
 ## Phương pháp tiếp cận 
 
-Giải pháp vũ phu sẽ là tạo ra tất cả$n!$hoán vị của các điểm và kiểm tra từng điểm để biết thuộc tính góc nhọn. Điều này đúng nhưng không khả thi vì$5000!$có kích thước lớn về mặt thiên văn. Each permutation check requires computing$n-2$góc, nhưng vụ nổ giai thừa chiếm ưu thế, khiến nó không thể sử dụng được cho$n$trên 10 hoặc 12. 
+Giải pháp vũ phu sẽ là tạo ra tất cả$n!$hoán vị của các điểm và kiểm tra từng điểm để biết thuộc tính góc nhọn. Điều này đúng nhưng không khả thi vì$5000!$có kích thước lớn về mặt thiên văn. Mỗi kiểm tra hoán vị yêu cầu tính toán$n-2$góc, nhưng vụ nổ giai thừa chiếm ưu thế, khiến nó không thể sử dụng được cho$n$trên 10 hoặc 12. 
 
 Cái nhìn sâu sắc quan trọng đến từ hình học. Với ba điểm bất kỳ$A$,$B$,$C$, góc tại$B$là cấp tính nếu tích chấm$(A-B) \cdot (C-B) > 0$. Chúng ta muốn xây dựng một dãy trong đó điều kiện này đúng với tất cả các bộ ba liên tiếp. Cấu trúc tham lam hoạt động nếu chúng ta chọn điểm bắt đầu và lặp đi lặp lại chọn điểm tiếp theo sao cho góc nhọn với điểm cuối cùng được thêm vào. Sắp xếp theo tọa độ là không cần thiết; thay vào đó, chúng ta có thể xây dựng chuỗi bằng cách liên tục chọn bất kỳ điểm nào sao cho việc cộng điểm đó ở đầu hiện tại không tạo thành góc vuông hoặc góc tù với hai điểm cuối cùng. 
 
