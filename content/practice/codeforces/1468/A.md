@@ -26,7 +26,7 @@ draft: false
 
 Chúng ta được yêu cầu tìm độ dài của dãy con dài nhất của một mảng sao cho dãy đó "gần như tăng lên". Một dãy gần như tăng nếu với mỗi cặp phần tử liên tiếp thì giá trị nhỏ nhất của cặp đó không giảm khi di chuyển trong dãy. Về mặt hình thức, đối với một chuỗi tiếp theo$b_1, b_2, \dots, b_k$, chúng tôi yêu cầu$\min(b_1, b_2) \le \min(b_2, b_3) \le \dots \le \min(b_{k-1}, b_k)$. Bất kỳ chuỗi hai phần tử nào cũng tự động thỏa mãn thuộc tính này, có nghĩa là các chuỗi con có độ dài 2 gần như tăng lên một cách tầm thường. 
 
-Đầu vào bao gồm nhiều trường hợp thử nghiệm. Mỗi trường hợp thử nghiệm cho độ dài mảng$n$và mảng$a$chính nó. Chúng ta phải xuất ra một số nguyên cho mỗi trường hợp thử nghiệm: độ dài của dãy con dài nhất gần như tăng dần. Tổng số phần tử mảng trong tất cả các trường hợp thử nghiệm được giới hạn bởi$5 \cdot 10^5$. Ràng buộc này rất quan trọng: nó cho phép các thuật toán tuyến tính$n$cho mỗi trường hợp thử nghiệm, nhưng bất kỳ thứ gì bậc hai, chẳng hạn như lập trình động đơn giản trên tất cả các cặp, sẽ quá chậm. 
+Đầu vào bao gồm nhiều trường hợp thử nghiệm. Mỗi trường hợp thử nghiệm cho độ dài mảng$n$và mảng$a$chính nó. Chúng ta phải xuất ra một số nguyên duy nhất cho mỗi trường hợp thử nghiệm: độ dài của dãy con dài nhất gần như tăng dần. Tổng số phần tử mảng trong tất cả các trường hợp thử nghiệm được giới hạn bởi$5 \cdot 10^5$. Ràng buộc này rất quan trọng: nó cho phép các thuật toán tuyến tính$n$cho mỗi trường hợp thử nghiệm, nhưng bất kỳ thứ gì bậc hai, chẳng hạn như lập trình động đơn giản trên tất cả các cặp, sẽ quá chậm. 
 
 Một trường hợp cạnh quan trọng là khi mảng giảm nghiêm ngặt. Ví dụ, đối với$a = [5, 4, 3, 2, 1]$, cách tiếp cận đơn giản có thể xem xét từng phần tử riêng lẻ, nhưng sẽ tồn tại một dãy con dài hơn nếu chúng ta cho phép lặp lại thỏa mãn điều kiện tối thiểu. Một trường hợp cạnh khác xảy ra khi tất cả các phần tử đều bằng nhau; ở đây toàn bộ mảng là một dãy con gần như tăng hợp lệ. Các mảng nhỏ có độ dài 2 là không đáng kể, nhưng việc triển khai bất cẩn có thể cố gắng tính toán sự khác biệt hoặc mức tối thiểu và trả về không chính xác 1 thay vì 2. 
 
@@ -48,10 +48,10 @@ Quan sát quan trọng là điều kiện chỉ phụ thuộc vào mức tối t
 
 1. Khởi tạo hai biến,`low`Và`high`, cả hai đều đại diện cho phần tử cuối cùng của dãy con. Đặt chúng thành phần tử đầu tiên của mảng vì chuỗi con bắt đầu từ đó. Đồng thời khởi tạo một bộ đếm`length = 1`để biểu thị độ dài chuỗi con hiện tại. 
 2. Lặp lại mảng bắt đầu từ phần tử thứ hai. Ở mỗi bước, chúng ta có hai lựa chọn để mở rộng dãy con: nối phần tử nhỏ hơn trong hai phần tử cuối cùng hoặc phần tử lớn hơn. Đối với phần tử hiện tại`a[i]`, tính thế năng mới`low`mức tối thiểu của lần trước`low`hoặc`high`Và`a[i]`. Tính toán tiềm năng mới`high`như mức tối đa của lần trước`low`hoặc`high`Và`a[i]`. 
-3. Nếu mới`low`lớn hơn hoặc bằng giá trị trước đó`low`, chúng ta có thể tăng độ dài chuỗi con một cách an toàn và cập nhật`low`Và`high`. Còn không thì đặt lại`low`Và`high`một cách thích hợp. 
-4. Tiếp tục quá trình này cho tất cả các phần tử, luôn theo dõi độ dài chuỗi con dài nhất. 
+3. Nếu mới`low`lớn hơn hoặc bằng giá trị trước đó`low`, chúng ta có thể tăng độ dài chuỗi con một cách an toàn và cập nhật`low`Và`high`. Còn không thì đặt lại`low`Và`high`appropriately.
+ 4. Tiếp tục quá trình này cho tất cả các phần tử, luôn theo dõi độ dài chuỗi con dài nhất. 
 
-Tại sao nó hoạt động: bất biến được duy trì là`low`Và`high`luôn đại diện cho các phần tử tối thiểu và tối đa của cặp cuối cùng trong dãy con hiện tại. Bằng cách chỉ theo dõi hai giá trị này, chúng tôi nắm bắt được tất cả các khả năng mở rộng dãy con trong khi thỏa mãn tính chất gần như tăng dần mà không cần liệt kê mọi dãy con. 
+Why it works: the invariant maintained is that`low`Và`high`luôn đại diện cho các phần tử tối thiểu và tối đa của cặp cuối cùng trong dãy con hiện tại. Bằng cách chỉ theo dõi hai giá trị này, chúng tôi nắm bắt được tất cả các khả năng mở rộng dãy con trong khi thỏa mãn tính chất gần như tăng dần mà không cần liệt kê mọi dãy con. 
 
 ## Giải pháp Python```python
 import sys

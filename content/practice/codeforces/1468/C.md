@@ -76,7 +76,7 @@ Polycarp luôn muốn giá trị chi tiêu lớn nhất, với đơn hàng đế
 
 Thay vì duy trì một cấu trúc phức tạp, chúng tôi duy trì hai quan điểm độc lập về cùng một khách hàng. 
 
-Cấu trúc giống như hàng đợi cho phép truy cập vào điểm đến sớm nhất. 
+Cấu trúc giống như hàng đợi cho phép truy cập đến nơi đến sớm nhất. 
 
 Hàng đợi ưu tiên cho phép truy cập vào giá trị chi tiêu lớn nhất. 
 
@@ -216,7 +216,7 @@ Cả hai giá trị chi tiêu đều bằng nhau. Vùng heap so sánh các ID ti
 
 | Đo | Độ phức tạp | Giải thích | 
 |---|---|---| 
-| Thời gian | O(q log q) | Mỗi lần chèn và loại bỏ đống chi phí O(log q) | 
+| Thời gian | O(q log q) | Chi phí cho mỗi lần chèn và loại bỏ đống là O(log q) | 
 | Không gian | O(q) | Tất cả khách hàng được lưu trữ một lần | 
 
 Mỗi khách hàng vào heap đúng một lần và rời khỏi heap nhiều nhất một lần. Con trỏ đến chỉ di chuyển về phía trước. Tổng công việc vừa vặn thoải mái trong giới hạn cho`5 · 10^5`hoạt động. 
@@ -280,7 +280,7 @@ Coi như:```
 1 10
 1 10
 3
-```Cả hai khách hàng đều có mức chi tiêu bằng nhau. Các cửa hàng đống`(-10, 1)`Và`(-10, 2)`. So sánh bộ dữ liệu từ điển làm cho khách hàng`1`người chiến thắng. 
+```Cả hai khách hàng đều có mức chi tiêu bằng nhau. Các cửa hàng heap`(-10, 1)`Và`(-10, 2)`. So sánh bộ dữ liệu từ điển làm cho khách hàng`1`người chiến thắng. 
 
 Coi như:```
 1 5

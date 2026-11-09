@@ -1,6 +1,6 @@
 ---
 title: "CF 1467B - Đồi và Thung lũng"
-description: "Chúng ta được cấp một dãy số nguyên và cần xác định \"đồi\" và \"thung lũng\" trong đó. Một ngọn đồi xuất hiện ở vị trí j nếu số ở đó lớn hơn cả hai hàng xóm, trong khi một thung lũng xuất hiện nếu nó nhỏ hơn cả hai hàng xóm."
+description: "Chúng ta được cấp một dãy số nguyên và cần xác định \"đồi\" và \"thung lũng\" trong đó. Một ngọn đồi xuất hiện ở vị trí j nếu số lượng ở đó lớn hơn cả hai hàng xóm, trong khi một thung lũng xuất hiện nếu nó nhỏ hơn cả hai hàng xóm."
 date: "2026-06-11T01:38:31+07:00"
 tags: ["codeforces", "competitive-programming", "brute-force", "implementation"]
 categories: ["algorithms"]
@@ -36,7 +36,7 @@ Các trường hợp cạnh phát sinh khi các chuỗi có rất ít phần t�
 
 Cách tiếp cận bạo lực lặp đi lặp lại trên mọi vị trí có thể có trong chuỗi, cố gắng thay đổi nó thành mọi số nguyên có thể, tính toán lại toàn bộ giá trị đe dọa và giữ mức tối thiểu. Cách tiếp cận này đúng về nguyên tắc nhưng hoàn toàn không thực tế. Nếu chúng ta cố gắng kiểm tra tất cả các giá trị lên đến$10^9$đối với mỗi phần tử, số lượng thao tác bùng nổ, vượt xa giới hạn khả thi. 
 
-Thông tin chuyên sâu quan trọng về tối ưu hóa xuất phát từ quan sát cho thấy việc thay đổi một số chỉ ảnh hưởng đến các ngọn đồi và thung lũng trong vùng lân cận của nó - cụ thể là bản thân chỉ số và hai chỉ số liền kề của nó. Vì vậy, chúng ta không cần phải tính toán lại toàn bộ chuỗi mỗi lần; chúng ta chỉ cần xem xét sự đóng góp cục bộ của các ngọn đồi và thung lũng xung quanh yếu tố đã thay đổi. 
+Thông tin chuyên sâu quan trọng về tối ưu hóa xuất phát từ quan sát cho thấy rằng việc thay đổi một số chỉ ảnh hưởng đến các ngọn đồi và thung lũng trong vùng lân cận của nó - cụ thể là bản thân chỉ số và hai chỉ số liền kề của nó. Vì vậy, chúng ta không cần phải tính toán lại toàn bộ chuỗi mỗi lần; chúng ta chỉ cần xem xét sự đóng góp cục bộ của các ngọn đồi và thung lũng xung quanh yếu tố đã thay đổi. 
 
 Chúng ta có thể tính toán trước các ngọn đồi và thung lũng ban đầu cho toàn bộ chuỗi. Sau đó với mỗi vị trí ứng viên`i`(ngoại trừ phần tử đầu tiên và cuối cùng), chúng tôi xem xét ba tùy chọn: thay đổi nó để khớp với hàng xóm bên trái, khớp với hàng xóm bên phải hoặc giữ nguyên. Đối với mỗi lựa chọn, chúng tôi tính toán sự thay đổi ở các ngọn đồi và thung lũng địa phương (tại các chỉ số`i-1`,`i`, Và`i+1`). Chúng tôi chọn phương án làm giảm tổng giá trị đe dọa nhiều nhất. Lặp lại điều này cho từng vị trí và theo dõi các kết quả tối thiểu trong giải pháp thời gian tuyến tính. 
 

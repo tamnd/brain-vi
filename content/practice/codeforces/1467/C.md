@@ -24,7 +24,7 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được cấp ba túi riêng biệt, mỗi túi chứa nhiều tập số nguyên. Chúng ta có thể thực hiện một thao tác cụ thể với số lần bất kỳ: chọn một số từ mỗi túi trong số hai túi không trống, trừ số thứ hai cho số thứ nhất và xóa số thứ hai khỏi túi của nó trong khi thay thế số đầu tiên bằng kết quả. Mục tiêu là áp dụng lặp đi lặp lại các thao tác này cho đến khi chỉ còn một túi chứa một số duy nhất và hai túi còn lại trống rỗng. Trong số tất cả các chuỗi hoạt động dẫn đến trạng thái cuối cùng này, chúng ta phải xác định số lượng tối đa có thể đạt được trong túi cuối cùng còn lại. 
+Chúng ta được cấp ba túi riêng biệt, mỗi túi chứa nhiều tập số nguyên. Chúng ta có thể thực hiện một thao tác cụ thể với số lần bất kỳ: chọn một số từ mỗi túi trong số hai túi không trống, trừ số thứ hai cho số thứ nhất và xóa số thứ hai khỏi túi của nó trong khi thay thế số đầu tiên bằng kết quả. Mục tiêu là áp dụng lặp lại các thao tác này cho đến khi chỉ có một túi chứa một số duy nhất và hai túi còn lại trống. Trong số tất cả các chuỗi hoạt động dẫn đến trạng thái cuối cùng này, chúng ta phải xác định số lượng tối đa có thể đạt được trong túi cuối cùng còn lại. 
 
 Đầu vào cung cấp kích thước của ba túi theo sau là số nguyên thực tế trong mỗi túi. Các ràng buộc cho phép tổng cộng lên tới 300.000 số, mỗi số lên tới 10^9. Điều này loại trừ bất kỳ thuật toán nào mô phỏng các hoạt động một cách đơn giản, vì cách tiếp cận vũ phu có thể yêu cầu kiểm tra lặp đi lặp lại tất cả các cặp có thể, điều này có thể dẫn đến số lượng hoạt động theo thứ tự$n^2$hoặc cao hơn. 
 

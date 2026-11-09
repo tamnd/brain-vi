@@ -38,7 +38,7 @@ Chiều dài hành lang`n`có thể lớn như`10^9`, vì vậy mọi mô phỏn
 
 Ví dụ:```
 n=7, a=3, b=6
-```Kẻ côn đồ đến phòng giam`1`sau đó`2`di chuyển. Người bảo vệ sau đó tiếp tục tiếp cận. Việc chụp xảy ra sau`5`giây. 
+```Tên côn đồ đến phòng giam`1`sau đó`2`di chuyển. Người bảo vệ sau đó tiếp tục tiếp cận. Việc chụp xảy ra sau`5`giây. 
 
 Một lỗi thường gặp là chỉ sử dụng khoảng cách ban đầu`|a-b| = 3`. Tên côn đồ thực sự sống sót lâu hơn vì hắn có thể rút lui về phía bức tường gần nhất. 
 
@@ -74,7 +74,7 @@ move = a - 1      if a < b
 move = n - a      if a > b
 ```Vậy số lượng pháo tối đa có thể đốt được là```
 slots = limit - move - 1
-```đơn giản hóa để```
+```điều đó đơn giản hóa thành```
 slots = abs(a - b) - 1
 ```Đây chính xác là số giây có sẵn để thả pháo. 
 

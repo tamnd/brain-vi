@@ -44,9 +44,9 @@ Một giải pháp bạo lực sẽ thử mọi vị trí trung tâm có thể$c
 
 Quan sát quan trọng là chúng ta không cần phải đánh giá tất cả các trung tâm một cách độc lập. Cấu trúc đối xứng: chọn một trung tâm$c$tạo ra một giá trị tại mỗi vị trí chỉ dựa trên khoảng cách, nghĩa là mảng cuối cùng là một “sóng” có khoảng cách tăng dần từ$c$. Cấu hình tốt nhất phải đẩy các chữ số lớn ra xa nhất có thể trong khi vẫn tôn trọng cấu trúc khoảng cách này. 
 
-Vì các chữ số chỉ phụ thuộc vào khoảng cách modulo 10 nên mẫu lặp lại sau mỗi 10 bước tính từ tâm ra ngoài. Điều đó có nghĩa là một khi chúng ta cố định một trung tâm, trình tự sẽ được xác định hoàn toàn bằng cách lặp lại một mẫu đơn giản ra bên ngoài và quyền tự do duy nhất là trung tâm nào mang lại trình tự từ điển tốt nhất. 
+Vì các chữ số chỉ phụ thuộc vào khoảng cách modulo 10 nên mẫu lặp lại sau mỗi 10 bước tính từ tâm ra ngoài. Điều đó có nghĩa là một khi chúng ta cố định một trung tâm, trình tự sẽ được xác định đầy đủ bằng cách lặp lại một mẫu đơn giản ra bên ngoài và quyền tự do duy nhất là trung tâm nào mang lại trình tự từ điển tốt nhất. 
 
-Thay vì xây dựng các mảng đầy đủ cho tất cả các trung tâm, chúng ta có thể tính toán trước mức độ tốt của mỗi trung tâm bằng cách mở rộng ra bên ngoài và so sánh từng chữ số được tạo ra. Vì mỗi vị trí chỉ đóng góp vào một số giới hạn so sánh trước khi quyết định được xác định, chúng ta có thể giảm tổng công việc xuống tuyến tính trên tất cả các trung tâm. 
+Thay vì xây dựng các mảng đầy đủ cho tất cả các trung tâm, chúng ta có thể tính toán trước mức độ tốt của mỗi trung tâm bằng cách mở rộng ra bên ngoài và so sánh từng chữ số được tạo ra. Vì mỗi vị trí chỉ đóng góp vào một số giới hạn so sánh trước khi quyết định được xác định, nên chúng ta có thể giảm tổng công việc xuống tuyến tính trên tất cả các trung tâm. 
 
 Chúng tôi so sánh các trung tâm một cách hiệu quả theo kiểu giải đấu, nhưng được thực hiện thông qua xây dựng trực tiếp và so sánh từ điển, trong đó những khác biệt ban đầu chiếm ưu thế và dừng việc tính toán thêm. 
 
@@ -60,10 +60,10 @@ Trong thực tế, việc tối ưu hóa dựa vào việc dừng sớm so sánh
 ## Hướng dẫn thuật toán 
 
 1. Xử lý từng chỉ số$c$như một điểm khởi đầu tiềm năng cho quá trình đóng băng lan rộng. Đối với một cố định$c$, chữ số cuối cùng ở vị trí$i$là$(|i-c| \bmod 10)$. Điều này cung cấp một chuỗi ứng cử viên hoàn chỉnh cho mỗi trung tâm. 
-2. Duy trì trung tâm “tốt nhất cho đến nay”, ban đầu là chỉ số đầu tiên. Chúng tôi so sánh từng trung tâm mới với trung tâm tốt nhất hiện tại bằng cách xây dựng ngầm các chuỗi chữ số cảm ứng của chúng. 
+2. Duy trì trung tâm “tốt nhất cho đến nay”, ban đầu là chỉ số đầu tiên. Chúng tôi so sánh từng trung tâm mới với trung tâm tốt nhất hiện tại bằng cách ngầm xây dựng các chuỗi chữ số cảm ứng của chúng. 
 3. Đối với hai trung tâm$a$Và$b$, so sánh chuỗi chữ số thu được của chúng từ trái sang phải. Tại vị trí$i$, tính toán$|i-a| \bmod 10$Và$|i-b| \bmod 10$. Vị trí đầu tiên nơi những khác biệt này quyết định trung tâm nào tốt hơn. 
 4. Vì mỗi phép so sánh dừng lại ở điểm không khớp đầu tiên nên hầu hết các cặp tâm đều được giải quyết sau khi chỉ kiểm tra một vài vị trí. Điều này làm cho tổng số phép tính chữ số trên tất cả các phép so sánh ở mức trung bình tuyến tính. 
-5. Sau khi quét tất cả các trung tâm, hãy xây dựng lại câu trả lời bằng cách lấy trung tâm tốt nhất tìm được và xuất ra$|i-c| \bmod 10$cho từng vị trí. 
+5. Sau khi quét tất cả các trung tâm, hãy xây dựng lại câu trả lời bằng cách lấy trung tâm tốt nhất được tìm thấy và xuất ra$|i-c| \bmod 10$cho từng vị trí. 
 
 ### Tại sao nó hoạt động 
 
@@ -101,7 +101,7 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Ý tưởng cốt lõi trong việc thực hiện là`better`thực hiện so sánh từ điển giữa hai trung tâm ứng viên mà không xây dựng mảng đầy đủ của chúng một cách rõ ràng. Thay vào đó, nó tính toán các giá trị theo yêu cầu và dừng ngay lập tức khi tìm thấy sự khác biệt. Bước xây dựng lại cuối cùng sử dụng trung tâm tốt nhất đã chọn để trực tiếp tạo ra câu trả lời trong một lần thực hiện. 
+```Ý tưởng cốt lõi trong việc thực hiện là`better`chức năng thực hiện so sánh từ điển giữa hai trung tâm ứng viên mà không xây dựng mảng đầy đủ của chúng một cách rõ ràng. Thay vào đó, nó tính toán các giá trị theo yêu cầu và dừng ngay lập tức khi tìm thấy sự khác biệt. Bước xây dựng lại cuối cùng sử dụng trung tâm tốt nhất đã chọn để trực tiếp tạo ra câu trả lời trong một lần thực hiện. 
 
 Một lỗi phổ biến ở đây là tính toán trước các mảng đầy đủ cho mọi trung tâm, làm cho nghiệm bậc hai cả về thời gian và bộ nhớ. Một điều nữa là quên rằng so sánh phải dựa trên từ điển từ chỉ số 0 chứ không dựa trên vị trí trung tâm. 
 

@@ -32,9 +32,9 @@ Nhiệm vụ là đếm xem có bao nhiêu đỉnh có thể đóng vai trò là
 
 Quan sát đầu tiên là tình trạng này chỉ phụ thuộc vào mối quan hệ tổ tiên-con cháu sau khi ra rễ. Một gốc không hợp lệ nếu tồn tại một số đường dẫn từ gốc đến nút chứa hai đỉnh có cùng giá trị. 
 
-Cây chứa tới$2 \cdot 10^5$đỉnh. Bất kỳ giải pháp nào lấy rễ cây ở mọi đỉnh và kiểm tra tất cả các đường dẫn riêng biệt đều vô vọng. Ngay cả một DFS duy nhất từ ​​mỗi đỉnh cũng sẽ yêu cầu$O(n^2)$công việc xung quanh$4 \cdot 10^{10}$hoạt động trong trường hợp xấu nhất. Chúng ta cần một cái gì đó gần tuyến tính hoặc$O(n \log n)$. 
+Cây chứa tới$2 \cdot 10^5$đỉnh. Bất kỳ giải pháp nào lấy rễ cây ở mọi đỉnh và kiểm tra tất cả các đường đi riêng biệt đều vô vọng. Ngay cả một DFS duy nhất từ ​​mỗi đỉnh cũng sẽ yêu cầu$O(n^2)$công việc xung quanh$4 \cdot 10^{10}$hoạt động trong trường hợp xấu nhất. Chúng ta cần một cái gì đó gần tuyến tính hoặc$O(n \log n)$. 
 
-Phần khó khăn là việc thay đổi gốc sẽ thay đổi mối quan hệ tổ tiên trên toàn cầu. Một cặp đỉnh có giá trị bằng nhau có thể nằm trên cùng một đường đi từ gốc đến nút đối với một số gốc nhưng đối với các gốc khác thì không. 
+Phần khó khăn là việc thay đổi gốc sẽ thay đổi mối quan hệ tổ tiên trên toàn cầu. Một cặp đỉnh có giá trị bằng nhau có thể nằm trên cùng một đường đi từ gốc tới nút đối với một số gốc nhưng đối với các gốc khác thì không. 
 
 Hãy xem xét một chuỗi:```
 1 -- 2 -- 3
@@ -61,7 +61,7 @@ Trường hợp cạnh cuối cùng là khi tất cả các giá trị đều kh
 
 ## Phương pháp tiếp cận 
 
-Ý tưởng vũ phu rất đơn giản. Với mọi đỉnh$r$, nhổ cây tại$r$, thực hiện DFS, duy trì tập hợp các giá trị hiện tại trên đường dẫn gốc đến hiện tại và xác minh rằng không có giá trị nào lặp lại. Nếu sự lặp lại xuất hiện,$r$không có tính đặc biệt. 
+Ý tưởng vũ phu rất đơn giản. Với mọi đỉnh$r$, nhổ cây tại$r$, perform a DFS, maintain the set of values currently on the root-to-current path, and verify that no value repeats. Nếu sự lặp lại xuất hiện,$r$không có tính đặc biệt. 
 
 Điều này đúng vì nó trực tiếp kiểm tra định nghĩa. Thật không may, mỗi root yêu cầu$O(n)$làm việc, và có$n$rễ. Tổng độ phức tạp trở thành$O(n^2)$, nó quá lớn đối với$n=2\cdot10^5$. 
 
@@ -89,7 +89,7 @@ Nếu gốc mới nằm bên trong cây con($c$), sau đó$u$Và$v$kết thúc �
 
 Do đó tất cả các gốc bên ngoài cây con($c$) là xấu. 
 
-Nếu không có đỉnh nào là tổ tiên của đỉnh kia trong căn nguyên cố định, hãy để$w=\mathrm{LCA}(u,v)$. 
+Nếu không có đỉnh nào là tổ tiên của đỉnh kia trong nghiệm cố định, hãy$w=\mathrm{LCA}(u,v)$. 
 
 Sau đó$u$Và$v$trở nên liên quan đến tổ tiên chính xác khi gốc mới nằm bên trong cây con ($u$) hoặc cây con($v$). 
 
@@ -115,9 +115,9 @@ Thực hiện DFS để tính toán thời gian vào và ra của chuyến tham 
 Đối với mọi giá trị, hãy theo dõi đỉnh gần đây nhất có giá trị đó trên đường dẫn DFS hiện tại. 
 
 Trong DFS, khi thăm đỉnh$v$, kiểm tra xem giá trị tương tự đã xuất hiện trên root-to- hiện tại chưa$v$con đường. 
-Của tổ tiên gần nhất có cùng giá trị là$u$, thì mọi gốc bên ngoài cây con dẫn từ$u$ĐẾN$v$không hợp lệ. 
+Của tổ tiên gần nhất có cùng giá trị là$u$, khi đó mọi gốc bên ngoài cây con dẫn từ$u$ĐẾN$v$không hợp lệ. 
 
-Điều này diễn ra sau trường hợp tổ tiên đã thảo luận trước đó. Bất kỳ gốc nào bên ngoài cây con đó đều giữ$u$bên trên$v$, tạo ra một giá trị trùng lặp trên đường dẫn gốc. 
+Điều này diễn ra sau trường hợp tổ tiên đã thảo luận trước đó. Bất kỳ gốc nào nằm ngoài cây con đó đều giữ$u$bên trên$v$, tạo ra một giá trị trùng lặp trên đường dẫn gốc. 
 
 Thêm một dấu không hợp lệ vào toàn bộ cây và trừ một dấu khỏi cây con đó. Sử dụng khoảng Euler, điều này sẽ trở thành một bản cập nhật phạm vi. 
 
@@ -301,7 +301,7 @@ Chỉ có đỉnh 2 còn hiệu lực.
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian |$O(n \log n)$| Duyệt DFS cộng với xử lý khoảng cách cây con | 
+| Thời gian |$O(n \log n)$| Truyền tải DFS cộng với xử lý khoảng cách cây con | 
 | Không gian |$O(n)$| Danh sách kề, mảng Euler, ngăn xếp, cập nhật | 
 
 Cây chứa nhiều nhất$2 \cdot 10^5$đỉnh, do đó cần có độ phức tạp tuyến tính hoặc gần tuyến tính. Thuật toán chỉ lưu trữ một lượng thông tin không đổi trên mỗi đỉnh và thực hiện một số lượng nhỏ các lần duyệt DFS, phù hợp thoải mái trong giới hạn. 

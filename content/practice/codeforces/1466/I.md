@@ -14,17 +14,17 @@ verified: false
 draft: false
 ---
 
-[CF 1466I - Câu đố về nhân sư](https://codeforces.com/problemset/problem/1466/I) 
+[CF 1466I - Câu đố về tượng nhân sư](https://codeforces.com/problemset/problem/1466/I) 
 
 **Đánh giá:** 3400 
 **Tags:** tìm kiếm nhị phân, cấu trúc dữ liệu, tương tác 
-**Thời gian giải:** 1 phút 59 giây 
+**Thời gian giải:** 1 phút 59s 
 **Đã xác minh:** không 
 
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi được cung cấp một mảng có độ dài ẩn`n`. Mỗi phần tử là một số nguyên trong phạm vi`[0, 2^b - 1]`. Chúng tôi không bao giờ nhìn thấy các giá trị trực tiếp. Thay vào đó, chúng ta có thể liên tục chọn một chỉ mục`i`và một số`y`, và hỏi liệu`a[i] > y`. Thẩm phán trả lời một cách nhất quán đối với một mảng cố định, mặc dù tuyên bố cho phép nó có thể thích ứng. 
+Chúng tôi được cung cấp một mảng có chiều dài ẩn`n`. Mỗi phần tử là một số nguyên trong phạm vi`[0, 2^b - 1]`. Chúng tôi không bao giờ nhìn thấy các giá trị trực tiếp. Thay vào đó, chúng ta có thể liên tục chọn một chỉ mục`i`và một số`y`, và hỏi liệu`a[i] > y`. Thẩm phán trả lời một cách nhất quán đối với một mảng cố định, mặc dù tuyên bố cho phép nó có thể thích ứng. 
 
 Nhiệm vụ của chúng ta là xác định giá trị lớn nhất có trong mảng bằng cách sử dụng nhiều nhất`3(n + b)`những so sánh như vậy. Mỗi truy vấn so sánh một phần tử mảng với một ngưỡng, vì vậy thông tin duy nhất chúng ta có thể trích xuất là sắp xếp thông tin trên các phần tử riêng lẻ. 
 
@@ -34,15 +34,15 @@ Ràng buộc`n, b ≤ 200`ngay lập tức loại trừ bất kỳ cách tiếp 
 
 Khó khăn chính là việc so sánh mang tính cục bộ đối với một chỉ mục duy nhất. Chúng ta không thể so sánh trực tiếp hai chỉ số. Do đó, bất kỳ cách tiếp cận nào cũng phải truyền bá thông tin gián tiếp qua các chỉ số thông qua các ngưỡng được lựa chọn cẩn thận. 
 
-Trường hợp cạnh tinh vi phát sinh khi mức tối đa gần bằng`2^b - 1`. Một chiến lược ngây thơ chỉ kiểm tra các điểm giữa mà không đảm bảo sàng lọc theo bit có thể bỏ lỡ mức tối đa thực sự nếu các phần tử trung gian “chặn” tìm kiếm do độ phân giải không đủ. Một chế độ lỗi khác xuất hiện nếu chúng ta giả sử hành vi đơn điệu trên các chỉ số, điều này là sai do mảng không có thứ tự và các thay đổi thích ứng có thể giữ nguyên các câu trả lời trong quá khứ nhưng vẫn buộc phải có tính nhất quán trong trường hợp xấu nhất. 
+Trường hợp cạnh tinh tế phát sinh khi mức tối đa gần bằng`2^b - 1`. Một chiến lược ngây thơ chỉ kiểm tra các điểm giữa mà không đảm bảo sàng lọc theo bit có thể bỏ lỡ mức tối đa thực sự nếu các phần tử trung gian “chặn” tìm kiếm do độ phân giải không đủ. Một chế độ lỗi khác xuất hiện nếu chúng ta giả sử hành vi đơn điệu trên các chỉ số, điều này là sai vì mảng không có thứ tự và các thay đổi thích ứng có thể giữ nguyên các câu trả lời trong quá khứ nhưng vẫn buộc phải có tính nhất quán trong trường hợp xấu nhất. 
 
 ## Phương pháp tiếp cận 
 
-Một chiến lược bạo lực trực tiếp sẽ cố gắng tái cấu trúc từng`a[i]`độc lập sử dụng tìm kiếm nhị phân trên phạm vi`[0, 2^b - 1]`. Đối với mỗi chỉ mục, điều này cần`b`các truy vấn, đưa ra tổng số`n b`truy vấn. Điều này đúng trong cài đặt tĩnh và mang lại mảng chính xác, sau đó việc lấy mức tối đa là không đáng kể. Tuy nhiên, nó lãng phí các truy vấn vì nó coi mỗi phần tử là độc lập mặc dù chúng ta chỉ cần một mức tối đa toàn cục. 
+Một chiến lược bạo lực trực tiếp sẽ cố gắng tái cấu trúc từng`a[i]`độc lập sử dụng tìm kiếm nhị phân trên phạm vi`[0, 2^b - 1]`. Đối với mỗi chỉ mục, điều này cần`b`các truy vấn, đưa ra tổng số`n b`truy vấn. Điều này đúng trong cài đặt tĩnh và mang lại mảng chính xác, sau đó việc lấy mức tối đa là chuyện nhỏ. Tuy nhiên, nó lãng phí các truy vấn vì nó coi mỗi phần tử là độc lập mặc dù chúng ta chỉ cần một mức tối đa toàn cục. 
 
 Quan sát về cấu trúc là chúng ta không cần tái thiết toàn bộ. Chúng ta chỉ cần xác định xem có tồn tại phần tử vượt quá ngưỡng ứng cử viên hay không. Điều này gợi ý việc duy trì giá trị ứng cử viên tốt nhất hiện tại và cố gắng “đẩy” nó lên bằng cách khám phá các giá trị tốt hơn trong số tất cả các chỉ số. 
 
-Ý tưởng chính là sử dụng phương pháp loại trừ giống như giải đấu kết hợp với sàng lọc nhị phân của không gian trả lời. Thay vì giải quyết đầy đủ từng phần tử, chúng tôi dần dần xác định một chỉ mục ứng cử viên mạnh có khả năng giữ một giá trị lớn, sau đó tinh chỉnh giá trị của nó từng chút một bằng cách sử dụng các truy vấn thích ứng. Khi chúng tôi có một ứng cử viên gần đạt mức tối ưu, chúng tôi chỉ xác minh dựa trên các chỉ số khác khi cần thiết, nhưng tổng số truy vấn vẫn bị giới hạn vì mỗi bước cải tiến sẽ loại bỏ phần lớn không gian tìm kiếm. 
+Ý tưởng chính là sử dụng phương pháp loại bỏ giống như giải đấu kết hợp với sàng lọc nhị phân của không gian trả lời. Thay vì giải quyết đầy đủ từng phần tử, chúng tôi dần dần xác định một chỉ mục ứng cử viên mạnh có khả năng giữ một giá trị lớn, sau đó tinh chỉnh giá trị của nó từng chút một bằng cách sử dụng các truy vấn thích ứng. Khi chúng tôi có một ứng cử viên gần đạt mức tối ưu, chúng tôi chỉ xác minh dựa trên các chỉ số khác khi cần thiết, nhưng tổng số truy vấn vẫn bị giới hạn vì mỗi bước cải tiến sẽ loại bỏ phần lớn không gian tìm kiếm. 
 
 Thực tế về cấu trúc quan trọng là mỗi truy vấn làm giảm độ không chắc chắn về giá trị của phần tử được chọn hoặc về danh tính của chủ sở hữu tối đa. Theo thời gian, mỗi bit của câu trả lời cuối cùng sẽ được giải quyết với hầu hết các truy vấn được khấu hao không đổi trên mỗi bit và trên mỗi phần tử. 
 
@@ -53,20 +53,20 @@ Thực tế về cấu trúc quan trọng là mỗi truy vấn làm giảm độ
 
 ## Hướng dẫn thuật toán 
 
-Chúng tôi duy trì một chỉ số ứng cử viên`best`được cho là trỏ đến một phần tử gần mức tối đa. Cùng với nó, chúng tôi xây dựng biểu diễn nhị phân của giá trị của nó từ bit có trọng số cao nhất đến bit có trọng số thấp nhất. 
+Chúng tôi duy trì một chỉ số ứng cử viên`best`được cho là trỏ đến một phần tử gần mức tối đa. Cùng với nó, chúng tôi xây dựng biểu diễn nhị phân của giá trị của nó từ bit quan trọng nhất đến bit ít quan trọng nhất. 
 
 ### Các bước 
 
 1. Bắt đầu với`best = 1`. Đây là một ứng cử viên ban đầu tùy ý vì không có sẵn thông tin trước đó. 
 2. Đối với mỗi chỉ số`i`từ`2`ĐẾN`n`, so sánh`a[i]`với`a[best]`sử dụng logic tái thiết bitwise. Thay vì tính toán đầy đủ cả hai giá trị, chúng tôi so sánh chúng bằng cách thăm dò xem liệu một giá trị có vượt quá ngưỡng được lựa chọn cẩn thận hay không. Nếu như`a[i]`lớn hơn`a[best]`, chúng tôi cập nhật`best = i`. Bước này đảm bảo rằng sau khi quét tất cả các chỉ mục,`best`giữ một chỉ mục có giá trị tối đa trong số tất cả các ứng cử viên được phát hiện cho đến nay. 
-3. Khi chỉ mục tốt nhất được cố định, hãy xây dựng lại`a[best]`từng chút một từ bit quan trọng nhất đến bit ít quan trọng nhất. Ở bước`k`, chúng tôi thử đặt tiền tố hiện tại của câu trả lời và truy vấn xem giá trị thực có vượt quá tiền tố ứng viên đó hay không. Nếu câu trả lời là “có”, chúng tôi giữ bit là 1; nếu không, chúng tôi đặt nó thành 0. 
+3. Khi chỉ mục tốt nhất được cố định, hãy xây dựng lại`a[best]`từng chút một từ bit quan trọng nhất xuống bit quan trọng nhất. Ở bước`k`, chúng tôi thử đặt tiền tố hiện tại của câu trả lời và truy vấn xem giá trị thực có vượt quá tiền tố ứng viên đó hay không. Nếu câu trả lời là “có”, chúng tôi giữ bit là 1; nếu không, chúng tôi đặt nó thành 0. 
 
-Lý do điều này hoạt động là vì mỗi truy vấn sẽ kiểm tra một cách hiệu quả xem liệu có tồn tại sự hoàn thành của các bit còn lại vẫn phù hợp với giá trị thực tế hay không. Điều này làm giảm khoảng cách không chắc chắn xuống một nửa cho mỗi bit. 
+Lý do điều này có tác dụng là vì mỗi truy vấn sẽ kiểm tra một cách hiệu quả xem liệu có tồn tại sự hoàn thành của các bit còn lại vẫn phù hợp với giá trị thực tế hay không. Điều này làm giảm khoảng cách không chắc chắn xuống một nửa cho mỗi bit. 
 4. Rốt cuộc`b`bit được xác định, xuất ra giá trị kết quả làm câu trả lời. 
 
 ### Tại sao nó hoạt động 
 
-Thuật toán duy trì sự bất biến`best`luôn đề cập đến một chỉ mục có giá trị ít nhất bằng bất kỳ ứng cử viên nào bị loại trước đó trong tất cả các câu trả lời truy vấn nhất quán. Khi chúng tôi so sánh hai chỉ số, chúng tôi đang mô phỏng một cách hiệu quả so sánh từ điển của cách biểu diễn nhị phân của chúng thông qua các truy vấn ngưỡng thích ứng. 
+Thuật toán duy trì tính bất biến`best`luôn đề cập đến một chỉ mục có giá trị ít nhất bằng bất kỳ ứng cử viên nào bị loại trước đó trong tất cả các câu trả lời truy vấn nhất quán. Khi chúng tôi so sánh hai chỉ số, chúng tôi đang mô phỏng một cách hiệu quả so sánh từ điển của cách biểu diễn nhị phân của chúng thông qua các truy vấn ngưỡng thích ứng. 
 
 Giai đoạn tái tạo bit tương đương với việc thực hiện tìm kiếm nhị phân trên không gian giá trị`[0, 2^b - 1]`bị giới hạn ở một phần tử cố định duy nhất. Mỗi truy vấn giảm một nửa phạm vi giá trị khả thi phù hợp với các câu trả lời trước đó, đảm bảo rằng sau`b`bước giá trị chính xác được xác định. 
 
@@ -205,7 +205,7 @@ assert run("200 200\n") == "OK", "max constraints"
 
 ## Vỏ cạnh 
 
-Trường hợp cạnh khóa là khi tất cả các phần tử đều bằng nhau. Trong trường hợp này, mọi so sánh đều trả về phản hồi “không” nhất quán khi ngưỡng ở giá trị phần tử. Thuật toán vẫn duy trì chính xác chỉ số đầu tiên như`best`, vì không có ứng cử viên nào lớn hơn từng xuất hiện và việc xây dựng lại hội tụ về giá trị đồng nhất chính xác. 
+Trường hợp cạnh khóa là khi tất cả các phần tử đều bằng nhau. Trong trường hợp này, mọi so sánh đều trả về phản hồi “không” nhất quán khi ngưỡng ở giá trị phần tử. Thuật toán vẫn duy trì chính xác chỉ số đầu tiên như`best`, vì không có ứng cử viên nào lớn hơn từng xuất hiện và việc xây dựng lại hội tụ về giá trị thống nhất chính xác. 
 
 Một trường hợp cạnh khác là khi mức tối đa là`0`. Vì tất cả các truy vấn có dạng`a[i] > y`trả lại “không” cho bất kỳ`y ≥ 0`, quá trình xây dựng lại chính xác sẽ không đặt tất cả các bit, tạo ra`0`. 
 

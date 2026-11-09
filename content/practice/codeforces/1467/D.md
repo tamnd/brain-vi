@@ -26,7 +26,7 @@ draft: false
 
 Chúng ta được yêu cầu tính tổng các giá trị cho tất cả các chuỗi có độ dài`k+1`mà robot có thể di chuyển dọc theo một đường`n`tế bào. Mỗi nước đi phải đi đúng một bước sang trái hoặc phải, nằm trong giới hạn. Giá trị của đường đi là tổng của`a_i`giá trị cho các ô được truy cập. Sau khi tính toán ban đầu, chúng tôi được yêu cầu thực hiện`q`cập nhật nơi một`a_i`được thay thế và sau mỗi lần cập nhật, tổng của tất cả các đường dẫn phải được tính toán lại theo modulo$10^9 + 7$. 
 
-Những ràng buộc cho chúng ta biết rằng`n`Và`k`cả hai đều có thể lên tới 5000 và`q`có thể lên tới 200.000. Một cách tiếp cận ngây thơ để liệt kê tất cả các đường đi có thể là không khả thi vì có khoảng`n * 2^k`đường dẫn, nhanh chóng vượt quá bất kỳ số lượng hoạt động hợp lý nào ngay cả đối với mức độ vừa phải`k`. Số lượng lớn các bản cập nhật cũng loại trừ việc tính toán lại tổng số từ đầu mỗi lần. Chúng ta cần một cách tính toán sự đóng góp của từng ô một cách độc lập để mỗi bản cập nhật có thể được áp dụng trong thời gian không đổi. 
+Những ràng buộc cho chúng ta biết rằng`n`Và`k`cả hai đều có thể lên tới 5000 và`q`có thể lên tới 200.000. Một cách tiếp cận đơn giản để liệt kê tất cả các đường đi có thể là không khả thi vì có khoảng`n * 2^k`đường dẫn, nhanh chóng vượt quá bất kỳ số lượng hoạt động hợp lý nào ngay cả đối với mức độ vừa phải`k`. Số lượng lớn các bản cập nhật cũng loại trừ việc tính toán lại tổng số từ đầu mỗi lần. Chúng ta cần một cách tính toán sự đóng góp của từng ô một cách độc lập để mỗi bản cập nhật có thể được áp dụng trong thời gian không đổi. 
 
 Một trường hợp cần cẩn thận là khi`k`lớn so với`n`. Ví dụ, nếu`n=2`Và`k=4`, robot liên tục nảy lên giữa hai ô. Việc triển khai bất cẩn cho rằng robot luôn có thể di chuyển cả sang trái và phải sẽ vượt quá số lượng đường đi ra ngoài giới hạn. 
 
@@ -34,7 +34,7 @@ Một trường hợp cần cẩn thận là khi`k`lớn so với`n`. Ví dụ, 
 
 Cách tiếp cận bạo lực sẽ cố gắng tạo ra tất cả các đường dẫn có độ dài`k+1`cho mỗi ô bắt đầu. Đối với mỗi đường dẫn, chúng tôi tính tổng giá trị của các ô dọc theo đường dẫn. Độ phức tạp là theo cấp số nhân trong`k`(`O(n * 2^k)`), điều này rõ ràng là không thể thực hiện được đối với`k=5000`. 
 
-Thông tin chi tiết quan trọng là số lượng đường dẫn đi qua mỗi ô sau`t`các bước di chuyển có thể được tính toán tổ hợp bằng cách sử dụng lập trình động. Định nghĩa`dp[i][j]`như số cách để tiếp cận ô`i`sau đó`j`di chuyển. Điều này tự nhiên dẫn đến sự tái phát:`dp[i][j] = dp[i-1][j-1] + dp[i+1][j-1]`(có ranh giới được kẹp). Với DP này, chúng ta có thể tính toán tổng số đường dẫn truy cập từng ô ở mỗi lần di chuyển. Sự đóng góp của một ô vào tổng số tiền tỷ lệ thuận với số lần nó được truy cập trên tất cả các đường dẫn, điều này cho phép chúng ta tính toán trước trọng số`cnt[i]`cho mỗi ô đại diện cho tổng hệ số đóng góp của nó. Sau đó, cập nhật cho`a_i`có thể được xử lý trong thời gian không đổi: tổng số thay đổi bởi`(new_value - old_value) * cnt[i]`. 
+Thông tin chi tiết quan trọng là số lượng đường dẫn đi qua mỗi ô sau`t`các bước di chuyển có thể được tính toán tổ hợp bằng cách sử dụng lập trình động. Định nghĩa`dp[i][j]`như số cách để tiếp cận ô`i`sau đó`j`di chuyển. This naturally leads to a recurrence:`dp[i][j] = dp[i-1][j-1] + dp[i+1][j-1]`(có ranh giới được kẹp). Với DP này, chúng ta có thể tính toán tổng số đường dẫn truy cập từng ô trong mỗi lần di chuyển. Sự đóng góp của một ô vào tổng số tiền tỷ lệ thuận với số lần nó được truy cập trên tất cả các đường dẫn, điều này cho phép chúng ta tính toán trước trọng số`cnt[i]`cho mỗi ô đại diện cho tổng hệ số đóng góp của nó. Sau đó, cập nhật cho`a_i`có thể được xử lý trong thời gian không đổi: tổng số thay đổi bởi`(new_value - old_value) * cnt[i]`. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -101,9 +101,9 @@ n=5, k=1, a=[3,5,1,4,2]
 | --- | --- | --- | --- | --- | 
 | 1 | [1,2,2,2,1] | [1,2,2,2,1] | [2,4,4,4,2] | [6,20,4,16,4] | 
 
-Tổng ban đầu = 62. Sau khi cập nhật`(1,9)`sum = 62 + (9-3)*2 = 62 + 12 = 74 (mod MOD) được sửa thành 62 sau khi tính toán đúng. 
+Tổng ban đầu = 62. Sau khi cập nhật`(1,9)`sum = 62 + (9-3)*2 = 62 + 12 = 74 (mod MOD) corrected to 62 after proper calculation.
 
-Dấu vết này cho thấy`cnt[i]`thể hiện chính xác số lần mỗi ô xuất hiện trên tất cả các đường dẫn. 
+ Dấu vết này cho thấy`cnt[i]`thể hiện chính xác số lần mỗi ô xuất hiện trên tất cả các đường dẫn. 
 
 ### Đầu vào mẫu 2```
 n=2, k=2, a=[1,2]
@@ -111,18 +111,18 @@ n=2, k=2, a=[1,2]
 | --- | --- | --- | --- | --- | 
 | 1 | [1,1] | [1,1] | [3,3] | [3,6] | 
 
-Tổng tổng = 9, việc xác minh thuật toán xử lý các mảng nhỏ có độ nảy lặp lại giữa các ô. 
+Total sum = 9, verifying the algorithm handles small arrays with repeated bouncing between cells.
 
-## Phân tích độ phức tạp 
+ ## Phân tích độ phức tạp 
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | O(n*k + q) | DP tiến và lùi mỗi lần lấy O(n_k), tính toán đóng góp lấy O(n_k), cập nhật lấy O(q) | 
-| Không gian | O(n*k) | Hai bảng DP có kích thước n*(k+1) và một mảng cnt | 
+| Thời gian | O(n*k + q) | DP forward and backward each take O(n_k), contribution calculation takes O(n_k), updates take O(q) |
+ | Không gian | O(n*k) | Two DP tables of size n*(k+1) and one cnt array |
 
-Với n, k ≤ 5000, n*k ≈ 25 triệu thao tác là có thể chấp nhận được. Mỗi lần cập nhật là O(1), khiến cho q=200.000 trở nên khả thi. 
+ With n, k ≤ 5000, n*k ≈ 25 million operations, which is acceptable. Updates are O(1) each, making q=200,000 feasible.
 
-## Trường hợp thử nghiệm```python
+ ## Trường hợp thử nghiệm```python
 import sys, io
 
 def run(inp: str) -> str:

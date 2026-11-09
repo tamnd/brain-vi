@@ -28,7 +28,7 @@ Chúng ta được yêu cầu tính số lượng bánh mì cũ tại một ti�
 
 Đầu vào bao gồm số ngày`n`, số lượng giá trị nhu cầu tiềm năng của khách hàng`m`, danh sách sản xuất hàng ngày`a`kích thước`n`và danh sách tăng dần nhu cầu của khách hàng tiềm năng`k`. Đối với mỗi`k_i`, chúng ta phải tính toán mức độ hư hỏng tối đa nếu chính xác`k_i`khách hàng đến mỗi ngày. 
 
-Những ràng buộc chỉ ra`n`Và`m`mỗi chiếc có thể lên tới 200.000 và nhu cầu sản xuất và khách hàng hàng ngày có thể đạt tới 10^9. Do đó, một mô phỏng ngây thơ bán bánh mì hàng ngày cho từng nhu cầu của khách hàng là không thực tế vì nó có thể đạt được khoảng`O(n * m)`lần lặp, theo thứ tự 4 * 10^10. Bất kỳ thuật toán nào cũng phải tránh lặp lại nhiều ngày cho mỗi truy vấn. 
+Những ràng buộc chỉ ra`n`Và`m`mỗi chiếc có thể lên tới 200.000 và nhu cầu sản xuất và khách hàng hàng ngày có thể đạt tới 10^9. Do đó, một mô phỏng ngây thơ bán bánh mì hàng ngày cho từng nhu cầu của khách hàng là không thực tế vì nó có thể đạt được khoảng`O(n * m)`số lần lặp theo thứ tự 4 * 10^10. Bất kỳ thuật toán nào cũng phải tránh lặp lại nhiều ngày cho mỗi truy vấn. 
 
 Các trường hợp khó khăn không rõ ràng bao gồm các tình huống trong đó nhu cầu hàng ngày rất nhỏ so với sản lượng. Ví dụ, nếu`a = [100, 1]`Và`k = 1`, ngày đầu tiên còn lại 99 ổ bánh chưa bán được. Những thứ này sẽ tích tụ và hư hỏng, vì vậy mức độ hư hỏng tối đa sẽ được xác định bằng thời gian tồn tại của những ổ bánh mì còn sót lại cho đến lần bán cuối cùng. Một trường hợp khác xảy ra khi nhu cầu vượt quá sản lượng hàng ngày: tất cả bánh mì được bán ngay lập tức và độ hư hỏng bằng không. Không xử lý vấn đề này một cách chính xác có thể tạo ra các giá trị kém hấp dẫn không chính xác. 
 
@@ -36,7 +36,7 @@ Các trường hợp khó khăn không rõ ràng bao gồm các tình huống tr
 
 Một giải pháp brute-force mô phỏng mỗi ngày cho từng nhu cầu của người tiêu dùng, theo dõi các ổ bánh còn lại dưới dạng hàng đợi hoặc danh sách đếm độ tuổi. Vào ngày`i`, nó bán`k`ổ bánh bắt đầu từ mẻ mới nhất và tăng độ hư hỏng cho những ổ bánh còn lại. Sau ngày cuối cùng, nó tính toán mức độ hư hỏng tối đa trong số tất cả các ổ bánh còn lại. Điều này đúng, nhưng mỗi truy vấn có thể yêu cầu`O(n)`thời gian để mô phỏng các ngày và với`m`truy vấn, tổng thời gian là`O(n*m)`. Đối với các ràng buộc tối đa, điều này là quá chậm. 
 
-Quan sát quan trọng để có một giải pháp hiệu quả là thứ tự bán ổ bánh mì là có tính quyết định và độ hư hỏng hàng ngày sẽ tăng tuyến tính nếu nhu cầu không đủ. Chúng ta có thể tính toán trước tổng tiền tố của sản lượng hàng ngày:`S[i] = a_1 + a_2 + ... + a_i`. Đối với một nhu cầu hàng ngày nhất định`k`, chúng ta có thể xác định ngày sớm nhất khi một ổ bánh được nướng vào ngày`i`sẽ được bán bằng cách tìm ngày nhỏ nhất`j`như vậy`S[j] - k*(j-i) >= S[i-1]`. Sự hư hỏng tối đa khi đó là sự khác biệt giữa`j`Và`i`. Vì nhu cầu của khách hàng được sắp xếp nên chúng tôi có thể quét qua các ngày sản xuất một cách hiệu quả để tính toán mức độ hư hỏng tích lũy và sử dụng phương pháp hai con trỏ hoặc tham lam để lập bản đồ nhu cầu về hư hỏng trong`O(n + m)`thời gian. Điều này tránh việc mô phỏng mọi hoạt động bán hàng và tận dụng tính đơn điệu của việc hư hỏng theo nhu cầu. 
+Quan sát quan trọng để có một giải pháp hiệu quả là thứ tự bán ổ bánh mì là có tính quyết định và độ hư hỏng hàng ngày sẽ tăng tuyến tính nếu nhu cầu không đủ. Chúng ta có thể tính toán trước tổng tiền tố của sản lượng hàng ngày:`S[i] = a_1 + a_2 + ... + a_i`. Đối với một nhu cầu hàng ngày nhất định`k`, chúng ta có thể xác định được ngày sớm nhất mà một ổ bánh mì được nướng trong ngày`i`sẽ được bán bằng cách tìm ngày nhỏ nhất`j`như vậy`S[j] - k*(j-i) >= S[i-1]`. Sự hư hỏng tối đa khi đó là sự khác biệt giữa`j`Và`i`. Vì nhu cầu của khách hàng được sắp xếp nên chúng tôi có thể quét qua các ngày sản xuất một cách hiệu quả để tính toán mức độ hư hỏng tích lũy và sử dụng phương pháp hai con trỏ hoặc tham lam để lập bản đồ nhu cầu về hư hỏng trong`O(n + m)`thời gian. Điều này tránh việc mô phỏng mọi hoạt động bán hàng và tận dụng tính đơn điệu của việc hư hỏng theo nhu cầu. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -49,11 +49,11 @@ Quan sát quan trọng để có một giải pháp hiệu quả là thứ tự 
 2. Khởi tạo một mảng`unattractiveness`kích thước`m`lưu trữ kết quả theo từng nhu cầu của khách hàng`k_i`. 
 3. Duy trì một biến`leftover`để theo dõi số bánh mì không bán được hàng ngày. Ban đầu,`leftover = 0`. 
 4. Lặp lại từ ngày đầu tiên đến ngày cuối cùng. Cho mỗi ngày`i`, tính toán`leftover = leftover + a[i] - k`. Nếu như`leftover < 0`, đặt lại về 0. Điều này tượng trưng cho bánh mì sẽ bị hỏng thêm. 
-5. Theo dõi sự hư hỏng của ổ bánh mì cũ nhất. Nếu một ổ bánh nướng vào ngày`i`được bán vào ngày`i + x`, thì sự hư hỏng của nó là`x`. Chúng ta có thể tính toán`x`sử dụng hiệu quả tổng số bánh mì còn sót lại chia cho nhu cầu hàng ngày`k`dùng phép chia số nguyên. 
-6. Cuối ngày, số ổ bánh còn lại sẽ được bán vào ngày cuối cùng. Tính toán mức độ hư hỏng tối đa cho mỗi truy vấn`k_i`sử dụng công thức`(total leftover + k_i - 1)//k_i`để xác định số ngày họ chờ đợi. 
-7. Vì`k`các giá trị được sắp xếp, chúng ta có thể quét qua`a`một lần và ánh xạ sự hư hỏng cho từng cái`k_i`trong một lượt. 
+5. Theo dõi sự hư hỏng của ổ bánh mì cũ nhất. Nếu một ổ bánh nướng vào ban ngày`i`được bán vào ngày`i + x`, thì sự hư hỏng của nó là`x`. Chúng ta có thể tính toán`x`sử dụng hiệu quả tổng số bánh mì còn sót lại chia cho nhu cầu hàng ngày`k`dùng phép chia số nguyên. 
+6. Cuối ngày, số ổ bánh còn lại được bán vào ngày cuối cùng. Tính toán mức độ hư hỏng tối đa cho mỗi truy vấn`k_i`sử dụng công thức`(total leftover + k_i - 1)//k_i`để xác định số ngày họ chờ đợi. 
+7. Vì`k`các giá trị được sắp xếp, chúng ta có thể quét qua`a`một lần và ánh xạ sự hư hỏng cho từng cái`k_i`trong một lần đi. 
 
-Bất biến được duy trì là sau ngày xử lý`i`,`leftover`luôn đại diện cho tổng số ổ bánh chưa bán được và độ hư hỏng tăng tỷ lệ thuận với số ngày chúng không được bán. Bằng cách tận dụng tổng tiền tố và phép chia số nguyên, chúng tôi tránh mô phỏng rõ ràng và đảm bảo rằng mức hư hỏng tối đa được tính toán chính xác cho mọi nhu cầu. 
+Bất biến được duy trì là sau ngày xử lý`i`,`leftover`luôn đại diện cho tổng số ổ bánh không bán được và độ hư hỏng tăng tỷ lệ thuận với số ngày chúng không bán được. Bằng cách tận dụng tổng tiền tố và phép chia số nguyên, chúng tôi tránh mô phỏng rõ ràng và đảm bảo rằng mức hư hỏng tối đa được tính toán chính xác cho mọi nhu cầu. 
 
 ## Giải pháp Python```python
 import sys
