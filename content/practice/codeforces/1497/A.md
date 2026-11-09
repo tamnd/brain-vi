@@ -34,9 +34,9 @@ Các trường hợp cạnh không rõ ràng bao gồm mảng bị thiếu`0`, m
 
 Cách tiếp cận bạo lực sẽ thử mọi hoán vị của mảng, tính MEX cho từng tiền tố và tính tổng chúng. Điều này hoạt động về nguyên tắc, nhưng số lượng hoán vị là`n!`phát nổ ngay cả đối với`n=10`, làm cho điều này hoàn toàn không thực tế. 
 
-Quan sát quan trọng là MEX chỉ tăng khi chúng ta đưa vào số còn thiếu nhỏ nhất. Vì vậy, để tối đa hóa tổng số MEX tiền tố, trước tiên chúng ta nên bao gồm tất cả các số riêng biệt bắt đầu từ`0`trở lên, theo thứ tự. Khi lần xuất hiện đầu tiên của mỗi số`0,1,2,...`được đặt, MEX của tiền tố sẽ tăng dần. 
+Quan sát quan trọng là MEX chỉ tăng khi chúng ta đưa vào số còn thiếu nhỏ nhất. Vì vậy, để tối đa hóa tổng số MEX tiền tố, trước tiên chúng ta nên bao gồm tất cả các số riêng biệt bắt đầu từ`0`trở lên, theo thứ tự. Once the first occurrence of each number`0,1,2,...`được đặt, MEX của tiền tố sẽ tăng dần. 
 
-Sau lần xuất hiện đầu tiên, các phần tử còn lại có thể được thêm vào theo bất kỳ thứ tự nào vì chúng không còn tăng MEX nữa. Chiến lược tham lam đơn giản này tạo ra một giải pháp chính xác và hiệu quả vì MEX ở mỗi tiền tố được xác định hoàn toàn bởi tập hợp các số đã được đặt. 
+Sau lần xuất hiện đầu tiên, các phần tử còn lại có thể được thêm vào theo bất kỳ thứ tự nào vì chúng không còn làm tăng MEX nữa. Chiến lược tham lam đơn giản này tạo ra một giải pháp chính xác và hiệu quả vì MEX ở mỗi tiền tố được xác định hoàn toàn bởi tập hợp các số đã được đặt. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -51,7 +51,7 @@ Sau lần xuất hiện đầu tiên, các phần tử còn lại có thể đư
 4. Một khi tất cả các số từ`0`đến mức hiện tại tối đa đã được xử lý một lần, nối các số còn lại theo thứ tự bất kỳ. Chúng không góp phần tăng MEX mà hoàn thiện mảng. 
 5. Xuất mảng kết quả. 
 
-**Tại sao nó hoạt động**: Ở mỗi bước, chúng tôi đảm bảo rằng MEX của tiền tố hiện tại được tối đa hóa bằng cách đưa số còn thiếu nhỏ nhất vào đầu tiên. Khi tiền tố chứa tất cả các số từ`0`ĐẾN`k-1`, MEX trở thành`k`. Việc thêm các bản sao sau đó không thể tăng MEX nên đặt chúng ở cuối là tối ưu. 
+**Tại sao nó hoạt động**: Ở mỗi bước, chúng tôi đảm bảo rằng MEX của tiền tố hiện tại được tối đa hóa bằng cách bao gồm số còn thiếu nhỏ nhất trước tiên. Khi tiền tố chứa tất cả các số từ`0`ĐẾN`k-1`, MEX trở thành`k`. Việc thêm các bản sao sau đó không thể tăng MEX nên đặt chúng ở cuối là tối ưu. 
 
 ## Giải pháp Python```python
 import sys
@@ -80,7 +80,7 @@ for _ in range(t):
             count[i] -= 1
     
     print(' '.join(map(str, result)))
-```Vòng lặp đầu tiên đảm bảo rằng mỗi tiền tố tăng MEX một cách tối ưu. Vòng lặp thứ hai xử lý các số còn sót lại. Mảng`count`đủ lớn để bao gồm tất cả các số đầu vào và ngăn ngừa lỗi chỉ mục. Việc xử lý ranh giới là ngầm định vì tất cả các số đều nhỏ hơn 100. 
+```Vòng lặp đầu tiên đảm bảo rằng mỗi tiền tố tăng MEX một cách tối ưu. Vòng lặp thứ hai xử lý các số còn sót lại. Mảng`count`đủ lớn để bao gồm tất cả các số đầu vào và ngăn ngừa lỗi chỉ mục. Việc xử lý ranh giới là ngầm định vì tất cả các số đều 100. 
 
 ## Ví dụ đã hoạt động 
 

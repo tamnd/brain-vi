@@ -1,5 +1,5 @@
 ---
-title: "CF 1497D - Thiên tài"
+title: "CF 1497D - Thiên Tài"
 description: "Chúng ta được cung cấp một tập hợp các vấn đề, mỗi vấn đề có liên quan đến độ phức tạp, thẻ và điểm số. Độ phức tạp của bài toán $i$-th là $ci = 2^i$, tăng theo cấp số nhân. Bạn bắt đầu với IQ $0$ và có thể chọn bất kỳ bài toán nào trước."
 date: "2026-06-10T21:48:14+07:00"
 tags: ["codeforces", "competitive-programming", "bitmasks", "dp", "graphs", "number-theory"]

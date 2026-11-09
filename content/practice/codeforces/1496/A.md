@@ -42,7 +42,7 @@ Một cách giải thích bạo lực cố gắng đặt tất cả các điểm
 
 Quan sát quan trọng là cấu trúc đảo ngược chỉ hạn chế các ký tự trùng khớp từ đầu vào trong. Thay vì chọn rõ ràng tất cả các phân vùng, chúng ta có thể nghĩ đến việc kết hợp`k`cặp chuỗi con: mỗi chuỗi con`a_i`phải khớp với mặt sau của phân đoạn hậu tố, nhưng chúng ta không cần biết ranh giới bên trong chính xác của chúng. 
 
-Điều này dẫn đến một ý tưởng hai con trỏ tham lam. Chúng tôi cố gắng loại bỏ các ký tự phù hợp từ cả hai đầu, tạo thành từng phân đoạn được phản chiếu cần thiết. Mỗi lần chúng tôi hoàn thành một cặp khối, chúng tôi sẽ tăng số lượng cặp hoàn thành. Nếu chúng ta có thể hoàn thành`k`các cặp như vậy trước khi con trỏ giao nhau hoặc vi phạm các ràng buộc, đoạn giữa còn lại sẽ tự động trở thành`a(k+1)`. 
+Điều này dẫn đến một ý tưởng hai con trỏ tham lam. Chúng tôi cố gắng loại bỏ các ký tự phù hợp từ cả hai đầu, tạo thành từng phân đoạn được phản chiếu cần thiết. Mỗi lần chúng tôi hoàn thành một cặp khối, chúng tôi sẽ tăng số lượng cặp hoàn thành. Nếu chúng ta có thể hoàn thành`k`các cặp như vậy trước khi con trỏ vượt qua hoặc vi phạm các ràng buộc, đoạn giữa còn lại sẽ tự động trở thành`a(k+1)`. 
 
 Cái nhìn sâu sắc quan trọng là chúng ta không cần phải xác định trước sự phân chia chính xác. Cấu trúc đảm bảo rằng mọi cách xây dựng hợp lệ đều tương ứng với một chuỗi các kết quả khớp tham lam hợp lệ từ cả hai đầu. 
 
@@ -238,7 +238,7 @@ abcba
 """) == "NO"
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-|`1 0 a`| CÓ | k = 0 trường hợp cơ sở | 
+|`1 0 a`| CÓ | k = 0 trường hợp cơ bản | 
 |`abcdef, k=3`| KHÔNG | không có tính đối xứng | 
 |`aaaaaa, k=3`| KHÔNG | thiếu ranh giới | 
 |`abcba, k=2`| KHÔNG | ràng buộc không khớp độ dài lẻ | 

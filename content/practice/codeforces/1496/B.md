@@ -36,7 +36,7 @@ Việc triển khai bất cẩn có thể mô phỏng mọi thao tác hoặc kh�
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận vũ phu rất đơn giản. Với mỗi thao tác, hãy tính`mex`Và`max`, tính toán`(mex + max + 1) // 2`và chèn nó vào multiset. Sau đó`k`hoạt động, đếm các phần tử riêng biệt. Điều này có hiệu quả vì mỗi bước đều tuân theo định nghĩa vấn đề một cách chính xác. Tuy nhiên, với`k`lên đến`10^9`, tốc độ này quá chậm; thậm chí tính toán`mex`nhiều lần sẽ tốn kém`O(n)`mỗi thao tác, đưa ra`O(n*k)`điều đó là không thể thực hiện được. 
+Cách tiếp cận vũ phu rất đơn giản. Với mỗi thao tác, hãy tính`mex`Và`max`, tính toán`(mex + max + 1) // 2`và chèn nó vào multiset. Sau đó`k`hoạt động, đếm các phần tử riêng biệt. Điều này có hiệu quả vì mỗi bước đều tuân theo đúng định nghĩa vấn đề. Tuy nhiên, với`k`lên đến`10^9`, tốc độ này quá chậm; thậm chí tính toán`mex`nhiều lần sẽ tốn kém`O(n)`mỗi thao tác, đưa ra`O(n*k)`điều đó là không thể thực hiện được. 
 
 Quan sát quan trọng là quá trình này ổn định nhanh chóng. Cho phép`a = mex(S)`Và`b = max(S)`. Nếu như`a > b`, sau đó`(a+b+1)//2 = a`, lớn hơn rất nhiều so với`b`, vì vậy mỗi thao tác chỉ thêm số nguyên tiếp theo sau số tối đa hiện tại. Trong trường hợp này, số phần tử riêng biệt tăng thêm`k`. Nếu như`a <= b`, sau đó`(a+b+1)//2`tạo ra một số giữa`a`Và`b`. Việc thêm số này có thể giới thiệu một phần tử mới (nếu nó không có trong tập hợp) hoặc trùng lặp (nếu có). Trong hầu hết các trường hợp, thêm nó một lần là đủ; sau đó, tập hợp không còn thay đổi nữa, bởi vì`mex`trở nên bằng số mới, ổn định tập hợp. 
 

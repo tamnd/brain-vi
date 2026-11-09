@@ -1,6 +1,6 @@
 ---
 title: "CF 1497B - M-mảng"
-description: "Chúng ta có nhiều tập số và môđun $m$. Nhiệm vụ là sắp xếp lại tất cả các số thành càng ít chuỗi càng tốt, trong đó mỗi chuỗi phải đáp ứng quy tắc tương thích cục bộ: bất cứ khi nào hai phần tử liên tiếp xuất hiện trong cùng một chuỗi thì tổng của chúng phải chia hết…"
+description: "Chúng ta có nhiều tập số và mô đun $m$. Nhiệm vụ là sắp xếp lại tất cả các số thành ít chuỗi nhất có thể, trong đó mỗi chuỗi phải đáp ứng quy tắc tương thích cục bộ: bất cứ khi nào hai phần tử liên tiếp xuất hiện trong cùng một chuỗi thì tổng của chúng phải chia hết…"
 date: "2026-06-10T21:44:17+07:00"
 tags: ["codeforces", "competitive-programming", "constructive-algorithms", "greedy", "math"]
 categories: ["algorithms"]
@@ -30,13 +30,13 @@ Bởi vì chúng ta được phép hoán vị các phần tử một cách tùy 
 
 Mục tiêu là chia tất cả các phần tử thành số lượng tối thiểu các chuỗi hợp lệ như vậy. 
 
-Ràng buộc$n \le 10^5$trên tất cả các trường hợp thử nghiệm buộc chúng tôi phải tránh xa bất kỳ chiến lược nào thử tất cả các phân vùng hoặc xây dựng trình tự một cách rõ ràng. Bất kỳ giải pháp nào thậm chí ngầm xem xét tất cả các cặp hoặc thử quay lui sẽ thất bại, vì không gian tìm kiếm tăng theo cấp số nhân với$n$. Cấu trúc của bài toán gợi ý rằng chỉ tần số của số dư mới quan trọng chứ không phải sự sắp xếp thực sự của các phần tử. 
+Ràng buộc$n \le 10^5$trên tất cả các trường hợp thử nghiệm buộc chúng tôi phải tránh xa mọi chiến lược thử tất cả các phân vùng hoặc xây dựng trình tự một cách rõ ràng. Bất kỳ giải pháp nào thậm chí ngầm xem xét tất cả các cặp hoặc thử quay lui sẽ thất bại, vì không gian tìm kiếm tăng theo cấp số nhân với$n$. Cấu trúc của bài toán gợi ý rằng chỉ tần số của số dư mới quan trọng chứ không phải sự sắp xếp thực sự của các phần tử. 
 
 Một trường hợp thất bại tinh tế đối với lý luận ngây thơ là giả định rằng việc ghép các số dư bổ sung một cách tham lam luôn cực tiểu hóa các chuỗi. Ví dụ: nếu chúng ta cố gắng luôn khớp càng nhiều$r$với$m-r$nhất có thể và sau đó bắt đầu các trình tự mới cho phần còn sót lại mà không xem xét cấu trúc tổng thể, chúng ta có thể đánh giá quá cao số lượng trình tự cần thiết hoặc xây dựng các cấu trúc không hợp lệ. Một lỗi phổ biến khác là xử lý từng cặp số dư một cách độc lập mà không xử lý hành vi đặc biệt của phần dư.$0$Và$m/2$. 
 
 ## Phương pháp tiếp cận 
 
-Một ý tưởng mạnh mẽ sẽ cố gắng thực sự xây dựng từng trình tự một. Chúng ta có thể liên tục chọn một phần tử không được sử dụng, mở rộng một chuỗi bằng cách tham lam chọn bất kỳ phần tử chưa được sử dụng tương thích nào và tiếp tục cho đến khi không thể mở rộng được, sau đó bắt đầu một chuỗi mới. Về nguyên tắc, điều này đúng vì chúng ta rõ ràng tôn trọng quy tắc kề. Tuy nhiên, mỗi tiện ích mở rộng đều yêu cầu quét các phần tử tương thích không được sử dụng và trong trường hợp xấu nhất, chúng tôi có thể xem lại các phần tử nhiều lần. Điều này dẫn đến hành vi bậc hai, vượt xa giới hạn khi$n$đạt tới$10^5$. 
+Một ý tưởng mạnh mẽ sẽ cố gắng thực sự xây dựng từng trình tự một. Chúng ta có thể liên tục chọn một phần tử không được sử dụng, mở rộng một chuỗi bằng cách tham lam chọn bất kỳ phần tử chưa sử dụng tương thích nào và tiếp tục cho đến khi không thể mở rộng được, sau đó bắt đầu một chuỗi mới. Về nguyên tắc, điều này đúng vì chúng ta rõ ràng tôn trọng quy tắc kề. Tuy nhiên, mỗi tiện ích mở rộng đều yêu cầu quét các phần tử tương thích không được sử dụng và trong trường hợp xấu nhất, chúng tôi có thể xem lại các phần tử nhiều lần. Điều này dẫn đến hành vi bậc hai, vượt xa giới hạn khi$n$đạt tới$10^5$. 
 
 Quan sát quan trọng là tính kề chỉ phụ thuộc vào số dư và mỗi số dư$r$chỉ tương tác với một đối tác duy nhất$m-r$. Điều này làm giảm bài toán thành các bài toán đếm độc lập trên mỗi cặp dư lượng bổ sung. 
 
@@ -54,7 +54,7 @@ Dư lượng đặc biệt$0$và khi nào$m$là chẵn,$m/2$, cư xử khác đi
 Trước tiên, chúng tôi nén mảng thành số tần số của mỗi modulo còn lại$m$. 
 
 1. Tính một mảng`cnt`Ở đâu`cnt[r]`lưu trữ bao nhiêu số còn lại$r$. Thao tác này sẽ xóa tất cả thông tin đặt hàng và chỉ giữ lại những thông tin quan trọng đối với tính khả thi của vùng lân cận. 
-2. Xử lý phần còn lại$0$. Nếu như`cnt[0]`khác 0, tất cả các phần tử như vậy có thể được đặt vào một chuỗi hợp lệ duy nhất, vì$0 + 0 \equiv 0 \pmod m$. Điều này đóng góp 0 hoặc 1 chuỗi. 
+2. Xử lý phần còn lại$0$. Nếu như`cnt[0]`khác 0, tất cả các phần tử như vậy có thể được đặt vào một chuỗi hợp lệ duy nhất, vì$0 + 0 \equiv 0 \pmod m$. Điều này đóng góp vào chuỗi 0 hoặc 1. 
 3. Nếu$m$chẵn, xử lý phần còn lại$m/2$. Tất cả các phần tử có phần dư này cũng tương thích lẫn nhau, vì vậy chúng có thể được đặt thành một chuỗi duy nhất nếu chúng tồn tại. Điều này cũng đóng góp nhiều nhất là 1 chuỗi. 
 4. Đối với mỗi phần còn lại$r$từ$1$ĐẾN$m-1$, ghép nối nó với$m-r$, nhưng chỉ xử lý mỗi cặp một lần bằng cách thực thi$r < m-r$. Đối với mỗi cặp như vậy, chúng tôi quyết định cần bao nhiêu chuỗi để chứa cả hai nhóm. 
 5. Cho một cặp$(r, m-r)$, cho phép$a = cnt[r]$Và$b = cnt[m-r]$. Nếu cả hai đều bằng 0, chúng ta bỏ qua nó. Mặt khác, số lượng chuỗi xen kẽ tối thiểu cần thiết là$\max(1, |a - b|)$. Điều này cho thấy thực tế là một chuỗi xen kẽ duy nhất có thể hấp thụ càng nhiều sự cân bằng càng tốt và bất kỳ sự mất cân bằng nào còn sót lại sẽ tạo ra các chuỗi bổ sung. 
@@ -101,7 +101,7 @@ if __name__ == "__main__":
     solve()
 ```Mã bắt đầu bằng cách xây dựng tần số còn lại, đây là thông tin duy nhất phù hợp với tính khả thi. Sau đó, nó xử lý riêng biệt hai lớp dư lượng tự tương thích, vì chúng hoạt động giống như các vấn đề của một nhóm độc lập. 
 
-Vòng lặp kết thúc$r$ghép mỗi dư lượng với phần bù của nó đúng một lần. biểu thức`max(1, abs(a1 - a2))`triển khai kết quả cấu trúc quan trọng cho các chuỗi xen kẽ: ngay cả một cặp mất cân bằng nặng vẫn cần ít nhất một chuỗi và mỗi đơn vị mất cân bằng bổ sung sẽ tạo ra một chuỗi bổ sung. 
+Vòng lặp kết thúc$r$ghép mỗi dư lượng với phần bù của nó đúng một lần. biểu thức`max(1, abs(a1 - a2))`triển khai kết quả cấu trúc quan trọng cho các chuỗi xen kẽ: ngay cả một cặp mất cân bằng nặng vẫn cần ít nhất một chuỗi và mỗi đơn vị mất cân bằng bổ sung sẽ buộc phải có một chuỗi bổ sung. 
 
 Phải cẩn thận để bỏ qua việc đếm hai lần bằng cách đảm bảo$r < m-r$, nếu không thì mỗi cặp sẽ được xử lý hai lần và câu trả lời sẽ bị tăng cao. 
 
