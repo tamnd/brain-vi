@@ -17,7 +17,7 @@ draft: false
 [CF 1473B - Chuỗi LCM](https://codeforces.com/problemset/problem/1473/B) 
 
 **Đánh giá:** 1000 
-**Tas:** lực lượng vũ phu, toán học, lý thuyết số, dây 
+**Tags:** lực lượng vũ phu, toán học, lý thuyết số, dây 
 **Thời gian giải:** 2m 59s 
 **Đã xác minh:** không 
 

@@ -51,7 +51,7 @@ Chúng tôi giảm bớt vấn đề để kiểm tra xem sau khi sắp xếp c�
 4. Khởi tạo một từ điển hoặc mảng để theo dõi cột được nhìn thấy lần cuối cho mỗi chẵn lẻ. 
 5. Lặp lại các ô bị chặn đã sắp xếp. Đối với ô hiện tại, hãy kiểm tra xem có ô nào bị chặn trước đó có cùng giá trị chẵn lẻ hay không. Nếu vậy, hãy tính toán sự khác biệt về số cột giữa ô hiện tại và ô bị chặn trước đó. Nếu chênh lệch là số lẻ thì không thể xếp kề nhau, do đó ngay lập tức trả về "KHÔNG" cho trường hợp kiểm thử này. 
 6. Cập nhật cột nhìn thấy lần cuối cho tính chẵn lẻ hiện tại vào cột hiện tại. 
-7. Nếu quá trình lặp kết thúc mà không phát hiện xung đột khoảng cách lẻ, xuất ra "CÓ". 
+7. Nếu quá trình lặp kết thúc mà không phát hiện xung đột khoảng cách lẻ, xuất "CÓ". 
 
 Tại sao nó hoạt động: Điều bất biến là quân domino bao phủ hai ô liền kề theo chiều dọc hoặc chiều ngang. Tính chẵn lẻ của hàng + cột modulo 2 không đổi đối với các vị trí domino và bất kỳ ô bị chặn liên tiếp nào có cùng tính chẵn lẻ được phân tách bằng một số cột lẻ sẽ để lại một đoạn có độ dài lẻ không thể xếp được. Bằng cách theo dõi sự bất biến này, chúng tôi đảm bảo tính chính xác mà không cần mô phỏng toàn bộ lưới. 
 
@@ -78,7 +78,7 @@ for _ in range(t):
                 break
         last_seen[parity] = c
     print("YES" if possible else "NO")
-```Giải pháp đọc từng trường hợp kiểm thử một cách hiệu quả, bỏ qua các khoảng trống. Chúng tôi biểu thị các ô bị chặn dưới dạng cặp (cột, chẵn lẻ), giúp giảm vấn đề thành việc theo dõi chẵn lẻ đơn giản. Việc sắp xếp đảm bảo chúng tôi xử lý các cột theo thứ tự và từ điển Last_seen theo dõi cột của ô bị chặn trước đó cho mỗi chẵn lẻ. Séc`(c - last_seen[parity]) % 2 == 1`nắm bắt được những hạn chế thiết yếu khiến cho việc ốp lát là không thể. 
+```Giải pháp đọc từng trường hợp kiểm thử một cách hiệu quả, bỏ qua các khoảng trống. Chúng tôi biểu thị các ô bị chặn dưới dạng cặp (cột, chẵn lẻ), giúp giảm vấn đề thành việc theo dõi chẵn lẻ đơn giản. Việc sắp xếp đảm bảo chúng tôi xử lý các cột theo thứ tự và từ điển Last_seen theo dõi cột của ô bị chặn trước đó cho mỗi chẵn lẻ. Séc`(c - last_seen[parity]) % 2 == 1`nắm bắt được hạn chế cơ bản khiến cho việc ốp lát là không thể. 
 
 ## Ví dụ đã hoạt động 
 

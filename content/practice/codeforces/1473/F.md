@@ -24,17 +24,17 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi đang chọn một tập hợp con các chỉ mục từ một mảng có kích thước$n$và mỗi chỉ mục có một giá trị$b_i$góp phần vào tổng số điểm. Ràng buộc không nằm ở tính kề cận hay thứ tự theo nghĩa thông thường mà là ở mối quan hệ chia hết giữa các giá trị$a_i$. 
+Chúng tôi đang chọn một tập hợp con các chỉ mục từ một mảng có kích thước$n$và mỗi chỉ số có một giá trị$b_i$góp phần vào tổng số điểm. Ràng buộc không nằm ở tính kề cận hay thứ tự theo nghĩa thông thường mà là ở mối quan hệ chia hết giữa các giá trị$a_i$. 
 
-Hãy nghĩ đến từng vị trí$i$như một nút mang trọng lượng$b_i$. Nếu chúng ta muốn bao gồm nút$i$, chúng tôi cũng buộc phải bao gồm một số nút trước đó: mọi chỉ mục trước đó$j < i$giá trị của ai$a_j$chia rẽ$a_i$. Điều này tạo ra sự phụ thuộc trực tiếp từ$i$cho tất cả như vậy$j$, nghĩa là bao gồm$i$yêu cầu bao gồm tất cả “những người tiền nhiệm có thể chia cắt” của nó. 
+Hãy nghĩ đến từng vị trí$i$như một nút mang trọng lượng$b_i$. Nếu chúng ta muốn bao gồm nút$i$, chúng tôi cũng buộc phải bao gồm một số nút trước đó: mọi chỉ mục trước đó$j < i$giá trị của ai$a_j$chia rẽ$a_i$. Điều này tạo ra sự phụ thuộc trực tiếp từ$i$cho tất cả như vậy$j$, nghĩa là bao gồm$i$yêu cầu bao gồm tất cả “những người tiền nhiệm có thể chia hết” của nó. 
 
 Nhiệm vụ là chọn một tập hợp con các nút được đóng theo các quy tắc phụ thuộc này trong khi tối đa hóa tổng số nút đã chọn.$b_i$. Bởi vì một số$b_i$có thể âm, không phải lúc nào cũng tối ưu để lấy mọi thứ có thể tiếp cận được, do đó cấu trúc trở thành bài toán đóng có trọng số trên đồ thị có hướng. 
 
 Ràng buộc$n \le 3000$đại khái cho phép$O(n^2)$chuyển đổi, nhưng bất cứ điều gì xây dựng một mạng luồng đầy đủ với việc mở rộng nút lớn hoặc tập hợp con DP đơn giản trên tất cả các tập hợp con đều là không thể ngay lập tức. Hạn chế chính đó là$a_i \le 100$, làm nén không gian giá trị và là nút cổ chai cấu trúc thực sự. 
 
-Trường hợp cạnh tinh tế xuất phát từ trọng số âm. Nếu tất cả$b_i$là phủ định, câu trả lời tối ưu là tập trống, nhưng cách tiếp cận đóng phụ thuộc ngây thơ vẫn có thể buộc phải đưa vào một số nút khi xem xét các nút khác một cách độc lập, dẫn đến việc tính toán quá mức. 
+Trường hợp cạnh tinh tế đến từ trọng số âm. Nếu tất cả$b_i$là phủ định, câu trả lời tối ưu là tập trống, nhưng cách tiếp cận đóng phụ thuộc ngây thơ vẫn có thể buộc phải đưa vào một số nút khi xem xét các nút khác một cách độc lập, dẫn đến việc tính toán quá mức. 
 
-Một trường hợp khác phát sinh khi nhiều chỉ số có chung$a_i$. Mặc dù các giá trị lặp lại, các phần phụ thuộc vẫn dựa trên chỉ mục và chỉ xem xét các vị trí trước đó. Thứ tự này quan trọng: việc hoán đổi các giá trị bằng nhau giữa các chỉ số sẽ thay đổi sự phụ thuộc nào tồn tại, do đó giải pháp không thể xử lý được$a_i$các giá trị dưới dạng các nút nhiều tập hợp độc lập. 
+Một trường hợp đặc biệt khác phát sinh khi nhiều chỉ số có chung$a_i$. Mặc dù các giá trị lặp lại, các phần phụ thuộc vẫn dựa trên chỉ mục và chỉ xem xét các vị trí trước đó. Thứ tự này quan trọng: việc hoán đổi các giá trị bằng nhau giữa các chỉ số sẽ thay đổi sự phụ thuộc nào tồn tại, do đó giải pháp không thể xử lý được$a_i$các giá trị dưới dạng các nút nhiều tập hợp độc lập. 
 
 ## Phương pháp tiếp cận 
 
@@ -42,11 +42,11 @@ Cách tiếp cận bạo lực sẽ thử mọi tập hợp con của chỉ số
 
 Một chế độ xem có cấu trúc hơn là diễn giải quy tắc dưới dạng điều kiện đóng: nếu chúng tôi chọn một nút, chúng tôi phải bao gồm tất cả các lân cận phụ thuộc sắp tới của nút đó. Đây là dạng cổ điển của bài toán tập đóng có trọng số cực đại, có thể giải được bằng cách cắt tối thiểu. Mỗi nút có trọng số$b_i$và các phần phụ thuộc là các cạnh có hướng với khả năng thực thi khả năng đóng vô hạn. 
 
-Tuy nhiên, một biểu đồ luồng đầy đủ trên$n \le 3000$các nút có khả năng$O(n^2)$các cạnh quá lớn đối với luồng tối đa tiêu chuẩn trong 4 giây với bộ nhớ chật hẹp, đặc biệt là dưới các ràng buộc của Codeforces và giới hạn 32 MB. 
+Tuy nhiên, một biểu đồ luồng đầy đủ trên$n \le 3000$các nút có khả năng$O(n^2)$các cạnh quá lớn đối với luồng tối đa tiêu chuẩn trong 4 giây với bộ nhớ eo hẹp, đặc biệt là dưới các ràng buộc của Codeforces và giới hạn 32 MB. 
 
 Sự đơn giản hóa chính xuất phát từ việc quan sát rằng các phụ thuộc bị chi phối hoàn toàn bởi tính chia hết của các số nhỏ$a_i \le 100$. Thay vì xây dựng biểu đồ trên các chỉ số, chúng tôi tổng hợp hành vi theo giá trị và xử lý vấn đề như lập trình động trên các ước số. 
 
-Chúng tôi xử lý các chỉ số theo thứ tự tăng dần, duy trì cho từng giá trị$v$đóng góp tốt nhất có thể đạt được của một tập hợp hợp lệ kết thúc ở các trạng thái phù hợp với các ràng buộc chia hết. Khi chúng ta xem xét chỉ số$i$, quyết định của nó chỉ phụ thuộc vào việc liệu chúng ta có bao gồm tất cả các ước số cần thiết trong số các vị trí trước đó hay không. Vì tất cả các phụ thuộc được xác định bởi$a_j \mid a_i$, Và$a_i$nhỏ, chúng ta có thể tính toán trước các danh sách ước số và duy trì các chuyển tiếp DP được nhóm theo giá trị. 
+Chúng tôi xử lý các chỉ số theo thứ tự tăng dần, duy trì cho từng giá trị$v$đóng góp tốt nhất có thể đạt được của một tập hợp hợp lệ kết thúc ở các trạng thái phù hợp với các ràng buộc chia hết. Khi chúng ta xem xét chỉ số$i$, quyết định của nó chỉ phụ thuộc vào việc liệu chúng ta có bao gồm tất cả các ước số cần thiết trong số các vị trí trước đó hay không. Vì tất cả các phụ thuộc được xác định bởi$a_j \mid a_i$, Và$a_i$nhỏ, chúng ta có thể tính toán trước các danh sách ước số và duy trì các chuyển đổi DP được nhóm theo giá trị. 
 
 Điều này biến vấn đề thành việc duy trì tổng tốt nhất có thể đạt được cho các cấu hình trên 100 giá trị có thể, trong đó mỗi giá trị bắt buộc rằng tất cả các ước số của nó phải hoạt động trước khi có thể đóng góp. DP truyền bá “kích hoạt” một cách hiệu quả dọc theo mạng chia thay vì dọc theo các chỉ số. 
 
@@ -110,7 +110,7 @@ if __name__ == "__main__":
     solve()
 ```Mảng DP`dp[v]`thể hiện sự đóng góp tốt nhất mà chúng tôi có thể liên kết với việc kết thúc một công trình hợp lệ có khả năng “kích hoạt” giá trị`v`. Khi xử lý một chỉ mục, chúng tôi tính tổng các đóng góp từ tất cả các trạng thái ước số vì đó chính xác là các chỉ số phải được đưa vào trước khi chọn phần tử hiện tại. Quá trình chuyển đổi chỉ cập nhật lớp giá trị hiện tại, giữ nguyên các giá trị tốt nhất trước đó. 
 
-Một chi tiết triển khai tinh tế là thu hẹp sự đóng góp từ các trạng thái ước số bằng cách sử dụng`max(0, dp[d])`. Điều này phản ánh rằng chúng ta có quyền bỏ qua các chuỗi có hại, vì việc bao gồm một nhóm ước số có đóng góp âm sẽ không bao giờ giúp đạt được mục tiêu tối đa. 
+Một chi tiết triển khai tinh tế là thu hẹp sự đóng góp từ các trạng thái ước số bằng cách sử dụng`max(0, dp[d])`. Điều này phản ánh rằng chúng ta có quyền bỏ qua các chuỗi có hại, vì việc bao gồm một nhóm chia có đóng góp âm sẽ không bao giờ giúp đạt được mục tiêu tối đa. 
 
 Câu trả lời cuối cùng bao gồm số 0 vì việc chọn không có gì luôn hợp lệ bất kể sự phụ thuộc. 
 
@@ -224,7 +224,7 @@ assert run("""5
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
 | tất cả các giá trị âm | 0 | xử lý tập trống | 
-| phần tử đơn | giá trị | trường hợp cơ sở đúng đắn | 
+| phần tử đơn | giá trị | tính đúng đắn của trường hợp cơ sở | 
 | chuỗi chia | 10 | lan truyền theo khả năng chia hết | 
 | dấu hiệu hỗn hợp | 19 | đưa vào có chọn lọc | 
 

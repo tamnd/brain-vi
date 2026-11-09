@@ -17,7 +17,7 @@ draft: false
 [CF 1473E - Đường dẫn tối thiểu](https://codeforces.com/problemset/problem/1473/E) 
 
 **Đánh giá:** 2400 
-**Tags:** đồ thị, đường đi ngắn nhất 
+**Tas:** đồ thị, đường đi ngắn nhất 
 **Thời gian giải:** 2m 42s 
 **Đã xác minh:** không 
 

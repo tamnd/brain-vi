@@ -26,7 +26,7 @@ draft: false
 
 Chúng ta bắt đầu với một mảng cơ sở cố định tăng dần từ 1 đến k và sau đó quay xuống theo cách rút gọn để độ dài của nó trở thành n. Hình dạng này là một đỉnh duy nhất: nó tăng dần đến k, sau đó giảm dần. Mọi giá trị từ 1 đến k xuất hiện ít nhất một lần và vì n nhỏ hơn 2k nên hậu tố giảm không phản ánh đầy đủ tiền tố tăng. 
 
-Chúng ta được phép “đổi tên” các giá trị của mảng này bằng cách sử dụng hoán vị p trên 1 thành k. Mỗi lần xuất hiện giá trị x trong mảng ban đầu đều được thay thế bằng p[x]. Cấu trúc của các vị trí không bao giờ thay đổi, chỉ có nhãn mới thay đổi. 
+Chúng ta được phép “đổi tên” các giá trị của mảng này bằng cách sử dụng hoán vị p trên 1 thành k. Mỗi lần xuất hiện giá trị x trong mảng ban đầu được thay thế bằng p[x]. Cấu trúc của các vị trí không bao giờ thay đổi, chỉ có nhãn mới thay đổi. 
 
 Hai ràng buộc chi phối việc lựa chọn hoán vị này. Đầu tiên, khi chúng ta áp dụng, số lần đảo ngược trong mảng được chuyển đổi không được vượt quá số lần đảo ngược trong mảng ban đầu. Thứ hai, trong số tất cả các hoán vị thỏa mãn ràng buộc này, mảng được biến đổi kết quả phải có độ lớn về mặt từ điển càng lớn càng tốt. 
 
@@ -34,7 +34,7 @@ Hai ràng buộc chi phối việc lựa chọn hoán vị này. Đầu tiên, k
 
 Ràng buộc k ≤ n < 2k là giới hạn cấu trúc chính. Nó đảm bảo mảng có chính xác một đỉnh và sự chồng chéo được kiểm soát chặt chẽ giữa phần tăng và phần giảm. Với k lên tới 100000 và tổng số lần kiểm tra cũng bị giới hạn, mọi giải pháp đều phải tuyến tính hoặc gần tuyến tính cho mỗi trường hợp kiểm tra. Bất cứ điều gì liên quan đến việc so sánh bậc hai các hoán vị hoặc tính nghịch đảo cho mỗi nhiệm vụ ứng cử viên sẽ ngay lập tức thất bại. 
 
-Một nỗ lực ngây thơ có thể thử tất cả các hoán vị hoặc gán nhãn một cách tham lam trong khi tính toán lại số lần đảo ngược. Điều đó không thành công vì ngay cả việc kiểm tra một hoán vị cũng yêu cầu O(n) và có k! khả năng. Một cái bẫy tinh vi khác là tối đa hóa từ điển một cách tham lam mà không tính đến việc bảo toàn đảo ngược. Ví dụ: việc gán p[k] = k trước tiên luôn hấp dẫn về mặt từ điển, nhưng có thể ngay lập tức làm tăng các nghịch đảo được tạo bởi hậu tố giảm dần nếu không được cân bằng cẩn thận. 
+Một nỗ lực ngây thơ có thể thử tất cả các hoán vị hoặc gán nhãn một cách tham lam trong khi tính toán lại số lần đảo ngược. Điều đó không thành công vì ngay cả việc kiểm tra một hoán vị cũng yêu cầu O(n) và có k! khả năng. Một cái bẫy tinh vi khác là tối đa hóa từ điển một cách tham lam mà không tính đến việc bảo toàn đảo ngược. Ví dụ: việc gán p[k] = k đầu tiên luôn hấp dẫn về mặt từ điển, nhưng có thể ngay lập tức làm tăng các nghịch đảo được tạo bởi hậu tố giảm nếu không được cân bằng cẩn thận. 
 
 Khó khăn chính là việc hoán vị ảnh hưởng gián tiếp đến mọi so sánh: việc hoán đổi nhãn sẽ thay đổi thứ tự tương đối của tất cả các chỉ số bằng nhau của một giá trị. Cấu trúc của a là thứ duy nhất làm cho vấn đề có thể giải quyết được. 
 

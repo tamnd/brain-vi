@@ -84,7 +84,7 @@ Nếu như$d[v] \le d[u]$, sau đó sử dụng cạnh đó làm ngoại lệ ng
 
 Nếu như$d[v] > d[u]$, sau đó chuyển sang$v$bảo tồn tất cả các lựa chọn trong tương lai, mang lại giá trị cho ứng viên`ans[v]`. 
 
-Sự tái phát trở thành:$$ans[u] = \min \left( d[u], \min_{d[v]\le d[u]} d[v], \min_{d[v]>d[u]} ans[v] \right)$$Bây giờ đồ thị tạo ra bởi các cạnh thuận là không có tính tuần hoàn đối với khoảng cách BFS vì mọi cạnh như vậy đều tăng nghiêm ngặt$d$. Điều đó có nghĩa là chúng ta có thể tính toán các câu trả lời theo thứ tự giảm dần của khoảng cách BFS hoặc tương đương với bản ghi nhớ DFS xử lý các cấp độ sâu hơn trước. 
+Sự tái phát trở thành:$$ans[u] = \min \left( d[u], \min_{d[v]\le d[u]} d[v], \min_{d[v]>d[u]} ans[v] \right)$$Bây giờ đồ thị tạo ra bởi các cạnh thuận là không có tính tuần hoàn đối với khoảng cách BFS vì mọi cạnh như vậy đều tăng nghiêm ngặt$d$. Điều đó có nghĩa là chúng ta có thể tính toán các câu trả lời theo thứ tự giảm dần khoảng cách BFS hoặc tương đương với bản ghi nhớ DFS xử lý các cấp độ sâu hơn trước. 
 
 Điều này làm giảm toàn bộ tính toán xuống còn một BFS và một DP dựa trên DFS trên biểu đồ. 
 
@@ -116,7 +116,7 @@ Lợi thế không tăng chính xác là kiểu di chuyển có thể tiêu tố
 
 Cạnh phía trước không tiêu thụ ngoại lệ. Bắt đầu từ`u`và việc đạt được lợi thế như vậy tương đương với việc bắt đầu từ`v`với tất cả các tùy chọn vẫn có sẵn. Kể từ đây`ans[v]`là một ứng cử viên hợp lệ. 
 
-Vì các cạnh phía trước luôn tăng khoảng cách BFS nên các phụ thuộc đệ quy chỉ đi từ khoảng cách nhỏ hơn đến khoảng cách lớn hơn. Không có chu trình nào có thể tồn tại giữa các phụ thuộc này, do đó sự lặp lại được xác định rõ ràng. Mọi hành trình hợp lệ đều bắt đầu bằng cách dừng lại, bằng cách đi theo một cạnh không tăng hoặc bằng cách đi về phía trước. Phép truy toán xem xét cả ba khả năng, do đó giá trị tối thiểu được tạo ra chính xác là câu trả lời tối ưu. 
+Vì các cạnh phía trước luôn tăng khoảng cách BFS nên các phụ thuộc đệ quy chỉ đi từ khoảng cách nhỏ hơn đến khoảng cách lớn hơn. Không có chu kỳ nào có thể tồn tại giữa các phụ thuộc này, do đó sự lặp lại được xác định rõ ràng. Mọi hành trình hợp lệ đều bắt đầu bằng cách dừng lại, bằng cách đi theo một cạnh không tăng hoặc bằng cách đi về phía trước. Phép truy toán xem xét cả ba khả năng, do đó giá trị tối thiểu được tạo ra chính xác là câu trả lời tối ưu. 
 
 #Giải pháp Python```python
 import sys

@@ -18,7 +18,7 @@ draft: false
 
 **Đánh giá:** 1700 
 **Tags:** cấu trúc dữ liệu, dp, triển khai, chuỗi 
-**Thời gian giải:** 1 phút 46s 
+**Thời gian giải:** 1 phút 46 giây 
 **Đã xác minh:** có 
 
 ##Giải pháp 
@@ -53,7 +53,7 @@ Cái nhìn sâu sắc quan trọng là chúng ta có thể xử lý trước th�
 6. Điều chỉnh giá trị tối thiểu và tối đa của hậu tố theo sự thay đổi thực trong`x`do tiền tố (`pref[l-1]`). Giá trị tối thiểu của`x`qua các hướng dẫn còn lại là`min(pref_min[l-1], pref[l-1] + suff_min[r+1])`, và cực đại là`max(pref_max[l-1], pref[l-1] + suff_max[r+1])`. 
 7. Câu trả lời cho truy vấn là`max_val - min_val + 1`. 
 
-Tại sao nó hoạt động: Điều bất biến là việc loại bỏ bất kỳ chuỗi tiếp theo nào chỉ đơn giản là dịch chuyển tất cả các giá trị sau đó do hiệu ứng thực của phân đoạn bị loại bỏ. Bằng cách lưu trữ các giá trị tối thiểu và tối đa cho tất cả các tiền tố và hậu tố, chúng ta có thể xây dựng lại các giá trị cực trị mà không cần mô phỏng từng bước. Kết hợp hai giá trị cực trị sau khi dịch chuyển sẽ tạo ra tập hợp đầy đủ các giá trị riêng biệt vì mỗi lần tăng/giảm đều thay đổi`x`đúng bằng 1. 
+Tại sao nó hoạt động: Điều bất biến là bất kỳ việc loại bỏ chuỗi con liền kề nào cũng chỉ đơn giản là dịch chuyển tất cả các giá trị sau đó do hiệu ứng thực của phân đoạn bị loại bỏ. Bằng cách lưu trữ các giá trị tối thiểu và tối đa cho tất cả các tiền tố và hậu tố, chúng ta có thể xây dựng lại các giá trị cực trị mà không cần mô phỏng từng bước. Kết hợp hai giá trị cực trị sau khi dịch chuyển sẽ tạo ra tập hợp đầy đủ các giá trị riêng biệt vì mỗi lần tăng/giảm đều thay đổi`x`đúng bằng 1. 
 
 ## Giải pháp Python```python
 import sys
