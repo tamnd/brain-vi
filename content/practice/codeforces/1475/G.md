@@ -28,7 +28,7 @@ Chúng ta được cho một mảng các số nguyên và Polycarp định nghĩ
 
 Đầu vào bao gồm nhiều trường hợp thử nghiệm. Mỗi trường hợp thử nghiệm cung cấp độ dài của mảng và các phần tử mảng. Đầu ra của mỗi trường hợp thử nghiệm là một số nguyên duy nhất: số phần tử tối thiểu phải bị loại bỏ. 
 
-Những ràng buộc cho phép$n$lên đến$2 \cdot 10^5$và giá trị phần tử lên đến$2 \cdot 10^5$. Một cách tiếp cận đơn giản để kiểm tra tính chia hết cho tất cả các cặp sẽ yêu cầu$O(n^2)$hoạt động trên mỗi trường hợp thử nghiệm, điều này không thể thực hiện được ở giới hạn trên vì$n^2$có thể là$4 \cdot 10^{10}$. Do đó chúng ta cần một thuật toán đại khái$O(n \log n)$hoặc$O(n \sqrt{m})$Ở đâu$m$là giá trị tối đa, để xử lý các đầu vào lớn nhất một cách hiệu quả. 
+Những ràng buộc cho phép$n$lên đến$2 \cdot 10^5$và giá trị phần tử lên tới$2 \cdot 10^5$. Một cách tiếp cận đơn giản để kiểm tra tính chia hết cho tất cả các cặp sẽ yêu cầu$O(n^2)$hoạt động trên mỗi trường hợp thử nghiệm, điều này không thể thực hiện được ở giới hạn trên vì$n^2$có thể là$4 \cdot 10^{10}$. Do đó chúng ta cần một thuật toán đại khái$O(n \log n)$hoặc$O(n \sqrt{m})$Ở đâu$m$là giá trị tối đa, để xử lý đầu vào lớn nhất một cách hiệu quả. 
 
 Trường hợp cạnh tinh tế là khi tồn tại nhiều bản sao của cùng một số. Ví dụ,$[2,2,8]$đã đẹp rồi, bởi vì tất cả các cặp$2$s chia rẽ nhau, và$2$chia rẽ$8$. Bất kỳ thuật toán nào không xử lý các bản sao một cách chính xác đều có thể loại bỏ các phần tử không chính xác. Một trường hợp khác là khi tất cả các phần tử đều là số nguyên tố không có bội số chung, chẳng hạn như$[3,5,7]$; giải pháp tối ưu là loại bỏ tất cả trừ một phần tử. 
 
@@ -137,6 +137,6 @@ assert run("1\n5\n1 1 1 1 1\n") == "0", "all equal"
 
 ## Vỏ cạnh 
 
-Đối với mảng`[3,5,7]`,`freq`đếm mỗi cái là 1. Ban đầu`dp[3]=1`,`dp[5]=1`,`dp[7]=1`. Không có bội số nào lan truyền thêm. Tập con đẹp lớn nhất có kích thước 1, loại bỏ =`3-1=2`. Điều này thể hiện việc xử lý các mảng không có sự chia hết giữa các số riêng biệt. 
+Đối với mảng`[3,5,7]`,`freq`đếm mỗi cái là 1. Ban đầu`dp[3]=1`,`dp[5]=1`,`dp[7]=1`. Không có bội số nào lan truyền thêm. Tập hợp con đẹp lớn nhất có kích thước 1, loại bỏ =`3-1=2`. Điều này thể hiện việc xử lý các mảng không có sự chia hết giữa các số riêng biệt. 
 
 Vì`[2,2,8]`,`dp[2]=2`,`dp[4]=0`,`dp[8]=1`. Tuyên truyền từ`2`,`dp[4]=2`,`dp[8]=3`. Kích thước chuỗi tối đa là 3

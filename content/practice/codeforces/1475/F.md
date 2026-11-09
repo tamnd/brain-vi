@@ -87,7 +87,7 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Đầu tiên, mã sẽ đọc các ma trận, tính toán chênh lệch XOR của chúng và khởi tạo các mảng lật hàng và cột. Nó đặt hàng đầu tiên về 0 và dẫn đến việc lật cột trực tiếp. Các hàng còn lại sau đó được kiểm tra theo các ràng buộc XOR. Nếu phát hiện thấy có sự mâu thuẫn, câu trả lời là "KHÔNG"; nếu không thì là "CÓ". Bỏ qua dòng trống giữa các ma trận sẽ tránh được sự sai lệch khi đọc đầu vào. Việc sử dụng khả năng hiểu danh sách đảm bảo rằng sự khác biệt của ma trận được tính toán một cách hiệu quả. 
+```Đầu tiên, mã sẽ đọc các ma trận, tính toán chênh lệch XOR của chúng và khởi tạo các mảng lật hàng và cột. Nó đặt hàng đầu tiên về 0 và dẫn đến việc lật cột trực tiếp. Các hàng còn lại sau đó được kiểm tra theo các ràng buộc XOR. Nếu phát hiện thấy có sự mâu thuẫn, câu trả lời là "KHÔNG"; nếu không thì là "CÓ". Bỏ qua dòng trống giữa các ma trận sẽ tránh được sai lệch khi đọc dữ liệu đầu vào. Việc sử dụng khả năng hiểu danh sách đảm bảo rằng sự khác biệt của ma trận được tính toán một cách hiệu quả. 
 
 ## Ví dụ đã hoạt động 
 

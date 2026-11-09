@@ -24,11 +24,11 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được cung cấp một chuỗi tăng giá hàng tháng cho một sản phẩm. Giá trị đầu tiên thể hiện giá ban đầu và mỗi giá trị tiếp theo là mức tăng danh nghĩa trong tháng đó. Chúng tôi được yêu cầu đảm bảo rằng tỷ lệ lạm phát hàng tháng, được tính bằng tỷ lệ giữa mức tăng của tháng đó với giá tích lũy tính đến tháng đó, không vượt quá một ngưỡng nhất định.$k$phần trăm. Để đạt được điều này, chúng tôi có thể tăng giá ban đầu và/hoặc giá của các tháng trước đó, nhưng chúng tôi muốn làm như vậy trong khi giảm thiểu tổng số tiền bổ sung được thêm vào. 
+Chúng ta được cung cấp một chuỗi tăng giá hàng tháng cho một sản phẩm. Giá trị đầu tiên thể hiện giá ban đầu và mỗi giá trị tiếp theo là mức tăng danh nghĩa trong tháng đó. Chúng tôi được yêu cầu đảm bảo rằng tỷ lệ lạm phát hàng tháng, được tính bằng tỷ lệ giữa mức tăng của tháng đó với giá tích lũy tính đến tháng đó, không vượt quá ngưỡng nhất định.$k$phần trăm. Để đạt được điều này, chúng tôi có thể tăng giá ban đầu và/hoặc giá của các tháng trước đó, nhưng chúng tôi muốn làm như vậy trong khi giảm thiểu tổng số tiền bổ sung được thêm vào. 
 
 Mỗi trường hợp thử nghiệm cung cấp số tháng$n$, tỷ lệ lạm phát tối đa được phép$k$, và mảng giá tăng$p$. Đầu ra là một số nguyên duy nhất cho mỗi trường hợp thử nghiệm, tổng số tiền tối thiểu cần được thêm vào mảng để hạn chế lạm phát được giữ nguyên cho mỗi tháng. 
 
-Những hạn chế ở mức vừa phải:$n$nhiều nhất là 100 và$t$lên tới 1000, nghĩa là giải pháp sẽ hoạt động hiệu quả trong$O(n)$mỗi trường hợp thử nghiệm. Mức tăng giá riêng lẻ có thể lên tới$10^9$, loại trừ các phương pháp dựa vào việc liệt kê thô bạo một cách ngây thơ tất cả các khoản bổ sung giá có thể có. Trường hợp khó khăn không rõ ràng phát sinh khi một mức giá ban đầu rất nhỏ được theo sau bởi một mức tăng lớn: nếu không điều chỉnh, hệ số lạm phát sẽ vượt quá$k$bằng một biên độ rộng. Ví dụ, với$p = [1, 100]$Và$k = 1$, mức tăng của tháng thứ hai gấp 100 lần giá ban đầu, vượt xa giới hạn 1%. Một giải pháp ngây thơ chỉ kiểm tra nếu$p_i \le k$thất bại hoàn toàn. 
+Những hạn chế ở mức vừa phải:$n$nhiều nhất là 100 và$t$lên tới 1000, nghĩa là giải pháp sẽ hoạt động hiệu quả trong$O(n)$mỗi trường hợp thử nghiệm. Mức tăng giá riêng lẻ có thể lên tới$10^9$, loại trừ các cách tiếp cận dựa vào việc liệt kê thô bạo một cách ngây thơ tất cả các khoản bổ sung giá có thể có. Trường hợp khó khăn không rõ ràng phát sinh khi một mức giá ban đầu rất nhỏ được theo sau bởi một mức tăng lớn: nếu không điều chỉnh, hệ số lạm phát sẽ vượt quá$k$theo một biên độ rộng. Ví dụ, với$p = [1, 100]$Và$k = 1$, mức tăng của tháng thứ hai gấp 100 lần giá ban đầu, vượt xa giới hạn 1%. Một giải pháp ngây thơ chỉ kiểm tra nếu$p_i \le k$thất bại hoàn toàn. 
 
 ## Phương pháp tiếp cận 
 
@@ -74,7 +74,7 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Mã bắt đầu bằng cách đọc số lượng ca kiểm thử và xử lý từng trường hợp kiểm thử riêng lẻ. Chúng tôi khởi tạo`total_add`về 0 và đặt`cumulative`với giá của tháng đầu tiên, phản ánh giá khởi điểm. Vòng lặp tính tổng tích lũy cần thiết bằng cách sử dụng phép chia trần để xử lý việc làm tròn số nguyên. Nếu số tiền tích lũy hiện tại không đủ, chúng tôi sẽ thêm số tiền cần thiết vào`total_add`và cập nhật`cumulative`. Cuối cùng, chúng tôi cộng giá của tháng hiện tại vào`cumulative`để kiểm tra trong tương lai. Sử dụng số học số nguyên xuyên suốt sẽ tránh được lỗi dấu phẩy động. 
+```Mã bắt đầu bằng cách đọc số lượng trường hợp thử nghiệm và xử lý từng trường hợp thử nghiệm riêng lẻ. Chúng tôi khởi tạo`total_add`về 0 và đặt`cumulative`với giá của tháng đầu tiên, phản ánh giá khởi điểm. Vòng lặp tính tổng tích lũy cần thiết bằng cách sử dụng phép chia trần để xử lý việc làm tròn số nguyên. Nếu số tiền tích lũy hiện tại không đủ, chúng tôi sẽ thêm số tiền cần thiết vào`total_add`và cập nhật`cumulative`. Cuối cùng, chúng tôi cộng giá của tháng hiện tại vào`cumulative`để kiểm tra trong tương lai. Sử dụng số học số nguyên xuyên suốt sẽ tránh được lỗi dấu phẩy động. 
 
 ## Ví dụ đã hoạt động 
 
@@ -146,4 +146,4 @@ assert run("1\n2 100\n1000000000 1000000000\n") == "0", "large numbers, already 
 
 ## Vỏ cạnh 
 
-Đối với đầu vào`2 1\n1 100`, số tích lũy bắt đầu từ 1. Tháng 1 yêu cầu`100 * 100 / 1 = 10000`, vì vậy chúng tôi thêm`10000 - 1 = 9999`đến tích lũy và tổng số được thêm vào là 9999. Thuật toán áp dụng chính xác mức chia trần và cập nhật tích lũy tuần tự. Vì`4 10\n10 1 1 100`, thuật toán cộng thêm 90 trước tháng cuối cùng để đáp ứng giới hạn 10%, chứng tỏ rằng các bản cập nhật tuần tự sẽ tích lũy chính xác cho những tháng sau đó.
+Đối với đầu vào`2 1\n1 100`, số tích lũy bắt đầu từ 1. Tháng 1 yêu cầu`100 * 100 / 1 = 10000`, vì vậy chúng tôi thêm`10000 - 1 = 9999`đến tích lũy và tổng số được thêm vào là 9999. Thuật toán áp dụng chính xác mức chia trần và cập nhật tích lũy tuần tự. Vì`4 10\n10 1 1 100`, thuật toán cộng thêm 90 trước tháng cuối cùng để đáp ứng giới hạn 10%, chứng tỏ rằng các bản cập nhật tuần tự sẽ tích lũy chính xác cho các tháng sau đó.

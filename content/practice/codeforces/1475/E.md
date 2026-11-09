@@ -18,7 +18,7 @@ draft: false
 
 **Đánh giá:** 1600 
 **Tags:** tổ hợp, toán, sắp xếp 
-**Thời gian giải:** 1 phút 46 giây 
+**Thời gian giải:** 1 phút 46s 
 **Đã xác minh:** có 
 
 ##Giải pháp 
@@ -26,7 +26,7 @@ draft: false
 
 Masha có một danh sách các blogger, mỗi blogger có số lượng người theo dõi nhất định và cô ấy muốn thuê chính xác`k`trong số đó để tối đa hóa tổng số khán giả tiếp cận. Đầu vào mang lại`n`, tổng số blogger,`k`, số lượng cô ấy có thể thuê, và một mảng`a`chiều dài`n`với số lượng người theo dõi của mỗi blogger. Với mỗi test case, kết quả đầu ra là số cách chọn`k`các blogger sao cho tổng số người theo dõi họ là cao nhất có thể. Hai lựa chọn được coi là khác nhau nếu chúng khác nhau bởi ít nhất một blogger. 
 
-Với những hạn chế, với`n`lên tới 1000 và tổng của tất cả`n`trên các trường hợp thử nghiệm cũng được giới hạn bởi 1000, chúng tôi biết rằng một giải pháp có độ phức tạp về thời gian khoảng`O(n log n)`mỗi trường hợp thử nghiệm sẽ dễ dàng phù hợp. Chúng ta cũng cần cẩn thận khi đếm tổ hợp vì`k`có thể lớn như`n`và việc đếm có thể được lặp lại, khiến cho việc đếm ngây thơ dễ mắc phải sai lầm. 
+Với những hạn chế, với`n`lên đến 1000 và tổng của tất cả`n`trên các trường hợp thử nghiệm cũng bị giới hạn bởi 1000, chúng tôi biết rằng một giải pháp có độ phức tạp về thời gian khoảng`O(n log n)`mỗi trường hợp thử nghiệm sẽ dễ dàng phù hợp. Chúng ta cũng cần cẩn thận khi đếm tổ hợp vì`k`có thể lớn như`n`và việc đếm có thể được lặp lại, khiến cho việc đếm ngây thơ dễ mắc phải sai lầm. 
 
 Một trường hợp phức tạp phát sinh khi nhiều blogger có cùng số lượng người theo dõi. Ví dụ: nếu tất cả các blogger đều có cùng người theo dõi và`k=2`, mọi cặp đều hợp lệ. Một cách tiếp cận ngây thơ chỉ cần thực hiện`k`số lớn nhất mà không xem xét tần số sẽ tính thiếu các khả năng. 
 
@@ -46,7 +46,7 @@ Việc này nhanh hơn đáng kể vì việc sắp xếp`O(n log n)`và tính t
 ## Hướng dẫn thuật toán 
 
 1. Đọc số lượng test case`t`. 
-2. Với mỗi test case, hãy đọc`n`Và`k`, sau đó đọc mảng theo dõi`a`. 
+2. Với mỗi test case, hãy đọc`n`Và`k`, sau đó đọc mảng theo sau`a`. 
 3. Sắp xếp`a`theo thứ tự giảm dần. đầu tiên`k`các phần tử bây giờ cho tổng số tiền tối đa có thể. 
 4. Xác định`x`, số người theo dõi nhỏ nhất trong top`k`các blogger. 
 5. Đếm`m`, số lần xuất hiện của`x`trong top`k`. 
@@ -54,7 +54,7 @@ Việc này nhanh hơn đáng kể vì việc sắp xếp`O(n log n)`và tính t
 7. Tính hệ số nhị thức`C(c, m)`modulo`10^9+7`để có được số lượng lựa chọn hợp lệ. 
 8. In kết quả cho từng test. 
 
-Thuật toán hoạt động vì tính bất biến là bất kỳ tập hợp tối ưu nào cũng phải bao gồm tất cả các phần tử lớn hơn`x`và chính xác`m`của các phần tử bằng`x`. Điều này đảm bảo rằng tổng là tối đa và đếm chính xác mọi kết hợp riêng biệt. 
+Thuật toán hoạt động vì bất biến là bất kỳ tập hợp tối ưu nào cũng phải bao gồm tất cả các phần tử lớn hơn`x`và chính xác`m`của các phần tử bằng`x`. Điều này đảm bảo rằng tổng là tối đa và đếm chính xác mọi kết hợp riêng biệt. 
 
 ## Giải pháp Python```python
 import sys

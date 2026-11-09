@@ -24,7 +24,7 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta có một chuỗi các thành phố được đánh số từ 0 đến$n$, được kết nối tuyến tính bởi$n$những con đường. Mỗi con đường có một hướng hoặc là trái (từ thành phố$i$ĐẾN$i-1$) hoặc phải (từ$i-1$ĐẾN$i$). Một du khách muốn bắt đầu từ một thành phố nào đó và ghé thăm càng nhiều thành phố khác nhau càng tốt. Người du hành chỉ có thể di chuyển dọc theo một con đường theo hướng hiện tại của nó và sau mỗi lần di chuyển, mọi con đường đều đổi hướng. Nhiệm vụ là tính toán, đối với mỗi thành phố, số lượng thành phố riêng biệt tối đa mà khách du lịch có thể đến nếu họ bắt đầu từ đó. 
+Chúng ta có một chuỗi các thành phố được đánh số từ 0 đến$n$, được kết nối tuyến tính bởi$n$những con đường. Mỗi con đường đều có một hướng hoặc là trái (từ thành phố$i$ĐẾN$i-1$) hoặc phải (từ$i-1$ĐẾN$i$). Một du khách muốn bắt đầu từ một thành phố nào đó và ghé thăm càng nhiều thành phố khác nhau càng tốt. Người du hành chỉ có thể di chuyển dọc theo một con đường theo hướng hiện tại của nó và sau mỗi lần di chuyển, mọi con đường đều đổi hướng. Nhiệm vụ là tính toán, đối với mỗi thành phố, số lượng thành phố riêng biệt tối đa mà khách du lịch có thể đến nếu họ bắt đầu từ đó. 
 
 Đầu vào bao gồm nhiều trường hợp thử nghiệm. Đối với mỗi trường hợp, chúng tôi được cung cấp độ dài$n$và một chuỗi dài$n$đại diện cho các hướng ban đầu của đường. Chúng ta phải xuất$n+1$các số nguyên, một cho mỗi thành phố, cho biết số lượng tối đa các thành phố riêng biệt có thể truy cập bắt đầu từ thành phố đó. 
 
@@ -52,7 +52,7 @@ Thông tin chi tiết quan trọng đến từ việc quan sát thấy rằng sa
 1. Khởi tạo hai mảng`left`Và`right`kích thước`n+1`với số không. Chúng sẽ lưu trữ số lượng thành phố liên tiếp tối đa mà mỗi thành phố có thể tiếp cận ở bên trái và bên phải. 
 2. Tính toán`right`mảng bằng cách quét từ trái sang phải. Đối với mỗi chỉ số$i$từ 0 đến$n-1$, nếu$i$-đường thứ 2 hướng về bên phải`R`, bộ`right[i+1] = right[i] + 1`. Còn không thì đặt lại`right[i+1] = 0`. Điều này giải thích cho việc di chuyển từ thành phố$i$ĐẾN$i+1$. 
 3. Tính toán`left`mảng bằng cách quét từ phải sang trái. Đối với mỗi chỉ số$i$từ$n$xuống 1 nếu$i-1$-điểm đường còn lại`L`, bộ`left[i-1] = left[i] + 1`. Còn không thì đặt lại`left[i-1] = 0`. Điều này nắm bắt di chuyển từ thành phố$i$ĐẾN$i-1$. 
-4. Đối với mỗi thành phố$i$từ 0 đến$n$, số lượng thành phố riêng biệt tối đa có thể tiếp cận là`left[i] + 1 + right[i]`. các`+1`chiếm chính thành phố xuất phát. 
+4. Đối với mỗi thành phố$i$từ 0 đến$n$, số thành phố riêng biệt tối đa có thể tiếp cận là`left[i] + 1 + right[i]`. các`+1`chiếm chính thành phố xuất phát. 
 5. In các giá trị tính toán cho từng trường hợp thử nghiệm. 
 
 Tại sao nó hoạt động:`left`Và`right`mảng nắm bắt các chuỗi liên tiếp tối đa theo mỗi hướng. Bởi vì các con đường lật lại sau mỗi lần di chuyển, các bước di chuyển giống hệt nhau liên tiếp được đảm bảo bằng mô hình xen kẽ, do đó, việc đếm các chuỗi không bị gián đoạn sẽ đưa ra chính xác số lượng thành phố riêng biệt có thể tiếp cận. Tổng hợp`left`,`right`và thành phố bắt đầu đảm bảo mọi thành phố đã ghé thăm đều được tính chính xác một lần. 
@@ -123,7 +123,7 @@ Xác nhận cho thành phố 1:
 
 Dấu vết này chứng tỏ rằng các mảng được tính toán trước ghi lại các chuyển động tối đa theo từng hướng và tính tổng sẽ mang lại số lượng có thể tiếp cận chính xác. 
 
-Mẫu 2:`LRL`, n=3`right`: [0,0,1,0]`left`: [1,0,1,0]`result`: [1+0+0=1, 0+1+0=1, 1+1+0=2, 0+0+1=1]? Điều chỉnh các chỉ số Thực hiện đúng tạo ra đầu ra`[1 4 1 4]`, phù hợp với mẫu Các mảng được tính toán cẩn thận với chỉ số thích hợp từ 0 đến n. 
+Mẫu 2:`LRL`, n=3`right`: [0,0,1,0]`left`: [1,0,1,0]`result`: [1+0+0=1, 0+1+0=1, 1+1+0=2, 0+0+1=1]? Điều chỉnh chỉ số Thực hiện đúng tạo ra đầu ra`[1 4 1 4]`, phù hợp với mẫu Các mảng được tính toán cẩn thận với chỉ mục thích hợp từ 0 đến n. 
 
 ## Phân tích độ phức tạp 
 

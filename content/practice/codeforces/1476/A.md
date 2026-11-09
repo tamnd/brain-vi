@@ -28,13 +28,13 @@ Chúng ta được yêu cầu xây dựng một mảng có kích thước$n$ch�
 
 Đầu vào bao gồm nhiều trường hợp thử nghiệm. Mỗi trường hợp thử nghiệm cho hai số nguyên,$n$Và$k$, với cả hai đều có thể đạt tới$10^9$. Đầu ra là một số nguyên duy nhất cho mỗi trường hợp thử nghiệm biểu thị phần tử tối đa có thể đạt được tối thiểu trong mảng. 
 
-Bởi vì$n$Và$k$có thể cực kỳ lớn, việc tạo ra một mảng thực tế hoặc lặp lại mọi giá trị có thể là không khả thi. Bất kỳ giải pháp nào cũng phải tính toán câu trả lời bằng các phép tính số học thuần túy, lý tưởng nhất là trong thời gian không đổi cho mỗi trường hợp thử nghiệm. Một cách tiếp cận ngây thơ cố gắng mô phỏng tất cả các mảng có thể sẽ thực hiện$O(n)$hoạt động trên mỗi trường hợp thử nghiệm, điều này là không thể chấp nhận được vì$n$có thể$10^9$. 
+Bởi vì$n$Và$k$có thể cực kỳ lớn, việc tạo ra một mảng thực tế hoặc lặp lại mọi giá trị có thể là không khả thi. Bất kỳ giải pháp nào cũng phải tính toán câu trả lời bằng các phép tính số học thuần túy, lý tưởng nhất là trong thời gian không đổi cho mỗi trường hợp thử nghiệm. Một cách tiếp cận ngây thơ cố gắng mô phỏng tất cả các mảng có thể sẽ thực hiện$O(n)$hoạt động cho mỗi trường hợp thử nghiệm, điều này là không thể chấp nhận được vì$n$có thể$10^9$. 
 
 Các trường hợp cạnh không rõ ràng phát sinh khi$n$nhỏ hơn$k$. Ví dụ, nếu$n = 1$Và$k = 5$, cách duy nhất để thỏa mãn tính chia hết là đặt phần tử đơn thành 5. Nếu$n$là bội số của$k$, sau đó đặt tất cả các phần tử thành 1 đã cho tổng chia hết cho$k$. Một tình huống phức tạp khác là khi$n$Và$k$là nguyên tố cùng nhau hoặc$n < k$nhưng không phải 1; trong những trường hợp như vậy, một số phần tử cần phải tăng lên trên 1 để đạt được tổng chia hết cho$k$. Những trường hợp này minh họa tại sao lời giải phải tính số nguyên nhỏ nhất$x$như vậy$x \cdot n \ge k \cdot m$đối với một số nguyên$m$, thay vì giả sử một mảng thống nhất các cái đó hoạt động. 
 
 ## Phương pháp tiếp cận 
 
-Một cách tiếp cận bạo lực sẽ cố gắng liệt kê tất cả các mảng có độ dài có thể$n$với các số nguyên dương, kiểm tra xem tổng của chúng có chia hết cho$k$và theo dõi tối đa. Vì$n \approx 10^9$, điều này đòi hỏi ít nhất$O(n)$hoạt động cho mỗi trường hợp thử nghiệm, vượt quá giới hạn thời gian theo nhiều bậc độ lớn. 
+Một cách tiếp cận bạo lực sẽ cố gắng liệt kê tất cả các mảng có độ dài có thể$n$với các số nguyên dương, kiểm tra xem tổng của chúng có chia hết cho$k$và theo dõi tối đa. Vì$n \approx 10^9$, điều này đòi hỏi ít nhất$O(n)$hoạt động trên mỗi trường hợp thử nghiệm, vượt quá giới hạn thời gian theo nhiều bậc độ lớn. 
 
 Thông tin chi tiết quan trọng là chúng ta không cần mảng đầy đủ, chỉ cần phần tử tối đa. Hãy biểu thị phần tử tối đa bằng$x$. Tổng của mảng nhiều nhất là$n \cdot x$, bởi vì tất cả các phần tử đều là số nguyên dương nhỏ hơn hoặc bằng$x$. Để thỏa mãn tính chia hết cho$k$, tổng ít nhất phải bằng$k \cdot \lceil \frac{1}{k} \cdot n \cdot x \rceil$. 
 
@@ -48,7 +48,7 @@ Tái định hình, nhỏ nhất$x$xảy ra khi chúng ta phân phối số ti�
 ## Hướng dẫn thuật toán 
 
 1. Với mỗi test, đọc số nguyên$n$Và$k$. 
-2. Tính bội số nhỏ nhất của$k$đó là ít nhất$n$. Điều này đảm bảo rằng nếu chúng ta chia đều số tiền này cho$n$các yếu tố, chúng tôi đạt được sự phân chia. Cho phép$m = \lceil \frac{n}{k} \rceil$. Tuy nhiên, chúng ta cần nhân với$k$và chia cho$n$để có được phần tử tối đa, vì vậy$x = \lceil \frac{k \cdot m}{n} \rceil$. 
+2. Tính bội số nhỏ nhất của$k$đó ít nhất là$n$. Điều này đảm bảo rằng nếu chúng ta chia đều số tiền này cho$n$các yếu tố, chúng tôi đạt được sự phân chia. Cho phép$m = \lceil \frac{n}{k} \rceil$. Tuy nhiên, chúng ta cần nhân với$k$và chia cho$n$để có được phần tử tối đa, vì vậy$x = \lceil \frac{k \cdot m}{n} \rceil$. 
 3. Công thức tương đương là tính$m = \lceil \frac{n}{k} \rceil$, sau đó$x = \lceil \frac{k \cdot m}{n} \rceil$. Điều này đảm bảo tổng$n \cdot x$chia hết cho$k$và tối thiểu. 
 4. In$x$. 
 

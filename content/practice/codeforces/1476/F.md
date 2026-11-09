@@ -1,6 +1,6 @@
 ---
 title: "CF 1476F - Đèn Lồng"
-description: "Chúng ta được cấp một hàng đèn lồng, mỗi chiếc có một sức mạnh quyết định số lượng đèn lồng liên tiếp có thể chiếu sáng theo một trong hai hướng. Nhiệm vụ là chỉ định hướng (trái hoặc phải) cho mỗi chiếc đèn lồng sao cho mỗi chiếc đèn lồng đều được chiếu sáng bởi ít nhất một chiếc đèn lồng khác."
+description: "Chúng tôi được cấp một hàng đèn lồng, mỗi chiếc có một sức mạnh xác định số lượng đèn lồng liên tiếp có thể chiếu sáng theo một trong hai hướng. Nhiệm vụ là chỉ định hướng (trái hoặc phải) cho mỗi chiếc đèn lồng sao cho mỗi chiếc đèn lồng đều được chiếu sáng bởi ít nhất một chiếc đèn lồng khác."
 date: "2026-06-11T00:04:48+07:00"
 tags: ["codeforces", "competitive-programming", "binary-search", "data-structures", "dp"]
 categories: ["algorithms"]
@@ -24,13 +24,13 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được cấp một hàng đèn lồng, mỗi chiếc có một sức mạnh quyết định số lượng đèn lồng liên tiếp có thể chiếu sáng theo một trong hai hướng. Nhiệm vụ là chỉ định hướng (trái hoặc phải) cho mỗi chiếc đèn lồng sao cho mỗi chiếc đèn lồng đều được chiếu sáng bởi ít nhất một chiếc đèn lồng khác. Nếu điều này là không thể, chúng tôi phải báo cáo KHÔNG. Nếu không, chúng tôi in CÓ và hướng dẫn cho tất cả các đèn lồng. 
+Chúng tôi được cấp một hàng đèn lồng, mỗi chiếc có một sức mạnh xác định số lượng đèn lồng liên tiếp có thể chiếu sáng theo một trong hai hướng. Nhiệm vụ là chỉ định hướng (trái hoặc phải) cho mỗi chiếc đèn lồng sao cho mỗi chiếc đèn lồng đều được chiếu sáng bởi ít nhất một chiếc đèn lồng khác. Nếu điều này là không thể, chúng tôi phải báo cáo KHÔNG. Nếu không, chúng tôi in CÓ và hướng dẫn cho tất cả các đèn lồng. 
 
-Đầu vào cung cấp nhiều trường hợp thử nghiệm. Mỗi trường hợp thử nghiệm bao gồm số lượng đèn lồng$n$và danh sách quyền hạn của họ$p_i$. Quyền hạn có thể nằm trong khoảng từ 0 đến$n$, vì vậy một số đèn lồng có thể không có tầm với và một số khác có thể che phủ toàn bộ hàng nếu cần thiết. Tổng của$n$trên tất cả các trường hợp thử nghiệm được giới hạn ở mức$3 \cdot 10^5$, nghĩa là chúng ta cần một giải pháp gần như tuyến tính cho mỗi trường hợp thử nghiệm để duy trì trong giới hạn thời gian. Phương pháp bậc hai sẽ không hiệu quả vì việc lặp đi lặp lại tất cả các mức độ chiếu sáng có thể có cho mỗi chiếc đèn lồng có thể đạt tới$n^2 \approx 10^{10}$hoạt động. 
+Đầu vào đưa ra nhiều trường hợp thử nghiệm. Mỗi trường hợp thử nghiệm bao gồm số lượng đèn lồng$n$và danh sách quyền hạn của họ$p_i$. Quyền hạn có thể nằm trong khoảng từ 0 đến$n$, vì vậy một số đèn lồng có thể không có tầm với và một số khác có thể che phủ toàn bộ hàng nếu cần thiết. Tổng của$n$trên tất cả các trường hợp thử nghiệm được giới hạn ở mức$3 \cdot 10^5$, nghĩa là chúng ta cần một giải pháp gần như tuyến tính cho mỗi trường hợp thử nghiệm để duy trì trong giới hạn thời gian. Phương pháp tiếp cận bậc hai sẽ không hiệu quả vì việc lặp đi lặp lại tất cả các mức độ chiếu sáng có thể có cho mỗi chiếc đèn lồng có thể đạt tới$n^2 \approx 10^{10}$hoạt động. 
 
 Các trường hợp khó khăn không rõ ràng phát sinh khi đèn lồng có công suất bằng 0. Ví dụ, nếu chiếc đèn lồng đầu tiên có công suất 0 thì nó không thể chiếu sáng bất kỳ ai ở bên trái, vì vậy nó phải được một chiếc đèn lồng khác chiếu sáng từ bên phải. Ngược lại, nếu đèn cuối cùng có công suất 0 thì phải chiếu sáng từ bên trái. Chuỗi số 0 bên trong mảng cũng tạo ra các ràng buộc: nếu số 0 không ở gần đèn lồng có đủ tầm với thì không có giải pháp nào tồn tại. Mảng nhỏ như$[0,1]$khả thi nhưng phải được xử lý cẩn thận. 
 
-Một trường hợp tinh tế khác là khi nhiều đèn lồng công suất cao chồng lên nhau. Một cách tiếp cận ngây thơ là chỉ hướng đèn lồng tùy ý sang phải hoặc trái có thể khiến một số đèn lồng không được chiếu sáng vì phạm vi của chúng không giao nhau. Chúng ta cần một cách có hệ thống để đảm bảo độ phủ sóng của mọi chiếc đèn lồng. 
+Một trường hợp tinh tế khác là khi nhiều đèn lồng công suất cao chồng lên nhau. Một cách tiếp cận ngây thơ là chỉ hướng đèn lồng tùy ý sang bên phải hoặc bên trái có thể khiến một số đèn lồng không được chiếu sáng vì phạm vi của chúng không giao nhau. Chúng ta cần một cách có hệ thống để đảm bảo độ phủ sóng của mọi chiếc đèn lồng. 
 
 ## Phương pháp tiếp cận 
 
