@@ -16,12 +16,12 @@ draft: false
 
 [CF 1521E - Nastia và Ma trận xinh đẹp](https://codeforces.com/problemset/problem/1521/E) 
 
-**Đánh giá:** 2700 
+**Xếp hạng:** 2700 
 **Tags:** tìm kiếm nhị phân, thuật toán xây dựng, dp, tham lam 
 **Thời gian giải:** 2 phút 30 giây 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi được cung cấp số lượng giá trị`1..k`. Giá trị`i`phải xuất hiện chính xác`a_i`lần. Các ô trống được cho phép và được biểu thị bằng`0`. 
@@ -43,7 +43,7 @@ m = 8
 a = [8]
 ```Một ý tưởng ngây thơ là tìm một ma trận có đủ các ô khác 0. Điều đó là không đủ. Các số bằng nhau cũng phải tránh xung đột đường chéo. Tần số lớn nhất tạo ra một giới hạn dưới bổ sung trên`n`. 
 
-Một trường hợp tinh vi khác là khi ma trận gần đầy.```
+Một trường hợp tinh tế khác là khi ma trận gần đầy.```
 m = 15
 ```MỘT`4 × 4`ma trận có 16 ô, nhưng mỗi ô`2 × 2`khối cần số không. Không thể sử dụng hết 16 ô. Công trình phải dành đủ vị trí trống. 
 
@@ -110,7 +110,7 @@ Mọi giá trị ngoại trừ có thể một giá trị đều được chứa
 
 Giá trị duy nhất có thể xuất hiện ở cả hai vùng là giá trị phân chia. Các bản sao của nó tạo thành một hậu tố liền kề của`A`và một tiền tố liền kề của`B`. Thứ tự của các ô ngăn chặn việc sao chép trong`A`và một bản sao trong`B`từ việc trở thành các góc đối diện của một`2 × 2`khối. Đây chính xác là cấu trúc được sử dụng trong các giải pháp được chấp nhận. 
 
-Sự bất bình đẳng về dung lượng đảm bảo vừa đủ ô có thể sử dụng vừa đủ chỗ cho giá trị thường xuyên nhất. Vì tất cả các số đều được đặt và mọi hạn chế cục bộ đều được tôn trọng nên ma trận rất đẹp. 
+Sự bất bình đẳng về dung lượng đảm bảo đủ ô có thể sử dụng và đủ chỗ cho giá trị thường xuyên nhất. Vì tất cả các số đều được đặt và mọi hạn chế cục bộ đều được tôn trọng nên ma trận rất đẹp. 
 
 ## Giải pháp Python```python
 import sys
@@ -208,7 +208,7 @@ def solve():
 solve()
 ```Phần đầu tiên tính toán kích thước hợp lệ tối thiểu. Vòng lặp này rẻ vì`n`không bao giờ trở nên lớn. Độ dài cạnh ma trận là khoảng`√m`. 
 
-Mảng được sắp xếp là trái tim của công trình. Các tần số lớn được xử lý trước để giá trị lớn nhất được ưu tiên bên trong vùng lớn hơn. 
+Mảng được sắp xếp là trái tim của công trình. Tần số lớn được xử lý trước để giá trị lớn nhất được ưu tiên bên trong vùng lớn hơn. 
 
 Biến`split`xác định giá trị duy nhất có thể vượt qua vùng`A`đến khu vực`B`. Mọi giá trị trước đó đều khớp hoàn toàn bên trong`A`, mọi giá trị sau này khớp hoàn toàn bên trong`B`. 
 
@@ -229,7 +229,7 @@ a = [2, 0, 0, 1]
 | Tần số lớn nhất | 2 | 
 | Hợp lệ nhỏ nhất n | 2 | 
 | Công suất của A | 2 | 
-| Tần số được sắp xếp | (2,1), (1,4) | 
+| Sắp xếp tần số | (2,1), (1,4) | 
 | Chia giá trị | 4 | 
 
 Vùng đất`A`có hai ô. Cả hai bản sao của giá trị`1`phù hợp ở đó. 
@@ -252,7 +252,7 @@ a = [2, 4, 8, 1]
 | Tần số lớn nhất | 8 | 
 | Hợp lệ nhỏ nhất n | 5 | 
 | Công suất của A | 15 | 
-| Tần số được sắp xếp | (8,3), (4,2), (2,1), (1,4) | 
+| Sắp xếp tần số | (8,3), (4,2), (2,1), (1,4) | 
 | Tiền tố trước khi tràn | 14 | 
 | Chia giá trị | 4 | 
 
@@ -335,7 +335,7 @@ Coi như:```
 1
 15 4
 2 4 8 1
-```MỘT`4 × 4`ma trận không thể hoạt động vì số lượng ô tối đa có thể sử dụng chỉ là`16 - 4 = 12`. 
+```MỘT`4 × 4`ma trận không thể hoạt động vì số lượng ô có thể sử dụng tối đa chỉ là`16 - 4 = 12`. 
 
 Bất đẳng thức thứ hai bác bỏ nó. Thuật toán chọn`n = 5`, nơi công suất sử dụng trở thành`25 - 4 = 21`, đủ cho tất cả mười lăm số. 
 

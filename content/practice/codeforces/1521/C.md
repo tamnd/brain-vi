@@ -17,11 +17,11 @@ draft: false
 [CF 1521C - Nastia và một hoán vị ẩn](https://codeforces.com/problemset/problem/1521/C) 
 
 **Xếp hạng:** 2000 
-**Tas:** thuật toán mang tính xây dựng, tương tác 
+**Tags:** thuật toán mang tính xây dựng, tương tác 
 **Thời gian giải:** 2 phút 36 giây 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được yêu cầu xây dựng lại một hoán vị ẩn của độ dài`n`chứa tất cả các số nguyên từ`1`ĐẾN`n`sử dụng cơ chế truy vấn tương tác. Đối với mỗi truy vấn, chúng tôi chọn hai chỉ số riêng biệt`i`Và`j`, một loại`t`(1 hoặc 2) và ngưỡng`x`. Nastia phản hồi bằng một giá trị được tính toán dựa trên các phần tử hoán vị tại`i`Và`j`Và`x`, tuân theo hai quy tắc: loại 1 trả về mức tối đa của mức tối thiểu, loại 2 trả về mức tối thiểu của mức tối đa. 
@@ -34,7 +34,7 @@ Các trường hợp cạnh liên quan đến các hoán vị trong đó giá tr
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận bạo lực sẽ là truy vấn mọi cặp`(i, j)`cho tất cả những gì có thể`x`để xác định từng`p_i`. Điều này hoạt động vì bằng cách truy vấn loại 1 với các biến thể`x`, chúng ta có thể cô lập`p_i`liên quan đến`p_j`. Tuy nhiên, số lượng truy vấn tăng lên khi`O(n^2)`, đó là quá nhiều khi`n = 10^4`, vượt quá cả giới hạn thời gian và truy vấn. 
+Cách tiếp cận bạo lực sẽ là truy vấn mọi cặp`(i, j)`cho tất cả những gì có thể`x`để xác định từng`p_i`. Điều này hoạt động vì bằng cách truy vấn loại 1 với các biến thể khác nhau`x`, chúng ta có thể cô lập`p_i`liên quan đến`p_j`. Tuy nhiên, số lượng truy vấn tăng lên khi`O(n^2)`, đó là quá nhiều khi`n = 10^4`, vượt quá cả giới hạn thời gian và truy vấn. 
 
 Cách tiếp cận tối ưu bắt nguồn từ việc nhận thấy rằng phần tử lớn nhất trong hoán vị có thể được xác định một cách hiệu quả. Loại truy vấn 2 với`x = n-1`trả lại số tiền tối thiểu`max(x, p_i)`Và`max(x+1, p_j)`; từ`x+1 = n`, một trong các truy vấn sẽ trả về`n`nếu một trong hai`p_i`hoặc`p_j`bằng`n`. Bằng cách so sánh các cặp một cách có hệ thống, chúng ta có thể tìm thấy chỉ số của`n`sử dụng`n-1`truy vấn. Khi đã biết vị trí của phần tử lớn nhất, chúng ta có thể xác định các phần tử còn lại bằng cách truy vấn loại 1 với`x`được đặt thành phần tử lớn nhất trừ đi một, so sánh chỉ số phần tử lớn nhất với chỉ mục khác. Điều này đảm bảo kết quả chính xác với độ chính xác`2n - 2`truy vấn, an toàn trong giới hạn. 
 
@@ -50,7 +50,7 @@ Thông tin chi tiết quan trọng là sự tương tác được cấu trúc xu
 1. Khởi tạo một mảng`p`kích thước`n`để lưu trữ hoán vị. 
 2. Tìm chỉ số của phần tử lớn nhất`n`. Bắt đầu với chỉ mục đầu tiên làm ứng cử viên, sau đó lặp qua các chỉ mục`1..n-1`. Đối với mỗi chỉ số`i`, thực hiện truy vấn loại 2 với`x = n-1`so sánh ứng viên và`i`. Nếu phản hồi là`n`, cập nhật chỉ mục ứng viên thành chỉ mục hiện tại. Sau tất cả các lần lặp, chỉ số ứng cử viên giữ nguyên`n`. 
 3. Một khi chúng ta biết chỉ số của`n`, điền vào các phần tử còn lại bằng cách lặp qua tất cả các chỉ mục khác. Đối với mỗi chỉ số`i != max_index`, thực hiện truy vấn loại 1 với`x = n-1`so sánh`i`với`max_index`. Giá trị trả về là`p[i]`bởi vì`max_index`là phần tử lớn nhất và chi phối việc đánh giá tối thiểu-tối đa. 
-4. Output the array`p`. 
+4. Xuất mảng`p`. 
 
 Tại sao nó hoạt động: truy vấn loại 2 với`x = n-1`đảm bảo rằng một trong hai chỉ số liên quan đến truy vấn sẽ trả về`n`nếu nó chứa mức tối đa. Điều này cho phép quét tuyến tính để tìm`n`. Một lần`n`đã biết, các truy vấn loại 1 khai thác ưu thế của nó để xác định các phần tử khác một cách độc lập. Mỗi truy vấn tiết lộ chính xác một phần tử hoặc cập nhật ứng viên ở mức tối đa và chúng tôi không bao giờ vượt quá`2n - 2`truy vấn. 
 

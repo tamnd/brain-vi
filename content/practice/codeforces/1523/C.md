@@ -1,6 +1,6 @@
 ---
 title: "CF 1523C - Nén và mở rộng"
-description: "Chúng ta được cấp một chuỗi các số nguyên, mỗi số đại diện cho số cuối cùng của một mục danh sách lồng nhau sau khi William vô tình xóa mọi thứ khác. Mục tiêu là xây dựng lại một danh sách lồng nhau hợp lệ có thể tạo ra chuỗi này."
+description: "Chúng ta được cấp một chuỗi số nguyên, mỗi số đại diện cho số cuối cùng của một mục danh sách lồng nhau sau khi William vô tình xóa mọi thứ khác. Mục tiêu là xây dựng lại một danh sách lồng nhau hợp lệ có thể tạo ra chuỗi này."
 date: "2026-06-10T17:33:54+07:00"
 tags: ["codeforces", "competitive-programming", "brute-force", "data-structures", "greedy", "implementation", "trees"]
 categories: ["algorithms"]
@@ -24,7 +24,7 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được cấp một chuỗi các số nguyên, mỗi số đại diện cho số cuối cùng của một mục danh sách lồng nhau sau khi William vô tình xóa mọi thứ khác. Mục tiêu là xây dựng lại một danh sách lồng nhau hợp lệ có thể tạo ra chuỗi này. Mỗi mục trong danh sách lồng nhau hợp lệ là một chuỗi các số nguyên được phân tách bằng dấu chấm, ví dụ:`1.2.3`. Một số mới có thể được thêm bằng cách mở rộng mục trước đó ở cấp độ hiện tại (tăng số cuối cùng) hoặc bằng cách bắt đầu một cấp độ sâu hơn (nối thêm`.1`). Danh sách được xây dựng lại phải duy trì thứ tự từ điển tăng dần ban đầu. 
+Chúng ta được cấp một chuỗi số nguyên, mỗi số đại diện cho số cuối cùng của một mục danh sách lồng nhau sau khi William vô tình xóa mọi thứ khác. Mục tiêu là xây dựng lại một danh sách lồng nhau hợp lệ có thể tạo ra chuỗi này. Mỗi mục trong danh sách lồng nhau hợp lệ là một chuỗi các số nguyên được phân tách bằng dấu chấm, ví dụ:`1.2.3`. Một số mới có thể được thêm bằng cách mở rộng mục trước đó ở cấp độ hiện tại (tăng số cuối cùng) hoặc bằng cách bắt đầu một cấp độ sâu hơn (nối thêm`.1`). Danh sách được xây dựng lại phải duy trì thứ tự từ điển tăng dần ban đầu. 
 
 Đầu vào bao gồm nhiều trường hợp thử nghiệm, mỗi trường hợp đưa ra số dòng`n`và dãy số cuối cùng`a_i`. Tối đa`n`trên tất cả các trường hợp thử nghiệm có tổng bằng 1000, điều đó có nghĩa là chúng tôi có thể thoải mái mua các giải pháp O(n^2) hoặc tốt hơn. Mỗi`a_i`nhiều nhất là`n`, vì vậy chúng ta có thể theo dõi các chuỗi mà không phải lo lắng về số lượng lớn hoặc tràn. 
 

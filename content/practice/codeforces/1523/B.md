@@ -17,11 +17,11 @@ draft: false
 [CF 1523B - Chúa tể của các giá trị](https://codeforces.com/problemset/problem/1523/B) 
 
 **Đánh giá:** 1100 
-**Tas:** thuật toán xây dựng 
+**Tags:** thuật toán xây dựng 
 **Thời gian giải:** 6m 5s 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một mảng có độ dài chẵn, biểu diễn các biến nội bộ của một hệ thống. Mỗi biến có một giá trị nguyên dương ban đầu. Mục tiêu là thay đổi mọi phần tử thành phủ định của nó bằng cách sử dụng hai loại thao tác: người ta có thể thêm giá trị của phần tử sau vào phần tử trước hoặc trừ phần tử trước khỏi phần tử sau. Các phép toán phải tôn trọng ràng buộc thứ tự, nghĩa là chỉ số đầu tiên hoàn toàn nhỏ hơn chỉ số thứ hai. Mỗi thao tác phải giữ giá trị tuyệt đối của các phần tử bên dưới$10^{18}$và tổng số thao tác không được vượt quá 5000. Đối với mỗi trường hợp thử nghiệm, chúng ta cần cung cấp một chuỗi các thao tác hợp lệ để biến mảng thành dạng phủ định của nó. 
@@ -34,7 +34,7 @@ Một trường hợp khó phát hiện khi các phần tử đã bằng nhau ho
 
 Cách tiếp cận bạo lực sẽ cố gắng lật từng phần tử riêng lẻ bằng cách áp dụng liên tục các thao tác với mọi phần tử khác. Người ta có thể tưởng tượng việc cộng hoặc trừ cho đến khi dấu hiệu đảo ngược. Mặc dù về nguyên tắc, điều này hoạt động nhưng nó nhanh chóng trở nên không thực tế vì một phần tử có thể yêu cầu hàng trăm thao tác và tương tác với tất cả các phần tử khác dẫn đến$O(n^2)$các bước, có thể vượt quá 5000 thao tác đối với các mảng lớn. 
 
-Cái nhìn sâu sắc quan trọng là các hoạt động giống như thao tác hệ thống tuyến tính trong đó mỗi cặp có thể được chuyển đổi độc lập. Bằng cách ghép nối các phần tử một cách tuần tự, chúng ta có thể phủ nhận cả hai một cách có hệ thống bằng cách sử dụng một chuỗi cố định gồm sáu thao tác trên mỗi cặp. Hãy xem xét một cặp$(x, y)$. Trình tự các thao tác là: 
+Cái nhìn sâu sắc quan trọng là các hoạt động giống như thao tác hệ thống tuyến tính trong đó mỗi cặp có thể được chuyển đổi độc lập. Bằng cách ghép nối các phần tử một cách tuần tự, chúng ta có thể phủ định cả hai một cách có hệ thống bằng cách sử dụng một chuỗi cố định gồm sáu thao tác trên mỗi cặp. Hãy xem xét một cặp$(x, y)$. Trình tự các thao tác là: 
 
 1. Đặt$y = y - x$2. Đặt$x = x + y$3. Đặt$y = y - x$4. Lặp lại ba bước trên theo thứ tự tương tự một lần nữa 
 
@@ -98,7 +98,7 @@ Mảng đầu vào: [1, 1, 1, 1]
 | 5 | 1 3 4 | [1, 0, 1, 1] | 
 | 6 | 2 3 4 | [1, 0, 1, 0] | 
 
-Bảng minh họa quá trình phủ định theo cặp. Sau tất cả sáu phép tính trên mỗi cặp, mỗi phần tử đều bị phủ định. 
+Bảng minh họa quá trình phủ định theo cặp. Sau tất cả sáu phép tính trên mỗi cặp, mỗi phần tử bị phủ định. 
 
 ### Mẫu 2 
 
@@ -138,7 +138,7 @@ assert run("1\n8\n1 2 1 2 1 2 1 2\n") != "", "Alternating pattern"
 | --- | --- | --- | 
 | 2 yếu tố | Trình tự 6 lệnh | Đầu vào tối thiểu, độ chính xác cơ bản | 
 | 6 yếu tố | Trình tự 18 lệnh | Ghép nối thích hợp cho mảng chẵn lớn hơn | 
-| Giá trị lớn bằng nhau | Trình tự 24 lệnh | Tránh tràn số nguyên | 
+| Giá trị lớn bằng nhau | Chuỗi 24 lệnh | Tránh tràn số nguyên | 
 | Mô hình xen kẽ | Chuỗi 24 lệnh | Xử lý đúng mẫu đa dạng | 
 
 ## Vỏ cạnh 

@@ -16,15 +16,15 @@ draft: false
 
 [CF 1520G - Đi hay không đi?](https://codeforces.com/problemset/problem/1520/G) 
 
-**Đánh giá:** 2200 
+**Xếp hạng:** 2200 
 **Tags:** vũ lực, dfs và tương tự, đồ thị, tham lam, triển khai, đường dẫn ngắn nhất 
 **Thời gian giải:** 2m 14s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được yêu cầu tìm thời gian tối thiểu để Dima đi từ góc trên bên trái của lưới thành phố hình chữ nhật đến góc dưới bên phải. Thành phố được thể hiện như một`n × m`lưới trong đó mỗi ô có một giá trị:`-1`vì bị chặn,`0`miễn phí và`x > 0`cho một cổng thông tin có chi phí`x`. Dima có thể di chuyển kịp thời đến bất kỳ ô trống liền kề trực giao nào`w`. Ngoài ra, từ bất kỳ ô cổng nào, anh ta có thể dịch chuyển tức thời đến bất kỳ cổng nào khác và thời gian dịch chuyển là tổng chi phí của hai ô cổng. 
+Chúng ta được yêu cầu tìm thời gian tối thiểu để Dima đi từ góc trên bên trái của lưới thành phố hình chữ nhật đến góc dưới bên phải. Thành phố được thể hiện như một`n × m`lưới trong đó mỗi ô có một giá trị:`-1`vì bị chặn,`0`miễn phí và`x > 0`cho một cổng thông tin có chi phí`x`. Dima có thể di chuyển kịp thời đến bất kỳ ô tự do liền kề trực giao nào`w`. Ngoài ra, từ bất kỳ ô cổng nào, anh ta có thể dịch chuyển tức thời đến bất kỳ cổng nào khác và thời gian dịch chuyển là tổng chi phí của hai ô cổng. 
 
 Đầu vào cung cấp lưới và chi phí bước`w`và đầu ra là thời gian tối thiểu để đến đích hoặc`-1`nếu điều đó là không thể. Cả ô bắt đầu và ô kết thúc đều được đảm bảo miễn phí, vì vậy Dima luôn có điểm bắt đầu hợp lệ. 
 
@@ -34,15 +34,15 @@ Các trường hợp biên không rõ ràng bao gồm một lưới trong đó t
 2 2 1
 0 -1
 -1 1
-```Ở đây, cách duy nhất để tiếp cận góc dưới bên phải là sử dụng cổng, nếu không, một cổng bỏ qua BFS ngây thơ sẽ xuất ra`-1`. 
+```Ở đây, cách duy nhất để đến được góc dưới bên phải là sử dụng cổng, nếu không thì một cổng bỏ qua BFS ngây thơ sẽ xuất ra`-1`. 
 
-Một tình huống phức tạp khác là khi con đường tối thiểu yêu cầu kết hợp giữa việc đi bộ và đúng một lần dịch chuyển tức thời. Nếu thuật toán không xem xét cả hai một cách độc lập, nó có thể tính toán trong thời gian dài hơn. 
+Một tình huống phức tạp khác là khi con đường tối thiểu yêu cầu kết hợp giữa việc đi bộ và đúng một lần dịch chuyển tức thời. Nếu thuật toán không xem xét cả hai một cách độc lập thì thời gian tính toán có thể lâu hơn. 
 
 ## Phương pháp tiếp cận 
 
 Một cách tiếp cận bạo lực là coi mọi ô như một nút trong biểu đồ và chạy thuật toán Dijkstra, bao gồm tất cả các cổng dưới dạng các cạnh dịch chuyển giữa mỗi cặp. Điều này sẽ hiệu quả vì kích thước lưới đủ nhỏ cho tìm kiếm dựa trên BFS, nhưng việc thêm biểu đồ hoàn chỉnh giữa các cổng sẽ bổ sung thêm`O(p²)`cạnh ở đâu`p`là số cổng. Trong trường hợp xấu nhất,`p ≈ n*m`, làm cho phương pháp này không khả thi do`O(n²m²)`hoạt động. 
 
-Thông tin chi tiết quan trọng là chúng ta không cần phải xem xét từng cạnh cổng thông tin đến cổng thông tin riêng lẻ. Chúng tôi có thể tính toán riêng chi phí tối thiểu để tiếp cận bất kỳ cổng nào ngay từ đầu và chi phí tối thiểu để đạt được mục tiêu từ bất kỳ cổng nào. Cho phép`d_start[i][j]`là thời gian tối thiểu để đến ô`(i,j)`ngay từ đầu chỉ sử dụng các bước di chuyển tiêu chuẩn. Cho phép`d_end[i][j]`là thời gian tối thiểu để đến ô`(i,j)`từ mục tiêu, một lần nữa chỉ sử dụng các bước di chuyển tiêu chuẩn. Sau đó với mỗi cổng thông tin`(i,j)`chúng tôi tính toán tổng đường dịch chuyển tối thiểu là`d_start[i][j] + cost[i][j] + cost[k][l] + d_end[k][l]`trên tất cả các cặp cổng thông tin`(i,j),(k,l)`. 
+Thông tin chi tiết quan trọng là chúng ta không cần phải xem xét từng cạnh cổng thông tin đến cổng thông tin một cách riêng lẻ. Chúng tôi có thể tính toán riêng chi phí tối thiểu để tiếp cận bất kỳ cổng nào ngay từ đầu và chi phí tối thiểu để đạt được mục tiêu từ bất kỳ cổng nào. Cho phép`d_start[i][j]`là thời gian tối thiểu để đến ô`(i,j)`ngay từ đầu chỉ sử dụng các bước di chuyển tiêu chuẩn. Cho phép`d_end[i][j]`là thời gian tối thiểu để đến ô`(i,j)`từ mục tiêu, một lần nữa chỉ sử dụng các bước di chuyển tiêu chuẩn. Sau đó với mỗi cổng thông tin`(i,j)`chúng tôi tính toán tổng đường dịch chuyển tối thiểu là`d_start[i][j] + cost[i][j] + cost[k][l] + d_end[k][l]`trên tất cả các cặp cổng thông tin`(i,j),(k,l)`. 
 
 Chúng tôi có thể tối ưu hóa điều này hơn nữa: thay vì kiểm tra tất cả các cặp cổng, chúng tôi chỉ có thể theo dõi cổng với mức tối thiểu.`d_start[i][j] + cost[i][j]`và tối thiểu`d_end[i][j] + cost[i][j]`. Đường dịch chuyển tối thiểu khi đó là tổng của hai giá trị tối thiểu này. Cuối cùng, câu trả lời là mức tối thiểu: con đường trực tiếp từ đầu đến cuối mà không cần dịch chuyển tức thời, con đường sử dụng một dịch chuyển tức thời theo một trong hai hướng hoặc cả hai. 
 
@@ -53,7 +53,7 @@ Chúng tôi có thể tối ưu hóa điều này hơn nữa: thay vì kiểm tr
 
 ## Hướng dẫn thuật toán 
 
-1. Khởi tạo một`dist`mảng cho lưới kích thước`n × m`, chứa đầy vô cùng, và đặt`dist[0][0] = 0`. Điều này sẽ theo dõi khoảng cách tối thiểu từ đầu. 
+1. Khởi tạo một`dist`mảng cho lưới kích thước`n × m`, tràn ngập vô cùng, và đặt`dist[0][0] = 0`. Điều này sẽ theo dõi khoảng cách tối thiểu từ đầu. 
 2. Thực hiện BFS (hoặc Dijkstra với hàng đợi ưu tiên) từ ô bắt đầu, chỉ xem xét các bước di chuyển tiêu chuẩn đến các ô trống liền kề với chi phí`w`. Sau chuyện này,`d_start[i][j]`lưu trữ thời gian tối thiểu để đạt được`(i,j)`mà không cần sử dụng dịch chuyển tức thời. 
 3. Thực hiện BFS/Dijkstra tương tự từ ô mục tiêu để tính toán`d_end[i][j]`. Điều này thể hiện chi phí tối thiểu từ bất kỳ ô nào đến mục tiêu mà không cần dịch chuyển tức thời. 
 4. Xác định tất cả các ô cổng thông tin. Đối với mỗi cổng`(i,j)`, tính toán`d_start[i][j] + cost[i][j]`Và`d_end[i][j] + cost[i][j]`. Theo dõi giá trị tối thiểu trong số tất cả các cổng cho mỗi số lượng này. 

@@ -21,14 +21,14 @@ draft: false
 **Thời gian giải:** 14 phút 56 giây 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta bắt đầu với một cái cây, nghĩa là một đồ thị liên thông với$n$đỉnh và chính xác$n-1$các cạnh. Mỗi lần di chuyển cho phép chúng ta loại bỏ một cạnh hiện có và chèn một cạnh mới vào giữa hai đỉnh bất kỳ. Cấu trúc được phép ngắt kết nối trong quá trình này, nhưng sau tất cả các thao tác, chúng ta phải kết thúc với một cấu trúc dạng cây trong đó mỗi đỉnh có nhiều nhất là hai bậc. Cấu trúc như vậy là cấu trúc đường dẫn đơn giản, thường được gọi là tre. 
 
 Nhiệm vụ là xác định số lần thay thế cạnh tối thiểu cần thiết để biến đổi cây ban đầu thành một đường đi nào đó đi qua tất cả các đỉnh. Vì mỗi thao tác loại bỏ một cạnh và thêm một cạnh nên số cạnh luôn giữ nguyên$n-1$, do đó đồ thị cuối cùng vẫn là một cái cây. Hạn chế duy nhất là mức độ ràng buộc. 
 
-Các ràng buộc cho phép lên đến$10^4$trường hợp thử nghiệm và tổng số$n$lên đến$2 \cdot 10^5$. Do đó, bất kỳ giải pháp nào cũng phải tuyến tính trung bình cho mỗi trường hợp thử nghiệm, vì việc xử lý bậc hai trên các cây lớn sẽ vượt quá giới hạn. Điều này ngay lập tức gợi ý rằng chúng ta không thể cố gắng mô phỏng việc nối lại cạnh tùy ý hoặc cố gắng liệt kê các đường dẫn ứng cử viên một cách rõ ràng. 
+Các ràng buộc cho phép lên đến$10^4$trường hợp thử nghiệm và tổng số$n$lên tới$2 \cdot 10^5$. Do đó, bất kỳ giải pháp nào cũng phải tuyến tính trung bình cho mỗi trường hợp thử nghiệm, vì việc xử lý bậc hai trên các cây lớn sẽ vượt quá giới hạn. Điều này ngay lập tức gợi ý rằng chúng ta không thể cố gắng mô phỏng việc nối lại cạnh tùy ý hoặc cố gắng liệt kê các đường dẫn ứng cử viên một cách rõ ràng. 
 
 Trường hợp cạnh khóa xuất hiện khi cây đã là một đường dẫn. Ví dụ, một chuỗi$1-2-3-4$đã thỏa mãn ràng buộc mức độ, do đó không cần thực hiện thao tác nào. Bất kỳ thuật toán nào thực hiện việc nối lại một cách mù quáng dựa trên sự mất cân bằng mức độ cục bộ sẽ đưa ra các hoạt động không cần thiết một cách không chính xác. 
 
@@ -40,7 +40,7 @@ Một cách tiếp cận bạo lực sẽ cố gắng mô phỏng tất cả cá
 
 Quan sát quan trọng là cấu trúc cuối cùng luôn là một đường dẫn, vì vậy điều quan trọng là chọn một đường dẫn bao trùm trong cây ban đầu càng “gần” với cấu trúc ban đầu càng tốt, giảm thiểu số cạnh phải được thay thế. Thay vì suy nghĩ về việc chỉnh sửa cạnh, chúng tôi thay đổi phối cảnh: chúng tôi muốn tối đa hóa số cạnh của đường dẫn cuối cùng đã tồn tại trong cây ban đầu theo một thứ tự nhất quán. 
 
-Điều này dẫn đến quan điểm của cây DP: nhổ cây và coi rằng trong cây tre cuối cùng, mỗi đỉnh có nhiều nhất là hai bậc, nghĩa là nó hoạt động giống như một phần của chuỗi. Chúng ta có thể coi việc chuyển đổi là chọn một tập hợp các chuỗi đỉnh-tách rời và hợp nhất chúng, trong đó mỗi lần hợp nhất tốn một thao tác khi cấu trúc không tương thích. Chiến lược tối ưu giúp giảm thiểu việc ghép các nhánh một cách tối ưu xung quanh cấu trúc trung tâm, giảm thiểu một cách hiệu quả số lượng “nhánh phụ” phải cắt và nối lại. 
+Điều này dẫn đến quan điểm của cây DP: nhổ cây và coi rằng trong cây tre cuối cùng, mỗi đỉnh có nhiều nhất là hai bậc, nghĩa là nó hoạt động giống như một phần của chuỗi. Chúng ta có thể coi việc chuyển đổi là chọn một tập hợp các chuỗi đỉnh-tách rời và hợp nhất chúng, trong đó mỗi lần hợp nhất tốn một thao tác khi cấu trúc không tương thích. Chiến lược tối ưu giúp giảm thiểu việc ghép các nhánh một cách tối ưu xung quanh cấu trúc trung tâm, giảm thiểu một cách hiệu quả số lượng “nhánh thừa” phải cắt và nối lại. 
 
 Một cách đơn giản hóa nổi tiếng cho vấn đề này là câu trả lời phụ thuộc vào số lượng mối quan hệ kề cận “tốt” mà chúng ta có thể duy trì trong khi chuyển đổi cây thành một đường dẫn duy nhất và điều này có thể được tính toán bằng cách root và so khớp các cây con trong một DP tham lam theo dõi các điểm cuối của chuỗi. 
 
@@ -163,10 +163,10 @@ def run(inp: str) -> str:
 # star, path, balanced tree, skewed tree
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-| cây hình ngôi sao | giá trị lớn | cắt tỉa độ chính xác cao | 
+| cây hình ngôi sao | giá trị lớn | độ chính xác cắt tỉa cao | 
 | cây đường dẫn | 0 | tre đã hợp lệ | 
 | cây nhị phân cân bằng | giá trị vừa phải | Tính chính xác của tổng hợp DP | 
-| xích lệch có nhánh phụ | chi phí cắt tỉa được tính toán | tính đúng đắn của việc hợp nhất cây con | 
+| xích lệch có nhánh thừa | chi phí cắt tỉa được tính toán | tính đúng đắn của việc hợp nhất cây con | 
 
 ## Vỏ cạnh 
 

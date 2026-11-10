@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 4 phút 34 giây 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một mảng các số nguyên dương và chúng ta cần chuyển đổi nó thành cái mà Nastia gọi là mảng tốt. Một mảng tốt được định nghĩa là một mảng trong đó mọi cặp phần tử liên tiếp đều nguyên tố cùng nhau. Tức là với mỗi chỉ số$i$từ$2$ĐẾN$n$, ước chung lớn nhất của$a_{i-1}$Và$a_i$phải bằng$1$. Hoạt động được phép là thay thế hai phần tử trong đó chúng tôi chọn các chỉ mục$i$Và$j$và gán giá trị mới$x$Và$y$ĐẾN$a_i$Và$a_j$, với hạn chế là giá trị cũ nhỏ hơn giá trị mới nhỏ hơn. Mỗi thao tác sửa đổi đồng thời hai phần tử và chúng tôi được phép thực hiện tối đa$n$những hoạt động như vậy. 
@@ -34,7 +34,7 @@ Các ràng buộc ngụ ý rằng tổng của tất cả$n$trên tất cả cá
 
 Cách tiếp cận bạo lực sẽ cố gắng quét mảng từ trái sang phải, kiểm tra từng cặp liên tiếp. Nếu một cặp không nguyên tố cùng nhau, chúng ta có thể thử thay thế một hoặc cả hai số bằng một số nào đó nguyên tố cùng nhau. Mặc dù điều này hoạt động về mặt khái niệm, việc quyết định chọn số nào trong khi tôn trọng quy tắc hoạt động có thể trở nên phức tạp. Số lượng hoạt động có thể tỷ lệ thuận với$n$và mỗi thao tác có thể yêu cầu tính toán gcd nhiều lần. Điều này không hiệu quả nhưng vẫn hoạt động đối với các mảng nhỏ hơn. 
 
-Thông tin chi tiết quan trọng là sửa một phần tử làm tham chiếu và sau đó thay đổi lần lượt tất cả các phần tử khác trong mảng liên quan đến phần tử cố định đó. Một lựa chọn đơn giản là chọn phần tử nhỏ nhất trong mảng làm trục hoặc thậm chí chỉ là phần tử đầu tiên. Bằng cách xen kẽ giữa một số nguyên tố lớn và phần tử cố định, chúng ta có thể đảm bảo các cặp liên tiếp là nguyên tố cùng nhau. Vì thao tác thay thế cho phép chúng ta gán bất kỳ giá trị nào bảo toàn giá trị nhỏ hơn nên chúng ta có thể gán các số một cách có hệ thống để mỗi cặp liên tiếp trở thành nguyên tố cùng nhau trong một lần chuyển. Điều này làm giảm vấn đề thành một thuật toán xây dựng với$O(n)$hoạt động và đảm bảo tính chính xác. 
+Thông tin chi tiết quan trọng là sửa một phần tử làm tham chiếu và sau đó thay đổi lần lượt tất cả các phần tử khác trong mảng liên quan đến phần tử cố định đó. Một lựa chọn đơn giản là chọn phần tử nhỏ nhất trong mảng làm trục hoặc thậm chí chỉ là phần tử đầu tiên. Bằng cách xen kẽ giữa một số nguyên tố lớn và phần tử cố định, chúng ta có thể đảm bảo các cặp liên tiếp là nguyên tố cùng nhau. Vì thao tác thay thế cho phép chúng ta gán bất kỳ giá trị nào bảo toàn giá trị nhỏ hơn nên chúng ta có thể gán các số một cách có hệ thống để mỗi cặp liên tiếp trở thành nguyên tố cùng nhau trong một lần chuyển. Điều này làm giảm vấn đề thành một thuật toán mang tính xây dựng với$O(n)$hoạt động và đảm bảo tính đúng đắn. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -87,7 +87,7 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Đầu tiên, mã sẽ đọc số lượng trường hợp thử nghiệm. Đối với mỗi mảng, nó tìm phần tử nhỏ nhất để đóng vai trò là trục cho tính đồng nguyên. Nó lặp lại các phần tử khác và tạo ra các phép toán với các giá trị đảm bảo gcd bằng 1 trong khi đáp ứng quy tắc thay thế. Việc sử dụng`min_val`đảm bảo mức tối thiểu của các giá trị cũ và mới phù hợp và xen kẽ với một số lượng lớn sẽ tránh xung đột gcd. 
+```Đầu tiên, mã sẽ đọc số lượng trường hợp thử nghiệm. Đối với mỗi mảng, nó tìm phần tử nhỏ nhất để đóng vai trò là điểm mấu chốt cho tính đồng nguyên. Nó lặp lại các phần tử khác và tạo ra các phép toán với các giá trị đảm bảo gcd bằng 1 trong khi đáp ứng quy tắc thay thế. Việc sử dụng`min_val`đảm bảo mức tối thiểu của các giá trị cũ và mới phù hợp và xen kẽ với một số lượng lớn sẽ tránh xung đột gcd. 
 
 ## Ví dụ đã hoạt động 
 
@@ -108,7 +108,7 @@ if __name__ == "__main__":
 Đầu vào mẫu 2:```
 3
 7 5 13
-```Không cần thực hiện thao tác nào vì tất cả các cặp đều đã là nguyên tố cùng nhau, xác nhận rằng thuật toán xử lý các mảng vốn đã tốt một cách chính xác. 
+```Không cần thực hiện thao tác nào vì tất cả các cặp đều đã là nguyên tố cùng nhau, xác nhận rằng thuật toán đã xử lý các mảng vốn đã tốt một cách chính xác. 
 
 ## Phân tích độ phức tạp 
 
@@ -117,7 +117,7 @@ if __name__ == "__main__":
 | Thời gian | O(n) | Mỗi phần tử được xử lý một lần và việc tìm mức tối thiểu mất O(n) | 
 | Không gian | O(n) | Danh sách thao tác lưu trữ tối đa n thao tác | 
 
-Giải pháp tỷ lệ tuyến tính với độ dài mảng. Với$n$lên đến$10^5$và tổng của$n$trên các trường hợp thử nghiệm lên đến$2 \cdot 10^5$, thuật toán này chạy tốt trong giới hạn thời gian 2 giây. 
+Giải pháp tỷ lệ tuyến tính với độ dài mảng. Với$n$lên tới$10^5$và tổng của$n$trên các trường hợp thử nghiệm lên đến$2 \cdot 10^5$, thuật toán này chạy tốt trong giới hạn thời gian 2 giây. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io

@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 12 phút 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 Đầu ra trống biểu thị sự cố trong thời gian chạy trước khi bất kỳ hoạt động in nào xảy ra, không phải lỗi logic trong phép toán. 
 
 Theo dõi việc thực hiện trên đầu vào:```
@@ -31,7 +31,7 @@ Theo dõi việc thực hiện trên đầu vào:```
 25
 ```Chương trình đầu tiên đọc`t = 3`, sau đó xử lý ba trường hợp thử nghiệm. Tính toán dự kiến ​​cho mỗi trường hợp thử nghiệm là: 
 
-Đối với mỗi`k`, tính:$$\frac{100}{\gcd(k, 100)}$$Lỗi xảy ra sớm hơn bất kỳ suy luận số học nào: chương trình không bao giờ đạt được`print`. Nguyên nhân thông thường dẫn đến hiện tượng này (không có dấu vết nào được hiển thị trong các khai thác kiểu thẩm phán, chỉ có đầu ra trống) là thiếu ký hiệu nhập hoặc ký hiệu không xác định trong đường dẫn thực thi thực tế, phổ biến nhất là`math.gcd`hoặc`gcd`đang được sử dụng mà không cần nhập khẩu`math`hoặc nhập khẩu`gcd`một cách rõ ràng. 
+Đối với mỗi`k`, tính:$$\frac{100}{\gcd(k, 100)}$$Lỗi xảy ra sớm hơn bất kỳ suy luận số học nào: chương trình không bao giờ đạt được`print`. Nguyên nhân thông thường gây ra chính xác triệu chứng này (không có dấu vết nào được hiển thị trong các khai thác kiểu thẩm phán, chỉ có đầu ra trống) là thiếu ký hiệu nhập hoặc ký hiệu không xác định trong đường dẫn thực thi thực tế, phổ biến nhất là`math.gcd`hoặc`gcd`đang được sử dụng mà không cần nhập khẩu`math`hoặc nhập khẩu`gcd`một cách rõ ràng. 
 
 Trong nhiều mẫu kiểu Codeforces, giải pháp sử dụng`gcd`trực tiếp, nhưng nếu nó được viết là`math.gcd`không có`import math`, hoặc như`gcd`không có`from math import gcd`, quá trình thực thi sẽ dừng ngay lập tức. 
 
@@ -52,7 +52,7 @@ for _ in range(t):
     print(100 // g)
 ```Phiên bản này đảm bảo: 
 
--`gcd`được xác định trong mọi môi trường thực thi. 
+-`gcd`được xác định trong tất cả các môi trường thực thi. 
 - Mỗi test case được xử lý độc lập trong O(1). 
 - Đầu ra được tạo ra ngay lập tức cho mỗi trường hợp, tránh các vấn đề về bộ đệm trong các lần chạy thoát sớm bị hỏng. 
 
