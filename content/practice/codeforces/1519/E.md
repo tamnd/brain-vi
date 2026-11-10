@@ -26,7 +26,7 @@ draft: false
 
 Chúng tôi được trao$n$điểm thuộc góc phần tư thứ nhất của mặt phẳng. Mỗi điểm được xác định bởi một cặp tọa độ hợp lý$(x_i, y_i)$, Ở đâu$x_i = a_i / b_i$Và$y_i = c_i / d_i$. Một nước đi bao gồm việc chọn hai điểm, di chuyển mỗi điểm sang phải hoặc một đơn vị lên trên, sau đó loại bỏ chúng, nhưng chỉ khi hai vị trí mới và điểm gốc nằm trên một đường thẳng. 
 
-Nhiệm vụ là tối đa hóa số lần di chuyển như vậy và đưa ra những điểm được ghép nối trong mỗi lần di chuyển. Đầu vào có thể lớn như$2 \cdot 10^5$điểm, vì vậy bất kỳ thuật toán nào thử từng cặp hoặc mô phỏng mọi kết hợp đều quá chậm. 
+Nhiệm vụ là tối đa hóa số lần di chuyển như vậy và đưa ra những điểm được ghép nối trong mỗi lần di chuyển. Đầu vào có thể lớn như$2 \cdot 10^5$điểm, do đó, bất kỳ thuật toán nào thử từng cặp hoặc mô phỏng mọi kết hợp đều quá chậm. 
 
 Ràng buộc cốt lõi mang tính hình học: để một nước đi có giá trị, hai điểm sau khi di chuyển phải thẳng hàng với gốc tọa độ. Vì chúng ta chỉ có thể di chuyển sang phải hoặc lên trên 1 nên mỗi điểm có đúng hai lựa chọn. Điều này gợi ý về một vấn đề ghép đôi tổ hợp trong đó mỗi điểm có thể tham gia chính xác vào một nước đi và chúng ta muốn có càng nhiều cặp càng tốt. 
 
@@ -50,7 +50,7 @@ Vì mỗi bước di chuyển chỉ làm thay đổi tính chẵn lẻ của cá
 1. Chuyển tọa độ từng điểm thành số nguyên$(a_i \cdot d_i, b_i \cdot c_i)$để loại bỏ các phân số. Điều này cho phép tất cả số học tiếp theo sử dụng số nguyên, tránh lỗi dấu phẩy động. 
 2. Xác định hàm đệ quy lấy danh sách các chỉ số điểm. Nếu danh sách có một hoặc không có điểm, hãy trả lại chúng dưới dạng điểm còn sót lại. 
 3. Đối với danh sách hiện tại, hãy phân loại các điểm thành bốn nhóm dựa trên tính chẵn lẻ của tọa độ nguyên theo modulo 2. Các nhóm này là`(even, even)`,`(even, odd)`,`(odd, even)`,`(odd, odd)`. 
-4. Xác định các nhóm có nhiều hơn một điểm. Ghép các điểm trong cùng một nhóm nếu có thể, tạo thành các nước đi. Nếu một nhóm có điểm còn sót lại sau khi ghép nối nội bộ, hãy truyền nó lên mức đệ quy cao hơn tiếp theo. 
+4. Xác định các nhóm có nhiều hơn một điểm. Ghép các điểm trong cùng một nhóm nếu có thể, tạo thành các bước di chuyển. Nếu một nhóm có điểm còn sót lại sau khi ghép nối nội bộ, hãy truyền nó lên mức đệ quy cao hơn tiếp theo. 
 5. Xử lý đệ quy từng nhóm với điểm còn lại cho đến khi tất cả các điểm được ghép nối hoặc chỉ còn một điểm chưa được ghép nối. Thu thập các bước di chuyển trong danh sách toàn cầu. 
 6. Xuất ra tổng số nước đi và chính các nước đi đó. 
 

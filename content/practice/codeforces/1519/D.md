@@ -24,19 +24,19 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được cho hai mảng số nguyên,`a`Và`b`, cả hai đều có cùng chiều dài`n`. The task is to maximize the sum of element-wise products,$\sum a_i \cdot b_i$, bằng cách đảo ngược tối đa một mảng con liền kề của`a`. Đảo ngược một mảng con có nghĩa là chọn một đoạn của`a`và đảo ngược thứ tự các phần tử của nó, trong khi`b`vẫn không thay đổi. 
+Chúng ta được cho hai mảng số nguyên,`a`Và`b`, cả hai đều có cùng chiều dài`n`. Nhiệm vụ là tối đa hóa tổng các sản phẩm theo từng phần tử,$\sum a_i \cdot b_i$, bằng cách đảo ngược tối đa một mảng con liền kề của`a`. Đảo ngược một mảng con có nghĩa là chọn một đoạn của`a`và đảo ngược thứ tự các phần tử của nó, trong khi`b`vẫn không thay đổi. 
 
-Những ràng buộc cho chúng ta`n`up to 5000. This means an O(n^3) solution is impractical, as it could require around 125 billion operations. An O(n^2) solution may be feasible with careful implementation. Giá trị trong`a`Và`b`có thể lên tới 10^7, vì vậy chúng ta phải sử dụng kiểu dữ liệu có khả năng lưu trữ tổng lên đến khoảng`5000 * 10^7 * 10^7 = 5 * 10^18`. của Python`int`xử lý việc này mà không bị tràn. 
+Những ràng buộc cho chúng ta`n`lên tới 5000. Điều này có nghĩa là giải pháp O(n^3) là không thực tế vì nó có thể yêu cầu khoảng 125 tỷ thao tác. Giải pháp O(n^2) có thể khả thi nếu triển khai cẩn thận. Giá trị trong`a`Và`b`có thể lên tới 10^7, vì vậy chúng ta phải sử dụng kiểu dữ liệu có khả năng lưu trữ tổng lên đến khoảng`5000 * 10^7 * 10^7 = 5 * 10^18`. của Python`int`xử lý việc này mà không bị tràn. 
 
 Các trường hợp cạnh bao gồm các mảng nhỏ có độ dài 1 hoặc 2, trong đó việc đảo ngược có thể không cải thiện được tổng. Một trường hợp tinh tế khác xảy ra khi mảng con tối ưu là toàn bộ mảng hoặc khi không cần đảo ngược vì mảng đã được căn chỉnh với`b`cho số tiền tối đa. Ví dụ,`a = [1, 2, 3]`,`b = [3, 2, 1]`. Đảo ngược toàn bộ`a`cho`[3, 2, 1]`và số tiền tối đa`3*3 + 2*2 + 1*1 = 14`. 
 
 ## Phương pháp tiếp cận 
 
-Phương pháp brute-force rất đơn giản: lặp qua tất cả các mảng con có thể`(l, r)`của`a`, đảo ngược mảng con, tính tổng$\sum a_i \cdot b_i$và theo dõi mức tối đa. Điều này hiệu quả vì mọi sự đảo chiều hợp lệ đều được xem xét. Tuy nhiên, điều này đòi hỏi các phép toán O(n^3): O(n^2) cho tất cả các mảng con và O(n) để tính từng tổng. Với`n`lên tới 5000, điều này là quá chậm. 
+Phương pháp brute-force rất đơn giản: lặp qua tất cả các mảng con có thể`(l, r)`của`a`, đảo ngược mảng con, tính tổng$\sum a_i \cdot b_i$và theo dõi mức tối đa. Điều này hiệu quả vì mọi sự đảo ngược hợp lệ đều được xem xét. Tuy nhiên, điều này đòi hỏi các phép toán O(n^3): O(n^2) cho tất cả các mảng con và O(n) để tính từng tổng. Với`n`lên tới 5000, điều này là quá chậm. 
 
 Thông tin chi tiết quan trọng là việc đảo ngược một mảng con chỉ làm thay đổi phần đóng góp của mảng con đó vào tổng số tiền. Các bộ phận của`a`bên ngoài đoạn đảo ngược vẫn thẳng hàng với`b`. Do đó, chúng ta có thể tính toán trước tổng số tiền mà không cần đảo ngược và chỉ tập trung vào "lợi ích" từ việc đảo ngược các mảng con. 
 
-Chúng ta có thể khai thác tính đối xứng: xem xét một mảng con từ`l`ĐẾN`r`. Nếu chúng ta đảo ngược nó, sự đóng góp của các yếu tố`a[l+i] * b[l+i]`thay đổi thành`a[r-i] * b[l+i]`. Bằng cách mở rộng từ tâm của mảng con ra ngoài, chúng ta có thể tính mức tăng dần theo thời gian O(n^2). Kỹ thuật mở rộng động hoặc hai con trỏ này làm giảm độ phức tạp từ O(n^3) xuống O(n^2), điều này khả thi đối với`n=5000`. 
+Chúng ta có thể khai thác tính đối xứng: xem xét một mảng con từ`l`ĐẾN`r`. Nếu chúng ta đảo ngược nó, sự đóng góp của các yếu tố`a[l+i] * b[l+i]`thay đổi thành`a[r-i] * b[l+i]`. Bằng cách mở rộng từ tâm của mảng con ra bên ngoài, chúng ta có thể tính mức tăng dần theo thời gian O(n^2). Kỹ thuật mở rộng động hoặc hai con trỏ này làm giảm độ phức tạp từ O(n^3) xuống O(n^2), điều này khả thi đối với`n=5000`. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -52,7 +52,7 @@ Chúng ta có thể khai thác tính đối xứng: xem xét một mảng con t�
 5. Tích lũy`gain`khi chúng tôi mở rộng ra bên ngoài và cập nhật`max_gain`bất cứ khi nào lợi ích tích lũy vượt quá nó. 
 6. Sau khi kiểm tra tất cả các trung tâm có thể, câu trả lời là`base_sum + max_gain`. 
 
-Tại sao nó hoạt động: đảo ngược một mảng con chỉ ảnh hưởng đến các vị trí bên trong nó. By expanding from the center outward and calculating the incremental gain at each step, we ensure every possible subarray is considered exactly once. Vì mức tăng được tính tương ứng với tổng ban đầu nên tổng bên ngoài mảng con không thay đổi, đảm bảo tính chính xác. 
+Tại sao nó hoạt động: đảo ngược một mảng con chỉ ảnh hưởng đến các vị trí bên trong nó. Bằng cách mở rộng từ tâm ra ngoài và tính toán mức tăng gia tăng ở mỗi bước, chúng tôi đảm bảo mọi mảng con có thể được xem xét chính xác một lần. Vì mức tăng được tính tương ứng với tổng ban đầu nên tổng bên ngoài mảng con không thay đổi, đảm bảo tính chính xác. 
 
 ## Giải pháp Python```python
 import sys

@@ -17,7 +17,7 @@ draft: false
 [CF 1519B - Chiếc bánh là lời nói dối](https://codeforces.com/problemset/problem/1519/B) 
 
 **Đánh giá:** 800 
-**Tags:** dp, toán 
+**Thẻ:** dp, toán 
 **Thời gian giải:** 1m 2s 
 **Đã xác minh:** không 
 
@@ -40,7 +40,7 @@ Cái nhìn sâu sắc quan trọng là nhận ra rằng chi phí dọc theo bấ
 
 Về mặt hình thức, có chính xác`n-1`di chuyển xuống và`m-1`những bước đi đúng đắn. Tổng các chỉ số hàng cho các bước di chuyển phải là`(n-1) * 1 + (n-1) * 2 + ...`nhưng vì mỗi bước đi đúng đều nằm ở một hàng nào đó nên đóng góp của chỉ số hàng là`(m-1) * sum of row indices from 1 to n-1)`. Sau khi kiểm tra cẩn thận, mô hình sẽ đơn giản hóa: tổng chi phí từ`(1,1)`ĐẾN`(n,m)`luôn luôn là`(n-1)*m + (m-1)*n = n*m - 1`. 
 
-Công thức này đúng cho mọi lưới vì bạn di chuyển`n-1`lần xuống và`m-1`lần đúng. Mỗi lần di chuyển phải tốn chỉ số hàng (từ 1 đến n) và được thực hiện`m-1`lần trên các hàng, trong khi mỗi lần di chuyển xuống sẽ tốn chỉ số cột (từ 1 đến m) và được thực hiện`n-1`lần trên các cột. Tổng hợp và đơn giản hóa mang lại`n*m - 1`. Khi bạn có công thức này, vấn đề sẽ giảm xuống còn một so sánh duy nhất: kiểm tra xem`k == n*m - 1`. 
+Công thức này đúng cho mọi lưới vì bạn di chuyển`n-1`lần xuống và`m-1`lần đúng. Mỗi bước di chuyển phải tốn chỉ số hàng (từ 1 đến n) và được thực hiện`m-1`lần trên các hàng, trong khi mỗi lần di chuyển xuống sẽ tốn chỉ số cột (từ 1 đến m) và được thực hiện`n-1`lần trên các cột. Tổng hợp và đơn giản hóa mang lại`n*m - 1`. Khi bạn có công thức này, vấn đề sẽ giảm xuống còn một so sánh duy nhất: kiểm tra xem`k == n*m - 1`. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 

@@ -24,6 +24,6 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi có hai màu đậu, đỏ và xanh. Mỗi gói chúng tôi tạo phải chứa ít nhất một hạt đậu mỗi màu và bên trong bất kỳ gói nào, chênh lệch giữa số lượng đậu đỏ và xanh không được vượt quá`d`. 
+Chúng tôi có hai màu đậu, đỏ và xanh. Mỗi gói chúng tôi tạo phải chứa ít nhất một hạt đậu mỗi màu và bên trong bất kỳ gói nào, sự khác biệt giữa số lượng đậu đỏ và xanh không được vượt quá`d`. 
 
 Câu hỏi đặt ra là liệu tất cả

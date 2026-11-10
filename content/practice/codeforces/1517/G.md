@@ -1,6 +1,6 @@
 ---
 title: "CF 1517G - Cắm Trại Đêm Đầy Sao"
-description: "Mỗi lều được đặt ở tọa độ nguyên và có trọng số dương. Chúng tôi có thể loại bỏ bất kỳ tập hợp con lều nào. Mục đích là tối đa hóa tổng trọng lượng của những chiếc lều còn lại. Hạn chế chỉ áp dụng cho những lều quan trọng, nghĩa là những lều có tọa độ đều chẵn."
+description: "Mỗi lều được đặt ở tọa độ nguyên và có trọng số dương. Chúng tôi có thể loại bỏ bất kỳ tập hợp con lều nào. Mục đích là tối đa hóa tổng trọng lượng của các lều còn lại. Hạn chế chỉ áp dụng cho những lều quan trọng, nghĩa là những lều có tọa độ đều chẵn."
 date: "2026-06-10T18:20:42+07:00"
 tags: ["codeforces", "competitive-programming", "constructive-algorithms", "flows", "graphs"]
 categories: ["algorithms"]
@@ -24,7 +24,7 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Mỗi lều được đặt ở tọa độ nguyên và có trọng số dương. Chúng tôi có thể loại bỏ bất kỳ tập hợp con lều nào. Mục đích là tối đa hóa tổng trọng lượng của những chiếc lều còn lại. 
+Mỗi lều được đặt ở tọa độ nguyên và có trọng số dương. Chúng tôi có thể loại bỏ bất kỳ tập hợp con lều nào. Mục đích là tối đa hóa tổng trọng lượng của các lều còn lại. 
 
 Hạn chế chỉ áp dụng cho những lều quan trọng, nghĩa là những lều có tọa độ đều chẵn. 
 
@@ -43,7 +43,7 @@ Ràng buộc\(n \le 1000\)là quan sát chính. Quét bậc hai trên cấu hìn
 
 Kích thước đầu vào chỉ \(n \le 1000\ không thoải mái. Xếp hạng sự cố và thẻ gợi ý rõ ràng rằng tác vụ thực sự là không phát hiện cấu hình), nhưng bản thân tọa độ rất lớn. Điều này ngay lập tức gợi ý rằng hình học đang chuyển đổi giới hạn thành một vấn đề tối ưu hóa đồ thị. 
 
-Một trường hợp khó nhận thấy là các giá trị tọa độ không phải là thách thức. Chỉ có vị trí tương đối giữa các lều hiện có mới quan trọng. Vì một chiếc lều có thể tham gia vào nhiều cấu hình bị cấm cùng một lúc. 
+Một trường hợp phức tạp là các giá trị tọa độ không phải là thách thức. Chỉ có vị trí tương đối giữa các lều hiện có mới quan trọng. Vì một chiếc lều có thể tham gia vào nhiều cấu hình bị cấm cùng một lúc. 
 
 Ví dụ:```text
 5
@@ -71,7 +71,7 @@ Ví dụ:```text
 1 1 10
 These four points form a valid forbidden shape even though it is not axis-aligned.
 
-Another easy mistake is to```Đây là một hình chữ nhật, nhưng câu lệnh cũng cho phép hình bình hành tổng quát có cạnh nằm ngang. May mắn thay, hãy xử lý mọi lều quan trọng một cách độc lập. Hai mẫu bị cấm có thể chia sẻ lều. Việc loại bỏ một khi tất cả các tọa độ đều là tích phân và tất cả các đỉnh phải nằm trong một lều được lựa chọn cẩn thận có thể phá hủy nhiều mẫu bị cấm cùng một lúc trong khoảng cách\(1\), mọi hình dạng bị cấm hợp lệ vẫn tương ứng với, vì vậy vấn đề mang tính toàn cầu chứ không phải cục bộ. 
+Another easy mistake is to```Đây là một hình chữ nhật, nhưng câu lệnh cũng cho phép hình bình hành tổng quát có cạnh nằm ngang. May mắn thay, hãy xử lý mọi lều quan trọng một cách độc lập. Hai mẫu bị cấm có thể chia sẻ lều. Việc loại bỏ một khi tất cả các tọa độ đều là số nguyên và tất cả các đỉnh phải nằm trong một lều được lựa chọn cẩn thận có thể phá hủy nhiều mẫu bị cấm cùng một lúc trong khoảng cách\(1\), mọi hình dạng bị cấm hợp lệ vẫn tương ứng với, vì vậy vấn đề mang tính toàn cầu chứ không phải cục bộ. 
 
 Coi như:```text
 (0,0) weight 100

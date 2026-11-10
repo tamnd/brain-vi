@@ -30,11 +30,11 @@ Nhiệm vụ không phải là xây dựng chuỗi mà chỉ quyết định xem
 
 Đây là một hệ bất đẳng thức tuyến tính trên chuỗi một chiều, nhưng sự hiện diện của các ràng buộc sai phân thứ hai làm cho nó mạnh hơn đáng kể so với đồ thị ràng buộc sai phân tiêu chuẩn. Mỗi$b_i$không chỉ gắn liền với các vùng lân cận mà còn với sự phát triển của các sườn dốc. 
 
-Các hạn chế có quy mô lớn, lên tới$2 \cdot 10^5$tổng cộng$n$qua các trường hợp thử nghiệm. Bất kỳ giải pháp nào cố gắng duy trì tính khả thi hình học đầy đủ một cách rõ ràng đối với tất cả các biến sẽ là quá chậm. Điều này buộc chúng ta phải hướng tới cách suy luận theo kiểu DP theo khoảng thời gian hoặc lan truyền tuyến tính. 
+Các hạn chế có quy mô lớn, lên tới$2 \cdot 10^5$tổng cộng$n$qua các trường hợp thử nghiệm. Bất kỳ giải pháp nào cố gắng duy trì tính khả thi hình học đầy đủ một cách rõ ràng đối với tất cả các biến sẽ là quá chậm. Điều này buộc chúng ta phải hướng tới cách lý luận theo kiểu DP theo khoảng thời gian hoặc lan truyền tuyến tính. 
 
-Một điểm tinh tế quan trọng là các giá trị là có thật và việc phát biểu bài toán đảm bảo rằng những nhiễu loạn vô cùng nhỏ không ảnh hưởng đến câu trả lời. Đây là một gợi ý mạnh mẽ rằng sự suy biến từ các chuỗi đẳng thức chính xác không bắt buộc phải được xử lý một cách tượng trưng và việc lan truyền khoảng với sự mơ hồ mở/đóng có thể được bỏ qua. 
+Một điểm tinh tế quan trọng là các giá trị là có thật và việc phát biểu bài toán đảm bảo rằng những nhiễu loạn vô cùng nhỏ không ảnh hưởng đến câu trả lời. Đây là một gợi ý mạnh mẽ rằng sự suy biến từ các chuỗi đẳng thức chính xác không bắt buộc phải được xử lý một cách tượng trưng và việc truyền bá khoảng với sự mơ hồ mở/đóng có thể được bỏ qua. 
 
-Một cách tiếp cận ngây thơ sẽ cố gắng gán các giá trị một cách tuần tự trong khi vẫn tôn trọng các ràng buộc, nhưng điều này có thể thất bại trong các ví dụ khi các quyết định tham lam sớm cản trở tính khả thi sau này. Ví dụ, nếu tất cả$b_i \in [0,1]$và tất cả sự khác biệt buộc phải được$1$, một bộ bài tập tham lam$b_1 = 0, b_2 = 1$, nhưng sau đó$b_3 = 2$vi phạm giới hạn của nó ngay lập tức. Thất bại xuất phát từ việc không theo dõi rằng mỗi bước không chỉ hạn chế giá trị hiện tại mà còn cả không gian độ dốc trong tương lai. 
+Một cách tiếp cận đơn giản sẽ cố gắng gán các giá trị một cách tuần tự trong khi vẫn tôn trọng các ràng buộc, nhưng cách này có thể thất bại trong các ví dụ khi các quyết định tham lam sớm cản trở tính khả thi sau này. Ví dụ, nếu tất cả$b_i \in [0,1]$và tất cả sự khác biệt buộc phải được$1$, một bộ bài tập tham lam$b_1 = 0, b_2 = 1$, nhưng sau đó$b_3 = 2$vi phạm giới hạn của nó ngay lập tức. Thất bại xuất phát từ việc không theo dõi rằng mỗi bước không chỉ hạn chế giá trị hiện tại mà còn cả không gian độ dốc trong tương lai. 
 
 Một cách tiếp cận không chính xác khác là xử lý từng ràng buộc một cách độc lập như tính khả thi về khoảng cách giữa các cặp liền kề. Điều đó bỏ qua những khác biệt thứ hai, vốn có thể âm thầm tạo ra sự mâu thuẫn toàn cầu ngay cả khi mọi ràng buộc cục bộ đều được thỏa mãn riêng lẻ. 
 
@@ -196,7 +196,7 @@ z: all [0,0]
 | 3 | [0,1] | [0,1] | sườn dốc ổn định | 
 | 4 | [1,1] | [0,1] | đạt mục tiêu | 
 
-Điều này xác nhận rằng khi sai phân thứ hai bằng 0, tính nhất quán của độ dốc cho phép lan truyền trơn tru mà không bị nổ hoặc sụp đổ. 
+Điều này xác nhận rằng khi sai phân thứ hai bằng 0, tính nhất quán của độ dốc cho phép truyền trơn tru mà không bị nổ hoặc sụp đổ. 
 
 ## Phân tích độ phức tạp 
 
