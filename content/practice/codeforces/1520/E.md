@@ -394,4 +394,4 @@ median = 2
 3
 ```Trị giá:```
 3 + 0 + 3 = 6
-```Thuật toán tập hợp những con cừu xung quanh con cừu ở giữa một cách tự nhiên. Điều này tránh được sai lầm phổ biến là buộc tất cả cừu về một điểm cuối, điều này sẽ đòi hỏi nhiều bước di chuyển hơn.
+```Thuật toán tập hợp những con cừu xung quanh con cừu ở giữa một cách tự nhiên. Điều này tránh được sai lầm phổ biến là buộc tất cả cừu về một điểm cuối, điều này đòi hỏi phải di chuyển nhiều hơn.

@@ -30,9 +30,9 @@ Những con số “bình thường” này có cấu trúc rất cứng nhắc.
 
 Ràng buộc$n \le 10^9$nghĩa là mỗi số có nhiều nhất 10 chữ số. Đây là hạn chế chính về cấu trúc: tổng thể chỉ có một số lượng nhỏ các số thông thường có thể có và chúng cực kỳ thưa thớt trong phạm vi của tất cả các số nguyên. 
 
-Một cách tiếp cận đơn giản là kiểm tra mọi số từ 1 đến$n$, xác minh xem tất cả các chữ số có bằng nhau hay không. Điều này đòi hỏi phải kiểm tra tới$10^9$số lượng trên mỗi truy vấn trong trường hợp xấu nhất, vượt xa giới hạn có thể chấp nhận được$t \le 10^4$. Ngay cả việc quét tuyến tính cho mỗi trường hợp thử nghiệm cũng không thể thực hiện được. 
+Một cách tiếp cận đơn giản là kiểm tra mọi số từ 1 đến$n$, xác minh xem tất cả các chữ số có bằng nhau hay không. Điều này đòi hỏi phải kiểm tra tới$10^9$số lượng trên mỗi truy vấn trong trường hợp xấu nhất, vượt xa giới hạn có thể chấp nhận được$t \le 10^4$. Even a linear scan per test case is impossible.
 
-Các trường hợp cạnh phát sinh khi$n$nhỏ hoặc khớp chính xác với một số bình thường. Ví dụ, nếu$n = 5$, câu trả lời là 5 vì mọi số có một chữ số đều là số bình thường. Nếu như$n = 10$, đáp án vẫn là 9 vì 10 không hề bình thường. Cách tiếp cận bất cẩn chỉ đếm dựa trên độ dài chữ số có thể bao gồm không chính xác 10 hoặc các số có chữ số hỗn hợp khác. 
+ Các trường hợp cạnh phát sinh khi$n$nhỏ hoặc khớp chính xác với một số bình thường. Ví dụ, nếu$n = 5$, câu trả lời là 5 vì mọi số có một chữ số đều là số bình thường. Nếu như$n = 10$, đáp án vẫn là 9 vì 10 không hề bình thường. Cách tiếp cận bất cẩn chỉ đếm dựa trên độ dài chữ số có thể bao gồm không chính xác 10 hoặc các số có chữ số hỗn hợp khác. 
 
 Sự tinh tế chính là nhận ra rằng câu trả lời không phụ thuộc vào sự phân bố hoặc các thuộc tính số học của$n$, nhưng hoàn toàn dựa trên việc đếm một tập hợp ứng cử viên có cấu trúc rất nhỏ. 
 
@@ -44,7 +44,7 @@ Quan sát quan trọng là các số thông thường có cấu trúc tổ hợp
 
 Thay vì lặp lại tất cả các số nguyên, chúng tôi chỉ tạo ra các ứng cử viên có cấu trúc này. Có nhiều nhất 9 chữ số và nhiều nhất là 10 độ dài, do đó tổng số ứng viên bị giới hạn bởi 90. Điều này biến mỗi truy vấn thành một lần quét liên tục trên một tập hợp cố định nhỏ. 
 
-Lực lượng vũ phu hoạt động vì nó kiểm tra mọi con số một cách rõ ràng, nhưng không thành công vì vũ trụ rất lớn. Quan sát cho thấy các số thông thường hoàn toàn được xác định bởi sự lựa chọn chữ số và độ dài làm sụp đổ không gian tìm kiếm từ tuyến tính sang dạng tuyến tính.$n$đến kích thước không đổi. 
+Lực lượng vũ phu hoạt động vì nó kiểm tra mọi con số một cách rõ ràng, nhưng không thành công vì vũ trụ rất lớn. Quan sát cho rằng các số thông thường được xác định hoàn toàn bằng cách lựa chọn chữ số và độ dài làm sụp đổ không gian tìm kiếm từ tuyến tính sang dạng tuyến tính.$n$đến kích thước không đổi. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -97,9 +97,9 @@ for _ in range(t):
 
 Đối với mỗi trường hợp thử nghiệm, chúng tôi lặp qua danh sách được tính toán trước và đếm xem có bao nhiêu giá trị không vượt quá$n$. Vì kích thước danh sách chỉ là 90 nên đây thực sự là thời gian không đổi cho mỗi truy vấn. 
 
-Một lỗi triển khai phổ biến là cố gắng tạo ra các số chỉ có độ dài chữ số là$n$dynamically per query. Điều đó làm phức tạp logic một cách không cần thiết và có nguy cơ xảy ra lỗi khi xử lý các giá trị biên như lũy thừa của mười. Precomputation avoids all such issues.
+Một lỗi triển khai phổ biến là cố gắng tạo các số chỉ có độ dài chữ số là$n$động cho mỗi truy vấn. Điều đó làm phức tạp logic một cách không cần thiết và có nguy cơ xảy ra lỗi khi xử lý các giá trị biên như lũy thừa của mười. Tính toán trước tránh được tất cả các vấn đề như vậy. 
 
- ## Ví dụ đã hoạt động 
+## Ví dụ đã hoạt động 
 
 Chúng tôi theo dõi hai đầu vào để xem cách sử dụng tập hợp tính toán trước. 
 

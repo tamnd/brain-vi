@@ -40,7 +40,7 @@ Ví dụ:```
 ###
 #.#
 ###
-```Điều này hợp lệ vì giống nhau`3 × 3`khung có thể đã được sơn hai lần. Một giải pháp bất cẩn đòi tìm hai hình chữ nhật riêng biệt sẽ từ chối nó một cách không chính xác. 
+```Điều này hợp lệ vì giống nhau`3 × 3`khung có thể đã được sơn hai lần. Một giải pháp bất cẩn đòi tìm hai hình chữ nhật khác nhau sẽ bác bỏ nó một cách không chính xác. 
 
 Một trường hợp phức tạp khác là khi sự chồng chéo tạo ra các vùng được lấp đầy. 
 
@@ -55,7 +55,7 @@ Một mối nguy hiểm khác đến từ các hình chữ nhật mỏng không 
 Ví dụ:```
 ###
 ###
-```Đây không phải là khung hợp lệ vì chiều cao chỉ`2`. Việc triển khai bất cẩn mà chỉ kiểm tra biên giới sẽ chấp nhận nó một cách không chính xác. 
+```Đây không phải là khung hợp lệ vì chiều cao chỉ`2`. Việc triển khai bất cẩn chỉ kiểm tra biên giới sẽ chấp nhận nó một cách không chính xác. 
 
 Những tình huống khó khăn nhất là khi một khung hình gần như bị ẩn hoàn toàn bởi một khung hình khác. 
 
@@ -86,7 +86,7 @@ Quan sát thứ hai mạnh mẽ hơn. Vì chỉ có hai khung nên mỗi ô đư
 3. Nó nằm ở viền trái. 
 4. Nó nằm ở biên giới bên phải. 
 
-Khi một bên được cố định, phía đối diện và các tọa độ còn lại sẽ bị hạn chế bởi các đoạn sơn liền kề. 
+Khi một bên được cố định, phía đối diện và các tọa độ còn lại sẽ bị ràng buộc bởi các đoạn sơn liền kề. 
 
 Giải pháp dự định sử dụng việc cắt tỉa và xác nhận tích cực. Thay vì liệt kê tất cả các hình chữ nhật, chúng tôi chỉ tạo ra các hình chữ nhật có thể đi qua ô được sơn đã chọn một cách hợp lý. Số lượng ứng viên như vậy vẫn có thể quản lý được. 
 
@@ -117,7 +117,7 @@ Chúng ta chỉ xét những hình chữ nhật có bốn ô góc được sơn.
 5. Đối với mỗi hình chữ nhật ứng viên: 
 
 1. Xác minh rằng nó thực sự tạo thành một khung hợp lệ. 
-2. Tạm thời loại bỏ phần đóng góp biên của nó khỏi lưới điện. 
+2. Tạm thời loại bỏ phần đóng góp biên giới của nó khỏi lưới điện. 
 3. Tìm tất cả các ô được sơn còn lại. 
 4. Kiểm tra xem mẫu còn lại có phải là: 
 

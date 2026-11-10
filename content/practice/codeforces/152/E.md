@@ -38,7 +38,7 @@ Số lượng thiết bị đầu cuối nhỏ gợi ý DP qua mặt nạ thiế
 
 Có một số trường hợp góc dễ bỏ sót. 
 
-Một trường hợp tinh vi là khi giải pháp tối ưu xem xét lại các ô được chia sẻ bởi nhiều kết nối đầu cuối. 
+Một trường hợp tinh tế là khi giải pháp tối ưu xem xét lại các ô được chia sẻ bởi nhiều kết nối đầu cuối. 
 
 Ví dụ:```
 2 3 3
@@ -47,7 +47,7 @@ Ví dụ:```
 1 1
 1 3
 2 2
-```Cấu trúc rẻ nhất không phải là ba con đường ngắn nhất riêng biệt. Hàng ghế giữa phía dưới đóng vai trò là hành lang chung. Một chiến lược tham lam kết nối các thiết bị đầu cuối theo từng cặp một cách độc lập sẽ làm tăng chi phí quá mức và tạo ra một liên kết không tối ưu. 
+```Cấu trúc rẻ nhất không phải là ba con đường ngắn nhất riêng biệt. Hàng ghế giữa phía dưới đóng vai trò là hành lang chung. Một chiến lược tham lam kết nối các thiết bị đầu cuối theo cặp độc lập sẽ làm tăng chi phí quá mức và tạo ra sự kết hợp không tối ưu. 
 
 Một trường hợp phức tạp khác là khi hai thiết bị đầu cuối ở cạnh nhau.```
 1 2 2
@@ -70,7 +70,7 @@ Một vấn đề tế nhị hơn xuất hiện trong quá trình tái thiết. 
 
 Cách tiếp cận bạo lực là liệt kê mọi tập hợp con của các ô lưới, kiểm tra xem nó có tạo thành một thành phần được kết nối chứa tất cả các thiết bị đầu cuối hay không và tính toán tổng chi phí của nó. Lưới có tối đa 200 ô, vì vậy điều này đòi hỏi phải kiểm tra$2^{200}$các tập hợp con, có kích thước lớn về mặt thiên văn. 
 
-Một ý tưởng mạnh mẽ hơn một chút là thử tất cả các cây có thể kết nối các thiết bị đầu cuối. Vì bản thân đồ thị có tới 200 đỉnh và có thể có nhiều điểm Steiner nên số lượng cây ứng cử viên vẫn vượt xa khả năng thực hiện. 
+Một ý tưởng mạnh mẽ hơn một chút là thử tất cả các cây có thể kết nối các thiết bị đầu cuối. Vì bản thân đồ thị có tới 200 đỉnh và có thể có nhiều điểm Steiner nên số lượng cây ứng cử vẫn vượt xa khả năng thực hiện. 
 
 Quan sát quan trọng là số lượng tế bào quan trọng là cực kỳ nhỏ. Khi chỉ tồn tại một số thiết bị đầu cuối, chúng ta có thể mô tả các yêu cầu kết nối bằng mặt nạ bit. 
 
@@ -359,7 +359,7 @@ XXX
 | Thời gian |$O(3^k \cdot nm + 2^k \cdot nm \log(nm))$| tập hợp con hợp nhất cộng với Dijkstra cho mỗi mặt nạ | 
 | Không gian |$O(2^k \cdot nm)$| Bảng DP và theo dõi phụ huynh | 
 
-Với tối đa 128 mặt nạ và 200 đỉnh, DP chứa khoảng 25.000 trạng thái. Dijkstra trên một biểu đồ nhỏ như vậy là cực kỳ nhanh, do đó giải pháp vừa vặn trong giới hạn. 
+Với tối đa 128 mặt nạ và 200 đỉnh, DP chứa khoảng 25.000 trạng thái. Dijkstra trên một biểu đồ nhỏ như vậy là cực kỳ nhanh, vì vậy lời giải nằm gọn trong giới hạn. 
 
 ## Trường hợp thử nghiệm```python
 # helper: run solution on input string, return output string

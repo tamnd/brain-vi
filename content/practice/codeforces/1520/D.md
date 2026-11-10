@@ -60,7 +60,7 @@ Những ví dụ này gợi ý rằng chúng ta cần một cách để chuyển
 
 ## Phương pháp tiếp cận 
 
-Giải pháp trực tiếp nhất là vũ lực. Đối với mỗi chỉ số$i$, hãy thử mọi chỉ mục sau$j$, tính toán cả hai vế của phương trình và tăng kết quả khi chúng khớp nhau. 
+Giải pháp trực tiếp nhất là vũ lực. Đối với mỗi chỉ số$i$, hãy thử mọi chỉ mục sau$j$, tính toán cả hai vế của phương trình và tăng kết quả khi chúng khớp. 
 
 Điều này hoạt động vì nó kiểm tra định nghĩa của một cặp hợp lệ theo đúng nghĩa đen. Vấn đề là thời gian chạy. Với$n = 2 \cdot 10^5$, số lượng cặp là khoảng$2 \times 10^{10}$, vượt xa những gì có thể được xử lý kịp thời. 
 
@@ -74,9 +74,9 @@ Vấn đề ban đầu không còn là so sánh các cặp. Thay vào đó, nó 
 
 Một khi được xem xét theo cách này, lời giải sẽ trở thành một bài toán đếm tần số tiêu chuẩn. 
 
-Khi chúng tôi quét mảng, giả sử giá trị hiện tại$a_i - i$đã xuất hiện rồi$f$lần. Sau đó, chỉ mục hiện tại tạo thành một cặp hợp lệ với từng chỉ mục trước đó.$f$chỉ số. Chúng tôi thêm$f$để trả lời và tăng tần suất. 
+Khi chúng tôi quét mảng, giả sử giá trị hiện tại$a_i - i$đã xuất hiện rồi$f$lần. Sau đó, chỉ mục hiện tại tạo thành một cặp hợp lệ với mỗi chỉ mục trước đó.$f$chỉ số. Chúng tôi thêm$f$để trả lời và tăng tần suất. 
 
-Bản đồ băm lưu trữ số lần mỗi giá trị được chuyển đổi đã xuất hiện. 
+Bản đồ băm lưu trữ số lần mỗi giá trị được chuyển đổi xuất hiện. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -286,15 +286,15 @@ assert run(
 
 Đầu ra:```
 0
-```### Tất cả các giá trị đều bằng nhau 
+```### All values equal
 
-đầu vào:```
+ đầu vào:```
 1
 4
 1 1 1 1
-```Các giá trị được chuyển đổi là:$$0,\,-1,\,-2,\,-3$$Tất cả đều khác biệt. 
+```Các giá trị được chuyển đổi là:$$0,\,-1,\,-2,\,-3$$All are distinct.
 
-Quá trình xử lý diễn ra với tần số luôn bằng 0 trước khi chèn, do đó câu trả lời không bao giờ tăng. 
+ Quá trình xử lý diễn ra với tần số luôn bằng 0 trước khi chèn, do đó đáp số không bao giờ tăng. 
 
 Đầu ra:```
 0

@@ -17,7 +17,7 @@ draft: false
 [CF 1520C - Ma trận không liền kề](https://codeforces.com/problemset/problem/1520/C) 
 
 **Đánh giá:** 1000 
-**Tags:** thuật toán xây dựng 
+**Tas:** thuật toán xây dựng 
 **Thời gian giải:** 2m 18s 
 **Đã xác minh:** có 
 
@@ -28,7 +28,7 @@ Chúng tôi được yêu cầu điền vào một$n \times n$lưới vuông v�
 
 Các ràng buộc khá nhỏ:$n$nằm trong khoảng từ 1 đến 100 và có thể có tới 100 trường hợp thử nghiệm. Điều này có nghĩa là chúng ta có thể cung cấp các giải pháp có độ phức tạp gần như$O(n^2)$cho mỗi trường hợp thử nghiệm, vì$100 \cdot 100^2 = 10^6$hoạt động có thể chấp nhận được trong giới hạn thời gian 4 giây. 
 
-Một số trường hợp khó nhận thấy ngay lập tức. Vì$n = 1$, giải pháp rất đơn giản: một ô duy nhất có số 1. Đối với$n = 2$Tuy nhiên, không có sự sắp xếp nào tồn tại. Bất kỳ vị trí nào từ 1 đến 4 sẽ buộc ít nhất một cặp số liên tiếp có chung một cạnh. Đối với lớn hơn$n$, thách thức là sắp xếp các số để tránh sự kề nhau của các số nguyên liên tiếp và việc điền từng hàng một cách ngây thơ sẽ thất bại vì các số liên tiếp chắc chắn sẽ là hàng xóm. 
+Một số trường hợp khó nhận thấy ngay lập tức. Vì$n = 1$, lời giải rất đơn giản: một ô duy nhất có số 1. Đối với$n = 2$Tuy nhiên, không có sự sắp xếp nào tồn tại. Bất kỳ vị trí nào từ 1 đến 4 sẽ buộc ít nhất một cặp số liên tiếp có chung một cạnh. Đối với lớn hơn$n$, thách thức là sắp xếp các số để tránh sự kề nhau của các số nguyên liên tiếp và việc điền từng hàng một cách ngây thơ sẽ thất bại vì các số liên tiếp chắc chắn sẽ là hàng xóm. 
 
 ## Phương pháp tiếp cận 
 
@@ -45,7 +45,7 @@ Quan sát quan trọng là chúng ta có thể tránh các số liên tiếp li�
 
 ## Hướng dẫn thuật toán 
 
-1. Đọc số lượng test case$t$. Đối với mỗi trường hợp thử nghiệm, hãy đọc$n$. Nếu như$n = 2$, đầu ra$-1$ngay lập tức vì không có giải pháp nào tồn tại. Nếu như$n = 1$, xuất ra một ô chứa 1. 
+1. Đọc số lượng test case$t$. Đối với mỗi trường hợp thử nghiệm, hãy đọc$n$. Nếu như$n = 2$, đầu ra$-1$ngay lập tức vì không có giải pháp tồn tại. Nếu như$n = 1$, xuất ra một ô chứa 1. 
 2. Khởi tạo một khoảng trống$n \times n$lưới. 
 3. Tạo hai danh sách: một danh sách chứa tất cả các số lẻ từ 1 đến$n^2$và một có tất cả các số chẵn từ 1 đến$n^2$. 
 4. Ghép danh sách lẻ với danh sách chẵn để tạo thành chuỗi cuối cùng. Điều này đảm bảo các số liên tiếp không bao giờ xuất hiện liên tiếp trong lưới. 
@@ -85,7 +85,7 @@ for _ in range(t):
     else:
         for row in result:
             print(' '.join(map(str, row)))
-```Mã xử lý đầu vào nhanh bằng cách sử dụng`sys.stdin.readline`. các`not_adjacent_matrix`chức năng đầu tiên kiểm tra những gì không thể giải quyết được$n = 2$và tầm thường$n = 1$trường hợp. Nó xây dựng các danh sách chẵn và lẻ và nối chúng lại, sau đó điền vào từng hàng trong lưới. Việc sử dụng một chỉ số đơn giản`idx`đảm bảo chúng ta sắp xếp các số một cách tuần tự mà không mắc lỗi. Việc sử dụng tính năng hiểu danh sách đảm bảo tính chính xác và tránh các lỗi riêng lẻ. 
+```Mã xử lý đầu vào nhanh bằng cách sử dụng`sys.stdin.readline`. các`not_adjacent_matrix`chức năng đầu tiên kiểm tra những gì không thể giải quyết được$n = 2$và tầm thường$n = 1$trường hợp. Nó xây dựng các danh sách chẵn và lẻ và nối chúng lại, sau đó điền vào từng hàng trong lưới. Việc sử dụng một chỉ số đơn giản`idx`đảm bảo chúng ta sắp xếp các số một cách tuần tự mà không mắc lỗi. Việc sử dụng khả năng hiểu danh sách đảm bảo tính chính xác và tránh các lỗi riêng lẻ. 
 
 ## Ví dụ đã hoạt động 
 
@@ -99,7 +99,7 @@ for _ in range(t):
 
 Không có hàng xóm ngang hoặc dọc nào khác nhau 1. 
 
-Đối với đầu vào`n = 2`, chúng tôi lập tức quay lại`-1`bởi vì bất kỳ vị trí nào từ 1-4 sẽ có cặp lân cận có chênh lệch 1. 
+Đối với đầu vào`n = 2`, chúng tôi lập tức quay lại`-1`bởi vì bất kỳ vị trí nào từ 1-4 sẽ có một cặp lân cận có chênh lệch 1. 
 
 ## Phân tích độ phức tạp 
 

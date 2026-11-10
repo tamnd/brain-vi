@@ -79,7 +79,7 @@ Cách tiếp cận bạo lực kiểm tra sự tiếp giáp một cách trực t
 2. Xử lý chuỗi từ trái sang phải. 
 3. Đối với mỗi vị trí, hãy xác định xem nó có bắt đầu một phân đoạn mới hay không. Vị trí bắt đầu một phân đoạn mới nếu đó là ký tự đầu tiên của chuỗi hoặc ký tự của nó khác với ký tự trước đó. 
 4. Bất cứ khi nào một phân đoạn mới bắt đầu, hãy kiểm tra xem chữ cái của nó đã có chưa`seen`. 
-5. Nếu thư đã có sẵn, hãy gửi lại`"NO"`ngay lập tức. Điều này có nghĩa là nhiệm vụ đã xuất hiện trong phân đoạn trước đó và hiện đang được xem lại. 
+5. Nếu bức thư đã có sẵn, hãy trả lại`"NO"`ngay lập tức. Điều này có nghĩa là nhiệm vụ đã xuất hiện trong phân đoạn trước đó và hiện đang được xem lại. 
 6. Nếu không, hãy thêm chữ cái vào`seen`và tiếp tục quét. 
 7. Nếu toàn bộ chuỗi được xử lý mà không tìm thấy ký tự phân đoạn lặp lại, hãy trả về`"YES"`. 
 
@@ -157,7 +157,7 @@ FFGZZZY
 
 Không có chữ cái bắt đầu phân đoạn lặp lại. Mỗi nhiệm vụ chiếm chính xác một khối, vì vậy câu trả lời là`"YES"`. 
 
-Ví dụ này cho thấy tại sao phải bỏ qua các chữ cái bằng nhau liên tiếp. Việc lặp đi lặp lại`F`Và`Z`ngày thuộc cùng một phân đoạn và không thể hiện việc quay lại một nhiệm vụ. 
+Ví dụ này cho thấy tại sao phải bỏ qua các chữ cái bằng nhau liên tiếp. Việc lặp đi lặp lại`F`Và`Z`ngày thuộc về cùng một phân đoạn và không thể hiện việc quay lại một nhiệm vụ. 
 
 ## Phân tích độ phức tạp 
 
@@ -265,7 +265,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 |`AAAAAA`|`YES`| Ngày lặp đi lặp lại trong một phân đoạn | 
 |`ABCBA`|`NO`| Quay lại nhiệm vụ đã hoàn thành trước đó | 
 |`AABBCC`|`YES`| Nhiều phân đoạn liền kề hợp lệ | 
-| 50 bản sao của`A`|`YES`| Độ dài lớn nhất với một nhiệm vụ liên tục | 
+| 50 bản`A`|`YES`| Độ dài lớn nhất với một nhiệm vụ liên tục | 
 
 ## Vỏ cạnh 
 
@@ -285,10 +285,10 @@ Coi như:```
 1
 6
 AABBCC
-```Đoạn bắt đầu là`A`,`B`, Và`C`. Mỗi cái xuất hiện chính xác một lần trong số các phần đầu của phân đoạn, vì vậy tập hợp này sẽ phát triển khi`{A}`,`{A,B}`,`{A,B,C}`. Không có sự lặp lại nào xảy ra và câu trả lời là`"YES"`. Điều này chứng tỏ rằng nhiều tác vụ được cho phép miễn là mỗi tác vụ chiếm một khối liền kề. 
+```Đoạn bắt đầu là`A`,`B`, Và`C`. Mỗi cái xuất hiện chính xác một lần trong số các phần đầu của phân đoạn, vì vậy tập hợp này sẽ phát triển khi`{A}`,`{A,B}`,`{A,B,C}`. Không có sự lặp lại nào xảy ra và câu trả lời là`"YES"`. Điều này chứng tỏ rằng nhiều nhiệm vụ được cho phép miễn là mỗi nhiệm vụ chiếm một khối liền kề. 
 
 Coi như:```
 1
 7
 ABCDCBA
-```Đoạn bắt đầu là`A`,`B`,`C`,`D`,`C`,`B`,`A`. Khi thứ hai`C`phân đoạn bắt đầu,`C`đã ở trong rồi`seen`, do đó kết quả đầu ra của thuật toán`"NO"`ngay lập tức. Vi phạm được phát hiện ở nhiệm vụ đầu tiên xuất hiện lại, ngay cả khi có liên quan đến nhiều nhiệm vụ khác nhau.
+```Đoạn bắt đầu là`A`,`B`,`C`,`D`,`C`,`B`,`A`. Khi thứ hai`C`phân đoạn bắt đầu,`C`đã ở trong rồi`seen`, do đó, thuật toán đầu ra`"NO"`ngay lập tức. Vi phạm được phát hiện ở nhiệm vụ đầu tiên xuất hiện lại, ngay cả khi có liên quan đến nhiều nhiệm vụ khác nhau.
