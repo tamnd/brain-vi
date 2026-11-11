@@ -50,7 +50,7 @@ Hãy xem xét các khoảng vượt qua$0$-ranh giới góc. Giả sử một m�
 
 Quan điểm bạo lực là cố định bán kính$r$, liệt kê các trung tâm ứng cử viên, đếm xem có bao nhiêu môi trường sống được bao phủ và sau đó tìm kiếm nhị phân trên$r$. Khó khăn là tâm có thể là một điểm bất kỳ trên một đường tròn liên tục nên có vô số ứng viên. Ngay cả khi chúng ta rời rạc mạnh mẽ thì kết quả cũng không chính xác. 
 
-Quan sát quan trọng là đối với bán kính cố định$r$, tâm bị ràng buộc vào đường tròn$$|C| = r.$$Lấy một môi trường sống$P$. We ask which positions of$C$che nó lại. Điều kiện là$$|P - C| \le r.$$Từ$C$đã nằm trên đường tròn$|C|=r$, các tâm hợp lệ tạo thành một cung trên đường tròn đó. Mỗi môi trường sống đóng góp một khoảng góc. Chúng ta chỉ cần biết liệu một góc nào đó có nằm trong ít nhất$k$khoảng thời gian. 
+Quan sát quan trọng là đối với bán kính cố định$r$, tâm bị ràng buộc vào đường tròn$$|C| = r.$$Lấy một môi trường sống$P$. Chúng tôi hỏi vị trí nào của$C$che nó lại. Điều kiện là$$|P - C| \le r.$$Từ$C$đã nằm trên đường tròn$|C|=r$, các tâm hợp lệ tạo thành một cung trên đường tròn đó. Mỗi môi trường sống đóng góp một khoảng góc. Chúng ta chỉ cần biết liệu một góc nào đó có nằm trong ít nhất$k$khoảng thời gian. 
 
 Điều đó biến bài toán hình học thành bài toán chồng lấp cực đại cổ điển trên một đường tròn. 
 

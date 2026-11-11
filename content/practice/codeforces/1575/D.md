@@ -187,14 +187,14 @@ assert True
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
 |`25`|`1`| trường hợp hợp lệ đơn giản nhất | 
-|`_5`|`2`| hạn chế hậu tố | 
-|`XX`|`1`| khớp nối X toàn cầu | 
-|`0_0`| phụ thuộc | xử lý số 0 hàng đầu | 
+|`_5` | `2` | suffix restriction |
+| `XX` | `1` | global X coupling |
+| `0_0` | depends | leading zero handling |
 
-## Vỏ cạnh 
+## Edge Cases
 
-Một trường hợp cạnh quan trọng là khi chuỗi trở thành toàn số 0 sau khi gán. Ví dụ, đầu vào`X_`trong đó X được chọn là 0 và dấu gạch dưới cũng là 0 tạo ra`00`. Điều này hợp lệ vì toàn bộ số bằng 0 và các quy tắc về số 0 đứng đầu cho phép điều đó. Thuật toán xử lý việc này vì hàm xác thực sẽ kiểm tra rõ ràng xem tất cả các ký tự có bằng 0 hay không và cho phép điều đó. 
+One important edge case is when the string becomes all zeros after assignment. For example, input `X_`trong đó X được chọn là 0 và dấu gạch dưới cũng là 0 tạo ra`00`. Điều này hợp lệ vì toàn bộ số bằng 0 và các quy tắc về số 0 đứng đầu cho phép điều đó. Thuật toán xử lý việc này vì hàm xác thực sẽ kiểm tra rõ ràng xem tất cả các ký tự có bằng 0 hay không và cho phép điều đó. 
 
-Một trường hợp khác là các số 0 đứng đầu theo sau là một hậu tố hợp lệ, chẳng hạn như`_25`. Gán dấu gạch dưới là 0 sẽ tạo ra`025`, điều này không hợp lệ vì nó có các số 0 đứng đầu và không phải là số 0. Việc kiểm tra sẽ từ chối nó một cách chính xác vì chuỗi không phải toàn số 0 và bắt đầu bằng 0. 
+Một trường hợp khác là các số 0 đứng đầu theo sau là một hậu tố hợp lệ, chẳng hạn như`_25`. Gán dấu gạch dưới là 0 sẽ tạo ra`025`, which is invalid because it has leading zeros and is not the number zero. The check correctly rejects it since the string is not all zeros and starts with zero.
 
-Trường hợp tinh tế cuối cùng là nhiều vị trí X như`X_X`. DFS không chỉ định chúng một cách độc lập; thay vào đó, tất cả chúng đều được cố định thành một chữ số trước khi bắt đầu liệt kê, đảm bảo tính nhất quán giữa các vị trí và ngăn chặn việc đếm quá mức.
+A final subtle case is multiple X positions like `X_X`. DFS không chỉ định chúng một cách độc lập; thay vào đó, tất cả chúng đều được cố định thành một chữ số trước khi bắt đầu liệt kê, đảm bảo tính nhất quán giữa các vị trí và ngăn chặn việc đếm quá mức.
