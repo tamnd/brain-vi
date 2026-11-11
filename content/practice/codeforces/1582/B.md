@@ -64,7 +64,7 @@ Các số 0 không ảnh hưởng đến tổng nên mỗi số 0 có thể gi�
 
 Câu trả lời đơn giản là$$o \times 2^z$$Quét mảng một lần sẽ cho cả hai số đếm. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu |$O(2^n \cdot n)$|$O(1)$| Quá chậm | 
 | Tối ưu |$O(n)$|$O(1)$| Đã chấp nhận | 
@@ -85,7 +85,7 @@ Một dãy con hợp lệ phải loại trừ chính xác một phần tử có 
 
 Giả sử dãy con có tổng$s-1$. Tương tự, các phần tử bị loại bỏ có tổng bằng 1. 
 
-Bởi vì mọi phần tử mảng đều không âm nên không thể xóa phần tử nào lớn hơn 1. Loại bỏ hai hoặc nhiều phần tử sẽ đóng góp ít nhất 2. Do đó, phải loại bỏ chính xác một phần tử bằng 1. 
+Bởi vì mọi phần tử mảng đều không âm nên không thể xóa phần tử nào lớn hơn 1. Việc loại bỏ hai hoặc nhiều phần tử sẽ đóng góp ít nhất là 2. Do đó, phải loại bỏ chính xác một phần tử bằng 1. 
 
 Các số 0 không đóng góp gì vào số tiền bị loại bỏ, vì vậy chúng có thể bị loại bỏ hoặc giữ lại mà không ảnh hưởng đến tính hợp lệ. 
 
@@ -117,7 +117,7 @@ Vòng lặp trên mảng đếm số không và số một. Các giá trị lớ
 
 biểu hiện`1 << zeros`tính toán$2^{\text{zeros}}$. Với tối đa 60 phần tử, giá trị lớn nhất là$2^{60}$, dễ dàng khớp với các số nguyên có độ chính xác tùy ý của Python. 
 
-Thứ tự nhân không quan trọng. Nếu không có ai, câu trả lời sẽ tự động trở thành số 0. 
+Thứ tự nhân không quan trọng. Nếu không có ai, câu trả lời sẽ tự động trở thành số không. 
 
 ## Ví dụ đã hoạt động 
 

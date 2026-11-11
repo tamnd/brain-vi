@@ -40,13 +40,13 @@ Một trường hợp thất bại khác xuất phát từ việc giả định 
 
 Ý tưởng vũ phu rất đơn giản. Chúng tôi tạo ra mọi tập hợp con, tính tổng của nó, kiểm tra xem nó có phải là tập hợp con hay không và theo dõi kích thước tập hợp con lớn nhất thỏa mãn điều kiện. Điều này đúng vì nó đánh giá trực tiếp mọi khả năng. Tuy nhiên, nó yêu cầu đánh giá 2ⁿ tập hợp con và tính tổng cho mỗi tập hợp con sẽ thêm một yếu tố khác, khiến nó trở nên hiệu quả O(n·2ⁿ). Với n = 100, điều này là không thể. 
 
-Quan sát quan trọng là chúng ta không cần phải tìm kiếm trong không gian tập hợp con. Chúng tôi chỉ quan tâm đến tổng của các phần tử được chọn. Vì tất cả các số đều dương nên việc thêm các phần tử luôn làm tăng tổng và tập hợp con lớn nhất chỉ đơn giản là mảng đầy đủ trừ khi tổng của nó là số nguyên tố. 
+Điều quan trọng nhất là chúng ta không cần phải tìm kiếm trong không gian tập hợp con. Chúng tôi chỉ quan tâm đến tổng của các phần tử được chọn. Vì tất cả các số đều dương nên việc thêm các phần tử luôn làm tăng tổng và tập hợp con lớn nhất chỉ đơn giản là mảng đầy đủ trừ khi tổng của nó là số nguyên tố. 
 
-Nếu tổng số đã là tổng hợp thì câu trả lời là tất cả các phần tử. Trường hợp có vấn đề duy nhất là khi tổng số tiền là số nguyên tố. Trong trường hợp đó, việc loại bỏ bất kỳ phần tử đơn lẻ nào sẽ làm thay đổi tổng và chúng ta chỉ cần kiểm tra xem việc loại bỏ một phần tử có thể tạo thành tổng hợp hay không. Vì tất cả các số đều dương nên việc loại bỏ nhiều hơn một phần tử sẽ chỉ làm giảm kích thước tập hợp con hơn nữa, vì vậy giải pháp tối ưu phải là mảng đầy đủ hoặc mảng trừ đi một phần tử. 
+Nếu tổng số tiền đã là tổng hợp thì câu trả lời là tất cả các phần tử. Trường hợp có vấn đề duy nhất là khi tổng số tiền là số nguyên tố. Trong trường hợp đó, việc loại bỏ bất kỳ phần tử đơn lẻ nào sẽ làm thay đổi tổng và chúng ta chỉ cần kiểm tra xem việc loại bỏ một phần tử có thể tạo thành tổng hợp hay không. Vì tất cả các số đều dương nên việc loại bỏ nhiều hơn một phần tử sẽ chỉ làm giảm kích thước tập hợp con hơn nữa, vì vậy giải pháp tối ưu phải là mảng đầy đủ hoặc mảng trừ đi một phần tử. 
 
 Vì vậy, vấn đề giảm xuống còn việc kiểm tra tính nguyên tố của tổng đầy đủ và nếu nó là số nguyên tố thì tìm bất kỳ phần tử đơn lẻ nào mà việc loại bỏ nó sẽ tạo thành tổng còn lại. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(n·2ⁿ) | O(n) | Quá chậm | 
 | Tối ưu | O(n·√S) | O(1) | Đã chấp nhận | 
@@ -56,8 +56,8 @@ Vì vậy, vấn đề giảm xuống còn việc kiểm tra tính nguyên tố 
 Gọi S là tổng của tất cả các phần tử. 
 
 1. Tính S bằng cách tính tổng tất cả các phần tử của mảng. Điều này đưa ra tổng tương ứng với việc chọn toàn bộ mảng. 
-2. Kiểm tra xem S có phải là số nguyên tố hay không bằng cách thử các ước số lên tới √S. Nếu S là hợp số thì chúng ta đã hoàn tất và có thể chọn tất cả các chỉ số. 
-3. Nếu S là số nguyên tố thì chúng ta cần loại bỏ đúng một phần tử. Hãy thử từng chỉ số i và tính S - a[i]. Nếu giá trị này là tổng hợp, chúng ta có thể chọn tất cả các phần tử ngoại trừ i và stop. 
+2. Kiểm tra xem S có phải là số nguyên tố hay không bằng cách thử các ước số lên đến √S. Nếu S là hợp số thì chúng ta đã hoàn tất và có thể chọn tất cả các chỉ số. 
+3. Nếu S là số nguyên tố thì chúng ta cần loại bỏ đúng một phần tử. Hãy thử từng chỉ số i và tính S - a[i]. Nếu giá trị này là hợp số, chúng ta có thể chọn tất cả các phần tử ngoại trừ i và stop. 
 4. Xuất tập hợp con kết quả. 
 
 Lý do chúng tôi chỉ xem xét việc loại bỏ một phần tử là vì việc loại bỏ nhiều phần tử sẽ làm giảm đáng kể kích thước tập hợp con và chúng tôi đang tối đa hóa số lượng phần tử. 

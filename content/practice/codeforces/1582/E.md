@@ -26,7 +26,7 @@ draft: false
 
 Chúng ta được cung cấp một mảng các số nguyên dương và được yêu cầu xây dựng một chuỗi các mảng con không chồng chéo. Các mảng con này phải được chọn theo thứ tự từ trái sang phải và độ dài của chúng được cố định để tạo thành một chuỗi giảm dần bắt đầu từ một giá trị nào đó.$k$xuống tới$1$. Vậy đoạn được chọn đầu tiên có độ dài$k$, cái thứ hai có độ dài$k-1$, cứ như vậy cho đến khi đoạn cuối cùng có độ dài$1$. Tất cả các phân đoạn phải xuất hiện theo thứ tự vị trí tăng dần và không phân đoạn nào có thể trùng lặp. 
 
-Trong số tất cả các cấu trúc hợp lệ như vậy, chúng tôi muốn tối đa hóa số lượng phân khúc chúng tôi có thể chọn, tức là tối đa hóa$k$, dưới ràng buộc bổ sung là tổng các phần tử bên trong mỗi phân đoạn được chọn phải tăng nghiêm ngặt khi chúng ta di chuyển qua chuỗi. 
+Trong số tất cả các công trình hợp lệ như vậy, chúng tôi muốn tối đa hóa số lượng phân khúc chúng tôi có thể chọn, tức là tối đa hóa$k$, dưới ràng buộc bổ sung là tổng các phần tử bên trong mỗi phân đoạn đã chọn phải tăng nghiêm ngặt khi chúng ta di chuyển qua chuỗi. 
 
 Khó khăn chính là độ dài các đoạn không phải là tùy ý, chúng bị ràng buộc chặt chẽ theo một mô hình giảm dần cố định và chúng ta phải tôn trọng cả thứ tự trong mảng và các ràng buộc tổng tăng dần cùng một lúc. 
 
@@ -48,18 +48,18 @@ Cái nhìn sâu sắc hơn là chúng ta không cần phải sửa$k$trực ti�
 
 Tuy nhiên, chúng ta có thể làm tốt hơn nữa. Bởi vì tất cả$a_i > 0$, tổng phân đoạn tăng khi vị trí phân đoạn dịch chuyển sang phải, nhưng không hoàn toàn đơn điệu về độ dài. Điều này cho phép một cấu trúc tham lam luôn cố gắng mở rộng chuỗi càng xa càng tốt mà không cần tìm kiếm nhị phân. 
 
-Chúng tôi duy trì một con trỏ cho vị trí bắt đầu có sẵn tiếp theo và lặp đi lặp lại cố gắng chọn một đoạn có độ dài cần thiết sao cho tổng của nó lớn hơn tổng đã chọn trước đó. Vì tất cả các giá trị đều dương nên khi một phân đoạn trở nên hợp lệ tại một vị trí, việc di chuyển nó sang phải chỉ làm tăng tổng của nó, vì vậy chúng ta có thể tham lam đặt phân đoạn hợp lệ sớm nhất cho mỗi độ dài. 
+We maintain a pointer for the next available starting position and iteratively try to pick a segment of the required length such that its sum is greater than the previous chosen sum. Since all values are positive, once a segment becomes valid at a position, moving it right only increases its sum, so we can greedily place the earliest valid segment for each length.
 
-Điều này làm giảm vấn đề chỉ bằng một lần quét từ trái sang phải với việc duy trì tổng phân đoạn một cách cẩn thận. 
+ Điều này làm giảm vấn đề chỉ bằng một lần quét từ trái sang phải với việc duy trì tổng phân đoạn một cách cẩn thận. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | Hàm mũ | O(n) | Quá chậm | 
 | Tham lam với số tiền tiền tố | O(n) | O(n) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-Chúng tôi tính toán trước các tổng tiền tố để bất kỳ tổng phân đoạn nào cũng có thể được truy vấn trong thời gian không đổi. Điều này là cần thiết vì chúng tôi liên tục đánh giá các phân khúc ứng viên. 
+Chúng tôi tính toán trước tổng tiền tố để bất kỳ tổng phân đoạn nào cũng có thể được truy vấn trong thời gian không đổi. Điều này là cần thiết vì chúng tôi liên tục đánh giá các phân khúc ứng viên. 
 
 Sau đó chúng tôi cố gắng xây dựng chuỗi dài nhất có thể bắt đầu từ các giá trị tiềm năng khác nhau của$k$, nhưng thay vì kiểm tra rõ ràng từng$k$, chúng tôi nhận thấy rằng chúng tôi có thể mô phỏng quá trình một lần và đo xem có bao nhiêu phân đoạn được hình thành. 
 
@@ -68,14 +68,14 @@ Sau đó chúng tôi cố gắng xây dựng chuỗi dài nhất có thể bắt
 3. Cố gắng đặt các đoạn theo thứ tự độ dài giảm dần, nhưng thay vì xác định trước$k$, chúng tôi phát triển chuỗi một cách tham lam. Chúng tôi duy trì độ dài của phân đoạn tiếp theo sẽ được thử và tổng phân đoạn được chọn cuối cùng. 
 4. Đối với một đoạn có độ dài nhất định, hãy quét từ con trỏ hiện tại để tìm vị trí sớm nhất nơi tồn tại một đoạn hợp lệ có tổng lớn hơn tổng của đoạn trước đó. 
 5. Sau khi tìm thấy một phân đoạn như vậy, hãy xác nhận nó, cập nhật tổng cuối cùng và di chuyển con trỏ đến vị trí sau phân đoạn này. 
-6. Tiếp tục giảm độ dài đoạn 1 và lặp lại quá trình cho đến khi không thể đặt được đoạn nào hợp lệ. 
+6. Tiếp tục giảm độ dài đoạn đi 1 và lặp lại quá trình cho đến khi không thể đặt được đoạn nào hợp lệ. 
 7. Số lượng phân đoạn được đặt thành công là câu trả lời. 
 
 Quyết định quan trọng luôn là chọn đoạn hợp lệ sớm nhất cho mỗi độ dài. Điều này giúp tránh lãng phí các phân đoạn tổng cao “tốt” quá sớm và đảm bảo tính linh hoạt tối đa cho các phân đoạn ngắn hơn sau này. 
 
 ### Tại sao nó hoạt động 
 
-Ở mỗi bước, chúng tôi duy trì bất biến rằng phân đoạn được chọn cuối cùng có vị trí kết thúc nhỏ nhất có thể có trong số tất cả các lựa chọn hợp lệ đạt được ngưỡng tổng của nó. Bởi vì tất cả các phần tử đều dương nên việc dịch chuyển một đoạn sang phải chỉ làm tăng tổng của nó và giảm không gian còn lại. Do đó, bất kỳ lựa chọn nào được thực hiện muộn hơn chỉ có thể hạn chế tính khả thi trong tương lai nhiều hơn so với lựa chọn hợp lệ trước đó. Điều này làm cho chiến lược lựa chọn tham lam sớm nhất trở nên tối ưu: nó không bao giờ cản trở một giải pháp có thể được mở rộng hơn nữa. 
+Ở mỗi bước, chúng tôi duy trì bất biến rằng phân đoạn được chọn cuối cùng có vị trí kết thúc nhỏ nhất có thể có trong số tất cả các lựa chọn hợp lệ đạt được ngưỡng tổng của nó. Bởi vì tất cả các phần tử đều dương nên việc dịch chuyển một đoạn sang phải chỉ làm tăng tổng của nó và giảm không gian còn lại. Do đó, bất kỳ lựa chọn nào được áp dụng muộn hơn chỉ có thể hạn chế tính khả thi trong tương lai nhiều hơn so với lựa chọn hợp lệ trước đó. Điều này làm cho chiến lược lựa chọn tham lam sớm nhất trở nên tối ưu: nó không bao giờ cản trở một giải pháp có thể được mở rộng hơn nữa. 
 
 ## Giải pháp Python```python
 import sys
@@ -125,9 +125,9 @@ def solve():
 t = int(input())
 for _ in range(t):
     solve()
-```Mã xây dựng các tổng tiền tố sao cho mọi truy vấn tổng phân đoạn đều có thời gian không đổi. Sau đó chúng tôi duy trì một con trỏ`i`để có vị trí xuất phát sớm nhất có thể. Đối với mỗi độ dài phân đoạn đã thử, chúng tôi quét tiếp cho đến khi tìm thấy phân đoạn có tổng vượt quá tổng phân đoạn trước đó. Sau khi tìm thấy, chúng tôi cam kết và tiến về phía trước. Nếu không có phân đoạn như vậy tồn tại, chúng tôi dừng lại. 
+```Mã xây dựng các tổng tiền tố sao cho mọi truy vấn tổng phân đoạn đều có thời gian không đổi. Sau đó chúng tôi duy trì một con trỏ`i`để có vị trí xuất phát sớm nhất có thể. Đối với mỗi độ dài phân đoạn đã thử, chúng tôi quét về phía trước cho đến khi tìm thấy phân đoạn có tổng vượt quá tổng phân đoạn trước đó. Sau khi tìm thấy, chúng tôi cam kết và tiến về phía trước. Nếu không có phân đoạn như vậy tồn tại, chúng tôi dừng lại. 
 
-Một điểm tinh tế là chúng tôi luôn tiến lên`i`ngay cả khi bỏ qua các lần khởi động không hợp lệ. Điều này rất cần thiết vì bất kỳ phần bắt đầu bị bỏ qua nào cũng không thể được sử dụng lại cho các đoạn có độ dài bằng nhau hoặc muộn hơn do ràng buộc không chồng chéo và yêu cầu ngày càng tăng. 
+Một điểm tinh tế là chúng tôi luôn tiến lên`i`ngay cả khi bỏ qua các lần khởi động không hợp lệ. Điều này rất cần thiết vì bất kỳ phần bắt đầu bị bỏ qua nào đều không thể được sử dụng lại cho các đoạn có độ dài tương tự hoặc dài hơn do ràng buộc không chồng chéo và yêu cầu ngày càng tăng. 
 
 ## Ví dụ đã hoạt động 
 

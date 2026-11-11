@@ -42,7 +42,7 @@ Quan sát quan trọng là chúng ta không thực sự cần phải xây dựng
 
 Vì vậy, chúng tôi giảm vấn đề xuống việc kiểm tra tối đa hai chữ cái ứng cử viên bắt nguồn từ chữ cái không khớp đầu tiên và mô phỏng kiểm tra bảng màu bị ràng buộc trong đó chúng tôi bỏ qua các lần xuất hiện của chữ cái đó. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(26 · n²) | O(n) | Quá chậm | 
 | Tối ưu | O(n) | O(1) | Đã chấp nhận | 
@@ -126,7 +126,7 @@ Các ứng cử viên là`a`Và`b`.
 
 Vì`a`, loại bỏ tất cả`a`ký tự mang lại`bcaacb`, đó là một palindrome. Số lần xóa là 4. 
 
-cho`b`, loại bỏ tất cả`b`ký tự mang lại`acaaca`, đó cũng là một palindrome. Yêu cầu xóa là 2. 
+cho`b`, loại bỏ tất cả`b`ký tự mang lại`acaaca`, đó cũng là một palindrome. Các yêu cầu xóa là 2. 
 
 Tối thiểu là 2. 
 

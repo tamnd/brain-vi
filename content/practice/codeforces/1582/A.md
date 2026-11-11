@@ -50,7 +50,7 @@ Cấu trúc quan trọng là chúng ta không được tự do lựa chọn các
 
 Chúng tôi cố gắng xây dựng một buổi hòa nhạc một cách tham lam với một nửa tổng số tiền. Đầu tiên chúng tôi sử dụng càng nhiều bài hát lớn càng tốt (3 phút), sau đó điều chỉnh với những bài hát dài 2 phút và cuối cùng sửa khoảng trống còn lại bằng những bài hát dài 1 phút. Bởi vì các giá trị nhỏ và có cấu trúc nên việc xây dựng tham lam này luôn mang lại sự cân bằng tốt nhất có thể đạt được. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(2^(a+b+c)) | O(1) | Quá chậm | 
 | Cân bằng tham lam | O(1) | O(1) | Đã chấp nhận | 

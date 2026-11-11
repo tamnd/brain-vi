@@ -30,21 +30,21 @@ Nhiệm vụ là đếm xem có bao nhiêu phân đoạn liền kề chỉ tạo
 
 Khó khăn chính là phép chia đưa ra một ràng buộc toàn cục: khi chúng ta chia cho một số, chúng ta phải đảm bảo rằng tích tích lũy đến thời điểm đó chứa tất cả các thừa số nguyên tố bắt buộc, nếu không thì giá trị sẽ không còn là số nguyên. Vì các phân đoạn có thể bắt đầu ở bất kỳ đâu nên điều kiện phải đúng cho mọi tiền tố bên trong phân đoạn chứ không chỉ ở phần cuối. 
 
-Những hạn chế làm cho vũ lực không thể thực hiện được. Với tối đa một triệu phần tử, ngay cả việc kiểm tra tất cả các phân đoạn cũng đã là bậc hai và việc tính toán lại hệ số hóa hoặc tính chia hết theo dõi bên trong mỗi phân đoạn sẽ đưa ra một hệ số logarit khác hoặc hệ số tệ hơn cho mỗi phép toán. Bất kỳ giải pháp nào tính toán lại các thừa số nguyên tố nhiều lần hoặc mô phỏng các phân đoạn một cách độc lập sẽ thất bại. 
+Những hạn chế làm cho vũ lực không thể thực hiện được. Với tối đa một triệu phần tử, ngay cả việc kiểm tra tất cả các phân đoạn cũng đã là bậc hai và việc tính toán lại hệ số hoặc theo dõi tính chia hết bên trong mỗi phân đoạn sẽ đưa ra một hệ số logarit khác hoặc hệ số tệ hơn cho mỗi phép toán. Bất kỳ giải pháp nào tính toán lại các thừa số nguyên tố nhiều lần hoặc mô phỏng các phân đoạn một cách độc lập sẽ thất bại. 
 
-Trường hợp cạnh tinh tế xuất hiện khi phép chia xuất hiện trước bất kỳ phép nhân nào bù cho chúng. Ví dụ: nếu chuỗi bắt đầu bằng phép chia thì mọi phân đoạn bắt đầu từ đó sẽ không hợp lệ ngay lập tức, nhưng các phân đoạn bắt đầu sau đó vẫn có thể hợp lệ trở lại. Một tình huống phức tạp khác là khi thâm hụt yếu tố cơ bản được tạo ra và sau đó được sửa chữa, vì chỉ có phân khúc địa phương mới quan trọng chứ không phải lịch sử toàn cầu. 
+Trường hợp cạnh tinh tế xuất hiện khi phép chia xuất hiện trước bất kỳ phép nhân nào bù cho chúng. Ví dụ: nếu chuỗi bắt đầu bằng phép chia thì mọi phân đoạn bắt đầu từ đó sẽ không hợp lệ ngay lập tức, nhưng các phân đoạn bắt đầu sau đó vẫn có thể hợp lệ trở lại. Một tình huống khó khăn khác là khi thâm hụt yếu tố cơ bản được tạo ra và sau đó được sửa chữa, vì chỉ có phân khúc địa phương mới quan trọng chứ không phải lịch sử toàn cầu. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận bạo lực sẽ lặp lại trên tất cả các phân đoạn và mô phỏng quy trình cho từng phân đoạn. Đối với một phân đoạn cố định, chúng tôi sẽ duy trì giá trị hiện tại và liên tục áp dụng phép nhân hoặc chia trong khi kiểm tra xem giá trị đó có còn là số nguyên hay không. Cách tiếp cận này đúng vì nó tuân theo định nghĩa. Tuy nhiên, mỗi phân đoạn tốn thời gian tuyến tính trong trường hợp xấu nhất, dẫn đến hành vi tổng thể theo khối. 
+Cách tiếp cận bạo lực sẽ lặp lại trên tất cả các phân đoạn và mô phỏng quy trình cho từng phân đoạn. Đối với một phân đoạn cố định, chúng tôi sẽ duy trì giá trị hiện tại và liên tục áp dụng phép nhân hoặc chia trong khi kiểm tra xem giá trị đó có còn là số nguyên hay không. Cách tiếp cận này đúng vì nó tuân theo định nghĩa trực tiếp. Tuy nhiên, mỗi phân đoạn tốn thời gian tuyến tính trong trường hợp xấu nhất, dẫn đến hành vi tổng thể theo khối. 
 
 Trở ngại chính là khả năng chia hết phụ thuộc vào sự cân bằng thừa số nguyên tố. Nhân với một số sẽ thêm các thừa số nguyên tố của nó, trong khi phép chia sẽ loại bỏ chúng. Giá trị vẫn là số nguyên miễn là không có số mũ nguyên tố nào trở thành số âm trong bất kỳ tiền tố nào của phân đoạn. 
 
-Điều này chuyển vấn đề thành việc theo dõi, đối với mọi số nguyên tố, liệu số mũ của nó có giữ nguyên không âm trên mọi tiền tố hay không. Thay vì tính toán lại từ đầu cho từng phân đoạn, chúng tôi xử lý mảng từ trái sang phải và duy trì điểm bắt đầu tốt nhất có thể cho phân đoạn kết thúc ở mỗi vị trí. 
+Điều này chuyển vấn đề thành việc theo dõi, đối với mọi số nguyên tố, liệu số mũ của nó có giữ nguyên không âm trên mọi tiền tố hay không. Thay vì tính toán lại từ đầu cho từng phân đoạn, chúng tôi xử lý mảng từ trái sang phải và duy trì điểm bắt đầu tốt nhất có thể cho phân đoạn kết thúc tại mỗi vị trí. 
 
 Quan sát quan trọng là đối với mỗi số nguyên tố, chúng ta chỉ cần biết liệu số dư hiện tại của nó có bao giờ giảm xuống dưới 0 hay không. Nếu đúng như vậy, không có phân đoạn nào bắt đầu trước thời điểm đó có thể vẫn hợp lệ, vì vậy phần bắt đầu phải tiếp tục. Mỗi số nguyên tố thực thi một cách độc lập một ràng buộc về khoảng cách còn lại của một phân đoạn. Điểm bắt đầu hợp lệ cuối cùng được xác định bởi ràng buộc nguyên tố hạn chế nhất. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(n² log A) | O(1) | Quá chậm | 
 | Tối ưu | O(n log A) | O(n log A) | Đã chấp nhận | 
@@ -53,10 +53,10 @@ Quan sát quan trọng là đối với mỗi số nguyên tố, chúng ta chỉ
 
 Chúng tôi xử lý mảng từ trái sang phải trong khi vẫn duy trì các ràng buộc do thừa số nguyên tố áp đặt. 
 
-1. Phân tích từng số thành số nguyên tố. Chúng ta coi phép nhân là phép cộng các số nguyên tố và phép chia là phép trừ chúng. Điều này chuyển vấn đề thành việc theo dõi nhiều bộ đếm số dư độc lập, mỗi bộ đếm một số nguyên tố. 
+1. Phân tích từng số thành số nguyên tố. Chúng ta coi phép nhân là phép cộng các số nguyên tố và phép chia là phép trừ chúng. Điều này chuyển vấn đề thành việc theo dõi nhiều bộ đếm số dư độc lập, mỗi bộ đếm số nguyên tố. 
 2. Duy trì một cuốn từ điển`cur[p]`đại diện cho thặng dư hiện tại của Prime`p`bên trong phân đoạn hoạt động kết thúc tại vị trí`i`. Giá trị dương có nghĩa là chúng tôi có sẵn các bản sao bổ sung của số nguyên tố đó cho các bộ phận trong tương lai. 
-3. Duy trì một từ điển khác`bad[p]`ghi lại vị trí sớm nhất buộc chúng ta phải khởi động lại các phân đoạn cho vị trí chính`p`. Ban đầu, tất cả các giá trị đều bằng 0. 
-4. Khi xử lý phép nhân tại vị trí`i`, chúng tôi tăng`cur[p]`với mọi thừa số nguyên tố của`a[i]`. Không có vi phạm ràng buộc nào có thể xảy ra chỉ bằng phép nhân vì nó chỉ bổ sung thêm tài nguyên. 
+3. Duy trì một từ điển khác`bad[p]`ghi lại vị trí sớm nhất buộc chúng tôi phải khởi động lại các phân đoạn cho vị trí chính`p`. Ban đầu, tất cả các giá trị đều bằng 0. 
+4. Khi xử lý phép nhân tại vị trí`i`, chúng tôi tăng`cur[p]`với mọi thừa số nguyên tố của`a[i]`. Không vi phạm ràng buộc nào có thể xảy ra chỉ bằng phép nhân vì nó chỉ bổ sung thêm tài nguyên. 
 5. Khi xử lý phép chia cho`a[i]`, chúng tôi trừ các thừa số nguyên tố của nó khỏi`cur`. Nếu với bất kỳ số nguyên tố nào`p`, giá trị trở thành âm, điều này có nghĩa là phân đoạn hiện tại không thể bao gồm tiền tố này. Sau đó chúng tôi thiết lập lại`cur[p]`về 0 và đặt`bad[p] = i`, nghĩa là bất kỳ phân đoạn hợp lệ nào kết thúc ở đây đều phải bắt đầu sau thời điểm này. 
 6. Đối với từng vị trí`i`, thời điểm bắt đầu hợp lệ sớm nhất được xác định bởi ràng buộc nguyên tố hạn chế nhất. Chúng tôi tính toán`L = max(bad[p])`trên tất cả các số nguyên tố hiện có liên quan. Số lượng phân đoạn hợp lệ kết thúc tại`i`vậy thì`i - L + 1`. 
 7. Chúng tôi tích lũy khoản đóng góp này cho mọi vị trí. 
@@ -156,7 +156,7 @@ Một ví dụ thứ hai:
 
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
-| Thời gian | O(n log A) | Mỗi số được phân tích thành thừa số một lần và mỗi bản cập nhật nguyên tố được khấu hao không đổi trong tất cả các hoạt động | 
+| Thời gian | O(n log A) | Mỗi số được phân tích thành thừa số một lần và mỗi bản cập nhật số nguyên tố được khấu hao không đổi trong tất cả các hoạt động | 
 | Không gian | O(n log A) | Lưu trữ sàng lọc SPF và bản đồ cân bằng nguyên tố | 
 
 Việc sàng lọc lên tới một triệu là khả thi trong bộ nhớ và mỗi thao tác chỉ chạm vào các thừa số nguyên tố của một số duy nhất, giữ cho thời gian chạy tổng thể trong giới hạn. 

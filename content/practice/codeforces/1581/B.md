@@ -28,7 +28,7 @@ Chúng ta được yêu cầu xác định liệu có thể xây dựng một đ
 
 Đầu vào bao gồm nhiều trường hợp thử nghiệm. Mỗi trường hợp thử nghiệm chỉ định các giá trị của`n`,`m`, Và`k`. Đối với mỗi điều kiện, chúng ta phải xuất "CÓ" nếu có thể xây dựng biểu đồ thỏa mãn các điều kiện này hoặc "KHÔNG" nếu không thể. 
 
-Với những hạn chế,`n`Và`m`có thể lên đến$10^9$và có thể có tới$10^5$trường hợp thử nghiệm. Điều này có nghĩa là chúng ta không thể xây dựng biểu đồ một cách rõ ràng hoặc thực hiện bất kỳ thao tác nào có tỷ lệ với`n`hoặc`m`. Thay vào đó, chúng ta phải suy luận một cách toán học về những gì có thể thực hiện được dựa trên số nút, cạnh và đường kính yêu cầu. 
+Với những hạn chế,`n`Và`m`có thể lên đến$10^9$và có thể có tới$10^5$trường hợp thử nghiệm. Điều này có nghĩa là chúng ta không thể xây dựng biểu đồ một cách rõ ràng hoặc thực hiện bất kỳ thao tác nào có tỷ lệ với`n`hoặc`m`. Thay vào đó, chúng ta phải suy luận về mặt toán học về những gì có thể thực hiện được dựa trên số nút, cạnh và đường kính yêu cầu. 
 
 Các trường hợp cạnh phát sinh khi`n`là rất nhỏ. Nếu như`n = 1`, đồ thị hợp lệ duy nhất không có cạnh và đường kính bằng 0, có thể thỏa mãn một số giá trị của`k`. Nếu như`k = 1`, đường kính yêu cầu nhỏ hơn 0, điều này là không thể. Khi`m = 0`, đồ thị bị ngắt kết nối nếu`n > 1`. Đây là những tình huống mà việc đếm ngây thơ có thể tạo ra kết quả không chính xác. 
 
@@ -46,7 +46,7 @@ Các hạn chế về đường kính tiếp tục hạn chế các khả năng.
 
 Bây giờ chúng ta có thể suy luận hoàn toàn bằng toán học: đồ thị phải được kết nối (`m >= n-1`), số cạnh không được vượt quá đồ thị đầy đủ (`m <= n(n-1)/2`), Và`k`áp đặt các hạn chế bổ sung đối với`n`. Những điều kiện này đủ để trả lời từng trường hợp thử nghiệm trong thời gian O(1). 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(n²) hoặc tệ hơn | O(n²) | Quá chậm | 
 | Tối ưu | O(1) cho mỗi trường hợp thử nghiệm | O(1) | Đã chấp nhận | 
@@ -59,7 +59,7 @@ Bây giờ chúng ta có thể suy luận hoàn toàn bằng toán học: đồ 
 4. Nếu`n = 2`, đồ thị có thể có 0 hoặc 1 cạnh. Đường kính sẽ là 1 nếu có cạnh, 0 nếu không có. Kiểm tra xem điều này có thỏa mãn không`k-1`. 
 5. Đối với`n >= 3`, đồ thị phải được kết nối. Vì thế`m >= n-1`. Nếu như`m < n-1`, xuất ra "KHÔNG". 
 6. Số cạnh tối đa có thể là$\frac{n(n-1)}{2}$. Nếu như`m > n(n-1)/2`, xuất ra "KHÔNG". 
-7. Yêu cầu về đường kính phụ thuộc vào`k`. Đồ thị hình sao với`n >= 3`có đường kính 2. Vậy nếu`k = 1`, điều đó là không thể. Nếu như`k = 2`, chỉ một đồ thị đầy đủ mới có thể có đường kính 1, vì vậy`m`phải bằng`n(n-1)/2`. Nếu không thì,`k >= 3`luôn có thể đạt được miễn là`n >= 3`Và`m`nằm trong phạm vi hợp lệ. 
+7. Yêu cầu về đường kính phụ thuộc vào`k`. Đồ thị hình sao với`n >= 3`có đường kính 2. Vậy nếu`k = 1`, điều đó là không thể. Nếu như`k = 2`, chỉ một đồ thị đầy đủ mới có thể có đường kính 1, vì vậy`m`phải bằng`n(n-1)/2`. Nếu không thì,`k >= 3`luôn luôn có thể đạt được miễn là`n >= 3`Và`m`nằm trong phạm vi hợp lệ. 
 8. Nếu tất cả các điều kiện đều được thỏa mãn, xuất ra "CÓ". Nếu không thì xuất ra "NO". 
 
 Tại sao nó hoạt động: Thuật toán dựa trên các đặc tính toán học của đồ thị được kết nối và đường kính đã biết của các cấu trúc tiêu chuẩn (chuỗi, ngôi sao, hoàn chỉnh). Mỗi lần kiểm tra tương ứng trực tiếp với một ràng buộc không thể thực hiện được. Vì chúng ta chỉ suy luận về số lượng và giới hạn nên không cần xây dựng biểu đồ thực tế. 
@@ -92,7 +92,7 @@ def main():
 
 if __name__ == "__main__":
     main()
-```Giải pháp trước tiên xử lý các đồ thị nhỏ nhất có yêu cầu về số cạnh và đường kính là các trường hợp góc. Sau đó, nó tính toán các cạnh tối thiểu và tối đa cho một đồ thị được kết nối và áp dụng trực tiếp logic đường kính dựa trên cấu trúc đồ thị hình sao và hoàn chỉnh. Điều này đảm bảo O(1) cho mỗi trường hợp thử nghiệm. 
+```Giải pháp trước tiên xử lý các đồ thị nhỏ nhất có yêu cầu về số cạnh và đường kính là các trường hợp góc. Sau đó, nó tính toán các cạnh tối thiểu và tối đa cho một đồ thị được kết nối và áp dụng trực tiếp logic đường kính dựa trên cấu trúc đồ thị ngôi sao và hoàn chỉnh. Điều này đảm bảo O(1) cho mỗi trường hợp thử nghiệm. 
 
 ## Ví dụ đã hoạt động 
 
