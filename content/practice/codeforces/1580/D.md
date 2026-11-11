@@ -38,7 +38,7 @@ Quan sát quan trọng là tổng gấp đôi trên mức tối thiểu có th�
 
 Cái nhìn sâu sắc là đối với mỗi vị trí$i$chúng tôi bao gồm, sự đóng góp tối thiểu của nó cho tất cả các khoảng có thể được tính toán tăng dần bằng cách sử dụng ngăn xếp đơn điệu để theo dõi các phần tử nhỏ hơn trước đó. Điều này biến tổng kép lồng nhau thành một chuỗi đóng góp cộng gộp có thể quản lý được. Sự phức tạp trở nên$O(n m)$bởi vì chúng tôi chỉ lặp qua tất cả các vị trí cho mỗi độ dài chuỗi con. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(n^m * m^2) | O(n^2) | Quá chậm | 
 | DP + Ngăn xếp đơn điệu | O(n m) | O(n m) | Đã chấp nhận | 

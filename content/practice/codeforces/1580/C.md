@@ -38,7 +38,7 @@ Thông tin chi tiết quan trọng đến từ việc quan sát rằng tàu có 
 
 Về bản chất, brute-force hoạt động vì bạn có thể kiểm tra từng chuyến tàu riêng lẻ nhưng không thành công khi độ dài chu kỳ quá lớn và quá trình mô phỏng trở nên quá dài. Việc quan sát thấy các chu kỳ lặp lại định kỳ cho phép chúng tôi tránh lặp lại hàng ngày và thay vào đó xử lý các bản cập nhật hàng loạt. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(m × n) | O(n) | Quá chậm | 
 | Tối ưu | O(m√m) | O(n + m) | Đã chấp nhận | 
@@ -46,12 +46,12 @@ Về bản chất, brute-force hoạt động vì bạn có thể kiểm tra t�
 ## Hướng dẫn thuật toán 
 
 1. Tính ngưỡng`B = sqrt(m)`để phân biệt chu kỳ nhanh và chậm. Bất kỳ chuyến tàu nào có`x_i + y_i < B`là nhanh, nếu không thì chậm. Điều này cân bằng số lượng chuyến tàu mỗi loại với số ngày. 
-2. Đối với mỗi đoàn tàu chạy chậm, khi được thêm vào, hãy lên lịch các khoảng thời gian bảo trì bằng cách sử dụng một mảng khác nhau. Đối với mỗi khoảng thời gian`[start_day, end_day)`, tăng bộ đếm tại`start_day`và giảm nó tại`end_day`. Khi tàu rời đi sớm, hãy ngừng lên lịch cho các chuyến tàu tiếp theo. 
-3. Đối với các chuyến tàu chạy nhanh, hãy tính toán trước một mảng có kích thước`cycle_length`thể hiện số lượng đoàn tàu đang được bảo trì trong mỗi ngày của chu trình. Khi một đoàn tàu được thêm vào, hãy tăng các độ lệch thích hợp và khi loại bỏ nó, hãy giảm các độ lệch tương tự. Điều này cho phép tra cứu nhanh chóng bất kỳ ngày nào bằng cách`(day - add_day) % cycle_length`. 
+2. Đối với mỗi đoàn tàu tốc độ chậm, khi được thêm vào, hãy lên lịch các khoảng thời gian bảo trì bằng cách sử dụng một mảng khác nhau. Đối với mỗi khoảng thời gian`[start_day, end_day)`, tăng bộ đếm tại`start_day`và giảm nó tại`end_day`. Khi tàu rời đi sớm, hãy ngừng lên lịch cho các chuyến tàu tiếp theo. 
+3. Đối với các đoàn tàu chạy nhanh, hãy tính toán trước một mảng có kích thước`cycle_length`thể hiện số lượng đoàn tàu đang được bảo trì trong mỗi ngày của chu trình. Khi một đoàn tàu được thêm vào, hãy tăng các độ lệch thích hợp và khi loại bỏ nó, hãy giảm các độ lệch tương tự. Điều này cho phép tra cứu nhanh chóng bất kỳ ngày nào bằng cách`(day - add_day) % cycle_length`. 
 4. Cho mỗi ngày`t`trong chuỗi sự kiện, tổng số đoàn tàu đang bảo trì là tổng của mảng chênh lệch tại`t`(đối với các chuyến tàu chậm) cộng với tổng của tất cả các mảng có chu kỳ nhanh cho ngày hôm đó. Xuất ra số tiền này. 
 5. Cập nhật kết cấu khi một đoàn tàu bị di dời để những ngày trong tương lai phản ánh chính xác sự vắng mặt của đoàn tàu. 
 
-Tại sao nó hoạt động: Các chuyến tàu chạy chậm chỉ được theo dõi rõ ràng trong những ngày chúng thực sự được bảo trì, vì vậy chúng tôi không bao giờ mô phỏng những ngày không cần thiết. Các chuyến tàu chạy nhanh được theo dõi bằng độ dài chu kỳ modulo bù, tận dụng đặc tính tuần hoàn. Cùng với nhau, hai cơ chế này đảm bảo số lượng bảo trì chính xác hàng ngày. Các bất biến là: mỗi chuyến tàu chậm chỉ đóng góp vào những ngày bảo trì chính xác và mỗi chuyến tàu nhanh đóng góp theo mảng chu trình được tính toán trước của nó. 
+Tại sao nó hoạt động: Các chuyến tàu chạy chậm chỉ được theo dõi rõ ràng trong những ngày chúng thực sự được bảo trì, vì vậy chúng tôi không bao giờ mô phỏng những ngày không cần thiết. Các chuyến tàu chạy nhanh được theo dõi bằng độ dài chu kỳ modulo bù, tận dụng đặc tính tuần hoàn. Cùng với nhau, hai cơ chế này đảm bảo số lượng bảo trì chính xác hàng ngày. Các bất biến là: mỗi chuyến tàu chậm chỉ đóng góp vào những ngày bảo trì chính xác và mọi chuyến tàu nhanh đều đóng góp theo mảng chu trình được tính toán trước của nó. 
 
 ## Giải pháp Python```python
 import sys
@@ -117,7 +117,7 @@ def main():
 
 if __name__ == "__main__":
     main()
-```Giải pháp đầu tiên phân vùng thành các loại chậm và nhanh để xử lý từng loại một cách hiệu quả. Mảng khác biệt theo dõi sự đóng góp bảo trì của các đoàn tàu chậm, trong khi các đoàn tàu nhanh sử dụng mảng chu trình được tính toán trước để xử lý những thay đổi thường xuyên. Một điểm tinh tế đang sử dụng`day - add_day[k]`độ dài chu kỳ modulo cho tàu nhanh, điều chỉnh chính xác thời gian bảo trì đầu tiên. Cần cẩn thận để không tính một chuyến tàu vào ngày nó bị dỡ bỏ. 
+```Giải pháp đầu tiên phân chia các phân vùng thành các loại chậm và nhanh để xử lý từng loại một cách hiệu quả. Mảng khác biệt theo dõi sự đóng góp bảo trì của các đoàn tàu chậm, trong khi các đoàn tàu nhanh sử dụng mảng chu trình được tính toán trước để xử lý những thay đổi thường xuyên. Một điểm tinh tế đang sử dụng`day - add_day[k]`độ dài chu kỳ modulo cho tàu nhanh, điều chỉnh chính xác thời gian bảo trì đầu tiên. Cần cẩn thận để không tính một chuyến tàu vào ngày nó bị dỡ bỏ. 
 
 ## Ví dụ đã hoạt động 
 
@@ -146,7 +146,7 @@ Dấu vết này cho thấy thuật toán tính toán chính xác số lượng 
 | Thời gian | O(m√m) | Các đoàn tàu nhanh được xử lý bằng cách bù chu kỳ, các đoàn tàu chậm được xử lý bằng mảng sai phân, cả hai đều có quy mô kết hợp gần bằng m√m | 
 | Không gian | O(n + m) | Lưu trữ mảng chênh lệch cho tàu chậm và mảng chu kỳ nhỏ cho tàu nhanh | 
 
-Điều này rất phù hợp trong các giới hạn vì m 2×10^5, cho phép thực hiện khoảng 2×10^5 × 500 phép tính trong trường hợp xấu nhất. 
+Điều này rất phù hợp trong các giới hạn vì m 2×10^5, mang lại khoảng 2×10^5 × 500 phép tính trong trường hợp xấu nhất. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io

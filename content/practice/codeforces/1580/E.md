@@ -24,7 +24,7 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi có một mạng lưới các ga đường sắt ở Gensokyo, được kết nối bằng đường sắt hai chiều với chiều dài dương. Các trạm được đánh số từ 1 đến$n$, với trạm 1 là trung tâm chính. Mạng được kết nối đầy đủ nên mọi trạm đều có thể truy cập được từ bất kỳ trạm nào khác. Mỗi trạm$i$có một chi phí$w_i$gắn liền với việc xây dựng tuyến đường sắt một chiều mới bắt đầu từ đó. Mục tiêu là bổ sung các tuyến đường sắt một chiều sao cho từ ga 1 đến bất kỳ ga nào khác, tồn tại ít nhất hai tuyến đường ngắn nhất tách rời nhau, ngoại trừ các điểm cuối. Ngoài ra, chúng tôi phải duy trì khoảng cách ngắn nhất ban đầu giữa trạm 1 và tất cả các trạm khác. Sau khi xây dựng các tuyến đường sắt một chiều này, chi phí có thể tăng ở các ga cụ thể do sự cố và chúng tôi được yêu cầu báo cáo tổng chi phí xây dựng tối thiểu trước và sau mỗi sự cố. 
+Chúng tôi có một mạng lưới các ga đường sắt ở Gensokyo, được kết nối bằng đường sắt hai chiều với chiều dài dương. Các trạm được đánh số từ 1 đến$n$, với trạm 1 là trung tâm chính. Mạng được kết nối đầy đủ nên mọi trạm đều có thể truy cập được từ bất kỳ trạm nào khác. Mỗi trạm$i$có một chi phí$w_i$gắn liền với việc xây dựng tuyến đường sắt một chiều mới bắt đầu từ đó. Mục tiêu là bổ sung các tuyến đường sắt một chiều sao cho từ ga 1 đến bất kỳ ga nào khác, tồn tại ít nhất hai tuyến đường ngắn nhất tách rời nhau ngoại trừ các điểm cuối. Ngoài ra, chúng tôi phải duy trì khoảng cách ngắn nhất ban đầu giữa trạm 1 và tất cả các trạm khác. Sau khi xây dựng các tuyến đường sắt một chiều này, chi phí có thể tăng ở các ga cụ thể do sự cố và chúng tôi được yêu cầu báo cáo tổng chi phí xây dựng tối thiểu trước và sau mỗi sự cố. 
 
 Kích thước đầu vào là đáng kể:$n$có thể đạt được$2 \cdot 10^5$,$m$lên đến$3 \cdot 10^5$, và có thể có$2 \cdot 10^5$sự cố. Vì vậy mỗi hoạt động phải được$O(n \log n)$hoặc$O(m \log n)$lúc tệ nhất. Bất kỳ thuật toán nào với$O(n^2)$hoặc$O(n \cdot m)$sự phức tạp sẽ quá chậm. 
 
@@ -38,7 +38,7 @@ Phương pháp tiếp cận mạnh mẽ sẽ xem xét từng cặp đường t�
 
 Điểm mấu chốt là vấn đề giảm xuống cấu trúc cây đường đi ngắn nhất bắt nguồn từ trạm 1. Nếu lần đầu tiên chúng ta tính toán khoảng cách ngắn nhất bằng thuật toán Dijkstra, chúng ta có thể phân loại từng cạnh thành một phần của cây đường đi ngắn nhất hoặc một lối tắt tiềm năng. Mỗi trạm cần một đường đi ngắn thứ hai không trùng với đỉnh ngoại trừ các điểm cuối. Điều này có thể đạt được bằng cách kết nối mỗi nút với một trong các nút cha của nó trong cây BFS/Dijkstra thông qua đường sắt một chiều. Vì chỉ có trạm khởi đầu mới quan trọng để tính toán chi phí nên chúng ta có thể chọn trạm có chi phí tối thiểu trong số các trạm gốc ứng cử viên cho mỗi nút. Khi chi phí tối thiểu ban đầu được tính toán, việc cập nhật nó cho một sự cố chỉ yêu cầu điều chỉnh tổng bằng chênh lệch chi phí của nhà ga nhân với số lượng đường sắt một chiều bắt đầu từ nhà ga đó. Điều này cho phép chúng tôi duy trì tổng hoạt động một cách hiệu quả, giảm độ phức tạp xuống còn$O((n + m) \log n + q)$. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(2^n) | O(n^2) | Quá chậm | 
 | Dijkstra + Cây BFS xây dựng | O((n + m) log n + q) | O(n + m) | Đã chấp nhận | 
@@ -49,10 +49,10 @@ Phương pháp tiếp cận mạnh mẽ sẽ xem xét từng cặp đường t�
 2. Chỉ xây dựng DAG gồm các cạnh có đường dẫn ngắn nhất. Đối với mọi cạnh$(u,v)$, bao gồm nó nếu$dist[u] + d = dist[v]$hoặc$dist[v] + d = dist[u]$. Điều này cung cấp cho chúng ta một biểu đồ phân lớp trong đó mọi đường dẫn đều tôn trọng khoảng cách ngắn nhất ban đầu. 
 3. Đối với mỗi trạm$i$khác 1, xác định các ứng viên tiền nhiệm theo con đường ngắn nhất. Chi phí tối thiểu để xây dựng tuyến đường sắt một chiều đảm bảo hai tuyến đường ngắn nhất tách rời nhau là tối thiểu$w[p]$giữa các ứng cử viên tiền nhiệm. Về cơ bản, chúng tôi mô phỏng việc thêm tuyến đường sắt một chiều "dự phòng" từ hãng mẹ rẻ nhất đến$i$. 
 4. Tổng hợp tổng chi phí bằng cách cộng chi phí xây dựng tối thiểu cho từng ga$i > 1$. Đây là câu trả lời trước mọi sự cố. 
-5. Đối với mỗi sự cố làm tăng chi phí xây dựng đường sắt từ ga$k_i$qua$x_i$, tăng$w[k_i]$tương ứng. Nếu bất kỳ đường sắt một chiều nào bắt đầu từ$k_i$trong lựa chọn được tính toán trước của chúng tôi, hãy tăng tổng chi phí theo số lần đường sắt như vậy$x_i$. Báo cáo tổng chi phí đã cập nhật. 
-6. Lặp lại bước 5 cho từng sự cố, duy trì tổng hoạt động hiệu quả mà không cần tính toán lại từ đầu. 
+5. Đối với mỗi sự cố làm tăng chi phí xây dựng đường sắt từ ga$k_i$qua$x_i$, tăng$w[k_i]$tương ứng. Nếu bất kỳ đường sắt một chiều nào bắt đầu từ$k_i$trong lựa chọn được tính toán trước của chúng tôi, hãy tăng tổng chi phí lên số lần đường sắt như vậy$x_i$. Báo cáo tổng chi phí đã cập nhật. 
+6. Lặp lại bước 5 cho mỗi sự cố, duy trì tổng hoạt động hiệu quả mà không cần tính toán lại từ đầu. 
 
-Tại sao nó hoạt động: Thuật toán của Dijkstra đảm bảo khoảng cách ngắn nhất. Việc hạn chế xây dựng đối với cây gốc có đường dẫn ngắn nhất sẽ duy trì khoảng cách trong khi thêm các đường dẫn thứ hai. Việc chọn cha mẹ có chi phí tối thiểu đảm bảo tổng chi phí được giảm thiểu. Thông tin cập nhật về sự cố là chính xác vì chúng tôi chỉ thêm những trạm thực sự đóng góp vào tổng chi phí. 
+Tại sao nó hoạt động: Thuật toán của Dijkstra đảm bảo khoảng cách ngắn nhất. Việc hạn chế xây dựng đối với cây gốc có đường dẫn ngắn nhất sẽ duy trì khoảng cách trong khi thêm các đường dẫn thứ hai. Việc chọn cha mẹ có chi phí tối thiểu sẽ đảm bảo tổng chi phí được giảm thiểu. Thông tin cập nhật về sự cố là chính xác vì chúng tôi chỉ thêm những trạm thực sự đóng góp vào tổng chi phí. 
 
 ## Giải pháp Python```python
 import sys

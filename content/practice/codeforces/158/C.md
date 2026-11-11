@@ -75,7 +75,7 @@ cd ..
 
 ## Phương pháp tiếp cận 
 
-Ý tưởng trực tiếp nhất là coi thư mục hiện tại như một chuỗi và thao tác nó theo đúng nghĩa đen mỗi khi lệnh xuất hiện. 
+Ý tưởng trực tiếp nhất là coi thư mục hiện tại là một chuỗi và thao tác nó theo đúng nghĩa đen mỗi khi lệnh xuất hiện. 
 
 Đối với một`cd`, chúng ta có thể nối các chuỗi, liên tục tìm kiếm dấu gạch chéo, xóa thủ công các thư mục mẹ khi nhìn thấy`..`, và xây dựng lại kết quả. Điều này hoạt động vì đường dẫn ngắn. Ngay cả khi mỗi lệnh xử lý một chuỗi 200 ký tự nhiều lần thì tổng công việc vẫn rất nhỏ. 
 
@@ -105,7 +105,7 @@ Nếu không, chúng tôi đẩy tên thư mục.
 
 Giải pháp thao tác chuỗi brute-force có thể được chấp nhận trong các ràng buộc này, nhưng cách biểu diễn ngăn xếp đơn giản hơn, an toàn hơn và phản ánh trực tiếp logic hệ thống tệp thực tế. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Thao tác chuỗi Brute Force | O(n × L2) | O(L) | Đã chấp nhận | 
 | Mô phỏng dựa trên ngăn xếp | O (n × L) | O(L) | Đã chấp nhận | 
@@ -141,7 +141,7 @@ Nếu thành phần này trống, hãy bỏ qua nó.
 Điều này mô phỏng việc di chuyển đến thư mục mẹ. 
 8. Nếu không, hãy thêm thành phần đó vào ngăn xếp. 
 
-Điều này mô phỏng việc nhập vào một thư mục con. 
+Điều này mô phỏng việc nhập một thư mục con. 
 
 ### Tại sao nó hoạt động 
 
@@ -231,7 +231,7 @@ def solve():
 solve()
 ```Việc thiết lập lại đường dẫn tuyệt đối là một điểm tinh tế khác. Chúng ta phải xóa ngăn xếp trước khi xử lý các thành phần. Nếu chúng tôi xóa nó sau đó, việc điều hướng tương đối bên trong cùng một đường dẫn sẽ hoạt động không chính xác. 
 
-Bài toán đảm bảo chúng ta không bao giờ di chuyển lên trên gốc, vì vậy`current.pop()`luôn được an toàn. 
+Bài toán đảm bảo rằng chúng ta không bao giờ di chuyển lên trên gốc, vì vậy`current.pop()`luôn được an toàn. 
 
 ## Ví dụ đã hoạt động 
 

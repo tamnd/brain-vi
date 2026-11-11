@@ -1,6 +1,6 @@
 ---
 title: "CF 158D - Tượng Băng"
-description: "Chúng ta có n tác phẩm điêu khắc bằng băng được đặt đều trên một vòng tròn. Mỗi tác phẩm điêu khắc có một giá trị, có thể tích cực hoặc tiêu cực. Chúng tôi có thể loại bỏ một số tác phẩm điêu khắc, nhưng những tác phẩm điêu khắc còn lại vẫn phải tạo thành một đa giác đều."
+description: "Chúng ta có n tác phẩm điêu khắc bằng băng được đặt đều trên một vòng tròn. Mỗi tác phẩm điêu khắc có một giá trị, có thể dương hoặc âm. Chúng tôi có thể loại bỏ một số tác phẩm điêu khắc, nhưng những tác phẩm điêu khắc còn lại vẫn phải tạo thành một đa giác đều."
 date: "2026-05-29T00:00:00+07:00"
 tags: ["codeforces", "competitive-programming", "*special", "brute-force", "number-theory"]
 categories: ["algorithms"]
@@ -24,7 +24,7 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi có`n`tác phẩm điêu khắc băng được đặt đều trên một vòng tròn. Mỗi tác phẩm điêu khắc có một giá trị, có thể tích cực hoặc tiêu cực. Chúng tôi có thể loại bỏ một số tác phẩm điêu khắc, nhưng những tác phẩm điêu khắc còn lại vẫn phải tạo thành một đa giác đều. 
+Chúng tôi có`n`tác phẩm điêu khắc băng được đặt đều trên một vòng tròn. Mỗi tác phẩm điêu khắc có một giá trị, có thể dương hoặc âm. Chúng tôi có thể loại bỏ một số tác phẩm điêu khắc, nhưng những tác phẩm điêu khắc còn lại vẫn phải tạo thành một đa giác đều. 
 
 Vì các tác phẩm điêu khắc không thể di chuyển nên các đỉnh còn lại phải cách đều nhau dọc theo đường tròn ban đầu. Điều đó có nghĩa là nếu chúng ta giữ`k`thì tác phẩm điêu khắc`k`phải chia`n`, và các tác phẩm điêu khắc được giữ lại có được bằng cách nhảy liên tục theo một kích thước bước cố định. 
 
@@ -36,7 +36,7 @@ Các ràng buộc đủ nhỏ để cho phép thử nhiều ước của`n`, nh�
 
 Có một số sai lầm dễ dàng trong vấn đề này. 
 
-Một lỗi phổ biến là chỉ kiểm tra các phân đoạn liền kề. Các tác phẩm điêu khắc còn lại không bắt buộc phải nằm liền kề trên vòng tròn. 
+Một lỗi phổ biến là chỉ kiểm tra các đoạn liền kề. Các tác phẩm điêu khắc còn lại không bắt buộc phải nằm liền kề trên vòng tròn. 
 
 Coi như:```
 8
@@ -87,7 +87,7 @@ step = n / k
 
 Số ước của một số lên đến`20000`nhỏ nên tổng công gần như tuyến tính. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Tập hợp con Brute Force | O(2^n) | O(n) | Quá chậm | 
 | Đếm chu kỳ theo ước số | O(n × d(n)) | O(1) | Đã chấp nhận | 
@@ -309,7 +309,7 @@ Bây giờ hãy xem xét một số lượng lớn các tác phẩm điêu khắ
 
 Thuật toán tính toán:```
 1 + 2 + 3 + 4 + 5 = 15
-```Điều này xử lý chính xác thực tế là mọi số nguyên tố có kích thước bước khác 0 đều đi qua toàn bộ vòng tròn. 
+```Điều này xử lý một cách chính xác thực tế là mọi số nguyên tố có kích thước bước khác 0 đều đi qua toàn bộ vòng tròn. 
 
 Cuối cùng, hãy xem xét các chu kỳ lặp đi lặp lại:```
 8

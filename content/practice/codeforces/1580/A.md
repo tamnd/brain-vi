@@ -1,6 +1,6 @@
 ---
 title: "CF 1580A - Cổng thông tin"
-description: "Chúng tôi được cung cấp một lưới nhị phân. Ô chứa 1 là khối obsidian và ô chứa 0 là khối trống. Chúng ta có thể lật bất kỳ ô nào, thay đổi 0 thành 1 hoặc 1 thành 0, với chi phí một lần cho mỗi lần lật."
+description: "Chúng tôi được cung cấp một lưới nhị phân. Ô chứa 1 là khối obsidian và ô chứa 0 trống. Chúng ta có thể lật bất kỳ ô nào, thay đổi 0 thành 1 hoặc 1 thành 0, với chi phí một lần cho mỗi lần lật."
 date: "2026-06-10T10:14:21+07:00"
 tags: ["codeforces", "competitive-programming", "brute-force", "data-structures", "dp", "greedy", "implementation"]
 categories: ["algorithms"]
@@ -34,7 +34,7 @@ Một cổng thông tin có cấu trúc rất cụ thể. Hình chữ nhật ph�
 
 Câu trả lời cho một trường hợp thử nghiệm là số lần lật tối thiểu cần thiết để ít nhất một hình chữ nhật con trở thành một cổng. 
 
-Các ràng buộc là manh mối đầu tiên cho thấy việc tìm kiếm trực tiếp là không thể. Cả hai kích thước có thể đạt tới 400. Một hình chữ nhật được xác định bằng cách chọn hai hàng và hai cột, điều này đã cho kết quả gần đúng$400^4$khả năng. Ngay cả việc kiểm tra một hình chữ nhật một cách hiệu quả cũng không thể cứu được giải pháp như vậy. 
+Các ràng buộc là manh mối đầu tiên cho thấy việc tìm kiếm trực tiếp là không thể. Cả hai kích thước có thể đạt tới 400. Một hình chữ nhật được xác định bằng cách chọn hai hàng và hai cột, điều này đã cho kết quả gần đúng$400^4$khả năng. Ngay cả việc kiểm tra một hình chữ nhật một cách hiệu quả cũng sẽ không lưu được giải pháp như vậy. 
 
 Câu lệnh này cũng chứa một sự đảm bảo bất thường: tổng của tất cả số hàng trong các trường hợp thử nghiệm nhiều nhất là 400 và tổng của tất cả số lượng cột cũng nhiều nhất là 400. Điều này có nghĩa là một giải pháp xung quanh$O(n^2m)$hoặc$O(nm^2)$có thể chấp nhận được, trong khi$O(n^2m^2)$là quá lớn. 
 
@@ -98,7 +98,7 @@ Sự đóng góp chi phí của mỗi cột có thể được tính toán độ
 
 Giải pháp được chấp nhận chạy trong$O(n^2m)$. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | Hình chữ nhật O(n²m²), ngay cả khi có kiểm tra O(1) | O(nm) | Quá chậm | 
 | Tối ưu | O(n²m) | O(m) cộng với tổng tiền tố | Đã chấp nhận | 
@@ -109,7 +109,7 @@ Giải pháp được chấp nhận chạy trong$O(n^2m)$.
 
 Đối với mỗi cột, chúng ta cần biết nhanh có bao nhiêu cột xuất hiện giữa hai hàng. 
 
-Xây dựng tổng tiền tố cột:$$col[j][i]$$lưu trữ số lượng những cái trong cột`j`từ hàng`1`qua hàng`i`. 
+Xây dựng tổng tiền tố cột:$$col[j][i]$$lưu trữ số lượng cái trong cột`j`từ hàng`1`qua hàng`i`. 
 
 Sau đó, mọi truy vấn phân đoạn dọc đều trở thành O(1). 
 
@@ -137,10 +137,10 @@ Khi đó các cột giữa viền trái và viền phải sẽ trở thành cộ
 2. Xác định$$value[c] = sideCost[c] - interiorCost[c]$$Điều này đo lường chúng ta phải trả thêm bao nhiêu chi phí nếu cột`c`trở thành đường viền bên thay vì cột bên trong. 
 3. Trong khi quét các cột từ trái sang phải, hãy duy trì đường viền bên trái tốt nhất có thể trước đó ít nhất ba cột. 
 
-Chiều rộng phải ít nhất là 4, vì vậy:$$right - left \ge 3$$4. Với mỗi cột viền phải, hãy tính$$total = sideCost[right] + prefixInteriorCost(right-1) + bestLeft$$Ở đâu`bestLeft`lưu trữ giá trị tối thiểu của$$sideCost[left] - prefixInteriorCost(left)$$over all valid left borders.
- 5. Update the global answer.
+Chiều rộng phải ít nhất là 4, vì vậy:$$right - left \ge 3$$4. Với mỗi cột viền phải, hãy tính$$total = sideCost[right] + prefixInteriorCost(right-1) + bestLeft$$Ở đâu`bestLeft`lưu trữ giá trị tối thiểu của$$sideCost[left] - prefixInteriorCost(left)$$trên tất cả các đường viền bên trái hợp lệ. 
+5. Cập nhật câu trả lời chung. 
 
- ### Tại sao nó hoạt động 
+### Tại sao nó hoạt động 
 
 Đối với các hàng trên và dưới cố định, mỗi cột thuộc đúng một trong ba loại: 
 
@@ -224,7 +224,7 @@ solve()
 
 Mảng`pref`lưu trữ tổng tiền tố của`interior`. Điều này cho phép chúng ta thu được chi phí của tất cả các cột bên trong giữa hai đường viền dưới dạng sự khác biệt đơn giản của các tiền tố. 
 
-Biến`best`là sự tối ưu hóa quan trọng. Khi quá trình quét đến một cột có thể đóng vai trò là đường viền bên phải,`best`đã chứa đường viền bên trái hợp lệ rẻ nhất. Bởi vì chiều rộng phải ít nhất là bốn, chỉ những cột có ít nhất ba vị trí trước đó mới được phép nhập mức tối thiểu này. 
+Biến`best`là sự tối ưu hóa quan trọng. Khi quá trình quét đến một cột có thể đóng vai trò là đường viền bên phải,`best`đã chứa đường viền bên trái hợp lệ rẻ nhất. Vì chiều rộng phải ít nhất là bốn nên chỉ các cột có ít nhất ba vị trí trước đó mới được phép nhập mức tối thiểu này. 
 
 Lỗi triển khai phổ biến nhất là lỗi từng lỗi một trong các chỉ mục tiền tố. biểu hiện`pref[left + 1]`là cố ý vì cột`left`bản thân nó không được tính vào các cột bên trong. 
 

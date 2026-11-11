@@ -26,7 +26,7 @@ draft: false
 
 Chúng tôi được yêu cầu sắp xếp các cuộc gọi điện thoại trong ngày cho ông Jackson theo cách tối đa hóa khoảng thời gian ngủ không bị gián đoạn dài nhất. Mỗi cuộc gọi có thời gian bắt đầu và thời lượng cụ thể. Nếu một cuộc gọi đến khi anh ấy đang bận, cuộc gọi đó sẽ được xếp hàng đợi và xử lý ngay sau khi kết thúc cuộc gọi hiện tại. Ông Jackson có thể bỏ qua tối đa _k_ cuộc gọi. Mục tiêu của chúng tôi là tìm ra khoảng thời gian liên tục tối đa trong ngày mà anh ấy không nói chuyện cũng như không xếp hàng để nói chuyện. 
 
-Đầu vào đảm bảo rằng số lượng cuộc gọi _n_ tối đa là 4000 và mỗi thời gian và thời lượng cuộc gọi phù hợp trong một ngày là 86400 giây. Giới hạn này đủ nhỏ để có thể chấp nhận được một thuật toán có các phép toán khoảng O(n2). Tuy nhiên, những cách tiếp cận ngây thơ thử mọi tổ hợp lệnh gọi bị bỏ qua, có thể là O(2ⁿ), là không thể. Mỗi cuộc gọi có thời gian bắt đầu duy nhất nhưng thời lượng có thể trùng nhau, vì vậy chúng tôi phải xử lý hàng đợi một cách cẩn thận. 
+Đầu vào đảm bảo rằng số lượng cuộc gọi _n_ tối đa là 4000 và mỗi thời gian và thời lượng cuộc gọi phù hợp trong một ngày là 86400 giây. Giới hạn này đủ nhỏ để có thể chấp nhận được một thuật toán có các phép toán khoảng O(n2). Tuy nhiên, những cách tiếp cận ngây thơ thử mọi tổ hợp lệnh gọi bị bỏ qua, có thể là O(2ⁿ), là không thể. Mỗi cuộc gọi có thời gian bắt đầu duy nhất nhưng thời lượng có thể trùng nhau, vì vậy chúng ta phải xử lý hàng đợi một cách cẩn thận. 
 
 Trường hợp khó khăn không rõ ràng xảy ra khi bỏ qua cuộc gọi là tối ưu ngay cả đối với các cuộc gọi không chồng chéo. Ví dụ: nếu có ba cuộc gọi tại các thời điểm 100, 200, 300, mỗi cuộc gọi có thời lượng 100 và _k_ = 2, thì thời gian ngủ tối đa đạt được bằng cách bỏ qua hai cuộc gọi đầu tiên, mang lại thời gian ngủ dài từ 1 đến 99. Một thuật toán bất cẩn chỉ bỏ qua các cuộc gọi chồng chéo sẽ tạo ra thời gian ngủ nhỏ hơn. 
 
@@ -34,13 +34,13 @@ Một trường hợp khác là khi bỏ qua cuộc gọi phải được cân b
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận bạo lực sẽ cố gắng bỏ qua tất cả các tập hợp con của cuộc gọi, mô phỏng quá trình xử lý cuộc gọi và đo phân đoạn rảnh dài nhất. Điều này đúng, nhưng với n 4000, số tập con 2ⁿ lớn về mặt thiên văn và hoàn toàn không khả thi. 
+Cách tiếp cận bạo lực sẽ cố gắng bỏ qua tất cả các tập hợp con của cuộc gọi, mô phỏng quá trình xử lý cuộc gọi và đo phân đoạn rảnh dài nhất. Điều này đúng, nhưng với n ≤ 4000, số lượng tập hợp con 2ⁿ lớn về mặt thiên văn và hoàn toàn không khả thi. 
 
 Một quan sát quan trọng là thứ tự xử lý các cuộc gọi xếp hàng là mang tính quyết định. Sau khi chúng tôi quyết định bỏ qua cuộc gọi nào, các cuộc gọi còn lại sẽ được xử lý theo thứ tự thời gian tăng dần và các cuộc gọi xếp hàng luôn được xử lý ngay sau khi kết thúc cuộc gọi hiện tại. Điều này gợi ý về lập trình động: chúng ta có thể duy trì trạng thái DP biểu thị thời gian sớm nhất sau khi xử lý cuộc gọi i đầu tiên với cuộc gọi j bị bỏ qua. Đặt dp[i][j] biểu thị thời điểm sớm nhất ông Jackson rảnh sau khi xử lý cuộc gọi i đầu tiên trong khi bỏ qua chính xác cuộc gọi j. Việc chuyển sang dp[i+1][j] xảy ra nếu chúng ta xử lý cuộc gọi tiếp theo một cách bình thường, cuộc gọi này có thể bắt đầu muộn hơn do phải xếp hàng và dp[i+1][j+1] xảy ra nếu chúng ta bỏ qua cuộc gọi. Khi đó, thời gian ngủ tối đa là khoảng cách lớn nhất giữa các khoảng thời gian bận rộn liên tiếp được tính toán từ DP này. 
 
 Điều này làm giảm vấn đề từ thời gian hàm mũ xuống O(n * k), điều này có thể chấp nhận được vì n và k là 4000. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(2ⁿ) | O(n) | Quá chậm | 
 | Lập trình động | O(n * k) | O(n * k) | Đã chấp nhận | 

@@ -36,11 +36,11 @@ Các trường hợp khó khăn không rõ ràng bao gồm các tình huống tr
 
 Một cách tiếp cận bạo lực sẽ tạo ra tất cả$n!$hoán vị, lặp lại từng số và với mỗi số, tính toán tất cả các mảng con chứa nó để đếm các cực đại riêng biệt. Cách tiếp cận này đúng về mặt logic nhưng có độ phức tạp về thời gian giai thừa, khiến nó không thể thực hiện được đối với$n>10$. 
 
-Cái nhìn sâu sắc quan trọng đến từ việc hiểu điều gì tạo nên một con số$x$Tốt. Đối với một số$x$trong một hoán vị, số lượng cực đại phân biệt trong các mảng con chứa nó chỉ được xác định bởi vị trí tương đối của các số lớn hơn$x$. Nếu có chính xác$m-1$số lớn hơn$x$"tách" hoán vị xung quanh$x$, sau đó$x$will be good. Do đó, chúng ta có thể trình bày lại vấn đề theo cách tổ hợp: chọn số nào tốt, đặt các số lớn hơn tương ứng với mỗi số tốt để thỏa mãn số lượng cực đại và đếm các sắp xếp hợp lệ. 
+Cái nhìn sâu sắc quan trọng đến từ việc hiểu điều gì tạo nên một con số$x$Tốt. Đối với một số$x$trong một hoán vị, số lượng cực đại phân biệt trong các mảng con chứa nó chỉ được xác định bởi vị trí tương đối của các số lớn hơn$x$. Nếu có chính xác$m-1$số lớn hơn$x$"tách" hoán vị xung quanh$x$, sau đó$x$sẽ tốt thôi. Do đó, chúng ta có thể trình bày lại vấn đề theo cách tổ hợp: chọn số nào tốt, đặt các số lớn hơn tương ứng với mỗi số tốt để thỏa mãn số lượng cực đại và đếm các sắp xếp hợp lệ. 
 
 Lập trình động trên số lượng vị trí còn lại và "khe tốt" còn lại cho phép chúng tôi tính toán tổng số hoán vị hợp lệ mà không cần tạo ra chúng. Điều này làm giảm vấn đề xuống$O(n^3)$hoặc$O(n^2)$tùy thuộc vào việc thực hiện, khả thi đối với$n \le 100$. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(n! * n^3) | O(n) | Quá chậm | 
 | Tối ưu | O(n^3) | O(n^2) | Đã chấp nhận | 
@@ -92,7 +92,7 @@ def main():
 
 if __name__ == "__main__":
     main()
-```Mã đầu tiên tính toán trước các hệ số giai thừa và nhị thức theo modulo$p$để cho phép tính toán nhanh số lần chèn. Bảng DP được cập nhật lặp đi lặp lại, xem xét cả trường hợp số hiện tại tốt và trường hợp không. Số tổ hợp$C[i-1][m-1]$phản ánh việc chọn vị trí cho các số lớn hơn số hiện tại để thỏa mãn chính xác$m$cực đại. 
+```Mã đầu tiên tính toán trước các hệ số giai thừa và nhị thức theo modulo$p$để cho phép tính toán nhanh số lượng chèn. Bảng DP được cập nhật lặp đi lặp lại, xem xét cả trường hợp số hiện tại tốt và trường hợp không. Số tổ hợp$C[i-1][m-1]$phản ánh việc chọn vị trí cho các số lớn hơn số hiện tại để thỏa mãn chính xác$m$cực đại. 
 
 ## Ví dụ đã hoạt động 
 
