@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 6 phút 22s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cấp một chuỗi gồm các chữ cái viết thường. Trong một lần di chuyển, chúng ta được phép chọn chính xác một tập hợp con các vị trí, lấy các ký tự ở các vị trí đó và chỉ sắp xếp lại những ký tự đã chọn đó một cách tùy ý trong khi giữ tất cả các ký tự khác cố định ở vị trí ban đầu. 
@@ -32,9 +32,9 @@ Một cách hữu ích để suy nghĩ về quy trình là chuỗi cuối cùng 
 
 Các ràng buộc rất nhỏ: độ dài chuỗi tối đa là 40 và có tối đa 1000 trường hợp thử nghiệm. Điều này ngay lập tức gợi ý rằng các giải pháp lên tới khoảng O(n2) hoặc thậm chí O(n³) cho mỗi trường hợp thử nghiệm là an toàn, nhưng bất kỳ số mũ nào trong 40 vẫn sẽ là giới hạn trừ khi được cấu trúc cẩn thận. Tuy nhiên, cấu trúc thực sự của bài toán cho phép giải pháp quét tuyến tính. 
 
-Một vấn đề tế nhị là tập hợp con được chọn có thể ở bất kỳ vị trí nào, không nhất thiết phải liền kề nhau. Điều này có nghĩa là những lựa chọn tham lam ngây thơ như “sửa lỗi đảo ngược cục bộ” có thể thất bại, bởi vì một ký tự bị đặt sai vị trí có thể sửa được bằng cách tham gia vào quá trình sắp xếp lại toàn bộ tập hợp đã chọn. 
+Một vấn đề tế nhị là tập hợp con được chọn có thể ở bất kỳ vị trí nào, không nhất thiết phải liền kề nhau. Điều này có nghĩa là những lựa chọn tham lam ngây thơ như “sửa đảo ngược cục bộ” có thể thất bại, bởi vì một ký tự bị đặt sai vị trí có thể sửa được bằng cách tham gia vào quá trình sắp xếp lại toàn bộ tập hợp đã chọn. 
 
-Một cái bẫy tiềm ẩn khác là giả định rằng chúng ta phải khớp vị trí chuỗi đã sắp xếp theo từng vị trí với sự không khớp. Điều đó gần đúng với sự thật, nhưng vẫn chưa đủ trừ khi chúng ta giải thích được tại sao chỉ riêng sự không phù hợp đã là đặc điểm của lựa chọn tối ưu. 
+Một cái bẫy tiềm ẩn khác là giả định rằng chúng ta phải khớp vị trí chuỗi đã sắp xếp theo vị trí không khớp. Điều đó gần đúng với sự thật, nhưng vẫn chưa đủ trừ khi chúng ta giải thích được tại sao chỉ riêng sự không phù hợp đã là đặc điểm của lựa chọn tối ưu. 
 
 ## Phương pháp tiếp cận 
 
@@ -42,7 +42,7 @@ Chiến lược brute-force sẽ thử tất cả các tập hợp con vị trí
 
 Quan sát quan trọng là chúng ta thực sự không cần mô phỏng các tập hợp con. Chuỗi đích cuối cùng được cố định: đó là phiên bản được sắp xếp của chuỗi gốc. Câu hỏi duy nhất là vị trí nào đã phù hợp với mục tiêu này mà không bị di chuyển. 
 
-Nếu một ký tự ở vị trí i đã bằng ký tự sẽ xuất hiện ở đó trong chuỗi đã sắp xếp, chúng ta có tùy chọn để nguyên ký tự đó. Bất kỳ vị trí nào không khớp đều phải tham gia vào tập hợp con đã chọn, nếu không thì không bao giờ có thể sửa được, vì các vị trí không thay đổi sẽ bảo toàn các ký tự của chúng. 
+Nếu một ký tự ở vị trí i đã bằng ký tự sẽ xuất hiện ở đó trong chuỗi đã sắp xếp, chúng ta có tùy chọn để nguyên ký tự đó. Bất kỳ vị trí nào không khớp đều phải nằm trong tập hợp con đã chọn, nếu không thì không bao giờ có thể sửa được, vì các vị trí không thay đổi sẽ bảo toàn các ký tự của chúng. 
 
 Điều này biến vấn đề thành sự so sánh giữa chuỗi gốc và phiên bản được sắp xếp của nó. Số lượng thay đổi tối thiểu cần thiết chính xác là số vị trí mà chúng khác nhau. 
 
@@ -127,7 +127,7 @@ Tất cả các vị trí đều khác nhau nên k = 4.
 | Thời gian | O(t · n log n) | sắp xếp từng chuỗi chiếm ưu thế trên mỗi trường hợp thử nghiệm | 
 | Không gian | O(n) | lưu trữ chuỗi đã sắp xếp | 
 
-Các ràng buộc cho phép tối đa 1000 chuỗi có độ dài tối đa là 40, do đó việc sắp xếp từng chuỗi là chuyện nhỏ trong giới hạn. Tổng số hoạt động vẫn thấp hơn nhiều so với bất kỳ ngưỡng giới hạn thời gian nào. 
+Các ràng buộc cho phép tối đa 1000 chuỗi có độ dài tối đa là 40, do đó việc sắp xếp từng chuỗi là không đáng kể trong giới hạn. Tổng số hoạt động vẫn thấp hơn nhiều so với bất kỳ ngưỡng giới hạn thời gian nào. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io

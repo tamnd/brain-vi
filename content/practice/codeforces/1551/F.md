@@ -16,12 +16,12 @@ draft: false
 
 [CF 1551F - Các đỉnh cách đều](https://codeforces.com/problemset/problem/1551/F) 
 
-**Đánh giá:** 2200 
+**Xếp hạng:** 2200 
 **Tags:** lực lượng vũ phu, tổ hợp, dfs và tương tự, dp, cây 
 **Thời gian giải:** 3 phút 54s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Nhiệm vụ là chọn một tập con các đỉnh trong cây sao cho mỗi cặp đỉnh được chọn cách đều nhau. Thay vì chỉ chọn các nút tùy ý, chúng tôi muốn có một cấu hình hình học thật chắc chắn: khi bạn chọn tập hợp con, tất cả khoảng cách theo cặp phải thu gọn về một giá trị cố định duy nhất. 
@@ -59,7 +59,7 @@ Với k = 2, cấu trúc bị suy biến. Mọi cặp nút đều hợp lệ vì
 
 Ta chia nghiệm thành trường hợp đặc biệt k = 2 và trường hợp tổng quát k ≥ 3. 
 
-### 1. Xử lý riêng k = 2 
+### 1. Xử lý k = 2 riêng biệt 
 
 Nếu k bằng 2 thì mọi cặp đỉnh không có thứ tự đều hợp lệ, nên đáp án là n(n−1)/2. Điều này tránh được việc tính toán không cần thiết và phản ánh thực tế là không có ràng buộc về cấu trúc nào xuất hiện khi chỉ liên quan đến một khoảng cách. 
 

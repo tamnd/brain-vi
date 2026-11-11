@@ -21,24 +21,24 @@ draft: false
 **Thời gian giải:** 1 phút 24s 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được cung cấp một mảng các số nguyên và chúng ta được phép xóa các phần tử khỏi mảng đó nhiều lần. Mỗi lần xóa sẽ nén mảng để các chỉ mục luôn liền kề nhau. Sau tất cả các lần xóa, chúng tôi xem xét các vị trí có giá trị khớp với chỉ mục, nghĩa là chúng tôi muốn có càng nhiều “điểm cố định” càng tốt trong mảng cuối cùng. 
+Chúng ta được cung cấp một mảng các số nguyên và chúng ta được phép xóa các phần tử khỏi mảng đó nhiều lần. Mỗi lần xóa sẽ nén mảng để các chỉ mục luôn liền kề nhau. Sau tất cả các lần xóa, chúng tôi xem xét các vị trí có giá trị khớp với chỉ mục, nghĩa là chúng tôi muốn có càng nhiều "điểm cố định" càng tốt trong mảng cuối cùng. 
 
 Mục tiêu không phải là tối đa hóa các điểm cố định mà là đạt được ít nhất`k`của chúng đồng thời giảm thiểu số lượng phần tử chúng tôi xóa. 
 
 Một điểm tinh tế quan trọng là việc xóa các phần tử sẽ thay đổi tất cả các chỉ mục về bên phải. Vì vậy, việc một phần tử có trở thành điểm cố định không chỉ phụ thuộc vào giá trị của nó mà còn phụ thuộc vào số lần xóa xảy ra trước nó. 
 
-Các ràng buộc đủ nhỏ cho nghiệm bậc hai hoặc gần bậc hai cho mỗi trường hợp thử nghiệm. Mỗi bài kiểm tra có`n ≤ 2000`, và tổng cộng`n`qua các thử nghiệm cũng là ≤ 2000. Điều này cho thấy rõ ràng rằng`O(n^2)`hoặc`O(n^2 log n)`giải pháp có thể chấp nhận được, trong khi mọi thứ khối cho mỗi bài kiểm tra sẽ không cần thiết. 
+Các ràng buộc đủ nhỏ cho nghiệm bậc hai hoặc gần bậc hai cho mỗi trường hợp thử nghiệm. Mỗi bài kiểm tra có`n ≤ 2000`, và tổng cộng`n`qua các lần kiểm tra cũng là ≤ 2000. Điều này cho thấy rõ ràng rằng`O(n^2)`hoặc`O(n^2 log n)`giải pháp có thể chấp nhận được, trong khi mọi thứ khối cho mỗi bài kiểm tra sẽ không cần thiết. 
 
-Một cạm bẫy ngây thơ sẽ xuất hiện ngay lập tức nếu chúng ta cố gắng mô phỏng việc xóa một cách tham lam mà không tính đến sự thay đổi chỉ số. Ví dụ: việc xóa các phần tử sẽ thay đổi tất cả các vị trí sau này, do đó việc kiểm tra các điểm cố định dựa trên chỉ mục gốc là không hợp lệ. 
+Một cạm bẫy ngây thơ sẽ xuất hiện ngay lập tức nếu chúng ta cố gắng mô phỏng việc xóa một cách tham lam mà không tính đến sự thay đổi chỉ số. Ví dụ: việc xóa các phần tử sẽ thay đổi tất cả các vị trí sau này, do đó việc kiểm tra các điểm cố định dựa trên các chỉ mục ban đầu là không hợp lệ. 
 
 Một trường hợp phức tạp khác là khi câu trả lời là không thể. Ví dụ: nếu tất cả các giá trị đều rất lớn so với các chỉ mục, thì ngay cả sau khi xóa, chúng ta có thể không bao giờ căn chỉnh đủ giá trị theo các vị trí. Một ví dụ nhỏ là`a = [5, 5, 5]`,`k = 2`. Dù xóa bằng cách nào, chúng tôi cũng không thể tạo đủ vị trí có giá trị bằng chỉ mục. 
 
 ## Phương pháp tiếp cận 
 
-Một cách giải thích mạnh mẽ sẽ là: thử mọi tập hợp con của các phần tử cần giữ, mô phỏng mảng kết quả và đếm các điểm cố định. Điều này rõ ràng là theo cấp số nhân bởi vì có`2^n`tập hợp con, và ngay cả khi cắt tỉa nó vẫn quá lớn đối với`n = 2000`. 
+Một cách giải thích mạnh mẽ sẽ là: thử mọi tập hợp con của các phần tử cần giữ, mô phỏng mảng kết quả và đếm các điểm cố định. Điều này rõ ràng là theo cấp số nhân bởi vì có`2^n`các tập hợp con, và ngay cả khi cắt tỉa nó vẫn quá lớn đối với`n = 2000`. 
 
 Chúng ta cần một cái nhìn có cấu trúc hơn về tác dụng thực sự của trình tự xóa. 
 
@@ -56,7 +56,7 @@ Bây giờ vấn đề trở thành việc lựa chọn ít nhất`k`chỉ số,
 
 Chúng tôi có thể mô hình hóa điều này dưới dạng DP theo các chỉ số: đối với mỗi vị trí, chúng tôi xem xét liệu chúng tôi chọn nó làm điểm cố định hay bỏ qua nó, đồng thời theo dõi xem chúng tôi đã hình thành bao nhiêu điểm cố định và bao nhiêu điểm xóa mà chúng tôi đã sử dụng một cách hiệu quả. 
 
-Một sự tối ưu hóa rõ ràng hơn xuất hiện: đối với mỗi phần tử, chúng tôi tính toán “chi phí” theo số lần xóa phải xảy ra trước khi nó được sửa. Sau đó chúng tôi cố gắng chọn ít nhất`k`các phần tử theo thứ tự chỉ số tăng dần sao cho các chi phí này có thể được thỏa mãn theo thứ tự. Vấn đề giảm xuống còn việc chọn một dãy con với các ràng buộc khả thi, được xử lý một cách tự nhiên với DP. 
+Một sự tối ưu hóa rõ ràng hơn xuất hiện: đối với mỗi phần tử, chúng tôi tính toán “chi phí” theo số lần xóa phải xảy ra trước khi sửa nó. Sau đó chúng tôi cố gắng chọn ít nhất`k`các phần tử theo thứ tự chỉ số tăng dần sao cho các chi phí này có thể được thỏa mãn theo thứ tự. Vấn đề giảm xuống còn việc chọn một dãy con với các ràng buộc khả thi, được xử lý một cách tự nhiên với DP. 
 
 Chúng tôi xác định`dp[i][j]`là số lần xóa tối thiểu được sử dụng trong tiền tố`i`để có được`j`các điểm cố định. Chuyển từ`i-1`ĐẾN`i`, chúng ta hoặc bỏ qua`i`(tăng số lần xóa lên 1 nếu chúng tôi xóa nó) hoặc giữ nó làm điểm cố định nếu khả thi với các lần xóa hiện tại. 
 
@@ -83,7 +83,7 @@ Chúng tôi xử lý từng trường hợp thử nghiệm một cách độc l�
 
 ### Tại sao nó hoạt động 
 
-Mỗi điểm cố định áp đặt một điều kiện căn chỉnh nghiêm ngặt giữa chỉ mục ban đầu, vị trí cuối cùng và số lần xóa trước nó. DP thực thi rằng bất cứ khi nào chúng tôi chọn một phần tử làm điểm cố định, việc xóa tiền tố phải khớp chính xác với những gì được yêu cầu cho phần tử đó. Vì số lần xóa tăng lên một cách đơn điệu khi chúng ta tiến về phía trước và chúng ta chỉ chuyển tiếp về phía trước trong các chỉ mục, nên DP duy trì tính nhất quán giữa tất cả các điểm cố định đã chọn. Mọi thứ tự không hợp lệ đều bị loại trừ vì việc xóa không khớp sẽ tính khối chuyển tiếp. 
+Mỗi điểm cố định áp đặt một điều kiện căn chỉnh nghiêm ngặt giữa chỉ mục ban đầu, vị trí cuối cùng và số lần xóa trước nó. DP thực thi rằng bất cứ khi nào chúng tôi chọn một phần tử làm điểm cố định, việc xóa tiền tố phải khớp chính xác với những gì được yêu cầu cho phần tử đó. Vì số lần xóa tăng lên một cách đơn điệu khi chúng ta tiến về phía trước và chúng ta chỉ chuyển tiếp về phía trước trong các chỉ mục nên DP duy trì tính nhất quán giữa tất cả các điểm cố định đã chọn. Mọi thứ tự không hợp lệ đều bị loại trừ vì việc xóa không khớp sẽ tính khối chuyển tiếp. 
 
 ## Giải pháp Python```python
 import sys
@@ -200,4 +200,4 @@ Trường hợp một cạnh là khi`a[i]`quá lớn so với vị trí của n�
 
 Một trường hợp cạnh khác là khi tất cả các phần tử đã thỏa mãn`a[i] = i`. Trong trường hợp đó`need = 0`ở mọi nơi, vì vậy mọi phần tử đều là một điểm cố định hợp lệ mà không cần xóa bất kỳ phần tử nào. DP sẽ cho phép thực hiện bất kỳ`k`trong số đó với chi phí bằng 0, tạo ra câu trả lời`0`. 
 
-Trường hợp cạnh cuối cùng là khi`k = 1`. Thuật toán giảm chính xác để tìm bất kỳ chỉ mục nào thỏa mãn ràng buộc và trả về số lần xóa tối thiểu cần thiết để căn chỉnh một phần tử, bằng 0 hoặc chi phí dịch chuyển nhỏ tùy thuộc vào cấu trúc.
+Trường hợp cạnh cuối cùng là khi`k = 1`. Thuật toán giảm một cách chính xác để tìm bất kỳ chỉ mục nào thỏa mãn ràng buộc và trả về số lần xóa tối thiểu cần thiết để căn chỉnh một phần tử, bằng 0 hoặc chi phí dịch chuyển nhỏ tùy thuộc vào cấu trúc.

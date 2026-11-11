@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 5 phút 22s 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một danh sách các số nguyên và chúng ta muốn quyết định xem liệu có thể gán một danh sách khác có cùng độ dài hay không, chẳng hạn$b_1, b_2, \dots, b_n$, sao cho mọi số đã cho$a_i$có thể được biểu thị bằng sự khác biệt giữa hai giá trị trong$b$. Các chỉ số được sử dụng cho sự khác biệt không bị ràng buộc với$i$, và tương tự$b$phần tử có thể được tái sử dụng tùy ý nhiều lần. 

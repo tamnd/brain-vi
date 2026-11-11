@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 4 phút 47 giây 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi được cung cấp một số trường hợp thử nghiệm độc lập. Trong mỗi trường hợp thử nghiệm, chúng tôi nhận được một danh sách các từ và chúng tôi muốn chọn càng nhiều từ trong số này càng tốt để tập hợp con được chọn thỏa mãn điều kiện mất cân bằng cụ thể. 
@@ -54,7 +54,7 @@ total_score(x) > 0
 
 Câu trả lời cuối cùng là kết quả tốt nhất trên cả 5 chữ cái. 
 
-Điều này có tác dụng vì sau khi chúng tôi sửa chữ cái đích, vấn đề sẽ trở thành lựa chọn tiền tố có kích thước tối đa dưới một ràng buộc đơn điệu về tổng tiền tố. 
+Điều này có hiệu quả vì sau khi chúng tôi sửa chữ cái đích, vấn đề sẽ trở thành lựa chọn tiền tố có kích thước tối đa dưới một ràng buộc đơn điệu về tổng tiền tố. 
 
 ### So sánh 
 
@@ -67,19 +67,19 @@ Câu trả lời cuối cùng là kết quả tốt nhất trên cả 5 chữ c�
 
 Chúng tôi xử lý từng trường hợp thử nghiệm một cách độc lập. 
 
-1. Đối với mỗi chữ cái trong năm chữ cái`a`ĐẾN`e`, treat it as the candidate dominant letter.
+1. Đối với mỗi chữ cái trong năm chữ cái`a`ĐẾN`e`, hãy coi nó như là chữ cái ưu thế ứng cử viên. 
 
- Điều này làm giảm vấn đề kiểm tra xem chữ cái đó có thể thống trị phần còn lại hay không. 
+Điều này làm giảm vấn đề kiểm tra xem chữ cái đó có thể thống trị phần còn lại hay không. 
 2. Với mỗi từ, hãy tính điểm đóng góp của nó cho chữ cái đã chọn: đếm số lần xuất hiện của chữ cái đó trừ đi số lần xuất hiện của tất cả các chữ cái khác. 
 
 Điều này chuyển đổi mỗi từ thành một giá trị số nguyên duy nhất thể hiện tính hữu dụng của nó đối với chữ cái này. 
 3. Sắp xếp tất cả các từ theo số điểm này theo thứ tự giảm dần. 
 
 Điều này đảm bảo chúng tôi xem xét các từ có lợi nhất trước tiên, giúp tối đa hóa thời gian duy trì tiền tố dương. 
-4. Duyệt qua danh sách đã sắp xếp và duy trì tổng hiện có. Tiếp tục mở rộng tiền tố miễn là việc thêm từ tiếp theo giữ cho tổng hoàn toàn dương. 
+4. Duyệt qua danh sách đã sắp xếp và duy trì tổng hiện hành. Tiếp tục mở rộng tiền tố miễn là việc thêm từ tiếp theo giữ cho tổng hoàn toàn dương. 
 
-Once the sum would become non-positive, we stop.
- 5. Ghi lại số từ tối đa có thể đạt được cho bức thư này. 
+Khi tổng trở thành không dương, chúng ta dừng lại. 
+5. Ghi lại số từ tối đa có thể đạt được cho bức thư này. 
 6. Lặp lại cho tất cả năm chữ cái và lấy kết quả tối đa trên chúng. 
 
 ### Tại sao nó hoạt động 
@@ -127,7 +127,7 @@ def main():
 
 if __name__ == "__main__":
     main()
-```Mã tuân theo mức giảm được mô tả trước đó. Mỗi từ được chuyển thành điểm tương ứng với chữ cái đích hiện tại. Việc sắp xếp đảm bảo chúng tôi luôn ưu tiên những từ hỗ trợ mạnh mẽ nhất cho điều kiện thống trị. Việc tích lũy tiền tố trực tiếp thực thi yêu cầu tích cực nghiêm ngặt. 
+```Mã tuân theo mức giảm được mô tả trước đó. Mỗi từ được chuyển thành điểm tương ứng với chữ cái đích hiện tại. Việc sắp xếp đảm bảo chúng tôi luôn ưu tiên những từ hỗ trợ mạnh mẽ nhất cho điều kiện thống trị. Việc tích lũy tiền tố thực thi trực tiếp yêu cầu tích cực nghiêm ngặt. 
 
 Một chi tiết tinh tế là điều kiện dừng`s + v <= 0`. Chúng ta phải dừng ngay lập tức khi việc thêm một từ sẽ phá vỡ sự thống trị nghiêm ngặt, vì bất kỳ từ nào khác cũng không tốt hơn do thứ tự sắp xếp. Một điểm quan trọng khác là tính lại điểm riêng cho từng chữ cái, vì tập hợp con tối ưu phụ thuộc rất nhiều vào chữ cái nào được chọn làm chữ cái chiếm ưu thế. 
 

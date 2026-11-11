@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 7 phút 19s 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cho các điểm đặt xung quanh một vòng tròn theo thứ tự chiều kim đồng hồ. Một số điểm này đã được kết nối bằng các hợp âm và các hợp âm ban đầu này không bao giờ chia sẻ điểm cuối. Các điểm còn lại cũng là những điểm cuối riêng biệt phải ghép thành các hợp âm mới để cuối cùng mỗi điểm chỉ được sử dụng đúng một lần. 
@@ -49,7 +49,7 @@ Quan sát cấu trúc quan trọng là sự đóng góp của bất kỳ dây cu
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
 | Kết hợp lực lượng vũ phu |$O((2n)! )$|$O(n)$| Quá chậm | 
-| Kết hợp hai bên với trọng số được tính toán trước |$O(n^3)$|$O(n^2)$| Đã chấp nhận | 
+| Kết hợp lưỡng cực với trọng số được tính toán trước |$O(n^3)$|$O(n^2)$| Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
@@ -63,7 +63,7 @@ Trước tiên, chúng tôi tính toán có bao nhiêu giao điểm đã tồn t
 
 ### 2. Thu thập điểm miễn phí và sắp xếp chúng 
 
-Chúng tôi trích xuất tất cả các điểm không sử dụng và sắp xếp chúng theo thứ tự vòng tròn (đây chỉ là thứ tự số vì các nhãn đã thể hiện thứ tự theo chiều kim đồng hồ). 
+Chúng tôi trích xuất tất cả các điểm không sử dụng và sắp xếp chúng theo thứ tự vòng tròn (đây chỉ là thứ tự số vì các nhãn đã biểu thị thứ tự theo chiều kim đồng hồ). 
 
 Gọi số điểm miễn phí là$m = 2(n-k)$. 
 
@@ -247,7 +247,7 @@ Khi không có dây cung ban đầu nào tồn tại thì mọi đóng góp tr�
 | Phù hợp | tối ưu tùy ý | - | 0 | 
 | Mới-mới | Tổng cộng có 3 hợp âm? không, 2 hợp âm | C(2,2)=1 | | 
 
-Điều này chứng tỏ rằng ngay cả khi không có bất kỳ tương tác nào với các hợp âm ban đầu, thuật toán vẫn tối đa hóa các giao điểm một cách chính xác hoàn toàn thông qua ghép nối cấu trúc. 
+Điều này chứng tỏ rằng ngay cả khi không có bất kỳ tương tác nào với các hợp âm ban đầu, thuật toán vẫn tối đa hóa chính xác các giao điểm hoàn toàn thông qua ghép nối cấu trúc. 
 
 ## Phân tích độ phức tạp 
 
@@ -256,7 +256,7 @@ Khi không có dây cung ban đầu nào tồn tại thì mọi đóng góp tr�
 | Thời gian |$O(n^3)$| Kết hợp Hungary trên tối đa 50 đỉnh mỗi bên | 
 | Không gian |$O(n^2)$| ma trận trọng số và mảng phù hợp | 
 
-Các ràng buộc cho phép lên tới 100 điểm, do đó việc so khớp khối và tiền xử lý bậc hai phù hợp thoải mái trong giới hạn. 
+Các ràng buộc cho phép lên tới 100 điểm, do đó việc so khớp bậc ba và tiền xử lý bậc hai phù hợp thoải mái trong giới hạn. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io
@@ -273,5 +273,5 @@ assert True
 | --- | --- | --- | 
 | tối thiểu không có hợp âm | 0 | trường hợp cơ sở | 
 | tất cả các điểm miễn phí | cấu trúc giao cắt tối đa | xây dựng đầy đủ | 
-| hợp âm đầu đơn | tính tương tác đúng đắn | xử lý trọng lượng | 
+| hợp âm đầu đơn | sự tương tác đúng đắn | xử lý trọng lượng | 
 | cấu hình đối xứng | kết hợp ổn định | sự đúng đắn của lưỡng đảng |

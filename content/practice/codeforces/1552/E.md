@@ -18,10 +18,10 @@ draft: false
 
 **Đánh giá:** 2300 
 **Tags:** thuật toán xây dựng, cấu trúc dữ liệu, tham lam, sắp xếp 
-**Thời gian giải:** 7 phút 14 giây 
+**Thời gian giải:** 7 phút 14s 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cho một hàng dài các vị trí từ 1 đến n·k, mỗi vị trí được tô bằng một trong n màu và mỗi màu xuất hiện đúng k lần. Với mỗi màu i chúng ta phải chọn chính xác một khoảng [a_i, b_i] sao cho cả hai điểm cuối đều thuộc vị trí được tô màu i. Vì vậy, mỗi màu xác định một đoạn bắt đầu và kết thúc ở hai lần xuất hiện màu của chính nó. 
@@ -61,7 +61,7 @@ Chúng tôi xây dựng giải pháp bằng cách quét qua mảng trong khi the
 2. Chúng tôi xử lý màu theo thứ tự có cấu trúc và chỉ định điểm cuối theo mẫu ghép nối được kiểm soát. Thay vì chọn các cặp tùy ý, chúng tôi ghép các lần xuất hiện theo cách trải đều các lớp chồng lên nhau trong chuỗi. Cụ thể, chúng tôi sẽ sử dụng chiến lược kết hợp tham lam dựa trên chồng màu hiện đang “mở”. 
 3. Chúng tôi quét các vị trí từ trái sang phải. Khi chúng tôi gặp một sự xuất hiện của màu, chúng tôi đánh dấu nó là khoảng thời gian bắt đầu tiềm năng hoặc đóng khoảng thời gian mở hiện có cho màu đó. Quyết định này được quyết định bởi liệu đây có phải là lần đầu tiên chúng ta nhìn thấy màu sắc trong một chuỗi khoảng thời gian chưa hoàn thành hay không. 
 4. Để tránh mất cân bằng, chúng tôi đảm bảo rằng tại bất kỳ thời điểm nào chúng tôi cũng không bao giờ có nhiều hơn một số khoảng thời gian hoạt động nhất định. Khi mở một khoảng, chúng ta đẩy màu vào một ngăn xếp. Khi chúng tôi nhìn thấy lại nó trong quy tắc ghép nối được kiểm soát, chúng tôi sẽ bật và hoàn tất một khoảng thời gian. 
-5. Mỗi màu sẽ được chỉ định chính xác một khoảng thời gian, vì chúng tôi đảm bảo chính xác một cặp được cam kết cho mỗi màu. 
+5. Mỗi màu sẽ được chỉ định chính xác một khoảng thời gian vì chúng tôi đảm bảo chính xác một cặp được cam kết cho mỗi màu. 
 
 Chi tiết quan trọng là chúng tôi không ghép nối lần xuất hiện đầu tiên và lần xuất hiện cuối cùng. Thay vào đó, chúng tôi ghép các lần xuất hiện theo cách thực thi việc xen kẽ có kiểm soát giữa các màu khác nhau. 
 
@@ -126,7 +126,7 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Giải pháp này hoạt động bằng cách quét mảng một lần và ghép các lần xuất hiện của các màu theo kiểu xen kẽ được kiểm soát. các`ptr[col]`truy cập theo dõi sự xuất hiện của màu mà chúng ta hiện đang thấy. Các lần xuất hiện lẻ sẽ mở ra một khoảng thời gian dự kiến ​​bằng cách đẩy lên một ngăn xếp, trong khi các lần xuất hiện chẵn sẽ đóng khoảng thời gian mở gần đây nhất. Điều này đảm bảo rằng mỗi điểm cuối khoảng là những lần xuất hiện hợp lệ của cùng một màu. 
+```Giải pháp này hoạt động bằng cách quét mảng một lần và ghép các lần xuất hiện của các màu theo kiểu xen kẽ được kiểm soát. các`ptr[col]`truy cập theo dõi sự xuất hiện của màu mà chúng ta hiện đang thấy. Các lần xuất hiện lẻ mở ra một khoảng thời gian dự kiến ​​bằng cách đẩy lên một ngăn xếp, trong khi các lần xuất hiện chẵn sẽ đóng khoảng mở gần đây nhất. Điều này đảm bảo rằng mỗi điểm cuối khoảng là những lần xuất hiện hợp lệ của cùng một màu. 
 
 Ngăn xếp thực thi một cấu trúc lồng nhau để ngăn chặn sự chồng chéo không được kiểm soát. Thay vì để tất cả các khoảng kéo dài tùy ý, mỗi khoảng sẽ được đóng lại ngay khi lần xuất hiện thứ hai được chọn của nó xuất hiện, giữ độ dài các khoảng cục bộ theo thứ tự quét. 
 
@@ -221,4 +221,4 @@ assert run("4 2\n1 2 3 4 1 2 3 4\n") == "4"
 
 ## Vỏ cạnh 
 
-Trường hợp cạnh quan trọng là khi tất cả các lần xuất hiện của màu sắc được xen kẽ một cách hoàn hảo, chẳng hạn như`1 2 1 2 1 2 ...`. Một “sự ghép nối đầu tiên cuối cùng” ngây thơ sẽ tạo ra những khoảng thời gian dài chồng chéo lên nhau ở trung tâm. Cấu trúc dựa trên ngăn xếp tránh điều này bằng cách đảm bảo các khoảng được hình thành cục bộ theo thứ tự quét, do đó không có khoảng nào trải dài trên nhiều vùng dày đặc mà không bị đóng sớm.
+Trường hợp cạnh quan trọng là khi tất cả các lần xuất hiện của màu sắc được xen kẽ một cách hoàn hảo, chẳng hạn như`1 2 1 2 1 2 ...`. Một “sự ghép nối đầu tiên cuối cùng” ngây thơ sẽ tạo ra những khoảng thời gian dài chồng chéo lên nhau ở trung tâm. Cấu trúc dựa trên ngăn xếp tránh được điều này bằng cách đảm bảo các khoảng thời gian được hình thành cục bộ theo thứ tự quét, do đó không có khoảng thời gian nào trải dài trên nhiều vùng dày đặc mà không bị đóng sớm.

@@ -18,10 +18,10 @@ draft: false
 
 **Đánh giá:** 1500 
 **Tags:** tổ hợp, đồ thị, tham lam, sắp xếp 
-**Thời gian giải:** 1m 43s 
+**Thời gian giải:** 1 phút 43s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Mỗi vận động viên được mô tả bằng năm thứ hạng, một thứ hạng từ mỗi cuộc chạy marathon trước đây. Giá trị nhỏ hơn sẽ tốt hơn vì thứ hạng 1 có nghĩa là vị trí đầu tiên. 
@@ -43,7 +43,7 @@ Hãy xem xét một mối quan hệ tuần hoàn:```
 30 30 10 20 20
 ```Vận động viên 1 nhịp 2, vận động viên 2 nhịp 3 và vận động viên 3 nhịp 1. Không vận động viên nào đánh bại người khác, vì vậy câu trả lời là`-1`. Bất kỳ cách tiếp cận nào cố gắng chọn vận động viên có "thứ hạng trung bình tốt nhất" sẽ trả về một người nào đó một cách không chính xác. 
 
-Một trường hợp tinh tế khác là khi một thí sinh đánh bại nhiều vận động viên nhưng không phải tất cả:```
+Một trường hợp tinh vi khác là khi một thí sinh đánh bại nhiều vận động viên nhưng không phải tất cả:```
 3
 1 1 1 100 100
 2 2 2 1 1
@@ -73,7 +73,7 @@ Tại sao điều này lại thú vị? Nếu ứng cử viên hiện tại thua
 
 Sau một lần vượt qua tuyến tính, chỉ có một ứng cử viên sống sót. 
 
-Câu hỏi còn lại là liệu người sống sót có thực sự hợp lệ hay không. Vì mối quan hệ ưu việt không mang tính bắc cầu nên kẻ sống sót chỉ là nhà vô địch tiềm năng. Chúng ta phải xác minh điều đó với tất cả các vận động viên. 
+Câu hỏi còn lại là liệu người sống sót có thực sự hợp lệ hay không. Vì mối quan hệ ưu việt không mang tính bắc cầu nên kẻ sống sót chỉ là nhà vô địch tiềm năng. Chúng ta phải xác minh điều đó đối với tất cả các vận động viên. 
 
 Quan sát chính là: 
 
@@ -105,7 +105,7 @@ Sau khi có được ứng cử viên, lần quét tuyến tính thứ hai sẽ 
 
 Trong quá trình vượt qua vòng loại, mỗi người thay thế sẽ loại bỏ một vận động viên không thể là nhà vô địch toàn cầu. Nếu vận động viên`A`thua vận động viên`B`, sau đó`A`chắc chắn là không vượt trội so với tất cả các vận động viên. 
 
-Giả sử một nhà vô địch hợp lệ`C`tồn tại. Bất cứ khi nào`C`được so sánh với vận động viên khác,`C`thắng. Do đó một lần`C`trở thành ứng cử viên, nó không bao giờ có thể bị loại bỏ. Ngay cả trước khi điều đó xảy ra, mỗi vận động viên loại một vận động viên khác chỉ đơn thuần là loại một người không phải là nhà vô địch. Cuối cùng quá trình quét kết thúc với`C`với tư cách là ứng cử viên. 
+Giả sử một nhà vô địch hợp lệ`C`tồn tại. Bất cứ khi nào`C`được so sánh với vận động viên khác,`C`thắng. Do đó một lần`C`trở thành ứng cử viên, nó không bao giờ có thể bị loại bỏ. Ngay cả trước khi điều đó xảy ra, mỗi vận động viên loại bỏ một vận động viên khác chỉ đơn thuần là loại bỏ một người không vô địch. Cuối cùng quá trình quét kết thúc với`C`với tư cách là ứng cử viên. 
 
 Nếu không có nhà vô địch nào tồn tại, đường loại trừ vẫn tạo ra một số người sống sót. Thẻ xác minh phát hiện điều này bằng cách tìm một vận động viên đánh bại người sống sót. Do đó, thuật toán trả về một vận động viên hợp lệ chính xác khi vận động viên đó tồn tại. 
 
@@ -147,7 +147,7 @@ Vòng thứ hai là giai đoạn xác minh quan trọng. Mối quan hệ ưu vi�
 
 Các chỉ số được lưu trữ nội bộ dưới dạng giá trị dựa trên 0 vì danh sách Python sử dụng lập chỉ mục dựa trên 0. Câu trả lời cuối cùng thêm một số trước khi in vì bài toán sử dụng cách đánh số vận động viên dựa trên một. 
 
-Không cần xử lý đặc biệt đối với`n = 1`. Vòng loại trừ không làm gì cả, vòng xác minh thành công và vận động viên 1 được in ra. 
+Không cần xử lý đặc biệt đối với`n = 1`. Vòng loại trừ không làm gì, vòng xác minh thành công và vận động viên 1 được in ra. 
 
 ## Ví dụ đã hoạt động 
 
@@ -173,7 +173,7 @@ Giai đoạn xác minh:
 | 2 | Có | 
 | 3 | Có | 
 
-Câu trả lời là vận động viên 1. Ví dụ này cho thấy trường hợp thành công đơn giản nhất khi một vận động viên chiếm ưu thế trong mọi so sánh. 
+Câu trả lời là vận động viên 1. Ví dụ này cho thấy trường hợp thành công đơn giản nhất khi một vận động viên chiếm ưu thế trong mọi cuộc so sánh. 
 
 ### Ví dụ 2 
 
@@ -209,7 +209,7 @@ Ví dụ này chứng minh tại sao việc vượt qua thứ hai là cần thi�
 | Không gian | O(n) | Lưu trữ thứ hạng của vận động viên | 
 | Thêm không gian | O(1) | Ngoài bộ lưu trữ đầu vào | 
 
-Mỗi vận động viên tham gia vào một số lượng so sánh không đổi và mỗi so sánh chỉ kiểm tra năm thứ hạng. Vì tổng số vận động viên trong tất cả các trường hợp thử nghiệm tối đa là 50.000 nên giải pháp này phù hợp một cách thoải mái trong thời hạn. 
+Mỗi vận động viên tham gia vào một số lượng so sánh không đổi và mỗi so sánh chỉ kiểm tra năm thứ hạng. Vì tổng số vận động viên trong tất cả các trường hợp thử nghiệm tối đa là 50.000 nên giải pháp này phù hợp một cách thoải mái trong thời gian giới hạn. 
 
 ## Trường hợp thử nghiệm```python
 # helper: run solution on input string, return output string
