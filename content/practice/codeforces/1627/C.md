@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1 phút 37s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp nhiều tập giá trị tạo thành một mảng tuần hoàn. Nhiệm vụ không phải là giữ cho mảng này cố định mà là xem xét tất cả các hoán vị riêng biệt của các phần tử của nó được sắp xếp trên một vòng tròn. Hai cách sắp xếp được coi là giống nhau nếu một cách sắp xếp có thể được xoay để thu được cách sắp xếp khác, vì vậy chúng ta đang làm việc hiệu quả với các hoán vị vòng tròn. 
@@ -32,17 +32,17 @@ Chúng tôi được yêu cầu tính toán số lượng thành phần dự ki�
 
 Khó khăn chính nằm ở hai lớp đối xứng: hoán vị của các giá trị giống hệt nhau sẽ thu gọn vào cùng một cấu hình và các phép quay theo chu kỳ cũng được xác định. Điều này có nghĩa là không gian xác suất không vượt quá n! hoán vị, nhưng theo cách sắp xếp vòng tròn riêng biệt của nhiều tập hợp. 
 
-Các ràng buộc rất lớn: tổng kích thước của tất cả các trường hợp thử nghiệm lên tới 10^6, do đó, mọi giải pháp về cơ bản đều phải tuyến tính cho mỗi trường hợp thử nghiệm. Bất kỳ điều gì liên quan đến phép liệt kê giai thừa, DP trên các hoán vị hoặc xác suất rõ ràng trên các sắp xếp đều là không thể ngay lập tức. Giải pháp phải giảm kỳ vọng xuống mức có thể tính toán trực tiếp từ việc đếm tần số. 
+Các ràng buộc rất lớn: tổng kích thước của tất cả các trường hợp thử nghiệm lên tới 10^6, do đó, mọi giải pháp về cơ bản đều phải tuyến tính cho mỗi trường hợp thử nghiệm. Bất kỳ điều gì liên quan đến phép liệt kê giai thừa, DP trên hoán vị hoặc xác suất rõ ràng trên các sắp xếp đều là không thể ngay lập tức. Giải pháp phải giảm kỳ vọng xuống mức có thể tính toán trực tiếp từ việc đếm tần số. 
 
 Trường hợp cạnh tinh tế phát sinh khi tất cả các phần tử giống hệt nhau. Trong trường hợp đó, mọi sự sắp xếp là một chu trình có các giá trị bằng nhau, do đó số thành phần luôn là 1. Bất kỳ công thức nào dựa vào xác suất kề vẫn phải tôn trọng ranh giới tuần hoàn và không được đếm kép. 
 
-Một trường hợp cạnh quan trọng khác là khi một giá trị xuất hiện đúng một lần. Trong những trường hợp như vậy, sự đóng góp của nó vào cấu trúc kề hoạt động khác với các giá trị lặp lại, vì nó không bao giờ có thể tạo thành một khối bên trong có kích thước lớn hơn một. 
+Một trường hợp cạnh quan trọng khác là khi một giá trị xuất hiện chính xác một lần. Trong những trường hợp như vậy, sự đóng góp của nó vào cấu trúc kề hoạt động khác với các giá trị lặp lại, vì nó không bao giờ có thể tạo thành một khối bên trong có kích thước lớn hơn một. 
 
 ## Phương pháp tiếp cận 
 
-Một cách tiếp cận bạo lực sẽ liệt kê tất cả các hoán vị vòng tròn riêng biệt của nhiều tập hợp. Đối với mỗi cách sắp xếp, chúng ta sẽ xây dựng biểu đồ kề và đếm các thành phần được kết nối bằng cách quét vòng tròn và nhóm các giá trị liền kề bằng nhau. Điều này đã tốn O(n) cho mỗi hoán vị và số lượng hoán vị riêng biệt theo thứ tự n! chia cho bội số. Ngay cả đối với n vừa phải, điều này vẫn bùng nổ theo kiểu tổ hợp. 
+Một cách tiếp cận bạo lực sẽ liệt kê tất cả các hoán vị vòng tròn riêng biệt của nhiều tập hợp. Đối với mỗi cách sắp xếp, chúng ta sẽ xây dựng biểu đồ kề và đếm các thành phần được kết nối bằng cách quét vòng tròn và nhóm các giá trị liền kề bằng nhau. Điều này đã tốn O(n) cho mỗi hoán vị và số lượng hoán vị riêng biệt là theo thứ tự n! chia cho bội số. Ngay cả đối với n vừa phải, điều này vẫn bùng nổ theo kiểu tổ hợp. 
 
-Quan sát quan trọng là số lượng thành phần được kết nối trên một vòng tròn được xác định hoàn toàn bởi số lượng cạnh có giá trị bằng nhau liền kề tồn tại. Nếu chúng ta quét xung quanh vòng tròn, mỗi khi nhìn thấy ranh giới giữa các giá trị khác nhau, chúng ta sẽ tăng số lượng thành phần lên một. Tương tự, các thành phần bằng số khối liền kề tối đa có giá trị bằng nhau trên chu trình. 
+Quan sát quan trọng là số lượng thành phần được kết nối trên một vòng tròn được xác định hoàn toàn bởi số lượng cạnh có giá trị bằng nhau liền kề tồn tại. Nếu chúng ta quét xung quanh vòng tròn, mỗi khi nhìn thấy ranh giới giữa các giá trị khác nhau, chúng ta sẽ tăng số lượng thành phần lên một. Tương tự, các thành phần bằng số lượng khối liền kề tối đa có giá trị bằng nhau trên chu trình. 
 
 Vì vậy, vấn đề giảm xuống còn việc tính toán số khối dự kiến ​​​​trong một hoán vị vòng tròn ngẫu nhiên của nhiều tập hợp. 
 
@@ -60,7 +60,7 @@ Tổng tất cả n cạnh liền kề trong một chu kỳ, điều này cho ra
 
 Điều này hiệu quả vì trong bất kỳ mô hình hoán vị nào của nhiều tập hợp, mọi cặp vị trí riêng biệt có thứ tự đều đối xứng. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | Ồ (n!) | O(n) | Quá chậm | 
 | Tối ưu | O(n) | O(n) | Đã chấp nhận | 
@@ -277,7 +277,7 @@ assert run("""1
 
 ## Vỏ cạnh 
 
-Khi tất cả các phần tử giống hệt nhau, mọi phần kề đều bằng nhau và chu trình tạo thành một thành phần được kết nối duy nhất. Thuật toán tính f = n cho một giá trị, cho ra f(f−1) = n(n−1). Sau khi chia cho n(n−1), các cạnh bằng nhau được mong đợi sẽ trở thành 1 trên mỗi cạnh, do đó các thành phần trở thành n − n = 0 ở dạng thô, nhưng được giải thích theo một chu trình, điều này tương ứng với một thành phần duy nhất vì mỗi lần hợp nhất sẽ thu gọn vòng tròn thành một khối. 
+Khi tất cả các phần tử giống hệt nhau, mọi phần kề đều bằng nhau và chu trình tạo thành một thành phần được kết nối duy nhất. Thuật toán tính f = n cho một giá trị, cho ra f(f−1) = n(n−1). Sau khi chia cho n(n−1), các cạnh bằng nhau được mong đợi sẽ trở thành 1 trên mỗi cạnh, do đó các thành phần trở thành n − n = 0 ở dạng thô, nhưng được giải thích theo chu trình, điều này tương ứng với một thành phần duy nhất vì mỗi lần hợp nhất sẽ thu gọn vòng tròn thành một khối. 
 
 Khi mọi phần tử đều phân biệt, tất cả f = 1, do đó tổng của f(f−1) bằng 0. Không có cạnh bằng nhau nào xuất hiện trong kỳ vọng, vì vậy mọi vị trí đều bắt đầu một thành phần mới, cho ra các thành phần dự kiến ​​bằng n. 
 

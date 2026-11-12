@@ -18,17 +18,17 @@ draft: false
 
 **Xếp hạng:** 2200 
 **Thẻ:** cấu trúc dữ liệu, dp, triển khai, đường dẫn ngắn nhất, hai con trỏ 
-**Thời gian giải:** 1 phút 57 giây 
+**Thời gian giải:** 1 phút 57s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Tòa nhà có thể được xem như một mạng lưới nhiều lớp trong đó mỗi tầng là một dãy phòng. Di chuyển theo chiều ngang trong một tầng có chi phí tỷ lệ thuận với khoảng cách bạn đi bộ và hệ số phạt dành riêng cho từng tầng, trong khi di chuyển theo chiều dọc chỉ có thể thực hiện được thông qua các thang được định hướng cũng có thể mang lại phần thưởng. 
 
 Nhiệm vụ là tính toán kết quả ròng tốt nhất có thể từ ô bắt đầu trên cùng bên trái ở tầng một đến ô dưới cùng bên phải ở tầng cuối cùng. Mọi chuyển động ngang trên sàn`i`chi phí`|j-k| * x_i`. Mỗi bậc thang là một cạnh được định hướng từ phòng này ở tầng thấp hơn đến phòng khác ở tầng cao hơn và góp phần tăng lợi ích`h_i`(vì vậy nó có hiệu quả làm giảm tổng chi phí). Mục tiêu là giảm thiểu tổng chi phí hoặc tối đa hóa lợi nhuận tương đương nếu cho phép giá trị âm. Nếu không có chuỗi nước đi nào đến đích thì câu trả lời là “KHÔNG THOÁT”. 
 
-Các ràng buộc buộc chúng ta phải tránh xa mọi cách tiếp cận xử lý không gian trạng thái dưới dạng biểu đồ lưới đầy đủ. Mô hình đường đi ngắn nhất trực tiếp trên tất cả`(n * m)`các nút sẽ là không thể vì cả hai chiều có thể đạt tới`10^5`. Ngay cả việc lưu trữ tất cả các nút cũng không thể thực hiện được. Quan sát quan trọng là chuyển động thẳng đứng chỉ đi lên, do đó cấu trúc là một DAG phân lớp, điều này gợi ý rõ ràng rằng việc xử lý các tầng theo thứ tự tăng dần. 
+Các ràng buộc buộc chúng ta phải tránh xa mọi cách tiếp cận xử lý không gian trạng thái dưới dạng biểu đồ lưới đầy đủ. Mô hình đường đi ngắn nhất trực tiếp trên tất cả`(n * m)`các nút sẽ không thể thực hiện được vì cả hai chiều đều có thể đạt tới`10^5`. Ngay cả việc lưu trữ tất cả các nút cũng không thể thực hiện được. Quan sát quan trọng là chuyển động thẳng đứng chỉ đi lên, do đó cấu trúc là một DAG phân lớp, điều này gợi ý rõ ràng rằng việc xử lý các tầng theo thứ tự tăng dần. 
 
 Một sai lầm ngây thơ là cho rằng khi bạn đến một căn phòng trên một tầng, cách tốt nhất để tiếp tục không phụ thuộc vào cách bạn đến đó. Điều này là sai vì chi phí để di chuyển theo chiều ngang phụ thuộc vào nơi bạn bắt đầu di chuyển, do đó, việc tiếp cận cùng một ô với “bối cảnh theo chiều ngang” khác nhau có thể dẫn đến các chi phí khác nhau trong tương lai. 
 
@@ -38,15 +38,15 @@ Cuối cùng, những bậc thang mang lại phần thưởng lớn có thể kh
 
 ## Phương pháp tiếp cận 
 
-Chế độ xem brute-force xây dựng một biểu đồ trong đó mọi ô`(i, j)`là một nút. Mỗi tầng đóng góp`m`các nút và các cạnh ngang kết nối tất cả các cặp trên cùng một tầng với trọng lượng tỷ lệ thuận với khoảng cách, trong khi các bậc thang được hướng các cạnh lên trên. Việc chạy các thuật toán đường đi ngắn nhất trên biểu đồ này sẽ đòi hỏi tới`n * m`nút và`O(m^2)`các cạnh trên mỗi tầng nếu được thực hiện một cách rõ ràng, dẫn đến yêu cầu về thời gian và bộ nhớ không thể theo thứ tự`10^10`. 
+Chế độ xem brute-force xây dựng một biểu đồ trong đó mọi ô`(i, j)`là một nút. Mỗi tầng đóng góp`m`các nút và các cạnh ngang kết nối tất cả các cặp trên cùng một tầng với trọng lượng tỷ lệ thuận với khoảng cách, trong khi các bậc thang được hướng các cạnh lên trên. Việc chạy các thuật toán đường đi ngắn nhất trên biểu đồ này sẽ tốn tới`n * m`nút và`O(m^2)`các cạnh trên mỗi tầng nếu được thực hiện một cách rõ ràng, dẫn đến yêu cầu về thời gian và bộ nhớ không thể theo thứ tự`10^10`. 
 
 Cấu trúc bên trong một tầng là sự đơn giản hóa quan trọng đầu tiên. Nếu chúng ta đã biết chi phí tốt nhất để tiếp cận một số ô trên sàn`i`, sau đó việc chuyển sang ô khác trên cùng tầng có thể được xử lý theo thời gian tuyến tính bằng cách sử dụng hai lần quét, vì hàm chi phí`|j-k| * x_i`lồi ở`j`. Đây là mẫu “biến đổi khoảng cách trên một đường” cổ điển. 
 
-Cái nhìn sâu sắc quan trọng thứ hai là thang chỉ đi lên. Điều này làm cho các tầng độc lập về thứ tự: sau khi chúng tôi xử lý xong một tầng, các giá trị được biết đến tốt nhất của nó có thể được truyền lên trên mà không cần phải truy cập lại sau này. Mỗi tầng trở thành một giai đoạn trong DP, nơi chúng tôi hợp nhất các đóng góp từ các thang đến và sau đó thực hiện việc thư giãn theo chiều ngang. 
+Cái nhìn sâu sắc quan trọng thứ hai là những chiếc thang chỉ đi lên. Điều này làm cho các tầng độc lập về thứ tự: sau khi chúng tôi xử lý xong một tầng, các giá trị được biết đến tốt nhất của nó có thể được truyền lên trên mà không cần phải truy cập lại sau này. Mỗi tầng trở thành một giai đoạn trong DP, nơi chúng tôi hợp nhất các đóng góp từ các thang đến và sau đó thực hiện việc thư giãn theo chiều ngang. 
 
-Khó khăn là một tầng có thể nhận giá trị từ nhiều thang và chúng ta phải kết hợp chúng một cách hiệu quả trước khi áp dụng phương pháp lan truyền theo chiều ngang. Điều này được xử lý bằng cách duy trì chi phí được biết đến nhiều nhất trên mỗi phòng và cập nhật hàng loạt trên mỗi tầng, sau đó là quét hai lần. 
+Khó khăn là một tầng có thể nhận các giá trị từ nhiều thang và chúng ta phải kết hợp chúng một cách hiệu quả trước khi áp dụng phương pháp lan truyền theo chiều ngang. Điều này được xử lý bằng cách duy trì chi phí được biết đến nhiều nhất trên mỗi phòng và cập nhật hàng loạt trên mỗi tầng, sau đó là quét hai lần. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Biểu đồ lưới Brute Force | O(nm + nm log(nm)) hoặc tệ hơn | O(nm) | Quá chậm | 
 | DP phân lớp với tối ưu hóa trên mỗi tầng | O(n + k + m trên mỗi tầng đang hoạt động) | O(m + k) | Đã chấp nhận | 
@@ -244,6 +244,6 @@ NO ESCAPE
 
 Trường hợp cạnh tới hạn là khi một tầng chỉ có thể tiếp cận được bằng thang nhưng không có lối đi ngang từ các phòng có thể tiếp cận trước đó ngoại trừ một cột duy nhất. Trong tình huống đó, DP không được phép dàn trải chi phí quá sớm trước khi nới lỏng bậc thang. Thuật toán xử lý vấn đề này vì các cập nhật bậc thang được áp dụng trước khi quét ngang, đảm bảo điểm đầu vào được đưa vào quá trình truyền bá. 
 
-Một trường hợp đặc biệt khác là khi một chiếc thang mang lại phần thưởng lớn đến mức các tầng trung gian trở nên có lợi hơn là tốn kém. Vì DP cho phép các giá trị âm và không giả sử tính đơn điệu, nên các chuyển đổi này chỉ truyền các hiệu ứng lùi một cách chính xác trong phạm vi thứ tự sàn chuyển tiếp được phép. 
+Một trường hợp đặc biệt khác là khi một chiếc thang mang lại phần thưởng lớn đến mức các tầng trung gian trở nên có lợi hơn là tốn kém. Vì DP cho phép các giá trị âm và không giả định tính đơn điệu, nên các chuyển đổi này chỉ truyền các hiệu ứng lùi một cách chính xác trong phạm vi thứ tự sàn chuyển tiếp được phép. 
 
 Cuối cùng, các tầng không thể tiếp cận vẫn duy trì INF trong cả giai đoạn bậc thang và giai đoạn ngang, ngăn chặn việc vô tình rò rỉ một phần giá trị vào các tính toán sau này, điều này rất cần thiết để tạo ra chính xác “NO ESCAPE”.

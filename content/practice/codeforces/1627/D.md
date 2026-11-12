@@ -17,11 +17,11 @@ draft: false
 [CF 1627D - Không thêm](https://codeforces.com/problemset/problem/1627/D) 
 
 **Xếp hạng:** 1900 
-**Tags:** lực lượng vũ phu, dp, toán học, lý thuyết số 
+**Tags:** sức mạnh vũ phu, dp, toán học, lý thuyết số 
 **Thời gian giải:** 1 phút 20s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một mảng các số nguyên riêng biệt và chúng ta có thể liên tục thêm các phần tử mới vào đó. Cụ thể, chúng ta có thể chọn hai phần tử bất kỳ, tính ước số chung lớn nhất (GCD) của chúng và nối nó vào mảng nếu GCD đó chưa có. Mục tiêu là tìm ra số lượng tối đa các thao tác như vậy mà chúng ta có thể thực hiện trước khi không thể thêm GCD nào nữa. 
@@ -34,11 +34,11 @@ Một trường hợp cạnh quan trọng là khi mảng đã chứa 1. Vì GCD 
 
 Cách tiếp cận brute-force xem xét từng cặp phần tử, tính toán GCD, kiểm tra xem nó đã có chưa và nối thêm nếu chưa. Chúng tôi lặp lại điều này cho đến khi không có phần tử mới nào được thêm vào. Mặc dù điều này đúng nhưng mỗi thao tác đều yêu cầu lặp lại tất cả các cặp, đưa ra$O(n^2)$mỗi phép cộng. Nếu mảng có thể tăng lên khoảng$10^6$các phần tử, tổng độ phức tạp đạt đến$O(n^3)$trong trường hợp xấu nhất là không thể thực hiện được. 
 
-Cái nhìn sâu sắc quan trọng đến từ việc quan sát rằng mọi số được thêm vào đều là ước số của một phần tử nào đó trong mảng. Điều này giới hạn phạm vi các số có thể có mà chúng ta có thể tạo ra trong tập hợp tất cả các ước số của tất cả các phần tử mảng. Thay vì mô phỏng các phép toán trên mảng, chúng ta có thể đảo ngược bài toán: với mỗi số nguyên cho đến phần tử lớn nhất, hãy đếm số phần tử ban đầu chia hết cho nó, sau đó truyền số đếm từ bội số xuống các ước số nhỏ hơn. Điều này cho phép tính toán số lần tối đa mà GCD có thể xuất hiện mà không cần tạo mảng một cách rõ ràng. 
+Cái nhìn sâu sắc quan trọng đến từ việc quan sát rằng mọi số được thêm vào đều là ước số của một phần tử nào đó trong mảng. Điều này giới hạn phạm vi các số có thể có mà chúng ta có thể tạo ra trong tập hợp tất cả các ước số của tất cả các phần tử mảng. Thay vì mô phỏng các phép toán trên mảng, chúng ta có thể đảo ngược bài toán: với mỗi số nguyên cho đến phần tử lớn nhất, hãy đếm số phần tử ban đầu chia hết cho nó, sau đó truyền số đếm từ bội số xuống các ước số nhỏ hơn. Điều này cho phép tính toán số lần tối đa một GCD có thể xuất hiện mà không cần tạo mảng một cách rõ ràng. 
 
-Cụ thể hãy xác định`cnt[x]`là số phần tử trong mảng chia hết cho`x`. Với mỗi số chia`d`, số lượng hoạt động tối đa có thể tạo ra`d`là`sum(cnt[m] for all multiples m of d) - 1`. Chúng ta có thể tính toán trước các ước số và bội số một cách hiệu quả bằng phương pháp giống như sàng. Điều này làm giảm độ phức tạp từ bậc hai xuống gần tuyến tính về kích thước của mảng và số lượng tối đa. 
+Cụ thể, hãy xác định`cnt[x]`là số phần tử trong mảng chia hết cho`x`. Với mỗi số chia`d`, số lượng hoạt động tối đa có thể tạo ra`d`là`sum(cnt[m] for all multiples m of d) - 1`. Chúng ta có thể tính toán trước các ước số và bội số một cách hiệu quả bằng phương pháp giống như sàng. Điều này làm giảm độ phức tạp từ bậc hai xuống gần tuyến tính về kích thước của mảng và số lượng tối đa. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(n^3) | O(n) | Quá chậm | 
 | Tối ưu (lan truyền số chia) | O(n + max(a) * log log max(a)) | O(max(a)) | Đã chấp nhận | 
@@ -80,7 +80,7 @@ for i in range(1, MAX_A + 1):
         res = max(res, cnt[i] - 1)
 
 print(res)
-```Vòng lặp đầu tiên xây dựng bản đồ hiện diện cho mảng. Vòng lặp thứ hai đếm số lần xuất hiện của các số trong`cnt`. Vòng lặp lồng nhau truyền số đếm từ bội số xuống ước số một cách hiệu quả. Việc trừ đi một trong lần quét cuối cùng dẫn đến thực tế là một phần tử không thể tạo thành GCD với chính nó. Thứ tự truyền từ lớn đến nhỏ đảm bảo rằng tất cả các GCD tiềm năng được xem xét chính xác một lần. 
+```Vòng lặp đầu tiên xây dựng bản đồ hiện diện cho mảng. Vòng lặp thứ hai đếm số lần xuất hiện của các số trong`cnt`. Vòng lặp lồng nhau truyền số đếm từ bội số xuống ước số một cách hiệu quả. Việc trừ đi một trong lần quét cuối cùng dẫn đến thực tế là một phần tử không thể tự tạo thành GCD. Thứ tự truyền từ lớn đến nhỏ đảm bảo rằng tất cả các GCD tiềm năng được xem xét chính xác một lần. 
 
 ## Ví dụ đã hoạt động 
 

@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1 phút 12s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cho một số nguyên lớn, được biểu diễn dưới dạng một chuỗi các chữ số không có số 0 đứng đầu và chúng ta được phép thực hiện chính xác một thao tác: chọn hai chữ số liên tiếp và thay thế chúng bằng tổng của chúng. Nếu tổng là một chữ số, nó sẽ thay thế trực tiếp cặp; nếu tổng có hai chữ số thì cả hai chữ số sẽ thay thế cặp ban đầu. Mục tiêu là chọn cặp theo cách tạo ra số lượng lớn nhất có thể sau thao tác đơn lẻ này. 
@@ -36,7 +36,7 @@ Phương pháp brute-force lặp lại trên tất cả các cặp chữ số l�
 
 Thông tin chi tiết quan trọng là việc thay thế **cặp chữ số ngoài cùng bên phải có tổng bằng 10 trở lên** sẽ đảm bảo mức tăng lớn nhất. Nếu không có cặp nào có tổng bằng 10 trở lên thì việc kết hợp **cặp ngoài cùng bên trái** sẽ tạo ra số lớn nhất vì việc kết hợp các chữ số nhỏ hơn sau này sẽ chỉ thu nhỏ số chữ số ở phía trước, làm giảm giá trị tổng thể. Về cơ bản, chúng tôi đang tận dụng đặc tính mà các chữ số có nghĩa nhất thống trị giá trị số, do đó, tổng có hai chữ số ở cuối chuỗi sẽ tăng giá trị một cách hiệu quả nhất. Điều này cho phép chúng ta rút gọn lời giải thành một lần duyệt qua chuỗi, kiểm tra các cặp từ trái sang phải và ghi nhớ cặp cuối cùng tạo ra tổng ít nhất là 10. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(n²) | O(n) | Quá chậm | 
 | Tối ưu | O(n) | O(n) | Đã chấp nhận | 
@@ -100,7 +100,7 @@ Không có tổng ≥ 10. Thay cặp đầu tiên:`9 + 0 = 9`→`9`Những dấu
 | Thời gian | O(n) | Một lần tuyến tính đi qua mỗi chuỗi có độ dài n cho mỗi trường hợp thử nghiệm | 
 | Không gian | O(n) | Lưu trữ chuỗi và xây dựng đầu ra | 
 
-Giải pháp phù hợp thoải mái trong giới hạn. Đối với 10.000 trường hợp thử nghiệm và tổng chiều dài$2 \cdot 10^5$, tổng số phép tính là tuyến tính trong 200.000, thấp hơn nhiều so với ngưỡng 2 giây. 
+Giải pháp phù hợp thoải mái trong giới hạn. Đối với 10.000 trường hợp thử nghiệm và tổng chiều dài$2 \cdot 10^5$, tổng số phép toán là tuyến tính trong 200.000, thấp hơn nhiều so với ngưỡng 2 giây. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io

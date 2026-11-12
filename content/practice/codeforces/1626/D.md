@@ -18,10 +18,10 @@ draft: false
 
 **Xếp hạng:** 2100 
 **Tags:** tìm kiếm nhị phân, bạo lực, tham lam, toán học 
-**Thời gian giải:** 1 phút 35 giây 
+**Thời gian giải:** 1m 35s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cấp nhiều tập trọng số và chúng ta phải chia các giá trị này thành ba nhóm bằng cách sử dụng hai điểm cắt trên trục số. Mọi thứ ngay bên dưới phần cắt đầu tiên thuộc về một nhóm, mọi thứ ít nhất là phần thứ hai thuộc về nhóm khác và mọi thứ ở giữa tạo thành nhóm thứ ba. 
@@ -30,9 +30,9 @@ Sau phân vùng này, mỗi nhóm được yêu cầu có kích thước lũy th
 
 Khó khăn chính là hai điểm cắt xác định đồng thời ba kích thước nhóm và việc di chuyển ranh giới sẽ thay đổi hai nhóm cùng một lúc. Điều này kết hợp các quyết định theo cách ngăn cản việc đối xử độc lập với từng nhóm. 
 
-Các ràng buộc đủ chặt chẽ để$O(n^2)$quét qua tất cả các cặp ranh giới là đường biên nhưng vẫn có thể thực hiện được nếu được tối ưu hóa cẩn thận với số lượng tiền tố và đánh giá theo thời gian không đổi. Một tìm kiếm tổ hợp đầy đủ trên tất cả các cách để gán các phần tử hoặc tất cả các lũy thừa mục tiêu có thể có của hai bộ ba là quá lớn vì mỗi thử nghiệm có thể chứa tối đa$2 \cdot 10^5$tổng số các phần tử. 
+Các ràng buộc đủ chặt chẽ để$O(n^2)$quét qua tất cả các cặp ranh giới là đường biên nhưng vẫn có thể thực hiện được nếu được tối ưu hóa cẩn thận với số lượng tiền tố và đánh giá theo thời gian không đổi. Một tìm kiếm tổ hợp đầy đủ trên tất cả các cách để gán các phần tử hoặc tất cả các lũy thừa mục tiêu của hai bộ ba có thể là quá lớn vì mỗi thử nghiệm có thể chứa tối đa$2 \cdot 10^5$tổng số các phần tử. 
 
-Một sai lầm ngây thơ nhưng đầy cám dỗ là giả định rằng mỗi nhóm có thể được làm tròn một cách độc lập thành lũy thừa tiếp theo của 2 dựa trên kích thước hiện tại của nó đối với một phần chia cố định mà không tính đến việc phân chia tốt hơn có thể di chuyển các phần tử giữa các nhóm và giảm đáng kể các phần bổ sung cần thiết. Một cạm bẫy phổ biến khác là quên rằng ban đầu một nhóm có kích thước bằng 0 được phép nhưng vẫn phải được đặt khác 0, điều này đã buộc ít nhất một lần chèn. 
+Một sai lầm ngây thơ nhưng đầy cám dỗ là giả định rằng mỗi nhóm có thể được làm tròn một cách độc lập thành lũy thừa tiếp theo của 2 dựa trên kích thước hiện tại của nó đối với một phần chia cố định mà không xem xét rằng việc phân chia tốt hơn có thể di chuyển các phần tử giữa các nhóm và giảm đáng kể các phần bổ sung cần thiết. Một cạm bẫy phổ biến khác là quên rằng ban đầu một nhóm có kích thước bằng 0 được phép nhưng vẫn phải được đặt khác 0, điều này đã buộc ít nhất một lần chèn. 
 
 Ví dụ: nếu tất cả các phần tử đều bằng nhau thì bất kỳ sự phân chia hợp lý nào cũng sẽ đặt mọi thứ vào một nhóm duy nhất, để trống hai nhóm còn lại. Một giải pháp ngây thơ chỉ có thể giải thích cho việc làm tròn nhóm không trống, thiếu chi phí bắt buộc để kích hoạt các nhóm trống. 
 
@@ -44,11 +44,11 @@ Cách tiếp cận brute-force liệt kê tất cả các cặp có thể$(x, y)
 
 Chúng ta có thể giảm bớt điều này bằng cách sắp xếp mảng và làm việc với số lượng tiền tố. Đối với một cố định$x$, nhóm đầu tiên là tiền tố và đối với trường hợp cố định$y$, nhóm thứ ba là một hậu tố. Nhóm giữa là sự khác biệt. Điều này cho phép tính toán cả ba kích cỡ trong thời gian không đổi cho mỗi cặp. 
 
-Quan sát quan trọng là hàm chi phí chỉ phụ thuộc vào quy mô nhóm và chi phí của mỗi nhóm chỉ phụ thuộc vào khoảng cách giữa quy mô của nó với lũy thừa tiếp theo của 2. Chúng ta có thể tính toán trước cho mọi kích thước có thể lên đến$n$, chi phí để đạt được lũy thừa tiếp theo của hai. 
+Quan sát quan trọng là hàm chi phí chỉ phụ thuộc vào quy mô nhóm và chi phí của mỗi nhóm chỉ phụ thuộc vào khoảng cách giữa quy mô của nó với lũy thừa tiếp theo của 2. Chúng ta có thể tính toán trước cho mọi kích thước có thể lên tới$n$, chi phí để đạt được lũy thừa tiếp theo của hai. 
 
 Điều này làm giảm vấn đề quét tất cả các điểm phân chia hợp lệ trong$O(n^2)$, thế là đủ vì tổng số tiền$n$qua các bài kiểm tra là$2 \cdot 10^5$, do đó tổng công việc vẫn có thể quản lý được. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu |$O(n^3)$|$O(1)$| Quá chậm | 
 | Tiền tố + quét cặp |$O(n^2)$mỗi bài kiểm tra |$O(n)$| Đã chấp nhận | 
@@ -112,7 +112,7 @@ if __name__ == "__main__":
     solve()
 ```Việc triển khai bắt đầu bằng cách xây dựng một bảng tra cứu lũy thừa tiếp theo của 2 cho mọi kích cỡ. Điều này tránh việc tính toán lại logarit nhiều lần bên trong các vòng lặp lồng nhau. các`cost`mảng chuyển đổi kích thước nhóm thành chi phí chèn trong thời gian không đổi. 
 
-Vòng lặp kép kết thúc`i`Và`j`liệt kê tất cả các cách có thể để chia mảng đã sắp xếp thành ba phân đoạn liền kề. Các ranh giới tương ứng trực tiếp với hai ngưỡng$x$Và$y$, vì việc sắp xếp đảm bảo rằng bất kỳ lựa chọn ngưỡng nào cũng tạo ra một phân vùng như vậy. 
+Vòng lặp kép kết thúc`i`Và`j`liệt kê tất cả các cách có thể để chia mảng đã sắp xếp thành ba đoạn liền kề. Các ranh giới tương ứng trực tiếp với hai ngưỡng$x$Và$y$, vì việc sắp xếp đảm bảo rằng bất kỳ lựa chọn ngưỡng nào cũng tạo ra một phân vùng như vậy. 
 
 Một điểm tinh tế là xử lý các phân đoạn trống. Vòng lặp cho phép`i == 0`hoặc`j == i`, tạo ra các nhóm có kích thước bằng không. Hàm chi phí buộc các giá trị này trở thành kích thước 1 một cách chính xác bằng cách ánh xạ 0 tới lũy thừa tiếp theo của 2, tức là 1. 
 

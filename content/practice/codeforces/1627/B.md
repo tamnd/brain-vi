@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1m 32s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta có một lớp học được biểu diễn dưới dạng lưới với$n$hàng và$m$cột. Mỗi ô là một chỗ ngồi. Tina có thể vẽ chính xác$k$ghế màu hồng, ở đâu$k$nằm trong khoảng từ 0 đến$n \cdot m - 1$. Sau đó, Rahul chọn một chỗ ngồi tránh những chiếc ghế sơn màu, cố gắng ngồi càng gần Tina càng tốt. Tina chọn chỗ ngồi sau Rahul, cố gắng tăng tối đa khoảng cách giữa họ. Nhiệm vụ là đối với mỗi$k$, để xác định khoảng cách tối thiểu có thể có giữa Rahul và Tina với giả định cả hai đều hành động tối ưu. 
@@ -32,13 +32,13 @@ Những hạn chế là đáng kể.$n \cdot m$có thể đạt được$10^5$, 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận bạo lực sẽ mô phỏng quy trình cho mọi$k$. Đối với mỗi$k$, chúng ta có thể lặp lại tất cả các kết hợp của$k$sơn các ghế còn lại cho Rahul rồi tính toán chỗ ngồi tối ưu của Tina. Về nguyên tắc thì điều này đúng nhưng độ phức tạp của nó lại tăng theo cấp số nhân.$n \cdot m$, điều đó là không thể thực hiện được đối với$n \cdot m = 10^5$. 
+Cách tiếp cận bạo lực sẽ mô phỏng quy trình cho mọi$k$. Đối với mỗi$k$, chúng ta có thể lặp lại tất cả các kết hợp của$k$sơn các ghế còn lại cho Rahul rồi tính toán chỗ ngồi tối ưu của Tina. Về nguyên tắc thì điều này đúng nhưng độ phức tạp của nó lại tăng theo cấp số nhân.$n \cdot m$, điều này là không thể thực hiện được đối với$n \cdot m = 10^5$. 
 
 Quan sát quan trọng là việc tối đa hóa và giảm thiểu khoảng cách trong lưới được điều khiển bởi vị trí của ghế so với các góc. Những chiếc ghế cách xa nhau nhất luôn là sự kết hợp của các góc dạng lưới. Vì khoảng cách Manhattan là tuyến tính nên các lựa chọn chiến lược chỉ còn là chọn chỗ ngồi ở hoặc gần các góc. Quan sát này cho phép chúng ta tính toán trước khoảng cách từ các góc và sắp xếp chúng. Thay vì mô phỏng từng lựa chọn sơn, chúng ta có thể tính toán khoảng cách Manhattan từ mỗi góc và xác định khoảng cách tối đa có thể còn lại sau đó.$k$ghế được "sơn". 
 
 Chúng ta có thể biểu thị các chỗ ngồi theo tọa độ của chúng so với bốn góc, sắp xếp các giá trị và cho mỗi chỗ ngồi.$k$, chọn$k$-sự kết hợp lớn nhất mang lại khoảng cách tối đa sau khi sơn. Điều này làm giảm độ phức tạp từ hàm mũ xuống$O(n \cdot m \log(n \cdot m))$cho mỗi trường hợp thử nghiệm do sắp xếp, điều này có thể chấp nhận được với các ràng buộc của vấn đề. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(2^{n*m}) | O(n*m) | Quá chậm | 
 | Tối ưu | O(n_m log(n_m)) | O(n*m) | Đã chấp nhận | 
@@ -48,12 +48,12 @@ Chúng ta có thể biểu thị các chỗ ngồi theo tọa độ của chúng
 1. Liệt kê tất cả các ghế theo tọa độ$(r, c)$vì$r \in [1, n]$,$c \in [1, m]$. 
 2. Với mỗi chỗ ngồi, hãy tính khoảng cách từ Manhattan đến cả bốn góc:$(1,1)$,$(1,m)$,$(n,1)$, Và$(n,m)$. "Giá trị" hiệu quả của một chỗ ngồi là mức tối đa của bốn khoảng cách này vì Rahul muốn ngồi gần Tina nhất và Tina muốn tối đa hóa khoảng cách. 
 3. Thu thập các giá trị khoảng cách tối đa cho tất cả các ghế vào danh sách. Đây là khoảng cách "trong trường hợp xấu nhất" mà Rahul có thể phải đối mặt nếu Tina chưa sơn lại chiếc ghế nào. 
-4. Sắp xếp danh sách này theo thứ tự giảm dần. Giá trị lớn nhất tương ứng với$k = 0$(không sơn), giá trị lớn thứ hai tương ứng với$k = 1$(một chỗ ngồi được sơn), v.v. Logic là Tina sẽ sơn những chỗ ngồi có khoảng cách tối đa cao nhất trước tiên để giảm thiểu khoảng cách tối thiểu của Rahul. 
-5. Xuất các giá trị đã sắp xếp theo thứ tự ngược lại cho$k = 0$ĐẾN$n \cdot m - 1$, tạo thành chuỗi khoảng cách tối thiểu mà Rahul có thể đạt được cho mỗi$k$. 
+4. Sắp xếp danh sách này theo thứ tự giảm dần. Giá trị lớn nhất tương ứng với$k = 0$(không sơn), giá trị lớn thứ hai tương ứng với$k = 1$(một chỗ ngồi được sơn), v.v. Logic là Tina sẽ sơn những chiếc ghế có khoảng cách tối đa cao nhất trước tiên để giảm thiểu khoảng cách tối thiểu của Rahul. 
+5. Xuất các giá trị được sắp xếp theo thứ tự ngược lại cho$k = 0$ĐẾN$n \cdot m - 1$, tạo thành chuỗi khoảng cách tối thiểu mà Rahul có thể đạt được cho mỗi$k$. 
 
 ### Tại sao nó hoạt động 
 
-Điều bất biến là trong lưới Manhattan, khoảng cách tối đa giữa hai điểm luôn được thực hiện ở một trong các góc. Bằng cách xem xét khoảng cách của mỗi chỗ ngồi từ tất cả các góc và sắp xếp, chúng tôi có thể xác định một cách có hệ thống khoảng cách tối thiểu mà Rahul có thể đạt được sau khi Tina vẽ tranh một cách có chiến lược.$k$chỗ ngồi. Việc sắp xếp đảm bảo rằng mỗi lần tăng của$k$loại bỏ chiếc ghế hiện đang có hiệu quả tối đa hóa khoảng cách, tương ứng với lựa chọn tối ưu của Tina. Điều này đảm bảo tính chính xác mà không cần mô phỏng rõ ràng từng hoán vị chỗ ngồi. 
+Điều bất biến là trong lưới Manhattan, khoảng cách tối đa giữa hai điểm luôn được thực hiện ở một trong các góc. Bằng cách xem xét khoảng cách của mỗi chỗ ngồi từ tất cả các góc và sắp xếp, chúng tôi có thể xác định một cách có hệ thống khoảng cách tối thiểu mà Rahul có thể đạt được sau khi Tina vẽ tranh một cách có chiến lược.$k$chỗ ngồi. Việc sắp xếp đảm bảo rằng mỗi lần tăng của$k$loại bỏ chiếc ghế hiện có hiệu quả nhất trong việc tối đa hóa khoảng cách, tương ứng với lựa chọn tối ưu của Tina. Điều này đảm bảo tính chính xác mà không cần mô phỏng rõ ràng từng hoán vị chỗ ngồi. 
 
 ## Giải pháp Python```python
 import sys
@@ -146,8 +146,8 @@ assert run("1\n5 1\n") == "4 4 4 4 4", "5x1 column grid"
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
 | 2 2 | 2 2 2 2 | Lưới vuông nhỏ | 
-| 2 3 | 3 3 3 3 4 4 | Non-square rectangular grid |
- | 1 5 | 4 4 4 4 4 | Hàng đơn | 
+| 2 3 | 3 3 3 3 4 4 | Lưới hình chữ nhật không vuông | 
+| 1 5 | 4 4 4 4 4 | Hàng đơn | 
 | 5 1 | 4 4 4 4 4 | Cột đơn | 
 
 ## Vỏ cạnh 

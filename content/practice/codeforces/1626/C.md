@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 5 phút 17s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Định dạng đầu vào đúng cho Codeforces 1628C 
 
 - Dòng đầu tiên:`t`- số lượng ca kiểm thử 
@@ -54,7 +54,7 @@ for _ in range(t):
 
 1. Chúng tôi đọc **đúng`n`** cho mỗi lưới vuông. 
 2. Chúng tôi đọc ** chính xác`n`dòng** mỗi dòng chứa **`n`số nguyên**, phù hợp với định dạng đầu vào. 
-3. Logic XOR hoạt động theo **mẫu bàn cờ** (`(i+j)%2==0`). Đối với bài toán "lưới XOR", có thể chứng minh rằng XOR tất cả các ô chẵn lẻ mang lại XOR của toàn bộ lưới ban đầu. 
+3. Logic XOR hoạt động theo **mẫu bàn cờ** (`(i+j)%2==0`). Đối với bài toán "lưới XOR", có thể chứng minh rằng XOR tất cả các ô chẵn lẻ sẽ mang lại XOR của toàn bộ lưới ban đầu. 
 4. Không có giả định nào về cột hoặc lưới hình chữ nhật được đưa ra, vì vậy`IndexError`được loại bỏ. 
 
 ### Xác thực đầu vào mẫu (Vấn đề gốc) 

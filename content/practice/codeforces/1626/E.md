@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1 phút 43s 
 **Đã xác minh:** không 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi được tặng một cái cây với$n$đỉnh, trong đó mỗi đỉnh có màu đen hoặc trắng. Một "con chip" có thể được đặt trên bất kỳ đỉnh nào và trong mỗi thao tác, bạn chọn một đỉnh màu đen$y$khác với đỉnh đen được chọn cuối cùng và di chuyển chip một bước dọc theo con đường ngắn nhất từ ​​vị trí hiện tại của nó tới$y$. Mục tiêu là để xác định xem mỗi đỉnh có thể thực hiện được bằng một số chuỗi di chuyển để cuối cùng đến được bất kỳ đỉnh đen nào hay không. 
@@ -30,7 +30,7 @@ Chúng tôi được tặng một cái cây với$n$đỉnh, trong đó mỗi đ
 
 Cây có thể rất lớn ($n \le 3 \cdot 10^5$), vì vậy việc mô phỏng đơn giản việc di chuyển con chip dọc theo đường đi là không thể. Mỗi thao tác có thể bao gồm việc đi qua một đường đi dài và số lượng các chuỗi đỉnh đen tiềm năng tăng theo cấp số nhân, vì vậy chúng ta phải tránh bất kỳ thuật toán nào xem xét tất cả các đường đi một cách rõ ràng. 
 
-Các trường hợp cạnh không rõ ràng phát sinh khi một đỉnh ở xa các đỉnh đen hoặc khi nó bị "bẫy" bởi cấu trúc: ví dụ: nếu một đỉnh trắng được bao quanh bởi các đỉnh trắng khác, tất cả các lân cận của chúng đều cách một lá đen duy nhất một khoảng cách, thì có thể không thể đạt được nhiều đỉnh đen. Một BFS ngây thơ chỉ xem xét khoảng cách đến đỉnh đen _any_ sẽ đánh dấu không chính xác nó có thể tiếp cận được, vì vậy chúng ta cần một cách tiếp cận có cấu trúc hơn. 
+Các trường hợp cạnh không rõ ràng phát sinh khi một đỉnh ở xa các đỉnh đen hoặc khi nó bị "bẫy" bởi cấu trúc: ví dụ: nếu một đỉnh trắng được bao quanh bởi các đỉnh trắng khác, tất cả các lân cận của chúng đều cách một lá đen duy nhất một khoảng cách, thì có thể không thể đạt được nhiều đỉnh đen. Một BFS ngây thơ chỉ xem xét khoảng cách đến đỉnh đen _bất kỳ_ nào sẽ đánh dấu không chính xác nó có thể tiếp cận được, vì vậy chúng ta cần một cách tiếp cận có cấu trúc hơn. 
 
 ## Phương pháp tiếp cận 
 
@@ -42,7 +42,7 @@ Chúng ta có thể chính thức hóa điều này như sau. Đầu tiên, tín
 
 Câu chuyện là: brute-force hoạt động trên lý thuyết vì việc di chuyển con chip dọc theo các đường đi cuối cùng sẽ đạt đến đỉnh đen, nhưng không thành công đối với những cây lớn do trình tự hàm mũ. Quan sát thấy rằng con chip chỉ có thể di chuyển về phía một đỉnh màu đen và khoảng cách dọc theo cây hạn chế khả năng tiếp cận sẽ làm giảm vấn đề đối với vấn đề ghi nhãn BFS/DFS. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(n^2) trường hợp xấu nhất | O(n) | Quá chậm | 
 | Tối ưu | O(n) | O(n) | Đã chấp nhận | 

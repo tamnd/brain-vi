@@ -18,10 +18,10 @@ draft: false
 
 **Đánh giá:** 800 
 **Tas:** thuật toán xây dựng, triển khai 
-**Thời gian giải:** 1 phút 35 giây 
+**Thời gian giải:** 1m 35s 
 **Đã xác minh:** có 
 
-## Giải pháp 
+##Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cung cấp một lưới nhỏ có kích thước lên tới 50 x 50, trong đó mỗi ô có màu đen hoặc trắng. Từ bất kỳ ô màu đen nào, chúng tôi được phép thực hiện thao tác trải đều màu đen theo một cách rất cụ thể: chúng tôi chọn một ô màu đen và sơn toàn bộ hàng của nó màu đen hoặc sơn toàn bộ cột của nó màu đen. Mỗi hành động như vậy tốn một lần di chuyển. 
@@ -56,13 +56,13 @@ Quan sát quan trọng là chúng ta không bao giờ cần theo dõi trạng th
 
 Nếu ô đích đã có màu đen thì chúng ta đã hoàn thành. 
 
-Nếu không, chúng tôi sẽ kiểm tra xem có tồn tại một ô đen trong cùng hàng với mục tiêu hay cùng cột với mục tiêu hay không. Nếu một ô như vậy tồn tại thì chỉ cần một thao tác là đủ: chúng ta có thể chọn ô đó và vẽ hàng hoặc cột của nó để che mục tiêu. 
+Nếu không, chúng tôi sẽ kiểm tra xem có tồn tại một ô đen trong cùng hàng với mục tiêu hay cùng cột với mục tiêu hay không. Nếu một ô như vậy tồn tại thì một thao tác là đủ: chúng ta có thể chọn ô đó và vẽ hàng hoặc cột của nó để che mục tiêu. 
 
-Nếu cả hàng mục tiêu và cột mục tiêu đều không chứa bất kỳ ô đen nào thì ngay cả sau bất kỳ số thao tác nào, cũng không có cách nào để đưa ra một ô đen được căn chỉnh với mục tiêu. Trong trường hợp đó, câu trả lời là không thể. 
+Nếu cả hàng mục tiêu và cột mục tiêu đều không chứa bất kỳ ô đen nào thì ngay cả sau bất kỳ số thao tác nào, cũng không có cách nào để đưa ra một ô đen thẳng hàng với mục tiêu. Trong trường hợp đó, câu trả lời là không thể. 
 
 Điều này làm giảm vấn đề xuống còn việc kiểm tra sự tồn tại đơn giản trong hàng và cột mục tiêu. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Brute Force (BFS bang) | Hàm mũ | Hàm mũ | Quá chậm | 
 | Tối ưu (quét hàng/cột) |$O(nm)$|$O(1)$| Đã chấp nhận | 
