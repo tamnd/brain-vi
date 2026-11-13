@@ -26,7 +26,7 @@ draft: false
 
 Chúng ta được yêu cầu tìm chi phí tối thiểu để một con rùa di chuyển từ góc trên bên trái của bàn đến góc dưới bên phải. Cái bàn có\(n\)hàng và\(m\)cột và mỗi ô chứa số \((i-1) \cdot m + j\), trong đó\(i\)Và\(j\)là chỉ số hàng và cột. Rùa chỉ có thể di chuyển xuống hoặc sang phải trong mỗi bước đi. Chi phí của một đường dẫn là tổng các số trong tất cả các ô được truy cập dọc theo đường dẫn đó, bao gồm cả ô bắt đầu và ô kết thúc. 
 
-Với những hạn chế\(1 \le n, m \le 10^4\)và lên tới 1000 trường hợp kiểm thử, chúng tôi cần một thuật toán \(O(1)\) cho mỗi trường hợp kiểm thử sau khi phân tích mẫu, vì việc xây dựng lưới hoặc liệt kê tất cả các đường dẫn sẽ là \(O(n \cdot m)\), có thể đạt tới\(10^8\)hoạt động trên mỗi trường hợp thử nghiệm, rõ ràng là quá chậm so với giới hạn thời gian. 
+Với những hạn chế\(1 \le n, m \le 10^4\)và lên tới 1000 trường hợp kiểm thử, chúng tôi cần một thuật toán \(O(1)\) cho mỗi trường hợp kiểm thử sau khi phân tích mẫu, vì việc xây dựng một lưới hoặc liệt kê tất cả các đường dẫn sẽ là \(O(n \cdot m)\), có thể đạt tới\(10^8\)hoạt động cho mỗi trường hợp thử nghiệm, rõ ràng là quá chậm so với giới hạn thời gian. 
 
 Các trường hợp cạnh không rõ ràng bao gồm các bảng một hàng hoặc một cột. Ví dụ, nếu\(n = 1, m = 10\), con rùa chỉ có một con đường duy nhất dọc theo hàng. Đầu ra đúng là tổng của các số nguyên liên tiếp\(1 + 2 + ... + 10 = 55\). Một cách tiếp cận bất cẩn khi cố gắng chọn những bước "tối thiểu" bằng cách kiểm tra những người hàng xóm có thể thất bại vì không có sự lựa chọn về phương hướng. 
 
@@ -54,7 +54,7 @@ $$Sau khi đơn giản hóa, nó rút gọn thành:$$
 \text{cost} = n \cdot m \cdot (n-1)/2 + m \cdot (m-1)/2 + n
 $$Hoặc rõ ràng hơn, bằng cách tính tổng dọc theo cột và sau đó là hàng còn lại. Công thức này đưa ra phép tính \(O(1)\) cho mỗi trường hợp thử nghiệm. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 |---|---|---|---| 
 | Lực lượng vũ phu DP | O(n*m) | O(n*m) | Quá chậm đối với n,m lớn | 
 | Công thức tính tổng | O(1) | O(1) | Đã chấp nhận | 
@@ -71,7 +71,7 @@ $$Một cách tiếp cận đơn giản hơn: tổng cột đầu tiên bao gồ
 \sum_{j=2}^{m} ((n-1)m + j) = (m-1)(n-1)m + \frac{m(m+1)}{2} - 1
 $$4. Cộng hai phần để có được tổng chi phí đường đi tối thiểu. 
 
-5. Xuất kết quả cho từng test case. 
+5. Xuất kết quả cho từng test. 
 
 Tại sao nó hoạt động: Con rùa không thể di chuyển sang trái hoặc lên trên, vì vậy đường đi tối thiểu phải ôm cạnh trên và bên trái cho đến khi đến hàng cuối cùng, sau đó đi dọc theo hàng cuối cùng. Bất kỳ đường dẫn nào khác chứa số lớn hơn trước đó, làm tăng tổng số tiền. Điều này được đảm bảo bằng kiểu đánh số tăng dần theo hàng và cột. 
 

@@ -1,6 +1,6 @@
 ---
-title: "CF 17E - Phân chia"
-description: "Chúng ta được cho một chuỗi và chúng ta xem xét mọi chuỗi con palindromic bên trong chuỗi đó. Mỗi lần xuất hiện đều có ý nghĩa riêng biệt, ngay cả khi hai chuỗi con có cùng văn bản. Ví dụ: trong \"aaa\" có ba lần xuất hiện khác nhau của \"a\"."
+title: "CF 17E - Phân tích"
+description: "Chúng ta được cấp một chuỗi và chúng ta xem xét mọi chuỗi con palindromic bên trong chuỗi đó. Mỗi lần xuất hiện đều có ý nghĩa riêng biệt, ngay cả khi hai chuỗi con có cùng văn bản. Ví dụ: trong \"aaa\" có ba lần xuất hiện khác nhau của \"a\"."
 date: "2026-05-28T00:00:00+07:00"
 tags: ["codeforces", "competitive-programming", "strings"]
 categories: ["algorithms"]
@@ -13,7 +13,7 @@ solve_time_s: 230
 verified: true
 draft: false
 ---
-[CF 17E - Palisection](https://codeforces.com/problemset/problem/17/E) 
+[CF 17E - Palissection](https://codeforces.com/problemset/problem/17/E) 
 
 **Xếp hạng:** 2900 
 **Thẻ:** chuỗi 
@@ -23,21 +23,21 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được cho một chuỗi và chúng ta xem xét mọi chuỗi con palindromic bên trong chuỗi đó. Mỗi lần xuất hiện đều có ý nghĩa riêng biệt, ngay cả khi hai chuỗi con có cùng văn bản. Ví dụ, trong`"aaa"`có ba lần xuất hiện khác nhau của`"a"`. 
+Chúng ta được cấp một chuỗi và chúng ta xem xét mọi chuỗi con palindromic bên trong chuỗi đó. Mỗi lần xuất hiện đều có ý nghĩa riêng biệt, ngay cả khi hai chuỗi con có cùng văn bản. Ví dụ, trong`"aaa"`có ba lần xuất hiện khác nhau của`"a"`. 
 
-Mỗi palindrome tương ứng với một khoảng`[l, r]`. Chúng ta phải đếm xem có bao nhiêu cặp khoảng palindromic khác nhau không có thứ tự giao nhau. Hai khoảng giao nhau nếu chúng có chung ít nhất một vị trí. 
+Mỗi palindrome tương ứng với một khoảng`[l, r]`. Chúng ta phải đếm xem có bao nhiêu cặp khoảng palindromic khác biệt giao nhau không theo thứ tự. Hai khoảng giao nhau nếu chúng có chung ít nhất một vị trí. 
 
 Giải thích trực tiếp là: 
 
 1. Liệt kê mọi chuỗi con palindromic. 
 2. Hãy xem xét từng cặp trong số chúng. 
-3. Đếm các cặp có khoảng cách trùng nhau. 
+3. Đếm các cặp có khoảng trùng nhau. 
 
-Chiều dài chuỗi có thể đạt tới`2 * 10^6`, điều này thay đổi hoàn toàn những gì khả thi. Thậm chí một`O(n^2)`thuật toán là không thể ở đây. Quét bậc hai trên tất cả các cặp sẽ yêu cầu khoảng`4 * 10^12`hoạt động trong trường hợp xấu nhất. Chúng ta cần một cái gì đó gần với thời gian tuyến tính. 
+Chiều dài chuỗi có thể đạt tới`2 * 10^6`, điều này thay đổi hoàn toàn những gì khả thi. Thậm chí một`O(n^2)`thuật toán là không thể ở đây. Việc quét bậc hai trên tất cả các cặp sẽ yêu cầu khoảng`4 * 10^12`hoạt động trong trường hợp xấu nhất. Chúng ta cần một cái gì đó gần với thời gian tuyến tính. 
 
 Một khó khăn tiềm ẩn khác là số lượng chuỗi con palindromic bản thân nó đã có thể là bậc hai. Một chuỗi như`"aaaa....a"`chứa khoảng`n(n+1)/2`palindrome. Chúng tôi không thể lưu trữ rõ ràng tất cả các khoảng thời gian. 
 
-mô-đun`51123987`cũng quan trọng. Số lượng trung gian có thể trở nên rất lớn, vì vậy mọi phép toán số học phải giữ nguyên giá trị này theo modulo. 
+mô-đun`51123987`cũng quan trọng. Số lượng trung gian có thể trở nên rất lớn, vì vậy mọi phép tính số học phải giữ nguyên giá trị này theo modulo. 
 
 Có một số trường hợp khó bỏ sót. 
 
@@ -61,7 +61,7 @@ abba
 ```Palindrome: 
 
 - bốn chữ cái duy nhất 
--`"bb"`-`"abba"`bảng màu`"abba"`giao nhau với mọi palindrome khác. Các thuật toán chỉ nhìn vào các trung tâm cục bộ thường quên các palindrome dài bao gồm nhiều palindrome nhỏ hơn. 
+-`"bb"`-`"abba"`bảng màu`"abba"`giao nhau với mọi palindrome khác. Các thuật toán chỉ nhìn vào các trung tâm cục bộ thường quên các palindrome dài bao phủ nhiều palindrome nhỏ hơn. 
 
 Trường hợp xấu nhất là chuỗi ký tự lặp lại:```
 5
@@ -92,7 +92,7 @@ T choose 2 - D
 - có bao nhiêu palindromes kết thúc ở mỗi vị trí, 
 - có bao nhiêu palindromes bắt đầu ở mỗi vị trí, 
 
-thì chúng ta có thể đếm các cặp rời nhau bằng tổng tiền tố. 
+thì chúng ta có thể đếm các cặp rời rạc với tổng tiền tố. 
 
 Thử thách còn lại là đạt được số lượng này mà không liệt kê từng bảng màu riêng lẻ. 
 
@@ -107,7 +107,7 @@ Từ những bán kính này, chúng ta có thể xây dựng lại số lượn
 
 Điều đó mang lại một`O(n)`giải pháp. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(n^4) ngây thơ, O(n^2) với bảng liệt kê Manacher | O(n^2) | Quá chậm | 
 | Tối ưu | O(n) | O(n) | Đã chấp nhận | 
@@ -155,7 +155,7 @@ total * (total - 1) / 2
 
 ### Tại sao nó hoạt động 
 
-Mỗi cặp palindrome riêng biệt thuộc đúng một trong hai loại: 
+Mỗi cặp palindromes riêng biệt thuộc đúng một trong hai loại: 
 
 - giao nhau, 
 - rời rạc. 
@@ -539,7 +539,7 @@ Bây giờ hãy xem xét:```
 aa
 ```Palindrome: 
 
--`[1,1]`-`[2,2]`-`[1,2]`Cặp rời rạc duy nhất là không có cặp nào, bởi vì mọi cặp đều trùng nhau. Tổng số cặp là`3`. Sau khi trừ đi các cặp rời rạc bằng 0, câu trả lời trở thành`2`bởi vì các cặp palindrome riêng biệt không có thứ tự là: 
+-`[1,1]`-`[2,2]`-`[1,2]`Cặp rời rạc duy nhất là không có cặp nào, bởi vì mọi cặp đều chồng lên nhau. Tổng số cặp là`3`. Sau khi trừ đi các cặp rời rạc bằng 0, câu trả lời trở thành`2`bởi vì các cặp palindrome riêng biệt không có thứ tự là: 
 
 -`[1,1]`với`[1,2]`-`[2,2]`với`[1,2]`Thuật toán xử lý bảng màu chẵn một cách chính xác thông qua`d2`. 
 

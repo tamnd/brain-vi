@@ -23,11 +23,11 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Cho ta hai số nguyên`n`Và`k`. Chúng ta nhìn vào tất cả các số nguyên tố từ`2`lên tới`n`. Trong số các số nguyên tố đó, chúng ta muốn đếm xem có bao nhiêu số có thể viết được dưới dạng:$$p_i + p_{i+1} + 1$$Ở đâu`p_i`Và`p_{i+1}`là các số nguyên tố lân cận, nghĩa là các số nguyên tố liên tiếp theo thứ tự tăng dần. 
+Cho ta hai số nguyên`n`Và`k`. Chúng tôi xem xét tất cả các số nguyên tố từ`2`lên đến`n`. Trong số các số nguyên tố đó, chúng ta muốn đếm xem có bao nhiêu số có thể viết được dưới dạng:$$p_i + p_{i+1} + 1$$Ở đâu`p_i`Và`p_{i+1}`là các số nguyên tố lân cận, nghĩa là các số nguyên tố liên tiếp theo thứ tự tăng dần. 
 
 Ví dụ: các số nguyên tố liên tiếp`5`Và`7`sản xuất:$$5 + 7 + 1 = 13$$Từ`13`cũng là số nguyên tố, nó có giá trị. 
 
-Nhiệm vụ là xác định xem ít nhất`k`số nguyên tố lên tới`n`thỏa mãn tính chất này. Nếu có thì in`YES`, nếu không thì in`NO`. 
+Nhiệm vụ là xác định xem ít nhất`k`số nguyên tố lên đến`n`thỏa mãn tính chất này. Nếu có thì in`YES`, nếu không thì in`NO`. 
 
 Những hạn chế là rất nhỏ.`n`nhiều nhất là`1000`, do đó, ngay cả các phương pháp tạo số nguyên tố khá kém hiệu quả cũng có thể được chấp nhận. Một thuật toán bậc hai trên tất cả các số lên đến`1000`vẫn chạy ngay lập tức. Điều này thay đổi trọng tâm của vấn đề từ tối ưu hóa sang tính chính xác và triển khai rõ ràng. 
 
@@ -53,7 +53,7 @@ Ví dụ:```
 
 Không có số hợp lệ nào tồn tại nên câu trả lời đúng là`NO`. 
 
-Một trường hợp nữa là`k = 0`. Trong tình huống đó câu trả lời luôn là`YES`, bởi vì có ít nhất 0 số nguyên tố hợp lệ sẽ tự động đúng. 
+Một trường hợp nữa là`k = 0`. Trong tình huống đó câu trả lời luôn là`YES`, bởi vì việc có ít nhất 0 số nguyên tố hợp lệ sẽ tự động đúng. 
 
 Ví dụ:```
 2 0
@@ -65,22 +65,22 @@ YES
 
 Cách tiếp cận bạo lực trực tiếp nhất là kiểm tra mọi số từ`2`ĐẾN`n`và thử tất cả các cặp số nguyên tố để xem liệu số đó có thể được biểu diễn dưới dạng:$$p_i + p_j + 1$$đồng thời kiểm tra xem các số nguyên tố có lân cận nhau hay không. 
 
-Vì có khoảng`168`số nguyên tố lên tới`1000`, cách tiếp cận này vẫn đủ nhỏ để vượt qua. Công việc trong trường hợp xấu nhất là xung quanh:$$1000 \times 168^2$$đó chỉ là một vài triệu hoạt động. 
+Vì có khoảng`168`số nguyên tố lên đến`1000`, cách tiếp cận này vẫn đủ nhỏ để vượt qua. Công việc trong trường hợp xấu nhất là xung quanh:$$1000 \times 168^2$$đó chỉ là một vài triệu hoạt động. 
 
 Phương pháp vũ phu hoạt động vì các ràng buộc rất nhỏ nhưng nó thực hiện những công việc không cần thiết. Biểu thức mà chúng ta quan tâm hoàn toàn được xác định bởi các số nguyên tố liên tiếp. Khi đã biết danh sách các số nguyên tố, mọi ứng cử viên hợp lệ chỉ đơn giản là:$$p_i + p_{i+1} + 1$$Không có lý do để kiểm tra sự kết hợp tùy ý. 
 
-Quan sát này đơn giản hóa vấn đề một cách đáng kể. Trước tiên chúng tôi tạo ra tất cả các số nguyên tố lên đến`n`. Sau đó, chúng tôi lặp qua các cặp số nguyên tố liên tiếp, tính giá trị ứng viên và kiểm tra xem ứng viên đó có phải là số nguyên tố hay không và nhiều nhất là`n`. 
+Quan sát này đơn giản hóa vấn đề một cách đáng kể. Đầu tiên chúng ta tạo ra tất cả các số nguyên tố lên đến`n`. Sau đó, chúng tôi lặp qua các cặp số nguyên tố liên tiếp, tính giá trị ứng viên và kiểm tra xem ứng viên đó có phải là số nguyên tố hay không và nhiều nhất là`n`. 
 
 Để kiểm tra tính nguyên tố nhanh chóng, chúng ta lưu trữ tất cả các số nguyên tố trong một tập hợp. Sau đó việc kiểm tra tư cách thành viên trở thành thời gian không đổi. 
 
 Cấu trúc của bài toán đương nhiên dẫn đến lời giải này vì điều kiện đã chỉ rõ các số nguyên tố liên tiếp. Thay vì tìm kiếm các cách biểu diễn số, chúng ta trực tiếp tạo ra tất cả các cách biểu diễn có thể có. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(P2) | O(P) | Đã chấp nhận | 
 | Tối ưu | O(n log log n) | O(n) | Đã chấp nhận | 
 
-Đây`P`là số số nguyên tố lên tới`n`. 
+Đây`P`là số số nguyên tố lên đến`n`. 
 
 ## Hướng dẫn thuật toán 
 
@@ -182,7 +182,7 @@ YES
 
 đầu vào:```
 45 7
-```Số nguyên tố lên đến`45`:$$[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43]$$| Các số nguyên tố lân cận | Ứng viên | Xuất sắc? | Đếm | 
+```Số nguyên tố lên tới`45`:$$[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43]$$| Các số nguyên tố lân cận | Ứng viên | Xuất sắc? | Đếm | 
 | --- | --- | --- | --- | 
 | 2, 3 | 6 | Không | 0 | 
 | 3, 5 | 9 | Không | 0 | 

@@ -24,7 +24,7 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Bài toán cho chúng ta nhiều tập số nguyên, tất cả đều bị giới hạn bởi một giá trị lớn nhất`m`và cho phép chúng ta thay thế nhiều lần bất kỳ số nào`x > 3`với hai số nguyên`p`Và`q`như vậy`p*q = x`và cả hai`p`Và`q`lớn hơn 1. Sau mỗi thao tác, tập hợp tăng thêm một phần tử. Mục tiêu là giảm sự khác biệt giữa phần tử lớn nhất và nhỏ nhất trong nhiều tập hợp, được định nghĩa là sự cân bằng. 
+Bài toán cho chúng ta nhiều tập số nguyên, tất cả đều bị giới hạn bởi một giá trị lớn nhất`m`và cho phép chúng ta thay thế nhiều lần bất kỳ số nào`x > 3`với hai số nguyên`p`Và`q`như vậy`p*q = x`và cả hai`p`Và`q`lớn hơn 1. Sau mỗi thao tác, tập hợp nhiều phần sẽ tăng thêm một phần tử. Mục tiêu là giảm sự khác biệt giữa phần tử lớn nhất và nhỏ nhất trong nhiều tập hợp, được định nghĩa là sự cân bằng. 
 
 Mỗi trường hợp thử nghiệm bao gồm kích thước của nhiều tập hợp, giới hạn phần tử tối đa và các phần tử ban đầu. Đầu ra là số dư nhỏ nhất có thể mà chúng ta có thể đạt được bằng cách áp dụng 0 hoặc nhiều thao tác phân tách này. 
 
@@ -36,11 +36,11 @@ Các trường hợp khó khăn có thể gặp phải một giải pháp đơn 
 
 Cách tiếp cận bạo lực sẽ là thử mọi phép phân chia hợp lệ cho mọi phần tử và tính toán đệ quy số dư cho tất cả các tập hợp kết quả. Điều này hoạt động về mặt khái niệm vì hoạt động được đảm bảo cuối cùng đạt đến các số không thể phân chia (số nguyên tố và số 1), do đó quá trình đệ quy chấm dứt. Vấn đề là đối với số lượng lớn, có nhiều cách để phân chia và mỗi cách phân chia sẽ phát triển thành nhiều tập hợp, điều này nhanh chóng dẫn đến sự tăng trưởng theo cấp số nhân. Ví dụ: việc chia tất cả các thừa số của một số như 210 sẽ tạo ra một cây khả năng khổng lồ. Điều này vượt xa số lượng hoạt động khả thi. 
 
-Thông tin chi tiết quan trọng là đảo ngược quan điểm: thay vì mô phỏng tất cả các phần tách về phía trước, chúng ta có thể nghĩ về các số nhỏ nhất mà mỗi phần tử ban đầu có thể được chia thành và theo dõi xem các phần tách này ảnh hưởng như thế nào đến giá trị tối thiểu của nhiều tập hợp. Bởi vì phép toán cho phép phân tích thành thừa số tùy ý, một số lớn có thể được rút gọn thành bất kỳ tổ hợp nào của các thừa số nguyên tố của nó. Để giảm thiểu số dư, chúng tôi muốn tập trung vào việc giảm giá trị tối đa đồng thời tránh tạo ra các số nhỏ hơn mức tối thiểu hiện tại. 
+Thông tin chi tiết quan trọng là đảo ngược quan điểm: thay vì mô phỏng tất cả các phần tách về phía trước, chúng ta có thể nghĩ về các số nhỏ nhất mà mỗi phần tử ban đầu có thể được chia thành và theo dõi xem các phần tách này ảnh hưởng như thế nào đến giá trị tối thiểu của nhiều tập hợp. Bởi vì phép toán cho phép phân tích nhân tử tùy ý, một số lớn có thể được rút gọn thành bất kỳ tổ hợp nào của các thừa số nguyên tố của nó. Để giảm thiểu số dư, chúng tôi muốn tập trung vào việc giảm giá trị tối đa đồng thời tránh tạo ra các số nhỏ hơn mức tối thiểu hiện tại. 
 
 Chúng ta có thể tính toán trước cho mỗi số`x`hệ số tối thiểu của nó lớn hơn 1 và sử dụng lập trình động để theo dõi các số tối thiểu có thể xảy ra khi chia tách. Sau đó, chúng tôi duy trì một cửa sổ trượt qua các giá trị này để xác định một cách hiệu quả số dư tối thiểu có thể đạt được trên nhiều tập hợp. Điều này biến mô phỏng hàm mũ thành quét tuyến tính kết hợp với tiền xử lý. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(2^n) | O(n) | Quá chậm | 
 | Tối ưu | O(M log M + N) | O(M + N) | Đã chấp nhận | 
@@ -95,7 +95,7 @@ for _ in range(t):
     final_min = next(i for i in range(1, m + 1) if freq[i])
     final_max = next(i for i in range(m, 0, -1) if freq[i])
     print(final_max - final_min)
-```Việc tính toán trước của`spf`là rất quan trọng để phân tích các số một cách nhanh chóng. các`freq`mảng cho phép chúng tôi mô phỏng hiệu quả các phần tách mà không cần duy trì một cách rõ ràng một tập hợp nhiều tập hợp đang phát triển. Bằng cách lặp lại từ các số lớn nhất trở xuống, chúng tôi đảm bảo rằng phép chia sẽ giảm giá trị tối đa nhiều nhất có thể trước khi xem xét các số nhỏ hơn. Lần quét cuối cùng của`freq`xác định số nhỏ nhất và số lớn nhất thực sự có sau tất cả các phép chia. 
+```Việc tính toán trước của`spf`là rất quan trọng để phân tích các số một cách nhanh chóng. các`freq`mảng cho phép chúng tôi mô phỏng hiệu quả các phần tách mà không cần duy trì một cách rõ ràng một tập hợp nhiều tập hợp đang phát triển. Bằng cách lặp lại từ các số lớn nhất trở xuống, chúng tôi đảm bảo rằng phép chia sẽ giảm giá trị tối đa nhiều nhất có thể trước khi xem xét các số nhỏ hơn. Lần quét cuối cùng của`freq`xác định số nhỏ nhất và lớn nhất thực sự có sau tất cả các phép chia. 
 
 ## Ví dụ đã hoạt động 
 

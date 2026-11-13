@@ -31,7 +31,7 @@ Hạn chế về trình độ chuyên môn là thuộc tính cấu trúc quan tr
 
 Các giới hạn đủ nhỏ để cho phép các thuật toán đồ thị có hành vi bậc hai. Chúng tôi có nhiều nhất`1000`nhân viên và`10000`cung cấp. MỘT`O(m log m)`hoặc`O(m α(n))`giải pháp dễ dàng đủ nhanh. Thậm chí`O(n^2)`vượt qua được chấp nhận được. Việc tìm kiếm toàn diện trên tất cả các tập con của các cạnh là không thể vì có thể có tới`2^10000`sự lựa chọn. 
 
-Phần nguy hiểm là cạnh đầu vào có chi phí tối thiểu cho mỗi nút không tự động đảm bảo hệ thống phân cấp hợp lệ. Các cạnh được chọn phải kết nối tất cả các nhân viên vào một cấu trúc có gốc. 
+Phần nguy hiểm là cạnh đầu vào có chi phí tối thiểu cho mỗi nút không tự động đảm bảo hệ thống phân cấp hợp lệ. Các cạnh được chọn phải kết nối tất cả nhân viên vào một cấu trúc gốc. 
 
 Hãy xem xét ví dụ này:```
 3
@@ -57,7 +57,7 @@ Một trường hợp tinh tế khác là khi nhiều nhân viên không nhận 
 1 2 5
 ```Người lao động`3`Và`4`không thể được giám sát bởi bất cứ ai. Một cây có gốc chỉ có thể có một gốc, vì vậy câu trả lời là`-1`. 
 
-Thứ tự trình độ cũng hàm ý một cái gì đó mạnh mẽ hơn. Nhân viên có trình độ chuyên môn tối đa không bao giờ có thể có người giám sát, bởi vì không có nhân viên có trình độ cao hơn tồn tại. Nếu có một số nhân viên có trình độ chuyên môn tối đa như nhau thì không có ranh giới nào có thể tồn tại giữa họ vì các lời đề nghị đòi hỏi sự bất bình đẳng nghiêm ngặt. Khi đó nhiều gốc trở thành điều tất yếu và câu trả lời là ngay lập tức`-1`. 
+Thứ tự trình độ cũng hàm ý một cái gì đó mạnh mẽ hơn. Nhân viên có trình độ tối đa không bao giờ có thể có người giám sát, bởi vì không có nhân viên có trình độ cao hơn tồn tại. Nếu có một số nhân viên có trình độ chuyên môn tối đa như nhau thì không có ranh giới nào có thể tồn tại giữa họ vì các lời đề nghị đòi hỏi sự bất bình đẳng nghiêm ngặt. Khi đó nhiều gốc trở thành điều tất yếu và câu trả lời là ngay lập tức`-1`. 
 
 ## Phương pháp tiếp cận 
 
@@ -77,7 +77,7 @@ Vậy thuật toán tối ưu trở thành:
 
 Điều này làm giảm vấn đề xuống còn một lần quét đơn giản trên tất cả các cạnh. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(2^m) | O(m) | Quá chậm | 
 | Tối ưu | O(n + m) | O(n) | Đã chấp nhận | 

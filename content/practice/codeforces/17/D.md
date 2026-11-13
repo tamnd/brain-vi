@@ -1,6 +1,6 @@
 ---
 title: "CF 17D - Sổ tay"
-description: "Nick muốn liệt kê tất cả các số có độ dài n cho trước trong cơ số b, trong đó các chữ số nằm trong khoảng từ 0 đến b-1, nhưng các số không thể bắt đầu bằng 0. Mỗi trang trong sổ ghi chú của anh ấy chứa chính xác c số. Chúng ta được yêu cầu tính xem có bao nhiêu con số xuất hiện ở trang cuối cùng mà anh ta điền vào."
+description: "Nick muốn liệt kê tất cả các số có độ dài n cho trước trong cơ số b, trong đó các chữ số nằm trong khoảng từ 0 đến b-1, nhưng các số không thể bắt đầu bằng 0. Mỗi trang trong sổ ghi chép của anh ấy chứa chính xác c số. Chúng ta được yêu cầu tính xem có bao nhiêu con số xuất hiện ở trang cuối cùng mà anh ta điền vào."
 date: "2026-05-28T00:00:00+07:00"
 tags: ["codeforces", "competitive-programming", "number-theory"]
 categories: ["algorithms"]
@@ -23,7 +23,7 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Nick muốn liệt kê tất cả các số có độ dài nhất định`n`trong căn cứ`b`, trong đó các chữ số nằm trong khoảng từ 0 đến`b-1`, nhưng các con số không thể bắt đầu bằng 0. Mỗi trang trong sổ ghi chép của anh đều ghi chính xác`c`những con số. Chúng ta được yêu cầu tính xem có bao nhiêu con số xuất hiện ở trang cuối cùng mà anh ta điền vào. 
+Nick muốn liệt kê tất cả các số có độ dài nhất định`n`trong căn cứ`b`, trong đó các chữ số nằm trong khoảng từ 0 đến`b-1`, nhưng các số không thể bắt đầu bằng 0. Mỗi trang trong sổ ghi chép của anh đều ghi chính xác`c`những con số. Chúng ta được yêu cầu tính xem có bao nhiêu con số xuất hiện ở trang cuối cùng mà anh ta điền vào. 
 
 Đầu vào bao gồm ba số nguyên:`b`(cơ sở),`n`(độ dài số) và`c`(số trên mỗi trang). Đầu ra là một số nguyên duy nhất: số lượng ở trang cuối cùng. 
 
@@ -39,7 +39,7 @@ Quan sát quan trọng là chúng ta không cần bản thân các con số, ch�
 
 Vì vậy, vấn đề được rút gọn thành tính toán`(b-1) * b^(n-1) % c`. Bởi vì`b`Và`n`có thể cực kỳ lớn, chúng ta cần thực hiện phép lũy thừa mô-đun một cách hiệu quả, điều này có thể được thực hiện bằng phép lũy thừa bằng bình phương. Phương pháp này cho phép chúng ta tính toán`b^(n-1) % c`mà không bao giờ lưu trữ`b^(n-1)`một cách rõ ràng. Cuối cùng, nếu kết quả của`(b-1) * b^(n-1) % c`bằng 0 nghĩa là trang cuối đã đầy nên chúng ta quay lại`c`. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(b^n) | O(1) | Quá chậm | 
 | Tối ưu | O(log n) | O(1) | Đã chấp nhận | 
@@ -67,7 +67,7 @@ if remaining == 0:
     remaining = c
 
 print(remaining)
-```Mã đọc đầu vào bằng I/O nhanh để xử lý các số nguyên có thể lớn. các`pow`Hàm trong Python tính toán hiệu quả`b^(n-1) % c`sử dụng phép lũy thừa bình phương. nhân với`(b-1)`chia tỷ lệ cho chữ số đầu tiên và`% c`đảm bảo chúng tôi ở trong giới hạn trang. Việc kiểm tra cuối cùng để tìm số 0 xử lý các trường hợp trang cuối cùng được điền đầy đủ. 
+```Mã đọc đầu vào bằng I/O nhanh để xử lý các số nguyên có thể lớn. các`pow`Hàm trong Python tính toán hiệu quả`b^(n-1) % c`dùng phép lũy thừa bình phương. nhân với`(b-1)`chia tỷ lệ cho chữ số đầu tiên và`% c`đảm bảo chúng tôi ở trong giới hạn trang. Việc kiểm tra cuối cùng để tìm số 0 xử lý các trường hợp trang cuối cùng được điền đầy đủ. 
 
 ## Ví dụ đã hoạt động 
 

@@ -39,7 +39,7 @@ Thông tin chi tiết đến từ việc nhận ra rằng điều duy nhất th�
 
 Điều này biến vấn đề thành một **vấn đề lập trình động trên nhiều bộ đếm**. Cho phép`dp[i][j][k]`là số cách chọn`i` `a`S,`j` `b`cát`k` `c`s từ chuỗi ban đầu sao cho chúng tôi có thể nhận được phân phối đó thông qua các hoạt động của mình. Chúng tôi lặp lại từng ký tự của chuỗi và cập nhật bảng DP bằng cách thêm ký tự đó vào số lượng hiện có. Sau khi xử lý toàn bộ chuỗi, câu trả lời là tổng của`dp[i][j][k]`cho tất cả`(i,j,k)`thỏa mãn điều kiện cân bằng. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(3^n) | O(3^n) | Quá chậm | 
 | DP về số lượng | O(n³) | O(n³) | Đã chấp nhận | 
@@ -89,7 +89,7 @@ for i in range(n+1):
                 answer = (answer + dp[i][j][k]) % MOD
 
 print(answer)
-```Mảng DP được cập nhật theo thứ tự ngược lại để tránh sử dụng ký tự hiện tại nhiều lần cho mỗi kết hợp. Chỉ kiểm tra điều kiện cân bằng sau khi xử lý tất cả các ký tự để đảm bảo chúng tôi chỉ tính các chuỗi có độ dài đầy đủ, có thể truy cập được. 
+```Mảng DP được cập nhật theo thứ tự ngược lại để tránh sử dụng ký tự hiện tại nhiều lần cho mỗi kết hợp. Chỉ kiểm tra điều kiện cân bằng sau khi xử lý tất cả các ký tự để đảm bảo chúng tôi chỉ tính các chuỗi có độ dài đầy đủ, có thể truy cập. 
 
 ## Ví dụ đã hoạt động 
 

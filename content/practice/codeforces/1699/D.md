@@ -38,11 +38,11 @@ Cách tiếp cận bạo lực là mô phỏng mọi trình tự xóa có thể 
 
 Một cái nhìn sâu sắc quan trọng là vấn đề giảm xuống việc xem xét các vị trí của một giá trị mục tiêu. Giả sử chúng ta sửa một giá trị`x`và cố gắng tối đa hóa một khối`x`. Mọi thao tác chúng tôi thực hiện đều xóa các phần tử không`x`hoặc các phần tử được`x`kết hợp với một cái gì đó khác Chúng ta có thể nghĩ vấn đề như sau: giữa lần xuất hiện đầu tiên và lần cuối cùng của`x`, bao nhiêu`x`có thể tồn tại nếu chúng ta loại bỏ một cách tối ưu`x`phần tử? 
 
-Quan sát này cho phép chúng ta xây dựng một giải pháp quy hoạch động. Cho phép`dp[l][r]`là số phần tử bằng nhau tối đa có thể đạt được trong mảng con từ chỉ mục`l`ĐẾN`r`. Nếu như`a[l] == a[r]`, chúng ta có thể sử dụng cả hai như một phần của khối và giải pháp tối ưu bên trong`l+1..r-1`đóng góp. Ngược lại, kết quả tốt nhất sẽ đến từ việc chia tách: hoặc loại bỏ`l`hoặc loại bỏ`r`và giải mảng con nhỏ hơn. Điều này tương tự như bài toán DP "loại bỏ palindrome", nhưng được điều chỉnh để xóa các phần tử không bằng nhau liền kề. 
+Quan sát này cho phép chúng ta xây dựng một giải pháp quy hoạch động. Cho phép`dp[l][r]`là số phần tử bằng nhau tối đa có thể đạt được trong mảng con từ chỉ mục`l`ĐẾN`r`. Nếu như`a[l] == a[r]`, chúng tôi có thể sử dụng cả hai như một phần của khối và giải pháp tối ưu bên trong`l+1..r-1`đóng góp. Ngược lại, kết quả tốt nhất sẽ đến từ việc chia tách: hoặc loại bỏ`l`hoặc loại bỏ`r`và giải mảng con nhỏ hơn. Điều này tương tự như bài toán DP "loại bỏ palindrome", nhưng được điều chỉnh để xóa các phần tử không bằng nhau liền kề. 
 
 Bảng DP có$O(n^2)$các mục nhập và mỗi mục nhập có thể được tính toán trong$O(n)$trong trường hợp xấu nhất nếu thực hiện một cách ngây thơ. Chúng ta có thể tối ưu hóa vòng lặp bên trong bằng cách sử dụng các vị trí được tính toán trước của các phần tử bằng nhau, làm cho tổng độ phức tạp$O(n^2)$, điều này khả thi$n \le 5000$. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(2^n) | O(n) | Quá chậm | 
 | DP tối ưu | O(n^2) | O(n^2) | Đã chấp nhận | 
