@@ -28,7 +28,7 @@ Chúng tôi được cung cấp một mảng có độ dài`n`được tạo b�
 
 Những hạn chế còn khiêm tốn:`n`có thể lên tới 100 và có thể lên tới 1000 trường hợp thử nghiệm. Mỗi phần tử trong mảng là một số nguyên nhỏ từ 0 đến 127. Điều này ngụ ý rằng bất kỳ thuật toán nào có độ phức tạp O(n) cho mỗi trường hợp thử nghiệm sẽ chạy hiệu quả, vì ngay cả trong trường hợp xấu nhất, chúng ta chỉ cần khoảng 100.000 thao tác, điều này không đáng kể đối với các CPU hiện đại. Điều này cũng loại trừ nhu cầu về cấu trúc dữ liệu phức tạp hoặc tối ưu hóa. 
 
-Các trường hợp cạnh bao gồm các mảng trong đó tất cả các phần tử đều giống hệt nhau, trong đó`x`có thể trùng với một trong các phần tử ban đầu, hoặc ở đâu`x`là số không. Ví dụ, nếu mảng là`[6, 6, 6, 6, 6, 6]`, đáp án đúng là 6. Một trường hợp phức tạp khác là`[100, 100, 0]`, trong đó XOR của hai phần tử ban đầu là 0. Một cách tiếp cận đơn giản, chẳng hạn, cố gắng loại bỏ các bản sao hoặc giả định`x`là phần tử tối đa có thể bị lỗi trên các đầu vào này. 
+Các trường hợp biên bao gồm các mảng trong đó tất cả các phần tử đều giống hệt nhau, trong đó`x`có thể trùng với một trong các phần tử ban đầu, hoặc ở đâu`x`là số không. Ví dụ, nếu mảng là`[6, 6, 6, 6, 6, 6]`, đáp án đúng là 6. Một trường hợp phức tạp khác là`[100, 100, 0]`, trong đó XOR của hai phần tử ban đầu là 0. Một cách tiếp cận đơn giản, chẳng hạn, cố gắng loại bỏ các bản sao hoặc giả định`x`là phần tử tối đa có thể bị lỗi trên các đầu vào này. 
 
 ## Phương pháp tiếp cận 
 
@@ -36,7 +36,7 @@ Cách tiếp cận bạo lực sẽ là thử loại bỏ lần lượt từng p
 
 Cái nhìn sâu sắc quan trọng là XOR vừa có tính kết hợp vừa có tính giao hoán. Điều này có nghĩa là XOR tất cả các phần tử của mảng cuối cùng cho chúng ta kết quả tương tự như XOR mảng ban đầu hai lần và giá trị được nối thêm một lần. Nếu chúng ta để XOR của mảng ban đầu là`x`, mảng cuối cùng chứa tất cả các phần tử gốc cộng với`x`. XOR mọi thứ cùng nhau mang lại`x ⊕ a1 ⊕ a2 ⊕ ... ⊕ a(n-1)`. Nhưng`a1 ⊕ a2 ⊕ ... ⊕ a(n-1)`chỉ là`x`, vậy tổng XOR là`x ⊕ x = 0`cộng với phần bổ sung`x`, rời đi`x`. Do đó, XOR của tất cả các phần tử của mảng cuối cùng trực tiếp cho giá trị của`x`. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(n²) | O(1) | Hoạt động nhưng không cần thiết | 
 | XOR Tất cả các phần tử | O(n) | O(1) | Được chấp nhận và đơn giản | 
@@ -49,7 +49,7 @@ Cái nhìn sâu sắc quan trọng là XOR vừa có tính kết hợp vừa có
 4. Lặp lại mảng, XOR từng phần tử vào`x`. Sau vòng lặp này,`x`chứa XOR của tất cả`n`các phần tử. 
 5. Đầu ra`x`cho trường hợp thử nghiệm hiện tại. 
 
-Tại sao nó hoạt động: XOR có đặc tính`a ⊕ a = 0`Và`a ⊕ 0 = a`. Trong mảng cuối cùng, mỗi phần tử ban đầu xuất hiện một lần và`x`xuất hiện một lần. XOR tất cả chúng cùng nhau sẽ loại bỏ tất cả các phần tử ban đầu bởi vì`a1 ⊕ a2 ⊕ ... ⊕ a(n-1) ⊕ x = x`. Điều này đảm bảo rằng chúng tôi sẽ luôn khôi phục XOR được nối thêm chính xác, bất kể sự xáo trộn. 
+Tại sao nó hoạt động: XOR có đặc tính`a ⊕ a = 0`Và`a ⊕ 0 = a`. Trong mảng cuối cùng, mọi phần tử gốc xuất hiện một lần và`x`xuất hiện một lần. XOR tất cả chúng cùng nhau sẽ loại bỏ tất cả các phần tử ban đầu bởi vì`a1 ⊕ a2 ⊕ ... ⊕ a(n-1) ⊕ x = x`. Điều này đảm bảo rằng chúng tôi sẽ luôn khôi phục XOR được nối thêm chính xác, bất kể sự xáo trộn. 
 
 ## Giải pháp Python```python
 import sys
@@ -63,7 +63,7 @@ for _ in range(t):
     for num in a:
         x ^= num
     print(x)
-```Giải pháp đọc số lượng trường hợp thử nghiệm và sau đó lặp lại chúng. Đối với mỗi mảng, nó tính toán XOR của tất cả các phần tử bằng vòng lặp for đơn giản. Bộ tích lũy XOR bắt đầu từ 0, đảm bảo rằng nó xử lý chính xác các mảng trong đó`x`có thể là 0. Không cần xử lý đặc biệt các phần tử xáo trộn hoặc lặp lại vì XOR tự động hủy các bản sao. 
+```Giải pháp đọc số lượng trường hợp thử nghiệm và sau đó lặp lại chúng. Đối với mỗi mảng, nó tính toán XOR của tất cả các phần tử bằng vòng lặp for đơn giản. Bộ tích lũy XOR bắt đầu từ 0, đảm bảo rằng nó xử lý chính xác các mảng trong đó`x`có thể bằng 0. Không cần xử lý đặc biệt các phần tử xáo trộn hoặc lặp lại vì XOR tự động hủy các bản sao. 
 
 ## Ví dụ đã hoạt động 
 

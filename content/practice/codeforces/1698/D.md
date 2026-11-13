@@ -48,7 +48,7 @@ Vì vậy, đối với bất kỳ truy vấn [l, r] nào, chúng ta có thể t
 
 Ở mỗi bước, chúng tôi kiểm tra tiền tố trung điểm [1, mid]. Nếu tổng khác với dự kiến ​​thì điểm cố định nằm bên trong nó; nếu không thì nó nằm ở hậu tố. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | Truy vấn O(n) | O(1) | Quá chậm | 
 | Tối ưu | Truy vấn O(log n) | O(1) | Đã chấp nhận | 
@@ -61,7 +61,7 @@ Chúng tôi duy trì phạm vi tìm kiếm [l, r] phải chứa điểm cố đ�
 2. Khi l < r, tính mid = (l + r) // 2. 
 3. Truy vấn phân đoạn [l, mid] và nhận các giá trị được sắp xếp trong phạm vi đó. Tính tổng S của chúng 
 4. Tính tổng dự kiến ​​của phân đoạn nhận dạng [l, mid], là ((l + mid) * (mid - l + 1)) // 2. 
-5. So sánh S với tổng dự kiến. Nếu chúng bằng nhau thì không có hoán đổi nào vượt qua ranh giới ảnh hưởng đến đoạn này, do đó điểm cố định phải nằm trong [mid + 1, r]. Ngược lại, nó nằm trong [l, mid]. 
+5. So sánh S với tổng dự kiến. Nếu chúng bằng nhau thì không có hoán đổi nào vượt qua ranh giới ảnh hưởng đến đoạn này nên điểm cố định phải nằm trong [mid + 1, r]. Ngược lại, nó nằm trong [l, mid]. 
 6. Cập nhật l hoặc r tương ứng và lặp lại. 
 7. Khi l == r, xuất l là vị trí của điểm cố định. 
 

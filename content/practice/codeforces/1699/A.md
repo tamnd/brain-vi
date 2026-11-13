@@ -24,7 +24,7 @@ draft: false
 ##Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được yêu cầu xây dựng ba số nguyên$a$,$b$, Và$c$, mỗi cái nằm trong một phạm vi lớn lên đến$10^9$, sao cho một biểu thức cụ thể bao gồm các giá trị XOR theo cặp khớp với một số mục tiêu nhất định$n$. Biểu thức tính tổng XOR của mỗi cặp:$(a \oplus b) + (b \oplus c) + (a \oplus c)$. 
+Chúng ta được yêu cầu xây dựng ba số nguyên$a$,$b$, Và$c$, mỗi cái nằm trong một phạm vi lớn lên tới$10^9$, sao cho một biểu thức cụ thể liên quan đến các giá trị XOR theo cặp khớp với một số mục tiêu nhất định$n$. Biểu thức tính tổng XOR của mỗi cặp:$(a \oplus b) + (b \oplus c) + (a \oplus c)$. 
 
 Khó khăn chính không phải là đánh giá XOR mà là việc chọn các giá trị làm cho ba XOR theo cặp này cộng lại chính xác.$n$, hoặc chứng minh rằng không có bộ ba nào như vậy tồn tại. 
 
@@ -32,7 +32,7 @@ Khó khăn chính không phải là đánh giá XOR mà là việc chọn các g
 
 Trường hợp cạnh tinh tế xuất hiện khi$n = 1$. Việc thử nhanh các giá trị nhỏ cho thấy biểu thức$(a \oplus b) + (b \oplus c) + (a \oplus c)$luôn tạo ra số chẵn. Ví dụ: nếu tất cả các bit được xem xét độc lập thì mỗi bit sẽ đóng góp 0 hoặc 2 vào tổng số. Điều này đã ngụ ý rằng kỳ quặc$n$không thể đại diện được. Một tìm kiếm ngây thơ sẽ bỏ lỡ hạn chế về cấu trúc này và cố gắng xây dựng không chính xác các giá trị lẻ. 
 
-Một cạm bẫy khác là giả định rằng việc đặt hai biến bằng nhau hoặc sử dụng các cấp số cộng đơn giản luôn có tác dụng. Mặc dù một số giá trị nhỏ có thể được vá theo cách thủ công, nhưng cần có một mẫu chung tôn trọng tính độc lập theo bit. 
+Một cạm bẫy khác là giả định rằng việc đặt hai biến bằng nhau hoặc sử dụng cấp số cộng đơn giản luôn có tác dụng. Mặc dù một số giá trị nhỏ có thể được vá theo cách thủ công, nhưng cần có một mẫu chung tôn trọng tính độc lập theo bit. 
 
 ## Phương pháp tiếp cận 
 
@@ -48,15 +48,15 @@ Một cấu trúc tiêu chuẩn phù hợp với tất cả mọi người$n$là
 
 Cách tiếp cận bạo lực không thành công vì nó bỏ qua cấu trúc trong XOR và xử lý vấn đề như tìm kiếm số. Giải pháp tối ưu hoạt động vì XOR tuyến tính hóa trên các bit, cho phép xây dựng trực tiếp với các đóng góp được kiểm soát. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu |$O(N^3)$mỗi bài kiểm tra |$O(1)$| Quá chậm | 
 | Xây dựng tối ưu |$O(1)$mỗi bài kiểm tra |$O(1)$| Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. Đọc$n$. Nếu như$n$là số lẻ, xuất ra ngay lập tức$-1$. Điều này xuất phát từ thực tế là biểu thức luôn có giá trị là số chẵn do tính đối xứng theo cặp của các đóng góp bit. 
-2. Tính toán$x = n / 2$. Chúng tôi mong muốn phân phối đồng đều tổng số tiền đóng góp cho hai kỳ hạn XOR bằng nhau. 
+1. Đọc$n$. Nếu như$n$là số lẻ, xuất ngay$-1$. Điều này xuất phát từ thực tế là biểu thức luôn có giá trị là số chẵn do tính đối xứng theo cặp của các đóng góp bit. 
+2. Tính toán$x = n / 2$. Chúng tôi mong muốn phân phối tổng số tiền đóng góp một cách đồng đều cho hai kỳ hạn XOR bằng nhau. 
 3. Xây dựng bộ ba$a = x$,$b = 0$,$c = x$. Lựa chọn này đảm bảo hai cặp XOR đóng góp chính xác$x$mỗi thứ trong khi thứ ba đóng góp bằng không. 
 4. Xuất bộ ba. 
 

@@ -28,7 +28,7 @@ Chúng ta bắt đầu với một hoán vị`a`, đại diện cho thứ tự b
 
 Sau khi thực hiện tất cả các bước, chúng ta kết thúc với một số hoán vị. Chúng tôi cũng được cung cấp một mảng mục tiêu`b`, ngoại trừ một số mục không xác định và được đánh dấu`-1`. Nhiệm vụ là đếm xem có bao nhiêu cách chúng ta có thể thay thế những giá trị còn thiếu này sao cho`b`trở thành một hoán vị hợp lệ và có thể truy cập được từ`a`theo quá trình trao đổi. 
 
-Vì vậy, câu hỏi thực sự không phải là mô phỏng trực tiếp các giao dịch hoán đổi mà là hiểu được những hoán vị cuối cùng nào có thể đạt được theo chuỗi các giao dịch hoán đổi cục bộ bị ràng buộc này, sau đó đếm xem có bao nhiêu cách để hoàn thành mục tiêu được chỉ định một phần. 
+Vì vậy, câu hỏi thực sự không phải là mô phỏng trực tiếp các giao dịch hoán đổi mà là hiểu những hoán vị cuối cùng nào có thể đạt được theo chuỗi các giao dịch hoán đổi cục bộ bị ràng buộc này, sau đó đếm xem có bao nhiêu cách để hoàn thành mục tiêu được chỉ định một phần. 
 
 Các ràng buộc buộc phải đưa ra giải pháp thời gian tuyến tính hoặc gần thời gian tuyến tính cho mỗi trường hợp thử nghiệm. Tổng của`n`qua các bài kiểm tra nhiều nhất là`2e5`, vì vậy bất kỳ giải pháp nào nhiều hơn`O(n log n)`mỗi bài kiểm tra phải được chứng minh một cách cẩn thận và bất cứ điều gì bậc hai đều không thể thực hiện được ngay lập tức. 
 
@@ -40,26 +40,26 @@ Một trường hợp phức tạp hơn nữa là khi`b`được chỉ định �
 
 ## Phương pháp tiếp cận 
 
-Ý tưởng mạnh mẽ sẽ là liệt kê tất cả các cách để lấp đầy`-1`vị trí trong`b`và với mỗi hoán vị hoàn thành, hãy kiểm tra xem nó có thể thu được từ`a`theo quá trình trao đổi. Ngay cả khi chúng tôi có cách kiểm tra khả năng tiếp cận một cách hiệu quả, thì số lần hoàn thành vẫn là yếu tố của số lượng giá trị bị thiếu, do đó, điều này ngay lập tức bị phá vỡ đối với bất kỳ thứ gì ngoại trừ đầu vào nhỏ. 
+Ý tưởng mạnh mẽ sẽ là liệt kê tất cả các cách để lấp đầy`-1`vị trí trong`b`và với mỗi hoán vị hoàn thành, hãy kiểm tra xem nó có thể thu được từ`a`theo quá trình trao đổi. Ngay cả khi chúng tôi có cách kiểm tra khả năng tiếp cận một cách hiệu quả, số lần hoàn thành vẫn là yếu tố của số lượng giá trị bị thiếu, do đó, điều này ngay lập tức bị phá vỡ đối với bất kỳ thứ gì ngoại trừ đầu vào nhỏ. 
 
 Để tiến về phía trước, chúng ta cần hiểu quá trình hoán đổi thực sự cho phép những gì. Mỗi thao tác chỉ hoán đổi bên trong một cửa sổ`[i, i+s]`, và cửa sổ dịch chuyển sang phải mỗi bước. Điều này tạo ra một hạn chế về hướng: các phần tử chỉ có thể di chuyển theo những cách phù hợp với việc đi qua các cửa sổ chồng chéo, điều này đặt ra một hạn chế có cấu trúc về khoảng cách các phần tử có thể “tụt hậu” hoặc “nhảy về phía trước”. 
 
-Một cách hữu ích để diễn giải lại quy trình là nghĩ về từng vị trí`i`đang được “xử lý” dần dần. Ở bước`i`, chức vụ`i`trở thành ranh giới bên trái của tất cả các giao dịch hoán đổi trong tương lai, nghĩa là các vị thế trước đó ngày càng trở nên đóng băng. Điều này tạo ra một cấu trúc giống như tham lam: một khi một vị trí đã được hoàn tất, nó không thể được xem lại và các lựa chọn được thực hiện trong cửa sổ hiện tại chỉ ảnh hưởng đến một khu vực giới hạn trong tương lai. 
+Một cách hữu ích để diễn giải lại quy trình là nghĩ về từng vị trí`i`đang được “xử lý” dần dần. Ở bước`i`, chức vụ`i`trở thành ranh giới bên trái của tất cả các giao dịch hoán đổi trong tương lai, nghĩa là các vị thế trước đó ngày càng bị đóng băng. Điều này tạo ra một cấu trúc giống như tham lam: một khi một vị trí đã được hoàn tất, nó không thể được xem lại và các lựa chọn được thực hiện trong cửa sổ hiện tại chỉ ảnh hưởng đến một khu vực giới hạn trong tương lai. 
 
-Quan sát quan trọng là quá trình này thực thi một cách hiệu quả các ràng buộc về cách các phần tử từ`a`có thể phù hợp với các vị trí trong`b`. Thay vì mô phỏng các giao dịch hoán đổi, chúng ta có thể nghĩ về các nhiệm vụ khả thi: mỗi giá trị trong`a`có một loạt các vị trí mà nó có thể chiếm giữ và vấn đề trở thành việc đếm các kết quả khớp hợp lệ phù hợp với các vị trí cố định một phần trong`b`. 
+Quan sát chính là quá trình này thực thi một cách hiệu quả các ràng buộc về cách các phần tử từ`a`có thể phù hợp với các vị trí trong`b`. Thay vì mô phỏng các giao dịch hoán đổi, chúng ta có thể nghĩ về các nhiệm vụ khả thi: mỗi giá trị trong`a`có một loạt các vị trí mà nó có thể chiếm giữ và vấn đề trở thành việc đếm các kết quả khớp hợp lệ phù hợp với các vị trí cố định một phần trong`b`. 
 
 Sau khi được điều chỉnh lại theo cách này, vấn đề sẽ giảm xuống còn việc duy trì, đối với mỗi giá trị, tập hợp các vị trí được phép và đảm bảo tính nhất quán với các giá trị cố định trong`b`. Cấu trúc cho phép quét tham lam, trong đó chúng ta gán các giá trị theo thứ tự ràng buộc tăng dần, sử dụng đối số nhất quán hai con trỏ hoặc phân đoạn. 
 
-Phần tổ hợp chỉ phát sinh từ`-1`positions: whenever we have multiple valid choices for assigning values to unconstrained slots, we multiply counts. The structure guarantees independence between segments formed by constraints.
+Phần tổ hợp chỉ phát sinh từ`-1`vị trí: bất cứ khi nào chúng tôi có nhiều lựa chọn hợp lệ để gán giá trị cho các vị trí không bị ràng buộc, chúng tôi sẽ nhân số lượng. Cấu trúc đảm bảo tính độc lập giữa các phân đoạn được hình thành bởi các ràng buộc. 
 
- | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(n! · n) | O(n) | Quá chậm | 
 | Quét ràng buộc + đếm tham lam | O(n log n) | O(n) | Đã chấp nhận | 
 
 ## Hướng dẫn thuật toán 
 
-1. First, interpret the swap process as defining constraints on where each element of`a`có thể kết thúc. Thay vì theo dõi các giao dịch hoán đổi, chúng tôi tính toán khoảng thời gian có thể tiếp cận cho từng giá trị. 
+1. Đầu tiên, hãy diễn giải quá trình hoán đổi như việc xác định các ràng buộc về vị trí của từng phần tử của`a`có thể kết thúc. Thay vì theo dõi các giao dịch hoán đổi, chúng tôi tính toán khoảng thời gian có thể tiếp cận cho từng giá trị. 
 2. Chúng tôi mô phỏng mỗi phần tử có thể lan truyền bao xa. Bởi vì việc hoán đổi chỉ được phép trong các cửa sổ trượt có chiều dài`s+1`, một phần tử bắt đầu ở vị trí`i`chỉ có thể di chuyển trong một vùng giới hạn được xác định bởi các cửa sổ chồng chéo. Điều này mang lại một cấu trúc khả năng tiếp cận đơn điệu. 
 3. Chúng tôi chuyển đổi vấn đề này thành một vấn đề phù hợp: mỗi giá trị`x`TRONG`a`phải được chỉ định vào đúng một vị trí trong`b`, nhưng chỉ trong khoảng có thể truy cập được của nó. 
 4. Chúng tôi quét các vị trí từ trái sang phải. Tại mỗi vị trí`i`, nếu như`b[i]`cố định thì ta buộc ngay giá trị tương ứng vào chiếm vị trí`i`. Nếu nó là`-1`, chúng tôi xem xét tất cả các giá trị có khoảng bao gồm`i`. 
@@ -69,7 +69,7 @@ Phần tổ hợp chỉ phát sinh từ`-1`positions: whenever we have multiple 
 
 ### Tại sao nó hoạt động 
 
-Bất biến quan trọng là tại mọi vị trí`i`, tập hợp các giá trị sẵn có thể hiện chính xác tất cả các giá trị mà việc gán cho các vị trí trước đó vẫn khả thi dưới các ràng buộc hoán đổi. Quá trình hoán đổi cửa sổ trượt đảm bảo rằng tính khả thi chỉ phụ thuộc vào thứ tự tương đối trong các vùng lân cận địa phương, vì vậy một khi chúng ta vượt qua vị trí`i`, các quyết định trước đó không thể bị vi phạm bởi các lần hoán đổi sau này. Điều này mang lại cấu trúc phụ thuộc một hướng, cho phép gán tham lam mà không cần quay lại. Bước nhân là hợp lệ vì các lựa chọn ở mỗi vị trí không bị ràng buộc tương ứng với các nhánh phân công rời rạc không bao giờ hội tụ lại do tính nội tại của các phép gán hoán vị. 
+Bất biến quan trọng là tại mọi vị trí`i`, tập hợp các giá trị sẵn có thể hiện chính xác tất cả các giá trị mà việc gán cho các vị trí trước đó vẫn khả thi dưới các ràng buộc hoán đổi. Quá trình hoán đổi cửa sổ trượt đảm bảo rằng tính khả thi chỉ phụ thuộc vào thứ tự tương đối trong các vùng lân cận địa phương, vì vậy một khi chúng ta vượt qua vị trí`i`, các quyết định trước đó không thể bị vi phạm bởi các lần hoán đổi sau này. Điều này mang lại cấu trúc phụ thuộc một hướng, cho phép gán tham lam mà không cần quay lại. Bước nhân là hợp lệ vì các lựa chọn ở mỗi vị trí không bị ràng buộc tương ứng với các nhánh phân công rời rạc không bao giờ hội tụ lại do tính tương đồng của các phép gán hoán vị. 
 
 ## Giải pháp Python```python
 import sys
@@ -198,7 +198,7 @@ def run(inp: str) -> str:
 # Custom sanity checks would go here
 ```| Kiểm tra đầu vào | Sản lượng dự kiến ​​| Nó xác nhận những gì | 
 | --- | --- | --- | 
-| n=1 tầm thường | 1 | tính đúng đắn của trường hợp cơ sở | 
+| n=1 tầm thường | 1 | trường hợp cơ sở đúng đắn | 
 | tất cả -1 b | tự do giống như giai thừa | phân nhánh tối đa | 
 | không thể sửa lỗi không khớp | 0 | sự đúng đắn từ chối sớm | 
 | s=n hoàn toàn tự do | tính nhất quán tổ hợp | khả năng tiếp cận toàn cầu | 

@@ -18,7 +18,7 @@ draft: false
 
 **Đánh giá:** 2800 
 **Tags:** thuật toán xây dựng, đồ thị, cách thực hiện, toán học 
-**Thời gian giải:** 2m 26s 
+**Thời gian giải:** 2 phút 26s 
 **Đã xác minh:** không 
 
 ##Giải pháp 
@@ -30,7 +30,7 @@ Các ràng buộc đủ nhỏ để`O(n^2)`Cách tiếp cận này khả thi vì
 
 Các trường hợp phức tạp là khi một phần tử chỉ xuất hiện một lần. Thao tác này yêu cầu các điểm cuối khớp nhau, vì vậy nếu một giá trị chỉ xuất hiện một lần và bị đặt sai vị trí thì không thể di chuyển giá trị đó bằng các thao tác này. Ví dụ, nếu`a = [1,2]`Và`b = [2,1]`, không`1`cũng không`2`xảy ra hai lần, do đó không thể đảo ngược được và kết quả đầu ra chính xác là`NO`. 
 
-Một sự tinh tế khác là khi có nhiều bản sao tồn tại. Mặc dù có thể đảo ngược nhưng chúng ta phải chọn cẩn thận các chỉ số để phần tử cần thiết di chuyển vào vị trí mà không vi phạm các vị trí trước đó. 
+Một sự tinh tế khác là khi tồn tại nhiều bản sao. Mặc dù có thể đảo ngược nhưng chúng ta phải chọn cẩn thận các chỉ số để phần tử cần thiết di chuyển vào vị trí mà không vi phạm các vị trí trước đó. 
 
 ## Phương pháp tiếp cận 
 
@@ -40,7 +40,7 @@ Quan sát quan trọng là bất kỳ yếu tố nào xảy ra ít nhất hai l�
 
 Với cái nhìn sâu sắc này, chúng ta có thể thiết kế một`O(n^2)`thuật toán xây dựng một cách xác định một chuỗi các thao tác để biến đổi`a`vào trong`b`mà không cần đoán. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Brute Force Tất cả các sự đảo ngược | Hàm mũ | O(n) | Quá chậm | 
 | Mang tính xây dựng với đảo ngược hai con trỏ | O(n^2) | O(n) | Đã chấp nhận | 
@@ -54,7 +54,7 @@ Với cái nhìn sâu sắc này, chúng ta có thể thiết kế một`O(n^2)`
 5. Ngược lại, đảo ngược mảng con`a[j:k+1]`. Điều này mang lại`v`đến vị trí`j`đồng thời bảo quản các bản sao cần thiết để cho phép thực hiện các bước tiếp theo. 
 6. Đảo ngược mảng con`a[i:k+1]`. Hiện nay`v`di chuyển vào vị trí`i`. 
 7. Ghi lại cả hai lần đảo chiều`(j+1, k+1)`Và`(i+1, k+1)`sử dụng chỉ mục dựa trên 1. 
-8. Tăng dần`i`và lặp lại cho đến hết mảng`a`trận đấu`b`. 
+8. Tăng`i`và lặp lại cho đến hết mảng`a`trận đấu`b`. 
 
 Tại sao nó hoạt động: Mỗi lần lặp đặt giá trị chính xác tại vị trí`i`mà không thay đổi các phần tử ở vị trí`< i`. Đảo ngược chỉ được áp dụng cho các phân đoạn chứa ít nhất hai phần tử giống hệt nhau, do đó thao tác luôn hợp lệ. Điều này đảm bảo rằng chúng ta có thể biến đổi`a`vào trong`b`nhiều nhất là`n^2`hoạt động vì mỗi vị trí có tối đa hai lần đảo chiều. 
 
@@ -119,7 +119,7 @@ Thuật toán kết thúc, khớp`b`chính xác. Hai lần đảo ngược đư�
 | --- | --- | --- | --- | --- | --- | 
 | 0 | [1,2] | 2 | [1] | không thể | - | 
 
-Đầu ra là`NO`bởi vì không có giá trị nào xảy ra hai lần, nên không có sự đảo chiều nào có thể di chuyển`2`đến chỉ số 0. 
+Đầu ra là`NO`vì không có giá trị nào xảy ra hai lần nên không có sự đảo chiều nào có thể di chuyển`2`đến chỉ số 0. 
 
 ## Phân tích độ phức tạp 
 

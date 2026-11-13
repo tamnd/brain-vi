@@ -39,7 +39,7 @@ Thông tin chi tiết quan trọng là mẫu khối 2x2 lặp lại đảm bảo
 0 1
 ```và xếp nó trên ma trận, mỗi ô có hai ô lân cận có cùng giá trị và hai ô lân cận có giá trị khác nhau. Bởi vì$n$Và$m$chẵn, chúng ta có thể xếp khối này một cách chính xác mà không phá vỡ mẫu. Điều này đảm bảo tình trạng hàng xóm một cách tự động. Chúng ta cũng có thể lật 1↔0 và nhận được nghiệm hợp lệ khác, đưa ra nhiều ma trận đúng. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(2^(nm) * nm) | O(nm) | Quá chậm | 
 | Gạch ốp lát | O(nm) | O(nm) | Đã chấp nhận | 
@@ -66,7 +66,7 @@ for _ in range(t):
         for j in range(m):
             row.append((i % 2) ^ (j % 2))
         print(" ".join(map(str, row)))
-```Giải pháp đọc đầu vào một cách hiệu quả và xây dựng ma trận một cách nhanh chóng. các`(i % 2) ^ (j % 2)`đảm bảo các giá trị xen kẽ theo mẫu bàn cờ. Chúng tôi không cần thêm bộ nhớ ngoài việc lưu trữ từng hàng một và không có lỗi nào xảy ra vì Python sử dụng tính năng lập chỉ mục dựa trên 0. 
+```Giải pháp đọc dữ liệu đầu vào một cách hiệu quả và xây dựng ma trận một cách nhanh chóng. các`(i % 2) ^ (j % 2)`đảm bảo các giá trị xen kẽ theo mẫu bàn cờ. Chúng tôi không cần thêm bộ nhớ ngoài việc lưu trữ từng hàng một và không có lỗi nào xảy ra vì Python sử dụng tính năng lập chỉ mục dựa trên 0. 
 
 ## Ví dụ đã hoạt động 
 

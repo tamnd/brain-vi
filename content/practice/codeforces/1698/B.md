@@ -32,7 +32,7 @@ Khía cạnh quan trọng là các hoạt động không thay đổi sự khác 
 
 Từ góc độ ràng buộc, tổng số phần tử trong tất cả các trường hợp thử nghiệm lên tới 2×10^5, do đó, mọi giải pháp đều phải tuyến tính hoặc gần tuyến tính cho mỗi trường hợp thử nghiệm. Việc mô phỏng bậc hai các phép toán hoặc thử tất cả các tập hợp con của các phân đoạn là không thể vì số lượng các phép toán có thể thực hiện được là không giới hạn và mang tính tổ hợp. 
 
-Một ý tưởng ngây thơ nhưng hấp dẫn là thử tham lam làm lớn các vị trí nhất định bằng cách liên tục thực hiện chúng bằng các thao tác, nhưng điều này bỏ qua một tương tác quan trọng: mỗi thao tác ảnh hưởng đến`k`các chỉ số liên tiếp nhau, do đó việc cải thiện một vị trí chắc chắn sẽ làm thay đổi các vị trí lân cận và cũng có thể cải thiện hoặc gây thiệt hại cho các ứng viên liền kề vì “quá cao”. 
+Một ý tưởng ngây thơ nhưng hấp dẫn là thử tham lam làm lớn các vị trí nhất định bằng cách liên tục thực hiện chúng bằng các thao tác, nhưng điều này bỏ qua một tương tác quan trọng: mỗi thao tác ảnh hưởng đến`k`các chỉ số liên tiếp, do đó việc cải thiện một vị trí chắc chắn sẽ làm thay đổi các vị trí lân cận và cũng có thể cải thiện hoặc gây thiệt hại cho các ứng viên liền kề vì “quá cao”. 
 
 Trường hợp cạnh tinh tế xuất hiện khi`k = n`. Trong trường hợp này, mọi thao tác đều tăng tất cả các cọc như nhau, do đó sự khác biệt tương đối không bao giờ thay đổi. Điều đó ngay lập tức ngụ ý rằng không có cọc bên trong nào có thể trở nên “quá cao” nếu nó chưa cao, vì điều kiện chỉ phụ thuộc vào các phép so sánh không đổi. 
 
@@ -42,21 +42,21 @@ Các trường hợp đặc biệt này đã gợi ý rằng câu trả lời kh
 
 ## Phương pháp tiếp cận 
 
-Một góc nhìn bạo lực sẽ cố gắng mô phỏng các chuỗi hoạt động. Mỗi thao tác chọn một phân đoạn và tăng nó, đồng thời chúng tôi sẽ theo dõi mảng sau mỗi bước và đánh giá có bao nhiêu chỉ số thỏa mãn điều kiện thống trị. Vấn đề là ngay cả khi chúng ta giới hạn bản thân ở một số lượng thao tác giới hạn, không gian khả năng sẽ tăng theo cấp số nhân với số lượng phân đoạn và đa thức với số bước và không có ràng buộc tự nhiên nào về số lượng thao tác có thể cần thiết. Ngay cả việc tìm kiếm tham lam các lựa chọn phân khúc cũng thất bại vì một động thái cục bộ tốt có thể phá hủy các đỉnh ưu thế đã tạo trước đó. 
+Một góc nhìn bạo lực sẽ cố gắng mô phỏng các chuỗi hoạt động. Mỗi thao tác chọn một phân đoạn và tăng nó, đồng thời chúng tôi sẽ theo dõi mảng sau mỗi bước và đánh giá có bao nhiêu chỉ số thỏa mãn điều kiện thống trị. Vấn đề là ngay cả khi chúng ta giới hạn bản thân ở một số lượng thao tác bị giới hạn, không gian khả năng sẽ tăng theo cấp số nhân với số lượng phân đoạn và đa thức với số bước và không có ràng buộc tự nhiên nào về số lượng thao tác có thể cần thiết. Ngay cả việc tìm kiếm tham lam các lựa chọn phân khúc cũng thất bại vì một động thái cục bộ tốt có thể phá hủy các đỉnh ưu thế đã tạo trước đó. 
 
 Quan sát quan trọng là chúng ta không thực sự quan tâm đến giá trị tuyệt đối của cọc. Chúng tôi chỉ quan tâm đến việc liệu một chỉ số có lớn hơn tổng của các chỉ số lân cận hay không. Điều kiện đó phụ thuộc vào sự khác biệt tương đối và những khác biệt đó bị ảnh hưởng bởi số lần mỗi chỉ mục được bao phủ bởi các phân đoạn đã chọn. 
 
-Bây giờ diễn giải lại quá trình. Mỗi thao tác thêm +1 vào một khối có độ dài`k`. Nếu chúng ta xác định một mảng số lượng hoạt động khác nhau, thì cấu hình cuối cùng được xác định bởi hàm bao phủ tuyến tính từng phần với các thay đổi độ dốc ở ranh giới phân đoạn. Điều này có nghĩa là chúng tôi đang xây dựng một cách hiệu quả hàm có giá trị số nguyên trên các chỉ mục bằng cách sử dụng các khoảng đơn vị chiều rộng`k`. 
+Bây giờ diễn giải lại quá trình. Mỗi thao tác thêm +1 vào một khối có độ dài`k`. Nếu chúng ta xác định một mảng số lượng hoạt động khác nhau, thì cấu hình cuối cùng được xác định bởi hàm bao phủ tuyến tính từng đoạn với độ dốc thay đổi ở ranh giới phân đoạn. Điều này có nghĩa là chúng tôi đang xây dựng một cách hiệu quả hàm có giá trị số nguyên trên các chỉ mục bằng cách sử dụng các khoảng đơn vị chiều rộng`k`. 
 
 Cái nhìn sâu sắc về cấu trúc quan trọng là chúng tôi đang cố gắng tối đa hóa số lượng vị trí bên trong thỏa mãn sự bất bình đẳng cục bộ nghiêm ngặt. Đối với một vị trí`i`để trở nên quá cao, chúng ta cần làm cho giá trị cuối cùng của nó vượt quá tổng các giá trị lân cận của nó. Vì chúng ta có thể tự do tăng các giá trị nên yếu tố giới hạn không phải là độ lớn mà là liệu chúng ta có thể “tách” các khoản đóng góp một cách độc lập để`i`phát triển nhanh hơn`i-1`Và`i+1`. 
 
-Điều này dẫn đến quan điểm khả thi tham lam: chúng tôi cố gắng gán “lợi thế” cho các vị trí theo cách sao cho các chỉ số vượt trội đã chọn có khoảng cách đủ để các hoạt động cần thiết của chúng không xung đột nghiêm trọng. Bán kính chồng lấp được xác định bởi`k`: một thao tác đơn lẻ sẽ ảnh hưởng đồng thời`k`các vị trí liên tiếp nhau, do đó hai ứng cử viên ở gần nhau có quá nhiều ảnh hưởng và không thể cùng được thăng tiến một cách độc lập theo cách bất đối xứng cần thiết. 
+Điều này dẫn đến quan điểm khả thi tham lam: chúng tôi cố gắng gán “lợi thế” cho các vị trí theo cách sao cho các chỉ số vượt trội được chọn có khoảng cách đủ để các hoạt động cần thiết của chúng không xung đột nghiêm trọng. Bán kính chồng lấp được xác định bởi`k`: một thao tác đơn lẻ sẽ ảnh hưởng đồng thời`k`các vị trí liên tiếp nhau, do đó hai ứng cử viên ở gần nhau có quá nhiều ảnh hưởng và không thể cùng được thăng tiến một cách độc lập theo cách bất đối xứng cần thiết. 
 
 Từ đó, chiến lược tối ưu sẽ chuyển thành một lựa chọn tổ hợp đơn giản: chúng tôi chọn một tập hợp chỉ số tối đa sao cho có thể thiên vị một cách nhất quán từng chỉ mục đã chọn so với các chỉ số lân cận bằng cách sử dụng các dịch chuyển cửa sổ có sẵn. Điều này hóa ra chỉ phụ thuộc vào các ràng buộc về khoảng cách gây ra bởi`k`và số lượng tối ưu giảm xuống thành một lần quét tham lam trong đó chúng tôi chọn các vị trí đỉnh hợp lệ trong khi bỏ qua vùng lân cận bị cấm xung quanh mỗi chỉ mục đã chọn. 
 
 Giải pháp cuối cùng là tuyến tính: chúng tôi lặp qua các chỉ số và tham lam chọn các vị trí có thể chiếm ưu thế mà không vi phạm bán kính tương tác do các hoạt động áp đặt. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Brute Force (mô phỏng hoạt động) | Hàm mũ | O(n) | Quá chậm | 
 | Tối ưu (khoảng cách tham lam dựa trên mức độ ảnh hưởng) | O(n) | O(n) | Đã chấp nhận | 
@@ -135,7 +135,7 @@ Tham số khoảng cách phản ánh rằng bất kỳ sự thống trị đư�
 | 2 | -inf | bỏ qua | 0 | 
 | 3 | -inf | bỏ qua | 0 | 
 
-Không thể lựa chọn được vì không thể tạo ra sự khác biệt tương đối. 
+Không thể lựa chọn vì không thể tạo ra sự khác biệt tương đối. 
 
 Điều này chứng tỏ trường hợp bất biến toàn cục trong đó các phép toán không làm thay đổi quan hệ thứ tự. 
 

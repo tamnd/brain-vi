@@ -26,19 +26,19 @@ draft: false
 
 Chúng ta được yêu cầu xác định xem một mảng số nguyên có phải là 3SUM đóng hay không, nghĩa là với mỗi bộ ba phần tử riêng biệt trong mảng, tổng của ba phần tử đó sẽ xuất hiện ở đâu đó trong mảng. Đầu vào bao gồm nhiều trường hợp thử nghiệm, mỗi trường hợp xác định độ dài của mảng theo sau là các phần tử của nó. Đầu ra là "CÓ" nếu mảng được đóng 3SUM và nếu không thì "KHÔNG". 
 
-Các ràng buộc cho phép lên đến$2 \cdot 10^5$tổng số phần tử mảng trong tất cả các trường hợp thử nghiệm, điều này ngụ ý rằng bất kỳ thuật toán nào có kết quả tệ hơn đại khái$O(n^2)$mỗi trường hợp thử nghiệm có thể là quá chậm. Một cách tiếp cận bạo lực xem xét trực tiếp tất cả các bộ ba sẽ yêu cầu$O(n^3)$hoạt động không khả thi đối với các hoạt động có quy mô lớn.$n$. 
+Các ràng buộc cho phép lên đến$2 \cdot 10^5$tổng số phần tử mảng trên tất cả các trường hợp thử nghiệm, điều này ngụ ý rằng bất kỳ thuật toán nào có kết quả kém hơn đại khái$O(n^2)$mỗi trường hợp thử nghiệm có thể là quá chậm. Một cách tiếp cận bạo lực xem xét trực tiếp tất cả các bộ ba sẽ yêu cầu$O(n^3)$hoạt động không khả thi đối với các hoạt động có quy mô lớn.$n$. 
 
 Các trường hợp cạnh cần xem xét bao gồm các mảng có tất cả các phần tử giống hệt nhau, mảng chỉ có số 0 và mảng chứa cả số dương và số âm lớn. Ví dụ,$[0,0,0,0]$được đóng 3SUM một cách tầm thường vì tất cả các bộ ba có tổng bằng 0, nằm trong mảng. Mảng có nhiều hơn ba phần tử khác 0 riêng biệt, chẳng hạn như$[-1, 2, -3, 4]$, có thể không thuộc tính vì một số tổng gấp ba nằm ngoài mảng. Mảng có nhiều bản sao hoặc số 0 phải được xử lý cẩn thận vì việc đếm các giá trị riêng biệt là điều cần thiết để đảm bảo tính chính xác. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận đơn giản là lặp qua từng bộ ba chỉ số có thể có và kiểm tra xem tổng của chúng có tồn tại trong mảng hay không. Điều này đúng vì nó trực tiếp thực hiện định nghĩa đóng 3SUM, nhưng độ phức tạp là$O(n^3)$, điều này không thể chấp nhận được khi$n$là lớn. Ví dụ,$n=2 \cdot 10^5$sẽ yêu cầu đại khái$8 \cdot 10^{15}$hoạt động. 
+Cách tiếp cận đơn giản là lặp lại từng bộ ba chỉ số có thể có và kiểm tra xem tổng của chúng có tồn tại trong mảng hay không. Điều này đúng vì nó trực tiếp thực hiện định nghĩa đóng 3SUM, nhưng độ phức tạp là$O(n^3)$, điều này không thể chấp nhận được khi$n$là lớn. Ví dụ,$n=2 \cdot 10^5$sẽ yêu cầu đại khái$8 \cdot 10^{15}$hoạt động. 
 
 Quan sát quan trọng là một mảng có nhiều hơn ba phần tử khác 0 riêng biệt không thể đóng 3SUM. Mỗi bộ ba số khác 0 riêng biệt tạo ra một tổng không nhất thiết phải có trong mảng. Do đó, chúng ta có thể giảm mảng xuống tối đa ba số dương, ba số âm và bất kỳ số 0 nào. Nếu có nhiều hơn ba số dương hoặc nhiều hơn ba số âm thì mảng không thể đóng 3SUM. 
 
 Một khi mảng đã được thu gọn lại, bài toán sẽ trở nên dễ giải quyết hơn vì số phần tử khác 0 riêng biệt nhiều nhất là sáu. Sau đó, chúng ta có thể liệt kê tất cả các bộ ba phần tử (có tính đến các số 0) và kiểm tra xem mỗi tổng có tồn tại trong mảng hay không. Vì tổng số phần tử được xem xét nhiều nhất là 7 nên việc kiểm tra này khả thi trong$O(1)$mỗi trường hợp thử nghiệm. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(n^3) | O(n) | Quá chậm | 
 | Giảm tối ưu + Kiểm tra ba lần | O(1) cho mỗi trường hợp kiểm thử sau khi lọc, O(n) cho tiền xử lý | O(n) | Đã chấp nhận | 

@@ -17,7 +17,7 @@ draft: false
 [CF 1698G - Chuỗi nhị phân dài](https://codeforces.com/problemset/problem/1698/G) 
 
 **Xếp hạng:** 2900 
-**Tags:** bitmasks, toán học, ma trận, gặp nhau ở giữa, lý thuyết số 
+**Tags:** bitmask, toán học, ma trận, gặp nhau ở giữa, lý thuyết số 
 **Thời gian giải:** 2m 12s 
 **Đã xác minh:** có 
 
@@ -28,7 +28,7 @@ Chúng tôi được cung cấp một chuỗi nhị phân nhỏ`s`có độ dài
 
 Mục tiêu là thực hiện các thao tác như vậy với số lần tùy ý để cuối cùng`t`, chính xác là hai bit`1`và phần còn lại là`0`. Trong số tất cả các cấu hình có thể thỏa mãn điều này, chúng ta cần chuỗi lớn nhất về mặt từ điển`t`. Cuối cùng, chúng ta phải báo cáo các chỉ số dựa trên 1 của hai`1`s, hoặc`-1`nếu đạt được chính xác hai`1`s là không thể. 
 
-Những hạn chế rất lớn: chiều dài của`t`là thiên văn nên chúng ta không thể mô phỏng nó một cách trực tiếp. Kích thước của`s`nhỏ nên mọi lời giải đều phải dựa vào suy luận về các vị trí theo phương pháp đại số hơn là xây dựng`t`. 
+Những hạn chế rất lớn: chiều dài của`t`mang tính thiên văn nên chúng ta không thể mô phỏng nó một cách trực tiếp. Kích thước của`s`nhỏ nên mọi lời giải đều phải dựa vào suy luận về các vị trí bằng đại số hơn là xây dựng`t`. 
 
 Một điểm tinh tế quan trọng là các phép toán XOR có thể nghịch đảo và giao hoán: áp dụng cùng một chuỗi con hai lần sẽ hủy bỏ hiệu ứng. Điều này có nghĩa là thứ tự thực hiện các thao tác không quan trọng; chỉ có tập hợp các vị trí được chuyển đổi số lần lẻ mới quan trọng. Một sự tinh tế khác là nếu`s`không có`1`s, không thể sản xuất bất kỳ`1`s, vậy câu trả lời phải là`-1`. Tương tự, nếu`s`có một đĩa đơn`1`, kết quả thật tầm thường: bạn có thể đặt chúng ở bất cứ đâu và lớn nhất về mặt từ điển`t`có hai`1`s càng xa bên trái càng tốt, tại các vị trí`1`Và`2`. 
 
@@ -47,14 +47,14 @@ Về cơ bản, chúng ta chỉ cần tính toán hai vị trí:
 
 Điều này tránh mọi nhu cầu mô phỏng lớn và hoạt động cho tất cả các`s`. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(10^100) | O(10^100) | Quá chậm | 
 | Tối ưu (lý luận vị trí) | O( | s | ) | 
 
 ## Hướng dẫn thuật toán 
 
-1. Kiểm tra xem`s`chứa bất kỳ`1`S. Nếu không thì xuất`-1`ngay lập tức. Không có thao tác XOR nào có thể tạo ra`1`S. 
+1. Kiểm tra xem`s`chứa bất kỳ`1`S. Nếu không thì xuất ra`-1`ngay lập tức. Không có thao tác XOR nào có thể tạo ra`1`S. 
 2. Tìm chỉ số ngoài cùng bên trái`l`Ở đâu`s[l] = '1'`. Đây sẽ là vị trí đầu tiên`1`TRONG`t`. 
 3. Tìm chỉ số ngoài cùng bên phải`r`Ở đâu`s[r] = '1'`. Điều này sẽ được sử dụng để tính toán thứ hai`1`. 
 4. Tính hai vị trí trong`t`. Cho phép`p = 1`(đặt bản sao đầu tiên của`s`bắt đầu từ vị trí ngoài cùng bên trái). Cho phép`q = 1 + r - l + 1`. Điều này đảm bảo thứ hai`1`xuất hiện ngay sau cái cuối cùng`1`của bản sao đầu tiên. 
