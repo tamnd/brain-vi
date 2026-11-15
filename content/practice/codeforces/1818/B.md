@@ -17,11 +17,11 @@ draft: false
 [CF 1818B - Không thể chia cắt](https://codeforces.com/problemset/problem/1818/B) 
 
 **Xếp hạng:** 900 
-**Tags:** thuật toán xây dựng 
+**Tas:** thuật toán xây dựng 
 **Thời gian giải:** 1 phút 7s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được yêu cầu xây dựng một hoán vị của các số nguyên từ 1 đến n sao cho với mỗi mảng con có độ dài lớn hơn một, tổng của mảng con không chia hết cho độ dài của nó. Nói cách khác, nếu bạn chọn bất kỳ phân đoạn liền kề nào của hoán vị thì tổng của phân đoạn đó sẽ không chia đều cho số phần tử trong đó. Đầu vào cung cấp nhiều trường hợp thử nghiệm, mỗi trường hợp chỉ định một số nguyên n và đầu ra phải là một hoán vị hợp lệ cho n đó hoặc -1 nếu không tồn tại hoán vị. 
@@ -64,7 +64,7 @@ for _ in range(t):
     else:
         # construct descending permutation
         print(*range(n, 0, -1))
-```Đầu tiên, giải pháp sẽ đọc t, số lượng trường hợp thử nghiệm và lặp lại từng trường hợp. Với mỗi n, nó xử lý ngay trường hợp ngoại lệ n=3 bằng cách in -1. Đối với tất cả n khác, nó sử dụng Python`range`với bước -1 để tạo ra hoán vị giảm dần từ n đến 1. Toán tử giải nén`*`in các số cách nhau bởi dấu cách. Có thể tránh được các lỗi xảy ra bằng cách cài đặt chính xác điểm bắt đầu, điểm dừng và bước vào`range`. Không cần phải kiểm tra các mảng con một cách rõ ràng vì thứ tự giảm dần đảm bảo tính chất. 
+```Đầu tiên, giải pháp sẽ đọc t, số lượng trường hợp thử nghiệm và lặp lại từng trường hợp. Với mỗi n, nó xử lý ngay trường hợp ngoại lệ n=3 bằng cách in -1. Đối với tất cả n khác, nó sử dụng Python`range`với bước -1 để tạo ra hoán vị giảm dần từ n đến 1. Toán tử giải nén`*`in các số cách nhau bởi dấu cách. Tránh các lỗi xảy ra bằng cách cài đặt chính xác điểm bắt đầu, điểm dừng và bước vào`range`. Không cần phải kiểm tra các mảng con một cách rõ ràng vì thứ tự giảm dần đảm bảo tính chất. 
 
 ## Ví dụ đã hoạt động 
 

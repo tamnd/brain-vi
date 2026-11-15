@@ -1,6 +1,6 @@
 ---
 title: "CF 1819D - Misha và Táo"
-description: "Trong bài toán này, chúng ta có một dãy các quầy bán táo, mỗi quầy bán một tập hợp con các loại táo được đánh số từ 1 đến $m$. Danya, người mua, lần lượt đi qua các quầy hàng và bỏ một trong mỗi loại táo từ quầy hàng hiện tại vào ba lô của mình."
+description: "Trong bài toán này, chúng ta có một dãy các quầy bán táo, mỗi quầy bán một tập hợp con các loại táo được đánh số từ 1 đến $m$. Danya, người mua, đi qua các quầy hàng theo thứ tự và bỏ một trong mỗi loại táo từ quầy hàng hiện tại vào ba lô của mình."
 date: "2026-06-09T08:02:23+07:00"
 tags: ["codeforces", "competitive-programming", "brute-force", "data-structures", "dp", "two-pointers"]
 categories: ["algorithms"]
@@ -21,16 +21,16 @@ draft: false
 **Thời gian giải:** 1 phút 40s 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Trong bài toán này, chúng ta có một dãy các quầy bán táo, mỗi quầy bán một tập hợp con các loại táo được đánh số từ 1 đến$m$. Danya, người mua, lần lượt đi qua các quầy hàng và bỏ một trong mỗi loại táo từ quầy hàng hiện tại vào ba lô của mình. Tuy nhiên, nếu tại bất kỳ thời điểm nào có nhiều hơn một quả táo cùng loại trong ba lô của anh ta thì tất cả táo sẽ biến mất ngay sau khi rời khỏi quầy hàng. Một số quầy hàng bị thiếu dữ liệu: nếu Danya không thể nhớ loại táo nào thì quầy hàng đó có thể chứa bất kỳ tập hợp con táo nào. 
+Trong bài toán này, chúng ta có một dãy các quầy bán táo, mỗi quầy bán một tập hợp con các loại táo được đánh số từ 1 đến$m$. Danya, người mua, đi qua các quầy hàng theo thứ tự và bỏ một trong mỗi loại táo từ quầy hàng hiện tại vào ba lô của mình. Tuy nhiên, nếu tại bất kỳ thời điểm nào có nhiều hơn một quả táo cùng loại trong ba lô của anh ta thì tất cả táo sẽ biến mất ngay sau khi rời khỏi quầy hàng. Một số quầy hàng bị thiếu dữ liệu: nếu Danya không thể nhớ loại táo nào thì quầy hàng đó có thể chứa bất kỳ tập hợp con táo nào. 
 
 Mục tiêu của chúng tôi là tính toán, đối với mỗi trường hợp thử nghiệm, số lượng táo tối đa có thể còn lại trong ba lô của Danya sau khi ghé thăm tất cả các quầy hàng. Đây là một vấn đề tổ hợp liên quan đến sự không chắc chắn do các điểm dừng không xác định, cùng với điều kiện “đặt lại” được kích hoạt bởi các bản sao. 
 
-Những ràng buộc cho chúng ta biết rằng$n$Và$m$mỗi người có thể tiếp cận được không$2 \cdot 10^5$và tổng số táo ở các quầy hàng cũng bị giới hạn ở mức$2 \cdot 10^5$. Điều này ngụ ý rằng chúng ta không thể mô phỏng mọi sự kết hợp có thể có của các gian hàng hoặc theo dõi từng tập hợp con một cách rõ ràng, bởi vì$O(2^n)$hoặc$O(n \cdot m)$lực lượng vũ phu trên tất cả các quầy hàng sẽ quá chậm. Chúng ta cần một cách tiếp cận tuyến tính hoặc gần tuyến tính đối với tổng số quầy hàng và loại táo. 
+Những ràng buộc cho chúng ta biết rằng$n$Và$m$mỗi người có thể tiếp cận được không$2 \cdot 10^5$, và tổng số lượng táo ở các quầy hàng cũng bị giới hạn ở mức$2 \cdot 10^5$. Điều này ngụ ý rằng chúng ta không thể mô phỏng mọi sự kết hợp có thể có của các gian hàng hoặc theo dõi từng tập hợp con một cách rõ ràng, bởi vì$O(2^n)$hoặc$O(n \cdot m)$lực lượng vũ phu trên tất cả các quầy hàng sẽ quá chậm. Chúng ta cần một cách tiếp cận tuyến tính hoặc gần tuyến tính đối với tổng số quầy hàng và loại táo. 
 
-Các trường hợp cạnh không rõ ràng liên quan đến các gian hàng trống hoặc các gian hàng không xác định. Ví dụ: nếu không xác định được tất cả các quầy hàng, chiến lược tối ưu có thể đặt táo để không xảy ra sự trùng lặp, cho phép chúng tôi có khả năng thu thập tất cả$m$các loại táo. Ngược lại, nếu biết lực lượng ngăn hàng chồng lên nhau, chỉ cần thêm một quả táo cũng sẽ khiến toàn bộ ba lô biến mất, giảm số lượng xuống còn kích thước của ngăn không trống cuối cùng. Việc hiểu sai các quầy hàng không xác định hoặc điều kiện đặt lại có thể dẫn đến sai sót từng lỗi một hoặc việc đếm số táo sẽ biến mất. 
+Các trường hợp cạnh không rõ ràng liên quan đến các gian hàng trống hoặc các gian hàng không xác định. Ví dụ: nếu không xác định được tất cả các quầy hàng, chiến lược tối ưu có thể đặt táo để không xảy ra sự trùng lặp, cho phép chúng tôi có khả năng thu thập tất cả$m$các loại táo. Ngược lại, nếu biết lực lượng ngăn hàng chồng lên nhau, dù chỉ một quả táo thừa cũng sẽ khiến toàn bộ ba lô biến mất, giảm số lượng xuống còn kích thước của ngăn không trống cuối cùng. Việc hiểu sai các quầy hàng không xác định hoặc điều kiện đặt lại có thể dẫn đến sai sót từng lỗi một hoặc việc đếm số táo sẽ biến mất. 
 
 ## Phương pháp tiếp cận 
 
@@ -46,13 +46,13 @@ Thông tin chi tiết quan trọng là chúng tôi không cần loại táo chí
 ## Hướng dẫn thuật toán 
 
 1. Đọc số lượng test case$t$. Đối với mỗi trường hợp thử nghiệm, hãy đọc số lượng quầy hàng$n$và các loại táo$m$. 
-2. Khởi tạo bộ đếm`backpack_count`để theo dõi có bao nhiêu quả táo hiện đang an toàn trong ba lô và một mảng boolean`has_apple`kích thước$m+1$để đánh dấu những loại táo hiện đang có. 
+2. Khởi tạo bộ đếm`backpack_count`để theo dõi có bao nhiêu quả táo hiện đang được cất giữ an toàn trong ba lô và một mảng boolean`has_apple`kích thước$m+1$để đánh dấu những loại táo hiện đang có. 
 3. Lặp lại từng gian hàng. Nếu gian hàng được biết đến (có giá trị khác 0$k_i$), hãy kiểm tra từng loại táo. Nếu bất kỳ loại táo nào đã có trong ba lô, điều này sẽ kích hoạt reset: set`backpack_count`về 0 và xóa tất cả`has_apple`cờ. Nếu không, hãy thêm các loại táo mới vào ba lô và đánh dấu chúng là có sẵn. 
 4. Nếu không biết gian hàng ($k_i = 0$), hãy xử lý nó một cách tối ưu. Chúng ta có thể cho rằng nó cung cấp các loại táo mới chưa có trong ba lô, tính đến tổng số loại còn lại$m - backpack_count$. Tăng`backpack_count`cho phù hợp và đánh dấu những loại đó là hiện tại. 
 5. Sau khi xử lý hết các gian hàng, giá trị của`backpack_count`là số táo tối đa có thể có trong ba lô đối với trường hợp thử nghiệm này. 
-6. In kết quả của tất cả các trường hợp thử nghiệm. 
+6. In kết quả của tất cả các ca kiểm thử. 
 
-Tại sao nó hoạt động: tại mỗi gian hàng, chúng tôi đưa ra quyết định tốt nhất tại địa phương. Các gian hàng đã biết có thể buộc thiết lập lại nếu tồn tại các bản sao. Các quầy hàng không xác định luôn có thể đóng góp những quả táo không trùng lặp một cách tối ưu. Bằng cách lặp từ trái sang phải và áp dụng các lần đặt lại chính xác, thuật toán đảm bảo kết quả cuối cùng`backpack_count`là tối đa. 
+Tại sao nó hoạt động: tại mỗi gian hàng, chúng tôi đưa ra quyết định tốt nhất tại địa phương. Các gian hàng đã biết có thể buộc phải thiết lập lại nếu tồn tại các bản sao. Các quầy hàng không xác định luôn có thể đóng góp những quả táo không trùng lặp một cách tối ưu. Bằng cách lặp từ trái sang phải và áp dụng các lần đặt lại chính xác, thuật toán đảm bảo kết quả cuối cùng`backpack_count`là tối đa. 
 
 ## Giải pháp Python```python
 import sys

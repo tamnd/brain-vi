@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 4 phút 56 giây 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 Bây giờ vấn đề đã rõ ràng hơn. Mã “đã sửa” trước đó chỉ tránh được sự cố, nhưng **logic vẫn sai**, tạo ra số lượng nhỏ hơn mong đợi. Điều đó có nghĩa là thuật toán cốt lõi để tính toán đầu ra trên mỗi`n`là không đúng. Hãy cẩn thận lý luận thông qua điều này. 
 
 ###Chẩn đoán 

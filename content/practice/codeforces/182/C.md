@@ -18,10 +18,10 @@ draft: false
 
 **Xếp hạng:** 2000 
 **Tas:** cấu trúc dữ liệu, tham lam 
-**Thời gian giải:** 1 phút 50 giây 
+**Thời gian giải:** 1 phút 50s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi có một mảng và độ dài cửa sổ cố định`len`. Đối với mỗi mảng con có độ dài`len`, chúng ta tính tổng của nó rồi lấy giá trị tuyệt đối. "Tổng tối ưu" của toàn bộ mảng là tổng mảng con tuyệt đối tối đa trong số tất cả các cửa sổ có độ dài cố định đó. 
@@ -81,7 +81,7 @@ Khi cửa sổ di chuyển, các phần tử vào và ra. Chúng ta phải duy t
 
 Việc triển khai đơn giản sẽ sắp xếp các tiêu cực cho mỗi cửa sổ, gây tốn kém`O(len log len)`mỗi cửa sổ và`O(n * len log len)`tổng thể. 
 
-Thông tin chi tiết quan trọng là chúng ta chỉ cần phần trên cùng`k`tiêu cực một cách năng động. Đây là cấu trúc hai multiset cổ điển: 
+Thông tin chi tiết quan trọng là chúng ta chỉ cần phần trên cùng`k`tiêu cực một cách năng động. Đây là cấu trúc hai tập hợp cổ điển: 
 
 1. Một bộ chứa các câu phủ định được chọn hiện đang đóng góp cho câu trả lời. 
 2. Bộ còn lại chứa các âm bản còn lại. 
@@ -115,7 +115,7 @@ Khi đó, tổng dương tốt nhất có thể đạt được cho thời hạn
 current_window_sum + best_sum
 ```5. Khi một phần tử âm đi vào cửa sổ, hãy chèn mức tăng của nó vào cấu trúc. 
 
-Nếu như`best`có ít hơn`k`phần tử, đặt nó trực tiếp ở đó. 
+Nếu như`best`có ít hơn`k`các phần tử, đặt nó trực tiếp ở đó. 
 
 Mặt khác, so sánh nó với mức tăng nhỏ nhất hiện có bên trong`best`. 
 

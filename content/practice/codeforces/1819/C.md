@@ -21,12 +21,12 @@ draft: false
 **Thời gian giải:** 1 phút 24s 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cho một cây vô hướng có tới hai trăm nghìn đỉnh. Quy tắc chuyển động rất khác thường: từ một đỉnh, con cáo có thể nhảy tới bất kỳ đỉnh nào trong khoảng cách đồ thị nhiều nhất là hai. Điều đó có nghĩa là một bước di chuyển có thể đi tới một đỉnh lân cận trực tiếp hoặc tới một đỉnh có chung đỉnh lân cận với vị trí hiện tại. 
 
-Nhiệm vụ là xác định xem có thể sắp xếp tất cả các đỉnh trong một chu trình sao cho mỗi cặp liên tiếp trong thứ tự được kết nối bằng một bước nhảy như vậy hay không và đỉnh cuối cùng cũng có thể nhảy trở lại đỉnh đầu tiên. Tất cả các đỉnh đều phải xuất hiện chính xác một lần, vì vậy về cơ bản chúng ta đang tìm kiếm chu trình Hamilton, nhưng trong một đồ thị dẫn xuất trong đó các cạnh biểu thị “khoảng cách nhiều nhất là hai trong cây”. 
+Nhiệm vụ là xác định xem có thể sắp xếp tất cả các đỉnh trong một chu trình sao cho mọi cặp liên tiếp trong thứ tự được kết nối bằng một bước nhảy như vậy và đỉnh cuối cùng cũng có thể nhảy trở lại đỉnh đầu tiên. Tất cả các đỉnh đều phải xuất hiện chính xác một lần, vì vậy về cơ bản chúng ta đang tìm kiếm chu trình Hamilton, nhưng trong một đồ thị dẫn xuất trong đó các cạnh biểu thị “khoảng cách nhiều nhất là hai trong cây”. 
 
 Đồ thị dẫn xuất dày đặc theo một cách rất có cấu trúc: mỗi đỉnh kết nối với các đỉnh lân cận của nó và cũng với tất cả các đỉnh trong hợp các lân cận của các đỉnh đó. Tuy nhiên, nó không hề tùy tiện; nó thừa hưởng các ràng buộc mạnh mẽ từ cấu trúc cây. 
 
@@ -40,13 +40,13 @@ Khó khăn cốt lõi là nhận ra rằng tính khả thi phụ thuộc hoàn t
 
 ## Phương pháp tiếp cận 
 
-Một cách tiếp cận bạo lực sẽ xây dựng một cách rõ ràng đồ thị trong đó tồn tại một cạnh giữa bất kỳ cặp đỉnh nào có khoảng cách tối đa là hai, sau đó cố gắng tìm chu trình Hamilton. Ngay cả việc xây dựng biểu đồ này cũng tốn O(n2) trong trường hợp xấu nhất, vì một cái cây dày đặc như một ngôi sao tạo ra các cạnh Θ(n2) trong biểu đồ dẫn xuất. Sau đó, việc phát hiện chu trình Hamilton tự nó là NP-đầy đủ trong các biểu đồ tổng quát, do đó, mọi tìm kiếm đơn giản hoặc DP trên các tập hợp con đều trở nên không khả thi ở quy mô này. 
+Một cách tiếp cận bạo lực sẽ xây dựng một cách rõ ràng đồ thị trong đó tồn tại một cạnh giữa bất kỳ cặp đỉnh nào có khoảng cách tối đa là hai, sau đó cố gắng tìm chu trình Hamilton. Ngay cả việc xây dựng biểu đồ này cũng tốn O(n2) trong trường hợp xấu nhất, vì một cái cây dày đặc như một ngôi sao tạo ra các cạnh Θ(n2) trong biểu đồ dẫn xuất. Sau đó, việc phát hiện chu trình Hamilton tự nó là NP-đầy đủ trong các biểu đồ chung, do đó, mọi tìm kiếm đơn giản hoặc DP trên các tập hợp con đều trở nên không khả thi ở quy mô này. 
 
 Quan sát quan trọng là chúng ta thực sự không bao giờ cần biểu đồ dẫn xuất đầy đủ. Cách duy nhất để đi qua tất cả các đỉnh đúng một lần là đảm bảo rằng chúng ta không bao giờ “bẫy” chính mình ở một đỉnh mà các đỉnh lân cận còn lại đều nằm quá xa trong cấu trúc cây. Điều này tạo ra một ràng buộc thứ tự rất cứng nhắc: phân nhánh cấp độ cao phải được giải quyết theo cách có kiểm soát sao cho mỗi nhánh được vào và ra trong phạm vi kết nối khoảng cách hai. 
 
 Cấu trúc nổi lên là câu trả lời tồn tại khi và chỉ khi cây không “quá tuyến tính”. Chính xác hơn, trở ngại duy nhất xuất phát từ thực tế là khi chúng ta ở một đỉnh có bậc lớn hơn hai, chúng ta phải có khả năng thăm các cây con của nó theo thứ tự giữ cho các chuyển tiếp trong khoảng cách hai. Điều này dẫn đến một chiến lược mang tính xây dựng dựa trên việc root cây và thực hiện một thứ tự giống như DFS, đảm bảo rằng khi chúng ta vào một cây con, chúng ta luôn có thể quay lại thông qua một hàng xóm hoặc một phím tắt khoảng cách hai.
 
-Việc xây dựng giảm xuống còn tạo ra thứ tự DFS nhưng chọn cẩn thận các điểm đầu vào sao cho các đỉnh liên tiếp trong quá trình truyền tải luôn nằm trong khoảng cách hai trong cây ban đầu. Điều này đạt được bằng cách đi qua cây trong khi vẫn đảm bảo rằng chúng ta luôn di chuyển đến cây con hoặc cây con anh em thông qua cây mẹ, điều này đảm bảo kết nối hai cạnh. 
+Việc xây dựng giảm xuống còn tạo ra thứ tự DFS nhưng chọn cẩn thận các điểm đầu vào sao cho các đỉnh liên tiếp trong quá trình truyền tải luôn nằm trong khoảng cách hai trong cây ban đầu. Điều này đạt được bằng cách đi qua cây trong khi vẫn duy trì rằng chúng ta luôn di chuyển đến cây con hoặc cây con anh em thông qua cây mẹ, điều này đảm bảo kết nối hai cạnh. 
 
 Brute-force hoạt động vì nó kiểm tra rõ ràng tất cả các chuỗi có thể, nhưng không thành công do độ phức tạp theo cấp số nhân và sự mở rộng đồ thị dày đặc. Quan sát rằng sự kề cận khoảng cách hai bị chi phối hoàn toàn bởi cấu trúc cha-con cục bộ cho phép chúng ta xây dựng một chu trình hợp lệ duy nhất trong thời gian tuyến tính. 
 
@@ -57,7 +57,7 @@ Brute-force hoạt động vì nó kiểm tra rõ ràng tất cả các chuỗi 
 
 ## Hướng dẫn thuật toán 
 
-Việc xây dựng bắt nguồn từ thực tế là một cây luôn có đường truyền hợp lệ trong biểu đồ khoảng cách hai trừ khi nó thoái hóa thành một cấu trúc ngăn chặn việc ghép tuần hoàn. Ý tưởng chính là xây dựng một thứ tự DFS và sau đó “đóng” nó thành một chu trình bằng cách đảm bảo các ràng buộc kề được thỏa mãn. 
+Việc xây dựng bắt nguồn từ thực tế là một cây luôn có đường truyền hợp lệ trong biểu đồ khoảng cách hai trừ khi nó thoái hóa thành một cấu trúc ngăn cản việc ghép tuần hoàn. Ý tưởng chính là xây dựng một thứ tự DFS và sau đó “đóng” nó thành một chu trình bằng cách đảm bảo các ràng buộc kề được thỏa mãn. 
 
 1. Gốc cây ở bất kỳ đỉnh nào, ví dụ đỉnh 1. Điều này mang lại cấu trúc cha-con mà chúng ta có thể dựa vào để kiểm soát khoảng cách. 
 2. Xây dựng danh sách kề cho cây và chuẩn bị thứ tự duyệt DFS. Chúng tôi thực hiện một DFS tiêu chuẩn nhưng chúng tôi đảm bảo các phần tử con được xử lý theo bất kỳ thứ tự nào vì tất cả các cây con đều đối xứng về chuyển động ở khoảng cách hai. 
@@ -68,7 +68,7 @@ Bước không rõ ràng là lý do tại sao thứ tự DFS lại hoạt độn
 
 ### Tại sao nó hoạt động 
 
-Thứ tự DFS đảm bảo rằng bất cứ khi nào chúng ta di chuyển giữa các đỉnh liên tiếp ở đầu ra, thì một trong hai đỉnh là cha của đỉnh kia hoặc cả hai đều nằm trong các cây con liền kề của một cây cha chung. Điều này đảm bảo khoảng cách cây của họ nhiều nhất là hai. Vì DFS truy cập mỗi nút chính xác một lần và chỉ quay về tổ tiên thông qua các cạnh cha, nên thứ tự kết quả tạo thành một chu trình hợp lệ theo ràng buộc nhảy. 
+Thứ tự DFS đảm bảo rằng bất cứ khi nào chúng ta di chuyển giữa các đỉnh liên tiếp ở đầu ra, thì một trong hai đỉnh là cha của đỉnh kia hoặc cả hai đều nằm trong các cây con liền kề của một cây cha chung. Điều này đảm bảo khoảng cách cây của họ tối đa là hai. Vì DFS truy cập mỗi nút chính xác một lần và chỉ quay về tổ tiên thông qua các cạnh cha, nên thứ tự kết quả tạo thành một chu trình hợp lệ theo ràng buộc nhảy. 
 
 ## Giải pháp Python```python
 import sys
@@ -229,8 +229,8 @@ assert run("""3
 
 ## Vỏ cạnh 
 
-Cây hình ngôi sao là cấu trúc dễ dãi nhất. Việc bắt đầu DFS ở giữa sẽ tạo ra một chuỗi trong đó mọi di chuyển đều là từ giữa đến lá hoặc từ lá đến giữa thông qua một lá khác và cả hai đều hợp lệ trong khoảng cách hai. Thuật toán đưa ra một hoán vị hợp lệ mà không cần bất kỳ xử lý đặc biệt nào vì việc đặt hàng trước sẽ truy cập tự nhiên vào tất cả các lá. 
+Cây hình ngôi sao là cấu trúc dễ dãi nhất. Việc khởi động DFS ở giữa sẽ tạo ra một chuỗi trong đó mọi di chuyển đều là từ giữa đến lá hoặc từ lá đến giữa thông qua một lá khác và cả hai đều hợp lệ trong khoảng cách hai. Thuật toán đưa ra một hoán vị hợp lệ mà không cần bất kỳ xử lý đặc biệt nào vì việc đặt hàng trước sẽ truy cập tự nhiên vào tất cả các lá. 
 
-Một chuỗi dài nhấn mạnh đến độ sâu đệ quy và đảm bảo rằng các nút liên tiếp chỉ được kết nối trực tiếp. DFS vẫn tạo ra thứ tự hợp lệ vì mỗi bước là một cạnh trực tiếp, thỏa mãn một cách tầm thường ràng buộc bước nhảy. 
+Một chuỗi dài nhấn mạnh độ sâu đệ quy và đảm bảo rằng các nút liên tiếp chỉ được kết nối trực tiếp. DFS vẫn tạo ra thứ tự hợp lệ vì mỗi bước là một cạnh trực tiếp, thỏa mãn một cách tầm thường ràng buộc bước nhảy. 
 
 Cây phân nhánh cao với độ sâu hỗn hợp cũng không yêu cầu logic đặc biệt. DFS đảm bảo rằng khi trở về từ một cây con, cây con tiếp theo được nhập thông qua cây cha, đảm bảo điều kiện khoảng cách hai không bao giờ bị vi phạm trong quá trình chuyển đổi.

@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1 phút 42s 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta có nhiều tập hợp các hình chữ nhật thẳng hàng theo trục. Mỗi hình chữ nhật là kết quả của việc cắt liên tục một hình chữ nhật chưa biết ban đầu dọc theo các đường lưới số nguyên. Mỗi lần cắt chia một hình chữ nhật theo chiều dọc hoặc chiều ngang thành hai hình chữ nhật nhỏ hơn với độ dài các cạnh là số nguyên và quá trình này tiếp tục cho đến khi chúng ta có chính xác số mảnh cho trước. 
@@ -46,7 +46,7 @@ Một ý tưởng mạnh mẽ là thử mọi hình chữ nhật trong nhiều t
 
 Cái nhìn sâu sắc quan trọng là đảo ngược quá trình. Thay vì nghĩ đến việc tách về phía trước, chúng ta xem xét việc hợp nhất các hình chữ nhật về phía sau. Mỗi lần cắt sẽ hợp nhất hai hình chữ nhật lại thành một hình chữ nhật lớn hơn để giữ nguyên chiều cao hoặc chiều rộng. 
 
-Nếu chúng ta đảo ngược tất cả các vết cắt, chúng ta sẽ hợp nhất các hình chữ nhật cho đến khi khôi phục được hình gốc$h \times w$. Mỗi lần hợp nhất phải kết hợp hai hình chữ nhật có cùng chiều dài cạnh. Điều này gợi ý rằng hình chữ nhật hợp lệ phải căn chỉnh theo các kích thước được chia sẻ theo cách rất có cấu trúc. 
+Nếu chúng ta đảo ngược tất cả các vết cắt, chúng ta sẽ hợp nhất các hình chữ nhật cho đến khi khôi phục được hình gốc$h \times w$. Mỗi lần hợp nhất phải kết hợp hai hình chữ nhật có cùng chiều dài cạnh. Điều này gợi ý rằng hình chữ nhật hợp lệ phải căn chỉnh theo các kích thước chung theo cách rất có cấu trúc. 
 
 Quan sát quan trọng là trong bất kỳ cấu hình hợp lệ nào, hình chữ nhật ban đầu phải sao cho tất cả các hình chữ nhật có thể được sắp xếp sao cho tổng số hộp giới hạn của chúng bằng chính xác.$(h, w)$và mỗi hình chữ nhật tương ứng với một khối con phân vùng hộp này mà không bị chồng chéo. Vì các vết cắt được căn chỉnh theo trục và bảo toàn các ranh giới số nguyên, nên multiset thể hiện một cách hiệu quả một phân vùng của lưới. 
 
@@ -54,7 +54,7 @@ Vì vậy, chúng ta có thể thử tất cả các ứng cử viên có thể 
 
 Một cái nhìn sâu sắc hơn đến từ cấu trúc ranh giới. Trong bất kỳ phân tách hợp lệ nào, ít nhất một hình chữ nhật phải chạm vào ranh giới của hình chữ nhật ban đầu dọc theo toàn bộ chiều cao hoặc toàn bộ chiều rộng của nó. Điều này ngụ ý rằng hoặc$h$phải xuất hiện như một số$a_i$hoặc một số$b_i$, và tương tự cho$w$. Vì vậy, chúng ta chỉ cần kiểm tra các ứng cử viên xuất phát từ các cạnh của hình chữ nhật hiện có. 
 
-Đối với mỗi ứng viên$h$, chúng tôi tính toán$w = \frac{\text{total area}}{h}$và xác minh xem tất cả các hình chữ nhật có thể được đặt một cách nhất quán hay không. Việc xác minh giảm xuống việc kiểm tra xem chúng ta có thể phân chia hình chữ nhật thành các dải thẳng hàng với chiều cao hay không$h$, có thể được xác thực bằng cách đếm tần suất chiều rộng cho từng lớp chiều cao. 
+Đối với mỗi ứng viên$h$, chúng tôi tính toán$w = \frac{\text{total area}}{h}$và xác minh xem tất cả các hình chữ nhật có thể được đặt một cách nhất quán hay không. Việc xác minh giảm xuống việc kiểm tra xem liệu chúng ta có thể phân chia hình chữ nhật thành các dải thẳng hàng với chiều cao hay không$h$, có thể được xác thực bằng cách đếm tần suất chiều rộng cho từng lớp chiều cao. 
 
 Điều này làm giảm vấn đề trong việc kiểm tra một tập hợp các chiều cao ứng viên có thể quản lý được và xác thực từng chiều cao theo thời gian tuyến tính. 
 
@@ -70,8 +70,8 @@ Chúng tôi điều chỉnh lại nhiệm vụ là tìm tất cả các giá tr�
 1. Tính tổng diện tích$S = \sum a_i b_i$. Điều này phải bằng$h \cdot w$, vì vậy mọi chiều cao của ứng viên đều phải chia$S$. Điều này hạn chế mọi khả năng một cách mạnh mẽ. 
 2. Thu thập tất cả các độ dài cạnh duy nhất từ ​​các hình chữ nhật đầu vào, vì bất kỳ giá trị hợp lệ nào$h$phải bằng chiều cao hoặc chiều rộng của hình chữ nhật nào đó. Lý do là một số hình chữ nhật phải nằm ngang với ranh giới của hình chữ nhật ban đầu, để lộ toàn bộ chiều cao. 
 3. Chiều cao của từng ứng viên$h$, kiểm tra xem$S \bmod h = 0$. Nếu không, hãy loại bỏ nó ngay lập tức vì không tồn tại chiều rộng số nguyên. 
-4. Đặt$w = S / h$. Bây giờ xác nhận xem tất cả hình chữ nhật có thể được nhúng vào một$h \times w$lưới không có mâu thuẫn. Việc xác thực được thực hiện bằng cách đảm bảo tính nhất quán về cách chiều cao và chiều rộng hình chữ nhật có thể xếp hộp giới hạn. 
-5. Để xác thực một cách hiệu quả, hãy nhóm các hình chữ nhật theo chiều cao và cố gắng xây dựng lại các phân vùng cột: đối với một$h$, mỗi hình chữ nhật đóng góp một đoạn ngang và chúng tôi kiểm tra xem chiều rộng có tổng hợp chính xác thành các cột có kích thước đầy đủ hay không$w$. Nếu có sự không phù hợp xảy ra, hãy loại bỏ ứng viên. 
+4. Đặt$w = S / h$. Bây giờ hãy xác thực xem tất cả hình chữ nhật có thể được nhúng vào một$h \times w$lưới không có mâu thuẫn. Việc xác thực được thực hiện bằng cách đảm bảo tính nhất quán về cách chiều cao và chiều rộng hình chữ nhật có thể xếp hộp giới hạn. 
+5. Để xác thực một cách hiệu quả, hãy nhóm các hình chữ nhật theo chiều cao và cố gắng xây dựng lại các phân vùng cột: đối với một$h$, mỗi hình chữ nhật đóng góp một đoạn ngang và chúng tôi kiểm tra xem chiều rộng có tổng hợp chính xác thành các cột có kích thước đầy đủ hay không$w$. Nếu có bất kỳ sự không phù hợp nào xảy ra, hãy loại bỏ ứng viên. 
 6. Thu thập tất cả hợp lệ$(h, w)$. Lặp lại đối xứng để bao gồm cả các kích thước được hoán đổi$(w, h)$khi chúng khác nhau. 
 
 ### Tại sao nó hoạt động 

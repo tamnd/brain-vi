@@ -1,6 +1,6 @@
 ---
 title: "CF 1819F - Dù muốn hay không, Crack, sắp phát hành!"
-description: "Chúng ta được yêu cầu phân tích chuỗi các thao tác trên các chuỗi được xây dựng từ các chữ cái a, b, c, d. Một số cặp không có thứ tự nhất định, cụ thể là ab, bc, cd và da, được gọi là \"good\" và cho phép các phép biến đổi được kiểm soát trên chuỗi."
+description: "Chúng ta được yêu cầu phân tích trình tự các thao tác trên các chuỗi được xây dựng từ các chữ cái a, b, c, d. Một số cặp không có thứ tự nhất định, cụ thể là ab, bc, cd và da, được gọi là \"good\" và cho phép các phép biến đổi được kiểm soát trên chuỗi."
 date: "2026-06-09T08:03:54+07:00"
 tags: ["codeforces", "competitive-programming", "data-structures", "dp"]
 categories: ["algorithms"]
@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1 phút 29s 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được yêu cầu phân tích trình tự các thao tác trên các chuỗi được xây dựng từ các chữ cái`a`,`b`,`c`,`d`. Một số cặp không có thứ tự, cụ thể là`ab`,`bc`,`cd`, Và`da`, được gọi là "tốt" và cho phép các phép biến đổi được kiểm soát trên chuỗi. Cho mỗi cặp tốt`{x, y}`, nếu ký tự cuối cùng là`x`, chúng ta có thể lật nó thành`y`. Ngoài ra, nếu tồn tại một vị trí`i`Ở đâu`s_i = x`và tất cả các ký tự tiếp theo là`y`, chúng ta có thể trao đổi`s_i`với`y`và cái đuôi với`x`. 

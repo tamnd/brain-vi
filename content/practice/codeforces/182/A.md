@@ -16,15 +16,15 @@ draft: false
 
 [CF 182A - Chiến trường](https://codeforces.com/problemset/problem/182/A) 
 
-**Xếp hạng:** 2200 
+**Đánh giá:** 2200 
 **Tags:** hình học, đồ thị, cách thực hiện, đường đi ngắn nhất 
 **Thời gian giải:** 3 phút 47s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi được yêu cầu mô phỏng chuyển động trên mặt phẳng 2D từ điểm bắt đầu$A$đến một điểm đến$B$đồng thời tránh tia laser định kỳ. Tia laser luân phiên giữa sạc và bắn, với thời lượng$a$Và$b$giây tương ứng. Trong giai đoạn bắn, Vasya phải ở trong chiến hào để tránh bị bắn trúng. Rãnh là các đoạn đường ngang hoặc dọc trên mặt phẳng và Vasya có thể đi vào hoặc rời khỏi rãnh ngay lập tức tại bất kỳ điểm nào dọc theo nó. Tốc độ của anh ta là 1 mét mỗi giây và anh ta có thể di chuyển tự do trên máy bay trong giai đoạn sạc tia laser. Chiều dài rãnh được đảm bảo tối đa$b$, vì vậy anh ta luôn có thể ẩn hoàn toàn bên trong chiến hào nếu đến trước khi tia laser bắn ra. 
+Chúng tôi được yêu cầu mô phỏng chuyển động trên mặt phẳng 2D từ điểm bắt đầu$A$đến một điểm đến$B$trong khi tránh tia laser định kỳ. Tia laser luân phiên giữa sạc và bắn, với thời lượng$a$Và$b$giây tương ứng. Trong giai đoạn bắn, Vasya phải ở trong chiến hào để tránh bị bắn trúng. Rãnh là các đoạn đường ngang hoặc dọc trên mặt phẳng và Vasya có thể vào hoặc ra khỏi rãnh ngay lập tức tại bất kỳ điểm nào dọc theo nó. Tốc độ của anh ta là 1 mét mỗi giây và anh ta có thể di chuyển tự do trên máy bay trong giai đoạn sạc tia laser. Chiều dài rãnh được đảm bảo tối đa$b$, vì vậy anh ta luôn có thể ẩn hoàn toàn bên trong chiến hào nếu đến trước khi tia laser bắn ra. 
 
 Đầu vào cung cấp chu trình laser, tọa độ bắt đầu và kết thúc cũng như một tập hợp các rãnh. Đầu ra là thời gian tối thiểu để đạt được$B$an toàn hoặc -1 nếu không thể. 
 
@@ -135,7 +135,7 @@ def solve():
 | --- | --- | --- | --- | 
 | 0 | (0,5) | 0 | Bắt đầu | 
 | 1 | (0,4) | 1 | Di chuyển xuống 1m (sạc) | 
-| 2 | (0,0) | 5 | Di chuyển đến rãnh bắt đầu, vẫn đang sạc | 
+| 2 | (0,0) | 5 | Di chuyển đến rãnh bắt đầu, vẫn sạc | 
 | ... | ... | ... | Tiếp tục ẩn nấp trong chiến hào khi bắn | 
 | Cuối cùng | (6,5) | 19 | Tổng thời gian tối thiểu | 
 

@@ -21,20 +21,20 @@ draft: false
 **Thời gian giải:** 3 phút 18s 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi được yêu cầu mô phỏng một loại lịch đặc biệt. Vasya có một chiếc đồng hồ hiển thị các ngày từ 1 đến`d`. Mỗi tháng có một số ngày nhất định và đồng hồ cũng không biết đó là tháng nào. Khi tháng thay đổi, nếu số ngày trên đồng hồ không khớp với ngày thực của tháng mới, Vasya sẽ tăng ngày theo cách thủ công cho đến khi đúng như vậy. Chúng tôi được yêu cầu đếm số lần tăng thủ công xảy ra trong suốt một năm. 
 
 Đầu vào bao gồm`d`, ngày tối đa mà đồng hồ có thể hiển thị,`n`, số tháng và một mảng`n`số nguyên biểu thị số ngày trong mỗi tháng. Đầu ra là tổng số lần tăng thủ công mà Vasya thực hiện. 
 
-Các hạn chế ở mức độ nhỏ đến trung bình:`n`nhiều nhất là 2000 và`d`có thể lên đến`10^6`. Điều này cho thấy rằng chúng ta không thể mô phỏng mọi ngày có thể trên một phạm vi rộng lớn.`d`nếu chúng tôi sử dụng một cách tiếp cận đơn giản, nhưng chúng tôi có thể lặp lại nhiều tháng và thực hiện các phép tính số học đơn giản mỗi tháng mà không gặp vấn đề về hiệu suất. 
+Các hạn chế ở mức độ nhỏ đến trung bình:`n`nhiều nhất là 2000 và`d`có thể lên đến`10^6`. Điều này cho thấy rằng chúng ta không thể mô phỏng mọi ngày có thể trên một phạm vi lớn`d`nếu chúng tôi sử dụng một cách tiếp cận đơn giản, nhưng chúng tôi có thể lặp lại nhiều tháng và thực hiện các phép tính số học đơn giản mỗi tháng mà không gặp vấn đề về hiệu suất. 
 
 Các trường hợp phức tạp liên quan đến các tháng có tổng số ngày trong tháng bằng`d`hoặc khi các tháng liên tiếp bắt đầu bằng số ngày trên đồng hồ đã ở phía trước hoặc phía sau. Ví dụ: tháng thứ nhất có 3 ngày, tháng thứ hai có 1 ngày và`d=3`, đồng hồ có thể hiển thị 1, 2, 3 vào cuối tháng 1, sau đó đặt lại về 1 vào đầu tháng 2. Việc xử lý bất cẩn số học modulo có thể tạo ra từng lỗi ở đây. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận bạo lực là mô phỏng mọi ngày trong năm. Bắt đầu với ngày đầu tiên trên đồng hồ. Đối với mỗi ngày của tháng hiện tại, hãy kiểm tra xem đồng hồ có khớp với ngày hiện tại không. Nếu không, hãy tăng đồng hồ theo cách thủ công cho đến khi khớp. Sau đó chuyển sang ngày hôm sau. Điều này hiệu quả vì nó mô phỏng chính xác hành vi của Vasya, nhưng trong trường hợp xấu nhất, nó sẽ thực hiện`sum(a_i)`các hoạt động có thể đạt tới`2*10^9`nếu như`n=2000`Và`a_i`là tất cả`d=10^6`. Điều này là quá chậm. 
+Cách tiếp cận bạo lực là mô phỏng mọi ngày trong năm. Bắt đầu với ngày đầu tiên trên đồng hồ. Đối với mỗi ngày trong tháng hiện tại, hãy kiểm tra xem đồng hồ có khớp với ngày hiện tại không. Nếu không, hãy tăng đồng hồ theo cách thủ công cho đến khi khớp. Sau đó chuyển sang ngày hôm sau. Điều này hiệu quả vì nó mô phỏng chính xác hành vi của Vasya, nhưng trong trường hợp xấu nhất, nó sẽ thực hiện`sum(a_i)`các hoạt động có thể đạt tới`2*10^9`nếu như`n=2000`Và`a_i`là tất cả`d=10^6`. Điều này là quá chậm. 
 
 Quan sát quan trọng là số lần tăng thủ công trong một tháng chỉ phụ thuộc vào số ngày mà đồng hồ hiển thị vào đầu tháng và số ngày trong tháng. Nếu ngày đồng hồ hiện tại là`c`và tháng có`m`ngày thì số lần tăng thủ công cần thiết vào đầu tháng là`(c + m - 1) // d`hoặc trực quan hơn, sau khi đếm`m-1`ngày, nếu đồng hồ trôi qua`d`, mỗi lần tràn thể hiện mức tăng thủ công cần thiết để bắt kịp. Chúng ta có thể xử lý việc này bằng số học modulo. Điều này làm giảm mô phỏng thành một vòng lặp đơn giản trong nhiều tháng, thêm một số mức tăng mỗi tháng trong thời gian O(1). 
 
@@ -88,7 +88,7 @@ print(manual_count)
 2 2
 ```Dấu vết: 
 
-| Tháng | Ngày trong Tháng | Đồng hồ bắt đầu | Đã thêm số lượng thủ công | Đồng hồ kết thúc | 
+| Tháng | Ngày trong tháng | Đồng hồ bắt đầu | Đã thêm số lượng thủ công | Đồng hồ kết thúc | 
 | --- | --- | --- | --- | --- | 
 | 1 | 2 | 1 | 0 | 2 | 
 | 2 | 2 | 3 | 2 | 2 | 
@@ -103,7 +103,7 @@ Giải thích: Tháng đầu tiên sử dụng ngày 1-2 trên đồng hồ, kh�
 3 5 2
 ```Dấu vết: 
 
-| Tháng | Ngày trong Tháng | Đồng hồ bắt đầu | Đã thêm số lượng thủ công | Đồng hồ kết thúc | 
+| Tháng | Ngày trong tháng | Đồng hồ bắt đầu | Đã thêm số lượng thủ công | Đồng hồ kết thúc | 
 | --- | --- | --- | --- | --- | 
 | 1 | 3 | 1 | 0 | 3 | 
 | 2 | 5 | 4 | 4 | 2 | 
@@ -152,6 +152,6 @@ assert run("10\n4\n1 2 3 4\n") == "0", "all months fit in clock"
 
 ## Vỏ cạnh 
 
-Nếu đồng hồ chỉ có một ngày,`d=1`, every new day except the first requires a manual increment. Ví dụ,`d=1`,`n=3`,`a=[1,1,1]`dẫn đến hai lần tăng thủ công. Thuật toán xử lý việc này vì`(current_day + days_in_month - d - 1)`tính toán tràn một cách chính xác ngay cả khi`d=1`. 
+Nếu đồng hồ chỉ có một ngày,`d=1`, mỗi ngày mới ngoại trừ ngày đầu tiên đều yêu cầu tăng thủ công. Ví dụ,`d=1`,`n=3`,`a=[1,1,1]`dẫn đến hai lần tăng thủ công. Thuật toán xử lý việc này vì`(current_day + days_in_month - d - 1)`tính toán tràn một cách chính xác ngay cả khi`d=1`. 
 
-Nếu một tháng hoàn toàn khớp với phạm vi đồng hồ còn lại thì không có sự tăng thủ công nào xảy ra. Vì`d=6`, tháng có 3 ngày bắt đầu từ đồng hồ 4,`(4 + 3 - 6 - 1)`đánh giá là 0, không tạo ra mức tăng nào phù hợp với hành vi mong đợi.
+Nếu một tháng hoàn toàn khớp với phạm vi đồng hồ còn lại thì không có sự gia tăng thủ công nào xảy ra. Vì`d=6`, tháng có 3 ngày bắt đầu từ đồng hồ 4,`(4 + 3 - 6 - 1)`đánh giá là 0, không tạo ra mức tăng nào phù hợp với hành vi mong đợi.
