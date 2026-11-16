@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/practice/codeforces/1930/A.md",
-      "priority": 20,
-      "added_at": "2026-06-09T17:41:24.634155Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/codeforces/1930/B.md",
-      "priority": 20,
-      "added_at": "2026-06-09T17:41:24.634202Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/codeforces/1930/C.md",
-      "priority": 20,
-      "added_at": "2026-06-09T17:41:24.634248Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/codeforces/1930/D1.md",
-      "priority": 20,
-      "added_at": "2026-06-09T17:41:24.634299Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/codeforces/1930/D2.md",
-      "priority": 20,
-      "added_at": "2026-06-09T17:41:24.634369Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/codeforces/1930/E.md",
-      "priority": 20,
-      "added_at": "2026-06-09T17:41:24.634420Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/codeforces/1930/F.md",
-      "priority": 20,
-      "added_at": "2026-06-09T17:41:24.634469Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/codeforces/1930/G.md",
-      "priority": 20,
-      "added_at": "2026-06-09T17:41:24.634514Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/codeforces/1930/H.md",
-      "priority": 20,
-      "added_at": "2026-06-09T17:41:24.634561Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/codeforces/1930/I.md",
-      "priority": 20,
-      "added_at": "2026-06-09T17:41:24.634609Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/practice/codeforces/1931/A.md",
       "priority": 20,
       "added_at": "2026-06-09T17:41:24.634704Z",
