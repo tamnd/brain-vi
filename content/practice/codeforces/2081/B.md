@@ -1,0 +1,31 @@
+---
+title: "CF 2081B - Cân bằng"
+description: "Một phân hoạch các đỉnh của một $n$-giác lồi với tính chất là không có đường chéo nào vẽ bên trong một phần cắt một đường chéo vẽ bên trong một phần khác tương đương với việc yêu cầu mỗi phần tạo ra một tập hợp các đường chéo không cắt nhau, và các phần khác nhau được lồng trong một tầng…"
+date: "2026-06-08T06:22:00+07:00"
+tags: ["codeforces", "competitive-programming", "greedy"]
+categories: ["algorithms"]
+codeforces_contest: 2081
+codeforces_index: "B"
+codeforces_contest_name: "Codeforces Round 1010 (Div. 1, Unrated)"
+rating: 2500
+weight: 2081
+solve_time_s: 112
+verified: false
+draft: false
+---
+
+[CF 2081B - Cân bằng](https://codeforces.com/problemset/problem/2081/B) 
+
+**Đánh giá:** 2500 
+**Thẻ:** tham lam 
+**Thời gian giải:** 1m 52s 
+**Đã xác minh:** không 
+
+## Giải pháp 
+Phân hoạch các đỉnh của một lồi$n$-gon với đặc tính là không có đường chéo nào được vẽ bên trong một phần cắt một đường chéo được vẽ bên trong một phần khác tương đương với việc yêu cầu mỗi phần tạo ra một tập hợp các đường chéo không cắt nhau và các phần khác nhau được lồng vào nhau theo kiểu tầng. Cấu trúc này được mã hóa chính xác bằng cây máy bay có các lá là$n$các đỉnh của đa giác và có các nút bên trong tương ứng với các khối của phân vùng. 
+
+Với cách phân vùng như vậy, hãy xây dựng một cây như sau. Mỗi khối của phân vùng sẽ trở thành một nút. Bất cứ khi nào một khối được chứa chặt chẽ trong cấu trúc bao lồi do khối khác tạo ra, hãy làm cho khối trước trở thành con của khối sau trong cây. Điều kiện không giao nhau đảm bảo rằng các mối quan hệ ngăn chặn được xác định rõ ràng và không xung đột, do đó cấu trúc thu được là một cây có thứ tự gốc. Ngược lại, từ bất kỳ cây có thứ tự gốc nào với$n$các lá được gắn nhãn theo chu kỳ bởi các đỉnh đa giác, người ta khôi phục một phân vùng không giao nhau bằng cách nhóm các đỉnh theo cấu trúc tổ tiên chung thấp nhất do cây tạo ra. Điều này thiết lập sự tương ứng một-một giữa các phân vùng và cây phẳng với$n$lá. 
+
+Sửa chữa$n$Và$k$. Các cây tương ứng có$n$lá được dán nhãn và$k$các nút bên trong, vì mỗi phần của phân vùng tương ứng với chính xác một nút bên trong trong biểu diễn cây. Những cây như vậy được tính bằng số Narayana, vì các phân vùng không cắt nhau của một$n$-phần tử được sắp xếp theo chu kỳ được đặt thành$k$các khối đều có cây phẳng với$k$các nút bên trong và$n$lá. 
+
+Số lượng phân vùng không giao nhau của một$n$-gon đỉnh vào$k$do đó các bộ phận là$$\frac{1}{n}\binom{n}{k}\binom{n}{k-1},$$đó là số Narayana$N(n,k)$. Điều này hoàn thành việc trao đổi thư từ và liệt kê. ∎
