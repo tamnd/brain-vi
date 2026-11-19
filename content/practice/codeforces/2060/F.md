@@ -16,12 +16,12 @@ draft: false
 
 [CF 2060F - Mảng nhân](https://codeforces.com/problemset/problem/2060/F) 
 
-**Đánh giá:** 2200 
+**Xếp hạng:** 2200 
 **Tags:** tổ hợp, dp, lý thuyết số 
 **Thời gian giải:** 2m 24s 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được yêu cầu đếm các mảng số nguyên trong đó tích của tất cả các phần tử bằng một số mục tiêu cụ thể. Cụ thể hơn, với các số nguyên đã cho$k$Và$n$, ta cần xác định với mọi số$x$từ$1$ĐẾN$k$, có bao nhiêu mảng$a$tồn tại sao cho mỗi phần tử nằm giữa$1$Và$k$, độ dài mảng tối đa là$n$, và tích của tất cả các phần tử bằng$x$. Mảng được phân biệt bởi độ dài và thứ tự các phần tử. 
@@ -36,9 +36,9 @@ Cách tiếp cận bạo lực sẽ thử tạo ra tất cả các mảng cho m�
 
 Cái nhìn sâu sắc quan trọng đến từ hệ số hóa và tổ hợp. Đối với một nhất định$x$, bất kỳ mảng nào nhân với$x$có thể được biểu diễn bằng nhiều tập hợp ước số của$x$. Cho phép$f(x)$biểu thị số mảng có tích$x$và chiều dài tối đa$n$. Chúng ta có thể bày tỏ$f(x)$đệ quy bằng cách xem xét tất cả các ước số$d$của$x$ít hơn$x$: mỗi mảng có sản phẩm$x$có thể được hình thành bằng cách lấy một mảng với sản phẩm$x/d$và nối thêm$d$. Điều này mang lại sự đệ quy$$f(x) = \sum_{d \mid x, d < x} f(x/d)$$với trường hợp cơ sở$f(1) = n$, chiếm tất cả các mảng chỉ bao gồm$1$S. Tổng được lấy trên các ước số để tránh tạo ra các tích không thể và cho phép lập trình động bằng cách lặp từ$1$ĐẾN$k$. 
 
-Sau đó, chúng tôi nhân số đếm với lũy thừa tương ứng với số lần mỗi ước số có thể xuất hiện theo chuỗi có độ dài tối đa$n$. Số học mô-đun đảm bảo chúng tôi vẫn nằm trong giới hạn số cho phép. Điều này làm giảm vấn đề từ việc liệt kê các chuỗi đến lặp lại các ước số, nhanh hơn nhiều: lặp qua các ước số lên đến$10^5$là khả thi và phép đệ quy tránh việc liệt kê các mảng một cách rõ ràng. 
+Sau đó, chúng tôi nhân số đếm với lũy thừa tương ứng với số lần mỗi ước số có thể xuất hiện theo chuỗi có độ dài tối đa$n$. Số học mô-đun đảm bảo chúng tôi vẫn nằm trong giới hạn số cho phép. Điều này làm giảm vấn đề từ việc liệt kê các chuỗi đến lặp lại các ước số, nhanh hơn nhiều: lặp qua các ước số lên đến$10^5$là khả thi và phép đệ quy tránh liệt kê các mảng một cách rõ ràng. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(k^n) | O(k^n) | Quá chậm | 
 | DP qua ước số | O(k log k) | O(k) | Đã chấp nhận | 
@@ -96,7 +96,7 @@ def solve():
 
 if __name__ == "__main__":
     solve()
-```Trong việc thực hiện này,`mod_pow`được sử dụng để tính toán lũy thừa modulo một cách hiệu quả$998244353$, cho phép đếm các chuỗi có độ dài lên tới`n`mà không lặp qua từng chiều dài. Sàng chia đảm bảo rằng các cập nhật trong`dp[x]`chỉ xem xét các phần mở rộng mảng khả thi. Các hoạt động modulo ngăn chặn tràn và giữ cho kết quả chính xác. 
+```Trong việc thực hiện này,`mod_pow`được sử dụng để tính toán lũy thừa modulo một cách hiệu quả$998244353$, cho phép đếm các chuỗi có độ dài lên tới`n`mà không lặp qua từng độ dài. Sàng chia đảm bảo rằng các cập nhật trong`dp[x]`chỉ xem xét các phần mở rộng mảng khả thi. Các hoạt động modulo ngăn chặn tràn và giữ cho kết quả chính xác. 
 
 ## Ví dụ đã hoạt động 
 

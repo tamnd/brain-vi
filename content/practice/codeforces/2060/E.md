@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1 phút 14s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Cho hai đồ thị vô hướng có cùng một tập đỉnh. Một biểu đồ, gọi là biểu đồ làm việc, là cấu trúc mà chúng ta được phép sửa đổi. Biểu đồ thứ hai là một cấu trúc tham chiếu cố định mà cuối cùng chúng ta phải “khớp” về mặt kết nối. 
@@ -48,7 +48,7 @@ Bây giờ cấu trúc trở nên sạch sẽ. Đầu tiên chúng ta buộc F t
 
 Điều này dẫn đến giải pháp dựa trên DSU: chúng tôi sử dụng DSU cho G để xác định các nhóm, sau đó mô phỏng các cạnh F hợp lệ trong các nhóm đó, đếm các thành phần kết quả trên mỗi nhóm và tính toán số lượng hợp nhất cần thiết. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Tính toán lại lực lượng vũ phu | O(n·(m₁+m₂)) | O(n+m) | Quá chậm | 
 | Hợp nhất thành phần DSU | O((n+m₁+m₂) α(n)) | O(n) | Đã chấp nhận | 
@@ -166,9 +166,9 @@ Các thành phần G là {1,2} và {3,4}.
 
 Bây giờ bên trong các thành phần G: 
 
-Đối với {1,2}, F có một thành phần nên có giá 0. 
+Với {1,2}, F có một thành phần nên có giá 0. 
 
-Với {3,4}, F có hai đơn vị nên có giá 1. 
+Đối với {3,4}, F có hai đơn vị nên có giá 1. 
 
 Tổng số câu trả lời là 2. 
 

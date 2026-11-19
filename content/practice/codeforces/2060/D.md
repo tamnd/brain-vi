@@ -21,18 +21,18 @@ draft: false
 **Thời gian giải:** 1 phút 48s 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cho một mảng các số nguyên dương. Chúng tôi được phép chọn liên tục hai phần tử liền kề và thực hiện thao tác "trừ cân bằng": chúng tôi xem xét một cặp, trừ giá trị nhỏ hơn khỏi cả hai mục và tiếp tục. Hoạt động này luôn buộc ít nhất một trong hai phần tử được chọn trở thành 0 và nó không bao giờ tăng bất kỳ giá trị nào. 
 
-Mục tiêu không phải là sắp xếp đầy đủ mảng mà là xác định xem liệu chúng ta có thể chuyển đổi nó thành một chuỗi không giảm bằng cách sử dụng bất kỳ số lượng thao tác nào như vậy hay không. 
+Mục tiêu không phải là sắp xếp đầy đủ mảng mà là xác định xem liệu chúng ta có thể chuyển đổi nó thành một chuỗi không giảm bằng cách sử dụng bất kỳ số lượng phép toán nào như vậy hay không. 
 
 Khó khăn chính là các hoạt động mang tính cục bộ nhưng tác động của chúng lan truyền: việc thay đổi một cặp ảnh hưởng đến khả năng điều chỉnh các cặp lân cận trong tương lai. Vì mọi thao tác đều bảo toàn tính không âm và chỉ loại bỏ khối lượng khỏi các cặp liền kề nên hệ thống hoạt động giống như chúng ta đang phân phối lại và xóa các giá trị theo một quy tắc rất hạn chế. 
 
-Các ràng buộc rất chặt chẽ: tổng cộng$n$trên tất cả các trường hợp thử nghiệm lên đến$2 \cdot 10^5$. Bất kỳ cách tiếp cận nào cố gắng mô phỏng các hoạt động hoặc khám phá trạng thái của mảng sẽ ngay lập tức thất bại, vì mỗi hoạt động có thể tương tác với các lân cận và số lượng chuỗi hoạt động có thể tăng theo cấp số nhân. Điều này buộc chúng ta phải hướng tới một lý luận tham lam tuyến tính hoặc gần tuyến tính cho mỗi trường hợp thử nghiệm. 
+Các ràng buộc rất chặt chẽ: tổng cộng$n$trên tất cả các trường hợp thử nghiệm lên đến$2 \cdot 10^5$. Bất kỳ cách tiếp cận nào cố gắng mô phỏng các hoạt động hoặc khám phá các trạng thái của mảng sẽ ngay lập tức thất bại, vì mỗi hoạt động có thể tương tác với các lân cận và số lượng chuỗi hoạt động có thể tăng theo cấp số nhân. Điều này buộc chúng ta phải hướng tới một lý luận tham lam tuyến tính hoặc gần tuyến tính cho mỗi trường hợp thử nghiệm. 
 
-Một trường hợp phức tạp xuất hiện khi những cải tiến cục bộ xung đột với trật tự toàn cầu. Ví dụ: các mảng như$[4, 5, 2, 3]$trông gần như có thể sắp xếp được, nhưng cấu trúc hoạt động ngăn chặn việc sửa lỗi đảo ngược giữa các khối ở giữa mà không phá vỡ cấu trúc trước đó. Một trường hợp phức tạp khác là xen kẽ các mẫu cao thấp như$[4,5,4,5,4,5,\dots]$, trong đó không rõ liệu việc hủy bỏ lặp đi lặp lại có thể “làm trơn tru” trình tự hay không. Cuối cùng, giảm nghiêm ngặt các mảng như$[4,3,2,1]$có vẻ như chúng có thể khắc phục được bằng cách giảm đi lặp lại, nhưng thao tác không thể tăng bất kỳ giá trị nào, vì vậy một số nghịch đảo về cơ bản là không thể đảo ngược. 
+Một trường hợp phức tạp xuất hiện khi những cải tiến cục bộ xung đột với trật tự toàn cầu. Ví dụ: các mảng như$[4, 5, 2, 3]$trông gần như có thể sắp xếp được, nhưng cấu trúc hoạt động ngăn chặn việc sửa lỗi đảo ngược giữa các khối ở giữa mà không phá vỡ cấu trúc trước đó. Một trường hợp phức tạp khác là xen kẽ các mẫu cao thấp như$[4,5,4,5,4,5,\dots]$, trong đó không rõ liệu việc hủy bỏ lặp đi lặp lại có thể “làm trơn tru” trình tự hay không. Cuối cùng, giảm nghiêm ngặt các mảng như$[4,3,2,1]$có vẻ như chúng có thể khắc phục được bằng cách giảm đi nhiều lần, nhưng thao tác không thể tăng bất kỳ giá trị nào, vì vậy một số nghịch đảo về cơ bản là không thể đảo ngược. 
 
 ## Phương pháp tiếp cận 
 
@@ -44,7 +44,7 @@ Thông tin chi tiết quan trọng là xử lý mảng từ trái sang phải, d
 
 Điều này dẫn đến một cấu trúc tham lam: chúng tôi mô phỏng mức giảm tốt nhất có thể của từng phần tử so với phần tử trước đó, đảm bảo rằng ở mỗi bước, chuỗi kết quả vẫn không giảm ở dạng có thể đạt được. Về cơ bản, hoạt động này cho phép chúng ta giảm các phần tử liền kề với nhau, do đó ràng buộc hiệu quả sẽ trở thành so sánh giữa các trạng thái tiền tố được điều chỉnh thay vì giá trị thô. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | Hàm mũ | O(n) | Quá chậm | 
 | Tối ưu | O(n) | O(1) | Đã chấp nhận | 

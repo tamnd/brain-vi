@@ -21,10 +21,10 @@ draft: false
 **Thời gian giải:** 3 phút 42s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi được cung cấp một số trường hợp thử nghiệm độc lập. Trong mỗi trường hợp thử nghiệm, chúng tôi bắt đầu với tổng bằng 0 và chúng tôi được phép sắp xếp lại danh sách các số đã cho một cách tự do. Sau khi chọn đơn hàng, chúng tôi xử lý từng con số một. Mỗi lần chúng ta cộng số tiếp theo vào tổng đang chạy, chúng ta có thể đạt được một điểm tùy thuộc vào tính chẵn lẻ của kết quả và nếu tổng trở thành số chẵn, chúng ta sẽ chia số đó ngay lập tức cho hai lần cho đến khi số đó lại trở thành số lẻ. 
+Chúng tôi được cung cấp một số trường hợp thử nghiệm độc lập. Trong mỗi trường hợp thử nghiệm, chúng tôi bắt đầu với tổng bằng 0 và chúng tôi được phép sắp xếp lại danh sách các số đã cho một cách tự do. Sau khi chọn đơn hàng, chúng tôi xử lý từng con số một. Mỗi lần chúng ta cộng số tiếp theo vào tổng đang chạy, chúng ta có thể đạt được một điểm tùy thuộc vào tính chẵn lẻ của kết quả và nếu tổng trở thành số chẵn, chúng ta sẽ chia đôi số đó ngay lập tức cho đến khi nó lại trở thành số lẻ. 
 
 Điều duy nhất quan trọng đối với việc ghi điểm là tần suất tổng số tiền hiện có trở thành số chẵn ngay sau khi cộng. Việc chia lặp lại không trực tiếp đóng góp thêm điểm; nó chỉ đặt lại trạng thái của tổng thành giá trị lẻ khi đạt được điểm. 
 
@@ -46,7 +46,7 @@ Giải pháp brute-force sẽ thử tất cả các hoán vị, mô phỏng quy 
 
 Nhận thức đúng đắn là chỉ có số lượng chẵn và lẻ mới quan trọng chứ không phải giá trị thực của chúng. Chiến lược tối ưu là nhận ra rằng số chẵn là “sự bổ sung an toàn” giúp duy trì cấu trúc, trong khi tỷ lệ cược là yếu tố duy nhất làm đảo lộn tính chẵn lẻ và tạo cơ hội để căn chỉnh tổng theo cách tạo ra kết quả chẵn. Câu trả lời cuối cùng phụ thuộc vào số lần chúng ta có thể xen kẽ các hiệu ứng này một cách tối ưu, điều này làm giảm thành một đối số đếm tham lam đối với phân phối chẵn lẻ được sắp xếp. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | Ồ (n!) | O(n) | Quá chậm | 
 | Tối ưu | O(n) | O(1) | Đã chấp nhận | 
@@ -130,7 +130,7 @@ Những dấu vết này cho thấy rằng chỉ có các chuyển đổi chẵn
 | Đo | Độ phức tạp | Giải thích | 
 | --- | --- | --- | 
 | Thời gian | O(n) mỗi lần kiểm tra | Chúng tôi chỉ tính các lớp chẵn lẻ một lần cho mỗi trường hợp thử nghiệm | 
-| Không gian | O(1) | Không có dung lượng lưu trữ bổ sung ngoài quầy | 
+| Không gian | O(1) | Không có bộ nhớ bổ sung ngoài quầy | 
 
 Các ràng buộc cho phép tối đa 500 trường hợp thử nghiệm và mỗi trường hợp 100 phần tử, do đó, việc quét tuyến tính cho mỗi thử nghiệm là không đáng kể trong giới hạn. 
 

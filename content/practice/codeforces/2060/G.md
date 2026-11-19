@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 2 phút 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 Lỗi bạn hiển thị không đủ để chẩn đoán thuật toán. 
 
 Hãy theo dõi những gì đã xảy ra: 

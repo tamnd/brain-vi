@@ -21,7 +21,7 @@ draft: false
 **Thời gian giải:** 1 phút 39 giây 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng ta được cho một tập hợp các chiều dài thanh và chúng ta phải chọn chính xác bốn thanh có thể tạo thành một hình thang cân có diện tích khác 0. Các que trở thành bốn cạnh có độ dài của một tứ giác lồi và chúng ta được phép sắp xếp lại chúng thành bất kỳ cấu hình hình thang hợp lệ nào miễn là các điều kiện hình học được thỏa mãn. 
@@ -48,7 +48,7 @@ Quan sát cấu trúc quan trọng là bất kỳ hình thang hợp lệ nào c�
 
 Để làm cho việc xây dựng trở nên đáng tin cậy, việc sắp xếp mảng sẽ đơn giản hóa việc phát hiện các bản sao và cho phép chúng ta chọn bất kỳ hai phần tử còn lại nào một cách hiệu quả. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Brute Force tăng gấp bốn lần |$O(n^4)$|$O(1)$| Quá chậm | 
 | Tần suất + xây dựng tham lam |$O(n \log n)$|$O(n)$| Đã chấp nhận | 
@@ -142,7 +142,7 @@ Chúng tôi theo dõi hai trường hợp, một trường hợp thành công v�
 | 1 | [1,2,3,4] | sắp xếp | không | 
 | 2 | - | dừng lại | - | 
 
-Không có giá trị nào lặp lại, do đó không tồn tại cặp chân bằng nhau hợp lệ. Thuật toán từ chối chính xác ngay lập tức. 
+Không có giá trị lặp lại, do đó không tồn tại cặp chân bằng nhau hợp lệ. Thuật toán từ chối chính xác ngay lập tức. 
 
 ## Phân tích độ phức tạp 
 

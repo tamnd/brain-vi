@@ -21,16 +21,16 @@ draft: false
 **Thời gian giải:** 1 phút 18s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được cho một dãy số nguyên được viết trên bảng. Trò chơi liên tục loại bỏ hai số trong mỗi vòng, nhưng thứ tự rất quan trọng: Alice loại bỏ một số trước với mục đích làm cho Bob không tạo thành một cặp tốt sau đó, trong khi Bob phản ứng bằng cách loại bỏ một số khác để cố gắng tối đa hóa tần suất hai giá trị bị loại bỏ tổng thành một giá trị mục tiêu cố định$k$. Bất cứ khi nào hai số được chọn trong một vòng cộng lại bằng$k$, điểm số tăng lên một. 
+Chúng ta được cho một dãy số nguyên được viết trên bảng. Trò chơi liên tục loại bỏ hai số trong mỗi vòng, nhưng thứ tự quan trọng: Alice loại bỏ một số trước với mục đích làm cho Bob không tạo thành một cặp tốt sau đó, trong khi Bob phản ứng bằng cách loại bỏ một số khác để cố gắng tối đa hóa tần suất hai giá trị bị loại bỏ tổng thành một giá trị mục tiêu cố định$k$. Bất cứ khi nào hai số được chọn trong một vòng cộng lại bằng$k$, điểm số tăng lên một. 
 
 Khó khăn chính là người chơi không hợp tác. Alice đang tích cực cố gắng ngăn cản Bob tạo ra các cặp có tổng bằng$k$, trong khi Bob đang cố gắng ép buộc những cặp như vậy. Điểm cuối cùng chỉ phụ thuộc vào số hiệp kết thúc bằng cặp phụ$(x, k-x)$. 
 
-Kích thước đầu vào lớn, lên tới$2 \cdot 10^5$tổng số phần tử trên các trường hợp thử nghiệm. Điều này loại trừ mọi mô phỏng của tất cả các trạng thái trò chơi có thể có hoặc lý luận cây trò chơi đệ quy. Bất cứ điều gì cố gắng đánh giá các lựa chọn mỗi lượt hoặc theo dõi kết quả phân nhánh sẽ giảm dần về hành vi bậc hai và sẽ không vượt qua. 
+Kích thước đầu vào lớn, lên tới$2 \cdot 10^5$tổng số phần tử trên các trường hợp thử nghiệm. Điều này loại trừ mọi mô phỏng của tất cả các trạng thái trò chơi có thể có hoặc lý luận cây trò chơi đệ quy. Bất cứ điều gì cố gắng đánh giá các lựa chọn mỗi lượt hoặc theo dõi kết quả phân nhánh sẽ làm suy giảm hành vi bậc hai và sẽ không vượt qua. 
 
-Một trường hợp cạnh tinh tế phát sinh khi một giá trị chính xác bằng một nửa$k$, vì việc ghép nối yêu cầu hai giá trị giống hệt nhau. Ví dụ, nếu$k=10$và chúng ta có nhiều số 5, thì mỗi sự kiện ghi điểm thành công sẽ tiêu tốn hai số 5. Một kẻ tham lam ngây thơ ghép các giá trị xuất hiện tùy ý mà không theo dõi tần số có thể dễ dàng đếm thừa hoặc đếm thiếu trong những trường hợp như vậy. 
+Một trường hợp cạnh tinh tế phát sinh khi một giá trị chính xác bằng một nửa$k$, vì việc ghép nối yêu cầu hai giá trị giống hệt nhau. Ví dụ, nếu$k=10$và chúng ta có nhiều số 5, thì mỗi sự kiện ghi điểm thành công sẽ tiêu tốn hai số 5. Một kẻ tham lam ngây thơ ghép các lần xuất hiện tùy ý của các giá trị mà không theo dõi tần số có thể dễ dàng đếm thừa hoặc đếm thiếu trong những trường hợp như vậy. 
 
 Một trường hợp khác là khi các giá trị hình thành các chuỗi bổ sung chồng chéo. Ví dụ, với$k=6$, các giá trị như 1, 2, 4, 5 tương tác sao cho nhiều cặp cạnh tranh cho cùng một lần xuất hiện. Cách tiếp cận “đếm bổ sung độc lập” ngây thơ không thành công vì nó bỏ qua việc mỗi phần tử được tiêu thụ một lần. 
 
@@ -46,7 +46,7 @@ Sự tương tác này sụp đổ thành một vấn đề tần số. Thay vì
 
 Việc triển khai tham lam trở thành: lặp qua các giá trị, luôn khớp càng nhiều phần bù càng tốt, đảm bảo mỗi số được sử dụng nhiều nhất một lần. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Mô phỏng lực lượng vũ phu | Hàm mũ | O(n) | Quá chậm | 
 | Kết hợp tham lam tần số | O(n) | O(n) | Đã chấp nhận | 
@@ -65,7 +65,7 @@ Chúng tôi giảm trò chơi xuống việc đếm số lượng cặp bổ sun
 
 ### Tại sao nó hoạt động 
 
-Trò chơi rút gọn thành các yếu tố ghép nối trong đó chỉ các giá trị bổ sung mới quan trọng để ghi điểm. Chiến lược tối ưu của Alice nhiều nhất có thể trì hoãn hoặc sắp xếp lại các cặp nhưng không thể thay đổi tổng số cặp bổ sung rời rạc có thể được hình thành. Mỗi điểm thành công tiêu tốn chính xác hai giá trị có tổng bằng$k$và không có yếu tố nào có thể đóng góp vào nhiều hơn một điểm. Quá trình khớp tần số xây dựng số lượng cặp hợp lệ rời rạc tối đa, phù hợp với kết quả trong cách chơi đối kháng tối ưu. 
+Trò chơi giảm bớt các yếu tố ghép nối trong đó chỉ các giá trị bổ sung mới quan trọng để ghi điểm. Chiến lược tối ưu của Alice nhiều nhất có thể trì hoãn hoặc sắp xếp lại các cặp nhưng không thể thay đổi tổng số cặp bổ sung rời rạc có thể được hình thành. Mỗi điểm thành công tiêu tốn chính xác hai giá trị có tổng bằng$k$và không có yếu tố nào có thể đóng góp vào nhiều hơn một điểm. Quá trình khớp tần số xây dựng số lượng cặp hợp lệ rời rạc tối đa, phù hợp với kết quả trong cách chơi đối kháng tối ưu. 
 
 ## Giải pháp Python```python
 import sys
@@ -153,7 +153,7 @@ Tổng số điểm = 3.
 | Thời gian | O(n) | Mỗi trường hợp thử nghiệm xử lý từng phần tử một lần để đếm tần số và mỗi giá trị riêng biệt một lần để ghép nối | 
 | Không gian | O(n) | Bản đồ tần số lưu trữ số lượng giá trị riêng biệt | 
 
-Tổng độ phức tạp trong tất cả các trường hợp thử nghiệm vẫn tuyến tính ở kích thước đầu vào, phù hợp thoải mái trong các ràng buộc của$2 \cdot 10^5$. 
+Tổng độ phức tạp trên tất cả các trường hợp thử nghiệm vẫn tuyến tính ở kích thước đầu vào, phù hợp thoải mái trong các ràng buộc của$2 \cdot 10^5$. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io
@@ -238,4 +238,4 @@ Khi tất cả các giá trị giống hệt nhau và bằng$k/2$, mọi sự ki
 
 Khi các giá trị tạo thành một tập hợp đối xứng hoàn hảo như$[1,2,3,4]$với$k=8$, mỗi giá trị có chính xác một phần bù và không xảy ra sự trùng lặp. Việc ghép tần số đảm bảo mỗi cặp được tính một lần và`used`set ngăn chặn sự trùng lặp. 
 
-Khi không có hai giá trị nào có tổng bằng$k$, bản đồ tần số vẫn xây dựng chính xác nhưng tất cả các tra cứu bổ sung đều không thành công, dẫn đến không có đóng góp.
+Khi không có hai giá trị nào có tổng bằng$k$, bản đồ tần số vẫn được xây dựng chính xác nhưng tất cả các tra cứu bổ sung đều không thành công, dẫn đến không có đóng góp nào.

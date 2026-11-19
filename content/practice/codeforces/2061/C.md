@@ -21,12 +21,12 @@ draft: false
 **Thời gian giải:** 1 phút 49s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Chúng tôi có một hàng bạn cùng lớp, mỗi người trong số họ đều tuyên bố có một số kẻ nói dối nhất định đứng bên trái họ. Mỗi người hoặc là trung thực, trong trường hợp đó tuyên bố của họ là hoàn toàn đúng, hoặc là kẻ nói dối, trong trường hợp đó tuyên bố của họ có thể là tùy tiện. Ngoài ra, những kẻ nói dối không thể đứng cạnh nhau. Nhiệm vụ của chúng ta là đếm tất cả các chuỗi bài tập trung thực và nói dối thỏa mãn các phát biểu của các bạn cùng lớp trung thực, modulo 998244353. 
 
-Đầu vào đưa ra nhiều trường hợp thử nghiệm. Mỗi trường hợp thử nghiệm chỉ định số lượng bạn cùng lớp`n`và một mảng`a`Ở đâu`a[i]`là số người nói dối ở bên trái`i`-người thứ 2 lên tiếng. Đầu ra là một số nguyên duy nhất cho mỗi trường hợp thử nghiệm: số lượng cấu hình có thể có của các bạn cùng lớp trung thực và nói dối. 
+Đầu vào cung cấp nhiều trường hợp thử nghiệm. Mỗi trường hợp thử nghiệm chỉ định số lượng bạn cùng lớp`n`và một mảng`a`Ở đâu`a[i]`là số người nói dối ở bên trái`i`-người thứ 2 lên tiếng. Đầu ra là một số nguyên duy nhất cho mỗi trường hợp thử nghiệm: số lượng cấu hình có thể có của các bạn cùng lớp trung thực và nói dối. 
 
 Bởi vì`n`có thể lên tới 2·10^5 cho mỗi trường hợp thử nghiệm và tổng của`n`trên tất cả các trường hợp thử nghiệm cũng bị giới hạn bởi 2·10^5, chúng ta phải thiết kế một thuật toán gần như tuyến tính theo`n`. Bất cứ điều gì bậc hai hoặc hàm mũ đều không thể thực hiện được ngay lập tức. Điều này loại trừ việc liệt kê tất cả 2^n nhiệm vụ trung thực/nói dối. 
 
@@ -40,7 +40,7 @@ Cái nhìn sâu sắc quan trọng đến từ việc quan sát thấy rằng c�
 
 Cách tiếp cận tối ưu sẽ trình bày lại vấn đề bằng cách đếm các chuỗi vị trí mà người nói dối có thể được đặt mà không vi phạm ràng buộc về khoảng cách, phù hợp với các nhận định trung thực. Giả định`cnt`là số kẻ nói dối mà chúng tôi đã chèn vào cho đến nay. Nếu như`a[i] = cnt`, người thứ i có thể thành thật. Bằng không, nếu`a[i] > cnt`, người thứ i chắc chắn là kẻ nói dối. Điều này dẫn đến một cách tiếp cận lập trình động một cách tự nhiên: theo dõi số lượng chuỗi hợp lệ kết thúc với người cuối cùng là người trung thực hoặc kẻ nói dối, cập nhật số lượng khi chúng tôi tiếp tục. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(2^n) | O(n) | Quá chậm | 
 | Lập trình động (Tối ưu) | O(n) cho mỗi trường hợp thử nghiệm | O(n) | Đã chấp nhận | 

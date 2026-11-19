@@ -1,6 +1,6 @@
 ---
 title: "CF 2061D - Kevin và những con số"
-description: "Chúng ta được cho hai chuỗi số nguyên: chuỗi ban đầu a có độ dài n và chuỗi mục tiêu b có độ dài m. Kevin có thể liên tục lấy hai số bất kỳ từ một số có hiệu nhiều nhất là một, loại bỏ chúng và chèn tổng của chúng trở lại dãy."
+description: "Chúng ta được cho hai chuỗi số nguyên: chuỗi ban đầu a có độ dài n và chuỗi đích b có độ dài m. Kevin có thể liên tục lấy hai số bất kỳ từ một số có hiệu nhiều nhất là một, loại bỏ chúng và chèn tổng của chúng trở lại dãy."
 date: "2026-06-08T07:40:58+07:00"
 tags: ["codeforces", "competitive-programming", "bitmasks", "data-structures"]
 categories: ["algorithms"]
@@ -21,14 +21,14 @@ draft: false
 **Thời gian giải:** 1 phút 38 giây 
 **Đã xác minh:** không 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
 Cho ta hai dãy số nguyên: dãy đầu tiên`a`chiều dài`n`và trình tự mục tiêu`b`chiều dài`m`. Kevin có thể liên tục lấy hai số bất kỳ từ`a`có hiệu nhiều nhất là một, loại bỏ chúng và chèn tổng của chúng trở lại dãy. Nhiệm vụ là xác định xem liệu sau một loạt các thao tác này, chúng ta có thể tạo ra nhiều tập hợp của`a`chính xác bằng bội số của`b`. 
 
 Mỗi trường hợp thử nghiệm có thể liên quan đến tối đa`2*10^5`số và tổng của tất cả`n`trên các trường hợp thử nghiệm cũng bị giới hạn bởi`2*10^5`. Với giới hạn thời gian 2 giây, điều này loại trừ bất kỳ giải pháp nào thử nghiệm tất cả các hoạt động có thể một cách ngây thơ, vì số lượng các cặp tiềm năng tăng lên theo kiểu tổ hợp. Chúng ta cần một cách tiếp cận xử lý từng phần tử theo thời gian gần tuyến tính so với`n`Và`m`. 
 
-Các trường hợp cạnh không rõ ràng phát sinh từ các chuỗi có khoảng trống lớn hoặc số lượng lặp lại. Ví dụ, nếu`a = [1, 3]`Và`b = [4]`, thao tác này không thể thực hiện được vì`|1 - 3| = 2`vượt quá chênh lệch cho phép là 1. Một điều tinh tế khác là khi tất cả các số đều giống nhau trong`a`Nhưng`b`yêu cầu một sự phân phối khác, chẳng hạn như`a = [1, 1, 1, 1]`Và`b = [2, 2]`. Các giải pháp ngây thơ có thể cho rằng bất kỳ số tiền nào cũng có thể đạt được, nhưng quy tắc chênh lệch nghiêm ngặt sẽ chặn một số sự hợp nhất. 
+Các trường hợp cạnh không rõ ràng phát sinh từ các chuỗi có khoảng cách lớn hoặc số lượng lặp lại. Ví dụ, nếu`a = [1, 3]`Và`b = [4]`, thao tác này không thể thực hiện được vì`|1 - 3| = 2`vượt quá chênh lệch cho phép là 1. Một điều tinh tế khác là khi tất cả các số đều giống nhau trong`a`Nhưng`b`yêu cầu một sự phân phối khác, chẳng hạn như`a = [1, 1, 1, 1]`Và`b = [2, 2]`. Các giải pháp ngây thơ có thể cho rằng bất kỳ số tiền nào cũng có thể đạt được, nhưng quy tắc chênh lệch nghiêm ngặt sẽ chặn một số sự hợp nhất. 
 
 ## Phương pháp tiếp cận 
 
@@ -38,7 +38,7 @@ Cái nhìn sâu sắc quan trọng là suy luận về các thừa số nguyên 
 
 Do đó, giải pháp tối ưu làm giảm vấn đề thành một đường truyền tuyến tính`a`Và`b`, biểu thị mỗi số dưới dạng số đếm của giá trị cơ sở và số nhân tương ứng. Sau đó, chúng tôi mô phỏng việc hợp nhất một cách xác định bằng cách chia các số trong`b`trở lại đơn vị của`a`số cơ sở của, kiểm tra xem số đếm có khớp chính xác không. Điều này bỏ qua nhu cầu tìm kiếm tổ hợp trong khi vẫn đảm bảo tính chính xác. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O(2^n) | O(n) | Quá chậm | 
 | Tối ưu | O(n + m) | O(n + m) | Đã chấp nhận | 

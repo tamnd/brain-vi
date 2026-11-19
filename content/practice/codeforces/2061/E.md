@@ -21,10 +21,10 @@ draft: false
 **Thời gian giải:** 1 phút 42s 
 **Đã xác minh:** có 
 
-##Giải pháp 
+## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng tôi được cung cấp một danh sách các số nguyên`a`chiều dài`n`và một danh sách các số nguyên kỳ diệu`b`chiều dài`m`. Kevin có thể chọn tối đa`k`các hoạt động trong đó mỗi hoạt động chọn một phần tử`a_i`và một phép thuật`b_j`và thay thế`a_i`với`a_i & b_j`, theo bit AND của hai số. Mục đích là giảm thiểu tổng của tất cả các phần tử trong`a`sau khi biểu diễn nhiều nhất`k`những hoạt động như vậy. 
+Chúng tôi được cung cấp một danh sách các số nguyên`a`chiều dài`n`và một danh sách các số nguyên kỳ diệu`b`chiều dài`m`. Kevin có thể chọn tối đa`k`các hoạt động trong đó mỗi hoạt động chọn một phần tử`a_i`và một phép thuật`b_j`và thay thế`a_i`với`a_i & b_j`, theo bit AND của hai số. Mục tiêu là giảm thiểu tổng của tất cả các phần tử trong`a`sau khi biểu diễn nhiều nhất`k`những hoạt động như vậy. 
 
 Các ràng buộc có ý nghĩa quan trọng đối với việc thiết kế thuật toán.`n`có thể lớn như`10^5`, trong khi`m`nhỏ, lên đến`10`. Tổng số hoạt động`k`có thể lên đến`nm`, nhưng trong thực tế nó cũng có thể bằng 0. Vì thao tác AND theo bit chỉ giảm hoặc giữ cùng một số, nên các AND lặp lại chỉ có thể giảm thêm các phần tử hoặc giữ nguyên chúng. Quan sát này sẽ là trọng tâm của chiến lược tối ưu. 
 
@@ -34,9 +34,9 @@ Các trường hợp đặc biệt cần xem xét bao gồm các tình huống t
 
 Cách tiếp cận đơn giản nhất là thử mọi chuỗi thao tác có thể xảy ra: chọn bất kỳ`a_i`, chọn bất kỳ`b_j`, thực hiện AND và tiếp tục đệ quy cho đến`k`lần. Điều này sẽ yêu cầu kiểm tra`O((nm)^k)`trình tự, điều này hoàn toàn không khả thi ngay cả đối với những trình tự nhỏ`n`hoặc`m`, chứ đừng nói đến khi`k`có thể lớn như`10^6`. Về nguyên tắc, lực lượng vũ phu hoạt động vì chúng tôi được phép thực hiện bất kỳ chuỗi hoạt động nào, nhưng nó không thành công đối với tất cả các kích thước đầu vào thực tế do vụ nổ tổ hợp. 
 
-Cái nhìn sâu sắc quan trọng là đối với mỗi yếu tố`a_i`, áp dụng AND với bất kỳ`b_j`chỉ làm giảm giá trị của nó và thứ tự thực hiện các thao tác không quan trọng vì`a_i & b_x & b_y`là như nhau bất kể trình tự. Vì vậy, đối với mỗi`a_i`, giá trị nhỏ nhất chúng ta có thể đạt được bằng cách sử dụng một thao tác là`min(a_i & b_j for all j)`. Đối với hai phép toán, chúng ta có thể lấy giá trị tối thiểu của tất cả`a_i & b_x & b_y`. Từ`m`nhỏ (tối đa 10), chúng ta có thể tính toán trước tất cả các kết quả có thể có của tổ hợp AND cho tối đa`2`hoạt động trên một phần tử duy nhất một cách hiệu quả. Khi chúng ta biết mức giảm tối đa mà mỗi phần tử có thể đạt được cho một, hai hoặc nhiều thao tác, vấn đề sẽ giảm xuống việc chọn`k`hoạt động tạo ra mức giảm lớn nhất. Sắp xếp tất cả các mức giảm có thể có trên tất cả các yếu tố và chiếm vị trí hàng đầu`k`là cách đơn giản nhất để làm điều này. 
+Cái nhìn sâu sắc quan trọng là đối với mỗi yếu tố`a_i`, áp dụng AND với bất kỳ`b_j`chỉ làm giảm giá trị của nó và thứ tự thực hiện các thao tác không quan trọng vì`a_i & b_x & b_y`là như nhau bất kể trình tự. Vì vậy, đối với mỗi`a_i`, giá trị nhỏ nhất chúng ta có thể đạt được khi sử dụng một thao tác là`min(a_i & b_j for all j)`. Đối với hai phép toán, chúng ta có thể lấy giá trị tối thiểu của tất cả`a_i & b_x & b_y`. Từ`m`nhỏ (tối đa 10), chúng ta có thể tính toán trước tất cả các kết quả có thể có của tổ hợp AND cho tối đa`2`hoạt động trên một phần tử duy nhất một cách hiệu quả. Khi chúng ta biết mức giảm tối đa mà mỗi phần tử có thể đạt được cho một, hai hoặc nhiều thao tác, vấn đề sẽ giảm xuống việc chọn`k`hoạt động tạo ra mức giảm lớn nhất. Sắp xếp tất cả các mức giảm có thể có trên tất cả các yếu tố và chiếm vị trí hàng đầu`k`là cách đơn giản nhất để làm điều này. 
 
-| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
+| Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Bản án | 
 | --- | --- | --- | --- | 
 | Lực lượng vũ phu | O((nm)^k) | O(n) | Quá chậm | 
 | Tối ưu | O(n * 2^m + n log n) | O(n * 2^m) | Đã chấp nhận | 
@@ -50,7 +50,7 @@ Cái nhìn sâu sắc quan trọng là đối với mỗi yếu tố`a_i`, áp d
 5. Áp dụng phần trên cùng`k`giảm từ danh sách đã sắp xếp về tổng của mảng ban đầu. Điều này đảm bảo chúng tôi sử dụng`k`hoạt động hiệu quả nhất về tổng thể, không phụ thuộc vào yếu tố nào chúng áp dụng. 
 6. Tính tổng cuối cùng như sau`sum(a) - sum(top k reductions)`. 
 
-Lý do điều này có tác dụng là vì các phép toán AND đơn điệu và độc lập: áp dụng phép toán AND trên một phần tử không làm thay đổi tác dụng của AND trên phần tử khác. Vì vậy, việc lựa chọn hiệu quả nhất trên toàn cầu`k`mức giảm đảm bảo số tiền tối thiểu có thể. 
+Lý do điều này hoạt động là vì các phép toán AND đơn điệu và độc lập: áp dụng phép toán AND trên một phần tử không làm thay đổi tác dụng của AND trên phần tử khác. Vì vậy, việc lựa chọn hiệu quả nhất trên toàn cầu`k`mức giảm đảm bảo số tiền tối thiểu có thể. 
 
 ## Giải pháp Python```python
 import sys
