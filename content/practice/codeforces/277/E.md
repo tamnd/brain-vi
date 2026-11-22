@@ -28,7 +28,7 @@ Chúng ta được cho một tập hợp các điểm trên mặt phẳng, mỗi
 
 Kích thước đầu vào lên tới 400 nút. Với thang đo này, các thuật toán với$O(n^4)$hoặc tệ hơn là độ phức tạp quá chậm, nhưng$O(n^3)$hoặc$O(n^2 \log n)$được chấp nhận ở giới hạn 3 giây. Mỗi nút có thể có tối đa hai nút con, điều này đưa ra các ràng buộc tổ hợp, nhưng hướng đi xuống cung cấp một trật tự tự nhiên mà chúng ta có thể khai thác. 
 
-Trường hợp cạnh đơn giản là khi các điểm được căn chỉnh theo cách không thể chọn gốc nào cho phép cây nhị phân hoàn chỉnh đi xuống. Ví dụ, ba điểm trên một đường ngang không thể tạo thành cây đi xuống vì không có điểm nào nằm trên hai điểm khác. Trong trường hợp như vậy, đầu ra đúng là`-1`. Một cách tiếp cận bất cẩn chỉ đơn giản là kết nối mỗi nút với các nút lân cận hướng xuống gần nhất của nó có thể tạo ra các chu trình hoặc các nút có nhiều hơn hai nút con. 
+Trường hợp cạnh đơn giản là khi các điểm được căn chỉnh theo cách không thể chọn gốc nào cho phép cây nhị phân hoàn chỉnh đi xuống. Ví dụ, ba điểm trên một đường ngang không thể tạo thành cây hướng xuống vì không có điểm nào nằm trên hai điểm khác. Trong trường hợp như vậy, đầu ra đúng là`-1`. Một cách tiếp cận bất cẩn chỉ đơn giản là kết nối mỗi nút với các nút lân cận hướng xuống gần nhất của nó có thể tạo ra các chu trình hoặc các nút có nhiều hơn hai nút con. 
 
 ## Phương pháp tiếp cận 
 
@@ -50,11 +50,11 @@ Cụ thể, mỗi nút được chia thành "nút trong" và "nút ngoài" trong
 
 - Mỗi nút được chia thành nút "in-node" và "out-node". 
 - Đối với mỗi cha tiềm năng _u_ và con _v_, chỉ thêm một cung từ nút ngoài của _u_ vào nút trong của _v_ nếu$y_u > y_v$. Chi phí của cung là khoảng cách Euclide$\sqrt{(x_u - x_v)^2 + (y_u - y_v)^2}$. Đặt công suất của cung này thành 1. 
-3. Thêm một nút nguồn kết nối với nút ngoài của ứng viên gốc có dung lượng 2, biểu thị số lượng nút con tối đa mà nó có thể gửi tới cây con. Tương tự, thêm một nút chìm kết nối từ các nút trong có dung lượng 1 vào mô hình mà mỗi nút phải nhận chính xác một nút cha (ngoại trừ nút gốc, không nhận được nút nào). 
+3. Thêm một nút nguồn kết nối với nút ngoài của ứng viên gốc có dung lượng 2, biểu thị số lượng nút con tối đa mà nó có thể gửi đến cây con. Tương tự, thêm một nút chìm kết nối từ các nút trong có dung lượng 1 vào mô hình mà mỗi nút phải nhận chính xác một nút cha (ngoại trừ nút gốc, không nhận được nút nào). 
 4. Chạy thuật toán luồng tối đa chi phí tối thiểu trên mạng này. Nếu luồng bão hòa tất cả các nút một cách chính xác thì chi phí của luồng là tổng chiều dài tối thiểu của cây nhị phân. Nếu luồng không khả thi, hãy in`-1`. 
 5. Trả về tổng chiều dài tối thiểu đã tính. 
 
-Tại sao nó hoạt động: Bằng cách mô hình hóa sự phân công cha-con dưới dạng luồng với dung lượng bằng hai cho các cung đi, mạng sẽ thực thi thuộc tính cây nhị phân một cách tự nhiên. Điều kiện đi xuống được mã hóa theo hướng cung. Luồng chi phí tối thiểu đảm bảo rằng tổng độ dài cạnh được giảm thiểu trong khi vẫn tôn trọng dung lượng, đây chính xác là mục tiêu của bài toán. 
+Tại sao nó hoạt động: Bằng cách lập mô hình phân công cha-con dưới dạng luồng với khả năng là hai cho các cung đi ra, mạng sẽ thực thi thuộc tính cây nhị phân một cách tự nhiên. Điều kiện đi xuống được mã hóa theo hướng cung. Luồng chi phí tối thiểu đảm bảo rằng tổng độ dài cạnh được giảm thiểu trong khi vẫn tôn trọng dung lượng, đây chính xác là mục tiêu của bài toán. 
 
 ## Giải pháp Python```python
 import sys

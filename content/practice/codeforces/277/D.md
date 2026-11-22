@@ -14,11 +14,11 @@ verified: false
 draft: false
 ---
 
-[CF 277D - Kẹt mã Google](https://codeforces.com/problemset/problem/277/D) 
+[CF 277D - Google Code Jam](https://codeforces.com/problemset/problem/277/D) 
 
 **Đánh giá:** 2800 
-**Tags:** dp, xác suất 
-**Thời gian giải:** 1m 33s 
+**Tags:** dp, probabilities
+ **Thời gian giải:** 1m 33s 
 **Đã xác minh:** không 
 
 ## Giải pháp 
@@ -28,15 +28,15 @@ Vasya đang tham gia một vòng lập trình với một số bài toán, mỗi
 
 Nhiệm vụ là tối đa hóa tổng số điểm dự kiến ​​mà Vasya có thể kiếm được trong thời gian giới hạn. Nếu nhiều lịch trình cho điểm dự kiến ​​như nhau thì lịch trình có thời gian dự kiến ​​thấp nhất sẽ được ưu tiên. Hình phạt về thời gian được xác định là thời gian gửi thành công cuối cùng, chỉ liên quan đến đầu vào Nhỏ và đầu vào Lớn thành công. 
 
-Ràng buộc cho thấy số lượng bài toán lên tới 1000, với tổng thời gian lên tới 1560 phút. Điều này ngăn cản các giải pháp thử mọi hoán vị của các đơn hàng có vấn đề, bởi vì 1000! có kích thước lớn về mặt thiên văn. Do đó, bất kỳ cách tiếp cận nào cũng phải mở rộng quy mô với$O(n \cdot t)$, phù hợp với giới hạn lập trình động tiêu chuẩn cho các tham số này. 
+Ràng buộc cho thấy số lượng bài toán lên tới 1000, với tổng thời gian lên tới 1560 phút. Điều này ngăn cản các giải pháp thử mọi hoán vị của các đơn hàng có vấn đề, bởi vì 1000! is astronomically large. Therefore any approach must scale roughly with$O(n \cdot t)$, phù hợp với giới hạn lập trình động tiêu chuẩn cho các tham số này. 
 
 Các trường hợp khó khăn không rõ ràng bao gồm các tình huống trong đó việc dành thời gian cho đầu vào lớn với xác suất thất bại cực cao có thể làm giảm điểm mong đợi xuống dưới mức có thể đạt được bằng cách giải quyết nhiều đầu vào nhỏ. Ví dụ: nếu đầu vào Lớn có 100 điểm nhưng khả năng thất bại là 99% thì việc tập trung vào đầu vào đó trước có thể làm giảm số điểm mong đợi nếu có thời gian để giải quyết các vấn đề nhỏ hơn một cách đáng tin cậy. Tương tự, một bài toán có đầu vào Nhỏ tốn rất nhiều thời gian so với số điểm của nó có thể bị bỏ qua hoàn toàn nếu những bài toán nhỏ hơn cho tỷ lệ điểm trên phút cao hơn. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận bạo lực sẽ xem xét tất cả các thứ tự có thể có để giải quyết các đầu vào Nhỏ và Lớn, tính toán các điểm dự kiến và mức phạt dự kiến cho mỗi hoán vị. Vì có tới 1000 bài toán, mỗi bài có hai giai đoạn nên số hoán vị xấp xỉ$(2n)!$, điều đó hoàn toàn không thể thực hiện được. 
+Cách tiếp cận vũ phu sẽ xem xét tất cả các thứ tự có thể có để giải các đầu vào Nhỏ và Lớn, tính toán các điểm kỳ vọng và mức phạt dự kiến cho mỗi hoán vị. Vì có tới 1000 bài toán, mỗi bài có hai giai đoạn nên số hoán vị xấp xỉ$(2n)!$, điều đó hoàn toàn không thể thực hiện được. 
 
-Quan sát quan trọng là điểm dự kiến ​​cho đầu vào Lớn không phụ thuộc vào thứ tự giải quyết các vấn đề khác, miễn là đầu vào Nhỏ được giải quyết trước. Hơn nữa, hình phạt về thời gian dự kiến ​​chỉ được tích lũy khi đầu vào Nhỏ được hoàn thành hoặc đầu vào Lớn thành công. Hai quan sát này cho phép chúng ta chuyển bài toán thành bài toán quy hoạch động trong tổng thời gian sử dụng. 
+Quan sát quan trọng là điểm dự kiến ​​cho đầu vào Lớn không phụ thuộc vào thứ tự giải các bài toán khác, miễn là đầu vào Nhỏ được giải quyết trước. Hơn nữa, hình phạt về thời gian dự kiến ​​chỉ được tích lũy khi đầu vào Nhỏ được hoàn thành hoặc đầu vào Lớn thành công. Hai quan sát này cho phép chúng ta chuyển bài toán thành bài toán quy hoạch động trong tổng thời gian sử dụng. 
 
 Chúng ta có thể coi đây là bài toán DP hai chiều trong đó`dp[time]`theo dõi số điểm mong đợi tối đa có thể đạt được nếu chính xác`time`phút đã được sử dụng. Đối với mỗi bài toán, chúng tôi lặp lại theo thời gian tích lũy có thể và xem xét hai lựa chọn: chỉ giải đầu vào Nhỏ hoặc giải cả đầu vào Nhỏ và Lớn. Điểm mong đợi từ đầu vào Lớn được tính theo xác suất thành công của nó. Hình phạt thời gian dự kiến ​​được cập nhật tương ứng, sử dụng tuyến tính của kỳ vọng. 
 
@@ -115,13 +115,13 @@ Mẫu 1:
 | 6-15 | 10+ | ... | 
 | Cuối cùng | 24 | 18.875 | 
 
-Điều này xác nhận rằng việc chọn đầu vào Nhỏ nhỏ hơn trước, sau đó đến đầu vào Lớn, sẽ tối đa hóa điểm đồng thời giảm thiểu thời gian phạt dự kiến. 
+Điều này xác nhận rằng việc chọn đầu vào Nhỏ nhỏ hơn trước, sau đó đến đầu vào Lớn sẽ tối đa hóa điểm đồng thời giảm thiểu thời gian phạt dự kiến. 
 
 Đầu vào nhỏ tùy chỉnh:```
 2 10
 5 10 5 5 0.5
 3 6 3 3 0.1
-```Trước tiên, DP sẽ bao gồm vấn đề thứ hai Đầu vào nhỏ (thời gian 3, điểm 3), sau đó là vấn đề đầu tiên Đầu vào nhỏ (thời gian 5, điểm 5), sau đó kiểm tra xem có thời gian cho đầu vào Lớn hay không. Chỉ một phần đầu vào lớn phù hợp với tổng thời gian, DP đảm bảo tối đa hóa điểm mong đợi và mức phạt là tối thiểu. 
+```Trước tiên, DP sẽ bao gồm vấn đề thứ hai Đầu vào nhỏ (thời gian 3, điểm 3), sau đó là vấn đề đầu tiên Đầu vào nhỏ (thời gian 5, điểm 5), sau đó kiểm tra xem có thời gian cho đầu vào Lớn hay không. Chỉ một phần đầu vào Lớn phù hợp với tổng thời gian, DP đảm bảo tối đa hóa số điểm mong đợi và mức phạt là tối thiểu. 
 
 ## Phân tích độ phức tạp 
 

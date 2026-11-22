@@ -1,5 +1,5 @@
 ---
-title: "CF 276E - Cô Bé Và Vấn Đề Trên Cây"
+title: "CF 276E - Cô bé và vấn đề trên cây"
 description: "Chúng ta có một cây trong đó hầu hết mọi nút đều hoạt động giống như một điểm trên một cấu trúc mỏng. Mọi nút ngoại trừ nút 1 có nhiều nhất là 2, nghĩa là cây về cơ bản là một tập hợp các chuỗi đơn giản được gắn vào một gốc nhánh duy nhất."
 date: "2026-06-05T02:18:19+07:00"
 tags: ["codeforces", "competitive-programming", "data-structures", "graphs", "trees"]
@@ -42,7 +42,7 @@ Một cạm bẫy phổ biến khác là coi các bản cập nhật là các b�
 
 Ý tưởng brute-force rất đơn giản: với mỗi truy vấn cập nhật 0 v x d, hãy chạy BFS hoặc DFS từ v và thêm x vào tất cả các nút có khoảng cách từ v tối đa là d. Mỗi lần truyền tải như vậy sẽ truy cập vào các nút O(n) trong trường hợp xấu nhất và vì có tới 100.000 truy vấn nên điều này trở thành O(nq), không thể sử dụng được. 
 
-Cái nhìn sâu sắc quan trọng đến từ việc nhận ra cấu trúc được áp đặt bởi ràng buộc về mức độ. Mọi nút ngoại trừ 1 đều có nhiều nhất là 2, vì vậy nếu chúng ta loại bỏ nút 1, đồ thị còn lại là tập hợp các đường đi rời nhau. Bất kỳ đường đi nào giữa hai nút đều nằm hoàn toàn bên trong một trong các chuỗi này hoặc đi qua nút 1 đúng một lần. 
+Cái nhìn sâu sắc quan trọng đến từ việc nhận ra cấu trúc được áp đặt bởi ràng buộc về mức độ. Mọi nút ngoại trừ 1 đều có nhiều nhất là 2, vì vậy nếu chúng ta loại bỏ nút 1, đồ thị còn lại là tập hợp các đường đi rời nhau. Bất kỳ đường dẫn nào giữa hai nút đều nằm hoàn toàn bên trong một trong các chuỗi này hoặc đi qua nút 1 đúng một lần. 
 
 Điều này cho phép chúng ta tách tác động của một bản cập nhật tập trung vào v thành hai phần: các nút được tiếp cận mà không đi qua nút 1 và các nút được tiếp cận qua nút 1. 
 
@@ -50,7 +50,7 @@ Bên trong một chuỗi, khoảng cách hoạt động giống như sự khác 
 
 Chúng tôi giải quyết vấn đề này bằng cách khởi động quá trình phân tách ở nút 1 và tính toán trước cho mỗi nút, độ sâu của nó so với nút 1 và điểm vào trong chuỗi của nó. Sau đó, mỗi bản cập nhật sẽ trở thành sự kết hợp của tối đa hai bản cập nhật theo khoảng thời gian trên các cấu trúc tuyến tính cộng với một sự điều chỉnh nhỏ ở nút 1, tính đến tất cả các đóng góp xuyên chuỗi. 
 
-Điều này biến đổi bản cập nhật bóng khoảng cách cây thành một tập hợp các phép cộng phạm vi trên mảng, được hỗ trợ hiệu quả với mảng sai phân hoặc cây Fenwick. 
+Điều này biến đổi bản cập nhật bóng khoảng cách theo cây thành một tập hợp các phép cộng phạm vi trên mảng, được hỗ trợ hiệu quả với mảng sai phân hoặc cây Fenwick. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -217,7 +217,7 @@ Một điểm tinh tế là nút 1 hoạt động như một trình kết nối 
 
 Bản cập nhật đầu tiên ảnh hưởng cục bộ đến nút 2 và không đến được nút 3 thông qua nút gốc vì bán kính không lan truyền vượt quá khoảng cách 1 đến nút 1. 
 
-Điều này xác nhận rằng các cập nhật chuỗi cục bộ và truyền bá phân tách gốc được xử lý độc lập. 
+Điều này xác nhận rằng các cập nhật chuỗi cục bộ và lan truyền phân tách gốc được xử lý độc lập. 
 
 ### Ví dụ 2 
 
@@ -240,7 +240,7 @@ Bản cập nhật đầu tiên ảnh hưởng cục bộ đến nút 2 và khô
 
 Điều này cho thấy sự lan truyền dựa trên gốc hoạt động thống nhất trên các nhánh khác nhau. 
 
-Dấu vết xác nhận rằng các cập nhật tập trung ở gốc được lan truyền chính xác theo độ sâu thay vì truyền tải rõ ràng. 
+Dấu vết xác nhận rằng các bản cập nhật tập trung ở gốc được lan truyền chính xác theo độ sâu thay vì truyền tải rõ ràng. 
 
 ## Phân tích độ phức tạp 
 
@@ -391,4 +391,4 @@ Trường hợp một cạnh là khi bán kính cập nhật đủ lớn để b
 
 Một trường hợp cạnh khác là truy vấn chính nút 1. Vì nút 1 tổng hợp tất cả các đóng góp theo chiều sâu nên câu trả lời của nó phải đến hoàn toàn từ cấu trúc toàn cầu. Việc trộn các cấu trúc chuỗi ở đây sẽ tăng gấp đôi số lượng và việc triển khai tránh điều đó một cách rõ ràng bằng cách tách trường hợp gốc trong các truy vấn. 
 
-Trường hợp tinh vi cuối cùng xảy ra ở ranh giới chuỗi, trong đó phạm vi cập nhật kéo dài qua phần cuối của chuỗi. Việc sử dụng`max`Và`min`kẹp đảm bảo chúng tôi không bao giờ ghi bên ngoài các chỉ mục hợp lệ, duy trì tính chính xác khi bán kính cập nhật lớn hơn độ dài phân đoạn còn lại.
+Trường hợp tinh tế cuối cùng xảy ra ở ranh giới chuỗi, trong đó phạm vi cập nhật kéo dài qua phần cuối của chuỗi. Việc sử dụng`max`Và`min`kẹp đảm bảo chúng tôi không bao giờ ghi bên ngoài các chỉ mục hợp lệ, duy trì tính chính xác khi bán kính cập nhật lớn hơn độ dài phân đoạn còn lại.

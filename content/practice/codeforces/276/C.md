@@ -53,7 +53,7 @@ Vì vậy, vấn đề giảm xuống còn tính toán tần suất mỗi chỉ 
 
 ## Hướng dẫn thuật toán 
 
-1. Khởi tạo một mảng`freq`kích thước`n + 2`với số không. Điều này sẽ theo dõi số lượng truy vấn bao gồm từng vị trí một cách gián tiếp thông qua cập nhật phạm vi. 
+1. Khởi tạo một mảng`freq`kích thước`n + 2`với số không. Điều này sẽ theo dõi có bao nhiêu truy vấn bao gồm từng vị trí một cách gián tiếp thông qua cập nhật phạm vi. 
 2. Đối với mỗi truy vấn$[l, r]$, tăng`freq[l]`bằng 1 và giảm dần`freq[r+1]`bằng 1. Điều này mã hóa ý tưởng rằng mức độ phù hợp bắt đầu từ`l`và kết thúc sau`r`. 
 3. Tính tổng tiền tố`freq`từ trái sang phải. Sau bước này,`freq[i]`đại diện cho số lượng truy vấn bao gồm chỉ mục`i`. 
 4. Sắp xếp mảng ban đầu`a`theo thứ tự giảm dần. Theo trực giác, các giá trị lớn hơn sẽ được gán cho các vị trí được sử dụng thường xuyên hơn. 
@@ -95,7 +95,7 @@ print(ans)
 
 Sắp xếp cả hai mảng là bước quan trọng khi phép gán tham lam xảy ra. Ghép nối các giá trị lớn nhất với tần số lớn nhất đảm bảo tổng đóng góp tối đa. 
 
-Vòng lặp cuối cùng chỉ tính tích số chấm của các chuỗi căn chỉnh này. 
+Vòng lặp cuối cùng chỉ đơn giản tính tích số chấm của các chuỗi căn chỉnh này. 
 
 ## Ví dụ đã hoạt động 
 
@@ -170,7 +170,7 @@ Sản phẩm chấm:
 | Thời gian |$O(n \log n + q)$| Việc sắp xếp chiếm ưu thế, tiền tố và xử lý truy vấn là tuyến tính | 
 | Không gian |$O(n)$| Mảng tần số và lưu trữ đầu vào | 
 
-Các ràng buộc cho phép tối đa 200.000 phần tử và truy vấn, do đó cần có các giải pháp tuyến tính hoặc log-tuyến tính. Thuật toán phù hợp thoải mái trong giới hạn vì nó chỉ thực hiện một lần truy vấn và hai loại. 
+Các ràng buộc cho phép lên tới 200.000 phần tử và truy vấn, do đó cần có các giải pháp tuyến tính hoặc log-tuyến tính. Thuật toán phù hợp thoải mái trong giới hạn vì nó chỉ thực hiện một lần truy vấn và hai loại. 
 
 ## Trường hợp thử nghiệm```python
 import sys, io

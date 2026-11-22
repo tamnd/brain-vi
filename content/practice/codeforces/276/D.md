@@ -53,7 +53,7 @@ Quan sát này làm giảm vấn đề trong việc tìm vị trí của bit kh�
 4. XOR tối đa đạt được bằng cách đặt tất cả các bit từ vị trí này trở xuống 1. Trong hệ nhị phân, đây là số có$k$những cái đó. Về mặt toán học, đây là$2^k - 1$. 
 5. In kết quả. Đây là XOR lớn nhất có thể đạt được giữa hai số trong phạm vi$[l, r]$. 
 
-Tại sao nó hoạt động: XOR tạo ra số 1 ở mỗi vị trí bit trong đó hai toán hạng của nó khác nhau. Để tối đa hóa XOR, chúng tôi muốn bit cao nhất có thể là 1. Bit khác nhau đầu tiên giữa$l$Và$r$đảm bảo rằng chúng ta có thể chọn hai số trong phạm vi khác nhau ở bit đó và có thể là tất cả các bit thấp hơn. Vì vậy, số$2^k - 1$thu được chính xác XOR tối đa có thể. Bất kỳ nỗ lực nào để chọn các số bên ngoài cấu trúc này sẽ mang lại XOR nhỏ hơn. 
+Tại sao nó hoạt động: XOR tạo ra số 1 ở mỗi vị trí bit trong đó hai toán hạng của nó khác nhau. Để tối đa hóa XOR, chúng tôi muốn bit cao nhất có thể là 1. Bit khác nhau đầu tiên giữa$l$Và$r$đảm bảo rằng chúng ta có thể chọn hai số trong phạm vi khác nhau ở bit đó và có thể là tất cả các bit thấp hơn. Vì thế, số$2^k - 1$thu được chính xác XOR tối đa có thể. Bất kỳ nỗ lực nào để chọn các số bên ngoài cấu trúc này sẽ mang lại XOR nhỏ hơn. 
 
 ## Giải pháp Python```python
 import sys
@@ -127,7 +127,7 @@ assert run("123456789 987654321\n") == "939524095", "large numbers"
 | --- | --- | --- | 
 | 5 6 | 3 | số liền kề nhỏ | 
 | 1 1 | 0 | điểm cuối giống hệt nhau | 
-| 8 15 | 7 | phạm vi vượt qua ranh giới lũy thừa hai | 
+| 8 15 | 7 | phạm vi vượt qua ranh giới sức mạnh của hai | 
 | 0 1023 | 1023 | đầy đủ các số 10 bit nhỏ | 
 | 123456789 987654321 | 939524095 | số lượng lớn, kiểm tra căng thẳng | 
 
@@ -135,6 +135,6 @@ assert run("123456789 987654321\n") == "939524095", "large numbers"
 
 cho$l = r$, XOR luôn bằng 0. Ví dụ: nhập`42 42`sản xuất$x = 42 ^ 42 = 0$, vòng lặp không thực thi và max_xor vẫn bằng 0. 
 
-Đối với các phạm vi trải dài trên ranh giới lũy thừa hai, như`8 15`, bit khác nhau đầu tiên là bit thứ 3 từ phải sang. Xây dựng tất cả những cái bên dưới sẽ cho 7, đây là XOR tối đa chính xác có thể đạt được trong phạm vi. 
+Đối với các phạm vi bao trùm một ranh giới lũy thừa hai, như`8 15`, bit khác nhau đầu tiên là bit thứ 3 từ phải sang. Xây dựng tất cả những cái bên dưới sẽ cho 7, đây là XOR tối đa chính xác có thể đạt được trong phạm vi. 
 
 Với số lượng lớn đang đến gần$10^{18}$, thuật toán chỉ lặp lại trên 60 bit, tạo ra XOR tối đa chính xác mà không bị tràn.

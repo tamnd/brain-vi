@@ -30,7 +30,7 @@ Quan sát quan trọng là hình dạng của tờ giấy không bao giờ thay 
 
 Hãy xem xét một đường lưới dọc bên trong. Nó chứa`m`phân đoạn đơn vị. Các vết cắt hiện tại đánh dấu một số khoảng trên đường đó là đã bị cắt. Các phân đoạn đơn vị chưa cắt còn lại tạo thành một số đường liền kề rời rạc. Mô tả tương tự áp dụng cho mọi đường lưới ngang bên trong. 
 
-Một nước đi sẽ chọn một đường lưới và cắt một khoảng liền kề trên đó. Bên trong một đoạn dài chưa cắt`s`, việc di chuyển như vậy sẽ loại bỏ một khối liền kề và để lại nhiều nhất là hai đường chạy nhỏ hơn không bị cắt. 
+Một nước đi chọn một đường lưới và cắt một khoảng liền kề trên đó. Bên trong một đoạn dài chưa cắt`s`, việc di chuyển như vậy sẽ loại bỏ một khối liền kề và để lại nhiều nhất là hai đường chạy nhỏ hơn không bị cắt. 
 
 Kích thước có thể lớn như`10^9`, vì vậy chúng tôi không thể lưu trữ lưới. Số lượng cắt hiện có chỉ là`10^5`, có nghĩa là chỉ`O(k)`các đường lưới có thể khác với trạng thái nguyên vẹn. Bất kỳ giải pháp được chấp nhận nào cũng phải hoạt động chỉ từ các mô tả cắt. 
 

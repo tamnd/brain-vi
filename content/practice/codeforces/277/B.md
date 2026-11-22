@@ -28,11 +28,11 @@ Chúng tôi được yêu cầu xây dựng một bộ`n`các điểm trên mặ
 
 Những hạn chế về`n`Và`m`cho chúng ta biết rằng tập hợp phải bao gồm tất cả các đỉnh của một lồi`m`-gon và có khả năng lên tới`m`điểm bổ sung bên trong nó. Từ`n`không thể vượt quá`2*m`, chúng ta được đảm bảo rằng mọi điểm phụ có thể được đặt bên trong đa giác lồi mà không tạo ra tập con lồi lớn hơn. Hạn chế là không có ba điểm nào nằm trên một đường thẳng ngăn cản việc xây dựng tầm thường dọc theo một đường thẳng. 
 
-Các trường hợp biên bao gồm kịch bản tối thiểu`n = m = 3`, trong đó đa giác lồi là toàn bộ tập hợp điểm và các trường hợp trong đó`n = 2*m`, buộc chúng ta phải đặt số điểm tối đa vào bên trong mà không tạo thành bao lồi mới. Một cách tiếp cận ngây thơ đặt tất cả các điểm trên một lớp lồi sẽ thất bại vì`n > m`bởi vì độ lồi sẽ vượt quá`m`. 
+Các trường hợp biên bao gồm kịch bản tối thiểu`n = m = 3`, trong đó đa giác lồi là toàn bộ tập hợp điểm và các trường hợp trong đó`n = 2*m`, buộc chúng ta phải đặt số điểm tối đa bên trong mà không tạo thành bao lồi mới. Một cách tiếp cận ngây thơ đặt tất cả các điểm trên một lớp lồi sẽ thất bại vì`n > m`bởi vì độ lồi sẽ vượt quá`m`. 
 
 ## Phương pháp tiếp cận 
 
-Một cách tiếp cận bạo lực sẽ cố gắng tạo ra tất cả các tập hợp con các điểm và kiểm tra kích thước của bao lồi. Đối với mỗi tập hợp điểm ứng cử viên, chúng tôi sẽ tính toán bao lồi bằng cách sử dụng quét Graham hoặc thuật toán chuỗi đơn điệu của Andrew, sau đó kiểm tra xem kích thước của nó có bằng không`m`. Số lượng tập hợp con tăng lên theo tổ hợp, lên đến`2^n`, điều này hoàn toàn không thể thực hiện được ngay cả đối với`n = 100`. 
+Một cách tiếp cận bạo lực sẽ cố gắng tạo ra tất cả các tập hợp con các điểm và kiểm tra kích thước của bao lồi. Đối với mỗi tập hợp điểm ứng cử viên, chúng tôi sẽ tính toán bao lồi bằng cách sử dụng quét Graham hoặc thuật toán chuỗi đơn điệu của Andrew, sau đó kiểm tra xem kích thước của nó có bằng không`m`. Số lượng tập hợp con tăng lên theo kiểu tổ hợp, lên đến`2^n`, điều này hoàn toàn không thể thực hiện được ngay cả đối với`n = 100`. 
 
 Cái nhìn sâu sắc quan trọng là hình học: chúng ta luôn có thể bắt đầu bằng một đường lồi`m`-gon và đặt thêm các điểm bên trong nó mà không làm tăng bao lồi. Nếu chúng ta đặt thêm`n - m`chỉ hoàn toàn bên trong đa giác và không thẳng hàng với bất kỳ cạnh nào, tập con lồi lớn nhất vẫn giữ nguyên chính xác như ban đầu`m`đỉnh. Cấu trúc này cho phép xây dựng thời gian tuyến tính đơn giản. 
 
@@ -50,7 +50,7 @@ Cái nhìn sâu sắc quan trọng là hình học: chúng ta luôn có thể b�
 3. Địa điểm`k`các điểm bên trong dọc theo một đường hơi lệch so với đáy của đa giác, ví dụ như tại`y = 0`với`x`tọa độ so le giữa hai đỉnh. Điều này đảm bảo chúng nằm bên trong bao lồi và tránh được hiện tượng cộng tuyến. 
 4. Xuất tọa độ của tất cả`n`điểm. 
 
-Tại sao nó hoạt động: bao lồi của một tập hợp điểm được xác định bởi các điểm ngoài cùng. Bằng cách đặt thêm`k`điểm hoàn toàn bên trong, chúng không thể trở thành các đỉnh của một đa giác lồi mới, do đó tập con lồi lớn nhất vẫn giữ nguyên chính xác là tập con lồi đầu tiên`m`điểm. Các điểm bên trong so le đảm bảo không có ba điểm nào thẳng hàng. 
+Tại sao nó hoạt động: bao lồi của một tập hợp điểm được xác định bởi các điểm ngoài cùng. Bằng cách đặt thêm`k`điểm hoàn toàn bên trong, chúng không thể trở thành các đỉnh của đa giác lồi mới, do đó tập con lồi lớn nhất vẫn giữ nguyên chính xác là tập con lồi đầu tiên`m`điểm. Các điểm bên trong so le đảm bảo không có ba điểm nào thẳng hàng. 
 
 ## Giải pháp Python```python
 import sys
@@ -140,6 +140,6 @@ assert run("6 3") == "0 0\n2 2\n4 4\n1 0\n3 0\n5 0", "n=2*m"
 
 cho`n = m`, thuật toán chỉ xây dựng đa giác lồi. Ví dụ,`n = 5, m = 5`mang lại điểm`(0,0),(2,2),(4,4),(6,6),(8,8)`. Không có điểm bên trong nên độ lồi chính xác là`m`. 
 
-Vì`n = 2*m`, thuật toán đặt`m`các điểm bên trong dọc theo một đường bên trong đa giác. Không có đỉnh lồi mới nào được tạo ra vì các điểm bên trong nằm hoàn toàn bên trong, so le và không thẳng hàng với bất kỳ cạnh đa giác nào. Vì`n = 6, m = 3`, điểm`(0,0),(2,2),(4,4)`tạo thành hình tam giác và`(1,0),(3,0),(5,0)`nằm bên trong, bảo toàn độ lồi tại 3. 
+Vì`n = 2*m`, thuật toán đặt`m`các điểm bên trong dọc theo một đường bên trong đa giác. Không có đỉnh lồi mới nào được tạo vì các điểm bên trong nằm hoàn toàn bên trong, so le và không thẳng hàng với bất kỳ cạnh đa giác nào. Vì`n = 6, m = 3`, điểm`(0,0),(2,2),(4,4)`tạo thành hình tam giác và`(1,0),(3,0),(5,0)`nằm bên trong, bảo toàn độ lồi tại 3. 
 
 Tất cả các trường hợp khác với`m ≤ n ≤ 2*m`cũng được xử lý tương tự. Không có ba điểm nào thẳng hàng, các điểm trong nằm hoàn toàn bên trong đa giác và kích thước bao lồi vẫn giữ nguyên`m`.

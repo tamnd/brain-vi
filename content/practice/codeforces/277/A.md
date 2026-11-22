@@ -34,11 +34,11 @@ Những hạn chế ở mức vừa phải: cả hai`n`Và`m`nhiều nhất là 
 
 Cách tiếp cận bạo lực sẽ liệt kê tất cả các nhóm bài tập ngôn ngữ có thể có cho những nhân viên không biết gì, tính toán kết nối thu được và chọn chi phí tối thiểu. Điều này đúng về nguyên tắc nhưng rõ ràng là không khả thi, vì ngay cả đối với`n=100`nó sẽ yêu cầu kiểm tra`m^n`sự kết hợp. 
 
-The key insight is that this is a connectivity problem. Nếu chúng ta coi nhân viên là các nút trong biểu đồ và kết nối hai nhân viên nếu họ dùng chung một ngôn ngữ thì vấn đề sẽ giảm xuống việc đếm các thành phần được kết nối trong biểu đồ ngôn ngữ nhân viên này. Employees in the same component can already communicate, so the cost arises only when connecting different components. Để hợp nhất`k`thành phần, chúng ta cần ít nhất`k-1`những kết nối mới. Mỗi kết nối có thể đạt được bằng cách dạy cho bất kỳ nhân viên nào trong một thành phần một ngôn ngữ từ thành phần khác. 
+Cái nhìn sâu sắc quan trọng là đây là một vấn đề kết nối. Nếu chúng ta coi nhân viên là các nút trong biểu đồ và kết nối hai nhân viên nếu họ dùng chung một ngôn ngữ thì vấn đề sẽ giảm xuống việc đếm các thành phần được kết nối trong biểu đồ ngôn ngữ nhân viên này. Nhân viên trong cùng một thành phần đã có thể giao tiếp nên chi phí chỉ phát sinh khi kết nối các thành phần khác nhau. Để hợp nhất`k`thành phần, chúng ta cần ít nhất`k-1`những kết nối mới. Mỗi kết nối có thể đạt được bằng cách dạy cho bất kỳ nhân viên nào trong một thành phần một ngôn ngữ từ thành phần khác. 
 
 Một sự tinh tế nữa là xử lý trường hợp đặc biệt khi không nhân viên nào biết bất kỳ ngôn ngữ nào. Trong trường hợp đó, mỗi nhân viên ban đầu là một thành phần biệt lập. Vì chúng tôi không thể dựa vào sự chồng chéo ngôn ngữ hiện có nên chúng tôi cần dạy mỗi nhân viên ít nhất một ngôn ngữ, dẫn đến chi phí tương đương`n`. 
 
-Cách tiếp cận tối ưu sử dụng cấu trúc tập hợp rời rạc (DSU). Chúng tôi lặp lại các ngôn ngữ và tập hợp tất cả nhân viên biết ngôn ngữ đó. Cuối cùng, số lượng bộ DSU riêng biệt cho biết số lượng nhóm bị ngắt kết nối ban đầu. Nếu ít nhất một nhân viên biết một ngôn ngữ, số bài học tối thiểu cần có là số nhóm trừ đi một. Nếu không có nhân viên nào biết ngoại ngữ thì số bài học tối thiểu bằng`n`. 
+Cách tiếp cận tối ưu sử dụng cấu trúc tập hợp rời rạc (DSU). Chúng tôi lặp lại các ngôn ngữ và tập hợp tất cả nhân viên biết ngôn ngữ đó. Cuối cùng, số lượng bộ DSU riêng biệt cho biết số lượng nhóm bị ngắt kết nối ban đầu. Nếu ít nhất một nhân viên biết một ngôn ngữ thì số bài học tối thiểu cần có là số nhóm trừ đi một. Nếu không có nhân viên nào biết ngoại ngữ thì số bài học tối thiểu bằng`n`. 
 
 | Tiếp cận | Độ phức tạp thời gian | Độ phức tạp của không gian | Phán quyết | 
 | --- | --- | --- | --- | 
@@ -49,7 +49,7 @@ Cách tiếp cận tối ưu sử dụng cấu trúc tập hợp rời rạc (DS
 
 1. Khởi tạo DSU với`n`các yếu tố, một cho mỗi nhân viên. Mỗi nhân viên bắt đầu trong bộ riêng của họ. Điều này mô hình hóa ý tưởng ban đầu, mỗi nhân viên có thể bị cô lập. 
 2. Theo dõi cờ boolean`any_language_known`để phát hiện xem có ít nhất một nhân viên biết một ngôn ngữ hay không. 
-3. Lặp lại từng nhân viên và danh sách ngôn ngữ đã biết của họ. Đối với mỗi ngôn ngữ, hãy duy trì một danh sách nhân viên biết ngôn ngữ đó. Đây là một ánh xạ ngược từ ngôn ngữ đến nhân viên. 
+3. Lặp lại từng nhân viên và danh sách các ngôn ngữ đã biết của họ. Đối với mỗi ngôn ngữ, hãy duy trì một danh sách nhân viên biết ngôn ngữ đó. Đây là một ánh xạ ngược từ ngôn ngữ đến nhân viên. 
 4. Đối với mỗi ngôn ngữ, nếu có từ hai nhân viên trở lên biết thì kết hợp tất cả họ vào DSU. Bước này hợp nhất những nhân viên đã có thể giao tiếp qua ngôn ngữ dùng chung thành một thành phần duy nhất. 
 5. Đếm số lượng các thành phần được kết nối riêng biệt bằng cách kiểm tra gốc của từng nhân viên trong DSU. Nếu như`any_language_known`là Đúng, số lượng bài học tối thiểu là`components - 1`. Nếu không có nhân viên nào biết ngoại ngữ thì số buổi học tối thiểu bằng`n`. 
 

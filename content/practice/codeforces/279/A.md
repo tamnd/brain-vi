@@ -24,15 +24,15 @@ draft: false
 ## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta được yêu cầu đếm xem một con ngựa phải quay bao nhiêu lần khi di chuyển theo đường xoắn ốc từ điểm gốc đến điểm đích.$(x, y)$. Hình xoắn ốc là vô hạn, được tạo thành từ các đoạn thẳng hàng với trục phát triển ra bên ngoài theo một mô hình: nó di chuyển sang phải, rồi lên, sang trái, rồi xuống, tăng khoảng cách mỗi khi hoàn thành một vòng quay hoàn chỉnh. Mỗi đoạn kết nối các điểm nguyên trên mặt phẳng Descartes và mỗi ngã rẽ xảy ra khi hướng thay đổi. 
+Chúng ta được yêu cầu đếm xem một con ngựa phải quay bao nhiêu lần khi di chuyển theo đường xoắn ốc từ điểm gốc đến điểm đích.$(x, y)$. Hình xoắn ốc là vô hạn, được tạo thành từ các đoạn thẳng hàng với trục phát triển ra bên ngoài theo một mô hình: nó di chuyển sang phải, rồi lên, sang trái, rồi xuống, tăng khoảng cách mỗi khi hoàn thành một vòng quay hoàn chỉnh. Mỗi đoạn kết nối các điểm nguyên trên mặt phẳng Cartesian và mỗi ngã rẽ xảy ra khi hướng thay đổi. 
 
 Dữ liệu đầu vào bao gồm hai số nguyên,$|x|, |y| \le 100$, đại diện cho điểm đích. Đầu ra là số lượt thực hiện trước khi đạt đến điểm đó. 
 
-Với các giới hạn nhỏ, việc mô phỏng lực lượng vũ phu dọc theo đường xoắn ốc là khả thi. Tuy nhiên, cần phải chú ý cẩn thận đối với các trường hợp có biên. Ví dụ: nếu mục tiêu là chính nguồn gốc$(0, 0)$, không có chuyển động nào xảy ra nên câu trả lời đúng là bằng 0. Một điều tinh tế khác là các lượt chỉ được tính khi ngựa đổi hướng chứ không phải khi nó hoàn thành một bước theo cùng một hướng. Một cách triển khai đơn giản chỉ đơn giản là đếm các lần chuyển tiếp phân đoạn mà không kiểm tra xem liệu đích đến có đạt được hay không có thể bị tính quá mức. 
+Với các giới hạn nhỏ, việc mô phỏng lực lượng vũ phu dọc theo đường xoắn ốc là khả thi. Tuy nhiên, cần phải chú ý cẩn thận đối với các trường hợp có biên. Ví dụ: nếu mục tiêu là chính nguồn gốc$(0, 0)$, không có chuyển động nào xảy ra nên câu trả lời đúng là bằng 0. Một điều tinh tế khác là các lượt chỉ được tính khi ngựa đổi hướng chứ không phải khi nó hoàn thành một bước theo cùng một hướng. Một cách triển khai đơn giản chỉ đơn giản là đếm các lần chuyển đổi phân đoạn mà không kiểm tra xem liệu đích đến có đạt được hay không có thể bị tính quá mức. 
 
 ## Phương pháp tiếp cận 
 
-Cách tiếp cận bạo lực mô phỏng đường xoắn ốc một cách rõ ràng. Chúng ta sẽ bắt đầu từ điểm gốc, theo dõi hướng hiện tại và độ dài đoạn rồi di chuyển từng bước dọc theo đường xoắn ốc. Mỗi lần thay đổi hướng xảy ra, chúng tôi sẽ tăng bộ đếm lần lượt. Phương pháp này được đảm bảo là đúng nhưng có thể không hiệu quả nếu đường xoắn ốc kéo dài quá xa trước khi chạm tới$(x, y)$. Tuy nhiên, bởi vì$|x|$Và$|y|$tối đa là 100, đường xoắn ốc sẽ không cần vượt quá 201 bước theo bất kỳ hướng nào. Điều đó mang lại đại khái$O(n^2)$hoạt động trong trường hợp xấu nhất, có thể chấp nhận được với các ràng buộc. 
+Cách tiếp cận bạo lực mô phỏng đường xoắn ốc một cách rõ ràng. Chúng ta sẽ bắt đầu từ điểm gốc, theo dõi hướng hiện tại và độ dài đoạn và di chuyển từng bước dọc theo đường xoắn ốc. Mỗi lần thay đổi hướng xảy ra, chúng tôi sẽ tăng bộ đếm lần lượt. Phương pháp này được đảm bảo là đúng nhưng có thể không hiệu quả nếu đường xoắn ốc kéo dài quá xa trước khi chạm tới$(x, y)$. Tuy nhiên, bởi vì$|x|$Và$|y|$tối đa là 100, đường xoắn ốc sẽ không cần vượt quá 201 bước theo bất kỳ hướng nào. Điều đó mang lại đại khái$O(n^2)$hoạt động trong trường hợp xấu nhất, có thể chấp nhận được với các ràng buộc. 
 
 Cách tiếp cận tối ưu tận dụng cấu trúc của đường xoắn ốc. Mỗi “lớp” của hình xoắn ốc tạo thành một hình vuông xung quanh lớp trước đó. Quan sát kiểu rẽ cho thấy con ngựa quay mỗi khi nó đi đến cuối đoạn đường. Chúng ta có thể tính toán số lớp mà đích nằm trong đó bằng cách lấy tọa độ tuyệt đối tối đa. Mỗi lớp hoàn chỉnh thêm bốn lượt. Nếu điểm nằm trên một đoạn trong một lớp, chúng tôi chỉ tính lượt trước khi đến đoạn đó. Điều này làm giảm vấn đề thành một công thức đơn giản mà không cần mô phỏng từng bước, nhưng với những hạn chế, việc mô phỏng từng bước sẽ đơn giản hơn và đủ nhanh. 
 
@@ -103,9 +103,9 @@ while True:
 | --- | --- | --- | --- | --- | --- | 
 | 0 | 0 | đúng | 1 | 0 | tới đích ngay lập tức | 
 
-Đầu ra:`0`. Thuật toán trả về số 0 một cách chính xác mà không cần vào vòng lặp. 
+Đầu ra:`0`. Thuật toán trả về 0 một cách chính xác mà không cần vào vòng lặp. 
 
-**Mẫu 2**: Đầu vào:`1 0`| cur_x | cur_y | thư mục | chiều dài | lượt | kiểm tra | 
+**Mẫu 2**: Nhập:`1 0`| cur_x | cur_y | thư mục | chiều dài | lượt | kiểm tra | 
 | --- | --- | --- | --- | --- | --- | 
 | 0 | 0 | đúng | 1 | 0 | đích trên đoạn (0→1,0) | 
 

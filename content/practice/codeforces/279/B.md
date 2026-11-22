@@ -1,6 +1,6 @@
 ---
 title: "CF 279B - Sách"
-description: "Chúng ta có một hàng sách và biết được thời gian cần thiết để đọc mỗi cuốn sách. Valera có thể bắt đầu từ bất kỳ vị trí nào và sau đó đọc liên tiếp các cuốn sách ở bên phải. Anh ta không thể bỏ qua cuốn sách và anh ta chỉ bắt đầu đọc một cuốn sách nếu còn đủ thời gian để hoàn thành nó."
+description: "Chúng ta có một hàng sách và biết được thời gian cần thiết để đọc mỗi cuốn sách. Valera có thể bắt đầu từ bất kỳ vị trí nào và sau đó đọc các cuốn sách liên tiếp ở bên phải. Anh ta không thể bỏ qua cuốn sách và anh ta chỉ bắt đầu đọc một cuốn sách nếu còn đủ thời gian để hoàn thành nó."
 date: "2026-06-05T08:34:56+07:00"
 tags: ["codeforces", "competitive-programming", "binary-search", "brute-force", "implementation", "two-pointers"]
 categories: ["algorithms"]
@@ -24,11 +24,11 @@ draft: false
 ## Giải pháp 
 ## Hiểu vấn đề 
 
-Chúng ta có một hàng sách và biết được thời gian cần thiết để đọc mỗi cuốn sách. Valera có thể bắt đầu từ bất kỳ vị trí nào và sau đó đọc liên tiếp các cuốn sách ở bên phải. Anh ta không thể bỏ qua cuốn sách và anh ta chỉ bắt đầu đọc một cuốn sách nếu còn đủ thời gian để hoàn thành nó. 
+Chúng ta có một hàng sách và biết được thời gian cần thiết để đọc mỗi cuốn sách. Valera có thể bắt đầu từ bất kỳ vị trí nào và sau đó đọc các cuốn sách liên tiếp ở bên phải. Anh ta không thể bỏ qua cuốn sách và anh ta chỉ bắt đầu đọc một cuốn sách nếu còn đủ thời gian để hoàn thành nó. 
 
 Nhiệm vụ là tìm số lượng sách liên tiếp lớn nhất mà tổng thời gian đọc không vượt quá thời gian cho phép.`t`. 
 
-The input gives the reading times of all books. Đầu ra là một số duy nhất, độ dài tối đa của một đoạn liền kề có tổng tối đa là`t`. 
+Đầu vào cung cấp thời gian đọc của tất cả các cuốn sách. Đầu ra là một số duy nhất, độ dài tối đa của một đoạn liền kề có tổng tối đa là`t`. 
 
 Những hạn chế là những gì thúc đẩy giải pháp. Số lượng sách có thể đạt`100000`, do đó, bất kỳ thuật toán nào kiểm tra tất cả các phân đoạn có thể một cách rõ ràng sẽ quá chậm. Có khoảng`n² / 2`các phân đoạn liền kề, tức là khoảng năm tỷ khi`n = 100000`. Ngay cả việc tính toán tổng phân khúc một cách hiệu quả với tổng tiền tố vẫn sẽ để lại một`O(n²)`liệt kê, vượt xa những gì phù hợp với giới hạn 2 giây. 
 
@@ -65,11 +65,11 @@ Trường hợp thứ ba là khi cửa sổ liên tục cần thu nhỏ lại.
 
 Giải pháp trực tiếp nhất là thử mọi vị trí bắt đầu và kéo dài sang bên phải cho đến khi tổng thời gian đọc vượt quá`t`. Đối với mỗi cuốn sách bắt đầu, chúng tôi tiếp tục thêm từng cuốn sách một. 
 
-Cách tiếp cận này đúng vì nó đánh giá rõ ràng mọi phân đoạn liền kề có thể. Vấn đề là thời gian chạy của nó. Trong trường hợp xấu nhất, chẳng hạn như khi tất cả thời gian đọc`1`, mỗi vị trí bắt đầu có thể kiểm tra hầu hết các cuốn sách còn lại. Tổng công việc trở thành:```
+Cách tiếp cận này đúng vì nó đánh giá rõ ràng mọi phân đoạn liền kề có thể có. Vấn đề là thời gian chạy của nó. Trong trường hợp xấu nhất, chẳng hạn như khi tất cả thời gian đọc`1`, mỗi vị trí bắt đầu có thể kiểm tra hầu hết các cuốn sách còn lại. Tổng công việc trở thành:```
 n + (n - 1) + (n - 2) + ... + 1 = O(n²)
 ```Với`n = 100000`, cái này quá lớn. 
 
-Quan sát quan trọng là tất cả thời gian đọc đều tích cực. Giả sử chúng ta có một phân khúc có tổng đã vượt quá`t`. Mở rộng nó hơn nữa chỉ có thể làm tăng tổng chứ không bao giờ giảm được. Điều đó có nghĩa là ranh giới bên trái của đoạn chỉ di chuyển về phía trước, không bao giờ lùi lại. 
+Quan sát quan trọng là tất cả thời gian đọc đều tích cực. Giả sử chúng ta có một phân khúc có tổng đã vượt quá`t`. Việc mở rộng nó hơn nữa chỉ có thể làm tăng tổng chứ không bao giờ giảm được. Điều đó có nghĩa là ranh giới bên trái của đoạn chỉ di chuyển về phía trước, không bao giờ lùi lại. 
 
 Thuộc tính này làm cho cửa sổ trượt có thể hoạt động được. Chúng tôi duy trì một cửa sổ`[left, right]`tổng của nó được theo dõi liên tục. Chúng tôi mở rộng cửa sổ bằng cách di chuyển`right`. Bất cứ khi nào số tiền trở nên quá lớn, chúng tôi di chuyển`left`chuyển tiếp cho đến khi tổng hợp lệ trở lại. 
 
