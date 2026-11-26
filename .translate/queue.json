@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/practice/euler/485.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:01.073194Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/euler/486.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:01.073221Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/euler/487.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:01.073251Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/euler/488.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:01.073284Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/euler/489.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:01.073312Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/euler/49.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:01.073341Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/euler/490.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:01.073369Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/euler/491.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:01.073398Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/euler/492.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:01.073427Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/euler/493.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:01.073455Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/practice/euler/494.md",
       "priority": 20,
       "added_at": "2026-06-01T12:15:01.073485Z",
