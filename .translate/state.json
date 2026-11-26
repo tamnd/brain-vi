@@ -3,7 +3,7 @@
   "lang": "vi",
   "source_repo": "/tmp/brain",
   "target_repo": "/tmp/bs/vi/repo",
-  "last_run": "2026-11-26T06:27:28.011244Z",
+  "last_run": "2026-11-26T06:49:44.418914Z",
   "batch": 0,
   "translator": {
     "provider": "google",
@@ -224246,6 +224246,86 @@
       "source_hash": "sha256:d614854f38b31806ffc34049356b80a58945d99b423eb51c678fb04a4fc721ae",
       "translated_at": "2026-11-26T06:27:28.011218Z",
       "dest_path": "content/practice/euler/475.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/euler/476.md": {
+      "source_hash": "sha256:fe2821c1e6c72ec025b577738303b7b7eaa3c613ecaa0d566cf9286ca05376ad",
+      "translated_at": "2026-11-26T06:45:10.451462Z",
+      "dest_path": "content/practice/euler/476.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/euler/477.md": {
+      "source_hash": "sha256:8a9523f1607b3f45ab816642e815863c10ba3fa81c51602b54ca4fe0f3d14f92",
+      "translated_at": "2026-11-26T06:45:46.419612Z",
+      "dest_path": "content/practice/euler/477.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/euler/478.md": {
+      "source_hash": "sha256:e1c699d8c5f7b42ba5ac3de90e767a1201264c7cafe3482523c0bbc6f2c913e6",
+      "translated_at": "2026-11-26T06:46:03.668693Z",
+      "dest_path": "content/practice/euler/478.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/euler/479.md": {
+      "source_hash": "sha256:38a10606361c190a8d5be557d9a4a49849a49ae349b40a8a7ad53b57167c7d56",
+      "translated_at": "2026-11-26T06:46:45.047749Z",
+      "dest_path": "content/practice/euler/479.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/euler/48.md": {
+      "source_hash": "sha256:bcedea2c70d8004c15f4de5cffedbfaabbbd8ab80e9bb656aed690982bf5a511",
+      "translated_at": "2026-11-26T06:47:27.013558Z",
+      "dest_path": "content/practice/euler/48.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/euler/480.md": {
+      "source_hash": "sha256:77537a33e81d22917abdcc38e5d466a6ee60f577d0beef7e7ac88105404c75c3",
+      "translated_at": "2026-11-26T06:47:53.355700Z",
+      "dest_path": "content/practice/euler/480.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/euler/481.md": {
+      "source_hash": "sha256:7aac02661a99c8f9d5fd8763a67938cd66ea270452c65aba94876b901387e33b",
+      "translated_at": "2026-11-26T06:48:25.376184Z",
+      "dest_path": "content/practice/euler/481.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/euler/482.md": {
+      "source_hash": "sha256:5fcfbed17b3b3c770d024df06aefa4328d8830e46a33c48fd1b398623fba3769",
+      "translated_at": "2026-11-26T06:48:53.633605Z",
+      "dest_path": "content/practice/euler/482.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/euler/483.md": {
+      "source_hash": "sha256:53ee2948966665a73c47342ba8e6cc9bf41815eba2f265e99478a80241d9bd7e",
+      "translated_at": "2026-11-26T06:49:28.673838Z",
+      "dest_path": "content/practice/euler/483.md",
+      "status": "done",
+      "tokens_used": 0,
+      "provider": "google"
+    },
+    "content/en/practice/euler/484.md": {
+      "source_hash": "sha256:790b1ca8280a5de2b0b43d52c5de5d06ba92b7fe85d516fede89b58c2686dc36",
+      "translated_at": "2026-11-26T06:49:44.418713Z",
+      "dest_path": "content/practice/euler/484.md",
       "status": "done",
       "tokens_used": 0,
       "provider": "google"
