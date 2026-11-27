@@ -1,66 +1,6 @@
 {
   "pending": [
     {
-      "source_path": "content/en/practice/euler/99.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:01.089327Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/euler/990.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:01.089360Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/euler/991.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:01.089390Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/euler/992.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:01.089418Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/euler/993.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:01.089446Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/euler/994.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:01.089474Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/euler/995.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:01.089501Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/euler/996.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:01.089530Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/euler/997.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:01.089559Z",
-      "retries": 0
-    },
-    {
-      "source_path": "content/en/practice/euler/998.md",
-      "priority": 20,
-      "added_at": "2026-06-01T12:15:01.089585Z",
-      "retries": 0
-    },
-    {
       "source_path": "content/en/practice/kvant/math/1.md",
       "priority": 20,
       "added_at": "2026-06-10T18:01:39.660917Z",
